@@ -2862,3 +2862,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 858, "native_CPU_XCTest": 880, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 1, "Apple_UI_Instruments": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Guard shared native save-destination mutations and completion against inactive/closed presentation, retaining original pending content and citations; preserve actual store acknowledgement/duplicate checks. Add actual Apple UI regression with private game/library fixture and record unexecuted Apple coverage explicitly.
 - Commit: containing commit for batch Owned-game-clock-releases-controller-between-frames.
+
+## Native-save-destination-scene-and-terminal-ownership
+
+- Parent checkpoint: 0b31d9949387c056470f51e93fda8f0c1ec9780b.
+- Source-order requirements: [125, 127, 128, 167, 169, 324, 476, 477, 478].
+- Source files: Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift, Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, development_workflow/SAVE_DESTINATION_OWNERSHIP.md.
+- Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 858, "native_CPU_XCTest": 880, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "written_Apple_UI_launch_vectors": 2, "executed_new_Apple_UI_launch_vectors": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Localize fixed save-sheet labels and native field/accessibility selection presentation through existing translation helpers, keeping typed book/chapter names and saved source/citation payload verbatim; preserve owner guards and explicitly record Apple/official-model verification gaps.
+- Commit: containing commit for batch Native-save-destination-scene-and-terminal-ownership.

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 // Prompt 09 → Prompt 10 bridge.
 // Ask determines WHAT is saved. This sheet determines WHERE it is tucked.
@@ -13,6 +14,20 @@ struct Prompt10AskSaveDestination: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var presentationIsVisible = false
+    @State private var presentationCompleted = false
+    @State private var presentationGeneration = UUID()
+    private func ownsInteraction(_ identity: UUID) -> Bool {
+        ownsPresentation && identity == presentationGeneration
+    }
+    private var ownsPresentation: Bool {
+        presentationIsVisible && !presentationCompleted && scenePhase == .active &&
+            UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
+    }
+    private var canEditDestination: Bool { ownsPresentation && store.storageProtectionReason == nil }
+
     @State private var selectedEncyclopediaID: UUID?
     @State private var selectedChapterID: UUID?
 
@@ -22,6 +37,7 @@ struct Prompt10AskSaveDestination: View {
     @State private var errorMessage: String?
 
     var body: some View {
+        let interactionID = presentationGeneration
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
                 Text("where should i tuck it?")
@@ -36,7 +52,7 @@ struct Prompt10AskSaveDestination: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                Prompt10LibraryStorageNotice(store: store)
+                Prompt10LibraryStorageNotice(store: store, interactionAllowed: { ownsInteraction(interactionID) })
                 if store.storageProtectionReason != nil {
                     // Original pending Ask content remains owned by this popup;
                     // no write or automatic destination change is attempted.
@@ -64,6 +80,7 @@ struct Prompt10AskSaveDestination: View {
                                 )
                             ) { encyclopedia in
                                 Button {
+                                    guard canEditDestination, ownsInteraction(interactionID), store.encyclopedia(id: encyclopedia.id) != nil else { return }
                                     selectedEncyclopediaID = encyclopedia.id
                                     selectedChapterID =
                                         encyclopedia.chapters
@@ -135,6 +152,8 @@ struct Prompt10AskSaveDestination: View {
                                 }
                             ) { chapter in
                                 Button {
+                                    guard canEditDestination, ownsInteraction(interactionID), selectedEncyclopediaID == encyclopedia.id,
+                                          store.encyclopedia(id: encyclopedia.id)?.chapters.contains(where: { $0.id == chapter.id }) == true else { return }
                                     selectedChapterID = chapter.id
                                 } label: {
                                     HStack {
@@ -173,8 +192,10 @@ struct Prompt10AskSaveDestination: View {
                 }
 
                 Button("+ new encyclopedia") {
+                    guard canEditDestination, ownsInteraction(interactionID) else { return }
                     showingNewEncyclopedia.toggle()
                 }
+                .accessibilityIdentifier("library.saveDestination.newBook")
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -199,7 +220,7 @@ struct Prompt10AskSaveDestination: View {
                 if showingNewEncyclopedia {
                     TextField(
                         "encyclopedia name",
-                        text: $newEncyclopediaName
+                        text: Binding(get: { newEncyclopediaName }, set: { if canEditDestination && ownsInteraction(interactionID) { newEncyclopediaName = $0 } })
                     )
                     .font(
                         .custom(
@@ -207,6 +228,7 @@ struct Prompt10AskSaveDestination: View {
                             size: 12
                         )
                     )
+                    .accessibilityIdentifier("library.saveDestination.bookName")
                     .textFieldStyle(.plain)
                     .padding(.horizontal, 12)
                     .frame(minHeight: 44)
@@ -223,6 +245,7 @@ struct Prompt10AskSaveDestination: View {
                     HStack(spacing: 7) {
                         ForEach(Prompt10BookStyle.allCases, id: \.self) { style in
                             Button {
+                                guard canEditDestination, ownsInteraction(interactionID) else { return }
                                 selectedNewEncyclopediaStyle = style
                             } label: {
                                 Image(style.assetName)
@@ -275,8 +298,9 @@ struct Prompt10AskSaveDestination: View {
                     WatercolorSecondaryButton(
                         label: "create encyclopedia"
                     ) {
-                        createAndSelectEncyclopedia()
+                        createAndSelectEncyclopedia(interactionID: interactionID)
                     }
+                    .accessibilityIdentifier("library.saveDestination.createBook")
                 }
 
                 if let errorMessage {
@@ -296,25 +320,38 @@ struct Prompt10AskSaveDestination: View {
                 WatercolorPrimaryButton(
                     label: "save here"
                 ) {
-                    savePendingContent()
+                    savePendingContent(interactionID: interactionID)
                 }
+                .accessibilityIdentifier("library.saveDestination.save")
                 .disabled(
-                    selectedEncyclopediaID == nil ||
+                    !canEditDestination || selectedEncyclopediaID == nil ||
                     selectedChapterID == nil
                 )
 
                 WatercolorSecondaryButton(
                     label: "cancel"
                 ) {
+                    guard ownsInteraction(interactionID) else { return }
+                    presentationCompleted = true
                     audioManager.play(.popupClose)
                     onCancel()
                 }
+                .accessibilityIdentifier("library.saveDestination.cancel")
             }
         }
+        .disabled(!ownsPresentation)
+        .onChange(of: scenePhase) { _, _ in presentationGeneration = UUID() }
+        .onDisappear {
+            presentationIsVisible = false
+            presentationGeneration = UUID()
+        }
         .onAppear {
+            presentationGeneration = UUID()
+            presentationIsVisible = true
+            guard !presentationCompleted else { return }
             audioManager.play(.popupOpen)
 
-            if let first =
+            if selectedEncyclopediaID == nil, let first =
                 store.sorted(
                     by: .recentlyUpdated
                 )
@@ -340,7 +377,8 @@ struct Prompt10AskSaveDestination: View {
         )
     }
 
-    private func createAndSelectEncyclopedia() {
+    private func createAndSelectEncyclopedia(interactionID: UUID) {
+        guard canEditDestination, ownsInteraction(interactionID) else { return }
         do {
             let encyclopedia =
                 try store.createEncyclopedia(
@@ -366,8 +404,8 @@ struct Prompt10AskSaveDestination: View {
         }
     }
 
-    private func savePendingContent() {
-        guard let encyclopediaID =
+    private func savePendingContent(interactionID: UUID) {
+        guard canEditDestination, ownsInteraction(interactionID), let encyclopediaID =
                 selectedEncyclopediaID,
               let chapterID =
                 selectedChapterID else {
@@ -413,6 +451,7 @@ struct Prompt10AskSaveDestination: View {
                 chapterID: chapterID
             )
 
+            presentationCompleted = true
             audioManager.play(.buttonSoftPop)
             onSaved()
 

@@ -1909,6 +1909,7 @@ struct Prompt28FruitBasketView: View {
                         ) {
                             requestQuestionSave(expectedQuestionID: sourceQuestionID, expectedInteractionID: interactionID)
                         }
+                        .accessibilityIdentifier("fruitBasket.result.saveQuestion")
 
                         Prompt28WatercolorButton(
                             title: "keep playing",

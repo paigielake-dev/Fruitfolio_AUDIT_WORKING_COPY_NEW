@@ -3,6 +3,49 @@ import XCTest
 final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testGameSaveDestinationRetainsDraftAcrossBackgroundAndSavesOriginalMetadataOnce() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "success",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let open = app.buttons["fruitBasket.result.saveQuestion"]
+            XCTAssertTrue(open.waitForExistence(timeout: 8))
+            for _ in 0..<24 { if open.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let newBook = app.buttons["library.saveDestination.newBook"]
+            XCTAssertTrue(newBook.waitForExistence(timeout: 5)); newBook.tap()
+            let field = app.textFields["library.saveDestination.bookName"]
+            XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("QA private 42")
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            XCTAssertEqual(field.value as? String, "QA private 42")
+            let create = app.buttons["library.saveDestination.createBook"]
+            for _ in 0..<16 { if create.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(create.isHittable); create.tap()
+            let cancel = app.buttons["library.saveDestination.cancel"]
+            for _ in 0..<16 { if cancel.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(cancel.isHittable); cancel.tap()
+            let readback = app.staticTexts["gameQA.savedQuestion"]
+            XCTAssertTrue(readback.waitForExistence(timeout: 5))
+            XCTAssertEqual(readback.label, "saved pages: 0; books: 1; metadata intact: true")
+            for _ in 0..<24 { if open.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let save = app.buttons["library.saveDestination.save"]
+            XCTAssertTrue(save.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if save.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(save.isHittable); XCTAssertTrue(save.isEnabled); save.tap()
+            let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@",
+                "saved pages: 1; books: 1; metadata intact: true"), object: readback)
+            XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 5), .completed)
+            XCTAssertFalse(save.exists)
+            captureGame(app, name: "game-save-original-metadata-reduced-\(reduced)")
+            app.terminate()
+        }
+    }
+
     func testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords() {
         for language in ["en", "fr"] {
             for reduced in [false, true] {

@@ -82,6 +82,7 @@ struct Prompt28GameRegressionHarness: View {
                 if !modalActive {
                     VStack(alignment: .leading) {
                         Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
+                        Prompt28SavedQuestionReadback(library: fixture.library, model: model)
                         Text("celebration art active: \(celebrationArtActive)")
                             .accessibilityIdentifier("gameQA.celebrationArtActive")
                         if let original = fixture.protectedOriginal {
@@ -201,6 +202,26 @@ struct Prompt28GameRegressionHarness: View {
 }
 /// Observe the actual model/store, not merely their enclosing fixture owner.
 /// Readback must follow result creation/retry and acknowledge real store state.
+@MainActor
+private struct Prompt28SavedQuestionReadback: View {
+    @ObservedObject var library: Prompt10SavedLibraryStore
+    @ObservedObject var model: Prompt28FruitBasketViewModel
+    var body: some View {
+        let pages = library.encyclopedias.flatMap(\.chapters).flatMap(\.pages)
+        let expected = model.currentQuestion.flatMap { Prompt28SavedResearchCopy.pending(question: $0) }
+        let intact = pages.allSatisfy { page in
+            guard let expected else { return false }
+            return page.question == expected.question && page.answer == expected.answer &&
+                page.sourceIDs == expected.sourceIDs && page.sourceVersions == expected.sourceVersions &&
+                page.knowledgeBaseVersion == expected.knowledgeBaseVersion &&
+                page.generationTimestamp == expected.generationTimestamp &&
+                page.originalAnswerID == expected.originalAnswerID && page.sourceRecords == expected.sourceRecords
+        }
+        Text("saved pages: \(pages.count); books: \(library.encyclopedias.count); metadata intact: \(intact)")
+            .accessibilityIdentifier("gameQA.savedQuestion")
+    }
+}
+
 @MainActor
 private struct Prompt28GameDiagnosticReadback: View {
     @ObservedObject var model: Prompt28FruitBasketViewModel

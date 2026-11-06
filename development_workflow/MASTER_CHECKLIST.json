@@ -7391,7 +7391,9 @@
         "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
         "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
         "Tools/check_shared_confirmation_coverage.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7436,9 +7438,10 @@
         "Prompt1BOwnedConfirmationTests existing actual ownership regressions",
         "Prompt1BScientificTranslationTests.testBareBibliographicIdentifiersAreProtectedWholeBeforeTheirNumericPrefixes",
         "Prompt1BCatalogTranslationTests.testCatalogCannotAlterBareDOISuffixWhileKeepingItsNumericalPrefix",
-        "Prompt1BTranslationPipelineTests.testLateIdentifierOrProtectedBrandInjectionRejectsWholePassage"
+        "Prompt1BTranslationPipelineTests.testLateIdentifierOrProtectedBrandInjectionRejectsWholePassage",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Whole-bibliographic-identifier-and-uppercase-HCG-translation-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
@@ -7458,9 +7461,40 @@
         "Saved Library persistence now captures the exact baseline UserDefaults object and rejects a commit after that record changes or is cleared elsewhere. The existing actual store rolls back its candidate state on failure and exposes a specific protection reason. Explicit reload reads the latest saved baseline without writing or merging it. Protected records cannot create books, and Library, Guide Builder home and Ask save destinations provide the same inline reload notice. This is value comparison in the local process, not a cross-process transaction/ABA guarantee.\n\nAdded a Foundation JSON-field-coverage guard: after a successful typed decode, a temporary typed encoding is inspected recursively for discarded dictionary fields/array members. No scientific scalar values are changed or treated as clinically equivalent. Unknown nested book/page/citation fields prevent writes while known readable pages remain available; no raw record is rewritten. This conservative rule also protects explicit null fields omitted by the typed encoder rather than guessing they are disposable. Unreadable originals retain the existing read-only behavior. Reload does not clear an unsupported record; only a genuinely readable/round-trippable newer baseline re-enables edits.\n\nThe real Saved Library store now conditionally retains genuine Combine/ObservableObject on Apple and runs its identical control flow on Linux. Existing Saved Library tests execute against that actual store. Its physical asset-name enum is also compiled unchanged on Foundation platforms; only the SwiftUI image view is conditionally excluded. No artwork/resources or model implementation is replaced. New actual-store tests prove stale/cleared deletion rollback, exact original byte preservation, known-page/notes readability under unknown nested fields, null protection and read-only reload. A DEBUG private-suite route and an actual UI test exercise the protected notice, large text/Reduce Motion and opening the existing readable book. Apple SDK/publisher/UI/screenshots remain NOT_RUN.\n\nThe new field guard is currently applied to Saved Library only. Remaining measurement/context persistence needs the same stale/unsupported-record review and implementation; this batch does not claim all app stores are protected.",
         "Converted the final two identified app SwiftUI native confirmation sites: Saved Library notes and user-authored page save/discard/keep. Each uses OwnedPopupSession and all three measured white-paper actions. Keep/Escape retains the draft; Save waits for actual shared dismissal and leaves the editor/page open on failure; explicit Discard closes without persisting the draft. Keyboard/focus, page departure/change cancellation and error-message focus are owned by the active view. The user-page overlay has a scoped PresentedPopupHost, so confirmation blurs the editor once without stacking another whole-app blur over its already dimmed background. Saved notes restore their Back control on Keep and the contents row after actual departure.\n\nNotes now save with their original field baseline. A newer same-store note cannot be silently replaced; stored answer text, source IDs/versions and other metadata remain unchanged. User-page editors freeze the original editable fields/chapter/identity in stable State. Their store API rejects newer wording, notes, source-address or chapter changes without altering the current snapshot. The comparison intentionally ignores unrelated imported-image/retained metadata changes: saving valid text clones the current page so new images survive. Existing persistence guards still protect outside-writer/unsupported records. Missing chapter selection produces a visible focused error rather than a silent no-op. Inputs survive failed saves; a success message is cleared when notes become dirty again.\n\nThe actual saved-note save/edit controls now use canonical feedback/animation. User-authored contents rows are labeled your own page rather than complete saved answer; long row titles wrap instead of truncating to two lines. Original art and source content are untouched. DEBUG Book QA can seed one synthetic user page only when explicitly requested, and synchronizes its root/local Reduce Motion preferences through the disposable shell suite. New Apple UI regressions walk Note Keep/Discard/Save and user-page overlay Keep/Discard/Save against actual private fixture records, checking original text/notes, retained drafts and one exposed confirmation scroll area. They remain NOT_RUN, as do VoiceOver, screenshots and actual device interaction.\n\nThree actual-store Foundation regressions prove stale note refusal with exact raw bytes/citation metadata retained, independent images surviving note/user-page edits, and older page drafts unable to overwrite newer notes/source addresses/chapter moves. The new test initially used the wrong existing createChapter argument label; it was corrected to the actual in: API, with no production API substitution.\n\nAdded Tools/check_shared_confirmation_coverage.swift using actual SwiftParser/SwiftSyntax. This is a bounded read-only check for alert/confirmationDialog member calls, ignoring comments/string prose/authorization option values, with method-token source locations. Parse/read failure cannot produce a clean result. Three executable checker regressions include the actual complete app source scan; no such native calls remain. It does not type-resolve arbitrary custom methods or prove UIKit/system-prompt/layout acceptance. Thirty-nine workflow tests passed, including nine real SwiftSyntax tool cases. 549 portable XCTest +21 Swift Testing and554 native-linked XCTest +21 Swift Testing passed. Compiler syntax parsed277 changed Swift files; Apple typecheck/build/clinical/runtime acceptance remains open.",
         "The actual shared source-citation footer now uses a compact canonical watercolor control for open source. Its old indirect manual press cue and redundant motion/audio dependencies were removed, leaving the canonical control as the sole press-cue owner. Citation link failures now use the already tested FruitfolioOwnedPopupSession instead of separate unmanaged popup IDs and an unrestricted dismissCurrent close closure. Failure actions consume their own identity once; stale/queued/replayed actions cannot close another feature. Departures/source changes cancel only the owned request and active callback, while dismissed request ownership is observed before new opens and focus restoration still waits for actual host dismissal. Original source titles, full attribution, publication metadata, DOI, URL and IDs remain verbatim. The existing actual-root/native-sheet UI regression now checks action bounds and reopens/closes the failure to catch stuck ownership. Those UI assertions remain NOT_RUN on Linux. Full available suites571 portable XCTest+21 SwiftTesting and576 native XCTest+21 SwiftTesting passed;39 workflow tests including9 real SwiftSyntax,278 syntax parses and the all-app canonical sound-owner scan pass. Apple UI/VoiceOver, actual openURL callbacks and device audio/layout remain unverified.",
-        "Standalone HCG now shares the same protected-identifier contract as hCG and the existing quantity label spelling. Introduced uppercase HCG is rejected in restored inference/catalog validation and whole-passage failure tests. Reference protection now includes complete bare/labeled DOI, PMID and PMCID identifiers; reference matching precedes the general quantity matcher so a bare DOI is protected whole instead of splitting off its numerical prefix and leaving a translatable suffix. This closes a concrete catalog/inference integrity gap where 10.1234/original could become10.1234/changed with unchanged numeric signatures. Added a full-identifier roundtrip regression with label variants/Unicode DOI suffixes and an actual catalog/service regression proving a changed suffix cannot display while paused and falls back only through the permitted runtime path. Existing deliberately corrupt second-paragraph contract tests now also include HCG/PMID additions and still reject whole passages. These are literal/citation integrity checks, not a semantic or clinical translation approval system. Final580 portable XCTest+21 SwiftTesting and586 native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Official MADLAD resources/actual T5 clinical/offline device proof and Apple UI/typechecking remain NOT_RUN."
+        "Standalone HCG now shares the same protected-identifier contract as hCG and the existing quantity label spelling. Introduced uppercase HCG is rejected in restored inference/catalog validation and whole-passage failure tests. Reference protection now includes complete bare/labeled DOI, PMID and PMCID identifiers; reference matching precedes the general quantity matcher so a bare DOI is protected whole instead of splitting off its numerical prefix and leaving a translatable suffix. This closes a concrete catalog/inference integrity gap where 10.1234/original could become10.1234/changed with unchanged numeric signatures. Added a full-identifier roundtrip regression with label variants/Unicode DOI suffixes and an actual catalog/service regression proving a changed suffix cannot display while paused and falls back only through the permitted runtime path. Existing deliberately corrupt second-paragraph contract tests now also include HCG/PMID additions and still reject whole passages. These are literal/citation integrity checks, not a semantic or clinical translation approval system. Final580 portable XCTest+21 SwiftTesting and586 native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Official MADLAD resources/actual T5 clinical/offline device proof and Apple UI/typechecking remain NOT_RUN.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-06T06:23:42.012568+00:00"
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
+      "latest_batch_verification": {
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
+        "executed": {
+          "portable_XCTest": 858,
+          "native_CPU_XCTest": 880,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
+          "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
+        },
+        "not_run": [
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
+          "Official MADLAD inference and clinical/native-language review"
+        ],
+        "remaining": [
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+      ]
     },
     {
       "sequence": 126,
@@ -7535,7 +7569,11 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7555,9 +7593,10 @@
         "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
@@ -7565,9 +7604,40 @@
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
+      "latest_batch_verification": {
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
+        "executed": {
+          "portable_XCTest": 858,
+          "native_CPU_XCTest": 880,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
+          "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
+        },
+        "not_run": [
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
+          "Official MADLAD inference and clinical/native-language review"
+        ],
+        "remaining": [
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+      ]
     },
     {
       "sequence": 128,
@@ -7597,7 +7667,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7617,9 +7691,10 @@
         "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
         "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -7628,9 +7703,40 @@
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
+      "latest_batch_verification": {
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
+        "executed": {
+          "portable_XCTest": 858,
+          "native_CPU_XCTest": 880,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
+          "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
+        },
+        "not_run": [
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
+          "Official MADLAD inference and clinical/native-language review"
+        ],
+        "remaining": [
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+      ]
     },
     {
       "sequence": 129,
@@ -9391,7 +9497,12 @@
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Core/Assets/AudioManager.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9400,13 +9511,45 @@
       "related_tests": [
         "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
         "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
-        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-05T20:21:39.756409+00:00"
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
+      "latest_batch_verification": {
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
+        "executed": {
+          "portable_XCTest": 858,
+          "native_CPU_XCTest": 880,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
+          "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
+        },
+        "not_run": [
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
+          "Official MADLAD inference and clinical/native-language review"
+        ],
+        "remaining": [
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+      ]
     },
     {
       "sequence": 168,
@@ -9456,36 +9599,54 @@
       "description": "Preserve correct transitions into the selected save destination.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": "batch:Assessment-snapshot-and-individual-tracker-reconciliation (resolve containing commit with git log)",
-      "evidence_of_implementation": [
-        "Reconciled stale NOT_STARTED using individual existing source/test evidence. Real sheet onSaved/onCancel and source/destination updates exist. Verify selected destination, successful write, cancellation and failed/protected writes in the real app."
+      "related_tests": [
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "last_updated": "2026-11-06T17:14:19.247177+00:00",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reconciled stale NOT_STARTED using individual existing source/test evidence. Real sheet onSaved/onCancel and source/destination updates exist. Verify selected destination, successful write, cancellation and failed/protected writes in the real app.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
+      ],
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
       "latest_batch_verification": {
-        "batch": "Assessment-snapshot-and-individual-tracker-reconciliation",
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
         "executed": {
-          "inspection": "Existing actual source/test paths inspected; stale NOT_STARTED is not evidence of absent code."
+          "portable_XCTest": 858,
+          "native_CPU_XCTest": 880,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
+          "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Actual Apple build/UI/VoiceOver/Reduce Motion/lifecycle acceptance for this whole requirement",
-          "Targeted successful/canceled/failed save-destination visual and transition tests still need complete Apple journey coverage"
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
+          "Official MADLAD inference and clinical/native-language review"
         ],
         "remaining": [
-          "Real sheet onSaved/onCancel and source/destination updates exist. Verify selected destination, successful write, cancellation and failed/protected writes in the real app.",
-          "Provide individual clause-by-clause closure and execute applicable Apple/device/domain acceptance before marking the original requirement complete."
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Real sheet onSaved/onCancel and source/destination updates exist. Verify selected destination, successful write, cancellation and failed/protected writes in the real app.",
-        "Provide individual clause-by-clause closure and execute applicable Apple/device/domain acceptance before marking the original requirement complete."
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
     {
@@ -17182,7 +17343,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Tools/compile_fruit_basket_masks.py",
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
-        "development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md"
+        "development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -17198,42 +17362,46 @@
         "Prompt1BPopupLayoutTests",
         "test_fruit_basket_masks",
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
-        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-transition-identities-and-frozen-save (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
         "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified.",
-        "Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted."
+        "Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-06T22:54:01.550663+00:00",
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-transition-identities-and-frozen-save",
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
         "executed": {
-          "portable_XCTest": 851,
-          "native_CPU_XCTest": 873,
+          "portable_XCTest": 858,
+          "native_CPU_XCTest": 880,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 12,
-          "Apple_UI": "NOT_RUN",
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple SDK/Combine notifications/SwiftUI sheets, gestures, scene transitions, VoiceOver and device gameplay",
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
           "Official MADLAD inference and clinical/native-language review"
         ],
         "remaining": [
-          "Run genuine Apple integration/UI/device coverage for transition ownership, frozen save content and background behavior",
-          "Verify remaining classification callback and game clock ownership; exact 320\u2013322 replacement copy remains pending clarification",
-          "Whole original requirement acceptance and official MADLAD/device/clinical blockers remain open"
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run genuine Apple integration/UI/device coverage for transition ownership, frozen save content and background behavior",
-        "Verify remaining classification callback and game clock ownership; exact 320\u2013322 replacement copy remains pending clarification",
-        "Whole original requirement acceptance and official MADLAD/device/clinical blockers remain open"
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
     {
@@ -28319,7 +28487,8 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
         "development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md",
         "development_workflow/CLASSIFICATION_DECISION_OWNERSHIP.md",
-        "development_workflow/GAME_CLOCK_OWNERSHIP.md"
+        "development_workflow/GAME_CLOCK_OWNERSHIP.md",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28455,7 +28624,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Owned-game-clock-releases-controller-between-frames (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -28574,36 +28743,39 @@
         "Actual MainActor game controller/store now portable with genuine conditional Combine;29real Apple Published fields preserved and initializer/method regions SHA-identical. Genuine registry/ledger included. Existing34game+2delayed ownership tests execute after32sync test entrypoints become async for Linux XCTest. Real7-assertion failure exposed rainy3obstacle regression and stale instantaneous puddle fixture. Rain now ensures puddle/no hidden wind/at most2obstacles; actual clock/playfield/checked-in painted masks verify contact/resistance. Earlier discovery abort and missing-resource runs preserved, not counted passed. Final837/859XCTest+21SwiftTesting each pass. No Apple UI/Combine/official-model certification.",
         "Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted.",
         "Actual classification fruit/star decision callbacks capture interaction identity; fruit captures exact item UUID. Controller validates identities before any mutation; consume/spawn/pause invalidate old callbacks. Genuine 49-test pre-fix run reproduced2assertion failures. Six regressions exercise identity replacement, wrong fruit, replay after replacement, pause/resume, stale later star and valid current accept. No engine/art/source/citation/schema rewrite.",
-        "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance."
+        "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-06T23:00:58.627546+00:00",
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
       "latest_batch_verification": {
-        "batch": "Owned-game-clock-releases-controller-between-frames",
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
         "executed": {
           "portable_XCTest": 858,
           "native_CPU_XCTest": 880,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 1,
-          "Apple_UI_Instruments": "NOT_RUN",
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple SDK/Combine/SwiftUI disappearance and lifecycle tests, Instruments and physical-device performance",
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
           "Official MADLAD inference and clinical/native-language review"
         ],
         "remaining": [
-          "Verify actual Apple game dismissal/background and clock resource lifetime with Instruments/device and integrated UI suite",
-          "Verify shared save-destination completion ownership next",
-          "Whole requirement acceptance, exact founder copy320\u2013322, official MADLAD and external clinical/device blockers remain open"
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual Apple game dismissal/background and clock resource lifetime with Instruments/device and integrated UI suite",
-        "Verify shared save-destination completion ownership next",
-        "Whole requirement acceptance, exact founder copy320\u2013322, official MADLAD and external clinical/device blockers remain open"
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
     {
@@ -28770,7 +28942,8 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
         "development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md",
         "development_workflow/CLASSIFICATION_DECISION_OWNERSHIP.md",
-        "development_workflow/GAME_CLOCK_OWNERSHIP.md"
+        "development_workflow/GAME_CLOCK_OWNERSHIP.md",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28952,7 +29125,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Owned-game-clock-releases-controller-between-frames (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -29105,36 +29278,39 @@
         "Actual MainActor game controller/store now portable with genuine conditional Combine;29real Apple Published fields preserved and initializer/method regions SHA-identical. Genuine registry/ledger included. Existing34game+2delayed ownership tests execute after32sync test entrypoints become async for Linux XCTest. Real7-assertion failure exposed rainy3obstacle regression and stale instantaneous puddle fixture. Rain now ensures puddle/no hidden wind/at most2obstacles; actual clock/playfield/checked-in painted masks verify contact/resistance. Earlier discovery abort and missing-resource runs preserved, not counted passed. Final837/859XCTest+21SwiftTesting each pass. No Apple UI/Combine/official-model certification.",
         "Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted.",
         "Actual classification fruit/star decision callbacks capture interaction identity; fruit captures exact item UUID. Controller validates identities before any mutation; consume/spawn/pause invalidate old callbacks. Genuine 49-test pre-fix run reproduced2assertion failures. Six regressions exercise identity replacement, wrong fruit, replay after replacement, pause/resume, stale later star and valid current accept. No engine/art/source/citation/schema rewrite.",
-        "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance."
+        "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-06T23:00:58.627546+00:00",
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
       "latest_batch_verification": {
-        "batch": "Owned-game-clock-releases-controller-between-frames",
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
         "executed": {
           "portable_XCTest": 858,
           "native_CPU_XCTest": 880,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 1,
-          "Apple_UI_Instruments": "NOT_RUN",
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple SDK/Combine/SwiftUI disappearance and lifecycle tests, Instruments and physical-device performance",
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
           "Official MADLAD inference and clinical/native-language review"
         ],
         "remaining": [
-          "Verify actual Apple game dismissal/background and clock resource lifetime with Instruments/device and integrated UI suite",
-          "Verify shared save-destination completion ownership next",
-          "Whole requirement acceptance, exact founder copy320\u2013322, official MADLAD and external clinical/device blockers remain open"
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual Apple game dismissal/background and clock resource lifetime with Instruments/device and integrated UI suite",
-        "Verify shared save-destination completion ownership next",
-        "Whole requirement acceptance, exact founder copy320\u2013322, official MADLAD and external clinical/device blockers remain open"
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
     {
@@ -29273,7 +29449,8 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
         "development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md",
         "development_workflow/CLASSIFICATION_DECISION_OWNERSHIP.md",
-        "development_workflow/GAME_CLOCK_OWNERSHIP.md"
+        "development_workflow/GAME_CLOCK_OWNERSHIP.md",
+        "development_workflow/SAVE_DESTINATION_OWNERSHIP.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29409,7 +29586,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Owned-game-clock-releases-controller-between-frames (resolve containing commit with git log)",
+      "commit_reference": "batch:Native-save-destination-scene-and-terminal-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -29508,36 +29685,39 @@
         "Actual MainActor game controller/store now portable with genuine conditional Combine;29real Apple Published fields preserved and initializer/method regions SHA-identical. Genuine registry/ledger included. Existing34game+2delayed ownership tests execute after32sync test entrypoints become async for Linux XCTest. Real7-assertion failure exposed rainy3obstacle regression and stale instantaneous puddle fixture. Rain now ensures puddle/no hidden wind/at most2obstacles; actual clock/playfield/checked-in painted masks verify contact/resistance. Earlier discovery abort and missing-resource runs preserved, not counted passed. Final837/859XCTest+21SwiftTesting each pass. No Apple UI/Combine/official-model certification.",
         "Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted.",
         "Actual classification fruit/star decision callbacks capture interaction identity; fruit captures exact item UUID. Controller validates identities before any mutation; consume/spawn/pause invalidate old callbacks. Genuine 49-test pre-fix run reproduced2assertion failures. Six regressions exercise identity replacement, wrong fruit, replay after replacement, pause/resume, stale later star and valid current accept. No engine/art/source/citation/schema rewrite.",
-        "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance."
+        "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
+        "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance."
       ],
-      "last_updated": "2026-11-06T23:00:58.627546+00:00",
+      "last_updated": "2026-11-06T23:05:22.455734+00:00",
       "latest_batch_verification": {
-        "batch": "Owned-game-clock-releases-controller-between-frames",
+        "batch": "Native-save-destination-scene-and-terminal-ownership",
         "executed": {
           "portable_XCTest": 858,
           "native_CPU_XCTest": 880,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 1,
-          "Apple_UI_Instruments": "NOT_RUN",
+          "written_Apple_UI_launch_vectors": 2,
+          "executed_new_Apple_UI_launch_vectors": 0,
+          "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple SDK/Combine/SwiftUI disappearance and lifecycle tests, Instruments and physical-device performance",
+          "Two new real Apple UI launch vectors: Reduce Motion off/on with accessibility XXXL, retained native draft across background, Cancel0pages then Save1original-metadata page",
+          "Apple SDK/SwiftUI actual terminal queued callbacks, sheet keyboard/focus/VoiceOver and protected-storage reload",
           "Official MADLAD inference and clinical/native-language review"
         ],
         "remaining": [
-          "Verify actual Apple game dismissal/background and clock resource lifetime with Instruments/device and integrated UI suite",
-          "Verify shared save-destination completion ownership next",
-          "Whole requirement acceptance, exact founder copy320\u2013322, official MADLAD and external clinical/device blockers remain open"
+          "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+          "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+          "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual Apple game dismissal/background and clock resource lifetime with Instruments/device and integrated UI suite",
-        "Verify shared save-destination completion ownership next",
-        "Whole requirement acceptance, exact founder copy320\u2013322, official MADLAD and external clinical/device blockers remain open"
+        "Execute actual Apple UI regressions; verify queued terminal/background/covering-popup events, keyboard/focus/VoiceOver/device behavior and user-facing confirmation beyond dismissal",
+        "Localize fixed save destination labels and native selection accessibility next; preserve private names and sourced data verbatim",
+        "Whole original checklist acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     }
   ]
