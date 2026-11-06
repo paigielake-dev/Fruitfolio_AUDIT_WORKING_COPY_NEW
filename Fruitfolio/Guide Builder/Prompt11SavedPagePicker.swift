@@ -50,7 +50,7 @@ struct Prompt11SavedPagePicker: View {
                 )
                 .multilineTextAlignment(.center)
 
-                TextField("search my saved things…", text: $searchText)
+                FruitfolioFixedTextField("search my saved things…", text: $searchText)
                     .font(.custom("Chalkboard SE", size: 12))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy

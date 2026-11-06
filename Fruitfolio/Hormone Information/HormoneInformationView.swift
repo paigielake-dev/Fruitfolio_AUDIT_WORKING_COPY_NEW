@@ -239,9 +239,9 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     ForEach(FruitfolioMeasuredHormone.allCases) { Text(LocalizedStringKey($0.label)).tag($0) }
                 }
                 if draft.hormone == .other {
-                    TextField("other hormone name", text: $draft.otherHormoneName).focused($editorFocus, equals: .otherName)
+                    FruitfolioFixedTextField("other hormone name", text: $draft.otherHormoneName).focused($editorFocus, equals: .otherName)
                 }
-                TextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
+                FruitfolioFixedTextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
                     .accessibilityIdentifier("measurements.editor.result")
                     .focused($editorFocus, equals: .result)
                     .onChange(of: draft.result) { _, _ in
@@ -261,7 +261,8 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     }
                 }
                 .accessibilityIdentifier("measurements.editor.resultFormat")
-                TextField("unit, exactly as reported", text: $draft.unit).focused($editorFocus, equals: .unit)
+                FruitfolioFixedTextField("unit, exactly as reported", text: $draft.unit).focused($editorFocus, equals: .unit)
+                    .accessibilityIdentifier("measurements.editor.unit")
                 if let shownDate = draft.dateForDisplay() {
                     DatePicker("test date", selection: Binding(
                         get: { draft.dateForDisplay() ?? shownDate },
@@ -282,12 +283,12 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     }
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
-                TextField("sample type (optional)", text: $draft.sampleType).focused($editorFocus, equals: .sample)
-                TextField("cycle day (optional)", text: $cycleDayText).keyboardType(.numberPad)
+                FruitfolioFixedTextField("sample type (optional)", text: $draft.sampleType).focused($editorFocus, equals: .sample)
+                FruitfolioFixedTextField("cycle day (optional)", text: $cycleDayText).keyboardType(.numberPad)
                     .accessibilityIdentifier("measurements.editor.cycleDay")
                     .focused($editorFocus, equals: .cycleDay)
-                TextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange).focused($editorFocus, equals: .reference)
-                TextField("notes (optional)", text: $draft.notes, axis: .vertical)
+                FruitfolioFixedTextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange).focused($editorFocus, equals: .reference)
+                FruitfolioFixedTextField("notes (optional)", text: $draft.notes, axis: .vertical)
                     .accessibilityIdentifier("measurements.editor.notes")
                     .focused($editorFocus, equals: .notes)
                 if let errorMessage {

@@ -1781,8 +1781,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     }
 
     func testMeasurementEditorSavesArabicDecimalCycleDayAndKeepsReportedResult() {
+        for language in ["en", "fr"] {
         let app = XCUIApplication()
-        app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion"]
+        app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsLanguage", language]
         app.launch()
         let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
         XCTAssertTrue(edit.waitForExistence(timeout: 5))
@@ -1790,6 +1791,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         edit.tap()
         let editor = app.scrollViews["measurements.editor.scroll"]
         XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        let unit = app.textFields["measurements.editor.unit"]
+        for _ in 0..<20 { if unit.isHittable { break }; editor.swipeUp() }
+        XCTAssertEqual(unit.value as? String, "pg/mL")
         let day = app.textFields["measurements.editor.cycleDay"]
         for _ in 0..<20 { if day.isHittable { break }; editor.swipeUp() }
         XCTAssertTrue(day.isHittable)
@@ -1804,9 +1808,14 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(editor.waitForExistence(timeout: 5))
         let result = app.textFields["measurements.editor.result"]
         for _ in 0..<20 { if result.isHittable { break }; editor.swipeDown() }
-        XCTAssertEqual(result.value as? String, "12.50")
+        XCTAssertEqual(result.value as? String, "12.50", "Changing app language or a fixed prompt must not rewrite a laboratory result")
+        for _ in 0..<20 { if unit.isHittable { break }; editor.swipeUp() }
+        XCTAssertEqual(unit.value as? String, "pg/mL")
         for _ in 0..<20 { if day.isHittable { break }; editor.swipeUp() }
         XCTAssertEqual(day.value as? String, "12")
+        captureGame(app, name: "measurement-field-prompts-language-\(language)")
+        app.terminate()
+        }
     }
 
     func testMeasurementFutureRecordNoticeKeepsExactReadableValue() {

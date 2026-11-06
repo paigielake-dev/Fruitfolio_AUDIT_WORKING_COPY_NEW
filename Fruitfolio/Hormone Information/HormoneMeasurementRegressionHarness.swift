@@ -30,7 +30,7 @@ private final class FruitfolioMeasurementRegressionFixture: ObservableObject {
         } catch { failure = "measurement QA fixture could not be prepared" }
         setupFailure = failure
     }
-    func cleanUp() { defaults.removePersistentDomain(forName: suite) }
+    deinit { UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite) }
 }
 
 struct FruitfolioMeasurementRegressionHarness: View {
@@ -44,9 +44,14 @@ struct FruitfolioMeasurementRegressionHarness: View {
             else { Button("open measurements QA") { presented = true } }
         }
         .onAppear {
-            settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioMeasurementsReduceMotion")
+            let args = ProcessInfo.processInfo.arguments
+            settings.reduceAnimationOverride = args.contains("-fruitfolioMeasurementsReduceMotion")
+            settings.language = args.firstIndex(of: "-fruitfolioMeasurementsLanguage")
+                .flatMap { $0 + 1 < args.count ? args[$0 + 1] : nil }
+                .flatMap(FruitfolioLanguage.init(rawValue:)) ?? .english
+            settings.translationPausedForMemoryPressure = true
         }
-        .onDisappear { fixture.cleanUp() }
+
     }
 }
 #endif

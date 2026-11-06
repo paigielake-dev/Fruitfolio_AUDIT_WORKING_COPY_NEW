@@ -146,6 +146,34 @@ struct FruitfolioFixedText: View {
     }
 }
 
+/// A native field whose fixed prompt follows the app language. The binding is
+/// forwarded unchanged; translation never reads or rewrites the entered value.
+struct FruitfolioFixedTextField: View {
+    let source: String
+    @Binding private var text: String
+    let axis: Axis
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+
+    init(_ source: String, text: Binding<String>, axis: Axis = .horizontal) {
+        self.source = source
+        self._text = text
+        self.axis = axis
+    }
+
+    var body: some View {
+        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language)
+        let presentation = translation.presentation(for: key)
+        TextField(presentation.text, text: $text, axis: axis)
+            .accessibilityLabel(Text(verbatim: presentation.text))
+            .accessibilityHint(Text(presentation.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
+    }
+}
+
 #if DEBUG
 /// Private, nonclinical catalog fixture. No production catalog/resource is
 /// edited and no fixture string is evidence of real localization approval.

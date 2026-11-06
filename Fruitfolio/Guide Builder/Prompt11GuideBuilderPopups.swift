@@ -43,7 +43,7 @@ struct Prompt11CreateGuidePopup: View {
                     )
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                TextField("ex. my hormone guide", text: $name)
+                FruitfolioFixedTextField("ex. my hormone guide", text: $name)
                 .accessibilityIdentifier("guide.create.name")
                 .bookLabelGuidance(text: name, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                     .font(.custom("Chalkboard SE", size: 12.5))
@@ -69,7 +69,7 @@ struct Prompt11CreateGuidePopup: View {
                     )
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                TextField(
+                FruitfolioFixedTextField(
                     "ex. everything i want to remember about my cycle",
                     text: $guideDescription,
                     axis: .vertical
@@ -232,7 +232,7 @@ struct Prompt11RenameGuidePopup: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                TextField("guide name", text: $name)
+                FruitfolioFixedTextField("guide name", text: $name)
                 .bookLabelGuidance(text: name, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                     .font(.custom("Chalkboard SE", size: 12.5))
                     .foregroundStyle(
@@ -327,7 +327,7 @@ struct Prompt11DescriptionPopup: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                TextField(
+                FruitfolioFixedTextField(
                     "ex. everything i want to remember about my cycle",
                     text: $guideDescription,
                     axis: .vertical
@@ -626,7 +626,7 @@ struct Prompt11SectionPopup: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                TextField("ex. hormones", text: $name)
+                FruitfolioFixedTextField("ex. hormones", text: $name)
                     .font(.custom("Chalkboard SE", size: 12.5))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -736,7 +736,7 @@ struct Prompt11NotePopup: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                TextField(
+                FruitfolioFixedTextField(
                     "write something you want to remember…",
                     text: $note,
                     axis: .vertical

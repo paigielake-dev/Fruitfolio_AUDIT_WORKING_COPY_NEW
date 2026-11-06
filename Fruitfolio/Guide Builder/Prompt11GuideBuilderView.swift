@@ -592,7 +592,7 @@ struct Prompt11GuideBuilderView: View {
         proxy: ScrollViewProxy
     ) -> some View {
         VStack(spacing: 7) {
-            TextField("find something in this guide…", text: $searchText)
+            FruitfolioFixedTextField("find something in this guide…", text: $searchText)
                 .font(.custom("Chalkboard SE", size: 12))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
