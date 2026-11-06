@@ -191,6 +191,43 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testFAQQuestionTranslationFallbackRetainsDisclosureAndSingleCueOwnership() {
+        for arabic in [false, true] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioFAQQA", "-fruitfolioFAQQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if arabic { app.launchArguments += ["-fruitfolioFAQQAArabic"] }
+            if reduced { app.launchArguments += ["-fruitfolioFAQQAReduceMotion"] }
+            app.launch()
+            let question = app.buttons["faq.question.about-1"]
+            XCTAssertTrue(question.waitForExistence(timeout: 5))
+            let scroll = app.scrollViews.firstMatch
+            for _ in 0..<12 { if question.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(question.isHittable)
+            XCTAssertGreaterThanOrEqual(question.frame.height, 44)
+            XCTAssertGreaterThanOrEqual(question.frame.width, 44)
+            XCTAssertFalse(question.label.isEmpty)
+            let collapsed = question.value as? String
+            XCTAssertNotNil(collapsed)
+            if !arabic { XCTAssertEqual(collapsed, "collapsed") }
+            question.tap()
+            let answer = app.descendants(matching: .any)
+                .matching(identifier: "faq.answer.about-1").firstMatch
+            XCTAssertTrue(answer.waitForExistence(timeout: 3))
+            XCTAssertNotEqual(question.value as? String, collapsed)
+            if !arabic { XCTAssertEqual(question.value as? String, "expanded") }
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 1")
+            question.tap()
+            XCTAssertFalse(answer.exists)
+            XCTAssertEqual(question.value as? String, collapsed)
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
+            captureGame(app, name: "faq-disclosure-arabic-\(arabic)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testLeaderboardTotalUsesAppNumberLocaleWithoutChangingStoredCount() throws {
         for language in ["en", "ar"] {
         for reduced in [false, true] {

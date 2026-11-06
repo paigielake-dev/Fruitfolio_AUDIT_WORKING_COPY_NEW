@@ -51,43 +51,23 @@ private struct Prompt29FAQSectionCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(settings.localized(section.title))
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 16,
-                        relativeTo: .headline
-                    )
-                )
+            FruitfolioTranslatedText(source: section.title,
+                font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: true)
                 .fontWeight(.bold)
+                .accessibilityAddTraits(.isHeader)
 
             ForEach(section.items) { item in
                 let isExpanded = expanded.contains(item.id)
-                Button {
-                    audioManager.play(.buttonSoftPop)
-                    if isExpanded { expanded.remove(item.id) } else { expanded.insert(item.id) }
-                } label: {
-                    HStack(spacing: 10) {
-                        Text(settings.localized(item.question))
-                            .fontWeight(.regular)
-                            .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Image("control_next")
-                            .resizable().scaledToFit().frame(width: 22, height: 22)
-                            .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                            .accessibilityHidden(true)
-                    }.frame(minHeight: 44)
+                Prompt29FAQQuestionButton(item: item, isExpanded: isExpanded) {
+                    if expanded.remove(item.id) == nil { expanded.insert(item.id) }
                 }
-                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                .accessibilityValue(isExpanded ? "expanded" : "collapsed")
-                .accessibilityIdentifier("faq.question.\(item.id)")
                 if isExpanded {
                     FruitfolioTranslatedText(source: item.answer,
                                              font: .custom("Chalkboard SE", size: 12.5, relativeTo: .body), serious: true)
                         .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)
+                        .accessibilityIdentifier("faq.answer.\(item.id)")
                     if item.id == "lifebridge-information" {
                         WatercolorSecondaryButton(label: "open LifeBridge information") { showLifeBridge = true }
                     }
@@ -133,5 +113,72 @@ private struct Prompt29FAQSectionCard: View {
                 }
             }
         )
+    }
+}
+
+/// A single disclosure button: translation presentation never nests a second
+/// button or original-text DisclosureGroup inside its label.
+@MainActor
+private struct Prompt29FAQQuestionButton: View {
+    let item: Prompt29FAQItem
+    let isExpanded: Bool
+    let action: () -> Void
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
+    @StateObject private var questionTranslation = FruitfolioControlTranslationState()
+    @StateObject private var stateTranslation = FruitfolioControlTranslationState()
+    private var questionKey: FruitfolioControlTranslationState.Key {
+        .init(source: item.question, language: settings.language)
+    }
+    private var stateKey: FruitfolioControlTranslationState.Key {
+        .init(source: isExpanded ? "expanded" : "collapsed", language: settings.language)
+    }
+
+    var body: some View {
+        let question = questionTranslation.presentation(for: questionKey)
+        let state = stateTranslation.presentation(for: stateKey)
+        Button {
+            audioManager.play(.buttonSoftPop)
+            action()
+        } label: {
+            HStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 4) {
+                    FruitfolioSemanticText(markdown: question.text,
+                        baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body),
+                        color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
+                    if let status = question.status.captionKey {
+                        Text(LocalizedStringKey(status)).font(.caption)
+                    }
+                }
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image("control_next")
+                    .resizable().scaledToFit().frame(width: 22, height: 22)
+                    .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                    .flipsForRightToLeftLayoutDirection(true)
+                    .accessibilityHidden(true)
+            }
+            .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: question.text)))
+        .accessibilityValue(Text(FruitfolioSemanticDocument.plainText(from: state.text)))
+        .accessibilityHint(Text([
+            question.status.accessibilityDetail(original: questionKey.source, localized: { settings.localized($0) }),
+            state.status.accessibilityDetail(original: stateKey.source, localized: { settings.localized($0) })
+        ].filter { !$0.isEmpty }.joined(separator: ". ")))
+        .accessibilityIdentifier("faq.question.\(item.id)")
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: questionKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await questionTranslation.resolve(questionKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: stateKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await stateTranslation.resolve(stateKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }

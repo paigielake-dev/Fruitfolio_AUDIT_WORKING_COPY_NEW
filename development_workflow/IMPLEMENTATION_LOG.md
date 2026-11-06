@@ -2004,3 +2004,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 734, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 14, "catalog_keys": 660, "catalog_existing_entries_preserved": 656, "nonempty_foreign_units": 0, "cross_model_focused_XCTest": 1}.
 - Next action: Replace FAQ question catalog-only label/state resolution with existing noninteractive control translation state; preserve original answers/copy, single button/sound ownership and expanded bindings. Add isolated large-text/RTL/fallback UI regression route.
 - Commit: containing commit for batch Retained-Ask-model-through-native-T5-release.
+
+## FAQ-question-state-translation-and-owned-disclosure
+
+- Parent checkpoint: 1c930fcfb86ad9081f7f3069201e435122449218.
+- Source-order requirements: [18, 24, 62, 63, 393, 394, 395, 397, 410, 411, 446, 466, 468, 471, 472, 477].
+- Source files: Fruitfolio/Hub/FAQ/Prompt29FAQView.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift, Fruitfolio/Fruitfolio/ContentView.swift, Fruitfolio/Localizable.xcstrings.
+- FAQ headings use display translation and questions/expanded states use shared noninteractive control translation inside one owned disclosure button. Wrapping, original answers, live expansion binding, chevron artwork and one cue retained. Isolated four-case large-text/Arabic RTL/motion/fallback UI scenarios added but unrun. Fifteen English source keys added preserving all 660 previous catalog entries.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 734, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 14, "catalog_keys": 675, "catalog_existing_entries_preserved": 660, "nonempty_foreign_units": 0, "SwiftSyntax_sound_ownership_findings": 0}.
+- Next action: Coalesce concurrent identical in-flight machine translation requests without a persistent result cache, preserving per-caller cancellation, protected content validation, memory-pressure release and exact source bytes. Add controlled concurrency regressions plus real native evidence; do not retain deleted user material in a global result cache.
+- Commit: containing commit for batch FAQ-question-state-translation-and-owned-disclosure.

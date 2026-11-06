@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "6d7bec5d24a0511043c57c9c35402a5d9c794252",
+  "current_HEAD": "1c930fcfb86ad9081f7f3069201e435122449218",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 393,
-  "current_implementation_batch": "Retained-Ask-model-through-native-T5-release",
+  "current_requirement": 428,
+  "current_implementation_batch": "FAQ-question-state-translation-and-owned-disclosure",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
-    "development_workflow/MADLAD_SHARED_BACKEND_OWNERSHIP_VERIFICATION.md",
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+    "Fruitfolio/Localizable.xcstrings",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/FAQ_CONTROL_TRANSLATION_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -512,7 +516,8 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "native focused Prompt1BT5ExecutionContractTests.testT5ReleaseAndReloadPreserveSeparateLoadedAskModelDuringConcurrentRequests"
+    "actual SwiftSyntax control-sound-ownership --check",
+    "JSON preservation comparison for all existing catalog entries"
   ],
   "last_test_results": {
     "portable_XCTest": 714,
@@ -523,13 +528,13 @@
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 14,
-    "catalog_keys": 660,
-    "catalog_existing_entries_preserved": 656,
+    "catalog_keys": 675,
+    "catalog_existing_entries_preserved": 660,
     "nonempty_foreign_units": 0,
-    "cross_model_focused_XCTest": 1
+    "SwiftSyntax_sound_ownership_findings": 0
   },
-  "next_exact_implementation_action": "Replace FAQ question catalog-only label/state resolution with existing noninteractive control translation state; preserve original answers/copy, single button/sound ownership and expanded bindings. Add isolated large-text/RTL/fallback UI regression route.",
-  "updated_at": "2026-11-06T13:57:40.059538+00:00",
+  "next_exact_implementation_action": "Coalesce concurrent identical in-flight machine translation requests without a persistent result cache, preserving per-caller cancellation, protected content validation, memory-pressure release and exact source bytes. Add controlled concurrency regressions plus real native evidence; do not retain deleted user material in a global result cache.",
+  "updated_at": "2026-11-06T14:03:26.780160+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

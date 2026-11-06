@@ -1,0 +1,7 @@
+# FAQ question and disclosure translation
+
+FAQ section headings now use the existing display translation view. Each question is one button with noninteractive shared control translation state for its label and expanded/collapsed accessibility value. Question labels wrap without shrinking; original answer wording and the existing multi-expansion binding are preserved. One soft-pop request belongs to the question action, and the existing motion-aware style remains. The original chevron asset is retained and opts into RTL mirroring. No translation DisclosureGroup or retry button is nested in the question button.
+
+Fifteen missing English-only keys cover existing FAQ source copy/states, bringing the catalog from 660 to 675 entries while retaining every prior entry. No foreign translations were invented or approved. Founder art and FAQ catalog content are unchanged. The missing canonical FAQ tulip remains an external asset blocker; this change adds no substitute.
+
+A new DEBUG route receives the existing disposable root authority, discards external opens and records actual sound requests. Four Apple scenarios cover accessibility XXXL, English/Arabic RTL, normal/reduced motion, expansion/collapse, answer visibility and exactly one cue request per action. Inference is explicitly paused in these cases for catalog/source-fallback coverage. They do not claim Arabic model output, actual audibility or animation correctness. Apple SDK typechecking/UI execution remains NOT_RUN. Feasible Linux results are recorded separately.

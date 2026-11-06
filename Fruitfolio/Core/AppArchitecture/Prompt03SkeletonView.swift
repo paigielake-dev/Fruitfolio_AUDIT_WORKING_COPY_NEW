@@ -171,6 +171,19 @@ struct Prompt03SkeletonView: View {
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
             Prompt28GameRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioFAQQA") {
+            Prompt29FAQView(onBack: {})
+                .environment(\.openURL, OpenURLAction { _ in .discarded })
+                .overlay(alignment: .bottomLeading) {
+                    FruitfolioInteractionSoundDiagnostics().allowsHitTesting(false)
+                }
+                .onAppear {
+                    let args = ProcessInfo.processInfo.arguments
+                    settings.language = args.contains("-fruitfolioFAQQAArabic") ? .arabic : .english
+                    settings.reduceAnimationOverride = args.contains("-fruitfolioFAQQAReduceMotion")
+                    settings.translationPausedForMemoryPressure = args.contains("-fruitfolioFAQQAPauseInference")
+                    audioManager.debugRecordInteractions(true)
+                }
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioContactQA") {
             Prompt30ContactView(onBack: {})
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
