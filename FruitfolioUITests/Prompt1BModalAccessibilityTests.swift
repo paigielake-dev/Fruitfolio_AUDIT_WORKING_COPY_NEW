@@ -951,4 +951,141 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertFalse(scroll.exists)
         app.terminate()
     }
+    private func launchCycleModal(_ scenario: String, reduced: Bool, rtl: Bool) -> XCUIApplication {
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioCycleModalQA", "-fruitfolioCycleModalQAScenario", scenario,
+                                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if reduced { app.launchArguments += ["-fruitfolioCycleModalReduceMotion"] }
+        if rtl { app.launchArguments += ["-fruitfolioCycleModalRTL"] }
+        app.launch()
+        return app
+    }
+
+    private func closeDirtyDailyLog(_ app: XCUIApplication) {
+        let close = app.buttons["dailyLog.close"]
+        let journal = app.scrollViews["dailyLog.scroll"]
+        for _ in 0..<20 { if close.isHittable { break }; journal.swipeDown() }
+        XCTAssertTrue(close.isHittable)
+        close.tap()
+        XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["dailyLog.close"].exists)
+        XCTAssertFalse(app.textViews["dailyLog.notes"].exists)
+        expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: app.keyboards.firstMatch)
+        waitForExpectations(timeout: 3)
+    }
+
+    private func tapCyclePaperAction(_ label: String, app: XCUIApplication) {
+        let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+        let slots = ["keep editing": "primary", "keep entry": "primary",
+                     "save and close": "secondary", "remove entry": "secondary", "save and leave": "secondary",
+                     "discard changes": "tertiary", "discard unsaved answers": "tertiary"]
+        guard let slot = slots[label] else { XCTFail("Unknown cycle modal action: \(label)"); return }
+        let action = app.buttons["fruitPopup.paper.action." + slot]
+        for _ in 0..<20 { if action.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(action.isHittable)
+        XCTAssertEqual(action.label, label)
+        XCTAssertGreaterThanOrEqual(action.frame.height, 44)
+        XCTAssertGreaterThanOrEqual(action.frame.minX, scroll.frame.minX - 1)
+        XCTAssertLessThanOrEqual(action.frame.maxX, scroll.frame.maxX + 1)
+        XCTAssertGreaterThanOrEqual(action.frame.minY, scroll.frame.minY - 1)
+        XCTAssertLessThanOrEqual(action.frame.maxY, scroll.frame.maxY + 1)
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "cycle-paper-" + label
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        action.tap()
+    }
+
+    func testDailyLogOwnedExitChoicesUsePresentedPaperAtAccessibilitySize() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                for choice in ["keep editing", "discard changes", "save and close"] {
+                    let app = launchCycleModal("daily-notes", reduced: reduced, rtl: rtl)
+                    let editor = app.textViews["dailyLog.notes"]
+                    XCTAssertTrue(editor.waitForExistence(timeout: 5))
+                    let journal = app.scrollViews["dailyLog.scroll"]
+                    for _ in 0..<20 { if editor.isHittable { break }; journal.swipeUp() }
+                    XCTAssertTrue(editor.isHittable)
+                    editor.tap(); editor.typeText(" unsaved fixture edit")
+                    closeDirtyDailyLog(app)
+                    tapCyclePaperAction(choice, app: app)
+                    if choice == "keep editing" {
+                        XCTAssertTrue(editor.waitForExistence(timeout: 5))
+                        XCTAssertTrue((editor.value as? String ?? "").contains("unsaved fixture edit"))
+                        closeDirtyDailyLog(app)
+                        tapCyclePaperAction("discard changes", app: app)
+                    }
+                    let status = app.staticTexts["cycleModalQA.status"]
+                    XCTAssertTrue(status.waitForExistence(timeout: 5))
+                    let note = app.staticTexts["cycleModalQA.savedNote"]
+                    if choice == "save and close" {
+                        let predicate = NSPredicate(format: "label CONTAINS %@", "unsaved fixture edit")
+                        expectation(for: predicate, evaluatedWith: note)
+                        waitForExpectations(timeout: 5)
+                    } else {
+                        let predicate = NSPredicate(format: "label == %@", "original fixture note")
+                        expectation(for: predicate, evaluatedWith: note)
+                        waitForExpectations(timeout: 5)
+                    }
+                    XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "cycleModalQA.error").firstMatch.exists)
+                    app.terminate()
+                }
+            }
+        }
+    }
+
+    func testMedicationRemovalUsesOwnedPaperAndPersistsOnlyAfterSavingDay() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                let app = launchCycleModal("daily-medication", reduced: reduced, rtl: rtl)
+                let remove = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "dailyLog.removeMedication.")).firstMatch
+                XCTAssertTrue(remove.waitForExistence(timeout: 5))
+                let journal = app.scrollViews["dailyLog.scroll"]
+                for _ in 0..<20 { if remove.isHittable { break }; journal.swipeUp() }
+                XCTAssertTrue(remove.isHittable); remove.tap()
+                tapCyclePaperAction("keep entry", app: app)
+                XCTAssertTrue(remove.waitForExistence(timeout: 5)); remove.tap()
+                tapCyclePaperAction("remove entry", app: app)
+                closeDirtyDailyLog(app)
+                tapCyclePaperAction("save and close", app: app)
+                let count = app.staticTexts["cycleModalQA.savedMedicationCount"]
+                expectation(for: NSPredicate(format: "label == %@", "0"), evaluatedWith: count)
+                waitForExpectations(timeout: 5)
+                XCTAssertEqual(app.staticTexts["cycleModalQA.savedNote"].label, "original fixture note")
+                app.terminate()
+            }
+        }
+    }
+
+    func testOnboardingFailedAutosaveOffersKeepDiscardOrSaveWithoutLosingSavedAnswers() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                for choice in ["keep editing", "discard unsaved answers", "save and leave"] {
+                    let scenario = choice == "save and leave" ? "onboarding-retry" : "onboarding-failure"
+                    let app = launchCycleModal(scenario, reduced: reduced, rtl: rtl)
+                    let failure = app.descendants(matching: .any).matching(identifier: "cycleOnboarding.saveFailure").firstMatch
+                    XCTAssertTrue(failure.waitForExistence(timeout: 5))
+                    let back = app.buttons["cycleOnboarding.back"]
+                    XCTAssertTrue(back.isHittable); back.tap()
+                    XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+                    XCTAssertFalse(back.exists)
+                    tapCyclePaperAction(choice, app: app)
+                    if choice == "keep editing" {
+                        XCTAssertTrue(back.waitForExistence(timeout: 5))
+                        XCTAssertTrue(failure.exists)
+                        back.tap()
+                        tapCyclePaperAction("discard unsaved answers", app: app)
+                    }
+                    let count = app.staticTexts["cycleModalQA.savedContextCount"]
+                    let expected = choice == "save and leave" ? "1" : "0"
+                    expectation(for: NSPredicate(format: "label == %@", expected), evaluatedWith: count)
+                    waitForExpectations(timeout: 5)
+                    app.terminate()
+                }
+            }
+        }
+    }
+
 }

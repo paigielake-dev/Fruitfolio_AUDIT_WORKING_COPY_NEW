@@ -59,6 +59,7 @@ SOURCES = [
     'Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingPersistence.swift',
     'Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingStore.swift',
     'Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingViewModel.swift',
+    'Fruitfolio/Cycle Tracker/Prompt1BCycleModalRegressionHarness.swift',
     'Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift',
     'Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift',
     'Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift',

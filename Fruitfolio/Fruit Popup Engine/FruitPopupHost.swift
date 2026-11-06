@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 private struct FruitfolioPopupHostPresentKey: EnvironmentKey {
     static let defaultValue = false
@@ -30,6 +33,14 @@ struct FruitPopupHost<Content: View>: View {
     var body: some View {
         if hasAncestorHost { content() }
         else { hostingBody }
+    }
+
+    @MainActor
+    private func dismissBackgroundKeyboard() {
+        #if canImport(UIKit)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+            to: nil, from: nil, for: nil)
+        #endif
     }
 
     private var hostingBody: some View {
@@ -76,6 +87,9 @@ struct FruitPopupHost<Content: View>: View {
          appears. If the host is rebuilt while a popup is still stored in the
          coordinator, that can replay popupOpen even though no new popup opened.
         */
+        .onAppear {
+            if popupCoordinator.currentPopup != nil { dismissBackgroundKeyboard() }
+        }
         .onChange(
             of: popupCoordinator.currentPopup?.id
         ) { oldID, newID in
@@ -88,6 +102,9 @@ struct FruitPopupHost<Content: View>: View {
                 return
             }
 
+            // Hidden background text inputs must not retain keyboard input while
+            // modal actions own accessibility focus and hit testing.
+            dismissBackgroundKeyboard()
             popupCoordinator.markMeasuring()
             popupCoordinator.markPresenting()
             popupCoordinator.markPresented()

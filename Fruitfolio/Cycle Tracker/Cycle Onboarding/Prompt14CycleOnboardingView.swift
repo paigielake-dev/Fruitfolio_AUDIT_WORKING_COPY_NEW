@@ -163,6 +163,7 @@ struct Prompt14CycleOnboardingView: View {
                             color: Prompt14Palette.burgundy, serious: true)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 12)
+                            .accessibilityIdentifier("cycleOnboarding.saveFailure")
                         if model.saveFailed && model.hasUnsavedChanges {
                             FruitfolioControlPillButton(label: "try saving again") {
                                 Task { _ = await model.retrySaving() }
@@ -187,6 +188,7 @@ struct Prompt14CycleOnboardingView: View {
                 if !model.goBack() { requestExit() }
             }
             .accessibilityFocused($backFocused)
+            .accessibilityIdentifier("cycleOnboarding.back")
             Spacer()
         }
         .padding(.horizontal, 16)

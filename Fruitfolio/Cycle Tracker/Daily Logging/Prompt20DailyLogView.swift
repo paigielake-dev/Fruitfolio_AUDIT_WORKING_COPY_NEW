@@ -149,6 +149,7 @@ public struct Prompt20DailyLogView: View {
             .frame(maxWidth: .infinity)
         }
         .scrollDismissesKeyboard(.interactively)
+        .accessibilityIdentifier("dailyLog.scroll")
     }
 
     private var header: some View {
@@ -173,6 +174,7 @@ public struct Prompt20DailyLogView: View {
 
             CloseControl(action: requestClose)
                 .accessibilityFocused($closeFocused)
+                .accessibilityIdentifier("dailyLog.close")
                 .disabled(model.saveState == .saving)
         }
     }
@@ -603,7 +605,8 @@ public struct Prompt20DailyLogView: View {
             journalTextEditor(
                 text: binding(\.generalNote),
                 placeholder: "write anything you want to remember about today…",
-                minHeight: 150
+                minHeight: 150,
+                identifier: "dailyLog.notes"
             )
         }
     }
@@ -818,7 +821,8 @@ public struct Prompt20DailyLogView: View {
     private func journalTextEditor(
         text: Binding<String>,
         placeholder: String,
-        minHeight: CGFloat
+        minHeight: CGFloat,
+        identifier: String? = nil
     ) -> some View {
         ZStack(alignment: .topLeading) {
             if text.wrappedValue.isEmpty {
@@ -831,6 +835,7 @@ public struct Prompt20DailyLogView: View {
             }
 
             TextEditor(text: text)
+                .accessibilityIdentifier(identifier ?? placeholder)
                 .font(Prompt20Type.input)
                 .foregroundStyle(Prompt20Palette.burgundy)
                 .scrollContentBackground(.hidden)
@@ -911,6 +916,7 @@ private struct Prompt20MedicationRow: View {
                 FruitfolioControlPillButton(label: "remove", action: onRemove)
                     .controlSize(.small)
                     .accessibilityFocused(removeFocus, equals: medication.id)
+                    .accessibilityIdentifier("dailyLog.removeMedication." + medication.id.uuidString)
                     .accessibilityLabel("remove \(medication.name.isEmpty ? "medication entry" : medication.name)")
             }
 

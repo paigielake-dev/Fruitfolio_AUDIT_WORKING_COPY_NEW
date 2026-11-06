@@ -136,7 +136,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioContextStorageQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalQA") {
+            Prompt1BCycleModalRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioContextStorageQA") {
             FruitfolioContextStorageRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioMeasurementsQA") {
             FruitfolioMeasurementRegressionHarness()
