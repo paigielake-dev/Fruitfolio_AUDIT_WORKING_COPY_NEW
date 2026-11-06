@@ -13,11 +13,13 @@ private final class Prompt28GameRegressionFixture: ObservableObject {
     init() {
         defaults = UserDefaults(suiteName: suite)!
         let store = Prompt28FruitBasketStore(defaults: defaults)
-        store.completeTour()
+        let args = ProcessInfo.processInfo.arguments
+        let scenarioIndex = args.firstIndex(of: "-fruitfolioGameQAScenario")
+        let isTour = scenarioIndex.map { $0 + 1 < args.count && args[$0 + 1] == "tour" } ?? false
+        if !isTour { store.completeTour() }
         store.controlMode = .classification
         store.persistPreferences()
         model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
-        let args = ProcessInfo.processInfo.arguments
         if let index = args.firstIndex(of: "-fruitfolioGameQAScenario"), index + 1 < args.count,
            args[index + 1] == "leaderboard-username-future" {
             defaults.set(Data(#"{"schemaVersion":3,"username":"future_berry","confirmedNonIdentifying":true,"future":null}"#.utf8),
@@ -75,6 +77,7 @@ struct Prompt28GameRegressionHarness: View {
     }
 
     private func configure() {
+        if scenario == "tour" { return } // Exercise the existing first-run overlay.
         if scenario == "setup" {
             model.rawTopic = "QA control layout fixture"
             model.openSetup()
@@ -139,6 +142,10 @@ private struct Prompt28GameDiagnosticReadback: View {
         VStack(alignment: .leading) {
             Text("back requests: \(backRequests)")
                 .accessibilityIdentifier("gameQA.backRequests")
+            Text("tour completed: \(store.tourState.hasCompletedTour)")
+                .accessibilityIdentifier("gameQA.tourCompleted")
+            Text("game screen: \(String(describing: model.screen))")
+                .accessibilityIdentifier("gameQA.screen")
             if let result = model.roundResult {
                 Text("raw fruit count: \(result.caughtFruit.count) / \(result.targetFruit)")
                     .accessibilityIdentifier("gameQA.rawResultFruit")

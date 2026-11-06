@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "6d911f0c596f8ee094c7b15010c188f310bc0ac0",
+  "current_HEAD": "1446227f58a863afdd82fc1cfa825d0eeee86f2d",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 393,
-  "current_implementation_batch": "Canonical-original-source-and-memory-retry-controls",
+  "current_checklist_part": 9,
+  "current_requirement": 26,
+  "current_implementation_batch": "Fruit-Basket-tutorial-copy-localization-and-ten-page-catalog",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,15 +493,14 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
-    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+    "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
     "Fruitfolio/Localizable.xcstrings",
-    "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/FRUIT_BASKET_TUTORIAL_LOCALIZATION_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/TRANSLATION_ORIGINAL_CONTROL_VERIFICATION.md"
+    "development_workflow/RUN_LOGS/Tutorial-source-copy-preservation.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -519,6 +518,7 @@
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "actual SwiftSyntax control-sound-ownership --check",
+    "Actual prior UI title/body arrays compared with new ordered tutorial catalog",
     "JSON preservation comparison of all prior catalog entries"
   ],
   "last_test_results": {
@@ -530,15 +530,15 @@
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 16,
-    "catalog_keys": 710,
+    "catalog_keys": 731,
     "nonempty_foreign_units": 0,
     "Foundation_shared_ownership_regressions": 11,
     "SwiftSyntax_sound_ownership_findings": 0,
-    "catalog_existing_entries_preserved": 708,
-    "genuine_temporary_catalog_focused_XCTest": 1
+    "catalog_existing_entries_preserved": 710,
+    "tutorial_source_pairs_preserved": 10
   },
-  "next_exact_implementation_action": "Localize existing Fruit Basket tutorial headings/body using the shared display pipeline, keep step counters and exact game-state demonstrations separate from inference, preserve tutorial completion/progress and owned overlay accessibility. Add isolated tutorial progression regression cases.",
-  "updated_at": "2026-11-06T15:32:39.679945+00:00",
+  "next_exact_implementation_action": "Give standalone Fruit Basket tutorial modal scope an escape-to-existing-skip action, heading focus and once-per-logical-open/close cues; preserve current step across reappearance. Exercise actual cue/background/escape handler through private QA without claiming OS VoiceOver gesture verification.",
+  "updated_at": "2026-11-06T15:50:36.001892+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

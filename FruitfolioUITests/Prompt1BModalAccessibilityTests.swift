@@ -191,6 +191,52 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameTutorialKeepsTenStepsAndRealCompletionAcrossLocaleFallback() throws {
+        for skip in [false, true] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "tour",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let next = app.buttons["fruitBasket.tour.next"]
+            XCTAssertTrue(next.waitForExistence(timeout: 5))
+            XCTAssertEqual(app.staticTexts["gameQA.tourCompleted"].label, "tour completed: false")
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            let formatter = NumberFormatter()
+            formatter.locale = Locale(identifier: language)
+            formatter.numberStyle = .decimal
+            if skip {
+                let skipButton = app.buttons["fruitBasket.tour.skip"]
+                for _ in 0..<24 { if skipButton.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(skipButton.isHittable)
+                XCTAssertGreaterThanOrEqual(skipButton.frame.height, 44)
+                skipButton.tap()
+                XCTAssertEqual(app.staticTexts["gameQA.screen"].label, "game screen: howItWorks")
+            } else {
+                for step in 1...10 {
+                    let counter = app.descendants(matching: .any).matching(identifier: "fruitBasket.tour.step").firstMatch
+                    let number = try XCTUnwrap(formatter.string(from: NSNumber(value: step)))
+                    let total = try XCTUnwrap(formatter.string(from: 10))
+                    XCTAssertEqual(counter.value as? String, number + " / " + total)
+                    for _ in 0..<24 { if next.isHittable { break }; scroll.swipeUp() }
+                    XCTAssertTrue(next.isHittable)
+                    XCTAssertGreaterThanOrEqual(next.frame.height, 44)
+                    next.tap()
+                }
+                XCTAssertEqual(app.staticTexts["gameQA.screen"].label, "game screen: learningSetup")
+            }
+            XCTAssertFalse(next.exists)
+            XCTAssertEqual(app.staticTexts["gameQA.tourCompleted"].label, "tour completed: true")
+            captureGame(app, name: "game-tour-skip-\(skip)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testOriginalTranslationControlUsesCanonicalSelectionAndSingleCueWithRealCatalog() {
         for muted in [false, true] {
         for reduced in [false, true] {

@@ -11,3 +11,36 @@ nonisolated enum Prompt28RulesCopy {
     static let totals = "on-device totals count good fruit and standalone stars when caught, including failed or unfinished attempts. successful baskets count only completed baskets. older saved fruit totals may omit failed or unfinished attempts; no missing history is guessed. worldwide rankings are unavailable until secure registration is configured."
     static let accessibleMode = "classification mode uses catch and pass buttons with the same scoring and protection rules, without reflex dragging. question difficulty changes the learning depth; game level changes catching. resetting game level preserves lifetime progress."
 }
+
+/// One source of truth for the existing ten tutorial pages. Copy and demo
+/// selection remain unchanged; step counts derive from this ordered catalog.
+nonisolated struct Prompt28TourPage: Equatable, Sendable {
+    let title: String
+    let body: String
+    var showsFruitDemo = false
+}
+
+nonisolated enum Prompt28TourCatalog {
+    static let pages: [Prompt28TourPage] = [
+        .init(title: "welcome to the Fruit Basket!",
+              body: "you pick something you wanna learn about, answer a little question, and then fill your basket with the fruits that belong. ♡"),
+        .init(title: "pick what you wanna learn",
+              body: "type any topic the approved library supports, then choose easy, medium, or hard. that only changes how deep the questions go."),
+        .init(title: "your game level",
+              body: "game level only changes the catching. you can start a topic’s game level over whenever you want without changing the science."),
+        .init(title: "answer the question",
+              body: "pick the answer you think is right. a wrong answer shows the correct answer + sourced explanation, with no point loss."),
+        .init(title: "the catch rule",
+              body: "catch the fruit that belongs in your basket. standalone stars are rare bonus drops: each one banks one star pass.", showsFruitDemo: true),
+        .init(title: "practice a good catch",
+              body: "a good catch adds +1 to your basket and +10 points. ten good fruits fills it."),
+        .init(title: "missing is okay",
+              body: "miss a good fruit? nothing gets taken away. another one will come along."),
+        .init(title: "let bad fruit pass",
+              body: "bad fruit can fall away safely. if you catch one with a star pass banked, exactly one pass is used and the round keeps going. with zero passes, the round ends."),
+        .init(title: "fill to 10",
+              body: "the tenth good fruit lands first, the basket reaches 10 / 10, then the result shows what you actually caught. the sourced library explanation stays separate from the catch rule."),
+        .init(title: "one last reminder",
+              body: "catch 10 good fruits. standalone stars bank protection for bad-fruit catches. question difficulty and game level stay separate. ♡"),
+    ]
+}

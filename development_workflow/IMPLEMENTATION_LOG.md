@@ -2092,3 +2092,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 730, "native_CPU_XCTest": 752, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 710, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 708, "genuine_temporary_catalog_focused_XCTest": 1}.
 - Next action: Localize existing Fruit Basket tutorial headings/body using the shared display pipeline, keep step counters and exact game-state demonstrations separate from inference, preserve tutorial completion/progress and owned overlay accessibility. Add isolated tutorial progression regression cases.
 - Commit: containing commit for batch Canonical-original-source-and-memory-retry-controls.
+
+## Fruit-Basket-tutorial-copy-localization-and-ten-page-catalog
+
+- Parent checkpoint: 1446227f58a863afdd82fc1cfa825d0eeee86f2d.
+- Source-order requirements: [9, 11, 18, 24, 47, 48, 62, 63, 393, 394, 410, 411, 422, 431, 434, 443, 446, 466, 468, 471, 472, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Preserved all ten actual title/body pairs and page-five demo in one ordered Foundation catalog, with actual source-copy comparison receipt. Title/body use shared translation; locale-formatted counter never enters inference. Canonical skip preserves existing skip-to-rules/completion behavior. Eight Apple full-progression/skip/Arabic fallback/motion UI cases added but unrun. Twenty-one English-only keys preserve all 710 prior catalog entries.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 730, "native_CPU_XCTest": 752, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 731, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 710, "tutorial_source_pairs_preserved": 10}.
+- Next action: Give standalone Fruit Basket tutorial modal scope an escape-to-existing-skip action, heading focus and once-per-logical-open/close cues; preserve current step across reappearance. Exercise actual cue/background/escape handler through private QA without claiming OS VoiceOver gesture verification.
+- Commit: containing commit for batch Fruit-Basket-tutorial-copy-localization-and-ten-page-catalog.

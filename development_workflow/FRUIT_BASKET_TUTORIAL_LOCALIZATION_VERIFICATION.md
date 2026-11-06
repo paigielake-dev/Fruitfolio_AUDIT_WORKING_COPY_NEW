@@ -1,0 +1,9 @@
+# Existing tutorial copy and localized framing
+
+The existing ten title/body pairs now live in one ordered Foundation catalog, with the same fruit demonstration on page five. Actual old arrays were extracted and compared with every new pair; copy order, wording, emoji and demo position are unchanged. The preservation receipt is in RUN_LOGS/Tutorial-source-copy-preservation.json. The next/final boundary and displayed total derive from the same catalog count rather than parallel hardcoded arrays.
+
+Titles and bodies use the shared display translation pipeline. The step label uses shared control translation while the actual index/total is locale-formatted separately and never enters inference. Existing popup composition, blur, artwork, completion writes and skip-to-rules behavior remain. The skip action now uses the existing compact canonical pill for wrapping, cue ownership and motion style. Tutorial completion semantics were not changed or represented as resumable per-page persistence.
+
+The private game regression route can now exercise the existing first-run tutorial instead of marking it complete at fixture creation. Actual observed store/model readback exposes completion and route. Eight added Apple launches combine completion/skip, English/Arabic fallback and Reduce Motion with maximum text. They traverse all ten steps or skip, check counter values and acknowledged completion/route. These UI, SDK, focus/VoiceOver, contrast, physical RTL/animation/audio checks remain NOT_RUN.
+
+Twenty-one English-only keys bring the catalog from 710 to 731, preserving every prior entry. No foreign translation is invented or approved. Inference pause is confined to the DEBUG fallback launches. Feasible Linux results are recorded in the batch log; official model/clinical/device acceptance remains blocked.

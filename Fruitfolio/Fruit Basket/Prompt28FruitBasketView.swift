@@ -2123,18 +2123,16 @@ struct Prompt28FruitBasketView: View {
                     )
                     .accessibilityLabel("Strawberry")
 
-                    Text("\(tourStep + 1) of 10")
-                        .prompt28Text(.metadata)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                    Prompt28StatisticRow(label: "tutorial step",
+                        value: Prompt28GameStatisticFormatting.fraction(tourStep + 1,
+                            target: Prompt28TourCatalog.pages.count, language: settings.language),
+                        font: Prompt28TextRole.metadata.font)
+                        .accessibilityIdentifier("fruitBasket.tour.step")
 
-                    Text(tourTitle)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 16,
-                                relativeTo: .headline
-                            )
-                        )
+                    FruitfolioTranslatedText(source: tourPage.title,
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityIdentifier("fruitBasket.tour.title")
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                         .fixedSize(
@@ -2142,20 +2140,10 @@ struct Prompt28FruitBasketView: View {
                             vertical: true
                         )
 
-                    Text(tourBody)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13,
-                                relativeTo: .body
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .primaryBurgundy
-                                .opacity(0.84)
-                        )
+                    FruitfolioTranslatedText(source: tourPage.body,
+                        font: .custom("Chalkboard SE", size: 13, relativeTo: .body),
+                        color: DesignTokens.ColorToken.primaryBurgundy.opacity(0.84))
+                        .accessibilityIdentifier("fruitBasket.tour.body")
                         .multilineTextAlignment(.center)
                         .lineSpacing(2)
                         .fixedSize(
@@ -2163,7 +2151,7 @@ struct Prompt28FruitBasketView: View {
                             vertical: true
                         )
 
-                    if tourStep == 4 {
+                    if tourPage.showsFruitDemo {
                         HStack(spacing: 16) {
                             Prompt28TourFruit(
                                 fruit: .apple,
@@ -2179,12 +2167,12 @@ struct Prompt28FruitBasketView: View {
 
                     Prompt28WatercolorButton(
                         title:
-                            tourStep == 9
+                            tourStep == Prompt28TourCatalog.pages.count - 1
                             ? "let’s play!"
                             : "next ♡",
                         accent: .paleYellow
                     ) {
-                        if tourStep >= 9 {
+                        if tourStep >= Prompt28TourCatalog.pages.count - 1 {
                             store.completeTour()
                             showTour = false
                             viewModel.openSetup()
@@ -2194,51 +2182,23 @@ struct Prompt28FruitBasketView: View {
                         }
                     }
                     .frame(maxWidth: 242)
+                    .accessibilityIdentifier("fruitBasket.tour.next")
 
                     if tourStep == 0 {
-                        Button("skip tour") {
+                        FruitfolioControlPillButton(label: "skip tour") {
                             viewModel.screen = .howItWorks
                             store.skipTourAfterRules()
                             showTour = false
                         }
-                        .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
-                        .frame(minHeight: 44)
+                        .controlSize(.small)
+                        .accessibilityIdentifier("fruitBasket.tour.skip")
                     }
                 }
             }
         }
     }
 
-    private var tourTitle: String {
-        [
-            "welcome to the Fruit Basket!",
-            "pick what you wanna learn",
-            "your game level",
-            "answer the question",
-            "the catch rule",
-            "practice a good catch",
-            "missing is okay",
-            "let bad fruit pass",
-            "fill to 10",
-            "one last reminder"
-        ][tourStep]
-    }
-
-    private var tourBody: String {
-        [
-            "you pick something you wanna learn about, answer a little question, and then fill your basket with the fruits that belong. ♡",
-            "type any topic the approved library supports, then choose easy, medium, or hard. that only changes how deep the questions go.",
-            "game level only changes the catching. you can start a topic’s game level over whenever you want without changing the science.",
-            "pick the answer you think is right. a wrong answer shows the correct answer + sourced explanation, with no point loss.",
-            "catch the fruit that belongs in your basket. standalone stars are rare bonus drops: each one banks one star pass.",
-            "a good catch adds +1 to your basket and +10 points. ten good fruits fills it.",
-            "miss a good fruit? nothing gets taken away. another one will come along.",
-            "bad fruit can fall away safely. if you catch one with a star pass banked, exactly one pass is used and the round keeps going. with zero passes, the round ends.",
-            "the tenth good fruit lands first, the basket reaches 10 / 10, then the result shows what you actually caught. the sourced library explanation stays separate from the catch rule.",
-            "catch 10 good fruits. standalone stars bank protection for bad-fruit catches. question difficulty and game level stay separate. ♡"
-        ][tourStep]
-    }
+    private var tourPage: Prompt28TourPage { Prompt28TourCatalog.pages[tourStep] }
 }
 
 private struct Prompt28MovingFruit: View {
@@ -2438,6 +2398,7 @@ private struct Prompt28LeaderboardCategoryButton: View {
 private struct Prompt28StatisticRow: View {
     let label: String
     let value: String
+    var font: Font = Prompt28TextRole.body.font
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var translation = FruitfolioControlTranslationState()
     private var key: FruitfolioControlTranslationState.Key {
@@ -2452,7 +2413,7 @@ private struct Prompt28StatisticRow: View {
                 .fixedSize(horizontal: false, vertical: true)
         } label: {
             VStack(alignment: .leading, spacing: 4) {
-                FruitfolioSemanticText(markdown: display.text, baseFont: Prompt28TextRole.body.font, serious: true)
+                FruitfolioSemanticText(markdown: display.text, baseFont: font, serious: true)
                 if let status = display.status.captionKey {
                     Text(LocalizedStringKey(status)).font(.caption)
                 }
@@ -2460,6 +2421,7 @@ private struct Prompt28StatisticRow: View {
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
         }
+        .font(font)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
         .accessibilityValue(Text(value))
