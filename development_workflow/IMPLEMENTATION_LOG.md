@@ -2653,3 +2653,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys_unchanged": 924, "Apple_calendar_layout": "NOT_RUN", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue Log Today/logging canonical interactions and draft/action ownership, preserving existing records and private values; remaining calendar Apple frame/VoiceOver/performance acceptance explicitly pending.
 - Commit: containing commit for batch Calendar-fixed-controls-and-expandable-status-copy.
+
+## Daily-log-active-owner-and-cancelled-save-task-entry
+
+- Parent checkpoint: b9b9a7c6de6b7c7de4da82c542a381a74c49f04a.
+- Source-order requirements: [297, 298, 300, 303, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift.
+- Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_daily_exit_launches_extended_NOT_RUN": 12, "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue actual journal fixed prompts/native editor labels via existing translation controls without sending private patient note values through translation or changing draft bindings.
+- Commit: containing commit for batch Daily-log-active-owner-and-cancelled-save-task-entry.

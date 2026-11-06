@@ -2637,6 +2637,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                     for _ in 0..<20 { if editor.isHittable { break }; journal.swipeUp() }
                     XCTAssertTrue(editor.isHittable)
                     editor.tap(); editor.typeText(" unsaved fixture edit")
+                    XCUIDevice.shared.press(.home)
+                    app.activate()
+                    XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+                    XCTAssertTrue(editor.waitForExistence(timeout: 3))
+                    XCTAssertTrue((editor.value as? String ?? "").contains("unsaved fixture edit"))
                     closeDirtyDailyLog(app)
                     tapCyclePaperAction(choice, app: app)
                     if choice == "keep editing" {

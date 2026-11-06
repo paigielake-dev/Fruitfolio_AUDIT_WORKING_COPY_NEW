@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 public struct Prompt20DailyLogView: View {
     @EnvironmentObject private var audioManager: AudioManager
@@ -6,6 +7,11 @@ public struct Prompt20DailyLogView: View {
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var appLocale
+    @Environment(\.scenePhase) private var scenePhase
+    private var ownerIsActive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
+    private var canInteract: Bool { ownerIsActive && popupCoordinator.currentPopup == nil }
 
     @StateObject private var model: Prompt20DailyLogViewModel
     @State private var showCervicalInfo = false
@@ -72,7 +78,7 @@ public struct Prompt20DailyLogView: View {
             if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
         }
         .task { await model.load() }
-        .allowsHitTesting(popupCoordinator.currentPopup == nil)
+        .allowsHitTesting(canInteract)
         .accessibilityHidden(popupCoordinator.currentPopup != nil)
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
             popupOwner?.observeDismissal()
@@ -83,6 +89,7 @@ public struct Prompt20DailyLogView: View {
             switch action {
             case .saveAndClose:
                 repositoryTask = Task { @MainActor in
+                    guard !Task.isCancelled, viewIsVisible else { return }
                     let saved = await model.save()
                     guard saved, !Task.isCancelled, viewIsVisible else { return }
                     onSaved(model.existingLog)
@@ -695,7 +702,7 @@ public struct Prompt20DailyLogView: View {
     }
 
     private func requestClose() {
-        guard model.saveState != .saving, viewIsVisible else { return }
+        guard model.saveState != .saving, canInteract else { return }
         guard model.hasUnsavedChanges else { dismiss(); return }
         guard let owner = popupOwner else { return }
         if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
@@ -706,13 +713,13 @@ public struct Prompt20DailyLogView: View {
             FruitPopupRequest(id: id, character: .peach,
                 message: "save, discard or keep editing this day’s changes? saved observations remain unchanged unless you save.",
                 primaryAction: .init(label: "keep editing") {
-                    guard viewIsVisible else { return }
+                    guard ownerIsActive else { return }
                     _ = owner.consumeAction(for: id)
                 }, secondaryAction: .init(label: "save and close") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     pendingConfirmationAction = .saveAndClose
                 }, tertiaryAction: .init(label: "discard changes") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     pendingConfirmationAction = .discardAndClose
                 }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
                 source: "daily-log-draft", deduplicationKey: "daily-log-draft-" + popupInstanceID.uuidString,
@@ -721,7 +728,7 @@ public struct Prompt20DailyLogView: View {
     }
 
     private func requestMedicationRemoval(_ entry: Prompt20MedicationEntry) {
-        guard viewIsVisible, let owner = popupOwner, model.saveState != .saving else { return }
+        guard canInteract, let owner = popupOwner, model.saveState != .saving else { return }
         if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
         if !entry.hasAnyContent {
             _ = model.removeMedication(ifUnchanged: entry)
@@ -735,10 +742,10 @@ public struct Prompt20DailyLogView: View {
             FruitPopupRequest(id: id, character: .peach,
                 message: "remove this medication or supplement entry from the current draft? saved observations change only when you save this day.",
                 primaryAction: .init(label: "keep entry") {
-                    guard viewIsVisible else { return }
+                    guard ownerIsActive else { return }
                     _ = owner.consumeAction(for: id)
                 }, secondaryAction: .init(label: "remove entry") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     pendingConfirmationAction = .removeMedication(entry)
                 }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
                 source: "daily-log-medication", deduplicationKey: "daily-log-medication-" + popupInstanceID.uuidString,
@@ -866,11 +873,12 @@ public struct Prompt20DailyLogView: View {
     }
 
     private func saveLog() {
-        guard model.canSave else { return }
+        guard canInteract, model.canSave else { return }
         repositoryTask?.cancel()
         repositoryTask = Task { @MainActor in
+            guard !Task.isCancelled, viewIsVisible else { return }
             let success = await model.save()
-            guard success, !Task.isCancelled else { return }
+            guard success, !Task.isCancelled, viewIsVisible else { return }
             onSaved(model.existingLog)
             if !model.hasUnsavedChanges { showSaveFeedback() }
         }
