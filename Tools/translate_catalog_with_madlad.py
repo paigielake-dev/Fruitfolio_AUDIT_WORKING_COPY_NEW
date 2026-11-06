@@ -16,6 +16,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
     'Core/AppArchitecture/FruitfolioLanguage.swift',
+    'Core/AppArchitecture/FruitfolioLocalization.swift',
     'Core/Translation/FruitfolioMADLADModels.swift',
     'Core/Translation/FruitfolioModelChecksum.swift',
     'Core/Translation/FruitfolioMADLADRuntime.swift',

@@ -15,6 +15,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
     @State private var rendered: String?
     @State private var resolvedKey: Key?
     @State private var failure: String?
+    @State private var translationOrigin: FruitfolioTranslationOrigin?
 
     private struct Key: Hashable {
         let source: String
@@ -36,7 +37,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                     resolvedKey == key && rendered != nil ? settings.language.rawValue : sourceLanguage)
             if usesTranslation {
                 if resolvedKey == key, rendered != nil {
-                    Text("local machine translation").font(.caption)
+                    if translationOrigin == .machine { Text("local machine translation").font(.caption) }
                     DisclosureGroup("original text") {
                         FruitfolioSemanticText(markdown: source).textSelection(.enabled)
                     }
@@ -59,26 +60,23 @@ struct FruitfolioTranslatedContent<Content: View>: View {
         }
         .task(id: TaskKey(sourceKey: key, paused: settings.translationPausedForMemoryPressure)) {
             let request = key
-            if usesTranslation && settings.translationPausedForMemoryPressure {
-                // Existing accepted display text is small and remains valid;
-                // release native allocations without discarding that reading.
-                if resolvedKey != request || rendered == nil {
-                    rendered = nil
-                    failure = "local translation is paused to reduce memory use. the original text is preserved."
-                    resolvedKey = request
-                }
-                return
-            }
+            // Accepted display text remains valid when native allocations are
+            // released. A new unresolved key can still use its small catalog
+            // entry while inference is paused; that lookup runs on the actor.
+            if resolvedKey == request, rendered != nil { return }
             rendered = nil
             failure = nil
             resolvedKey = nil
+            translationOrigin = nil
             guard usesTranslation else { return }
             do {
-                let result = try await FruitfolioTranslationService.shared.translate(
+                let result = try await FruitfolioTranslationService.shared.translateForDisplay(
                     request.source, language: request.language, protectedLiterals: request.protectedLiterals,
-                    sourceLanguage: request.sourceLanguage)
+                    sourceLanguage: request.sourceLanguage,
+                    inferenceAllowed: !settings.translationPausedForMemoryPressure)
                 try Task.checkCancellation()
-                rendered = result
+                rendered = result.text
+                translationOrigin = result.origin
                 resolvedKey = request
             } catch {
                 guard !Task.isCancelled else { return }

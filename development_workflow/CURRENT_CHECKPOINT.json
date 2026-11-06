@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "8f4c4ac0ef61942a150a8d54bda0fab4119e4e76",
+  "current_HEAD": "71b2b173e85cc17eb28370d4cdcf5339e9f78d7c",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 315,
-  "current_implementation_batch": "Owned-saved-note-user-page-confirmations-and-field-specific-conflict-guards",
+  "current_checklist_part": 9,
+  "current_requirement": 396,
+  "current_implementation_batch": "Catalog-first-translation-origin-memory-gating-and-undated-reference-protection",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,19 +493,20 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-    "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
-    "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
-    "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/check_shared_confirmation_coverage.swift",
+    "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+    "Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift",
+    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+    "FruitfolioTests/Prompt1BCatalogTranslationTests.swift",
+    "Tools/MADLADCatalogRunner.swift",
     "Tools/run_portable_swift_tests.py",
+    "Tools/translate_catalog_with_madlad.py",
+    "development_workflow/BLOCKERS.md",
+    "development_workflow/CATALOG_FIRST_TRANSLATION_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SAVED_DRAFT_OWNED_MODAL_VERIFICATION.md",
-    "development_workflow/tests/test_shared_confirmation_coverage.py"
+    "development_workflow/RUN_LOGS/Catalog-first-actual-runner-resource-check.json",
+    "development_workflow/RUN_LOGS/Founder-source-host-policy-check.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -518,27 +519,32 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite",
-    "Full actual native-linked Swift5 suite",
+    "Full final portable Swift6 suite",
+    "Full final actual native-linked Swift5 suite",
     "39 workflow tests including9 actual SwiftSyntax cases",
-    "Actual AST scan of all app Swift sources for native confirmation calls",
+    "Rebuild exact production MADLAD CLI with actual native archives",
+    "Actual rebuilt CLI nonempty missing-resource request",
     "Swift compiler syntax parse",
+    "Current environment network-policy read, no blocked HTTP attempt",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "549 XCTest +21 Swift Testing passed",
-    "nativeSwift5": "554 XCTest +21 Swift Testing passed against actual CPU llama",
-    "workflow": "39 passed including9 actual SwiftSyntax cases",
-    "modal_source": "Actual SwiftSyntax bounded app scan has0 alert/confirmationDialog calls; parse failures fail closed",
-    "syntax": "277 Swift files parsed,0errors; no Apple typecheck",
-    "Apple": "NOT_RUN actual saved-note/page overlay UI, focus/VO/DT, screenshots, sound/device acceptance"
+    "Swift6": "557 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "562 XCTest +21 Swift Testing passed against actual CPU llama",
+    "workflow": "39 passed including9 real SwiftSyntax cases",
+    "CLI": "Actual current-source Swift5/native runner rebuilt; nonempty offline request rejects absent resources with no translation",
+    "sourceAccess": "Both LifeBridge hosts and huggingface.co excluded by enforced spec3; exact unblock action recorded, no bypass/approval invented",
+    "catalog": "652 existing keys;0 nonempty foreign values; fixtures do not prove shipped/clinically reviewed localization",
+    "syntax": "278 Swift files parsed,0errors; no Apple typecheck",
+    "Apple": "NOT_RUN compiled app catalogs, origin labels/UI/screenshots/VO/DT, actual official T5/device/clinical acceptance"
   },
-  "next_exact_implementation_action": "Continue the next independent incomplete source-of-truth requirement: inspect the approved LifeBridge source/snapshot contract and recover authentic content from the two exact founder-specified HTTPS sources if the current network policy allows it. Use available connected read tools or the configured proxy, retain provenance/citations, and never invent approval/application/clinical claims. If access/review is blocked, record the exact blocker and immediately continue static UI/localization coverage and other original-order source work; do not retry inaccessible resources repeatedly.",
-  "updated_at": "2026-11-06T04:51:21.041928+00:00",
+  "next_exact_implementation_action": "Connect the actual character dialogue renderers (FruitPopupView and First-Launch Tour shared bubble content) to the selected-language/citation-safe display translation pipeline instead of raw English dynamic text. Preserve intentional invitation layout, focus/motion and all actions; check canonical feedback ownership before changing raw action buttons. Then correct measurement editor result-format provenance/cycle-day Unicode parsing: it currently records Locale.current rather than the app-selected locale and uses raw Int(day), while existing numeric validation already normalizes Unicode digits. Preserve unknown legacy provenance without guessing or changing stored values.",
+  "updated_at": "2026-11-06T05:26:30.966286+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
-    "Recover approved LifeBridge content from both exact founder sources when accessible; otherwise record precise access/review blocker and continue independently",
-    "Complete static UI/localization/remaining unnumbered requirement reconciliation without inventing reviewed translations",
-    "Verify scoped native hosts and affected modal/export/persistence UI on Apple"
+    "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
+    "Correct measurement input locale/provenance and Unicode cycle-day entry without guessing legacy formats or converting user values",
+    "Complete static catalog/remaining unnumbered requirement reconciliation; official MADLAD/LifeBridge source access is blocked as recorded",
+    "Verify affected Apple UI/catalogs/runtime/device and clinical acceptance"
   ]
 }

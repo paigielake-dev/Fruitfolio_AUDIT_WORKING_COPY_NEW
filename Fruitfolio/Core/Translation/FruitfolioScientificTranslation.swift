@@ -6,6 +6,7 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
     let original: String
     let prepared: String
     private let replacements: [(String, String)]
+    private let protectionRegexPattern: String
 
     init(_ source: String, protectedLiterals: [String] = []) throws {
         original = source
@@ -18,7 +19,9 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
             FruitfolioScientificQuantityProtection.referencePattern,
             #"\*\*|__|(?<!\*)\*(?!\*)"#
         ]
-        let regex = try NSRegularExpression(pattern: patterns.map { "(?:\($0))" }.joined(separator: "|"))
+        let pattern = patterns.map { "(?:\($0))" }.joined(separator: "|")
+        protectionRegexPattern = pattern
+        let regex = try NSRegularExpression(pattern: pattern)
         let ns = source as NSString
         let matches = regex.matches(in: source, range: NSRange(location: 0, length: ns.length))
         let prefix = "FFPROTECT_" + UUID().uuidString.replacingOccurrences(of: "-", with: "") + "_"
@@ -52,7 +55,33 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
         return output
     }
 
+    /// Catalog text has no generated placeholders. Preserve the source-specific
+    /// protected token sequence while permitting ordinary translated words that
+    /// merely resemble units (for example Norwegian "min"). This checks literal
+    /// integrity, not semantic/clinical approval of a translation.
+    func validateCatalogCandidate(_ candidate: String) throws -> String {
+        let expected = replacements.map { $0.1 }
+        let sourceLiterals = Set(expected)
+        let regex = try NSRegularExpression(pattern: protectionRegexPattern)
+        let ns = candidate as NSString
+        let retained = regex.matches(in: candidate, range: NSRange(location: 0, length: ns.length))
+            .map { ns.substring(with: $0.range) }.filter { sourceLiterals.contains($0) }
+        guard retained == expected,
+              try FruitfolioScientificQuantityProtection.quantitySignature(candidate) == FruitfolioScientificQuantityProtection.quantitySignature(original),
+              try FruitfolioScientificQuantityProtection.referenceSignature(candidate) == FruitfolioScientificQuantityProtection.referenceSignature(original) else {
+            throw FruitfolioTranslationError.protectedContentChanged
+        }
+        return candidate
+    }
 
+
+
+}
+
+enum FruitfolioTranslationOrigin: Equatable, Sendable { case source, catalog, machine }
+struct FruitfolioDisplayTranslation: Equatable, Sendable {
+    let text: String
+    let origin: FruitfolioTranslationOrigin
 }
 
 actor FruitfolioTranslationService {
@@ -62,8 +91,30 @@ actor FruitfolioTranslationService {
 
     func releaseResources() async { await runtime.releaseResources() }
 
-    func translate(_ source: String, language: FruitfolioLanguage, protectedLiterals: [String] = [], sourceLanguage: String = "en") async throws -> String {
-        guard language.rawValue != sourceLanguage else { return source }
+    func translate(_ source: String, language: FruitfolioLanguage, protectedLiterals: [String] = [],
+                   sourceLanguage: String = "en", preferCatalog: Bool = true, bundle: Bundle = .main) async throws -> String {
+        try await translateForDisplay(source, language: language, protectedLiterals: protectedLiterals,
+            sourceLanguage: sourceLanguage, preferCatalog: preferCatalog, bundle: bundle).text
+    }
+
+    func translateForDisplay(_ source: String, language: FruitfolioLanguage, protectedLiterals: [String] = [],
+                             sourceLanguage: String = "en", preferCatalog: Bool = true,
+                             inferenceAllowed: Bool = true, bundle: Bundle = .main) async throws -> FruitfolioDisplayTranslation {
+        try Task.checkCancellation()
+        guard language.rawValue != sourceLanguage,
+              !source.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return .init(text: source, origin: .source)
+        }
+        // Catalog keys describe English source text. Never reinterpret a saved
+        // non-English original as an English UI key, or rewrite saved records.
+        if preferCatalog, sourceLanguage == "en",
+           let candidate = FruitfolioLocalization.catalogValue(source, language: language, bundle: bundle),
+           let accepted = try? FruitfolioScientificTranslationEnvelope(source, protectedLiterals: protectedLiterals)
+                .validateCatalogCandidate(candidate) {
+            try Task.checkCancellation()
+            return .init(text: accepted, origin: .catalog)
+        }
+        guard inferenceAllowed else { throw FruitfolioTranslationError.pausedForMemoryPressure }
         // Only the simplified Chinese selector maps to the generic zh tag.
         // Traditional Chinese is not silently advertised as equivalent.
         let tag = language == .chineseSimplified ? "zh" : language.rawValue
@@ -79,6 +130,6 @@ actor FruitfolioTranslationService {
             try Task.checkCancellation()
             translated.append(try envelope.restore(result))
         }
-        return translated.joined(separator: "\n\n")
+        return .init(text: translated.joined(separator: "\n\n"), origin: .machine)
     }
 }

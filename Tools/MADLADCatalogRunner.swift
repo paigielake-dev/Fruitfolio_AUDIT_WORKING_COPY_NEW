@@ -30,7 +30,7 @@ struct MADLADCatalogRunner {
                     guard let language = FruitfolioLanguage(rawValue: job.locale) else {
                         throw FruitfolioTranslationError.unsupportedLanguage(job.locale)
                     }
-                    let value = try await service.translate(job.source, language: language, protectedLiterals: job.protectedLiterals)
+                    let value = try await service.translate(job.source, language: language, protectedLiterals: job.protectedLiterals, preferCatalog: false)
                     result = Result(id: job.id, value: value, error: nil)
                 } catch {
                     result = Result(id: job.id, value: nil, error: error.localizedDescription)

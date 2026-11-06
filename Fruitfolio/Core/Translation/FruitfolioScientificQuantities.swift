@@ -28,7 +28,7 @@ enum FruitfolioScientificQuantityProtection {
         return "(?:" + quantityPattern + ")|(?:" + bareUnit + ")|(?:" + label + ")"
     }
 
-    static let referencePattern = #"https?://[^\s<>]+|\[[^\]\n]{1,200}\]|\([^\)\n]*\b(?:1[6-9]|20|21)\d{2}[a-z]?[^\)\n]*\)"#
+    static let referencePattern = #"https?://[^\s<>]+|[\[［][^\]］\n]{1,200}[\]］]|[\(（][^\)）\n]*\b(?:(?:1[6-9]|20|21)\d{2}[a-z]?|(?i:n\.\h*d\.))[^\)）\n]*[\)）]"#
 
     static func quantitySignature(_ text: String) throws -> [String] {
         try matches(quantityPattern, in: text)
