@@ -15055,7 +15055,8 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -15075,17 +15076,42 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
+      "latest_batch_verification": {
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
+        "executed": {
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
+        },
+        "not_run": [
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
+        ],
+        "remaining": [
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+      ]
     },
     {
       "sequence": 290,
@@ -15126,7 +15152,8 @@
         "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
         "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
-        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyLoader.swift"
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyLoader.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -15150,9 +15177,10 @@
         "Prompt14CycleOnboardingTests",
         "Prompt16TodayStateBuilderTests",
         "Prompt1BCanonicalCalendarTests",
-        "Prompt21BodyBiologyCoreTests"
+        "Prompt21BodyBiologyCoreTests",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Open-period-report-versus-todays-recorded-bleeding (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
@@ -15160,9 +15188,33 @@
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
         "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
-        "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing."
+        "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-05T23:42:01.158165+00:00"
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
+      "latest_batch_verification": {
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
+        "executed": {
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
+        },
+        "not_run": [
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
+        ],
+        "remaining": [
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+      ]
     },
     {
       "sequence": 291,
@@ -15196,7 +15248,8 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -15218,17 +15271,42 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
+      "latest_batch_verification": {
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
+        "executed": {
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
+        },
+        "not_run": [
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
+        ],
+        "remaining": [
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+      ]
     },
     {
       "sequence": 292,
@@ -22284,7 +22362,8 @@
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
-        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift"
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22321,9 +22400,10 @@
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Personal-context-native-editor-fixed-accessible-label (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -22349,31 +22429,32 @@
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
         "Actual My Context headings, fixed optional/reporting explanations, section titles and controlled choice rows use existing compact translation state with original font sizes. Existing English source and catalog unchanged. Selection buttons inherit translated child text and use native selected trait instead of English-only label/value/hint overrides. No policy, persistence, prediction math, assets or patient notes changed.",
         "Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.",
-        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified."
+        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-06T21:10:28.471468+00:00",
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
       "latest_batch_verification": {
-        "batch": "Personal-context-native-editor-fixed-accessible-label",
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
         "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "source": "Key source is fixed label; native binding unchanged; catalog920 preserved plus one English key"
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
         },
         "not_run": [
-          "Apple SDK build/native editor focus, keyboard, cursor, IME, VoiceOver and draft retention regression",
-          "Official MADLAD and target-language accessible label acceptance"
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
         ],
         "remaining": [
-          "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-          "Verify only fixed label changes across language/memory release and patient value remains exact",
-          "Whole context/localization/device requirements remain IN_PROGRESS"
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-        "Verify only fixed label changes across language/memory release and patient value remains exact",
-        "Whole context/localization/device requirements remain IN_PROGRESS"
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
       ]
     },
     {
@@ -25225,9 +25306,10 @@
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Personal-context-native-editor-fixed-accessible-label (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -25293,31 +25375,32 @@
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
         "Actual My Context headings, fixed optional/reporting explanations, section titles and controlled choice rows use existing compact translation state with original font sizes. Existing English source and catalog unchanged. Selection buttons inherit translated child text and use native selected trait instead of English-only label/value/hint overrides. No policy, persistence, prediction math, assets or patient notes changed.",
         "Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.",
-        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified."
+        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-06T21:10:28.471468+00:00",
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
       "latest_batch_verification": {
-        "batch": "Personal-context-native-editor-fixed-accessible-label",
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
         "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "source": "Key source is fixed label; native binding unchanged; catalog920 preserved plus one English key"
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
         },
         "not_run": [
-          "Apple SDK build/native editor focus, keyboard, cursor, IME, VoiceOver and draft retention regression",
-          "Official MADLAD and target-language accessible label acceptance"
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
         ],
         "remaining": [
-          "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-          "Verify only fixed label changes across language/memory release and patient value remains exact",
-          "Whole context/localization/device requirements remain IN_PROGRESS"
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-        "Verify only fixed label changes across language/memory release and patient value remains exact",
-        "Whole context/localization/device requirements remain IN_PROGRESS"
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
       ]
     },
     {
@@ -26990,9 +27073,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Personal-context-native-editor-fixed-accessible-label (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -27085,31 +27169,32 @@
         "Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.",
         "Actual personal context root gates Back/category sheets by active visible owner without a covering presentation. Editor gates Save/prefer-not/Close/confirmation requests and popup actions, and rejects inactive asynchronous focus. Existing frozen baseline revision, pending confirmed dismissal workflow and native patient text remain unchanged. Existing Apple add/edit/remove regression uses stable category ID and checks unsent draft after background/reactivation; NOT_RUN.",
         "Shared context notice reload and delayed focus require visible active scene/UIKit owner without covering popup. Actual three callers additionally pass their current root/editor interaction gate, including native child-sheet coverage, so root visibility alone cannot allow stale actions. Read-only canonical reload/storage protection unchanged.",
-        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified."
+        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-06T21:10:28.471468+00:00",
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
       "latest_batch_verification": {
-        "batch": "Personal-context-native-editor-fixed-accessible-label",
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
         "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "source": "Key source is fixed label; native binding unchanged; catalog920 preserved plus one English key"
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
         },
         "not_run": [
-          "Apple SDK build/native editor focus, keyboard, cursor, IME, VoiceOver and draft retention regression",
-          "Official MADLAD and target-language accessible label acceptance"
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
         ],
         "remaining": [
-          "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-          "Verify only fixed label changes across language/memory release and patient value remains exact",
-          "Whole context/localization/device requirements remain IN_PROGRESS"
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-        "Verify only fixed label changes across language/memory release and patient value remains exact",
-        "Whole context/localization/device requirements remain IN_PROGRESS"
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
       ]
     },
     {
@@ -27421,9 +27506,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Personal-context-native-editor-fixed-accessible-label (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -27550,31 +27636,32 @@
         "Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.",
         "Actual personal context root gates Back/category sheets by active visible owner without a covering presentation. Editor gates Save/prefer-not/Close/confirmation requests and popup actions, and rejects inactive asynchronous focus. Existing frozen baseline revision, pending confirmed dismissal workflow and native patient text remain unchanged. Existing Apple add/edit/remove regression uses stable category ID and checks unsent draft after background/reactivation; NOT_RUN.",
         "Shared context notice reload and delayed focus require visible active scene/UIKit owner without covering popup. Actual three callers additionally pass their current root/editor interaction gate, including native child-sheet coverage, so root visibility alone cannot allow stale actions. Read-only canonical reload/storage protection unchanged.",
-        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified."
+        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-06T21:10:28.471468+00:00",
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
       "latest_batch_verification": {
-        "batch": "Personal-context-native-editor-fixed-accessible-label",
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
         "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "source": "Key source is fixed label; native binding unchanged; catalog920 preserved plus one English key"
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
         },
         "not_run": [
-          "Apple SDK build/native editor focus, keyboard, cursor, IME, VoiceOver and draft retention regression",
-          "Official MADLAD and target-language accessible label acceptance"
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
         ],
         "remaining": [
-          "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-          "Verify only fixed label changes across language/memory release and patient value remains exact",
-          "Whole context/localization/device requirements remain IN_PROGRESS"
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-        "Verify only fixed label changes across language/memory release and patient value remains exact",
-        "Whole context/localization/device requirements remain IN_PROGRESS"
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
       ]
     },
     {
@@ -27810,9 +27897,10 @@
         "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Personal-context-native-editor-fixed-accessible-label (resolve containing commit with git log)",
+      "commit_reference": "batch:Today-context-restriction-and-uncertainty-copy-localization (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -27885,31 +27973,32 @@
         "Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.",
         "Actual personal context root gates Back/category sheets by active visible owner without a covering presentation. Editor gates Save/prefer-not/Close/confirmation requests and popup actions, and rejects inactive asynchronous focus. Existing frozen baseline revision, pending confirmed dismissal workflow and native patient text remain unchanged. Existing Apple add/edit/remove regression uses stable category ID and checks unsent draft after background/reactivation; NOT_RUN.",
         "Shared context notice reload and delayed focus require visible active scene/UIKit owner without covering popup. Actual three callers additionally pass their current root/editor interaction gate, including native child-sheet coverage, so root visibility alone cannot allow stale actions. Read-only canonical reload/storage protection unchanged.",
-        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified."
+        "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.",
+        "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history."
       ],
-      "last_updated": "2026-11-06T21:10:28.471468+00:00",
+      "last_updated": "2026-11-06T21:12:06.705380+00:00",
       "latest_batch_verification": {
-        "batch": "Personal-context-native-editor-fixed-accessible-label",
+        "batch": "Today-context-restriction-and-uncertainty-copy-localization",
         "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "source": "Key source is fixed label; native binding unchanged; catalog920 preserved plus one English key"
+          "workflow": "60 passed source edit",
+          "syntax": "311 parsed final edit",
+          "source": "Original uncertainty/retained-history strings and suppression/prediction logic unchanged; catalog921 preserved"
         },
         "not_run": [
-          "Apple SDK build/native editor focus, keyboard, cursor, IME, VoiceOver and draft retention regression",
-          "Official MADLAD and target-language accessible label acceptance"
+          "Apple SDK build and Today loading/failure/context-restricted translated UI/VoiceOver",
+          "Official-model native-language warning/uncertainty and clinical meaning review"
         ],
         "remaining": [
-          "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-          "Verify only fixed label changes across language/memory release and patient value remains exact",
-          "Whole context/localization/device requirements remain IN_PROGRESS"
+          "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+          "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+          "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native keyboard/draft/background/save/reopen/remove Apple regression with wrapper",
-        "Verify only fixed label changes across language/memory release and patient value remains exact",
-        "Whole context/localization/device requirements remain IN_PROGRESS"
+        "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
+        "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
+        "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
       ]
     }
   ]

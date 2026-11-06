@@ -164,11 +164,11 @@ struct Prompt16TodayView: View {
 
     private var loadingView: some View {
         VStack(spacing: 14) {
-            ProgressView()
+            ProgressView { FruitfolioFixedText(source: "Loading Today view", serious: true) }
+                .labelsHidden()
                 .tint(Prompt16Palette.burgundy)
-                .accessibilityLabel("Loading Today view")
 
-            Text("opening today’s cycle page…")
+            FruitfolioFixedText(source: "opening today’s cycle page…", font: Prompt16Type.body, serious: true)
                 .font(Prompt16Type.body)
                 .foregroundStyle(
                     Prompt16Palette.burgundy.opacity(0.72)
@@ -186,7 +186,7 @@ struct Prompt16TodayView: View {
             spacing: 16
         ) {
             if let todayClarification {
-                Text(todayClarification)
+                FruitfolioTranslatedText(source: todayClarification, font: Prompt16Type.body, serious: true)
                     .font(Prompt16Type.body)
                     .foregroundStyle(Prompt16Palette.burgundy.opacity(0.78))
                     .fixedSize(horizontal: false, vertical: true)
@@ -204,21 +204,16 @@ struct Prompt16TodayView: View {
 
             predictionInfoButton
 
-            Text(
-                Prompt16TodayContext
-                    .insufficientData
-                    .title
-            )
+            FruitfolioFixedText(source: Prompt16TodayContext.insufficientData.title,
+                font: Prompt16Type.contextTitle, serious: true)
+            .accessibilityAddTraits(.isHeader)
             .font(Prompt16Type.contextTitle)
             .foregroundStyle(
                 Prompt16Palette.burgundy
             )
 
-            Text(
-                Prompt16TodayContext
-                    .insufficientData
-                    .explanation
-            )
+            FruitfolioTranslatedText(source: Prompt16TodayContext.insufficientData.explanation,
+                font: Prompt16Type.body, serious: true)
             .font(Prompt16Type.body)
             .foregroundStyle(
                 Prompt16Palette.burgundy.opacity(0.82)
@@ -241,17 +236,17 @@ struct Prompt16TodayView: View {
 
     private var contextRestrictedContent: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("today")
+            FruitfolioFixedText(source: "today", font: Prompt16Type.contextTitle, serious: true)
                 .font(Prompt16Type.contextTitle)
                 .foregroundStyle(Prompt16Palette.burgundy)
                 .accessibilityAddTraits(.isHeader)
 
-            Text(todayClarification ?? "your saved cycle history is still here, but ordinary current-cycle predictions are not shown for this context.")
+            FruitfolioTranslatedText(source: todayClarification ?? "your saved cycle history is still here, but ordinary current-cycle predictions are not shown for this context.", font: Prompt16Type.body, serious: true)
                 .font(Prompt16Type.body)
                 .foregroundStyle(Prompt16Palette.burgundy.opacity(0.82))
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("your historical logs stay saved. changing your context does not rewrite or delete them.")
+            FruitfolioTranslatedText(source: "your historical logs stay saved. changing your context does not rewrite or delete them.", font: Prompt16Type.body, serious: true)
                 .font(Prompt16Type.body)
                 .foregroundStyle(Prompt16Palette.burgundy.opacity(0.72))
                 .fixedSize(horizontal: false, vertical: true)

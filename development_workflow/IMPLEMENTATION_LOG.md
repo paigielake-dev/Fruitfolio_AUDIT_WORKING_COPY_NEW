@@ -2576,3 +2576,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 921, "preserved_entries": 920, "Apple_native_editor": "written stable-ID regression, NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue original290 predicted versus confirmed event presentation and291 unsupported certainty; preserve existing no-diagnostic context policy. Context282–289 source policies exist but clinical/integrated Apple acceptance remains open, not certified complete.
 - Commit: containing commit for batch Personal-context-native-editor-fixed-accessible-label.
+
+## Today-context-restriction-and-uncertainty-copy-localization
+
+- Parent checkpoint: e4462d8d21bd89ae21c2bec8a52a15fd739af37b.
+- Source-order requirements: [289, 290, 291, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 924, "new_English_entries": 3, "Apple_Today_status_UI": "NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue wheel contextual information and accessible label/locale consistency using existing scientific uncertainty and genuine source context; preserve original wheel artwork, prediction math and immutable source order.
+- Commit: containing commit for batch Today-context-restriction-and-uncertainty-copy-localization.
