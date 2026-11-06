@@ -14,6 +14,8 @@ import subprocess
 import tempfile
 
 SOURCES = [
+    "Fruitfolio/Fruit Popup Engine/FruitPopupModels.swift",
+    "Fruitfolio/Core/AppArchitecture/PopupCoordinator.swift",
     "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
     "Fruitfolio/Privacy Settings/FruitfolioOwnershipVerification.swift",
     "Fruitfolio/Core/Translation/FruitfolioCitationProtection.swift",
@@ -113,6 +115,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt06FruitPopupTests.swift',
     'Prompt1BOwnershipRecordPolicyTests.swift',
     'Prompt1BCitationTranslationTests.swift',
     'Prompt1BSavedTranslationBoundaryTests.swift',

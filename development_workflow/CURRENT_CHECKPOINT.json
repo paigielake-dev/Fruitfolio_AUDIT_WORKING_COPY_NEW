@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1424ad297e01b6ae719ba1be5e97c0e8d96db877",
+  "current_HEAD": "418c37b72feb12d9e6c0dfc2c800e6ca0a178437",
   "latest_verified_commit": null,
-  "current_checklist_part": 10,
-  "current_requirement": 1,
-  "current_implementation_batch": "Optional-real-StoreKit-app-ownership-with-owned-task-and-original-record-protection",
+  "current_checklist_part": 1,
+  "current_requirement": 384,
+  "current_implementation_batch": "Actual-root-and-native-popup-scope-with-owned-citation-dialog",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,16 +493,20 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Privacy Settings/FruitfolioOwnershipVerification.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
-    "Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift",
-    "FruitfolioTests/Prompt1BOwnershipRecordPolicyTests.swift",
-    "FruitfolioTests/Prompt1BOwnershipValidationTests.swift",
+    "Fruitfolio/Core/AppArchitecture/PopupCoordinator.swift",
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioCitationRegressionHarness.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+    "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+    "Fruitfolio/Fruit Popup Engine/FruitPopupModels.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+    "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+    "FruitfolioTests/Prompt06FruitPopupTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/BLOCKERS.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/OWNERSHIP_VERIFICATION.md"
+    "development_workflow/ROOT_POPUP_SCOPE_VERIFICATION.md"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -515,20 +519,24 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite including actual Foundation ownership models",
-    "Full actual native-linked Swift5 suite",
+    "Initial full portable suite caught two assertions from leaked queued dedup key",
+    "Final full portable Swift6 suite after actual key-cleanup fix",
+    "Final full actual native-linked Swift5 suite",
+    "29 Python workflow tests",
     "Swift compiler syntax parse",
+    "Xcode project reference validation",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "468 XCTest +21 Swift Testing passed",
-    "nativeSwift5": "473 XCTest +21 Swift Testing passed",
-    "syntax": "246 changed Swift files parsed; zero errors",
-    "Apple": "NOT_RUN StoreKit API typecheck/real transactions and three Combine-owner regressions",
-    "ownership": "Production/test/wrong-bundle/signature policy tested; no real receipt/charge verification claimed",
-    "services": "Auth/cloud backend still absent; actual StoreKit source adapter now integrated independently"
+    "Swift6": "475 XCTest +21 Swift Testing passed after queued dedup cancellation fix",
+    "nativeSwift5": "480 XCTest +21 Swift Testing passed",
+    "workflow": "29 passed",
+    "syntax": "248 changed Swift files parsed; zero errors",
+    "project": "Build-file references resolve; no Xcode build/link",
+    "Apple": "NOT_RUN observation publisher/UI/sound/focus/native-sheet geometry and actual screenshots",
+    "scope": "Production coordinator decision code executed; conditional Combine observation and SwiftUI host require Apple verification"
   },
-  "next_exact_implementation_action": "Fix actual shared FruitPopupHost coverage: source inspection found its Hub/global requests lacked the common blur and the root did not host popups across all routes. Move hosting to the real root with nested-host suppression, shared blur/dim/Reduce Motion and background AX/hit exclusion. Replace remaining source-citation system alert through a measured white-paper global popup with owned late-link callbacks and UI regression capture. Preserve existing Hub tour and character art/default behavior; do not rebuild app.",
-  "updated_at": "2026-11-06T02:02:45.314869+00:00",
+  "next_exact_implementation_action": "Continue independent UX/source gaps: Data Management currently displays implementation-phase/coordinator language and only a deletion notice. Replace technical placeholder copy with truthful actionable feature-specific management options reusing existing actual deletion flows, without falsely claiming global deletion or export. Preserve privacy/data and native modal scopes; then remaining founder applicability/verification gaps. Do not stop between batches.",
+  "updated_at": "2026-11-06T02:16:25.836315+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

@@ -68,56 +68,58 @@ struct Prompt03SkeletonView: View {
     }
 
     var body: some View {
-        NavigationStack(
-            path: $navigation.path
-        ) {
-            initialContent
-            .navigationDestination(
-                for: FruitfolioRoute.self
-            ) { route in
-                routeView(route)
+        FruitPopupHost {
+            NavigationStack(
+                path: $navigation.path
+            ) {
+                initialContent
+                .navigationDestination(
+                    for: FruitfolioRoute.self
+                ) { route in
+                    routeView(route)
+                }
             }
-        }
-        .navigationBarBackButtonHidden(true)
-        .toolbar(
-            .hidden,
-            for: .navigationBar
-        )
-        .tint(
-            DesignTokens.ColorToken
-                .primaryBurgundy
-        )
-        .background(
-            DesignTokens.ColorToken
-                .backgroundCream
-                .ignoresSafeArea()
-        )
-        .onAppear {
-            syncMotionPreferences()
-            navigation.onNavigationTransition = {
-                audioManager.play(.pageTurn)
+            .navigationBarBackButtonHidden(true)
+            .toolbar(
+                .hidden,
+                for: .navigationBar
+            )
+            .tint(
+                DesignTokens.ColorToken
+                    .primaryBurgundy
+            )
+            .background(
+                DesignTokens.ColorToken
+                    .backgroundCream
+                    .ignoresSafeArea()
+            )
+            .onAppear {
+                syncMotionPreferences()
+                navigation.onNavigationTransition = {
+                    audioManager.play(.pageTurn)
+                }
             }
-        }
-        .onChange(
-            of: systemReduceMotion
-        ) {
-            syncMotionPreferences()
-        }
-        .onChange(
-            of: settings.reduceAnimationOverride
-        ) {
-            syncMotionPreferences()
-        }
-        #if canImport(UIKit)
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
-            settings.translationPausedForMemoryPressure = true
-            Task {
-                async let translation: Void = FruitfolioTranslationService.shared.releaseResources()
-                async let research: Void = LlamaFruitfolioLanguageModel.shared.releaseResources()
-                _ = await (translation, research)
+            .onChange(
+                of: systemReduceMotion
+            ) {
+                syncMotionPreferences()
             }
+            .onChange(
+                of: settings.reduceAnimationOverride
+            ) {
+                syncMotionPreferences()
+            }
+            #if canImport(UIKit)
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
+                settings.translationPausedForMemoryPressure = true
+                Task {
+                    async let translation: Void = FruitfolioTranslationService.shared.releaseResources()
+                    async let research: Void = LlamaFruitfolioLanguageModel.shared.releaseResources()
+                    _ = await (translation, research)
+                }
+            }
+            #endif
         }
-        #endif
         .environmentObject(appState)
         .environmentObject(navigation)
         .environmentObject(settings)
@@ -133,7 +135,10 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioCitationQA") {
+            FruitfolioCitationRegressionHarness()
+                .environment(\.openURL, OpenURLAction { _ in .discarded })
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
             Prompt28GameRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioContactQA") {
             Prompt30ContactView(onBack: {})

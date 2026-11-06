@@ -72,7 +72,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for reduced in [false, true] {
             for scenario in ["failure", "success"] {
                 let app = launchGame(scenario, reduced: reduced)
-                let count = app.descendants(matching: .any)["fruitBasket.result.fruitCount"].firstMatch
+                let count = app.descendants(matching: .any).matching(identifier: "fruitBasket.result.fruitCount").firstMatch
                 XCTAssertTrue(count.waitForExistence(timeout: 5))
                 let expected = scenario == "success" ? "10 / 10" : "7 / 10"
                 XCTAssertTrue((count.label + " " + String(describing: count.value ?? "")).contains(expected))
@@ -85,7 +85,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     func testGameStormUsesLargeCardAndExcludesBackgroundUntilAcknowledged() {
         for reduced in [false, true] {
             let app = launchGame("storm", reduced: reduced)
-            let note = app.otherElements["fruitBasket.stormNote"].firstMatch
+            let note = app.otherElements.matching(identifier: "fruitBasket.stormNote").firstMatch
             XCTAssertTrue(note.waitForExistence(timeout: 5))
             XCTAssertFalse(app.buttons["fruitBasket.classification.catchFruit"].exists)
             let acknowledge = app.buttons["got it"]
@@ -111,6 +111,61 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    func testNestedHostReusesOneRootCharacterPopupAndExcludesAllBackground() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioCitationQA", "-fruitfolioCitationReduceMotion",
+                                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let open = app.buttons["citationQA.characterPopup"]
+        XCTAssertTrue(open.waitForExistence(timeout: 5))
+        for _ in 0..<10 { if open.isHittable { break }; app.swipeUp() }
+        open.tap()
+        let popupScroll = app.scrollViews.matching(identifier: "fruitPopup.scroll")
+        XCTAssertTrue(popupScroll.firstMatch.waitForExistence(timeout: 3))
+        XCTAssertEqual(popupScroll.count, 1)
+        XCTAssertFalse(app.buttons["citationQA.background"].exists)
+        let close = app.buttons["fruitPopup.action.primary"]
+        for _ in 0..<12 { if close.isHittable { break }; popupScroll.firstMatch.swipeUp() }
+        XCTAssertTrue(close.isHittable)
+        captureGame(app, name: "one-root-character-popup")
+        close.tap()
+        XCTAssertTrue(app.buttons["citationQA.background"].waitForExistence(timeout: 3))
+        app.terminate()
+    }
+
+    func testSourceLinkFailureUsesOneRootPaperPopupAndRestoresWholePageAccess() {
+        for inSheet in [false, true] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioCitationQA", "-UIPreferredContentSizeCategoryName",
+                                    "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioCitationReduceMotion"] }
+            if inSheet { app.launchArguments += ["-fruitfolioCitationQAInSheet"] }
+            app.launch()
+            let source = app.buttons["sourceCitation.open.qa-citation"]
+            XCTAssertTrue(source.waitForExistence(timeout: 5))
+            for _ in 0..<12 { if source.isHittable { break }; app.swipeUp() }
+            source.tap()
+            let paper = app.otherElements.matching(identifier: "fruitPopup.tapedWhite")
+            XCTAssertTrue(paper.firstMatch.waitForExistence(timeout: 3))
+            XCTAssertEqual(paper.count, 1)
+            XCTAssertFalse(app.buttons["citationQA.background"].exists)
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            let close = app.buttons["fruitPopup.paper.action.primary"]
+            for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(close.isHittable)
+            captureGame(app, name: "citation-paper-inSheet-\(inSheet)-reduced-\(reduced)")
+            close.tap()
+            let background = app.buttons["citationQA.background"]
+            XCTAssertTrue(background.waitForExistence(timeout: 3))
+            for _ in 0..<12 { if background.isHittable { break }; app.swipeDown() }
+            background.tap()
+            XCTAssertTrue(app.staticTexts["background actions: 1"].exists)
+            app.terminate()
+        }
+        }
+    }
+
     func testScrollablePopupIsolatesBackgroundAndRestoresItOnClose() {
         verifyModal(reduceMotion: false)
     }
@@ -131,12 +186,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             book.tap()
             let rename = app.buttons["rename"]
             XCTAssertTrue(rename.waitForExistence(timeout: 5))
-            let open = app.otherElements["library.openBook"].firstMatch
+            let open = app.otherElements.matching(identifier: "library.openBook").firstMatch
             XCTAssertTrue(open.exists)
             XCTAssertGreaterThanOrEqual(open.frame.minX, app.frame.minX)
             XCTAssertLessThanOrEqual(open.frame.maxX, app.frame.maxX)
             XCTAssertLessThanOrEqual(open.frame.maxY, app.frame.maxY)
-            app.buttons["Back"].firstMatch.tap()
+            app.buttons.matching(identifier: "Back").firstMatch.tap()
             XCTAssertTrue(book.waitForExistence(timeout: 3))
             app.terminate()
         }

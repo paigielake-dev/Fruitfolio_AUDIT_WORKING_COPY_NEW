@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 @MainActor
 enum FruitPopupCharacter: String, CaseIterable, Sendable {
@@ -71,6 +71,8 @@ struct FruitPopupAction: Identifiable {
     }
 }
 
+enum FruitPopupSurface: Equatable, Sendable { case characterSpeech, tapedWhite }
+
 struct FruitPopupRequest: Identifiable {
     let id: UUID
     let character: FruitPopupCharacter
@@ -84,6 +86,7 @@ struct FruitPopupRequest: Identifiable {
     let source: String?
     let deduplicationKey: String?
     let analyticsIdentifier: String?
+    let surface: FruitPopupSurface
 
     init(
         id: UUID = UUID(),
@@ -97,7 +100,8 @@ struct FruitPopupRequest: Identifiable {
         priority: FruitPopupPriority = .educational,
         source: String? = nil,
         deduplicationKey: String? = nil,
-        analyticsIdentifier: String? = nil
+        analyticsIdentifier: String? = nil,
+        surface: FruitPopupSurface = .characterSpeech
     ) {
         self.id = id
         self.character = character
@@ -111,5 +115,6 @@ struct FruitPopupRequest: Identifiable {
         self.source = source
         self.deduplicationKey = deduplicationKey
         self.analyticsIdentifier = analyticsIdentifier
+        self.surface = surface
     }
 }

@@ -1,6 +1,18 @@
 import SwiftUI
 
+private struct FruitfolioPopupHostPresentKey: EnvironmentKey {
+    static let defaultValue = false
+}
+fileprivate extension EnvironmentValues {
+    var fruitfolioPopupHostPresent: Bool {
+        get { self[FruitfolioPopupHostPresentKey.self] }
+        set { self[FruitfolioPopupHostPresentKey.self] = newValue }
+    }
+}
+
 struct FruitPopupHost<Content: View>: View {
+    @Environment(\.fruitfolioPopupHostPresent) private var hasAncestorHost
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject
     private var popupCoordinator: PopupCoordinator
 
@@ -13,14 +25,23 @@ struct FruitPopupHost<Content: View>: View {
     @ViewBuilder
     let content: () -> Content
 
+    @ViewBuilder
     var body: some View {
+        if hasAncestorHost { content() }
+        else { hostingBody }
+    }
+
+    private var hostingBody: some View {
         GeometryReader { proxy in
             ZStack {
                 content()
+                    .environment(\.fruitfolioPopupHostPresent, true)
                     .frame(
                         width: proxy.size.width,
                         height: proxy.size.height
                     )
+                    .fruitfolioModalBlur(active: popupCoordinator.currentPopup != nil,
+                                         reduceMotion: motionPreferences.reduceMotionActive)
 
                 if let request =
                     popupCoordinator.currentPopup {
@@ -30,11 +51,14 @@ struct FruitPopupHost<Content: View>: View {
                     )
                     .zIndex(998)
 
-                    popupLayer(
-                        request: request,
-                        proxy: proxy
-                    )
-                    .zIndex(999)
+                    if request.surface == .tapedWhite {
+                        tapedWhitePopup(request, available: proxy.size)
+                            .zIndex(999)
+                    } else {
+                        popupLayer(request: request, proxy: proxy)
+                            .zIndex(999)
+                    }
+
                 }
             }
             .frame(
@@ -120,20 +144,48 @@ struct FruitPopupHost<Content: View>: View {
         for request: FruitPopupRequest
     ) -> some View {
 
-        if request.dismissBehavior
-            == .tapOutside {
-
-            Color.clear
-                .contentShape(
-                    Rectangle()
-                )
-                .ignoresSafeArea()
-                .onTapGesture {
-                    popupCoordinator.dismissCurrent(
-                        reason: .programmatic
-                    )
+        Color.black.opacity(FruitfolioModalBlurSpec.dimOpacity)
+            .ignoresSafeArea()
+            .contentShape(Rectangle())
+            .onTapGesture {
+                if request.dismissBehavior == .tapOutside {
+                    popupCoordinator.dismissCurrent(reason: .programmatic)
                 }
+            }
+            .accessibilityHidden(true)
+    }
+
+    private func tapedWhitePopup(_ request: FruitPopupRequest, available: CGSize) -> some View {
+        FruitfolioTapedWhitePopup {
+            VStack(spacing: 12) {
+                FruitfolioTranslatedText(source: request.message,
+                    font: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true)
+                    .textSelection(.enabled)
+                if let action = request.primaryAction { paperAction(action, primary: true) }
+                if let action = request.secondaryAction { paperAction(action, primary: false) }
+            }
+            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         }
+        .frame(width: available.width, height: available.height)
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .accessibilityIdentifier("fruitPopup.tapedWhite")
+        .accessibilityAction(.escape) {
+            if request.dismissBehavior != .persistentUntilAcknowledged {
+                popupCoordinator.dismissCurrent(reason: .programmatic)
+            }
+        }
+    }
+
+    private func paperAction(_ action: FruitPopupAction, primary: Bool) -> some View {
+        Button(settings.localized(action.label)) {
+            audioManager.play(.buttonSoftPop)
+            action.handler()
+        }
+        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .accessibilityLabel(settings.localized(action.accessibilityLabel ?? action.label))
+        .accessibilityIdentifier(primary ? "fruitPopup.paper.action.primary" : "fruitPopup.paper.action.secondary")
     }
 
     // MARK: - Popup Layer
@@ -273,6 +325,7 @@ struct FruitPopupHost<Content: View>: View {
                 motionPreferences
                     .reduceMotionActive
         )
+        .accessibilityAddTraits(.isModal)
         .onTapGesture {
             if request.dismissBehavior
                 == .tapPopup {
@@ -344,5 +397,18 @@ struct FruitPopupHost<Content: View>: View {
 
             return .center
         }
+    }
+}
+
+/// Native sheets/covers form a new presentation surface above the root overlay.
+/// Give that surface one local host/coordinator so a citation dialog cannot be
+/// rendered behind it or replay audio in both the sheet and app root.
+struct FruitfolioPresentedPopupHost<Content: View>: View {
+    @StateObject private var coordinator = PopupCoordinator()
+    @ViewBuilder let content: () -> Content
+    var body: some View {
+        FruitPopupHost { content() }
+            .environment(\.fruitfolioPopupHostPresent, false)
+            .environmentObject(coordinator)
     }
 }

@@ -1,9 +1,10 @@
 import Foundation
-import SwiftUI
+#if canImport(Combine)
 import Combine
+#endif
 
 @MainActor
-final class PopupCoordinator: ObservableObject {
+final class PopupCoordinator {
 
     enum PresentationState: Equatable {
         case idle
@@ -14,8 +15,14 @@ final class PopupCoordinator: ObservableObject {
         case dismissing
     }
 
-    @Published private(set) var currentPopup: FruitPopupRequest?
-    @Published private(set) var presentationState: PresentationState = .idle
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var currentPopup: FruitPopupRequest?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var presentationState: PresentationState = .idle
 
     private var queue: [FruitPopupRequest] = []
     private var activeDeduplicationKeys: Set<String> = []
@@ -44,6 +51,18 @@ final class PopupCoordinator: ObservableObject {
         } else {
             enqueue(request)
         }
+    }
+
+    func containsRequest(id: UUID) -> Bool {
+        currentPopup?.id == id || queue.contains { $0.id == id }
+    }
+
+    /// Cancel only the departing feature's request, including its queued form.
+    func cancelRequest(id: UUID) {
+        let removed = queue.filter { $0.id == id }
+        queue.removeAll { $0.id == id }
+        removeDeduplicationKeys(for: removed)
+        if currentPopup?.id == id { dismissCurrent(reason: .programmatic) }
     }
 
     func markMeasuring() {
@@ -315,6 +334,10 @@ final class PopupCoordinator: ObservableObject {
             }
     }
 }
+
+#if canImport(Combine)
+extension PopupCoordinator: ObservableObject {}
+#endif
 
 enum DismissReason: Sendable {
     case action

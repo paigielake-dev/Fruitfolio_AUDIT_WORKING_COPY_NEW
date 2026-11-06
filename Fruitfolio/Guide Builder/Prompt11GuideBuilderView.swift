@@ -72,6 +72,7 @@ struct Prompt11GuideBuilderView: View {
         }
         .fullScreenCover(isPresented: $showingReadMode) {
             if let selectedGuideID {
+                FruitfolioPresentedPopupHost {
                 Prompt11ReadModeView(
                     store: store,
                     guideID: selectedGuideID,
@@ -81,6 +82,7 @@ struct Prompt11GuideBuilderView: View {
                 )
                 .environmentObject(audioManager)
                 .environmentObject(motionPreferences)
+                }
             }
         }
         .onDisappear { dismissSavedStatus() }

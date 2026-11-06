@@ -87,7 +87,9 @@ struct FruitfolioHormoneInformationView: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
         .sheet(isPresented: $showingLibrary) {
-            FruitfolioHormoneLibraryView(onBack: { showingLibrary = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioHormoneLibraryView(onBack: { showingLibrary = false })
+            }
         }
         .sheet(item: $editing) { record in
             FruitfolioHormoneMeasurementEditor(original: record, captureInitialTestDay: !store.records.contains(where: { $0.id == record.id }), onCancel: { editing = nil }) { updated in
