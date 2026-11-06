@@ -2510,3 +2510,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 794, "native_CPU_XCTest": 816, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "official_MADLAD": "BLOCKED; syntheticT5 is not official model", "Apple": "NOT_RUN"}.
 - Next action: Measurement separation remains implemented pending Apple acceptance;267–280 require missing clinically reviewed adjustment method (BLOCKERS.md), do not fabricate curves. Continue next independent original281 context adaptation UI/localization, preserving no-diagnosis/no-confidence-boost policy and previous logs.
 - Commit: containing commit for batch Measurement-missing-ID-delete-preserves-acknowledged-revision.
+
+## Context-choice-fixed-copy-and-native-selection-semantics
+
+- Parent checkpoint: 338305f0a7ccf5b0a92f8eb60f6ce630d3ef7c88.
+- Source-order requirements: [281, 285, 286, 287, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Context Personalization/Prompt27AContextViews.swift.
+- Actual My Context headings, fixed optional/reporting explanations, section titles and controlled choice rows use existing compact translation state with original font sizes. Existing English source and catalog unchanged. Selection buttons inherit translated child text and use native selected trait instead of English-only label/value/hint overrides. No policy, persistence, prediction math, assets or patient notes changed.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "catalog_keys_unchanged": 870, "Foundation": "unchanged; prior794 portable/816 native XCTest +21 SwiftTesting each not rerun", "Apple": "NOT_RUN"}.
+- Next action: Continue actual My Context controls and context-aware presentation, checking active owner/draft preservation and localizable safety/accessibility hints without changing clinical policy or prior logs.
+- Commit: containing commit for batch Context-choice-fixed-copy-and-native-selection-semantics.

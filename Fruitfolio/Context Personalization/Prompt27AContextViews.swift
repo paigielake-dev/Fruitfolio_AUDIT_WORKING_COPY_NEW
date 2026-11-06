@@ -154,7 +154,7 @@ struct Prompt27AMyContextView: View {
                             "Clears context selections without deleting cycle history, Daily Log entries, symptoms, temperatures, notes, or Trends."
                         )
 
-                        Text("all of this is optional. clearing or changing context never rewrites what you previously logged.")
+                        FruitfolioFixedText(source: "all of this is optional. clearing or changing context never rewrites what you previously logged.", font: Prompt27AType.small, serious: true)
                             .font(Prompt27AType.small)
                             .foregroundStyle(
                                 DesignTokens.ColorToken.secondaryBurgundy
@@ -231,7 +231,7 @@ struct Prompt27AMyContextView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .center, spacing: 3) {
-                Text("my context")
+                FruitfolioFixedText(source: "my context", font: Prompt27AType.title, serious: true)
                     .font(Prompt27AType.title)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -252,14 +252,14 @@ struct Prompt27AMyContextView: View {
                 Spacer(minLength: 0)
             }
 
-            Text("tell Fruitfolio anything you’d like it to keep in mind ♡")
+            FruitfolioFixedText(source: "tell Fruitfolio anything you’d like it to keep in mind ♡", font: Prompt27AType.body, serious: true)
                 .font(Prompt27AType.body)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("this is context you choose to report — not something Fruitfolio guesses from your cycle, symptoms, age, or activity.")
+            FruitfolioFixedText(source: "this is context you choose to report — not something Fruitfolio guesses from your cycle, symptoms, age, or activity.", font: Prompt27AType.small, serious: true)
                 .font(Prompt27AType.small)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy.opacity(0.84)
@@ -274,7 +274,7 @@ struct Prompt27AMyContextView: View {
         VStack(alignment: .leading, spacing: 10) {
             sectionTitle("cycle / health context")
 
-            Text("choose any that apply — these can overlap")
+            FruitfolioFixedText(source: "choose any that apply — these can overlap", font: Prompt27AType.small, serious: true)
                 .font(Prompt27AType.small)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
@@ -325,7 +325,7 @@ struct Prompt27AMyContextView: View {
     private func sectionTitle(
         _ title: String
     ) -> some View {
-        Text(title)
+        FruitfolioFixedText(source: title, font: Prompt27AType.sectionTitle, serious: true)
             .font(Prompt27AType.sectionTitle)
             .foregroundStyle(
                 DesignTokens.ColorToken.primaryBurgundy
@@ -353,9 +353,9 @@ struct Prompt27AMyContextView: View {
             )
         )
         .disabled(viewModel.store.storageProtectionReason != nil)
-        .accessibilityLabel(title)
-        .accessibilityValue(selected ? "selected" : "not selected")
-        .accessibilityHint("Double tap to select")
+        // Preserve the translated child label and use the system's localized
+        // selection trait instead of overriding it with English-only text.
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }
 
@@ -409,7 +409,7 @@ private struct Prompt27ASelectionRow: View {
             .frame(width: 25, height: 25)
             .accessibilityHidden(true)
 
-            Text(title)
+            FruitfolioFixedText(source: title, font: Prompt27AType.body, serious: true)
                 .font(Prompt27AType.body)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
