@@ -1791,6 +1791,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         edit.tap()
         let editor = app.scrollViews["measurements.editor.scroll"]
         XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        let hormone = app.descendants(matching: .any).matching(identifier: "measurements.editor.hormone").firstMatch
+        XCTAssertTrue((hormone.label + " " + (hormone.value as? String ?? "")).contains("E2"), "Controlled symbol remains literal under source fallback")
         let unit = app.textFields["measurements.editor.unit"]
         for _ in 0..<20 { if unit.isHittable { break }; editor.swipeUp() }
         XCTAssertEqual(unit.value as? String, "pg/mL")
@@ -1815,6 +1817,42 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertEqual(day.value as? String, "12")
         captureGame(app, name: "measurement-field-prompts-language-\(language)")
         app.terminate()
+        }
+    }
+
+    func testControlledOtherHormonePreservesEnteredNameAndExactLaboratoryFieldsUnderSourceFallback() {
+        for language in ["en", "fr"] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsLanguage", language]
+            app.launch()
+            let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
+            edit.tap()
+            let editor = app.scrollViews["measurements.editor.scroll"]
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            let picker = app.descendants(matching: .any).matching(identifier: "measurements.editor.hormone").firstMatch
+            XCTAssertTrue(picker.isHittable); picker.tap()
+            let other = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Other Hormone")).firstMatch
+            XCTAssertTrue(other.waitForExistence(timeout: 3)); other.tap()
+            let name = app.textFields["measurements.editor.otherName"]
+            XCTAssertTrue(name.waitForExistence(timeout: 3)); name.tap(); name.typeText("QA custom hormone")
+            let save = app.buttons["measurements.editor.save"]
+            for _ in 0..<24 { if save.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(save.isHittable); save.tap()
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            XCTAssertTrue(app.staticTexts["QA custom hormone"].exists)
+            for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
+            edit.tap()
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            XCTAssertEqual(name.value as? String, "QA custom hormone")
+            let result = app.textFields["measurements.editor.result"]
+            XCTAssertEqual(result.value as? String, "12.50")
+            let unit = app.textFields["measurements.editor.unit"]
+            for _ in 0..<20 { if unit.isHittable { break }; editor.swipeUp() }
+            XCTAssertEqual(unit.value as? String, "pg/mL")
+            captureGame(app, name: "controlled-other-hormone-source-fallback-\(language)")
+            app.terminate()
         }
     }
 

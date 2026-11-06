@@ -62,7 +62,7 @@ final class Prompt1BControlTranslationStateTests: XCTestCase {
         let runtime = ControlLabelFixtureRuntime(fail: true)
         let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
         for (source, expected) in [("save", "speichern"), ("DNA", "DNA"), ("LifeBridge information", "LifeBridge Informationen")] {
-            let key = Key(source: source, language: .german)
+            let key = Key(source: source, language: .german, protectedLiterals: source == "DNA" ? ["DNA"] : [])
             await state.resolve(key, inferenceAllowed: false, bundle: bundle)
             XCTAssertEqual(state.presentation(for: key).text, expected)
             XCTAssertEqual(state.presentation(for: key).status, .catalog)
@@ -186,4 +186,33 @@ final class Prompt1BControlTranslationStateTests: XCTestCase {
         await state.resolve(key, inferenceAllowed: true)
         XCTAssertEqual(state.presentation(for: key).status, .machine)
     }
+    func testChangingProtectedLiteralsInvalidatesAcceptedCompactDisplay() async {
+        let runtime = ControlLabelFixtureRuntime()
+        let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
+        let original = Key(source: "alpha label", language: .german)
+        await state.resolve(original, inferenceAllowed: true)
+        XCTAssertEqual(state.presentation(for: original).status, .machine)
+        let protected = Key(source: original.source, language: original.language, protectedLiterals: ["alpha"])
+        XCTAssertNotEqual(original, protected)
+        XCTAssertEqual(state.presentation(for: protected).text, protected.source)
+        XCTAssertEqual(state.presentation(for: protected).status, .preparing)
+        await state.resolve(protected, inferenceAllowed: true)
+        XCTAssertEqual(state.presentation(for: protected).status, .unavailable)
+        XCTAssertEqual(state.presentation(for: protected).text, protected.source)
+        let calls = await runtime.calls
+        XCTAssertEqual(calls, 2, "A prior accepted display cannot bypass changed caller protection")
+    }
+
+    func testExplicitHormoneAbbreviationsCannotDisappearFromCompactOutput() async {
+        let runtime = ControlLabelFixtureRuntime()
+        let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
+        for hormone in [FruitfolioMeasuredHormone.estradiol, .lh, .fsh, .amh] {
+            let key = Key(source: hormone.label, language: .french, protectedLiterals: hormone.protectedAbbreviations)
+            XCTAssertFalse(key.protectedLiterals.isEmpty)
+            await state.resolve(key, inferenceAllowed: true)
+            XCTAssertEqual(state.presentation(for: key).status, .unavailable, "Fixture output omits the protected symbol and must be rejected")
+            XCTAssertEqual(state.presentation(for: key).text, hormone.label)
+        }
+    }
+
 }

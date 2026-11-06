@@ -11,11 +11,12 @@ struct FruitfolioHormoneLibraryView: View {
             VStack(alignment: .leading, spacing: 20) {
                 BackControl(action: onBack)
                 Text("hormone library").font(.title2.bold()).accessibilityAddTraits(.isHeader)
-                Picker("educational hormone", selection: $hormone) {
+                Picker(selection: $hormone) {
                     ForEach(FruitfolioMeasuredHormone.allCases.filter { $0 != .other }) { item in
-                        Text(LocalizedStringKey(item.label)).tag(item)
+                        FruitfolioFixedText(source: item.label, protectedLiterals: item.protectedAbbreviations, serious: true).tag(item)
                     }
-                }
+                } label: { FruitfolioFixedText(source: "educational hormone", serious: true) }
+                .accessibilityIdentifier("hormoneLibrary.hormone")
                 .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 if let asset = artwork {
                     FruitfolioImage(id: asset).scaledToFit().frame(maxWidth: 100, maxHeight: 100)

@@ -59,15 +59,23 @@ struct FruitfolioHormoneInformationView: View {
                 .disabled(store.storageProtectionReason != nil)
                 .accessibilityIdentifier("measurements.add")
                 .accessibilityFocused($deletionFocus, equals: .add)
-                Picker("filter by hormone", selection: $filter) {
-                    Text("all hormones").tag(Optional<FruitfolioMeasuredHormone>.none)
+                Picker(selection: $filter) {
+                    FruitfolioFixedText(source: "all hormones", serious: true).tag(Optional<FruitfolioMeasuredHormone>.none)
                     ForEach(FruitfolioMeasuredHormone.allCases) { hormone in
-                        Text(LocalizedStringKey(hormone.label)).tag(Optional(hormone))
+                        FruitfolioFixedText(source: hormone.label, protectedLiterals: hormone.protectedAbbreviations, serious: true).tag(Optional(hormone))
                     }
-                }
+                } label: { FruitfolioFixedText(source: "filter by hormone", serious: true) }
+                .accessibilityIdentifier("measurements.hormoneFilter")
                 ForEach(store.history(hormone: filter)) { measurement in
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(verbatim: measurement.hormoneName).bold()
+                        Group {
+                            if measurement.hormone == .other {
+                                Text(verbatim: measurement.otherHormoneName)
+                            } else {
+                                FruitfolioFixedText(source: measurement.hormone.label,
+                                    protectedLiterals: measurement.hormone.protectedAbbreviations, serious: true)
+                            }
+                        }.fontWeight(.bold)
                         Text(verbatim: "\(measurement.result) \(measurement.unit)")
                         if let date = measurement.dateForDisplay() { Text(date, style: .date) }
                         else { Text(verbatim: measurement.reportedTestDay?.description ?? "date unavailable") }
@@ -235,11 +243,15 @@ private struct FruitfolioHormoneMeasurementEditor: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 Text("measurement").font(.title2).bold()
-                Picker("hormone", selection: $draft.hormone) {
-                    ForEach(FruitfolioMeasuredHormone.allCases) { Text(LocalizedStringKey($0.label)).tag($0) }
-                }
+                Picker(selection: $draft.hormone) {
+                    ForEach(FruitfolioMeasuredHormone.allCases) { hormone in
+                        FruitfolioFixedText(source: hormone.label, protectedLiterals: hormone.protectedAbbreviations, serious: true).tag(hormone)
+                    }
+                } label: { FruitfolioFixedText(source: "hormone", serious: true) }
+                .accessibilityIdentifier("measurements.editor.hormone")
                 if draft.hormone == .other {
                     FruitfolioFixedTextField("other hormone name", text: $draft.otherHormoneName).focused($editorFocus, equals: .otherName)
+                        .accessibilityIdentifier("measurements.editor.otherName")
                 }
                 FruitfolioFixedTextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
                     .accessibilityIdentifier("measurements.editor.result")

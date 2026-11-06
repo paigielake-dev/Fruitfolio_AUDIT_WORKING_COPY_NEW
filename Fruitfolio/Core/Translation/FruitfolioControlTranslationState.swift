@@ -10,6 +10,12 @@ final class FruitfolioControlTranslationState {
     struct Key: Hashable, Sendable {
         let source: String
         let language: FruitfolioLanguage
+        let protectedLiterals: [String]
+        init(source: String, language: FruitfolioLanguage, protectedLiterals: [String] = []) {
+            self.source = source
+            self.language = language
+            self.protectedLiterals = protectedLiterals
+        }
     }
     struct Presentation: Equatable, Sendable {
         let text: String
@@ -64,7 +70,7 @@ final class FruitfolioControlTranslationState {
         resolved = .init(text: key.source, status: key.language == .english ? .source : .preparing)
         do {
             let result = try await service.translateForDisplay(key.source, language: key.language,
-                protectedLiterals: ["Fruitfolio", "LifeBridge"], inferenceAllowed: inferenceAllowed, bundle: bundle)
+                protectedLiterals: ["Fruitfolio", "LifeBridge"] + key.protectedLiterals, inferenceAllowed: inferenceAllowed, bundle: bundle)
             try Task.checkCancellation()
             guard generation == request, resolvedKey == key else { return }
             let status: Presentation.Status

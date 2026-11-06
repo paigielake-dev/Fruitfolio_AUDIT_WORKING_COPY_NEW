@@ -119,6 +119,7 @@ struct FruitfolioTranslatedText: View {
 /// Saved scientific or user-authored bodies keep FruitfolioTranslatedText.
 struct FruitfolioFixedText: View {
     let source: String
+    var protectedLiterals: [String] = []
     var font: Font = .body
     var color: Color? = nil
     var serious = false
@@ -126,7 +127,7 @@ struct FruitfolioFixedText: View {
     @StateObject private var translation = FruitfolioControlTranslationState()
 
     var body: some View {
-        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language)
+        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language, protectedLiterals: protectedLiterals)
         let presentation = translation.presentation(for: key)
         VStack(alignment: .leading, spacing: 4) {
             FruitfolioSemanticText(markdown: presentation.text, baseFont: font, color: color, serious: serious)

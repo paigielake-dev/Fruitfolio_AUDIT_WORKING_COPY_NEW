@@ -15,6 +15,18 @@ enum FruitfolioMeasuredHormone: String, CaseIterable, Codable, Identifiable, Sen
         case .other: return "Other Hormone"
         }
     }
+    /// Stable symbols are retained literally in translated controlled labels.
+    /// This is not a scientific terminology/clinical-quality signoff.
+    var protectedAbbreviations: [String] {
+        switch self {
+        case .estradiol: return ["E2"]
+        case .lh: return ["LH"]
+        case .fsh: return ["FSH"]
+        case .amh: return ["AMH"]
+        case .progesterone, .testosterone, .prolactin, .other: return []
+        }
+    }
+
 }
 
 enum FruitfolioHormoneTestDatePrecision: String, Codable, Sendable { case day }
