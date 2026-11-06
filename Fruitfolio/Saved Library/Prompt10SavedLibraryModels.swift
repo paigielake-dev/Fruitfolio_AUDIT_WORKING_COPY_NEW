@@ -260,6 +260,7 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
     case unreadableStorage
     case unsupportedStorage
     case storageChanged
+    case contentChanged
 
     var errorDescription: String? {
         switch self {
@@ -283,6 +284,8 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
             return "that change didn’t settle properly."
         case .unsupportedStorage:
             return "your saved library has fields this version cannot safely update. readable pages remain available. the original data has been kept, and changes are paused."
+        case .contentChanged:
+            return "this saved page changed while you were editing. your unsaved text is still here, and nothing was overwritten. review the current saved page before trying again."
         case .storageChanged:
             return "your saved library changed or was cleared elsewhere. the latest saved data has been preserved. reload it before making changes."
         case .unreadableStorage:

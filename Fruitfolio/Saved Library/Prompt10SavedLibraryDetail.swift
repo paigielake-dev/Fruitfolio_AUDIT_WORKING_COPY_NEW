@@ -17,6 +17,7 @@ struct Prompt10EncyclopediaDetailView: View {
     @State private var expandedChapterIDs: Set<UUID> = []
     @State private var showingMaterialEditor = false
     @State private var materialToEdit: Prompt10SavedPage?
+    @AccessibilityFocusState private var focusedPageID: UUID?
 
     private var encyclopedia: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -37,7 +38,10 @@ struct Prompt10EncyclopediaDetailView: View {
                             if let selectedPage {
                                 Prompt10SavedPageView(store: store, encyclopediaID: encyclopediaID, page: selectedPage,
                                     onPageChanged: { updated in self.selectedPage = updated },
-                                    onBack: { self.selectedPage = nil },
+                                    onBack: {
+                                        self.selectedPage = nil
+                                        focusedPageID = selectedPage.id
+                                    },
                                     onEditUserMaterial: { page in materialToEdit = page; showingMaterialEditor = true })
                             } else {
                                 ScrollView {
@@ -60,9 +64,11 @@ struct Prompt10EncyclopediaDetailView: View {
             if showingMaterialEditor {
                 ZStack {
                 DesignTokens.ColorToken.backgroundCream.opacity(FruitfolioModalBlurSpec.dimOpacity).ignoresSafeArea().allowsHitTesting(false)
-                Prompt10UserMaterialEditor(store: store, encyclopediaID: encyclopediaID, existing: materialToEdit,
-                    onSaved: { page in selectedPage = page; showingMaterialEditor = false; materialToEdit = nil },
-                    onCancel: { showingMaterialEditor = false; materialToEdit = nil })
+                FruitfolioPresentedPopupHost {
+                    Prompt10UserMaterialEditor(store: store, encyclopediaID: encyclopediaID, existing: materialToEdit,
+                        onSaved: { page in selectedPage = page; showingMaterialEditor = false; materialToEdit = nil },
+                        onCancel: { showingMaterialEditor = false; materialToEdit = nil })
+                }
                 }
             }
         }
@@ -283,6 +289,7 @@ struct Prompt10EncyclopediaDetailView: View {
                         }
                     ) { page in
                         Button {
+                            focusedPageID = nil
                             selectedPage = page
                         } label: {
                             HStack(alignment: .top, spacing: 10) {
@@ -308,12 +315,12 @@ struct Prompt10EncyclopediaDetailView: View {
                                     .foregroundStyle(
                                         DesignTokens.ColorToken.primaryBurgundy
                                     )
-                                    .lineLimit(2)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
 
                                     Text(
-                                        page.saveType == .excerpt
-                                            ? "saved excerpt"
-                                            : "complete saved answer"
+                                        page.userMaterial != nil ? "your own page"
+                                            : (page.saveType == .excerpt ? "saved excerpt" : "complete saved answer")
                                     )
                                     .font(
                                         .custom(
@@ -334,6 +341,8 @@ struct Prompt10EncyclopediaDetailView: View {
                             )
                             .padding(.vertical, 4)
                         }
+                        .accessibilityIdentifier("savedBook.page." + page.id.uuidString)
+                        .accessibilityFocused($focusedPageID, equals: page.id)
                         .buttonStyle(
                             CutePopButtonStyle(
                                 reduceMotion:
@@ -363,7 +372,18 @@ struct Prompt10SavedPageView: View {
     @State private var imageImportGeneration = UUID()
     @State private var mediaMessage: String?
     @State private var notes = Prompt10NoteDraft()
-    @State private var confirmDiscardNotes = false
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var viewIsVisible = false
+    @State private var pendingNoteAction: NoteAction?
+    @State private var returnBackFocus = false
+    @State private var popupInstanceID = UUID()
+    @State private var notesMessage: String?
+    @State private var notesFocusRequest = UUID()
+    @AccessibilityFocusState private var backFocused: Bool
+    @AccessibilityFocusState private var notesMessageFocused: Bool
+    @FocusState private var notesFocused: Bool
+    private enum NoteAction { case save, discard }
 
     private var hasUnsavedNotes: Bool { notes.hasChanges }
 
@@ -373,8 +393,10 @@ struct Prompt10SavedPageView: View {
                 ZStack {
                     HStack {
                         BackControl {
-                            if hasUnsavedNotes { confirmDiscardNotes = true } else { onBack() }
+                            if hasUnsavedNotes { requestBack() } else { onBack() }
                         }
+                        .accessibilityIdentifier("savedPage.back")
+                        .accessibilityFocused($backFocused)
 
                         Spacer()
                     }
@@ -433,11 +455,13 @@ struct Prompt10SavedPageView: View {
                         Text(verbatim: address).font(.caption).textSelection(.enabled)
                     }
                     if let onEditUserMaterial {
-                        Button("edit my page") {
+                        WatercolorSecondaryButton(label: "edit my page") {
                             if hasUnsavedNotes { mediaMessage = "save or discard your note changes before editing this page." }
                             else { onEditUserMaterial(page) }
                         }
                         .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                        .accessibilityIdentifier("savedPage.editOwnPage")
+                        .controlSize(.small)
                     }
                 }
                 notesSection
@@ -485,36 +509,104 @@ struct Prompt10SavedPageView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
-        .onDisappear { cancelImageImport() }
+        .accessibilityIdentifier("savedPage.scroll")
+        .onDisappear {
+            viewIsVisible = false
+            cancelImageImport()
+            popupOwner?.cancel()
+            pendingNoteAction = nil
+            returnBackFocus = false
+        }
         .onChange(of: page.id) { _, _ in
             cancelImageImport()
+            popupOwner?.cancel()
+            pendingNoteAction = nil
+            returnBackFocus = false
+            notesMessage = nil
             loadNotesIfNeeded()
         }
-        .onAppear { loadNotesIfNeeded() }
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+            loadNotesIfNeeded()
+        }
         .onChange(of: page.notes) { _, _ in loadNotesIfNeeded() }
+        .onChange(of: notes.text) { _, _ in
+            if notesMessage == "notes saved!" { notesMessage = nil }
+        }
         .interactiveDismissDisabled(hasUnsavedNotes)
-        .confirmationDialog("save your note changes?", isPresented: $confirmDiscardNotes, titleVisibility: .visible) {
-            Button("save and go back") { if saveNotes() { onBack() } }
-            Button("discard changes", role: .destructive) {
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            let action = pendingNoteAction
+            pendingNoteAction = nil
+            switch action {
+            case .save:
+                returnBackFocus = false
+                if saveNotes() { onBack() }
+            case .discard:
+                returnBackFocus = false
                 notes.discard()
                 onBack()
+            case nil: break
             }
-            Button("keep editing", role: .cancel) {}
+            if returnBackFocus { returnBackFocus = false; backFocused = true }
+        }
+    }
+
+    private func requestBack() {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        returnBackFocus = true
+        backFocused = false
+        notesFocused = false
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .blueberry,
+                message: "save, discard or keep editing your note changes? the saved page text and its source details will be kept.",
+                primaryAction: .init(label: "keep editing") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                },
+                secondaryAction: .init(label: "save and go back") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingNoteAction = .save
+                },
+                tertiaryAction: .init(label: "discard changes") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingNoteAction = .discard
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "saved-note-draft", deduplicationKey: "saved-note-draft-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
         }
     }
 
     private var notesSection: some View {
         VStack(alignment: .leading, spacing: 8) {
+            Prompt10LibraryStorageNotice(store: store)
             Text("my notes")
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
                 .fontWeight(.bold)
             TextEditor(text: $notes.text)
+                .focused($notesFocused)
+                .accessibilityIdentifier("savedPage.notes")
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
                 .frame(minHeight: 110)
                 .padding(8)
                 .background(DesignTokens.ColorToken.backgroundCream.opacity(0.75), in: RoundedRectangle(cornerRadius: 12))
-            Button("save notes") { _ = saveNotes() }
-            .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+            WatercolorSecondaryButton(label: "save notes") { _ = saveNotes() }
+                .disabled(store.storageProtectionReason != nil)
+                .accessibilityIdentifier("savedPage.saveNotes")
+            if let notesMessage {
+                FruitfolioTranslatedContent(source: notesMessage) { display, _ in
+                    FruitfolioSemanticText(markdown: display,
+                        baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                        .accessibilityFocused($notesMessageFocused)
+                }
+                .task(id: notesFocusRequest) {
+                    await Task.yield()
+                    guard !Task.isCancelled, viewIsVisible else { return }
+                    notesMessageFocused = true
+                }
+            }
         }
 
     }
@@ -527,17 +619,19 @@ struct Prompt10SavedPageView: View {
     @discardableResult
     private func saveNotes() -> Bool {
         do {
-            try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: notes.text)
+            try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: notes.text, expectedNotes: notes.baseline)
             notes.didSave()
             // Preserve concurrently attached images and other persisted fields.
             if let updated = store.encyclopedia(id: encyclopediaID)?.chapters
                 .first(where: { $0.id == page.chapterID })?.pages.first(where: { $0.id == page.id }) {
                 onPageChanged(updated)
             }
-            mediaMessage = "notes saved!"
+            notesMessage = "notes saved!"
+            notesFocusRequest = UUID()
             return true
         } catch {
-            mediaMessage = "those notes could not be saved."
+            notesMessage = error.localizedDescription
+            notesFocusRequest = UUID()
             return false
         }
     }

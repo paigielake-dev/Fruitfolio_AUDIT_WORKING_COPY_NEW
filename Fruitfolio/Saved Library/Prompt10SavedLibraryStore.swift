@@ -203,7 +203,9 @@ final class Prompt10SavedLibraryStore {
 
     @discardableResult
     func saveUserMaterial(_ draft: Prompt10UserMaterialDraft, to encyclopediaID: UUID,
-                          chapterID: UUID, existingPageID: UUID? = nil) throws -> Prompt10SavedPage {
+                          chapterID: UUID, existingPageID: UUID? = nil,
+                          expectedBaseline: Prompt10UserMaterialEditingBaseline? = nil) throws -> Prompt10SavedPage {
+        if let expectedBaseline, existingPageID != expectedBaseline.pageID { throw Prompt10LibraryError.contentChanged }
         guard let bookIndex = encyclopedias.firstIndex(where: { $0.id == encyclopediaID }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
         }
@@ -216,6 +218,7 @@ final class Prompt10SavedLibraryStore {
                 throw Prompt10LibraryError.pageNotFound
             }
             let original = encyclopedias[bookIndex].chapters[originalChapter].pages[pageIndex]
+            if let expectedBaseline, !expectedBaseline.matches(original) { throw Prompt10LibraryError.contentChanged }
             var updated = try draft.page(chapterID: chapterID, existing: original)
             if originalChapter == targetIndex {
                 encyclopedias[bookIndex].chapters[targetIndex].pages[pageIndex] = updated
@@ -411,7 +414,8 @@ final class Prompt10SavedLibraryStore {
         encyclopediaID: UUID,
         chapterID: UUID,
         pageID: UUID,
-        notes rawNotes: String
+        notes rawNotes: String,
+        expectedNotes: String? = nil
     ) throws {
         guard let encyclopediaIndex = encyclopedias.firstIndex(where: {
             $0.id == encyclopediaID
@@ -434,6 +438,11 @@ final class Prompt10SavedLibraryStore {
                 $0.id == pageID
             }) else {
             throw Prompt10LibraryError.pageNotFound
+        }
+
+        if let expectedNotes,
+           encyclopedias[encyclopediaIndex].chapters[chapterIndex].pages[pageIndex].notes != expectedNotes {
+            throw Prompt10LibraryError.contentChanged
         }
 
         encyclopedias[encyclopediaIndex]

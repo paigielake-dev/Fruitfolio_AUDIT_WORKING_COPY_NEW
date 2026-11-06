@@ -61,6 +61,23 @@ nonisolated struct Prompt10UserMaterialDraft: Equatable, Sendable {
     }
 }
 
+/// Freeze only fields this editor can change. Independently attached images
+/// and other retained metadata remain owned by the current saved page.
+nonisolated struct Prompt10UserMaterialEditingBaseline: Equatable, Sendable {
+    let pageID: UUID
+    let chapterID: UUID
+    let draft: Prompt10UserMaterialDraft
+    init(page: Prompt10SavedPage) {
+        pageID = page.id
+        chapterID = page.chapterID
+        draft = Prompt10UserMaterialDraft(page: page)
+    }
+    func matches(_ page: Prompt10SavedPage) -> Bool {
+        page.id == pageID && page.chapterID == chapterID && page.userMaterial != nil
+            && Prompt10UserMaterialDraft(page: page) == draft
+    }
+}
+
 nonisolated enum Prompt10ImageAttachmentMutation {
     static func attaching(_ newID: String, replacing oldID: String?, to current: [String]) throws -> [String] {
         guard !newID.isEmpty, !current.contains(newID) else { throw Prompt10LibraryError.persistenceFailure }

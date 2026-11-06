@@ -82,6 +82,7 @@ struct Prompt1BBookRegressionHarness: View {
     @StateObject private var store: Prompt10SavedLibraryStore
     @StateObject private var motion = MotionPreferences()
     @State private var showingGuides = false
+    @EnvironmentObject private var settings: SettingsStore
     private let suite: String
     private let fixtureError: String?
 
@@ -93,7 +94,15 @@ struct Prompt1BBookRegressionHarness: View {
         var failure: String?
         do {
             for style in Prompt10BookStyle.allCases {
-                _ = try store.createEncyclopedia(name: "QA \(style.rawValue)", style: style)
+                let book = try store.createEncyclopedia(name: "QA \(style.rawValue)", style: style)
+                if style == .sage, ProcessInfo.processInfo.arguments.contains("-fruitfolioBookDraftFixture"),
+                   let chapter = book.chapters.first {
+                    var draft = Prompt10UserMaterialDraft()
+                    draft.title = "QA editable page"
+                    draft.body = "QA original own page text"
+                    draft.notes = "QA original note"
+                    _ = try store.saveUserMaterial(draft, to: book.id, chapterID: chapter.id)
+                }
             }
         } catch { failure = error.localizedDescription }
         self.fixtureError = failure
@@ -114,7 +123,9 @@ struct Prompt1BBookRegressionHarness: View {
         }
         .environmentObject(motion)
         .onAppear {
-            motion.update(systemReduceMotion: false, appOverride: ProcessInfo.processInfo.arguments.contains("-fruitfolioBookReduceMotion"))
+            let reduced = ProcessInfo.processInfo.arguments.contains("-fruitfolioBookReduceMotion")
+            settings.reduceAnimationOverride = reduced
+            motion.update(systemReduceMotion: false, appOverride: reduced)
         }
         .onDisappear { UserDefaults.standard.removePersistentDomain(forName: suite) }
     }

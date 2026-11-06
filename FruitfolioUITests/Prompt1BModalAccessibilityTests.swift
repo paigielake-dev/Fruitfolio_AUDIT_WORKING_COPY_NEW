@@ -208,6 +208,99 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    private func openDraftFixturePage(_ app: XCUIApplication) {
+        app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookDraftFixture", "-fruitfolioBookReduceMotion"]
+        app.launch()
+        let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage,")).firstMatch
+        for _ in 0..<16 { if book.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(book.isHittable)
+        book.tap()
+        let row = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.tap()
+        XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
+    }
+
+    func testSavedNotesKeepDiscardAndSaveThroughOwnedPaper() {
+        let app = XCUIApplication()
+        openDraftFixturePage(app)
+        let scroll = app.scrollViews["savedPage.scroll"]
+        let notes = app.textViews["savedPage.notes"]
+        for _ in 0..<20 { if notes.isHittable { break }; scroll.swipeUp() }
+        notes.tap(); notes.typeText(" QA kept note draft")
+        let back = app.buttons["savedPage.back"]
+        for _ in 0..<20 { if back.isHittable { break }; scroll.swipeDown() }
+        back.tap()
+        XCTAssertTrue(app.buttons["fruitPopup.paper.action.tertiary"].waitForExistence(timeout: 5))
+        XCTAssertFalse(notes.exists)
+        captureGame(app, name: "saved-note-three-choice-paper")
+        tapSharedPaperAction("primary", in: app)
+        XCTAssertTrue(notes.waitForExistence(timeout: 5))
+        XCTAssertTrue((notes.value as? String)?.contains("QA kept note draft") == true)
+        for _ in 0..<20 { if back.isHittable { break }; scroll.swipeDown() }
+        back.tap()
+        tapSharedPaperAction("tertiary", in: app)
+        let row = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.tap()
+        XCTAssertTrue(notes.waitForExistence(timeout: 5))
+        XCTAssertEqual(notes.value as? String, "QA original note")
+        for _ in 0..<20 { if notes.isHittable { break }; scroll.swipeUp() }
+        notes.tap(); notes.typeText(" QA saved note")
+        for _ in 0..<20 { if back.isHittable { break }; scroll.swipeDown() }
+        back.tap()
+        tapSharedPaperAction("secondary", in: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.tap()
+        XCTAssertTrue(notes.waitForExistence(timeout: 5))
+        XCTAssertTrue((notes.value as? String)?.contains("QA saved note") == true)
+        XCTAssertTrue(app.staticTexts["QA original own page text"].exists)
+        app.terminate()
+    }
+
+    func testUserPageOverlayKeepDiscardAndSaveRetainOriginalUntilExplicitSave() {
+        let app = XCUIApplication()
+        openDraftFixturePage(app)
+        let reading = app.scrollViews["savedPage.scroll"]
+        let edit = app.buttons["savedPage.editOwnPage"]
+        for _ in 0..<20 { if edit.isHittable { break }; reading.swipeUp() }
+        edit.tap()
+        let paper = app.scrollViews["tapedWhitePopup.scroll"]
+        let body = app.textViews["userPage.editor.body"]
+        XCTAssertTrue(body.waitForExistence(timeout: 5))
+        for _ in 0..<20 { if body.isHittable { break }; paper.swipeUp() }
+        body.tap(); body.typeText(" QA kept page draft")
+        let cancel = app.buttons["userPage.editor.cancel"]
+        for _ in 0..<20 { if cancel.isHittable { break }; paper.swipeUp() }
+        cancel.tap()
+        XCTAssertTrue(app.buttons["fruitPopup.paper.action.tertiary"].waitForExistence(timeout: 5))
+        XCTAssertFalse(body.exists)
+        XCTAssertEqual(app.scrollViews.matching(identifier: "tapedWhitePopup.scroll").count, 1)
+        captureGame(app, name: "user-page-overlay-three-choice-paper")
+        tapSharedPaperAction("primary", in: app)
+        XCTAssertTrue(body.waitForExistence(timeout: 5))
+        XCTAssertTrue((body.value as? String)?.contains("QA kept page draft") == true)
+        for _ in 0..<20 { if cancel.isHittable { break }; paper.swipeUp() }
+        cancel.tap()
+        tapSharedPaperAction("tertiary", in: app)
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["QA original own page text"].exists)
+        for _ in 0..<20 { if edit.isHittable { break }; reading.swipeUp() }
+        edit.tap()
+        XCTAssertTrue(body.waitForExistence(timeout: 5))
+        XCTAssertEqual(body.value as? String, "QA original own page text")
+        for _ in 0..<20 { if body.isHittable { break }; paper.swipeUp() }
+        body.tap(); body.typeText(" QA saved page change")
+        for _ in 0..<20 { if cancel.isHittable { break }; paper.swipeUp() }
+        cancel.tap()
+        tapSharedPaperAction("secondary", in: app)
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        let saved = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "QA saved page change")).firstMatch
+        XCTAssertTrue(saved.exists)
+        XCTAssertEqual(app.textViews["savedPage.notes"].value as? String, "QA original note")
+        app.terminate()
+    }
+
     func testContextClearUsesSharedPaperAndCancelPreservesUnsupportedOriginal() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioContextStorageQA", "-fruitfolioContextReduceMotion",
