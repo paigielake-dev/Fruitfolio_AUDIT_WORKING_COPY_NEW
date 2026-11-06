@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1c930fcfb86ad9081f7f3069201e435122449218",
+  "current_HEAD": "5df80f84cc54266d977f0ef2b689e82c520d2ae1",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
   "current_requirement": 428,
-  "current_implementation_batch": "FAQ-question-state-translation-and-owned-disclosure",
+  "current_implementation_batch": "Bounded-inflight-translation-ownership-without-result-cache",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,10 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Fruitfolio/ContentView.swift",
-    "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-    "Fruitfolio/Localizable.xcstrings",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/FAQ_CONTROL_TRANSLATION_VERIFICATION.md",
+    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+    "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
+    "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
+    "development_workflow/MADLAD_INFLIGHT_REQUEST_OWNERSHIP_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -516,25 +514,24 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "actual SwiftSyntax control-sound-ownership --check",
-    "JSON preservation comparison for all existing catalog entries"
+    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
   ],
   "last_test_results": {
-    "portable_XCTest": 714,
-    "native_CPU_XCTest": 734,
+    "portable_XCTest": 723,
+    "native_CPU_XCTest": 744,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 306,
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
-    "native_T5_contract_methods": 14,
+    "native_T5_contract_methods": 15,
     "catalog_keys": 675,
-    "catalog_existing_entries_preserved": 660,
     "nonempty_foreign_units": 0,
-    "SwiftSyntax_sound_ownership_findings": 0
+    "Foundation_shared_ownership_regressions": 9,
+    "focused_initial_ownership_regressions": 7
   },
-  "next_exact_implementation_action": "Coalesce concurrent identical in-flight machine translation requests without a persistent result cache, preserving per-caller cancellation, protected content validation, memory-pressure release and exact source bytes. Add controlled concurrency regressions plus real native evidence; do not retain deleted user material in a global result cache.",
-  "updated_at": "2026-11-06T14:03:26.780160+00:00",
+  "next_exact_implementation_action": "Inspect cancellation/release handling for unshared overflow translation work and ensure memory-pressure release cannot cause queued multi-paragraph work to silently reload resources; preserve per-caller cancellation and accepted displays, add production regression coverage if a concrete gap is confirmed.",
+  "updated_at": "2026-11-06T14:14:29.968936+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

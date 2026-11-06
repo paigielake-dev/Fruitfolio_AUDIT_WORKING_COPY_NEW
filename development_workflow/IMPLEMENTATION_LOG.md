@@ -2015,3 +2015,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 734, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 14, "catalog_keys": 675, "catalog_existing_entries_preserved": 660, "nonempty_foreign_units": 0, "SwiftSyntax_sound_ownership_findings": 0}.
 - Next action: Coalesce concurrent identical in-flight machine translation requests without a persistent result cache, preserving per-caller cancellation, protected content validation, memory-pressure release and exact source bytes. Add controlled concurrency regressions plus real native evidence; do not retain deleted user material in a global result cache.
 - Commit: containing commit for batch FAQ-question-state-translation-and-owned-disclosure.
+
+## Bounded-inflight-translation-ownership-without-result-cache
+
+- Parent checkpoint: 5df80f84cc54266d977f0ef2b689e82c520d2ae1.
+- Source-order requirements: [418, 419, 422, 426, 427, 428, 429, 431, 434, 443, 444, 466, 467, 474, 475, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift.
+- Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.
+- Tests added/updated: FruitfolioTests/Prompt1BScientificTranslationTests.swift, FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 723, "native_CPU_XCTest": 744, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 15, "catalog_keys": 675, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 9, "focused_initial_ownership_regressions": 7}.
+- Next action: Inspect cancellation/release handling for unshared overflow translation work and ensure memory-pressure release cannot cause queued multi-paragraph work to silently reload resources; preserve per-caller cancellation and accepted displays, add production regression coverage if a concrete gap is confirmed.
+- Commit: containing commit for batch Bounded-inflight-translation-ownership-without-result-cache.

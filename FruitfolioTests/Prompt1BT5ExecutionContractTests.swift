@@ -91,6 +91,63 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         XCTAssertFalse(released.resourcesLoaded)
     }
 
+    func testSharedRequestsUseOneActualNativeDecodeAndReleaseCancelsQueuedReload() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        let gate = Prompt1BNativeTranslationGate(runtime: runtime)
+        let service = FruitfolioTranslationService(runtime: gate)
+        func waitFor(_ waiters: Int, calls: Int) async {
+            let deadline = ContinuousClock.now.advanced(by: .seconds(3))
+            while ContinuousClock.now < deadline {
+                let active = await service.debugInFlightStatistics()
+                if active.requests == 1, active.waiters == waiters, await gate.callCount() == calls { return }
+                try? await Task.sleep(for: .milliseconds(1))
+            }
+            XCTFail("Timed out waiting for queued native request owners")
+            await gate.unblockAll()
+        }
+        let first = (0..<8).map { _ in Task {
+            try await service.translateForDisplay("fixture", language: .german, preferCatalog: false)
+        } }
+        await waitFor(8, calls: 1)
+        await gate.unblockAll()
+        for task in first {
+            let result = try await task.value
+            XCTAssertEqual(result.text, "fixture")
+            XCTAssertEqual(result.origin, .machine)
+        }
+        let actual = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(actual.encoderCalls, 1)
+        XCTAssertEqual(actual.decoderCalls, 2)
+        XCTAssertTrue(actual.resourcesLoaded)
+        await gate.rearm()
+        let pending = (0..<2).map { _ in Task {
+            try await service.translate("fixture", language: .german, preferCatalog: false)
+        } }
+        await waitFor(2, calls: 2)
+        await service.releaseResources()
+        let released = await runtime.debugExecutionStatistics()
+        XCTAssertFalse(released.modelLoaded)
+        XCTAssertFalse(released.resourcesLoaded)
+        await gate.unblockAll()
+        for task in pending {
+            do { _ = try await task.value; XCTFail("Release cancelled queued shared inference") }
+            catch { XCTAssertTrue(error is CancellationError) }
+        }
+        let cancelled = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(cancelled.encoderCalls, 1, "Cancelled queued work must not reload or decode")
+        XCTAssertFalse(cancelled.modelLoaded)
+        let next = try await service.translate("fixture", language: .german, preferCatalog: false)
+        XCTAssertEqual(next, "fixture")
+        let retried = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(retried.encoderCalls, 2)
+        XCTAssertEqual(retried.decoderCalls, 4)
+        XCTAssertEqual(retried.checkedBlockingCalls, 10)
+        XCTAssertEqual(retried.mainThreadBlockingCalls, 0)
+        await service.releaseResources()
+    }
+
     func testT5ReleaseAndReloadPreserveSeparateLoadedAskModelDuringConcurrentRequests() async throws {
         let modelURL = try XCTUnwrap(ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"]
             .map { URL(fileURLWithPath: $0) } ?? Bundle.main.url(forResource: "FruitfolioAI", withExtension: "gguf"))
@@ -471,6 +528,30 @@ private enum SyntheticT5Contract {
         }
         data += Data(repeating: 0, count: (32 - data.count % 32) % 32)
         return data + payload
+    }
+}
+/// Schedules entry to the actual native runtime; it never implements a C API
+/// or supplies model output. Every unblocked request calls the real actor.
+private actor Prompt1BNativeTranslationGate: FruitfolioLocalTranslationRuntime {
+    private let runtime: FruitfolioMADLADRuntime
+    private var calls = 0
+    private var open = false
+    private var gates: [CheckedContinuation<Void, Never>] = []
+    init(runtime: FruitfolioMADLADRuntime) { self.runtime = runtime }
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        calls += 1
+        if !open { await withCheckedContinuation { gates.append($0) } }
+        try Task.checkCancellation()
+        return try await runtime.translate(text, targetTag: targetTag)
+    }
+    func releaseResources() async { await runtime.releaseResources() }
+    func callCount() -> Int { calls }
+    func rearm() { open = false }
+    func unblockAll() {
+        open = true
+        let pending = gates
+        gates.removeAll()
+        for gate in pending { gate.resume() }
     }
 }
 #endif

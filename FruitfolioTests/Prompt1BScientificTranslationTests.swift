@@ -186,3 +186,227 @@ final class Prompt1BTranslationPipelineTests: XCTestCase {
         // This checks the protection pipeline, not actual model inference or translation quality.
     }
 }
+
+#if DEBUG
+/// Protocol scheduling fixture only: identity text is NOT native/model output.
+private actor Prompt1BSharedTranslationGate: FruitfolioLocalTranslationRuntime {
+    private var calls = 0
+    private var cancelled = 0
+    private var open = false
+    private var gates: [Int: CheckedContinuation<Void, Never>] = [:]
+    private let corruptFirst: Bool
+    init(corruptFirst: Bool = false) { self.corruptFirst = corruptFirst }
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        calls += 1
+        let index = calls
+        if !open { await withCheckedContinuation { gates[index] = $0 } }
+        do { try Task.checkCancellation() }
+        catch { cancelled += 1; throw error }
+        return corruptFirst && index == 1 ? text + " 99 mg" : text
+    }
+    func releaseResources() {}
+    func counts() -> (calls: Int, cancelled: Int) { (calls, cancelled) }
+    func unblockFirst() { gates.removeValue(forKey: 1)?.resume() }
+    func unblockAll() {
+        open = true
+        let pending = Array(gates.values)
+        gates.removeAll()
+        for gate in pending { gate.resume() }
+    }
+}
+
+final class Prompt1BSharedTranslationTests: XCTestCase {
+    private func wait(_ service: FruitfolioTranslationService, runtime: Prompt1BSharedTranslationGate,
+                      requests: Int, waiters: Int, calls: Int,
+                      file: StaticString = #filePath, line: UInt = #line) async {
+        let deadline = ContinuousClock.now.advanced(by: .seconds(3))
+        while ContinuousClock.now < deadline {
+            let active = await service.debugInFlightStatistics()
+            let actual = await runtime.counts()
+            if active.requests == requests, active.waiters == waiters, actual.calls == calls { return }
+            try? await Task.sleep(for: .milliseconds(1))
+        }
+        XCTFail("Timed out waiting for actual shared-request ownership", file: file, line: line)
+        await runtime.unblockAll()
+    }
+
+    func testIdenticalConcurrentRequestsShareValidatedResultWithoutCachingCompletedText() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let source = "FSH ≤ 12.5 IU/L [source-1] DOI:10.1234/fixture"
+        let tasks = (0..<8).map { _ in Task {
+            try await service.translateForDisplay(source, language: .german,
+                protectedLiterals: ["source-1"], preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 1, waiters: 8, calls: 1)
+        await runtime.unblockAll()
+        for task in tasks {
+            let result = try await task.value
+            XCTAssertEqual(result.text, source)
+            XCTAssertEqual(result.origin, .machine)
+        }
+        let finished = await service.debugInFlightStatistics()
+        XCTAssertEqual(finished.requests, 0)
+        XCTAssertEqual(finished.waiters, 0)
+        let again = try await service.translate(source, language: .german,
+            protectedLiterals: ["source-1"], preferCatalog: false)
+        XCTAssertEqual(again, source)
+        let actual = await runtime.counts()
+        XCTAssertEqual(actual.calls, 2, "Completed text must not remain in a service result cache")
+    }
+
+    func testOneCancelledWaiterDoesNotCancelAnotherOwnersSharedWork() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let first = Task { try await service.translate("fixture", language: .german, preferCatalog: false) }
+        let second = Task { try await service.translate("fixture", language: .german, preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 1, waiters: 2, calls: 1)
+        first.cancel()
+        await wait(service, runtime: runtime, requests: 1, waiters: 1, calls: 1)
+        await runtime.unblockAll()
+        do { _ = try await first.value; XCTFail("Cancelled owner") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let kept = try await second.value
+        XCTAssertEqual(kept, "fixture")
+        let actual = await runtime.counts()
+        XCTAssertEqual(actual.cancelled, 0)
+    }
+
+    func testLastCancellationAndStaleCompletionCannotRemoveANewSameSourceFlight() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let old = (0..<2).map { _ in Task {
+            try await service.translate("fixture", language: .german, preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 1, waiters: 2, calls: 1)
+        for task in old { task.cancel() }
+        await wait(service, runtime: runtime, requests: 0, waiters: 0, calls: 1)
+        let fresh = Task { try await service.translate("fixture", language: .german, preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 1, waiters: 1, calls: 2)
+        await runtime.unblockFirst()
+        for task in old {
+            do { _ = try await task.value; XCTFail("Cancelled owners") }
+            catch { XCTAssertTrue(error is CancellationError) }
+        }
+        let joining = Task { try await service.translate("fixture", language: .german, preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 1, waiters: 2, calls: 2)
+        await runtime.unblockAll()
+        let first = try await fresh.value
+        let second = try await joining.value
+        XCTAssertEqual(first, "fixture")
+        XCTAssertEqual(second, "fixture")
+        let actual = await runtime.counts()
+        XCTAssertEqual(actual.cancelled, 1)
+    }
+
+    func testRejectedSharedOutputIsNotAcceptedOrCached() async throws {
+        let runtime = Prompt1BSharedTranslationGate(corruptFirst: true)
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let tasks = (0..<2).map { _ in Task {
+            try await service.translate("fixture", language: .german, preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 1, waiters: 2, calls: 1)
+        await runtime.unblockAll()
+        for task in tasks {
+            do { _ = try await task.value; XCTFail("Invented quantity") }
+            catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+        }
+        let retry = try await service.translate("fixture", language: .german, preferCatalog: false)
+        XCTAssertEqual(retry, "fixture")
+        let actual = await runtime.counts()
+        XCTAssertEqual(actual.calls, 2)
+    }
+
+    func testByteDifferentUnicodeAndDifferentProtectionOrLanguageNeverShare() async throws {
+        let cases: [(String, String, [String], [String], FruitfolioLanguage, FruitfolioLanguage, String, String)] = [
+            ("café", "cafe\u{301}", [], [], .german, .german, "en", "en"),
+            ("Blue flower", "Blue flower", ["Blue"], ["flower"], .german, .german, "en", "en"),
+            ("fixture", "fixture", [], [], .german, .french, "en", "en"),
+            ("fixture", "fixture", [], [], .german, .german, "en", "fr")
+        ]
+        for (left, right, leftProtection, rightProtection, leftLanguage, rightLanguage, leftSource, rightSource) in cases {
+            let runtime = Prompt1BSharedTranslationGate()
+            let service = FruitfolioTranslationService(runtime: runtime)
+            let first = Task { try await service.translate(left, language: leftLanguage,
+                protectedLiterals: leftProtection, sourceLanguage: leftSource, preferCatalog: false) }
+            let second = Task { try await service.translate(right, language: rightLanguage,
+                protectedLiterals: rightProtection, sourceLanguage: rightSource, preferCatalog: false) }
+            await wait(service, runtime: runtime, requests: 2, waiters: 2, calls: 2)
+            await runtime.unblockAll()
+            let firstText = try await first.value
+            let secondText = try await second.value
+            XCTAssertEqual(Data(firstText.utf8), Data(left.utf8))
+            XCTAssertEqual(Data(secondText.utf8), Data(right.utf8))
+        }
+    }
+
+    func testPausedCallerCannotJoinAnAlreadyRunningInference() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let active = Task { try await service.translate("fixture", language: .german, preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 1, waiters: 1, calls: 1)
+        do {
+            _ = try await service.translateForDisplay("fixture", language: .german,
+                preferCatalog: false, inferenceAllowed: false)
+            XCTFail("Paused caller must not join inference")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .pausedForMemoryPressure) }
+        await wait(service, runtime: runtime, requests: 1, waiters: 1, calls: 1)
+        await runtime.unblockAll()
+        let result = try await active.value
+        XCTAssertEqual(result, "fixture")
+    }
+
+    func testSharingWaiterLimitBypassesInsteadOfGrowingUnboundedMetadata() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let tasks = (0..<65).map { _ in Task {
+            try await service.translate("fixture", language: .german, preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 1, waiters: 64, calls: 2)
+        await runtime.unblockAll()
+        for task in tasks {
+            let result = try await task.value
+            XCTAssertEqual(result, "fixture")
+        }
+        let active = await service.debugInFlightStatistics()
+        XCTAssertEqual(active.requests, 0)
+    }
+
+    func testLargeSourceOrProtectionMetadataRetainsTheOriginalUncachedPath() async throws {
+        for (source, protection) in [
+            (String(repeating: "a", count: 16 * 1024 + 1), [String]()),
+            ("fixture", Array(repeating: "brand", count: 65)),
+            ("fixture", [String(repeating: "b", count: 4097)])
+        ] {
+            let runtime = Prompt1BSharedTranslationGate()
+            let service = FruitfolioTranslationService(runtime: runtime)
+            let task = Task { try await service.translate(source, language: .german,
+                protectedLiterals: protection, preferCatalog: false) }
+            await wait(service, runtime: runtime, requests: 0, waiters: 0, calls: 1)
+            await runtime.unblockAll()
+            let result = try await task.value
+            XCTAssertEqual(Data(result.utf8), Data(source.utf8))
+        }
+    }
+
+    func testSharingMetadataBudgetsBypassWithoutClippingOrRejectingWork() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let tasks = (0..<33).map { index in Task {
+            try await service.translate("fixture \(index)", language: .german, preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 32, waiters: 32, calls: 33)
+        await runtime.unblockAll()
+        for (index, task) in tasks.enumerated() {
+            let result = try await task.value
+            XCTAssertEqual(result, "fixture \(index)")
+        }
+        let large = String(repeating: "a", count: 16 * 1024 + 1)
+        let result = try await service.translate(large, language: .german, preferCatalog: false)
+        XCTAssertEqual(result, large)
+        let finished = await service.debugInFlightStatistics()
+        XCTAssertEqual(finished.requests, 0)
+        XCTAssertEqual(finished.waiters, 0)
+    }
+}
+#endif

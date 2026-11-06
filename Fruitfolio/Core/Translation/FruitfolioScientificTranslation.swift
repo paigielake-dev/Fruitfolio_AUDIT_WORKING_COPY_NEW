@@ -106,7 +106,42 @@ actor FruitfolioTranslationService {
     private let runtime: any FruitfolioLocalTranslationRuntime
     init(runtime: any FruitfolioLocalTranslationRuntime) { self.runtime = runtime }
 
-    func releaseResources() async { await runtime.releaseResources() }
+    // Only simultaneous work is shared. Completed text is owned by its caller,
+    // never retained here after the final waiter (including failed requests).
+    private struct RequestKey: Hashable, Sendable {
+        let source: Data
+        let protectedLiterals: [Data]
+        let sourceLanguage: Data
+        let targetTag: String
+    }
+    private struct Flight: Sendable {
+        let id: UUID
+        let task: Task<FruitfolioDisplayTranslation, Error>
+        var waiters: Set<UUID>
+    }
+    private var flights: [RequestKey: Flight] = [:]
+
+    #if DEBUG
+    func debugInFlightStatistics() -> (requests: Int, waiters: Int) {
+        (flights.count, flights.values.reduce(0) { $0 + $1.waiters.count })
+    }
+    #endif
+
+    func releaseResources() async {
+        let tasks = flights.values.map(\.task)
+        flights.removeAll()
+        for task in tasks { task.cancel() }
+        await runtime.releaseResources()
+    }
+
+    private func finishWaiter(key: RequestKey, flightID: UUID, waiter: UUID, cancelIfLast: Bool) {
+        guard var flight = flights[key], flight.id == flightID else { return }
+        flight.waiters.remove(waiter)
+        if flight.waiters.isEmpty {
+            flights.removeValue(forKey: key)
+            if cancelIfLast { flight.task.cancel() }
+        } else { flights[key] = flight }
+    }
 
     func translate(_ source: String, language: FruitfolioLanguage, protectedLiterals: [String] = [],
                    sourceLanguage: String = "en", preferCatalog: Bool = true, bundle: Bundle = .main) async throws -> String {
@@ -135,6 +170,56 @@ actor FruitfolioTranslationService {
         // Only the simplified Chinese selector maps to the generic zh tag.
         // Traditional Chinese is not silently advertised as equivalent.
         let tag = language == .chineseSimplified ? "zh" : language.rawValue
+        // Bound sharing metadata. Larger/distinct overflow requests retain the
+        // original uncached path; no text is truncated or rejected by this policy.
+        guard let key = sharingKey(source: source, protectedLiterals: protectedLiterals,
+                                   sourceLanguage: sourceLanguage, targetTag: tag) else {
+            return try await machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
+        }
+        let waiter = UUID()
+        let flight: Flight
+        if var existing = flights[key], existing.waiters.count < 64 {
+            existing.waiters.insert(waiter)
+            flights[key] = existing
+            flight = existing
+        } else if flights[key] == nil, flights.count < 32 {
+            let task = Task {
+                try await self.machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
+            }
+            flight = Flight(id: UUID(), task: task, waiters: [waiter])
+            flights[key] = flight
+        } else {
+            return try await machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
+        }
+        defer { finishWaiter(key: key, flightID: flight.id, waiter: waiter, cancelIfLast: false) }
+        return try await withTaskCancellationHandler {
+            let result = try await flight.task.value
+            try Task.checkCancellation()
+            return result
+        } onCancel: {
+            Task { await self.finishWaiter(key: key, flightID: flight.id, waiter: waiter, cancelIfLast: true) }
+        }
+    }
+
+    private func sharingKey(source: String, protectedLiterals: [String],
+                            sourceLanguage: String, targetTag: String) -> RequestKey? {
+        guard source.utf8.count <= 16 * 1024, sourceLanguage.utf8.count <= 64,
+              protectedLiterals.count <= 64 else { return nil }
+        var literalBytes = 0
+        for literal in protectedLiterals {
+            let count = literal.utf8.count
+            guard count <= 4096 - literalBytes else { return nil }
+            literalBytes += count
+        }
+        // String equality normalizes Unicode; sharing must preserve original
+        // bytes and the exact protection context instead of conflating records.
+        return RequestKey(source: Data(source.utf8),
+            protectedLiterals: protectedLiterals.map { Data($0.utf8) },
+            sourceLanguage: Data(sourceLanguage.utf8), targetTag: targetTag)
+    }
+
+    private func machineTranslate(_ source: String, protectedLiterals: [String],
+                                  targetTag: String) async throws -> FruitfolioDisplayTranslation {
         var translated: [String] = []
         for paragraph in source.components(separatedBy: "\n\n") {
             try Task.checkCancellation()
@@ -143,7 +228,7 @@ actor FruitfolioTranslationService {
                 continue
             }
             let envelope = try FruitfolioScientificTranslationEnvelope(paragraph, protectedLiterals: protectedLiterals)
-            let result = try await runtime.translate(envelope.prepared, targetTag: tag)
+            let result = try await runtime.translate(envelope.prepared, targetTag: targetTag)
             try Task.checkCancellation()
             translated.append(try envelope.restore(result))
         }
