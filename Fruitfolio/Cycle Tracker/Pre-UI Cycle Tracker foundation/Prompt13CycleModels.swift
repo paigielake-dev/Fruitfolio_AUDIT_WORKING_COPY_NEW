@@ -902,6 +902,8 @@ nonisolated enum Prompt13CycleError: Error, LocalizedError, Equatable {
     case invalidDose
     case emptyNote
     case persistenceFailure
+    case storageChanged
+    case unsupportedPersistence
     case syncConflict
 
     var errorDescription: String? {
@@ -931,7 +933,13 @@ nonisolated enum Prompt13CycleError: Error, LocalizedError, Equatable {
             return "a blank note is not stored."
 
         case .persistenceFailure:
-            return "Fruitfolio could not save cycle data locally."
+            return "Fruitfolio could not access cycle data locally."
+
+        case .storageChanged:
+            return "saved cycle data needs to be reloaded before this change can be saved or erased. the original file is preserved."
+
+        case .unsupportedPersistence:
+            return "saved cycle data contains fields or a format this version cannot safely update. the original file is preserved."
 
         case .syncConflict:
             return "Fruitfolio found cycle data that needs review before it can be merged."

@@ -17,6 +17,9 @@ actor Prompt13FileCyclePersistence:
     private let fileURL: URL
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
+    private var hasSnapshot = false
+    private var expectedData: Data?
+    private var protectionError: Prompt13CycleError?
 
     init(
         fileURL: URL? = nil
@@ -77,98 +80,61 @@ actor Prompt13FileCyclePersistence:
             decoder
     }
 
-    func load()
-        async throws
-        -> Prompt13CycleArchive
-    {
-        guard
-            FileManager
-                .default
-                .fileExists(
-                    atPath:
-                        fileURL.path
-                )
-        else {
-            return Prompt13CycleArchive()
-        }
-
-        do {
-            let data =
-                try Data(
-                    contentsOf:
-                        fileURL
-                )
-
-            return
-                try decoder.decode(
-                    Prompt13CycleArchive.self,
-                    from: data
-                )
-        } catch {
-            throw
-                Prompt13CycleError
-                    .persistenceFailure
-        }
+    private func readData() throws -> Data? {
+        guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
+        do { return try Data(contentsOf: fileURL) }
+        catch { throw Prompt13CycleError.persistenceFailure }
     }
 
-    func save(
-        _ archive: Prompt13CycleArchive
-    ) async throws {
-        do {
-            let directory =
-                fileURL
-                    .deletingLastPathComponent()
-
-            try FileManager
-                .default
-                .createDirectory(
-                    at: directory,
-                    withIntermediateDirectories:
-                        true
-                )
-
-            let data =
-                try encoder.encode(
-                    archive
-                )
-
-            try data.write(
-                to: fileURL,
-                options: [.atomic]
-            )
-        } catch {
-            throw
-                Prompt13CycleError
-                    .persistenceFailure
-        }
+    private func requireCurrentSnapshot() throws {
+        guard try readData() == expectedData else { throw Prompt13CycleError.storageChanged }
     }
 
-    func erase()
-        async throws
-    {
+    func load() async throws -> Prompt13CycleArchive {
+        let data = try readData()
+        expectedData = data; hasSnapshot = true; protectionError = nil
+        guard let data else { return Prompt13CycleArchive() }
         do {
-            guard
-                FileManager
-                    .default
-                    .fileExists(
-                        atPath:
-                            fileURL.path
-                    )
-            else {
-                return
+            let archive = try decoder.decode(Prompt13CycleArchive.self, from: data)
+            guard archive.schemaVersion == 1,
+                  FruitfolioJSONFieldCoverage.preservesFields(original: data, encoded: try encoder.encode(archive)) else {
+                throw Prompt13CycleError.unsupportedPersistence
             }
-
-            try FileManager
-                .default
-                .removeItem(
-                    at: fileURL
-                )
-        } catch {
-            throw
-                Prompt13CycleError
-                    .persistenceFailure
-        }
+            return archive
+        } catch let error as Prompt13CycleError { protectionError = error; throw error }
+        catch { protectionError = .persistenceFailure; throw Prompt13CycleError.persistenceFailure }
     }
+
+    func save(_ archive: Prompt13CycleArchive) async throws {
+        try Task.checkCancellation()
+        if !hasSnapshot {
+            expectedData = try readData(); hasSnapshot = true
+            if expectedData != nil { protectionError = .storageChanged }
+        }
+        if let protectionError { throw protectionError }
+        try requireCurrentSnapshot()
+        guard archive.schemaVersion == 1 else { throw Prompt13CycleError.unsupportedPersistence }
+        do {
+            let data = try encoder.encode(archive)
+            try requireCurrentSnapshot()
+            try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: fileURL, options: .atomic)
+            expectedData = data
+        } catch let error as Prompt13CycleError { throw error }
+        catch { throw Prompt13CycleError.persistenceFailure }
+    }
+
+    /// Explicit erasure may remove an unsupported baseline, never a newer file.
+    func erase() async throws {
+        try Task.checkCancellation()
+        if !hasSnapshot { expectedData = try readData(); hasSnapshot = true }
+        try requireCurrentSnapshot()
+        do {
+            if FileManager.default.fileExists(atPath: fileURL.path) { try FileManager.default.removeItem(at: fileURL) }
+            expectedData = nil; protectionError = nil
+        } catch { throw Prompt13CycleError.persistenceFailure }
+    }
+
 }
 
 actor Prompt13InMemoryCyclePersistence:

@@ -6,10 +6,24 @@ nonisolated protocol Prompt14OnboardingPersistence: Sendable {
     func erase() async throws
 }
 
+nonisolated enum Prompt14OnboardingPersistenceError: LocalizedError, Equatable, Sendable {
+    case unavailable, storageChanged, unsupportedFormat
+    var errorDescription: String? {
+        switch self {
+        case .unavailable: return "saved cycle setup could not be accessed. please try again."
+        case .storageChanged: return "saved cycle setup needs to be reloaded before this change can be saved or erased. the original file is preserved."
+        case .unsupportedFormat: return "saved cycle setup contains fields this version cannot safely update. the original file is preserved."
+        }
+    }
+}
+
 actor Prompt14FileOnboardingPersistence: Prompt14OnboardingPersistence {
     private let fileURL: URL
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
+    private var hasSnapshot = false
+    private var expectedData: Data?
+    private var protectionError: Prompt14OnboardingPersistenceError?
 
     init(fileURL: URL? = nil) {
         if let fileURL {
@@ -33,25 +47,60 @@ actor Prompt14FileOnboardingPersistence: Prompt14OnboardingPersistence {
         self.decoder = decoder
     }
 
+    private func readData() throws -> Data? {
+        guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
+        do { return try Data(contentsOf: fileURL) }
+        catch { throw Prompt14OnboardingPersistenceError.unavailable }
+    }
+
+    private func requireCurrentSnapshot() throws {
+        guard try readData() == expectedData else { throw Prompt14OnboardingPersistenceError.storageChanged }
+    }
+
     func load() async throws -> Prompt14OnboardingDraft {
-        guard FileManager.default.fileExists(atPath: fileURL.path) else {
-            return Prompt14OnboardingDraft()
-        }
-        let data = try Data(contentsOf: fileURL)
-        return try decoder.decode(Prompt14OnboardingDraft.self, from: data)
+        let data = try readData()
+        expectedData = data; hasSnapshot = true; protectionError = nil
+        guard let data else { return Prompt14OnboardingDraft() }
+        do {
+            let draft = try decoder.decode(Prompt14OnboardingDraft.self, from: data)
+            guard draft.schemaVersion == 1,
+                  FruitfolioJSONFieldCoverage.preservesFields(original: data, encoded: try encoder.encode(draft)) else {
+                throw Prompt14OnboardingPersistenceError.unsupportedFormat
+            }
+            return draft
+        } catch let error as Prompt14OnboardingPersistenceError { protectionError = error; throw error }
+        catch { protectionError = .unavailable; throw Prompt14OnboardingPersistenceError.unavailable }
     }
 
     func save(_ draft: Prompt14OnboardingDraft) async throws {
-        let folder = fileURL.deletingLastPathComponent()
-        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        let data = try encoder.encode(draft)
-        try data.write(to: fileURL, options: .atomic)
+        try Task.checkCancellation()
+        if !hasSnapshot {
+            expectedData = try readData(); hasSnapshot = true
+            if expectedData != nil { protectionError = .storageChanged }
+        }
+        if let protectionError { throw protectionError }
+        try requireCurrentSnapshot()
+        guard draft.schemaVersion == 1 else { throw Prompt14OnboardingPersistenceError.unsupportedFormat }
+        do {
+            let data = try encoder.encode(draft)
+            try requireCurrentSnapshot()
+            try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: fileURL, options: .atomic)
+            expectedData = data
+        } catch let error as Prompt14OnboardingPersistenceError { throw error }
+        catch { throw Prompt14OnboardingPersistenceError.unavailable }
     }
 
     func erase() async throws {
-        guard FileManager.default.fileExists(atPath: fileURL.path) else { return }
-        try FileManager.default.removeItem(at: fileURL)
+        try Task.checkCancellation()
+        if !hasSnapshot { expectedData = try readData(); hasSnapshot = true }
+        try requireCurrentSnapshot()
+        do {
+            if FileManager.default.fileExists(atPath: fileURL.path) { try FileManager.default.removeItem(at: fileURL) }
+            expectedData = nil; protectionError = nil
+        } catch { throw Prompt14OnboardingPersistenceError.unavailable }
     }
+
 }
 
 actor Prompt14InMemoryOnboardingPersistence: Prompt14OnboardingPersistence {
