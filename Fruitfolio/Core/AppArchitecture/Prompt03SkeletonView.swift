@@ -133,7 +133,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioContactQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+            Prompt28GameRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioContactQA") {
             Prompt30ContactView(onBack: {})
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
                 .onAppear {

@@ -28,6 +28,89 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    private func launchGame(_ scenario: String, reduced: Bool) -> XCUIApplication {
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", scenario,
+                                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+        app.launch()
+        return app
+    }
+
+    private func captureGame(_ app: XCUIApplication, name: String) {
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
+    func testGameClassificationDistinguishesGoodFruitAndBonusStarAtAccessibilitySize() {
+        for reduced in [false, true] {
+            for scenario in ["good", "star"] {
+                let app = launchGame(scenario, reduced: reduced)
+                let scroll = app.scrollViews["fruitBasket.classification.scroll"]
+                XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+                let buttonID = scenario == "star" ? "fruitBasket.classification.catchStar" : "fruitBasket.classification.catchFruit"
+                let button = app.buttons[buttonID]
+                for _ in 0..<12 { if button.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(button.isHittable)
+                captureGame(app, name: "game-\(scenario)-reduced-\(reduced)-before")
+                button.tap()
+                let progress = app.staticTexts["fruitBasket.classification.progress"]
+                for _ in 0..<12 { if progress.isHittable { break }; scroll.swipeDown() }
+                let expected = scenario == "star" ? "basket 0 of 10; star passes 1" : "basket 1 of 10; star passes 0"
+                let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: progress)
+                XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 5), .completed)
+                captureGame(app, name: "game-\(scenario)-reduced-\(reduced)-settled")
+                app.terminate()
+            }
+        }
+    }
+
+    func testGameActualResultsExposeSevenFruitFailureAndTenFruitSuccess() {
+        for reduced in [false, true] {
+            for scenario in ["failure", "success"] {
+                let app = launchGame(scenario, reduced: reduced)
+                let count = app.descendants(matching: .any)["fruitBasket.result.fruitCount"].firstMatch
+                XCTAssertTrue(count.waitForExistence(timeout: 5))
+                let expected = scenario == "success" ? "10 / 10" : "7 / 10"
+                XCTAssertTrue((count.label + " " + String(describing: count.value ?? "")).contains(expected))
+                captureGame(app, name: "game-\(scenario)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
+    func testGameStormUsesLargeCardAndExcludesBackgroundUntilAcknowledged() {
+        for reduced in [false, true] {
+            let app = launchGame("storm", reduced: reduced)
+            let note = app.otherElements["fruitBasket.stormNote"].firstMatch
+            XCTAssertTrue(note.waitForExistence(timeout: 5))
+            XCTAssertFalse(app.buttons["fruitBasket.classification.catchFruit"].exists)
+            let acknowledge = app.buttons["got it"]
+            for _ in 0..<12 { if acknowledge.isHittable { break }; note.swipeUp() }
+            XCTAssertTrue(acknowledge.isHittable)
+            captureGame(app, name: "game-storm-reduced-\(reduced)")
+            acknowledge.tap()
+            XCTAssertTrue(app.scrollViews["fruitBasket.classification.scroll"].waitForExistence(timeout: 3))
+            app.terminate()
+        }
+    }
+
+    func testGameRulesAndLeaderboardCapturePortraitAndLandscapeAtAccessibilitySize() {
+        for scenario in ["rules", "leaderboard"] {
+            let app = launchGame(scenario, reduced: true)
+            let marker = scenario == "rules" ? app.staticTexts["how it works!"] : app.textFields["fruitBasket.publicUsername"]
+            if !marker.waitForExistence(timeout: 5) { XCTFail("Missing game QA state: \(scenario)") }
+            captureGame(app, name: "game-\(scenario)-portrait")
+            XCUIDevice.shared.orientation = .landscapeLeft
+            captureGame(app, name: "game-\(scenario)-landscape")
+            app.terminate()
+        }
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     func testScrollablePopupIsolatesBackgroundAndRestoresItOnClose() {
         verifyModal(reduceMotion: false)
     }

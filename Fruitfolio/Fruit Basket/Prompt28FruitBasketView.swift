@@ -45,13 +45,14 @@ private struct Prompt28InlineArtGlyph: View {
 
 struct Prompt28FruitBasketView: View {
     let onBack: () -> Void
+    private let libraryStore: Prompt10SavedLibraryStore
 
     @StateObject private var store: Prompt28FruitBasketStore
     @StateObject private var viewModel: Prompt28FruitBasketViewModel
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
-    @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
+    @ObservedObject private var usernameStore: FruitfolioUsernameStore
     @Environment(\.scenePhase) private var scenePhase
 
     @State private var questionOperationTask: Task<Void, Never>?
@@ -68,9 +69,13 @@ struct Prompt28FruitBasketView: View {
     init(
         onBack: @escaping () -> Void,
         researchProvider: (any Prompt28ResearchProviding)? = nil,
-        defaults: UserDefaults = .standard
+        defaults: UserDefaults = .standard,
+        usernameStore: FruitfolioUsernameStore? = nil,
+        libraryStore: Prompt10SavedLibraryStore? = nil
     ) {
         self.onBack = onBack
+        self.libraryStore = libraryStore ?? .shared
+        _usernameStore = ObservedObject(wrappedValue: usernameStore ?? .shared)
         let store = Prompt28FruitBasketStore(defaults: defaults)
         _store = StateObject(wrappedValue: store)
         _viewModel = StateObject(
@@ -80,6 +85,18 @@ struct Prompt28FruitBasketView: View {
             )
         )
     }
+
+    #if DEBUG
+    /// The regression route uses the actual controller and isolated stores.
+    init(onBack: @escaping () -> Void, regressionModel: Prompt28FruitBasketViewModel,
+         usernameStore: FruitfolioUsernameStore, libraryStore: Prompt10SavedLibraryStore) {
+        self.onBack = onBack
+        self.libraryStore = libraryStore
+        _store = StateObject(wrappedValue: regressionModel.store)
+        _viewModel = StateObject(wrappedValue: regressionModel)
+        _usernameStore = ObservedObject(wrappedValue: usernameStore)
+    }
+    #endif
 
     var body: some View {
         ZStack {
@@ -164,7 +181,7 @@ struct Prompt28FruitBasketView: View {
         .sheet(isPresented: $showingSaveDestination) {
             if let pending = viewModel.savePendingContent() {
                 Prompt10AskSaveDestination(
-                    store: .shared,
+                    store: libraryStore,
                     pending: pending,
                     onSaved: {
                         showingSaveDestination = false
@@ -1189,6 +1206,7 @@ struct Prompt28FruitBasketView: View {
                     y: height * fruit.y
                 )
                 .zIndex(10)
+                .accessibilityIdentifier("fruitBasket.classification.item")
                 .onAppear {
                     Prompt28AssetUsageRegistrar.markRendered(
                         fruit.fruitID.assetID
@@ -1236,7 +1254,8 @@ struct Prompt28FruitBasketView: View {
                 }
             )
             .zIndex(30)
-            .accessibilityLabel("Basket, \(viewModel.basketCount) of 10")
+            .accessibilityIdentifier("fruitBasket.round.basket")
+            .accessibilityLabel("Basket, \(viewModel.basketCount) of \(viewModel.engine.rules.goodFruitTarget)")
             .accessibilityValue(viewModel.basketIsInPuddle ? "in a puddle; movement meets gentle resistance" : "on dry ground")
         }
         .onAppear { viewModel.updatePlayfield(size: geometry.playfield) }
@@ -1255,6 +1274,9 @@ struct Prompt28FruitBasketView: View {
         VStack(spacing: 14) {
             Spacer()
                 .frame(height: 92)
+            Text("basket \(viewModel.basketCount) of \(viewModel.engine.rules.goodFruitTarget); star passes \(viewModel.session?.availableStarPasses ?? 0)")
+                .prompt28Text(.secondary)
+                .accessibilityIdentifier("fruitBasket.classification.progress")
 
             if let fruit =
                 viewModel.classificationFruit {
@@ -1268,7 +1290,7 @@ struct Prompt28FruitBasketView: View {
                     height: 100
                 )
                 .accessibilityLabel(
-                    "\(fruit.fruitID.displayName). Does this belong in the basket?"
+                    "\(fruit.fruitID.displayName). \(fruit.classification == .good ? "attached star marker" : "no attached star marker"). Does this belong in the basket?"
                 )
                 .onAppear {
                     Prompt28AssetUsageRegistrar.markRendered(
@@ -1339,6 +1361,7 @@ struct Prompt28FruitBasketView: View {
         ) {
             viewModel.classificationDecision(accept: true)
         }
+        .accessibilityIdentifier("fruitBasket.classification.catchFruit")
     }
 
     private var classificationNoButton: some View {
@@ -1348,6 +1371,7 @@ struct Prompt28FruitBasketView: View {
         ) {
             viewModel.classificationDecision(accept: false)
         }
+        .accessibilityIdentifier("fruitBasket.classification.passFruit")
     }
 
     private var pausePanel: some View {
@@ -1405,6 +1429,7 @@ struct Prompt28FruitBasketView: View {
 
             Prompt28PaperPanel {
                 VStack(spacing: 12) {
+                    if viewModel.currentQuestion?.usesSeriousFeedback != true {
                     FruitfolioImage(
                         id: .fruit_peach_soft
                     )
@@ -1414,8 +1439,9 @@ struct Prompt28FruitBasketView: View {
                     )
                     .accessibilityLabel("Peach")
 
+                    }
                     Text(
-                        "oopsie :,) that one didn’t belong in this basket."
+                        Prompt28FeedbackCopy.unsuccessful(serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
                     )
                     .prompt28Text(.sectionHeading)
                     .multilineTextAlignment(.center)
@@ -1432,7 +1458,7 @@ struct Prompt28FruitBasketView: View {
                     }
 
                     Text(
-                        "your score didn’t lose any points ♡"
+                        viewModel.currentQuestion?.usesSeriousFeedback == true ? "no points were deducted." : "your score didn’t lose any points ♡"
                     )
                     .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
@@ -1474,6 +1500,7 @@ struct Prompt28FruitBasketView: View {
             Text(result.succeeded ? "completed catch round" : "catch attempt ended")
                 .prompt28Text(.sectionHeading).accessibilityAddTraits(.isHeader)
             LabeledContent("fruit caught", value: "\(result.caughtFruit.count) / \(result.targetFruit)")
+                .accessibilityIdentifier("fruitBasket.result.fruitCount")
             LabeledContent("passes carried in", value: String(result.starPassesAtStart))
             LabeledContent("stars caught this round", value: String(result.starsCollected))
             LabeledContent("star passes used", value: String(result.starPassesSpent))

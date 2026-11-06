@@ -458,6 +458,10 @@ struct Prompt28LeaderboardTotals: Equatable, Sendable {
 /// Neutral feedback for serious education; the ordinary founder celebration is
 /// retained for nonsensitive game questions. This does not classify a diagnosis.
 nonisolated enum Prompt28FeedbackCopy {
+    static func unsuccessful(serious: Bool) -> String {
+        serious ? "that catch attempt ended. review the visual catch rule before retrying."
+            : "oopsie :,) that one didn’t belong in this basket."
+    }
     static func incorrect(serious: Bool) -> String {
         serious ? "that answer does not match the original source. review the excerpt and its citations below."
             : "not quite :,) here’s the little reason why."

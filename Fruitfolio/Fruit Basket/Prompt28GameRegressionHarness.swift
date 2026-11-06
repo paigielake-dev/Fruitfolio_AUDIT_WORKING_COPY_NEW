@@ -1,0 +1,91 @@
+#if DEBUG
+import SwiftUI
+
+/// Nonclinical UI fixtures only, inside the real root environment. All game and
+/// username writes use this disposable suite, never the user's standard store.
+@MainActor
+private final class Prompt28GameRegressionFixture: ObservableObject {
+    let model: Prompt28FruitBasketViewModel
+    let username: FruitfolioUsernameStore
+    let library: Prompt10SavedLibraryStore
+    private let defaults: UserDefaults
+    private let suite = "Fruitfolio.gameUIQA." + UUID().uuidString
+    init() {
+        defaults = UserDefaults(suiteName: suite)!
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        store.completeTour()
+        store.controlMode = .classification
+        store.persistPreferences()
+        model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        username = FruitfolioUsernameStore(defaults: defaults)
+        library = Prompt10SavedLibraryStore(defaults: defaults)
+    }
+    func cleanUp() { defaults.removePersistentDomain(forName: suite) }
+}
+
+struct Prompt28GameRegressionHarness: View {
+    @StateObject private var fixture = Prompt28GameRegressionFixture()
+    @State private var configured = false
+    @EnvironmentObject private var settings: SettingsStore
+    private var model: Prompt28FruitBasketViewModel { fixture.model }
+    private var scenario: String {
+        let arguments = ProcessInfo.processInfo.arguments
+        if let index = arguments.firstIndex(of: "-fruitfolioGameQAScenario"), index + 1 < arguments.count {
+            return arguments[index + 1]
+        }
+        return "good"
+    }
+
+    var body: some View {
+        Prompt28FruitBasketView(onBack: {}, regressionModel: model, usernameStore: fixture.username, libraryStore: fixture.library)
+            .task {
+                guard !configured else { return }
+                configured = true
+                settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioGameReduceMotion")
+                configure()
+            }
+            .onDisappear { fixture.cleanUp() }
+    }
+
+    private func configure() {
+        if scenario == "rules" { model.screen = .howItWorks; return }
+        if scenario == "leaderboard" { model.screen = .leaderboard; return }
+        model.rawTopic = "QA visual fixture"
+        model.currentQuestion = Prompt28Question(id: "qa-only", topicQuery: "QA visual fixture",
+            normalizedTopic: "qa visual fixture", category: "UI fixture — not medical research",
+            educationalDifficulty: .easy, questionText: "UI fixture only: choose the first option.",
+            answerOptions: [.init(id: "first", text: "first"), .init(id: "second", text: "second")], correctAnswerID: "first",
+            explanation: "UI regression fixture only. This is not medical content.", sourceIDs: ["qa-only"],
+            sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
+            catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
+            contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0))
+        var session = model.engine.newSession(topic: model.rawTopic, normalizedTopic: "qa visual fixture",
+            difficulty: .easy, startingLevel: scenario == "storm" ? 6 : 1)
+        if scenario == "storm" { session.currentRound = 3 }
+        model.session = session
+        model.beginCatch()
+        if scenario == "storm" { return } // Real screen-change observer presents the real storm modal.
+        if scenario == "star" {
+            model.classificationFruit = nil
+            model.classificationStarAvailable = true
+        } else if scenario == "success" || scenario == "failure" {
+            let count = scenario == "success" ? model.engine.rules.goodFruitTarget : 7
+            for _ in 0..<count { catchFruit(.pear, classification: .good) }
+            if scenario == "failure" { catchFruit(.lemon, classification: .bad) }
+            model.sceneBecameInactive() // Deterministically completes the real queued result.
+        } else {
+            model.classificationStarAvailable = false
+            model.classificationFruit = fruit(.pear, classification: .good)
+        }
+    }
+    private func fruit(_ id: Prompt28FruitID, classification: Prompt28FruitClassification) -> Prompt28FallingFruit {
+        .init(fruitID: id, classification: classification, x: 0.5, y: 0.5, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)
+    }
+    private func catchFruit(_ id: Prompt28FruitID, classification: Prompt28FruitClassification) {
+        model.classificationStarAvailable = false
+        model.classificationFruit = fruit(id, classification: classification)
+        model.classificationDecision(accept: true)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+    }
+}
+#endif

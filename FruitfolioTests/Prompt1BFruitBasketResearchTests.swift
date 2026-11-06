@@ -106,6 +106,9 @@ final class Prompt1BFruitBasketResearchTests: XCTestCase {
         cannotOverrideSourceTone.seriousFeedback = false
         XCTAssertTrue(cannotOverrideSourceTone.usesSeriousFeedback)
         XCTAssertTrue(question.sourceExcerpt?.contains("pregnancy loss") == true)
+        XCTAssertFalse(Prompt28FeedbackCopy.unsuccessful(serious: true).contains(":,)"))
+        XCTAssertFalse(Prompt28FeedbackCopy.unsuccessful(serious: true).contains("oopsie"))
+        XCTAssertEqual(Prompt28FeedbackCopy.unsuccessful(serious: false), "oopsie :,) that one didn’t belong in this basket.")
         XCTAssertFalse(Prompt28FeedbackCopy.correct(serious: true).contains("YAY"))
         XCTAssertFalse(Prompt28FeedbackCopy.incorrect(serious: true).contains(":,)"))
         XCTAssertEqual(Prompt28FeedbackCopy.correct(serious: false), "YAYYY! catch your fruit! :-)")

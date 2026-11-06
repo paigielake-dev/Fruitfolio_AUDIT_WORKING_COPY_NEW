@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "2f9d5de4cbdc37cbb4aacf8d83537c7175053235",
+  "current_HEAD": "360052df7c2844ec39a22982bab7b6cb8c46d963",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 435,
-  "current_implementation_batch": "Shared-saved-display-translation-policy-and-original-storage-boundary",
+  "current_requirement": 468,
+  "current_implementation_batch": "Actual-game-UI-scenarios-accessible-star-cues-and-serious-failure-feedback",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,14 +493,15 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-    "FruitfolioTests/Prompt1BSavedTranslationBoundaryTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SAVED_TRANSLATION_BOUNDARY_VERIFICATION.md"
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "FruitfolioTests/Prompt1BFruitBasketResearchTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/GAME_UI_REGRESSION_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -513,20 +514,22 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite with final semantic mismatch regression",
+    "Full portable Swift6 suite",
     "Full actual native-linked Swift5 suite",
+    "24 Python workflow tests",
     "Swift compiler syntax parse",
+    "Xcode project reference validation",
     "git diff --check"
   ],
   "last_test_results": {
     "Swift6": "462 XCTest +21 Swift Testing passed",
     "nativeSwift5": "467 XCTest +21 Swift Testing passed",
-    "syntax": "239 changed Swift files parsed; zero errors",
-    "storage": "Actual UserDefaults saved bytes and reinitialized original source/citation/note metadata unchanged across fixture display translations/preferences",
-    "Apple": "NOT_RUN saved display/selection/VoiceOver and complete per-language app acceptance",
-    "MADLAD": "Official T5 inference/clinical quality NOT_RUN; fixture tests are storage/display policy only"
+    "workflow": "24 passed",
+    "syntax": "240 changed Swift files parsed; zero errors",
+    "project": "Build-file references resolved; no Xcode build/link",
+    "Apple": "NOT_RUN four game UI tests and all screenshots/VoiceOver/landscape/motion effects; app typecheck unavailable"
   },
-  "next_exact_implementation_action": "Continue435\u2013442 actual translation acceptance gates and443\u2013478 remaining independent source/test fixes. Preserve runtime blockers explicitly. Reconcile remaining founder prose requirements against current implementation without repeating broad source audits; address independent production ownership verification and recovery/testing gaps when applicable. All unknown/MADLAD resource/device/clinical gates remain unverified, no push.",
-  "updated_at": "2026-11-06T01:39:36.086781+00:00",
+  "next_exact_implementation_action": "Make Mac runtime preflight check the requested simulator/device architecture without unnecessarily requiring an iPhone slice for simulator tests; retain strict both-platform release gate. Preserve unrun Apple screenshot/UI status. Then continue remaining independent verification/source failures and founder applicability reconciliation; do not stop at this batch.",
+  "updated_at": "2026-11-06T01:46:26.391371+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }
