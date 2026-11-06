@@ -902,9 +902,22 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         verifyModal(reduceMotion: true, rightToLeft: true)
     }
 
-    private func verifyModal(reduceMotion: Bool, rightToLeft: Bool = false) {
+    func testEveryCharacterUsesTheRootHostInBothDirectionsAndLogicalSides() {
+        for character in ["strawberry", "blueberry", "peach"] {
+            for rightToLeft in [false, true] {
+                for trailing in [false, true] {
+                    verifyModal(reduceMotion: true, rightToLeft: rightToLeft,
+                                character: character, trailing: trailing)
+                }
+            }
+        }
+    }
+
+    private func verifyModal(reduceMotion: Bool, rightToLeft: Bool = false,
+                             character: String = "blueberry", trailing: Bool = false) {
         let app = XCUIApplication()
-        app.launchArguments += ["-fruitfolioModalQA"]
+        app.launchArguments += ["-fruitfolioModalQA", "-fruitfolioDialogueCharacter", character]
+        if trailing { app.launchArguments += ["-fruitfolioDialogueTrailing"] }
         if reduceMotion {
             app.launchArguments += ["-fruitfolioModalReduceMotion",
                                     "-UIPreferredContentSizeCategoryName",
@@ -914,6 +927,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         app.launch()
         let scroll = app.scrollViews["fruitPopup.scroll"]
         XCTAssertTrue(scroll.waitForExistence(timeout: 10))
+        XCTAssertEqual(app.scrollViews.matching(identifier: "fruitPopup.scroll").count, 1)
         XCTAssertFalse(app.buttons["modalQA.background"].exists,
                        "Modal background must be absent from the accessibility tree.")
         let close = app.buttons["fruitPopup.action.primary"]
@@ -928,12 +942,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertLessThanOrEqual(close.frame.maxX, scroll.frame.maxX)
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = (reduceMotion ? "modal-accessibility-reduce-motion" : "modal-scroll-actions")
-            + (rightToLeft ? "-rtl" : "-ltr")
+            + (rightToLeft ? "-rtl" : "-ltr") + "-" + character + (trailing ? "-trailing" : "-leading")
         attachment.lifetime = .keepAlways
         add(attachment)
         close.tap()
         XCTAssertTrue(app.buttons["modalQA.background"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.buttons["modalQA.background"].isHittable)
         XCTAssertFalse(scroll.exists)
+        app.terminate()
     }
 }
