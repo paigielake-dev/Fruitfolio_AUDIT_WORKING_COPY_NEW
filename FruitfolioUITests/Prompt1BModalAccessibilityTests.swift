@@ -158,6 +158,10 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let source = app.buttons["sourceCitation.open.qa-citation"]
             XCTAssertTrue(source.waitForExistence(timeout: 5))
             for _ in 0..<12 { if source.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(source.isHittable)
+            XCTAssertGreaterThanOrEqual(source.frame.height, 44)
+            XCTAssertGreaterThanOrEqual(source.frame.minX, app.frame.minX)
+            XCTAssertLessThanOrEqual(source.frame.maxX, app.frame.maxX)
             source.tap()
             let paper = app.otherElements.matching(identifier: "fruitPopup.tapedWhite")
             XCTAssertTrue(paper.firstMatch.waitForExistence(timeout: 3))
@@ -168,6 +172,14 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
             XCTAssertTrue(close.isHittable)
             captureGame(app, name: "citation-paper-inSheet-\(inSheet)-reduced-\(reduced)")
+            close.tap()
+            XCTAssertTrue(source.waitForExistence(timeout: 3))
+            for _ in 0..<16 { if source.isHittable { break }; app.swipeUp() }
+            source.tap()
+            XCTAssertTrue(paper.firstMatch.waitForExistence(timeout: 3))
+            XCTAssertEqual(paper.count, 1)
+            for _ in 0..<16 { if close.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(close.isHittable)
             close.tap()
             let background = app.buttons["citationQA.background"]
             XCTAssertTrue(background.waitForExistence(timeout: 3))
