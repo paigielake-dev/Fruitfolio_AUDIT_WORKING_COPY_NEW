@@ -2840,3 +2840,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 851, "native_CPU_XCTest": 873, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 12, "Apple_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Protect actual classification callbacks with captured fruit/round identity before consuming passes or advancing drops; add failing actual-controller regressions, execute supported suites, record per-entry evidence and checkpoint locally.
 - Commit: containing commit for batch Actual-game-transition-identities-and-frozen-save.
+
+## Classification-callback-fruit-and-interaction-ownership
+
+- Parent checkpoint: 25a565d99830e38cc22c4b6488e3a06b943f07dc.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, development_workflow/CLASSIFICATION_DECISION_OWNERSHIP.md.
+- Actual classification fruit/star decision callbacks capture interaction identity; fruit captures exact item UUID. Controller validates identities before any mutation; consume/spawn/pause invalidate old callbacks. Genuine 49-test pre-fix run reproduced2assertion failures. Six regressions exercise identity replacement, wrong fruit, replay after replacement, pause/resume, stale later star and valid current accept. No engine/art/source/citation/schema rewrite.
+- Tests added/updated: FruitfolioTests/Prompt28FruitBasketTests.swift.
+- Verification: {"portable_XCTest": 857, "native_CPU_XCTest": 879, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 2, "Apple_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Reproduce and fix actual owned-gameplay-clock retaining the controller across sleep; verify a real frame ran before asserting release, test actual controller rather than fake timer, execute supported checks, record checklist evidence and local checkpoint.
+- Commit: containing commit for batch Classification-callback-fruit-and-interaction-ownership.

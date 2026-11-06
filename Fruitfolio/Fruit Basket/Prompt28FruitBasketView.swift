@@ -1507,6 +1507,7 @@ struct Prompt28FruitBasketView: View {
         height: CGFloat,
         xOffset: CGFloat
     ) -> some View {
+        let interactionID = viewModel.questionInteractionID
         ScrollView {
         VStack(spacing: 14) {
             VStack(spacing: 8) {
@@ -1539,13 +1540,13 @@ struct Prompt28FruitBasketView: View {
 
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 12) {
-                        classificationYesButton
-                        classificationNoButton
+                        classificationYesButton(fruitID: fruit.id, interactionID: interactionID)
+                        classificationNoButton(fruitID: fruit.id, interactionID: interactionID)
                     }
 
                     VStack(spacing: 8) {
-                        classificationYesButton
-                        classificationNoButton
+                        classificationYesButton(fruitID: fruit.id, interactionID: interactionID)
+                        classificationNoButton(fruitID: fruit.id, interactionID: interactionID)
                     }
                 }
                 .frame(maxWidth: 292)
@@ -1556,11 +1557,13 @@ struct Prompt28FruitBasketView: View {
                     font: Prompt28TextRole.body.font, serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
                     .multilineTextAlignment(.center)
                 Prompt28WatercolorButton(title: "catch star", accent: .paleYellow) {
-                    viewModel.classificationStarDecision(accept: true)
+                    guard canInteractWithGame else { return }
+                    viewModel.classificationStarDecision(accept: true, expectedInteractionID: interactionID)
                 }
                 .accessibilityIdentifier("fruitBasket.classification.catchStar")
                 Prompt28WatercolorButton(title: "let star pass", accent: .mint) {
-                    viewModel.classificationStarDecision(accept: false)
+                    guard canInteractWithGame else { return }
+                    viewModel.classificationStarDecision(accept: false, expectedInteractionID: interactionID)
                 }
             } else if !viewModel.catchTransits.isEmpty {
                 FruitfolioTranslatedText(source: "settling in the basket…", font: Prompt28TextRole.body.font, serious: true)
@@ -1590,22 +1593,24 @@ struct Prompt28FruitBasketView: View {
         .accessibilityIdentifier("fruitBasket.classification.scroll")
     }
 
-    private var classificationYesButton: some View {
+    private func classificationYesButton(fruitID: UUID, interactionID: UUID) -> some View {
         Prompt28WatercolorButton(
             title: viewModel.currentQuestion?.usesSeriousFeedback == true ? "catch fruit" : "yes ♡",
             accent: .mint
         ) {
-            viewModel.classificationDecision(accept: true)
+            guard canInteractWithGame else { return }
+            viewModel.classificationDecision(accept: true, expectedFruitID: fruitID, expectedInteractionID: interactionID)
         }
         .accessibilityIdentifier("fruitBasket.classification.catchFruit")
     }
 
-    private var classificationNoButton: some View {
+    private func classificationNoButton(fruitID: UUID, interactionID: UUID) -> some View {
         Prompt28WatercolorButton(
             title: viewModel.currentQuestion?.usesSeriousFeedback == true ? "let fruit pass" : "nope!",
             accent: .peach
         ) {
-            viewModel.classificationDecision(accept: false)
+            guard canInteractWithGame else { return }
+            viewModel.classificationDecision(accept: false, expectedFruitID: fruitID, expectedInteractionID: interactionID)
         }
         .accessibilityIdentifier("fruitBasket.classification.passFruit")
     }

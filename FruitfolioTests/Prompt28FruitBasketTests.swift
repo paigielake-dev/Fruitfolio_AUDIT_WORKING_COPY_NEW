@@ -16,6 +16,88 @@ final class Prompt28FruitBasketTests: XCTestCase {
         return model
     }
 
+    func testClassificationPassReplacesInteractionIdentity() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        model.classificationFruit = .init(fruitID: .lemon, classification: .bad,
+            x: 0.5, y: 0.38, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        let ticket = model.questionInteractionID
+        model.classificationDecision(accept: false)
+        XCTAssertNotEqual(model.questionInteractionID, ticket)
+    }
+
+    func testClassificationStarPassReplacesInteractionIdentity() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        model.classificationFruit = nil
+        model.classificationStarAvailable = true
+        let ticket = model.questionInteractionID
+        model.classificationStarDecision(accept: false)
+        XCTAssertNotEqual(model.questionInteractionID, ticket)
+    }
+
+    func testStaleFruitDecisionCannotActOnReplacementFruit() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        let first = Prompt28FallingFruit(fruitID: .lemon, classification: .bad,
+            x: 0.5, y: 0.38, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationFruit = first
+        let oldTicket = model.questionInteractionID
+        model.classificationDecision(accept: false, expectedFruitID: first.id, expectedInteractionID: oldTicket)
+        let replacement = model.classificationFruit
+        let ledger = model.roundLedger
+        let score = model.session?.score
+        model.classificationDecision(accept: true, expectedFruitID: first.id, expectedInteractionID: oldTicket)
+        XCTAssertEqual(model.classificationFruit?.id, replacement?.id)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertEqual(model.session?.score, score)
+        XCTAssertTrue(model.catchTransits.isEmpty)
+    }
+
+    func testWrongFruitIdentityCannotConsumeCurrentDecision() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        let fruit = model.classificationFruit
+        let ticket = model.questionInteractionID
+        let ledger = model.roundLedger
+        model.classificationDecision(accept: true, expectedFruitID: UUID(), expectedInteractionID: ticket)
+        XCTAssertEqual(model.classificationFruit?.id, fruit?.id)
+        XCTAssertEqual(model.questionInteractionID, ticket)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertTrue(model.catchTransits.isEmpty)
+    }
+
+    func testPrePauseFruitDecisionCannotResumeAgainstSameFruit() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        let fruit = model.classificationFruit!
+        let ticket = model.questionInteractionID
+        model.pause()
+        model.resume()
+        model.classificationDecision(accept: true, expectedFruitID: fruit.id, expectedInteractionID: ticket)
+        XCTAssertEqual(model.classificationFruit?.id, fruit.id)
+        XCTAssertTrue(model.catchTransits.isEmpty)
+        model.classificationDecision(accept: true, expectedFruitID: fruit.id,
+            expectedInteractionID: model.questionInteractionID)
+        XCTAssertNil(model.classificationFruit)
+        XCTAssertEqual(model.catchTransits.count, 1)
+    }
+
+    func testStaleStarDecisionCannotConsumeReplacementStarOrPasses() async {
+        let model = roundModel(starPasses: 3); defer { model.leaveScreen() }
+        model.classificationFruit = nil
+        model.classificationStarAvailable = true
+        let ticket = model.questionInteractionID
+        model.classificationStarDecision(accept: false, expectedInteractionID: ticket)
+        // Deterministically expose a later real decision without depending on rare-drop randomness.
+        model.classificationFruit = nil
+        model.classificationStarAvailable = true
+        let ledger = model.roundLedger
+        model.classificationStarDecision(accept: true, expectedInteractionID: ticket)
+        XCTAssertTrue(model.classificationStarAvailable)
+        XCTAssertTrue(model.catchTransits.isEmpty)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertEqual(model.session?.availableStarPasses, 3)
+        model.classificationStarDecision(accept: true, expectedInteractionID: model.questionInteractionID)
+        XCTAssertFalse(model.classificationStarAvailable)
+        XCTAssertEqual(model.catchTransits.count, 1)
+    }
+
     func testUnknownAnswerCannotMutateQuestionChoiceOrStreak() async {
         let model = unansweredModel(); defer { model.leaveScreen() }
         model.session?.currentStreak = 3

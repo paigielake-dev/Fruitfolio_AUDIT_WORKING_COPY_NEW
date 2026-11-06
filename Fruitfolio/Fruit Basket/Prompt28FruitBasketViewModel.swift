@@ -363,14 +363,17 @@ final class Prompt28FruitBasketViewModel {
         if !activeObstacles.contains(.puddle) { basketX = basketTargetX }
     }
 
-    func classificationDecision(accept: Bool) {
+    func classificationDecision(accept: Bool, expectedFruitID: UUID? = nil, expectedInteractionID: UUID? = nil) {
         guard
             screen == .catchActive, !isPaused, !store.isReadOnly, catchTransits.isEmpty,
             store.controlMode == .classification,
             let fruit = classificationFruit,
+            expectedFruitID == nil || expectedFruitID == fruit.id,
+            expectedInteractionID == nil || expectedInteractionID == questionGeneration,
             !roundResultLocked
         else { return }
 
+        questionGeneration = UUID()
         classificationFruit = nil
         if accept {
             catchTransits.append(.init(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification), relativeX: 0))
@@ -381,9 +384,11 @@ final class Prompt28FruitBasketViewModel {
         }
     }
 
-    func classificationStarDecision(accept: Bool) {
+    func classificationStarDecision(accept: Bool, expectedInteractionID: UUID? = nil) {
         guard screen == .catchActive, !isPaused, !store.isReadOnly, store.controlMode == .classification,
-              classificationStarAvailable, catchTransits.isEmpty, !roundResultLocked else { return }
+              classificationStarAvailable, catchTransits.isEmpty, !roundResultLocked,
+              expectedInteractionID == nil || expectedInteractionID == questionGeneration else { return }
+        questionGeneration = UUID()
         classificationStarAvailable = false
         if accept {
             catchTransits.append(.init(id: UUID(), kind: .star, relativeX: 0))
@@ -397,6 +402,7 @@ final class Prompt28FruitBasketViewModel {
     func pause() {
         if roundResultLocked { resolvePendingRound(); return }
         guard screen == .catchActive else { return }
+        questionGeneration = UUID()
         isPaused = true
         gameplayTask?.cancel()
         gameplayTask = nil
@@ -650,6 +656,7 @@ final class Prompt28FruitBasketViewModel {
 
     private func spawnClassificationFruit() {
         guard let question = currentQuestion else { return }
+        questionGeneration = UUID()
         if starPlanner.shouldDropStar(randomUnit: Double.random(in: 0...1)) {
             classificationFruit = nil
             classificationStarAvailable = true
