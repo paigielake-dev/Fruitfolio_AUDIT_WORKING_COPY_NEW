@@ -2697,3 +2697,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_cross_timezone_graph": "NOT_RUN", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue unified graph current-state selection/active owner and localization, preserving all exact recorded observations and missing-day uncertainty; verify actual UI separately from Foundation projection.
 - Commit: containing commit for batch Unified-symptom-timeline-explicit-record-calendar.
+
+## Trends-live-symptom-selection-and-request-scoped-refresh
+
+- Parent checkpoint: 226a584691fc660f0fd8f5e31cca4f41d10054c9.
+- Source-order requirements: [305, 306, 309, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift.
+- Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.
+- Tests added/updated: FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_queued_filters_and_refresh": "NOT_RUN; requires actual SwiftUI event tests", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue actual unified graph accessible/localized fixed labels, filter state and observation/interpretation disclosures. Add actual Apple regression harness if feasible; never substitute a pure mirrored test for real UI execution.
+- Commit: containing commit for batch Trends-live-symptom-selection-and-request-scoped-refresh.

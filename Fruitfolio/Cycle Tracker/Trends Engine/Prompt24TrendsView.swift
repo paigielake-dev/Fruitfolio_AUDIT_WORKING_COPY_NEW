@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 @MainActor
 struct Prompt24TrendsView: View {
@@ -15,6 +16,11 @@ struct Prompt24TrendsView: View {
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var viewIsVisible = false
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
+    }
     @Environment(\.scenePhase) private var scenePhase
 
     @State private var selectedTab: Prompt24TrendsTab = .cycle
@@ -22,6 +28,7 @@ struct Prompt24TrendsView: View {
     @State private var snapshot: Prompt24TrendsSnapshot?
     @State private var loadState: LoadState = .loading
     @State private var refreshID = UUID()
+    @State private var snapshotID = UUID()
 
     private enum LoadState {
         case loading
@@ -79,9 +86,11 @@ struct Prompt24TrendsView: View {
             .transition(.opacity)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .task(id: refreshID) {
-            await load()
+        .task(id: refreshID) { [request = refreshID] in
+            await load(request: request)
         }
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 refreshID = UUID()
@@ -132,6 +141,7 @@ struct Prompt24TrendsView: View {
         HStack(spacing: 12) {
             ForEach(Prompt24TrendsTab.allCases) { tab in
                 Button {
+                    guard canInteract else { return }
                     audioManager.play(.buttonSoftPop)
                     if motionPreferences.reduceMotionActive {
                         selectedTab = tab
@@ -346,9 +356,12 @@ struct Prompt24TrendsView: View {
                 .fontWeight(.semibold)
 
             ForEach(Prompt23SymptomTaxonomy.items.filter { available.contains($0.symptomID) }) { item in
-                Button {
+                Button { [request = snapshotID] in
+                    guard canInteract, loadState == .loaded, request == snapshotID else { return }
                     audioManager.play(.buttonSoftPop)
-                    var updated = selection
+                    // Read live state so two actions from one render cannot
+                    // replace one another with the same captured selection.
+                    var updated = (selectedSymptoms ?? available).intersection(available)
                     if updated.contains(item.symptomID) { updated.remove(item.symptomID) }
                     else { updated.insert(item.symptomID) }
                     selectedSymptoms = updated
@@ -472,16 +485,18 @@ struct Prompt24TrendsView: View {
         .frame(maxWidth: .infinity, minHeight: 320)
     }
 
-    private func load() async {
+    private func load(request: UUID) async {
+        guard !Task.isCancelled, request == refreshID else { return }
         loadState = .loading
 
         do {
             let loaded = try await loader.load()
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, request == refreshID else { return }
             snapshot = loaded
+            snapshotID = UUID()
             loadState = .loaded
         } catch {
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, request == refreshID else { return }
             snapshot = nil
             loadState = .failed
 

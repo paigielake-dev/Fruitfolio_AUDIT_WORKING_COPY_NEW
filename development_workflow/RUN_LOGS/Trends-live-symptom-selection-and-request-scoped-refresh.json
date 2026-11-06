@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-11-06T21:30:55.372257+00:00",
+  "commands": [
+    "60 workflow checks",
+    "311 Swift source syntax parses",
+    "git diff --check"
+  ],
+  "results": {
+    "workflow_checks": 60,
+    "syntax_files": 311,
+    "Apple_queued_filters_and_refresh": "NOT_RUN; requires actual SwiftUI event tests",
+    "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"
+  },
+  "verification": {
+    "executed": {
+      "workflow": "60 passed",
+      "syntax": "311 parsed",
+      "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+    },
+    "not_run": [
+      "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
+      "Apple SDK build and actual graph VoiceOver/selection behavior"
+    ],
+    "remaining": [
+      "Execute actual successive different/same filter taps and refresh race cases on Apple",
+      "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
+      "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+    ]
+  }
+}
