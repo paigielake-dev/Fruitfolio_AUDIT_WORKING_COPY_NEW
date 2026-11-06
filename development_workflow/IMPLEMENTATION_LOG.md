@@ -2719,3 +2719,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 945, "new_English_entries": 3, "Apple_graph_filter_AX": "NOT_RUN", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Distinguish all-hidden symptom filter from genuinely absent logged history in actual empty graph presentation; preserve current selection/snapshot owner and every recorded observation. Then continue graph accessibility/source distinction requirements.
 - Commit: containing commit for batch Unified-symptom-fixed-copy-and-native-filter-selection.
+
+## Unified-symptom-hidden-selection-distinct-from-no-history
+
+- Parent checkpoint: 90beb2266efd697ef7d4763697849bb255bc0e7a.
+- Source-order requirements: [305, 306, 308, 309, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual all-hidden symptom selection now shows explicit filter explanation and canonical Show All action instead of no-history empty graph. Show All restores only current accepted available set after active/snapshot guard; no records generated/modified. Genuine absent history retains original empty presentation. Stable filter/graph/recovery IDs added for real UI regression. Two English entries preserve945 old entries,947 total.
+- Tests added/updated: FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; actual filter UI NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 947, "new_English_entries": 2, "Apple_hidden_filter_restore": "NOT_RUN; actual harness/regression next", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Add disposable actual Trends/real in-memory repository UI fixture and regression for filter-all-hidden/restore/background and actual unchanged-record readback; distinguish written Apple tests from execution.
+- Commit: containing commit for batch Unified-symptom-hidden-selection-distinct-from-no-history.

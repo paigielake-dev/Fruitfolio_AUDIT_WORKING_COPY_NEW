@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:32:44.378850+00:00",
+  "updated_at": "2026-11-06T21:34:19.748781+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -5378,6 +5378,41 @@
         ]
       },
       "timestamp": "2026-11-06T21:32:44.378850+00:00"
+    },
+    {
+      "batch": "Unified-symptom-hidden-selection-distinct-from-no-history",
+      "commands": [
+        "60 workflow checks",
+        "311 Swift source parses",
+        "Catalog945-entry preservation plus2English keys",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "English_catalog_keys": 947,
+        "new_English_entries": 2,
+        "Apple_hidden_filter_restore": "NOT_RUN; actual harness/regression next",
+        "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "All-hidden versus no-history branch and read-only current snapshot restore; no model/data changes",
+          "catalog": "945 entries preserved;two English additions"
+        },
+        "not_run": [
+          "Apple actual all-hidden/restore/background and no-history distinction",
+          "Apple VoiceOver/native selected and translated control layout"
+        ],
+        "remaining": [
+          "Write/run actual graph fixture filter/restore/readback Apple regression; no source-only runtime claim",
+          "Verify no-history and hidden-history states remain distinct and every actual observation is reachable",
+          "Complete whole graph/localization/clinical/device acceptance independently"
+        ]
+      },
+      "timestamp": "2026-11-06T21:34:19.748781+00:00"
     }
   ]
 }

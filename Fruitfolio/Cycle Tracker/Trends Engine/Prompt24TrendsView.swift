@@ -305,16 +305,29 @@ struct Prompt24TrendsView: View {
         return VStack(alignment: .leading, spacing: 18) {
             symptomToggleGrid(available: available)
 
-            Prompt24MetricSection(
-                title: "symptom patterns",
-                subtitle: "one timeline using only symptoms you actually logged",
-                hasData: !occurrences.isEmpty
-            ) {
-                Prompt24UnifiedSymptomChart(
-                    occurrences: occurrences,
-                    selectedSymptoms: visible,
-                    calendar: loader.todayLoader.calendar
-                )
+            if !available.isEmpty && visible.isEmpty {
+                VStack(alignment: .leading, spacing: 12) {
+                    FruitfolioFixedText(source: "your logged symptoms are hidden by the current selection. choose a symptom above or show all logged symptoms.", serious: true)
+                        .accessibilityIdentifier("trends.symptoms.hiddenSelection")
+                    WatercolorSecondaryButton(label: "show all logged symptoms") { [request = snapshotID] in
+                        guard canInteract, loadState == .loaded, request == snapshotID else { return }
+                        selectedSymptoms = available
+                    }
+                    .accessibilityIdentifier("trends.symptoms.showAll")
+                }
+            } else {
+                Prompt24MetricSection(
+                    title: "symptom patterns",
+                    subtitle: "one timeline using only symptoms you actually logged",
+                    hasData: !occurrences.isEmpty
+                ) {
+                    Prompt24UnifiedSymptomChart(
+                        occurrences: occurrences,
+                        selectedSymptoms: visible,
+                        calendar: loader.todayLoader.calendar
+                    )
+                    .accessibilityIdentifier("trends.symptoms.graph")
+                }
             }
 
             FruitfolioTranslatedText(source: "dots are recorded observations. unlogged days do not mean a symptom was absent. timing summaries below are calculated descriptions, not diagnoses or predictions.", font: .footnote, serious: true)
@@ -377,6 +390,7 @@ struct Prompt24TrendsView: View {
                 }
                 .buttonStyle(Prompt24SoftPressButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 .accessibilityAddTraits(selection.contains(item.symptomID) ? .isSelected : [])
+                .accessibilityIdentifier("trends.symptoms.filter." + item.symptomID.rawValue)
             }
         }
     }
