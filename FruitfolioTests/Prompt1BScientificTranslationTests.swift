@@ -2,6 +2,39 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BScientificTranslationTests: XCTestCase {
+    func testIntroducedScientificIdentifiersRejectBothInferenceAndCatalogCandidates() throws {
+        let source = "my context"
+        let envelope = try FruitfolioScientificTranslationEnvelope(source)
+        for identifier in ["AMH", "FSH", "LH", "TSH", "pH", "hCG", "DHEA-S", "HbA1c", "rs123", "HLA-DQB1*06:02"] {
+            XCTAssertThrowsError(try envelope.restore(envelope.prepared + " " + identifier), identifier)
+            XCTAssertThrowsError(try envelope.validateCatalogCandidate("mi contexto " + identifier), identifier)
+        }
+        XCTAssertEqual(try envelope.restore("min kontekst"), "min kontekst")
+        XCTAssertEqual(try envelope.validateCatalogCandidate("min kontekst"), "min kontekst")
+    }
+
+    func testScientificIdentifierOrderMultiplicityAndCaseRemainExact() throws {
+        let source = "FSH and AMH; FSH again"
+        let envelope = try FruitfolioScientificTranslationEnvelope(source)
+        XCTAssertEqual(try envelope.restore(envelope.prepared), source)
+        XCTAssertEqual(try envelope.validateCatalogCandidate("FSH y AMH; FSH otra vez"), "FSH y AMH; FSH otra vez")
+        for candidate in ["FSH y AMH", "AMH y FSH; FSH otra vez", "FSH y AMH; FSH FSH", "fsh y AMH; FSH"] {
+            XCTAssertThrowsError(try envelope.validateCatalogCandidate(candidate))
+        }
+        XCTAssertThrowsError(try envelope.restore(envelope.prepared + " AMH"))
+    }
+
+    func testExplicitProtectedLiteralCannotBeIntroducedWhenAbsentFromSource() throws {
+        let envelope = try FruitfolioScientificTranslationEnvelope("my library", protectedLiterals: ["Fruitfolio", "FruitsofLife.xo"])
+        XCTAssertEqual(try envelope.validateCatalogCandidate("mi biblioteca"), "mi biblioteca")
+        XCTAssertThrowsError(try envelope.restore(envelope.prepared + " Fruitfolio"))
+        XCTAssertThrowsError(try envelope.validateCatalogCandidate("biblioteca de FruitsofLife.xo"))
+        let present = try FruitfolioScientificTranslationEnvelope("Fruitfolio library", protectedLiterals: ["Fruitfolio"])
+        XCTAssertEqual(try present.restore(present.prepared), "Fruitfolio library")
+        XCTAssertThrowsError(try present.restore(present.prepared + " Fruitfolio"))
+        XCTAssertThrowsError(try present.validateCatalogCandidate("Fruitfolio biblioteca Fruitfolio"))
+    }
+
     func testRoundTripProtectsNumbersUnitsCitationsURLsAndFormatting() throws {
         let source = "**estradiol** 12.5 pg/mL [source-7] (Author, 2020). https://example.org/12"
         let envelope = try FruitfolioScientificTranslationEnvelope(source, protectedLiterals: ["source-7"])
@@ -50,6 +83,19 @@ final class Prompt1BScientificTranslationTests: XCTestCase {
     }
 }
 
+/// Deliberately corrupt contract fixture; never presented as native T5 output.
+private actor Prompt1BIdentifierInjectionFixture: FruitfolioLocalTranslationRuntime {
+    let suffix: String
+    private var calls = 0
+    init(suffix: String) { self.suffix = suffix }
+    func releaseResources() {}
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        calls += 1
+        return calls == 2 ? text + suffix : text
+    }
+    func callCount() -> Int { calls }
+}
+
 private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRuntime {
     private var tags: [String] = []
     private var releases = 0
@@ -63,6 +109,22 @@ private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRunt
 }
 
 final class Prompt1BTranslationPipelineTests: XCTestCase {
+    func testLateIdentifierOrProtectedBrandInjectionRejectsWholePassage() async throws {
+        for suffix in [" AMH", " Fruitfolio"] {
+            let runtime = Prompt1BIdentifierInjectionFixture(suffix: suffix)
+            let service = FruitfolioTranslationService(runtime: runtime)
+            let source = "first paragraph\n\nsecond paragraph"
+            do {
+                _ = try await service.translateForDisplay(source, language: .spanish,
+                    protectedLiterals: ["Fruitfolio"], preferCatalog: false)
+                XCTFail("An invalid second paragraph must not return a partial translation")
+            } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+            let calls = await runtime.callCount()
+            XCTAssertEqual(calls, 2)
+            XCTAssertEqual(source, "first paragraph\n\nsecond paragraph")
+        }
+    }
+
     func testNewFounderSelectorsForwardDistinctModelTagsWithoutClaimingSupport() async throws {
         let fixture = Prompt1BIdentityTranslationFixture()
         let service = FruitfolioTranslationService(runtime: fixture)

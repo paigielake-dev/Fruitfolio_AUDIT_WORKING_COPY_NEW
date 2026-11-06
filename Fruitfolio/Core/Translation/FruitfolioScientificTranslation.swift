@@ -7,11 +7,13 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
     let prepared: String
     private let replacements: [(String, String)]
     private let protectionRegexPattern: String
+    private let explicitProtectionPattern: String?
 
     init(_ source: String, protectedLiterals: [String] = []) throws {
         original = source
         let literalPatterns = protectedLiterals.filter { !$0.isEmpty }
             .sorted { $0.count > $1.count }.map { NSRegularExpression.escapedPattern(for: $0) }
+        explicitProtectionPattern = literalPatterns.isEmpty ? nil : literalPatterns.map { "(?:\($0))" }.joined(separator: "|")
         let patterns = literalPatterns + [
             FruitfolioScientificQuantityProtection.protectionPattern,
             #"\\[\\*_`\[\]<>]"#,
@@ -48,10 +50,7 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
         }
         var output = translated
         for (marker, original) in replacements { output = output.replacingOccurrences(of: marker, with: original) }
-        guard try FruitfolioScientificQuantityProtection.quantitySignature(output) == FruitfolioScientificQuantityProtection.quantitySignature(original),
-              try FruitfolioScientificQuantityProtection.referenceSignature(output) == FruitfolioScientificQuantityProtection.referenceSignature(original) else {
-            throw FruitfolioTranslationError.protectedContentChanged
-        }
+        try validateSignatures(output)
         return output
     }
 
@@ -66,15 +65,31 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
         let ns = candidate as NSString
         let retained = regex.matches(in: candidate, range: NSRange(location: 0, length: ns.length))
             .map { ns.substring(with: $0.range) }.filter { sourceLiterals.contains($0) }
-        guard retained == expected,
-              try FruitfolioScientificQuantityProtection.quantitySignature(candidate) == FruitfolioScientificQuantityProtection.quantitySignature(original),
-              try FruitfolioScientificQuantityProtection.referenceSignature(candidate) == FruitfolioScientificQuantityProtection.referenceSignature(original) else {
+        guard retained == expected else {
             throw FruitfolioTranslationError.protectedContentChanged
         }
+        try validateSignatures(candidate)
         return candidate
     }
 
-
+    private func validateSignatures(_ candidate: String) throws {
+        guard try FruitfolioScientificQuantityProtection.quantitySignature(candidate) == FruitfolioScientificQuantityProtection.quantitySignature(original),
+              try FruitfolioScientificQuantityProtection.referenceSignature(candidate) == FruitfolioScientificQuantityProtection.referenceSignature(original),
+              try FruitfolioScientificQuantityProtection.identifierSignature(candidate) == FruitfolioScientificQuantityProtection.identifierSignature(original) else {
+            throw FruitfolioTranslationError.protectedContentChanged
+        }
+        if let explicitProtectionPattern {
+            let regex = try NSRegularExpression(pattern: explicitProtectionPattern)
+            func signature(_ text: String) -> [String] {
+                let ns = text as NSString
+                return regex.matches(in: text, range: NSRange(location: 0, length: ns.length))
+                    .map { ns.substring(with: $0.range) }
+            }
+            guard signature(candidate) == signature(original) else {
+                throw FruitfolioTranslationError.protectedContentChanged
+            }
+        }
+    }
 
 }
 

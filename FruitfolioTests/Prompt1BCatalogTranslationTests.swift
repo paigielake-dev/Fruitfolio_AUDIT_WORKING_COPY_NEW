@@ -80,6 +80,25 @@ final class Prompt1BCatalogTranslationTests: XCTestCase {
         // Identity contract fixture proves fallback invocation, not translation quality.
     }
 
+    func testCatalogWithInventedIdentifierCannotDisplayWhileModelIsPaused() async throws {
+        let source = "my context"
+        let (bundle, root) = try fixture([source: "mi contexto AMH"])
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runtime = CatalogFallbackRuntime()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        do {
+            _ = try await service.translateForDisplay(source, language: .spanish, inferenceAllowed: false, bundle: bundle)
+            XCTFail("Invented catalog identifier must not bypass validation")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .pausedForMemoryPressure) }
+        let calls = await runtime.callCount()
+        XCTAssertEqual(calls, 0)
+        let fallback = try await service.translateForDisplay(source, language: .spanish, bundle: bundle)
+        XCTAssertEqual(fallback.text, source)
+        XCTAssertEqual(fallback.origin, .machine)
+        let fallbackCalls = await runtime.callCount()
+        XCTAssertEqual(fallbackCalls, 1)
+    }
+
     func testScientificLiteralsAndFullAttributionMustRemainExactInCatalogText() throws {
         let citation = "Doe, A. (2024). Original source title. DOI:10.1000/example."
         let source = "recorded FSH 12.50 mIU/mL [A]\n\n" + citation

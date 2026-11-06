@@ -24,8 +24,15 @@ enum FruitfolioScientificQuantityProtection {
         // isolated unit symbols. The quantity signature below excludes bare
         // words such as Norwegian "min", which can also be a unit abbreviation.
         let bareUnit = #"(?<![\p{L}\p{N}_'’])"# + unit + #"(?![\p{L}\p{N}_'’])"#
-        let label = #"\b(?:HLA-[A-Z0-9]+\*[0-9:]+|HbA1c|hCG|pH|FSH|LH|TSH|AMH|DHEA-S|rs[0-9]+|[A-Z][A-Z0-9_-]*[0-9][A-Z0-9_-]*)\b"#
-        return "(?:" + quantityPattern + ")|(?:" + bareUnit + ")|(?:" + label + ")"
+        return "(?:" + quantityPattern + ")|(?:" + bareUnit + ")|(?:" + identifierPattern + ")"
+    }
+
+    // These are explicit scientific identifiers, unlike ambiguous ordinary
+    // words such as "min" which may also be a unit abbreviation.
+    static let identifierPattern = #"\b(?:HLA-[A-Z0-9]+\*[0-9:]+|HbA1c|hCG|pH|FSH|LH|TSH|AMH|DHEA-S|rs[0-9]+|[A-Z][A-Z0-9_-]*[0-9][A-Z0-9_-]*)\b"#
+
+    static func identifierSignature(_ text: String) throws -> [String] {
+        try matches(identifierPattern, in: text)
     }
 
     static let referencePattern = #"https?://[^\s<>]+|[\[［][^\]］\n]{1,200}[\]］]|[\(（][^\)）\n]*\b(?:(?:1[6-9]|20|21)\d{2}[a-z]?|(?i:n\.\h*d\.))[^\)）\n]*[\)）]"#
