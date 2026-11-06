@@ -93,7 +93,7 @@ struct Prompt19CalendarView: View {
                     .padding(.bottom, contextClarification == nil ? 12 : 5)
 
                 if let contextClarification {
-                    Text(contextClarification)
+                    FruitfolioTranslatedText(source: contextClarification, font: Prompt19Type.footnote, serious: true)
                         .font(Prompt19Type.footnote)
                         .foregroundStyle(
                             Prompt19Palette.burgundy.opacity(0.70)
@@ -102,7 +102,6 @@ struct Prompt19CalendarView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal, 28)
                         .padding(.bottom, 8)
-                        .accessibilityLabel(contextClarification)
                 }
 
                 weekdayHeader
@@ -131,7 +130,7 @@ struct Prompt19CalendarView: View {
                         .padding(.leading, 14)
                         .padding(.bottom, 4)
                 }
-                .frame(height: 82)
+                .frame(minHeight: 82)
             }
 
             Image("decor_rainbow")
@@ -344,9 +343,7 @@ struct Prompt19CalendarView: View {
     }
 
     private var earlyStateMessage: some View {
-        Text(
-            "predictions will appear here as Fruitfolio learns from the cycle history you log."
-        )
+        FruitfolioTranslatedText(source: "predictions will appear here as Fruitfolio learns from the cycle history you log.", font: Prompt19Type.footnote, serious: true)
         .font(
             Prompt19Type.footnote
         )
@@ -369,9 +366,7 @@ struct Prompt19CalendarView: View {
     }
 
     private var failureMessage: some View {
-        Text(
-            "this calendar page couldn’t refresh just yet. your saved cycle data is still safe."
-        )
+        FruitfolioTranslatedText(source: "this calendar page couldn’t refresh just yet. your saved cycle data is still safe.", font: Prompt19Type.footnote, serious: true)
         .font(
             Prompt19Type.footnote
         )
@@ -1437,10 +1432,9 @@ private struct Prompt19MonthControl:
                     width: 22,
                     height: 22
                 )
+                .accessibilityHidden(true)
 
-                Text(
-                    label
-                )
+                FruitfolioFixedText(source: label, font: Prompt19Type.microControl, serious: true)
                 .font(
                     Prompt19Type.microControl
                 )
@@ -1465,9 +1459,7 @@ private struct Prompt19MonthControl:
                         .reduceMotionActive
             )
         )
-        .accessibilityLabel(
-            label
-        )
+
     }
 }
 

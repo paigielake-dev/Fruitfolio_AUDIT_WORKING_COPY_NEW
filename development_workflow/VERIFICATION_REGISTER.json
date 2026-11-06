@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:21:42.564647+00:00",
+  "updated_at": "2026-11-06T21:23:05.254945+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -5141,6 +5141,39 @@
         ]
       },
       "timestamp": "2026-11-06T21:21:42.564647+00:00"
+    },
+    {
+      "batch": "Calendar-fixed-controls-and-expandable-status-copy",
+      "commands": [
+        "60 workflow checks",
+        "311 syntax parses",
+        "Existing catalog source keys verified; no catalog edits",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "English_catalog_keys_unchanged": 924,
+        "Apple_calendar_layout": "NOT_RUN",
+        "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Original arrow art/style/source strings and calculations preserved; status expands instead of fixed-height clipping"
+        },
+        "not_run": [
+          "Apple SDK build, long translated status/control frames and VoiceOver label/provenance",
+          "Actual calendar responsive layout, RTL, Dynamic Type and Reduce Motion"
+        ],
+        "remaining": [
+          "Execute Apple month controls/status/disclosure frames across locales and accessibility sizes",
+          "Verify translated context/uncertainty wording and no hidden English AX override with actual VoiceOver",
+          "Measure device month-transition performance; source layout edits do not certify runtime acceptance"
+        ]
+      },
+      "timestamp": "2026-11-06T21:23:05.254945+00:00"
     }
   ]
 }

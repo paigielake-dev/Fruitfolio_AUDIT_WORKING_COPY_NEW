@@ -2642,3 +2642,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_calendar_ownership": "NOT_RUN; no new fake UI harness", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue canonical calendar controls fixed-label translation/accessibility without replacing original arrow art or changing calendar dates/predictions; then logging controls in original order.
 - Commit: containing commit for batch Calendar-active-controls-and-current-cell-selection.
+
+## Calendar-fixed-controls-and-expandable-status-copy
+
+- Parent checkpoint: 5dc628f0956ee7198edfe88ac6c02a7bd658f078.
+- Source-order requirements: [295, 296, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift.
+- Actual calendar previous/next labels use shared compact semantic translation with original arrow images/style. Decorative arrow AX hiding lets translated label remain authoritative. Context clarification and early/failure original explanations use existing long-form source/provenance owner; English-only AX override removed. Bottom status uses minHeight82 rather than fixed height to permit expanded text/disclosure. Existing catalog already has all keys. No calculation/data/source wording/artwork changed.
+- Tests added/updated: FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift (unchanged; no Foundation rerun this UI batch).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys_unchanged": 924, "Apple_calendar_layout": "NOT_RUN", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue Log Today/logging canonical interactions and draft/action ownership, preserving existing records and private values; remaining calendar Apple frame/VoiceOver/performance acceptance explicitly pending.
+- Commit: containing commit for batch Calendar-fixed-controls-and-expandable-status-copy.
