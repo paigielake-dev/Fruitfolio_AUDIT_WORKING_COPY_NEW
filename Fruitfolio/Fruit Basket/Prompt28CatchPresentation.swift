@@ -5,16 +5,17 @@ import Foundation
 /// against that supplied art; simulator/device visual acceptance is still required.
 nonisolated struct Prompt28CatchGeometry: Sendable {
     let playfield: CGSize
+    var basketCenterY: CGFloat { min(playfield.height * 0.89, max(66, playfield.height - 78)) }
     var basketWidth: CGFloat { min(playfield.width * 0.36, 150) }
     var basketArtSize: CGSize { .init(width: basketWidth * 0.90, height: basketWidth * 0.90 * 380 / 398) }
-    var isValid: Bool { playfield.width.isFinite && playfield.height.isFinite && playfield.width > 0 && playfield.height > 0 }
+    var isValid: Bool { playfield.width.isFinite && playfield.height.isFinite && playfield.width > 0 && playfield.height >= 132 }
     var fruitSize: CGFloat { min(max(playfield.width * 0.13, 46), 66) }
     var starSize: CGFloat { min(max(playfield.width * 0.10, 34), 52) }
 
     func artRect(basketX: Double) -> CGRect {
         let size = basketArtSize
         return CGRect(x: playfield.width * basketX - size.width / 2,
-                      y: playfield.height * 0.89 + 66 - size.height, width: size.width, height: size.height)
+                      y: basketCenterY + 66 - size.height, width: size.width, height: size.height)
     }
     func mouth(basketX: Double) -> CGRect {
         Self.mouth(in: artRect(basketX: basketX))

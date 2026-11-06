@@ -92,4 +92,15 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
             XCTAssertEqual(metrics.writingSize, CGSize.zero)
         }
     }
+    func testLargeControlCardKeepsOriginalCanvasWithinSmallAndLandscapeViewports() {
+        for available in [CGSize(width: 320, height: 568), CGSize(width: 568, height: 220), CGSize(width: 200, height: 180)] {
+            let metrics = FruitfolioPopupLayout.largeControlCard(available: available)
+            XCTAssertLessThanOrEqual(metrics.paperSize.width, available.width - 32)
+            XCTAssertLessThanOrEqual(metrics.paperSize.height, available.height - 32)
+            XCTAssertEqual(metrics.paperSize.width / metrics.paperSize.height, 634.0 / 667.0, accuracy: 0.000001)
+            XCTAssertLessThan(metrics.writingSize.width, metrics.paperSize.width)
+            XCTAssertLessThan(metrics.writingSize.height, metrics.paperSize.height)
+        }
+    }
+
 }

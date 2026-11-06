@@ -102,6 +102,11 @@ struct Prompt28FruitBasketEngine: Sendable {
     }
 
     func activeObstacles(level: Int, round: Int) -> Set<Prompt28ObstacleKind> {
+        let base = baseObstacles(level: level, round: round)
+        return clampedLevel(level) >= 6 && round.isMultiple(of: 3) ? base.union([.puddle]) : base
+    }
+
+    private func baseObstacles(level: Int, round: Int) -> Set<Prompt28ObstacleKind> {
         let level = clampedLevel(level)
         switch level {
         case 1:

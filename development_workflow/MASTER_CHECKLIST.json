@@ -1256,7 +1256,16 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Tools/compile_fruit_basket_masks.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1269,16 +1278,21 @@
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "test_fruit_basket_masks"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 37,
@@ -4547,7 +4561,12 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4570,9 +4589,11 @@
         "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
         "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "Prompt1BFruitBasketResearchTests",
+        "Prompt1BHealthSafetyBoundaryTests"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for b2e427d; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
@@ -4583,9 +4604,10 @@
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
         "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 126,
@@ -5090,7 +5112,11 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
         "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5119,9 +5145,11 @@
         "Prompt1BCanonicalCalendarTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt1BFruitBasketResearchTests",
+        "Prompt1BHealthSafetyBoundaryTests"
       ],
-      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for b2e427d; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -5133,9 +5161,10 @@
         "Fixed a clinical translation-protection gap: leading signs/comparators and units outside the old limited numeric regex could remain unprotected. Complete signed/comparison quantities, ratios/ranges/uncertainties, scientific powers, broader laboratory units and invariant labels are now protected atomically without interpreting/converting values. Post-restoration signatures also reject added unit/numeric claims and introduced structured references/URLs. Tests preserve escaped Markdown operators and avoid misclassifying ordinary translated contractions/words as bare units. All feasible protection/native regressions pass. These checks cannot prove non-numerical medical meaning or real language quality; official MADLAD weights/T5 inference and clinical review remain blocked/unrun.",
         "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
-        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
       ],
-      "last_updated": "2026-11-05T23:10:03.932755+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 137,
@@ -6237,7 +6266,12 @@
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Tools/run_portable_swift_tests.py",
-        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6255,17 +6289,20 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt1BEvidenceBoundaryTests"
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BFruitBasketResearchTests",
+        "Prompt1BHealthSafetyBoundaryTests"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for b2e427d; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 163,
@@ -6291,7 +6328,12 @@
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Tools/run_portable_swift_tests.py",
-        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6309,17 +6351,20 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets"
+        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
+        "Prompt1BFruitBasketResearchTests",
+        "Prompt1BHealthSafetyBoundaryTests"
       ],
-      "commit_reference": "batch:P3-native-whole-paragraph-token-budgets (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for b2e427d; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified."
+        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
       ],
-      "last_updated": "2026-11-05T21:19:43.429166+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 164,
@@ -6388,7 +6433,12 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
-        "Fruitfolio/Ask/Prompt09AnswerSupport.swift"
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6403,16 +6453,20 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets"
+        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
+        "Prompt1BFruitBasketResearchTests",
+        "Prompt1BHealthSafetyBoundaryTests"
       ],
-      "commit_reference": "batch:P3-native-whole-paragraph-token-budgets (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e89369c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified."
+        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
+        "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization."
       ],
-      "last_updated": "2026-11-05T21:19:43.429166+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 166,
@@ -11485,7 +11539,15 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11494,13 +11556,19 @@
       "related_tests": [
         "Prompt1BFruitBasketResearchTests",
         "Prompt1BHealthSafetyBoundaryTests",
-        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
+        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)",
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
       ],
-      "commit_reference": "batch:Fruit-Basket-offline-excerpt-practice-and-source-trails (resolve containing commit with git log)",
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
       ],
-      "last_updated": "2026-11-05T23:48:48.355913+00:00"
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 325,
@@ -11524,12 +11592,12 @@
         "Prompt1BHealthSafetyBoundaryTests",
         "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:Serious-game-education-without-blanket-topic-exclusion (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e89369c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
         "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization."
       ],
-      "last_updated": "2026-11-06T00:08:55.613819+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 326,
@@ -11555,12 +11623,12 @@
         "Prompt1BHealthSafetyBoundaryTests",
         "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:Fruit-Basket-offline-excerpt-practice-and-source-trails (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for b2e427d; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
       ],
-      "last_updated": "2026-11-05T23:48:48.355913+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 327,
@@ -11573,7 +11641,15 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11584,14 +11660,20 @@
         "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume",
         "Prompt1BFruitBasketResearchTests",
         "Prompt1BHealthSafetyBoundaryTests",
-        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
+        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)",
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
       ],
-      "commit_reference": "batch:Fruit-Basket-offline-excerpt-practice-and-source-trails (resolve containing commit with git log)",
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
-        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
       ],
-      "last_updated": "2026-11-05T23:48:48.355913+00:00"
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 328,
@@ -11613,12 +11695,12 @@
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
         "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e67d22c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 329,
@@ -11640,12 +11722,12 @@
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
         "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e67d22c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 330,
@@ -11669,13 +11751,13 @@
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
         "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e67d22c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 331,
@@ -11814,13 +11896,13 @@
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
         "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e67d22c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 335,
@@ -11831,7 +11913,14 @@
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11840,14 +11929,19 @@
       "related_tests": [
         "Prompt1BCatchPresentationTests",
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
-        "Prompt1BFruitBasketRulesTests"
+        "Prompt1BFruitBasketRulesTests",
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
-        "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
+        "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.",
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 336,
@@ -11858,7 +11952,14 @@
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11867,14 +11968,19 @@
       "related_tests": [
         "Prompt1BCatchPresentationTests",
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
-        "Prompt1BFruitBasketRulesTests"
+        "Prompt1BFruitBasketRulesTests",
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
-        "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
+        "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.",
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 337,
@@ -11930,7 +12036,7 @@
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
         "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:Serious-game-education-without-blanket-topic-exclusion (resolve containing commit with git log)",
+      "commit_reference": "evidence mapping corrected for e67d22c; see IMPLEMENTATION_LOG",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
@@ -11938,7 +12044,7 @@
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.",
         "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization."
       ],
-      "last_updated": "2026-11-06T00:08:55.613819+00:00"
+      "last_updated": "2026-11-06T00:26:39.479684+00:00"
     },
     {
       "sequence": 339,
@@ -11946,15 +12052,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Implement wind movement in code rather than relying solely on animated artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 340,
@@ -11962,15 +12087,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Use the existing wind artwork as the visual reference.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 341,
@@ -11978,15 +12122,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make wind alter fruit trajectories slightly.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 342,
@@ -11994,15 +12157,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Play the appropriate wind audio.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 343,
@@ -12010,15 +12192,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Use existing rain and rain-cloud artwork for soft rain.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 344,
@@ -12026,15 +12227,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make rain produce puddle obstacles.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 345,
@@ -12042,15 +12262,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Animate puddles subtly while preserving the original artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 346,
@@ -12058,15 +12297,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Display Strawberry\u2019s specified storm popup using the existing large contact-card artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 347,
@@ -12074,15 +12332,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Include the specified storm dialogue.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 348,
@@ -12090,15 +12367,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Add basket inertia while the basket physically passes through a puddle.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 349,
@@ -12106,15 +12402,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Visually communicate the basket\u2019s resistance.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 350,
@@ -12122,15 +12437,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Restore normal movement after leaving the puddle.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 351,
@@ -12138,15 +12472,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Position branch obstacles as though growing from the screen edge.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 352,
@@ -12154,15 +12507,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make fruit bounce off branches and change trajectory.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 353,
@@ -12170,15 +12542,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make vines slow good fruit passing through them.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 354,
@@ -12186,15 +12577,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make vines slow standalone stars.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 355,
@@ -12202,15 +12612,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Prevent bad fruit from using the vine-slowing interaction.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 356,
@@ -12218,15 +12647,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Play rustling audio when appropriate objects contact vines.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 357,
@@ -12234,15 +12682,34 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make vine resistance visibly believable rather than merely changing an invisible velocity value.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 358,
@@ -12498,15 +12965,43 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Update accessibility descriptions, FAQs, and tests to match the corrected gameplay.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Tools/compile_fruit_basket_masks.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BFruitBasketResearchTests",
+        "Prompt1BHealthSafetyBoundaryTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BObstacleGeometryTests",
+        "Prompt1BObstaclePhysicsTests",
+        "Prompt1BPopupLayoutTests",
+        "test_fruit_basket_masks"
+      ],
+      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
+        "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.",
+        "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization.",
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+      ],
+      "last_updated": "2026-11-06T00:29:34.824842+00:00"
     },
     {
       "sequence": 373,
@@ -12658,12 +13153,7 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12672,19 +13162,14 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
-        "Prompt1BFruitBasketResearchTests",
-        "Prompt1BHealthSafetyBoundaryTests",
-        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:Serious-game-education-without-blanket-topic-exclusion (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
-        "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-06T00:08:55.613819+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 379,
@@ -12697,12 +13182,7 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12711,19 +13191,14 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
-        "Prompt1BFruitBasketResearchTests",
-        "Prompt1BHealthSafetyBoundaryTests",
-        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:Serious-game-education-without-blanket-topic-exclusion (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
-        "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-06T00:08:55.613819+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 380,
@@ -12765,10 +13240,7 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12776,16 +13248,13 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
-        "Prompt1BCatchPresentationTests",
-        "Prompt1BCatchViewModelTests (Apple NOT_RUN)"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:Classification-stars-and-shared-settlement-parity (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-06T00:01:52.090975+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 382,

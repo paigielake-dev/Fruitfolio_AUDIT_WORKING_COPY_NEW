@@ -16,6 +16,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var basketX: Double = 0.5
     @Published var lastBadFruit: Prompt28FruitID?
     @Published var message: String?
+    @Published private(set) var vineContactSequence = 0
+    @Published private(set) var basketResistance = 0.0
+    @Published private(set) var basketIsInPuddle = false
     @Published var isPaused = false
     @Published var classificationStarAvailable = false
     @Published var classificationFruit: Prompt28FallingFruit?
@@ -24,6 +27,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     let store: Prompt28FruitBasketStore
     let engine: Prompt28FruitBasketEngine
 
+    private let obstacleLibrary: Prompt28ObstacleMaskLibrary?
+    private var basketTargetX = 0.5
     private let researchProvider: any Prompt28ResearchProviding
     private var questionGeneration = UUID()
     private var gameplayTask: Task<Void, Never>?
@@ -41,9 +46,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     init(
         store: Prompt28FruitBasketStore,
         researchProvider: any Prompt28ResearchProviding,
-        engine: Prompt28FruitBasketEngine? = nil
+        engine: Prompt28FruitBasketEngine? = nil,
+        obstacleLibrary: Prompt28ObstacleMaskLibrary? = .bundled
     ) {
         self.store = store
+        self.obstacleLibrary = obstacleLibrary
         self.researchProvider = researchProvider
         self.engine = engine ?? Prompt28FruitBasketEngine()
         self.difficulty = store.preferredDifficulty
@@ -201,6 +208,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     func beginCatch() {
         guard currentQuestion != nil, var session else { return }
         stopGameplay()
+        if !activeObstacles.intersection([.vines, .branch, .puddle]).isEmpty && obstacleLibrary == nil {
+            screen = .error
+            message = "required game obstacle geometry is unavailable. this round cannot start safely; no progress has been removed."
+            return
+        }
         session.goodFruitCaughtThisRound = 0
         self.session = session
         activeFruit.removeAll()
@@ -210,6 +222,10 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         classificationStarAvailable = false
         classificationFruit = nil
         basketX = 0.5
+        basketTargetX = 0.5
+        basketResistance = 0
+        basketIsInPuddle = false
+        vineContactSequence = 0
         roundResultLocked = false
         isPaused = false
         roundID = UUID()
@@ -232,21 +248,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func moveBasket(to normalizedX: Double) {
-        guard screen == .catchActive, !isPaused else { return }
-        let target = min(max(normalizedX, 0.10), 0.90)
-        guard activeObstacles.contains(.puddle) else {
-            basketX = target
-            return
-        }
-
-        // The puddle adds mild inertia only while crossing its central painted region.
-        // It never removes enough control to make avoiding a BAD fruit unreasonable.
-        let pathMin = min(basketX, target)
-        let pathMax = max(basketX, target)
-        let crossingPuddle = pathMax >= 0.33 && pathMin <= 0.67
-        let response = crossingPuddle ? 0.58 : 1.0
-        basketX += (target - basketX) * response
-        basketX = min(max(basketX, 0.10), 0.90)
+        guard screen == .catchActive, !isPaused, normalizedX.isFinite else { return }
+        basketTargetX = min(max(normalizedX, 0.10), 0.90)
+        if !activeObstacles.contains(.puddle) { basketX = basketTargetX }
     }
 
     func classificationDecision(accept: Bool) {
@@ -339,6 +343,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         // Unselected presentations are replaced so no invisible object can catch.
         activeFruit.removeAll(); activeStars.removeAll()
         classificationFruit = nil; classificationStarAvailable = false
+        basketTargetX = basketX; basketResistance = 0; basketIsInPuddle = false
         store.controlMode = mode
         store.persistPreferences()
     }
@@ -420,28 +425,27 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             }
             return
         }
+        let obstacleGeometry = obstacleLibrary.map { Prompt28ObstacleGeometry(playfield: playfieldSize, level: gameLevel, library: $0) }
+        if let obstacleGeometry {
+            let response = Prompt28ObstaclePhysics.moveBasket(position: basketX, target: basketTargetX, delta: frameDelta,
+                geometry: obstacleGeometry, puddleActive: activeObstacles.contains(.puddle))
+            basketX = response.position; basketResistance = response.resistance
+            basketIsInPuddle = activeObstacles.contains(.puddle) && obstacleGeometry.basketTouchesPuddle(at: basketX)
+        } else { basketX = basketTargetX; basketResistance = 0; basketIsInPuddle = false }
         var remaining: [Prompt28FallingFruit] = []
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
         for var fruit in activeFruit {
             let previousY = fruit.y
-            let vineMultiplier = activeObstacles.contains(.vines) && fruit.classification == .good && (0.22...0.58).contains(fruit.y) ? 0.56 : 1.0
-            fruit.y += fruit.fallSpeed * vineMultiplier * frameDelta
-
-            var horizontalVelocity = fruit.horizontalDrift
-            if activeObstacles.contains(.wind) {
-                horizontalVelocity += windDirection * (weather == .softRain ? 0.030 : 0.021)
+            if let obstacleGeometry {
+                if Prompt28ObstaclePhysics.advanceFruit(&fruit, delta: frameDelta, geometry: obstacleGeometry,
+                    obstacles: activeObstacles, lanes: laneBounds, windDirection: windDirection, weather: weather) {
+                    vineContactSequence += 1
+                }
+            } else {
+                fruit.y += fruit.fallSpeed * frameDelta
+                fruit.x = min(max(fruit.x + fruit.horizontalDrift * frameDelta, laneBounds.lowerBound), laneBounds.upperBound)
             }
-
-            // The right-side branch gently redirects fruit before it reaches the basket.
-            // This creates a readable obstacle without turning it into an unavoidable trap.
-            if activeObstacles.contains(.branch),
-               (0.27...0.55).contains(fruit.y),
-               fruit.x > 0.66 {
-                horizontalVelocity -= 0.095
-            }
-
-            fruit.x = min(max(fruit.x + horizontalVelocity * frameDelta, laneBounds.lowerBound), laneBounds.upperBound)
 
             if geometry.crossedMouth(x: fruit.x, previousY: previousY, currentY: fruit.y, basketX: basketX, objectSize: geometry.fruitSize) {
                 catchTransits.append(.init(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification), relativeX: fruit.x - basketX))
@@ -463,9 +467,16 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         var remainingStars: [Prompt28FallingStar] = []
         for var star in activeStars {
             let previousY = star.y
-            let vineMultiplier = activeObstacles.contains(.vines) && (0.22...0.58).contains(star.y) ? 0.56 : 1.0
-            star.y += star.fallSpeed * vineMultiplier * frameDelta
-            star.x = min(max(star.x + star.horizontalDrift * frameDelta, laneBounds.lowerBound), laneBounds.upperBound)
+            if let obstacleGeometry {
+                if Prompt28ObstaclePhysics.advanceStar(&star, delta: frameDelta, geometry: obstacleGeometry,
+                    obstacles: activeObstacles, lanes: laneBounds, windDirection: windDirection, weather: weather) {
+                    vineContactSequence += 1
+                }
+            } else {
+                star.y += star.fallSpeed * frameDelta
+                star.x = min(max(star.x + star.horizontalDrift * frameDelta, laneBounds.lowerBound), laneBounds.upperBound)
+            }
+
             if geometry.crossedMouth(x: star.x, previousY: previousY, currentY: star.y, basketX: basketX, objectSize: geometry.starSize) {
                 catchTransits.append(.init(id: star.id, kind: .star, relativeX: star.x - basketX))
                 continue
@@ -505,10 +516,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let speed = 1.18 / max(duration, 0.5)
         let drift = random(in: levelConfig.driftRange)
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
-        var x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
-        if activeObstacles.contains(.branch), x > 0.72 {
-            x = Double.random(in: max(0.12, laneBounds.lowerBound)...0.70)
-        }
+        let x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
         let rotation = Double.random(in: -6...6)
         activeFruit.append(
             Prompt28FallingFruit(

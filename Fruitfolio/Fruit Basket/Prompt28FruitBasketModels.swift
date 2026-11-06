@@ -283,6 +283,11 @@ struct Prompt28FallingFruit: Identifiable, Equatable, Sendable {
     let fallSpeed: Double
     let horizontalDrift: Double
     let rotationDegrees: Double
+    var isInVines = false
+    var vineContactTime: TimeInterval = 0
+    var branchDeflected = false
+    var branchBounceRemaining: TimeInterval = 0
+    var horizontalVelocityAfterBranch: Double?
 
     init(
         id: UUID = UUID(),
@@ -312,6 +317,9 @@ struct Prompt28FallingStar: Identifiable, Equatable, Sendable {
     let fallSpeed: Double
     let horizontalDrift: Double
     let rotationDegrees: Double
+
+    var isInVines = false
+    var vineContactTime: TimeInterval = 0
 
     init(id: UUID = UUID(), x: Double, y: Double = -0.12, fallSpeed: Double, horizontalDrift: Double, rotationDegrees: Double) {
         self.id = id; self.x = x; self.y = y; self.fallSpeed = fallSpeed

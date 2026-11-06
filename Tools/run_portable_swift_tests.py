@@ -13,6 +13,8 @@ import subprocess
 import tempfile
 
 SOURCES = [
+    'Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift',
+    'Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift',
     'Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift',
     'Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift',
     'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift',
@@ -99,6 +101,8 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BObstaclePhysicsTests.swift',
+    'Prompt1BObstacleGeometryTests.swift',
     'Prompt1BCatchPresentationTests.swift',
     'Prompt1BFruitBasketResearchTests.swift', 'Prompt1BHealthSafetyBoundaryTests.swift',
     'Prompt21BodyBiologyCoreTests.swift',
@@ -159,6 +163,7 @@ def main():
             extra_targets + production_target + ', .testTarget(name: "FruitfolioTests", dependencies: ["Fruitfolio"])], ' +
             'swiftLanguageModes: [' + language_mode + '])\n')
         environment = os.environ.copy()
+        environment['FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH'] = str(root / 'Fruitfolio/Fruit Basket/Prompt28ObstacleMasks.json')
         environment['FRUITFOLIO_TEST_RESEARCH_PATH'] = str(root / 'Fruitfolio/FruitfolioResearchPackage.json')
         environment['FRUITFOLIO_TEST_MODEL_PATH'] = str(root / 'FruitfolioAI.gguf')
         environment['CLANG_MODULE_CACHE_PATH'] = str(work / 'module-cache')

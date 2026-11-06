@@ -91,4 +91,19 @@ final class Prompt1BCatchPresentationTests: XCTestCase {
         }
     }
 
+    func testBasketAndFullyEnteredItemsStayOnScreenInShortLandscapeField() {
+        for size in [CGSize(width: 390, height: 220), CGSize(width: 240, height: 380), CGSize(width: 620, height: 320)] {
+            let geometry = Prompt28CatchGeometry(playfield: size)
+            XCTAssertGreaterThanOrEqual(geometry.basketCenterY - 66, 0)
+            XCTAssertLessThanOrEqual(geometry.basketCenterY + 66, size.height)
+            for kind: Prompt28CatchTransit.Kind in [.star, .fruit(.pear, .good)] {
+                var transit = Prompt28CatchTransit(id: UUID(), kind: kind, relativeX: 0)
+                _ = transit.advance(by: Prompt28CatchTransit.duration)
+                let pose = geometry.pose(for: transit, basketX: 0.5, reducedMotion: false)
+                XCTAssertLessThanOrEqual(pose.center.y + pose.size.height / 2, size.height)
+                XCTAssertGreaterThanOrEqual(pose.center.y - pose.size.height / 2, 0)
+            }
+        }
+    }
+
 }

@@ -57,6 +57,8 @@ struct Prompt28FruitBasketView: View {
     @State private var questionOperationTask: Task<Void, Never>?
     @State private var showingSaveDestination = false
     @State private var showTour = false
+    @State private var showStormNote = false
+    @State private var lastStormNoteKey: String?
     @State private var tourStep = 0
     @State private var leaderboardValidationMessage: String?
     @State private var leaderboardUsernameDraft = ""
@@ -81,6 +83,7 @@ struct Prompt28FruitBasketView: View {
 
     var body: some View {
         ZStack {
+            ZStack {
             GeometryReader { proxy in
                 Image("fruitbasket_background")
                     .resizable()
@@ -104,13 +107,18 @@ struct Prompt28FruitBasketView: View {
             weatherLayer
 
             content
-                .fruitfolioModalBlur(active: showTour, reduceMotion: motionPreferences.reduceMotionActive)
                 .frame(maxWidth: 620)
                 .frame(maxWidth: .infinity)
+
+            }
+            .fruitfolioModalBlur(active: showTour || showStormNote, reduceMotion: motionPreferences.reduceMotionActive)
 
             if showTour {
                 tourOverlay
                     .zIndex(100)
+            }
+            if showStormNote {
+                stormNote.zIndex(110)
             }
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
@@ -130,6 +138,15 @@ struct Prompt28FruitBasketView: View {
             viewModel.leaveScreen()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
+        }
+        .onChange(of: viewModel.screen) { _, screen in
+            guard screen == .catchActive, viewModel.weather == .softRain,
+                  let session = viewModel.session else { return }
+            let key = session.id.uuidString + ":" + String(session.currentRound)
+            guard key != lastStormNoteKey else { return }
+            lastStormNoteKey = key
+            showStormNote = true
+            viewModel.pause()
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
@@ -211,7 +228,7 @@ struct Prompt28FruitBasketView: View {
 
             case .breezy:
                 Prompt28WindGust(
-                    reduceMotion: motionPreferences.reduceMotionActive,
+                    reduceMotion: motionPreferences.reduceMotionActive || viewModel.isPaused,
                     direction: viewModel.windDirection
                 )
                 .onAppear {
@@ -223,6 +240,10 @@ struct Prompt28FruitBasketView: View {
             case .softRain:
                 GeometryReader { proxy in
                     ZStack(alignment: .top) {
+                        if viewModel.activeObstacles.contains(.wind) {
+                            Prompt28WindGust(reduceMotion: motionPreferences.reduceMotionActive || viewModel.isPaused,
+                                direction: viewModel.windDirection)
+                        }
                         FruitfolioImage(id: .fruitbasket_rain, contentMode: .fill)
                             .frame(width: proxy.size.width, height: proxy.size.height)
                             .opacity(0.23)
@@ -242,6 +263,10 @@ struct Prompt28FruitBasketView: View {
                     Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_rain)
                     Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_rain_cloud)
                     audioManager.play(.fruitBasketRainObstacle)
+                    if viewModel.activeObstacles.contains(.wind) {
+                        Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_wind)
+                        audioManager.play(.fruitBasketWind)
+                    }
                 }
             }
         } else {
@@ -314,6 +339,34 @@ struct Prompt28FruitBasketView: View {
         }
         .padding(.horizontal, 18)
         .padding(.top, 8)
+    }
+
+    private var stormNote: some View {
+        ZStack {
+            DesignTokens.ColorToken.backgroundCream.opacity(0.72).ignoresSafeArea()
+            FruitfolioLargeControlCardPopup {
+                VStack(spacing: 10) {
+                    HStack {
+                        FruitfolioImage(id: .fruit_strawberry_silly).frame(width: 44, height: 44)
+                            .accessibilityLabel("Strawberry")
+                        Spacer()
+                        CloseControl(action: dismissStormNote)
+                    }
+                    FruitfolioTranslatedText(source: "uh oh! a little storm is passing. o__o", protectedLiterals: ["o__o"],
+                        font: Prompt28TextRole.sectionHeading.font)
+                    FruitfolioTranslatedText(source: "puddles gently resist your basket while it moves through the water.",
+                        font: Prompt28TextRole.secondary.font)
+                    FruitfolioControlPillButton(label: "got it") { dismissStormNote() }
+                }
+            }
+        }
+        .accessibilityIdentifier("fruitBasket.stormNote")
+        .accessibilityAction(.escape) { dismissStormNote() }
+    }
+
+    private func dismissStormNote() {
+        showStormNote = false
+        if viewModel.screen == .paused { viewModel.resume() }
     }
 
     private func performQuestionOperation(_ operation: @MainActor @escaping () async -> Void) {
@@ -949,11 +1002,12 @@ struct Prompt28FruitBasketView: View {
 
             let xOffset =
                 (proxy.size.width - width) / 2
+            let fieldHeight = max(0, proxy.size.height - proxy.safeAreaInsets.bottom)
 
             ZStack(alignment: .topLeading) {
                 gameplayDecor(
                     width: width,
-                    height: proxy.size.height,
+                    height: fieldHeight,
                     xOffset: xOffset
                 )
 
@@ -1021,14 +1075,14 @@ struct Prompt28FruitBasketView: View {
                 } else if store.controlMode == .classification {
                     classificationGameplay(
                         width: width,
-                        height: proxy.size.height,
+                        height: fieldHeight,
                         xOffset: xOffset
                     )
 
                 } else {
                     catchGameplay(
                         width: width,
-                        height: proxy.size.height,
+                        height: fieldHeight,
                         xOffset: xOffset
                     )
                 }
@@ -1038,72 +1092,41 @@ struct Prompt28FruitBasketView: View {
         .onChange(of: viewModel.basketCount) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.fruitCatch) }
         }
+        .onChange(of: viewModel.vineContactSequence) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.vineRustle) }
+        }
         .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.starChime) }
         }
     }
 
     @ViewBuilder
-    private func gameplayDecor(
-        width: CGFloat,
-        height: CGFloat,
-        xOffset: CGFloat
-    ) -> some View {
-        if viewModel.activeObstacles.contains(.vines) {
-            FruitfolioImage(
-                id: .fruitbasket_vines,
-                contentMode: .fit
-            )
-            .frame(width: width * (viewModel.gameLevel == 2 ? 0.20 : 0.30))
-            .position(
-                x: xOffset + width * (viewModel.gameLevel == 2 ? 0.07 : 0.11),
-                y: height * 0.54
-            )
-            .opacity(viewModel.gameLevel == 2 ? 0.46 : 0.66)
-            .zIndex(12)
-            .accessibilityHidden(true)
-            .onAppear {
-                Prompt28AssetUsageRegistrar.markRendered(
-                    .fruitbasket_vines
-                )
+    private func gameplayDecor(width: CGFloat, height: CGFloat, xOffset: CGFloat) -> some View {
+        if let library = Prompt28ObstacleMaskLibrary.bundled {
+            let geometry = Prompt28ObstacleGeometry(playfield: CGSize(width: width, height: height), level: viewModel.gameLevel, library: library)
+            if viewModel.activeObstacles.contains(.vines), let frame = geometry.frame("vines") {
+                FruitfolioImage(id: .fruitbasket_vines)
+                    .frame(width: frame.width, height: frame.height)
+                    .position(x: xOffset + frame.midX, y: frame.midY)
+                    .opacity(viewModel.gameLevel == 2 ? 0.46 : 0.66)
+                    .zIndex(12).accessibilityHidden(true).allowsHitTesting(false)
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_vines) }
             }
-        }
-
-        if viewModel.activeObstacles.contains(.branch) {
-            FruitfolioImage(
-                id: .fruitbasket_branch
-            )
-            .frame(width: min(width * 0.30, 176))
-            .position(
-                x: xOffset + width * 0.84,
-                y: height * 0.40
-            )
-            .opacity(0.78)
-            .zIndex(12)
-            .accessibilityHidden(true)
-            .onAppear {
-                Prompt28AssetUsageRegistrar.markRendered(
-                    .fruitbasket_branch
-                )
+            if viewModel.activeObstacles.contains(.branch), let frame = geometry.frame("branch") {
+                FruitfolioImage(id: .fruitbasket_branch)
+                    .frame(width: frame.width, height: frame.height)
+                    .scaleEffect(x: -1, y: 1)
+                    .position(x: xOffset + frame.midX, y: frame.midY)
+                    .opacity(0.78)
+                    .zIndex(12).accessibilityHidden(true).allowsHitTesting(false)
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_branch) }
             }
-        }
-
-        if viewModel.activeObstacles.contains(.puddle) {
-            FruitfolioImage(
-                id: .fruitbasket_puddle
-            )
-            .frame(width: min(width * 0.34, 190))
-            .position(
-                x: xOffset + width * 0.50,
-                y: height * 0.905
-            )
-            .opacity(0.62)
-            .zIndex(2)
-            .accessibilityHidden(true)
-            .onAppear {
-                Prompt28AssetUsageRegistrar.markRendered(
-                    .fruitbasket_puddle
-                )
+            if viewModel.activeObstacles.contains(.puddle), let frame = geometry.frame("puddle") {
+                Prompt28PuddleArtwork(active: !viewModel.isPaused, reduceMotion: motionPreferences.reduceMotionActive)
+                    .frame(width: frame.width, height: frame.height)
+                    .position(x: xOffset + frame.midX, y: frame.midY)
+                    .opacity(0.62).zIndex(2).accessibilityHidden(true).allowsHitTesting(false)
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_puddle) }
             }
         }
     }
@@ -1139,7 +1162,9 @@ struct Prompt28FruitBasketView: View {
             ForEach(viewModel.activeStars) { star in
                 FruitfolioImage(id: .fruitbasket_star)
                     .frame(width: geometry.starSize, height: geometry.starSize)
-                    .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees))
+                    .scaleEffect(x: star.isInVines && !motionPreferences.reduceMotionActive ? 0.94 : 1,
+                                 y: star.isInVines && !motionPreferences.reduceMotionActive ? 1.04 : 1)
+                    .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees + (star.isInVines ? sin(star.vineContactTime * 13) * 4 : 0)))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
                     .accessibilityLabel("star pass")
@@ -1155,7 +1180,7 @@ struct Prompt28FruitBasketView: View {
             .frame(width: geometry.basketWidth, height: 132)
             .position(
                 x: xOffset + width * viewModel.basketX,
-                y: height * 0.89
+                y: geometry.basketCenterY
             )
             .gesture(
                 DragGesture(
@@ -1174,9 +1199,8 @@ struct Prompt28FruitBasketView: View {
                 }
             )
             .zIndex(30)
-            .accessibilityLabel(
-                "Basket, \(viewModel.basketCount) of 10"
-            )
+            .accessibilityLabel("Basket, \(viewModel.basketCount) of 10")
+            .accessibilityValue(viewModel.basketIsInPuddle ? "in a puddle; movement meets gentle resistance" : "on dry ground")
         }
         .onAppear { viewModel.updatePlayfield(size: geometry.playfield) }
         .onChange(of: geometry.playfield) { _, size in viewModel.updatePlayfield(size: size) }
@@ -1941,10 +1965,16 @@ private struct Prompt28MovingFruit: View {
                 FruitfolioImage(id: fruit.fruitID.assetID)
                     .frame(width: side * 0.88, height: side * 0.88)
                     .rotationEffect(
-                        .degrees(reduceMotion ? 0 : fruit.rotationDegrees)
+                        .degrees(reduceMotion ? 0 : fruit.rotationDegrees + (fruit.isInVines ? sin(fruit.vineContactTime * 13) * 4 : 0))
                     )
+                    .scaleEffect(x: fruit.isInVines && !reduceMotion ? 0.94 : 1, y: fruit.isInVines && !reduceMotion ? 1.04 : 1)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-
+                if fruit.classification == .good {
+                    FruitfolioImage(id: .fruitbasket_star)
+                        .frame(width: starSize, height: starSize)
+                        .accessibilityHidden(true)
+                        .accessibilityIdentifier("fruitBasket.goodFruitMarker")
+                }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
@@ -1994,7 +2024,7 @@ private struct Prompt28BasketProgressView: View {
                             ? geometry.pose(for: transit, basketX: basketX, reducedMotion: motionPreferences.reduceMotionActive)
                             : Prompt28CatchGeometry.localPose(for: transit, basketSize: CGSize(width: width, height: height), reducedMotion: motionPreferences.reduceMotionActive)
                         let center = geometry.isValid
-                            ? CGPoint(x: pose.center.x - playfield.width * basketX + width / 2, y: pose.center.y - playfield.height * 0.89 + height / 2)
+                            ? CGPoint(x: pose.center.x - playfield.width * basketX + width / 2, y: pose.center.y - geometry.basketCenterY + height / 2)
                             : pose.center
                         let asset: FruitfolioAssetID = {
                             switch transit.kind {
@@ -2506,7 +2536,17 @@ private struct Prompt28WindGust: View {
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
-        .onAppear { drift = true }
+        .onAppear { drift = !reduceMotion }
+        .onChange(of: reduceMotion) { _, reduced in
+            if reduced {
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { drift = false }
+            } else { drift = true }
+        }
+        .onDisappear {
+            var transaction = Transaction(); transaction.disablesAnimations = true
+            withTransaction(transaction) { drift = false }
+        }
         .accessibilityHidden(true)
     }
 }
@@ -2551,6 +2591,33 @@ private struct Prompt28WatercolorConfettiBurst: View {
         case 2: return DesignTokens.ColorToken.paleYellow
         case 3: return DesignTokens.ColorToken.lavender
         default: return DesignTokens.ColorToken.mint
+        }
+    }
+}
+
+private struct Prompt28PuddleArtwork: View {
+    let active: Bool
+    let reduceMotion: Bool
+    @State private var ripple = false
+    var body: some View {
+        FruitfolioImage(id: .fruitbasket_puddle)
+            .scaleEffect(x: active && !reduceMotion && ripple ? 1.012 : 1,
+                         y: active && !reduceMotion && ripple ? 0.993 : 1)
+            .offset(x: active && !reduceMotion && ripple ? 1.2 : 0)
+            .animation(active && !reduceMotion ? .easeInOut(duration: 2.8).repeatForever(autoreverses: true) : nil, value: ripple)
+            .onAppear { synchronize() }
+            .onChange(of: active) { _, _ in synchronize() }
+            .onChange(of: reduceMotion) { _, _ in synchronize() }
+            .onDisappear {
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { ripple = false }
+            }
+    }
+    private func synchronize() {
+        if active && !reduceMotion { ripple = true }
+        else {
+            var transaction = Transaction(); transaction.disablesAnimations = true
+            withTransaction(transaction) { ripple = false }
         }
     }
 }
