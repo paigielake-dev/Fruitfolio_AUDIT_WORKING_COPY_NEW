@@ -30,6 +30,7 @@ struct Prompt12OwnershipView: View {
                             )
 
                         Prompt12InfoText(store.ownershipState.displayDetail)
+                        if let message = store.ownershipValidationMessage { Prompt12InfoText(message) }
 
                         Prompt12StatusPill(
                             text: "$9.99 one-time purchase",
@@ -66,6 +67,7 @@ struct Prompt12OwnershipView: View {
                             audioManager.play(.buttonSoftPop)
                             store.beginQuietOwnershipValidation()
                         }
+                        .disabled(store.ownershipState == .validating)
                     }
                 }
                 .padding(.horizontal, 20)

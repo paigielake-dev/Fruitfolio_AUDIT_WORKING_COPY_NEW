@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "e32ff31b5fdfdc8a95f422b3a960a8302231ead6",
+  "current_HEAD": "1424ad297e01b6ae719ba1be5e97c0e8d96db877",
   "latest_verified_commit": null,
-  "current_checklist_part": 9,
-  "current_requirement": 477,
-  "current_implementation_batch": "Full-bibliographic-literal-protection-and-immutable-translation-request",
+  "current_checklist_part": 10,
+  "current_requirement": 1,
+  "current_implementation_batch": "Optional-real-StoreKit-app-ownership-with-owned-task-and-original-record-protection",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,22 +493,20 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Core/Translation/FruitfolioCitationProtection.swift",
-    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
-    "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
+    "Fruitfolio/Privacy Settings/FruitfolioOwnershipVerification.swift",
+    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+    "Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift",
+    "FruitfolioTests/Prompt1BOwnershipRecordPolicyTests.swift",
+    "FruitfolioTests/Prompt1BOwnershipValidationTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/CITATION_TRANSLATION_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "development_workflow/BLOCKERS.md",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/OWNERSHIP_VERIFICATION.md"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
-    "Production auth/sync/StoreKit services are not configured",
+    "Production auth/cloud sync services are not configured; StoreKit source adapter awaits Apple SDK/receipt validation",
     "Xcode/Apple SDK and iOS UI tests unavailable on Linux",
     "MADLAD official weights/tokenizer blocked by huggingface.co proxy 403; domain draft immutable",
     "Device/simulator llama.xcframework must be built on Mac; supplied framework is simulator-only",
@@ -517,20 +515,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite",
+    "Full portable Swift6 suite including actual Foundation ownership models",
     "Full actual native-linked Swift5 suite",
-    "Compiler syntax parse",
+    "Swift compiler syntax parse",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "465 XCTest +21 Swift Testing passed",
-    "nativeSwift5": "470 XCTest +21 Swift Testing passed",
-    "syntax": "242 changed Swift files parsed; zero errors",
-    "citation": "Full APA/bare DOI/escaped citation guards tested with fixture; actual source metadata unchanged",
-    "Apple": "NOT_RUN source propagation and UI language handling",
-    "MADLAD": "Official T5 output/clinical semantic equivalence NOT_RUN; literal fidelity alone is insufficient"
+    "Swift6": "468 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "473 XCTest +21 Swift Testing passed",
+    "syntax": "246 changed Swift files parsed; zero errors",
+    "Apple": "NOT_RUN StoreKit API typecheck/real transactions and three Combine-owner regressions",
+    "ownership": "Production/test/wrong-bundle/signature policy tested; no real receipt/charge verification claimed",
+    "services": "Auth/cloud backend still absent; actual StoreKit source adapter now integrated independently"
   },
-  "next_exact_implementation_action": "Continue independent source/test gaps; investigate the existing ownership check stub as an applicable founder paid-app requirement and integrate real StoreKit AppTransaction verification without adding a paywall or fake purchased state. Preserve existing architecture/data, gate Apple runtime acceptance, and keep auth/sync and official MADLAD/clinical gates explicit. Reconcile remaining founder prose requirements as work continues.",
-  "updated_at": "2026-11-06T01:54:04.036917+00:00",
+  "next_exact_implementation_action": "Fix actual shared FruitPopupHost coverage: source inspection found its Hub/global requests lacked the common blur and the root did not host popups across all routes. Move hosting to the real root with nested-host suppression, shared blur/dim/Reduce Motion and background AX/hit exclusion. Replace remaining source-citation system alert through a measured white-paper global popup with owned late-link callbacks and UI regression capture. Preserve existing Hub tour and character art/default behavior; do not rebuild app.",
+  "updated_at": "2026-11-06T02:02:45.314869+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

@@ -3,6 +3,7 @@ import Foundation
 enum Prompt12OwnershipState: String, Codable, Equatable, Sendable {
     case purchased
     case validating
+    case verifiedTestInstallation
     case validationUnavailable
     case unknown
 
@@ -12,6 +13,8 @@ enum Prompt12OwnershipState: String, Codable, Equatable, Sendable {
             return "Fruitfolio purchased ♡"
         case .validating:
             return "checking ownership"
+        case .verifiedTestInstallation:
+            return "test installation verified"
         case .validationUnavailable:
             return "ownership check unavailable"
         case .unknown:
@@ -25,6 +28,8 @@ enum Prompt12OwnershipState: String, Codable, Equatable, Sendable {
             return "$9.99 one-time purchase. no subscription."
         case .validating:
             return "Fruitfolio is checking the storefront record quietly."
+        case .verifiedTestInstallation:
+            return "this is a verified test installation, not a production purchase record. local features remain available."
         case .validationUnavailable:
             return "you can keep using Fruitfolio while storefront validation is unavailable."
         case .unknown:

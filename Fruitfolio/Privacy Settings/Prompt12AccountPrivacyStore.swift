@@ -6,6 +6,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     static let shared = Prompt12AccountPrivacyStore()
 
     @Published private(set) var ownershipState: Prompt12OwnershipState
+    @Published private(set) var ownershipValidationMessage: String? = nil
     @Published private(set) var authenticationState: Prompt12AuthenticationState
     @Published private(set) var syncState: Prompt12SyncState
     @Published private(set) var account: Prompt12AccountIdentity?
@@ -16,20 +17,28 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
 
     private let defaults: UserDefaults
     private let persistenceKey: String
+    private let ownershipVerifier: any FruitfolioOwnershipVerifying
+    private let expectedBundleIdentifier: String?
+    private var ownershipValidationTask: Task<Void, Never>?
+    private var ownershipGeneration = UUID()
 
     init(
         defaults: UserDefaults = .standard,
-        persistenceKey: String = "fruitfolio.prompt12.accountPrivacy.v1"
+        persistenceKey: String = "fruitfolio.prompt12.accountPrivacy.v1",
+        ownershipVerifier: any FruitfolioOwnershipVerifying = FruitfolioStoreKitOwnershipVerifier(),
+        expectedBundleIdentifier: String? = Bundle.main.bundleIdentifier
     ) {
         self.defaults = defaults
         self.persistenceKey = persistenceKey
+        self.ownershipVerifier = ownershipVerifier
+        self.expectedBundleIdentifier = expectedBundleIdentifier
 
         if let data = defaults.data(forKey: persistenceKey),
            let snapshot = try? JSONDecoder().decode(
                 Prompt12StoreSnapshot.self,
                 from: data
            ) {
-            ownershipState = snapshot.ownershipState
+            ownershipState = snapshot.ownershipState == .validating ? .validationUnavailable : snapshot.ownershipState
             authenticationState = snapshot.authenticationState
             syncState = snapshot.syncState
             account = snapshot.account
@@ -61,16 +70,58 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
         ownershipState.displayTitle
     }
 
-    func markPurchasedForInstalledApp() {
-        ownershipState = .purchased
-        saveSnapshot()
-    }
+    deinit { ownershipValidationTask?.cancel() }
 
-    func beginQuietOwnershipValidation() {
-        // A timer is not a storefront receipt. Preserve app access while a real
-        // StoreKit verification integration is unavailable.
-        ownershipState = .validationUnavailable
+    /// Compatibility entry point performs verification rather than fabricating
+    /// a new receipt. Installed paid-app access remains independent of this check.
+    func markPurchasedForInstalledApp() { _ = beginQuietOwnershipValidation() }
+
+    @discardableResult
+    func beginQuietOwnershipValidation() -> Task<Void, Never> {
+        if let ownershipValidationTask { return ownershipValidationTask }
+        if defaults.object(forKey: persistenceKey) != nil {
+            guard let bytes = defaults.data(forKey: persistenceKey),
+                  (try? JSONDecoder().decode(Prompt12StoreSnapshot.self, from: bytes)) != nil else {
+                ownershipState = .validationUnavailable
+                ownershipValidationMessage = "the saved account/settings record could not be read. it has been preserved; this ownership check did not change it."
+                return Task {}
+            }
+        }
+        ownershipValidationMessage = nil
+        ownershipGeneration = UUID()
+        let generation = ownershipGeneration
+        let verifier = ownershipVerifier
+        let bundleIdentifier = expectedBundleIdentifier
+        ownershipState = .validating
         saveSnapshot()
+        let expectedBytes = defaults.data(forKey: persistenceKey)
+        let task = Task { [weak self] in
+            let result: FruitfolioOwnershipVerification
+            if let bundleIdentifier {
+                result = await verifier.verify(expectedBundleIdentifier: bundleIdentifier)
+            } else { result = .unavailable }
+            guard let self, self.ownershipGeneration == generation else { return }
+            self.ownershipValidationTask = nil
+            guard let expectedBytes, self.defaults.data(forKey: self.persistenceKey) == expectedBytes else {
+                self.ownershipState = .validationUnavailable
+                self.ownershipValidationMessage = "the local account/settings record changed during this check. the newer record was preserved; try again when ready."
+                return
+            }
+            guard !Task.isCancelled else {
+                self.ownershipState = .validationUnavailable
+                self.ownershipValidationMessage = "ownership checking was cancelled. local features remain available."
+                self.saveSnapshot()
+                return
+            }
+            switch result {
+            case .verifiedProductionInstallation: self.ownershipState = .purchased
+            case .verifiedTestInstallation: self.ownershipState = .verifiedTestInstallation
+            case .unverified, .unavailable: self.ownershipState = .validationUnavailable
+            }
+            self.saveSnapshot()
+        }
+        ownershipValidationTask = task
+        return task
     }
 
     func requestSignIn(email: String) throws {
@@ -194,6 +245,9 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func resetLocalAccountPrivacyStateForTesting() {
+        ownershipGeneration = UUID()
+        ownershipValidationTask?.cancel()
+        ownershipValidationTask = nil
         ownershipState = .purchased
         authenticationState = .signedOut
         syncState = .localOnly
