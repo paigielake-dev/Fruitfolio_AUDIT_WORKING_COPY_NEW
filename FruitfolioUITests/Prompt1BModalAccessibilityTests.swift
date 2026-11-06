@@ -2073,6 +2073,17 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 XCTAssertGreaterThanOrEqual(section.frame.minX, library.frame.minX - 2)
                 XCTAssertLessThanOrEqual(section.frame.maxX, library.frame.maxX + 2)
             }
+            let estradiolArticle = app.otherElements["hormoneLibrary.article.estradiol"]
+            XCTAssertTrue(estradiolArticle.exists)
+            for _ in 0..<32 { if picker.isHittable { break }; library.swipeDown() }
+            XCTAssertTrue(picker.isHittable); picker.tap()
+            let amh = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Anti-Müllerian")).firstMatch
+            XCTAssertTrue(amh.waitForExistence(timeout: 3)); amh.tap()
+            let oldArticleGone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: estradiolArticle)
+            XCTAssertEqual(XCTWaiter.wait(for: [oldArticleGone], timeout: 3), .completed)
+            XCTAssertTrue(app.otherElements["hormoneLibrary.article.amh"].waitForExistence(timeout: 10))
+            XCTAssertFalse(estradiolArticle.exists, "Only the selected hormone's real article may be exposed")
+            XCTAssertTrue((picker.label + " " + (picker.value as? String ?? "")).contains("AMH"))
             let back = app.buttons["hormoneLibrary.back"]
             for _ in 0..<32 { if back.isHittable { break }; library.swipeDown() }
             XCTAssertTrue(back.isHittable); back.tap()
@@ -2080,6 +2091,29 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
             XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 0")
             captureGame(app, name: "hormone-library-fixed-copy-source-fallback-\(language)")
+            app.terminate()
+        }
+    }
+
+    func testMeasurementLibraryRetryRecoversInjectedReadFailureUsingActualApprovedArticle() {
+        for language in ["en", "fr"] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioHormoneLibraryRetryQA", "-fruitfolioMeasurementsLanguage", language]
+            app.launch()
+            let library = app.scrollViews["hormoneLibrary.scroll"]
+            XCTAssertTrue(library.waitForExistence(timeout: 5))
+            let retry = app.buttons["hormoneLibrary.retry"]
+            XCTAssertTrue(retry.waitForExistence(timeout: 5))
+            XCTAssertFalse(app.otherElements["hormoneLibrary.article.estradiol"].exists)
+            for _ in 0..<32 { if retry.isHittable { break }; library.swipeUp() }
+            XCTAssertTrue(retry.isHittable); retry.tap()
+            XCTAssertTrue(app.otherElements["hormoneLibrary.article.estradiol"].waitForExistence(timeout: 10))
+            XCTAssertFalse(retry.exists, "A prior request failure cannot cover a successfully loaded real article")
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "hormoneLibrary.section.functions").firstMatch.exists)
+            XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
+            XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 0")
+            XCTAssertEqual(app.staticTexts["measurementQA.originalBytesIntact"].label, "original bytes intact: true")
+            captureGame(app, name: "library-injected-read-retry-source-fallback-\(language)")
             app.terminate()
         }
     }

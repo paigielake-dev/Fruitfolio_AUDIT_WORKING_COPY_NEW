@@ -2444,3 +2444,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 793, "native_CPU_XCTest": 815, "SwiftTesting_each_run": 21, "workflow_checks": 60, "syntax_files": 311, "focused_hormone_library_XCTest": 6, "prior_focused_tests": 6, "prior_focused_failed_assertions": 17, "prior_unexpected_failures": 0, "Apple_measurement_UI_launches_written_NOT_RUN": 20, "Apple_Guide_UI_launches_written_NOT_RUN": 56, "English_catalog_keys_unchanged": 863, "nonempty_foreign_units": 0, "official_MADLAD": "BLOCKED; synthetic/native ownership tests are not official inference"}.
 - Next action: Guard Hormone Library presentation by the selected hormone before async task startup, so an accepted previous article or error cannot appear under the next hormone label. Capture requested hormone in the task and reject stale completions/failures; keep current approved provider/source/citation owners. Extend actual library picker UI assertions and source diagnostics without inventing content; run relevant checks and record all remaining Apple/model/clinical verification.
 - Commit: containing commit for batch Literal-Unicode-hormone-research-name-matching.
+
+## Hormone-library-request-scoped-presentation-and-retry
+
+- Parent checkpoint: 5c09a6891592ecff82c2f6cb0ff12e25c48f243c.
+- Source-order requirements: [257, 258, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryView.swift, Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_measurement_launches_written_NOT_RUN": 22, "Apple_Guide_launches_written_NOT_RUN": 56, "English_catalog_keys": 864, "last_confirmed_prior_full_suites_NOT_RERUN": {"portable_XCTest": 793, "native_CPU_XCTest": 815, "SwiftTesting_each": 21}}.
+- Next action: Inspect original requirement259 and existing implementation for the next independent incomplete behavior; preserve clinical boundaries and record actual verification separately from written Apple checks.
+- Commit: containing commit for batch Hormone-library-request-scoped-presentation-and-retry.

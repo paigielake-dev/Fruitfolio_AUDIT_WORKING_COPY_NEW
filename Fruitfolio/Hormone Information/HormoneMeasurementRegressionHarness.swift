@@ -25,9 +25,23 @@ private final class FruitfolioMeasurementFaultDefaults: UserDefaults, @unchecked
     }
 }
 
+/// An explicitly synthetic first read failure; accepted content always comes
+/// from the actual approved-resource provider, never a fake medical article.
+private actor FruitfolioLibraryRetryFixture {
+    private var failNext = true
+    func article(for hormone: FruitfolioMeasuredHormone) async throws -> FruitfolioHormoneLibraryArticle {
+        if failNext {
+            failNext = false
+            throw CocoaError(.fileReadNoSuchFile)
+        }
+        return try await FruitfolioHormoneLibraryProvider.shared.article(for: hormone)
+    }
+}
+
 @MainActor
 private final class FruitfolioMeasurementRegressionFixture: ObservableObject {
     static let recordID = UUID(uuidString: "CF310000-0000-0000-0000-000000000001")!
+    let libraryRetry = FruitfolioLibraryRetryFixture()
     let store: FruitfolioHormoneMeasurementStore
     let setupFailure: String?
     private let suite = "Fruitfolio.measurementUIQA." + UUID().uuidString
@@ -85,7 +99,12 @@ struct FruitfolioMeasurementRegressionHarness: View {
     var body: some View {
         Group {
             if let failure = fixture.setupFailure { Text(failure) }
-            else if presented { FruitfolioHormoneInformationView(onBack: { presented = false }, store: fixture.store) }
+            else if presented {
+                if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryRetryQA") {
+                    FruitfolioHormoneLibraryView(onBack: { presented = false },
+                        articleLoader: { [loader = fixture.libraryRetry] hormone in try await loader.article(for: hormone) })
+                } else { FruitfolioHormoneInformationView(onBack: { presented = false }, store: fixture.store) }
+            }
             else { Button("open measurements QA") { presented = true } }
         }
         .overlay(alignment: .bottomLeading) {
