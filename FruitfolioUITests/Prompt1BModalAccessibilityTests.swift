@@ -194,6 +194,45 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testProtectedGameRecoveryReloadAndBackgroundPreserveOriginalBytesAndOwner() {
+        for scenario in ["protected-progress-top", "protected-progress-null"] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", scenario,
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let recovery = app.scrollViews["fruitBasket.progressRecovery"]
+            XCTAssertTrue(recovery.waitForExistence(timeout: 5))
+            let heading = app.descendants(matching: .any).matching(identifier: "fruitBasket.progressRecovery.heading").firstMatch
+            XCTAssertEqual(heading.label, "game progress is protected")
+            XCTAssertFalse(app.buttons["fruitBasket.gameplay.pause"].exists)
+            XCTAssertFalse(app.buttons["fruitBasket.pause.resetLevel"].exists)
+            let owner = app.staticTexts["gameQA.recoveryOwner"].label
+            XCTAssertTrue(owner.hasPrefix("recovery owner: "))
+            let reload = app.buttons["fruitBasket.progressRecovery.reload"]
+            for attempt in 0..<2 {
+                if attempt == 1 { XCUIDevice.shared.press(.home); app.activate() }
+                XCTAssertTrue(recovery.waitForExistence(timeout: 5))
+                for _ in 0..<24 { if reload.isHittable { break }; recovery.swipeUp() }
+                XCTAssertTrue(reload.isHittable)
+                XCTAssertGreaterThanOrEqual(reload.frame.height, 44)
+                reload.tap()
+                XCTAssertTrue(recovery.exists)
+                XCTAssertEqual(app.staticTexts["gameQA.protectedStore"].label, "protected store: true")
+                XCTAssertEqual(app.staticTexts["gameQA.protectedBlobIntact"].label, "protected blob intact: true")
+                XCTAssertEqual(app.staticTexts["gameQA.recoveryOwner"].label, owner)
+                XCTAssertFalse(app.buttons["fruitBasket.gameplay.pause"].exists)
+            }
+            captureGame(app, name: "protected-game-\(scenario)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testSharedGameLevelResetPreservesOriginAndConservedProgress() {
         for origin in ["paused", "result"] {
         for language in ["en", "ar"] {

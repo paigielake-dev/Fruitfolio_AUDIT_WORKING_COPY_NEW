@@ -1,0 +1,9 @@
+# Protected game recovery presentation
+
+The real read-only recovery screen now uses shared semantic translation for its heading and actual persistence failure/fallback copy. Serious presentation keeps the message neutral. Its actual heading receives guarded accessibility focus on presentation, foreground return and unsuccessful reload; canceled/departed/inactive or popup-obscured contexts cannot request that focus. Reload retains the existing explicit successful-reload route and preferences/tutorial behavior. Failed compatible decoding leaves gameplay and reset controls absent.
+
+Two disposable QA fixtures construct genuine same-version game documents with an unknown top-level object or nested tour null before the real store loads. The real persistence/coverage guard rejects them. Fixture setup respects the resulting read-only state and does not rewrite the record. Independent readback observes the actual store and backing UserDefaults Data; an opaque owner token detects fixture recreation across backgrounding. No protected bytes or user content are displayed or logged.
+
+Eight Apple UI launches cover both future shapes, English/Arabic and motion settings at accessibility text size. Each reloads, backgrounds/reactivates, reloads again and requires unchanged original bytes, the same fixture owner, continuing read-only status and no gameplay controls. These UI/SwiftUI typecheck/VoiceOver tests are NOT_RUN here. Source focus requests are not verified physical VoiceOver behavior. The Foundation persistence fault/coverage regressions remain the executable evidence for write blocking and preservation.
+
+Three English-only fixed recovery keys preserve all 787 prior catalog entries and add no nonempty foreign translations. Original art, research, persistence format and reset/physics behavior are unchanged. Feasible full checks appear in the batch run log; they do not establish rendered layout, clinical translation quality or official MADLAD inference.

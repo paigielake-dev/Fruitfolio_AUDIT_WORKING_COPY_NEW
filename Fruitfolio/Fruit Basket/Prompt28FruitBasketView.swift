@@ -69,6 +69,7 @@ struct Prompt28FruitBasketView: View {
     @State private var levelResetSession: Prompt28LevelResetSession?
     @State private var returnLevelResetFocus = false
     @AccessibilityFocusState private var levelResetControlFocused: Bool
+    @AccessibilityFocusState private var progressRecoveryHeadingFocused: Bool
     private enum GameplayFocus: Hashable { case pause, classificationProgress }
     @AccessibilityFocusState private var gameplayFocus: GameplayFocus?
     @FocusState private var usernameKeyboardFocused: Bool
@@ -248,8 +249,10 @@ struct Prompt28FruitBasketView: View {
                 tourHeadingFocused = false
                 stormHeadingFocused = false
                 pauseHeadingFocused = false
+                progressRecoveryHeadingFocused = false
                 viewModel.sceneBecameInactive()
-            } else if showStormNote { stormHeadingFocused = true }
+            } else if store.isReadOnly { focusProgressRecoveryHeading() }
+            else if showStormNote { stormHeadingFocused = true }
             else if showTour { tourHeadingFocused = true }
             else if pauseMenuVisible { pauseHeadingFocused = true }
         }
@@ -449,24 +452,47 @@ struct Prompt28FruitBasketView: View {
             VStack(spacing: 18) {
                 topBar
                 FruitfolioLargeCard {
-                    Text("game progress is protected").prompt28Text(.sectionHeading)
-                        .accessibilityAddTraits(.isHeader)
-                    Text(store.persistenceMessage ?? "the original local game data is retained while progress changes are paused.")
-                        .prompt28Text(.body)
-                    FruitfolioControlPillButton(label: "reload local progress") {
-                        store.reload()
-                        if !store.isReadOnly {
-                            viewModel.changeTopic()
-                            viewModel.difficulty = store.preferredDifficulty
-                            tourStep = 0
-                            showTour = !store.tourState.hasCompletedTour
-                        }
+                    FruitfolioTranslatedContent(source: "game progress is protected") { display, _ in
+                        FruitfolioSemanticText(markdown: display, baseFont: Prompt28TextRole.sectionHeading.font, serious: true)
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityFocused($progressRecoveryHeadingFocused)
+                            .accessibilityIdentifier("fruitBasket.progressRecovery.heading")
                     }
+                    FruitfolioTranslatedText(source: store.persistenceMessage ?? "the original local game data is retained while progress changes are paused.",
+                        font: Prompt28TextRole.body.font, serious: true)
+                        .accessibilityIdentifier("fruitBasket.progressRecovery.message")
+                    FruitfolioControlPillButton(label: "reload local progress", action: reloadProtectedGameProgress)
+                        .accessibilityIdentifier("fruitBasket.progressRecovery.reload")
                 }
             }
             .padding(.horizontal, 20)
         }
+        .task { focusProgressRecoveryHeading() }
         .accessibilityIdentifier("fruitBasket.progressRecovery")
+    }
+
+    private func focusProgressRecoveryHeading() {
+        progressRecoveryHeadingFocused = false
+        Task { @MainActor in
+            await Task.yield()
+            guard rootIsVisible, store.isReadOnly, scenePhase == .active,
+                  popupCoordinator.currentPopup == nil else { return }
+            progressRecoveryHeadingFocused = true
+        }
+    }
+
+    private func reloadProtectedGameProgress() {
+        guard rootIsVisible, store.isReadOnly else { return }
+        store.reload()
+        if !store.isReadOnly {
+            progressRecoveryHeadingFocused = false
+            viewModel.changeTopic()
+            viewModel.difficulty = store.preferredDifficulty
+            tourStep = 0
+            showTour = !store.tourState.hasCompletedTour
+        } else {
+            focusProgressRecoveryHeading()
+        }
     }
 
     private var stormNote: some View {

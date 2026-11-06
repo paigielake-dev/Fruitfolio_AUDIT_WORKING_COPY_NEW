@@ -8,18 +8,38 @@ private final class Prompt28GameRegressionFixture: ObservableObject {
     let model: Prompt28FruitBasketViewModel
     let username: FruitfolioUsernameStore
     let library: Prompt10SavedLibraryStore
-    private let defaults: UserDefaults
+    let defaults: UserDefaults
+    let protectedOriginal: Data?
+    let recoveryToken = UUID().uuidString
     private let suite = "Fruitfolio.gameUIQA." + UUID().uuidString
     init() {
         defaults = UserDefaults(suiteName: suite)!
-        let store = Prompt28FruitBasketStore(defaults: defaults)
         let args = ProcessInfo.processInfo.arguments
         let scenarioIndex = args.firstIndex(of: "-fruitfolioGameQAScenario")
+        let scenario = scenarioIndex.flatMap { $0 + 1 < args.count ? args[$0 + 1] : nil }
+        if ["protected-progress-top", "protected-progress-null"].contains(scenario ?? "") {
+            do {
+                let encoded = try JSONEncoder().encode(Prompt28PersistedGameState())
+                var json = try JSONSerialization.jsonObject(with: encoded) as! [String: Any]
+                if scenario == "protected-progress-top" { json["future"] = ["keep": "fixture original"] }
+                else {
+                    var tour = json["tourState"] as! [String: Any]
+                    tour["future"] = NSNull()
+                    json["tourState"] = tour
+                }
+                let original = try JSONSerialization.data(withJSONObject: json)
+                protectedOriginal = original
+                defaults.set(original, forKey: "fruitfolio.prompt28.fruitBasket.v1")
+            } catch { preconditionFailure("Unable to build the private game recovery fixture") }
+        } else { protectedOriginal = nil }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
         let isTour = scenarioIndex.map { $0 + 1 < args.count && args[$0 + 1] == "tour" } ?? false
-        if !isTour { store.completeTour() }
-        let isCatchLayout = scenarioIndex.map { $0 + 1 < args.count && ["hud-catch", "catch-objects"].contains(args[$0 + 1]) } ?? false
-        store.controlMode = isCatchLayout ? .catchMode : .classification
-        store.persistPreferences()
+        if !store.isReadOnly {
+            if !isTour { store.completeTour() }
+            let isCatchLayout = scenarioIndex.map { $0 + 1 < args.count && ["hud-catch", "catch-objects"].contains(args[$0 + 1]) } ?? false
+            store.controlMode = isCatchLayout ? .catchMode : .classification
+            store.persistPreferences()
+        }
         model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
         if let index = args.firstIndex(of: "-fruitfolioGameQAScenario"), index + 1 < args.count,
            args[index + 1] == "leaderboard-username-future" {
@@ -58,9 +78,13 @@ struct Prompt28GameRegressionHarness: View {
             }
             .overlay(alignment: .bottomLeading) {
                 if !modalActive {
-                    Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
-                        .font(.caption2)
-                        .allowsHitTesting(false)
+                    VStack(alignment: .leading) {
+                        Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
+                        if let original = fixture.protectedOriginal {
+                            Prompt28ProtectedGameBlobReadback(store: model.store, defaults: fixture.defaults,
+                                expected: original, token: fixture.recoveryToken)
+                        }
+                    }.font(.caption2).allowsHitTesting(false)
                 }
             }
             .task {
@@ -84,6 +108,7 @@ struct Prompt28GameRegressionHarness: View {
     }
 
     private func configure() {
+        if scenario.hasPrefix("protected-progress-") { return }
         if scenario == "tour" { return } // Exercise the existing first-run overlay.
         if scenario == "setup" {
             model.rawTopic = "QA control layout fixture"
@@ -193,6 +218,24 @@ private struct Prompt28GameDiagnosticReadback: View {
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
                 FruitfolioInteractionSoundDiagnostics()
             }
+        }
+    }
+}
+
+/// Independent observations of the real private store and its backing bytes.
+@MainActor
+private struct Prompt28ProtectedGameBlobReadback: View {
+    @ObservedObject var store: Prompt28FruitBasketStore
+    let defaults: UserDefaults
+    let expected: Data
+    let token: String
+    var body: some View {
+        VStack {
+            Text("protected blob intact: \(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1") == expected)")
+                .accessibilityIdentifier("gameQA.protectedBlobIntact")
+            Text("protected store: \(store.isReadOnly)")
+                .accessibilityIdentifier("gameQA.protectedStore")
+            Text("recovery owner: " + token).accessibilityIdentifier("gameQA.recoveryOwner")
         }
     }
 }
