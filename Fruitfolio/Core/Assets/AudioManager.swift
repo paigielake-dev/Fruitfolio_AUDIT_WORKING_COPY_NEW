@@ -36,7 +36,7 @@ final class AudioManager: ObservableObject {
         }
     }
     private func debugTracks(_ id: FruitfolioAudioID) -> Bool {
-        id == .buttonSoftPop || id == .popupOpen || id == .popupClose
+        id == .buttonSoftPop || id == .popupOpen || id == .popupClose || id == .starChime
     }
     private func debugRequested(_ id: FruitfolioAudioID) {
         guard debugInteractionRecording, debugTracks(id) else { return }

@@ -9,6 +9,7 @@ struct FruitfolioInteractionSoundDiagnostics: View {
         VStack(alignment: .trailing, spacing: 2) {
             counter("soft pop requests", .buttonSoftPop, starts: false, id: "audioQA.softPopRequests")
             counter("soft pop starts", .buttonSoftPop, starts: true, id: "audioQA.softPopStarts")
+            counter("star chime requests", .starChime, starts: false, id: "audioQA.starChimeRequests")
             counter("popup open requests", .popupOpen, starts: false, id: "audioQA.openRequests")
             counter("popup close requests", .popupClose, starts: false, id: "audioQA.closeRequests")
         }

@@ -1038,7 +1038,6 @@ struct Prompt28FruitBasketView: View {
                                 title: "catch",
                                 accent: .paleYellow
                             ) {
-                                if !question.usesSeriousFeedback { audioManager.play(.starChime) }
                                 viewModel.screen = .catchIntro
                             }
                             .accessibilityIdentifier("fruitBasket.question.correctContinue")

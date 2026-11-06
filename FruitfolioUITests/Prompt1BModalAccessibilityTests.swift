@@ -191,6 +191,54 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testCorrectAnswerNavigationOwnsOnlyItsCanonicalPopWhileStarBankKeepsItsEventCue() {
+        for muted in [false, true] {
+        for reduced in [false, true] {
+        for scenario in ["question-excerpt", "star"] {
+            XCUIDevice.shared.orientation = .portrait
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", scenario,
+                "-fruitfolioGameQAPauseInference", "-fruitfolioAudioDiagnostics",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            if scenario == "question-excerpt" {
+                let scroll = app.scrollViews["fruitBasket.question.scroll"]
+                let answer = app.buttons["fruitBasket.question.answer.first"]
+                XCTAssertTrue(answer.waitForExistence(timeout: 5))
+                for _ in 0..<24 { if answer.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(answer.isHittable)
+                answer.tap()
+                let proceed = app.buttons["fruitBasket.question.correctContinue"]
+                XCTAssertTrue(proceed.waitForExistence(timeout: 3))
+                for _ in 0..<24 { if proceed.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(proceed.isHittable)
+                proceed.tap()
+                XCTAssertTrue(app.buttons["fruitBasket.question.continue"].waitForExistence(timeout: 3))
+                XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
+                XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 2)")
+                XCTAssertEqual(app.staticTexts["audioQA.starChimeRequests"].label, "star chime requests: 0")
+            } else {
+                let catchStar = app.buttons["fruitBasket.classification.catchStar"]
+                XCTAssertTrue(catchStar.waitForExistence(timeout: 5))
+                let scroll = app.scrollViews["fruitBasket.classification.scroll"]
+                for _ in 0..<24 { if catchStar.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(catchStar.isHittable)
+                catchStar.tap()
+                let star = app.staticTexts["audioQA.starChimeRequests"]
+                let earned = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "star chime requests: 1"), object: star)
+                XCTAssertEqual(XCTWaiter.wait(for: [earned], timeout: 5), .completed)
+                XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 1")
+                XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 1)")
+            }
+            captureGame(app, name: "game-cue-\(scenario)-muted-\(muted)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testExactExcerptQuestionScrollsWithoutTranslatingItsWordMatchingChoices() {
         for language in ["en", "ar"] {
         for reduced in [false, true] {

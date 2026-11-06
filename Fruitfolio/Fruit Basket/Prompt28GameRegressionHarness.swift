@@ -37,6 +37,7 @@ struct Prompt28GameRegressionHarness: View {
     @State private var configured = false
     @State private var backRequests = 0
     @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var audioManager: AudioManager
     private var model: Prompt28FruitBasketViewModel { fixture.model }
     private var scenario: String {
         let arguments = ProcessInfo.processInfo.arguments
@@ -54,6 +55,9 @@ struct Prompt28GameRegressionHarness: View {
                         .accessibilityIdentifier("gameQA.backRequests")
                     Text("stored highest level: \(model.store.leaderboardTotals.highestLevel)")
                         .accessibilityIdentifier("gameQA.storedHighestLevel")
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                        FruitfolioInteractionSoundDiagnostics()
+                    }
                 }
                 .font(.caption2)
                 .allowsHitTesting(false)
@@ -66,6 +70,12 @@ struct Prompt28GameRegressionHarness: View {
                    let language = FruitfolioLanguage(rawValue: args[index + 1]) {
                     settings.language = language
                 } else { settings.language = .english }
+                if args.contains("-fruitfolioAudioDiagnostics") {
+                    settings.globallyMuted = args.contains("-fruitfolioAudioMuted")
+                    settings.soundEffectsEnabled = true
+                    settings.soundEffectsVolume = 0.5
+                    audioManager.debugRecordInteractions(true)
+                }
                 settings.translationPausedForMemoryPressure = args.contains("-fruitfolioGameQAPauseInference")
                 settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioGameReduceMotion")
                 configure()

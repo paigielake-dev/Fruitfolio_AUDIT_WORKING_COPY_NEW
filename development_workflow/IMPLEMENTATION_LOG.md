@@ -2048,3 +2048,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 727, "native_CPU_XCTest": 749, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 677, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "catalog_existing_entries_preserved": 675, "SwiftSyntax_sound_ownership_findings": 0}.
 - Next action: Remove the manual star chime from the canonical correct-answer catch navigation button, which already owns the soft-pop cue; retain the actual star-bank event chime. Extend actual opt-in audio request diagnostics and add a question-to-catch UI ownership regression without claiming physical audibility.
 - Commit: containing commit for batch Exact-excerpt-framing-localization-and-scrollable-question.
+
+## Catch-navigation-cue-owner-and-star-bank-event-diagnostics
+
+- Parent checkpoint: 2c31047e69ea17a60148f57d5448683a1e5cb8f3.
+- Source-order requirements: [9, 11, 12, 443, 446, 468, 472, 476, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Core/Assets/AudioManager.swift, Fruitfolio/Core/Assets/FruitfolioInteractionSoundDiagnostics.swift.
+- Removed direct star-chime request from canonical correct-answer catch navigation; canonical pop remains and actual star-bank observer unchanged. Real opt-in AudioManager counters now include star requests. Eight Apple UI launches distinguish navigation from earned-star cues with mute/reduce-motion; unrun. Original audio payloads unchanged; Linux checks cannot verify AVFoundation/SwiftUI or physical audibility.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 727, "native_CPU_XCTest": 749, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 677, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0}.
+- Next action: Route existing fixed correct/incorrect game feedback and catch legend through shared display translation with serious-tone selection and citation protection intact; preserve original excerpt word choices and all domain fields. Extend actual question-flow UI scenarios.
+- Commit: containing commit for batch Catch-navigation-cue-owner-and-star-bank-event-diagnostics.
