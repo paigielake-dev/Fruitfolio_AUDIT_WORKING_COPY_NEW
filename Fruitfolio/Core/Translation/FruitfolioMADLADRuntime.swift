@@ -28,9 +28,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     /// Counts only actual successful native calls, never user content. Synthetic
     /// contract execution does not establish official MADLAD or language quality.
     func debugExecutionStatistics() -> (encoderCalls: Int, decoderCalls: Int, resourcesLoaded: Bool,
-                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int) {
+                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int, modelLoaded: Bool) {
         (successfulEncoderCalls, successfulDecoderCalls, model != nil && context != nil,
-         checkedBlockingCalls, mainThreadBlockingCalls)
+         checkedBlockingCalls, mainThreadBlockingCalls, model != nil)
     }
     #endif
 
@@ -57,11 +57,10 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
 
     func translate(_ text: String, targetTag: String) async throws -> String {
         try Task.checkCancellation()
-        try loadIfNeeded(targetTag: targetTag)
-        guard let model, let context, let vocab, let sampler, let manifest else {
+        try loadModelIfNeeded(targetTag: targetTag)
+        guard let model, let vocab, let manifest else {
             throw FruitfolioTranslationError.resourcesMissing
         }
-        defer { llama_memory_clear(llama_get_memory(context), true) }
         guard manifest.supportedLanguageTags.contains(targetTag) else {
             throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
         }
@@ -74,6 +73,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         }
         let input = try tokenize("\(tag) \(text)", vocab: vocab, addSpecial: true)
         guard input.count < manifest.contextLength else { throw FruitfolioTranslationError.inputTooLong }
+        try prepareContextIfNeeded(model: model, config: manifest)
+        guard let context, let sampler else { throw FruitfolioTranslationError.inferenceFailed }
+        defer { llama_memory_clear(llama_get_memory(context), true) }
         llama_memory_clear(llama_get_memory(context), true)
         llama_sampler_reset(sampler)
         var batch = llama_batch_init(Int32(manifest.contextLength), 0, 1)
@@ -116,7 +118,7 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         throw FruitfolioTranslationError.truncatedOutput
     }
 
-    private func loadIfNeeded(targetTag: String) throws {
+    private func loadModelIfNeeded(targetTag: String) throws {
         if model != nil { return }
         let directory = resourceDirectory ?? Bundle.main.resourceURL
         guard let directory else { throw FruitfolioTranslationError.resourcesMissing }
@@ -154,6 +156,24 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
             llama_model_free(loaded)
             throw FruitfolioTranslationError.incompatibleModel
         }
+        guard let loadedVocab = llama_model_get_vocab(loaded) else {
+            llama_model_free(loaded)
+            throw FruitfolioTranslationError.incompatibleModel
+        }
+        guard !Task.isCancelled else {
+            llama_model_free(loaded)
+            throw CancellationError()
+        }
+        model = loaded
+        vocab = loadedVocab
+        manifest = config
+    }
+
+    /// Tokenization needs the loaded model vocabulary, but rejected inputs do
+    /// not need a compute context/sampler. Keep that heavier allocation lazy.
+    private func prepareContextIfNeeded(model loaded: OpaquePointer, config: FruitfolioMADLADManifest) throws {
+        if context != nil, sampler != nil { return }
+        try Task.checkCancellation()
         var contextParameters = llama_context_default_params()
         contextParameters.n_ctx = UInt32(config.contextLength)
         contextParameters.n_batch = UInt32(config.contextLength)
@@ -165,30 +185,32 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         recordBlockingExecutionThread()
         #endif
         guard let loadedContext = llama_init_from_model(loaded, contextParameters) else {
-            llama_model_free(loaded)
+            releaseResources()
             throw FruitfolioTranslationError.incompatibleModel
         }
         guard !Task.isCancelled else {
-            llama_free(loadedContext); llama_model_free(loaded)
+            llama_free(loadedContext)
+            releaseResources()
             throw CancellationError()
         }
         guard llama_n_ctx(loadedContext) >= UInt32(config.contextLength) else {
-            llama_free(loadedContext); llama_model_free(loaded)
-            throw FruitfolioTranslationError.incompatibleModel
-        }
-        guard let loadedVocab = llama_model_get_vocab(loaded) else {
-            llama_free(loadedContext); llama_model_free(loaded)
+            llama_free(loadedContext)
+            releaseResources()
             throw FruitfolioTranslationError.incompatibleModel
         }
         guard let loadedSampler = llama_sampler_init_greedy() else {
-            llama_free(loadedContext); llama_model_free(loaded)
+            llama_free(loadedContext)
+            releaseResources()
             throw FruitfolioTranslationError.inferenceFailed
         }
-        model = loaded
+        guard !Task.isCancelled else {
+            llama_sampler_free(loadedSampler)
+            llama_free(loadedContext)
+            releaseResources()
+            throw CancellationError()
+        }
         context = loadedContext
-        vocab = loadedVocab
         sampler = loadedSampler
-        manifest = config
     }
 
     private func tokenize(_ text: String, vocab: OpaquePointer, addSpecial: Bool) throws -> [llama_token] {

@@ -1894,3 +1894,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 727, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "actual_C_API_typecheck": "PASS; not Apple ABI/link", "native_T5_contract_methods": 9, "before_unsupported_regression": "1 actual native test, 2 failures on parent 759f8f4", "current_unsupported_language": "zero native load/context calls, no resources loaded", "native_tokenizer_variants": 4, "Apple_UI_typecheck": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic graph and metadata contracts are not official tokenizer, language or clinical verification"}.
 - Next action: Delay actual native context/sampler allocation until exact language-token and input-token budget checks pass, preserving model/vocabulary loading and cancellation/free safety. Verify over-budget requests allocate no context and later valid requests reuse the model correctly.
 - Commit: containing commit for batch Native-T5-tokenizer-variants-and-preallocation-language-rejection.
+
+## Lazy-native-T5-context-after-exact-token-validation
+
+- Parent checkpoint: 4a6f1c4bbc65783840e58da40547dd5b513be17a.
+- Source-order requirements: [418, 419, 425, 426, 427, 428, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift.
+- Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 729, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "native_T5_contract_methods": 11, "actual_C_API_typecheck": "PASS; not Apple ABI/link", "before_budget_regression": "1 actual native test, 2 failures against 4a6f1c4 allocation behavior", "overbudget_current": "model-only state, one sampled load, no context/encoder/decoder; valid retry reuses model", "Apple_UI_typecheck": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 metadata/execution contracts do not approve official model/language/clinical/device behavior"}.
+- Next action: Exercise concurrent real native translation and resource-release requests against the existing serialized actor; verify no partial output/resource use-after-free and successful final release/reload without claiming device/official-model performance.
+- Commit: containing commit for batch Lazy-native-T5-context-after-exact-token-validation.

@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "759f8f47a69c58986ed1a4a17ab1aa793a0ba391",
+  "current_HEAD": "4a6f1c4bbc65783840e58da40547dd5b513be17a",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
   "current_requirement": 428,
-  "current_implementation_batch": "Native-T5-tokenizer-variants-and-preallocation-language-rejection",
+  "current_implementation_batch": "Lazy-native-T5-context-after-exact-token-validation",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -495,9 +495,11 @@
   "uncommitted_changes": [
     "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
     "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
+    "development_workflow/MADLAD_LAZY_CONTEXT_VERIFICATION.md",
+    "development_workflow/MADLAD_NATIVE_THREAD_VERIFICATION.md",
     "development_workflow/MADLAD_TOKENIZER_VARIANTS_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/T5-unsupported-language-before.json"
+    "development_workflow/RUN_LOGS/T5-budget-context-before.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -518,20 +520,19 @@
   ],
   "last_test_results": {
     "portable_XCTest": 712,
-    "native_CPU_XCTest": 727,
+    "native_CPU_XCTest": 729,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 306,
+    "native_T5_contract_methods": 11,
     "actual_C_API_typecheck": "PASS; not Apple ABI/link",
-    "native_T5_contract_methods": 9,
-    "before_unsupported_regression": "1 actual native test, 2 failures on parent 759f8f4",
-    "current_unsupported_language": "zero native load/context calls, no resources loaded",
-    "native_tokenizer_variants": 4,
+    "before_budget_regression": "1 actual native test, 2 failures against 4a6f1c4 allocation behavior",
+    "overbudget_current": "model-only state, one sampled load, no context/encoder/decoder; valid retry reuses model",
     "Apple_UI_typecheck": "NOT_RUN",
-    "official_MADLAD": "BLOCKED; synthetic graph and metadata contracts are not official tokenizer, language or clinical verification"
+    "official_MADLAD": "BLOCKED; synthetic T5 metadata/execution contracts do not approve official model/language/clinical/device behavior"
   },
-  "next_exact_implementation_action": "Delay actual native context/sampler allocation until exact language-token and input-token budget checks pass, preserving model/vocabulary loading and cancellation/free safety. Verify over-budget requests allocate no context and later valid requests reuse the model correctly.",
-  "updated_at": "2026-11-06T13:08:37.854831+00:00",
+  "next_exact_implementation_action": "Exercise concurrent real native translation and resource-release requests against the existing serialized actor; verify no partial output/resource use-after-free and successful final release/reload without claiming device/official-model performance.",
+  "updated_at": "2026-11-06T13:16:55.018403+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

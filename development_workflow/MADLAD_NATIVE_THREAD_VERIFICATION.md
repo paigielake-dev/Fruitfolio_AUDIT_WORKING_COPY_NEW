@@ -12,7 +12,7 @@ counts and zero physical-main-thread invocations for both nongated/gated graph
 execution, release/reload, retained-context decoder-budget retries and a call
 through the actual main-actor control display state. Early cancellation samples
 zero native operations; changed-file reload is rejected before further allocation.
-Unsupported/input-budget cases sample actual load/context but no encoder/decoder.
+Manifest-unsupported requests now sample zero native operations. Following lazy-context allocation, over-budget inputs sample model loading only; neither reaches encode/decode.
 
 The seven focused native methods passed against the actual checked-in CPU llama
 archives on Linux. Synthetic, untrained tensors establish graph/control-flow and

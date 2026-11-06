@@ -21,9 +21,10 @@ require the actual digest, T5/tokenizer metadata, native encoder/decoder graph,
 context, exact tag round trip and inference gates. Cached models retain the
 existing membership check. Missing/invalid manifest recovery is unchanged.
 
-Input over-budget detection still needs the actual native tokenizer and currently
-loads both model and context. Its encoder/decoder calls remain zero. Further
-reducing that allocation is independent work, not claimed fixed here.
+At this checkpoint input-budget detection still loaded model and context. The
+follow-up [lazy-context evidence](MADLAD_LAZY_CONTEXT_VERIFICATION.md) now verifies
+that the actual tokenizer/model is loaded while compute context is delayed until
+the input passes; no encoder/decoder runs for rejected input.
 
 Nine native contract methods pass in the focused suite, including the four new
 metadata/input variants and separated unsupported/budget tests. Physical-thread

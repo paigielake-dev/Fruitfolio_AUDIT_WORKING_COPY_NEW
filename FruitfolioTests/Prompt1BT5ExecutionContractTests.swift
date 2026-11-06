@@ -74,8 +74,64 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         let actual = await runtime.debugExecutionStatistics()
         XCTAssertEqual(actual.encoderCalls, 0)
         XCTAssertEqual(actual.decoderCalls, 0)
-        XCTAssertEqual(actual.checkedBlockingCalls, 2)
+        XCTAssertEqual(actual.checkedBlockingCalls, 1)
         XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
+        XCTAssertTrue(actual.modelLoaded)
+        XCTAssertFalse(actual.resourcesLoaded)
+        do { _ = try await runtime.translate("fixture", targetTag: "de"); XCTFail("Empty synthetic output") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inferenceFailed) }
+        let retried = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(retried.encoderCalls, 1)
+        XCTAssertEqual(retried.decoderCalls, 1)
+        XCTAssertEqual(retried.checkedBlockingCalls, 4, "The already loaded model must be reused")
+        XCTAssertTrue(retried.resourcesLoaded)
+        await runtime.releaseResources()
+        let released = await runtime.debugExecutionStatistics()
+        XCTAssertFalse(released.modelLoaded)
+        XCTAssertFalse(released.resourcesLoaded)
+    }
+
+    func testModelOnlyReleaseRevalidatesChangedBytesBeforeReload() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        do {
+            _ = try await runtime.translate(String(repeating: "fixture ", count: 100), targetTag: "de")
+            XCTFail("Over-budget input")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inputTooLong) }
+        let partial = await runtime.debugExecutionStatistics()
+        XCTAssertTrue(partial.modelLoaded); XCTAssertFalse(partial.resourcesLoaded)
+        await runtime.releaseResources()
+        let released = await runtime.debugExecutionStatistics()
+        XCTAssertFalse(released.modelLoaded); XCTAssertFalse(released.resourcesLoaded)
+        let file = try FileHandle(forWritingTo: directory.appendingPathComponent("SYNTHETIC-UNTRAINED-NOT-MADLAD.gguf"))
+        try file.seekToEnd(); try file.write(contentsOf: Data([1])); try file.close()
+        do { _ = try await runtime.translate("fixture", targetTag: "de"); XCTFail("Changed weights") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .checksumMismatch) }
+        let rejected = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(rejected.checkedBlockingCalls, 1)
+        XCTAssertFalse(rejected.modelLoaded); XCTAssertFalse(rejected.resourcesLoaded)
+    }
+
+    func testDeclaredButMissingVocabularyTagNeverAllocatesContext() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let manifestURL = directory.appendingPathComponent("MADLAD400.manifest.json")
+        var manifest = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: manifestURL)) as? [String: Any])
+        manifest["supportedLanguageTags"] = ["de", "en", "fr"]
+        try JSONSerialization.data(withJSONObject: manifest).write(to: manifestURL)
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        do { _ = try await runtime.translate("fixture", targetTag: "fr"); XCTFail("Manifest cannot invent a vocabulary tag") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .unsupportedLanguage("fr")) }
+        let rejected = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(rejected.checkedBlockingCalls, 1)
+        XCTAssertTrue(rejected.modelLoaded); XCTAssertFalse(rejected.resourcesLoaded)
+        XCTAssertEqual(rejected.encoderCalls, 0); XCTAssertEqual(rejected.decoderCalls, 0)
+        do { _ = try await runtime.translate("fixture", targetTag: "de"); XCTFail("Empty synthetic output") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inferenceFailed) }
+        let valid = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(valid.checkedBlockingCalls, 4)
+        XCTAssertEqual(valid.encoderCalls, 1); XCTAssertEqual(valid.decoderCalls, 1)
         await runtime.releaseResources()
     }
 
