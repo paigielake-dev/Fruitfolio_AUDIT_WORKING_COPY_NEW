@@ -1619,3 +1619,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable": "623 XCTest +21 SwiftTesting passed", "native": "629 XCTest +21 SwiftTesting passed", "workflow": "40 passed", "syntax": "283 Swift files parsed,0 errors; not Apple typechecking", "Apple/official MADLAD": "NOT_RUN or external resource blocked"}.
 - Next action: Implement serialized high-level cycle operations with one final persistence write, rollback/reload after failure and no intermediate empty daily-log saves. Add actual-file counting/fault/concurrency regressions, then protect onboarding actor state and continue independent checklist work.
 - Commit: containing commit for batch Cycle-file-exact-snapshot-and-future-field-protection.
+
+## Cycle-actor-serialized-commit-and-failure-recovery
+
+- Parent checkpoint: 1eaecb0bb09362bbe947d06d13d52fad85299423.
+- Source-order requirements: [443, 444, 461, 467, 474, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift.
+- All21 existing public async cycle operations now serialize across backend awaits and use private internal implementations to avoid recursive acquisition. Changed candidate archives commit once. Failure discards candidate state and forces a real backend reload, including lost-acknowledgment recovery. Clear atomically replaces the archive with the existing empty representation instead of erasing before a potentially failing save. Six actual-file tests cover linked observations, failed saves/clears, acknowledgment loss,21 concurrent notes and queued cancellation. The same tests against actual parent source reproduced7failures(1missing-file assertion error). Observation linkage already staged its log before this change; no old two-write observation regression is claimed. This is not cross-file/cross-process atomicity or Apple acceptance.
+- Tests added/updated: FruitfolioTests/Prompt1BCycleTransactionTests.swift.
+- Verification: {"portable": "629 XCTest+21 SwiftTesting passed", "native": "635 XCTest+21 SwiftTesting passed", "workflow": "40 passed", "syntax": "284 files parsed,0errors; no Apple typecheck", "project": "Build-file references resolved,notbuilt", "before": "6tests7failures(1unexpected missing-file assertion error),after6pass", "Apple/MADLAD": "Apple UI/device/official T5 output NOT_RUN or resource blocked"}.
+- Next action: Protect Prompt14 onboarding actor state with serialized operations and rollback/reload on failed saves or erases. Keep actual cross-file cycle-start import recovery explicit: a committed cycle file cannot be physically rolled back by an onboarding acknowledgment failure. Add actual-file faults/concurrency/retry tests, then continue independent checklist requirements.
+- Commit: containing commit for batch Cycle-actor-serialized-commit-and-failure-recovery.

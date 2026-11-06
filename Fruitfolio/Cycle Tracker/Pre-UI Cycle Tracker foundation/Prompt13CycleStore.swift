@@ -61,9 +61,63 @@ actor Prompt13CycleStore {
         )
     }
 
+    // Actor reentrancy must not expose an uncommitted candidate while file I/O
+    // suspends. Public entry points queue here; internal calls use unlocked
+    // implementations so one user operation produces one complete file write.
+    private var operationActive = false
+    private var operationWaiters: [CheckedContinuation<Void, Never>] = []
+
+    private func acquireOperation() async {
+        if !operationActive {
+            operationActive = true
+            return
+        }
+        await withCheckedContinuation { operationWaiters.append($0) }
+    }
+
+    private func releaseOperation() {
+        if operationWaiters.isEmpty {
+            operationActive = false
+        } else {
+            operationWaiters.removeFirst().resume()
+        }
+    }
+
+    private func withOperation<T: Sendable>(
+        _ body: (isolated Prompt13CycleStore) async throws -> T
+    ) async throws -> T {
+        await acquireOperation()
+        defer { releaseOperation() }
+        try Task.checkCancellation()
+        try await loadIfNeededUnlocked()
+        let baseline = archive
+        do {
+            let result = try await body(self)
+            try Task.checkCancellation()
+            if archive != baseline {
+                try await persistence.save(archive)
+            }
+            return result
+        } catch {
+            archive = baseline
+            // A backend may have committed before reporting an error. Reload
+            // its actual state next time instead of assuming physical rollback.
+            isLoaded = false
+            throw error
+        }
+    }
+
     // MARK: - Lifecycle
 
     func loadIfNeeded()
+        async throws
+    {
+        return try await withOperation { store in
+            try await store.loadIfNeededUnlocked()
+        }
+    }
+
+    private func loadIfNeededUnlocked()
         async throws
     {
         guard !isLoaded else {
@@ -83,8 +137,17 @@ actor Prompt13CycleStore {
         async throws
         -> Prompt13CycleArchive
     {
+        return try await withOperation { store in
+            try await store.snapshotUnlocked()
+        }
+    }
+
+    private func snapshotUnlocked()
+        async throws
+        -> Prompt13CycleArchive
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         return archive
     }
@@ -92,7 +155,13 @@ actor Prompt13CycleStore {
     /// Archive and derived values come from the same actor-isolated snapshot.
     /// No suspension occurs between capturing records and deriving state.
     func snapshotWithDerivedState(on currentDate: Prompt13LocalDate, generatedAt: Date = Date()) async throws -> Prompt13CoherentCycleSnapshot {
-        try await loadIfNeeded()
+        return try await withOperation { store in
+            try await store.snapshotWithDerivedStateUnlocked(on: currentDate, generatedAt: generatedAt)
+        }
+    }
+
+    private func snapshotWithDerivedStateUnlocked(on currentDate: Prompt13LocalDate, generatedAt: Date = Date()) async throws -> Prompt13CoherentCycleSnapshot {
+        try await loadIfNeededUnlocked()
         try Task.checkCancellation()
         let captured = archive
         let derived = try engine.rebuildDerivedState(from: captured, currentDate: currentDate, generatedAt: generatedAt)
@@ -107,8 +176,21 @@ actor Prompt13CycleStore {
     ) async throws
         -> Prompt13DerivedState
     {
+        return try await withOperation { store in
+            try await store.derivedStateUnlocked(on: currentDate, generatedAt: generatedAt)
+        }
+    }
+
+    private func derivedStateUnlocked(
+        on currentDate:
+            Prompt13LocalDate,
+        generatedAt:
+            Date = Date()
+    ) async throws
+        -> Prompt13DerivedState
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         return
             try engine
@@ -140,8 +222,28 @@ actor Prompt13CycleStore {
     ) async throws
         -> CycleStart
     {
+        return try await withOperation { store in
+            try await store.recordCycleStartUnlocked(on: date, source: source, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordCycleStartUnlocked(
+        on date:
+            Prompt13LocalDate,
+        source:
+            Prompt13CycleStartSource =
+            .userConfirmed,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> CycleStart
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -174,7 +276,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -190,7 +292,16 @@ actor Prompt13CycleStore {
         dates: Set<Prompt13LocalDate>,
         now: Date = Date()
     ) async throws {
-        try await loadIfNeeded()
+        return try await withOperation { store in
+            try await store.adoptCycleStartsAsOnboardingUnlocked(dates: dates, now: now)
+        }
+    }
+
+    private func adoptCycleStartsAsOnboardingUnlocked(
+        dates: Set<Prompt13LocalDate>,
+        now: Date = Date()
+    ) async throws {
+        try await loadIfNeededUnlocked()
         var changed = false
         for index in archive.cycleStarts.indices {
             guard !archive.cycleStarts[index].metadata.isDeleted,
@@ -201,7 +312,7 @@ actor Prompt13CycleStore {
             changed = true
         }
         if changed, let referenceDate = dates.sorted().last {
-            try await recomputeAndPersist(now: now, referenceDate: referenceDate)
+            try await recomputeDerivedState(now: now, referenceDate: referenceDate)
         }
     }
 
@@ -218,8 +329,25 @@ actor Prompt13CycleStore {
     ) async throws
         -> CycleStart
     {
+        return try await withOperation { store in
+            try await store.editCycleStartUnlocked(id: id, newDate: newDate, now: now, today: today)
+        }
+    }
+
+    private func editCycleStartUnlocked(
+        id:
+            UUID,
+        newDate:
+            Prompt13LocalDate,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> CycleStart
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             newDate,
@@ -283,7 +411,7 @@ actor Prompt13CycleStore {
                 .cycleStarts[index]
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -301,8 +429,21 @@ actor Prompt13CycleStore {
         referenceDate:
             Prompt13LocalDate
     ) async throws {
+        return try await withOperation { store in
+            try await store.deleteCycleStartUnlocked(id: id, now: now, referenceDate: referenceDate)
+        }
+    }
+
+    private func deleteCycleStartUnlocked(
+        id:
+            UUID,
+        now:
+            Date = Date(),
+        referenceDate:
+            Prompt13LocalDate
+    ) async throws {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         guard
             let index =
@@ -328,7 +469,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -344,8 +485,21 @@ actor Prompt13CycleStore {
         referenceDate:
             Prompt13LocalDate
     ) async throws {
+        return try await withOperation { store in
+            try await store.restoreCycleStartUnlocked(id: id, now: now, referenceDate: referenceDate)
+        }
+    }
+
+    private func restoreCycleStartUnlocked(
+        id:
+            UUID,
+        now:
+            Date = Date(),
+        referenceDate:
+            Prompt13LocalDate
+    ) async throws {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         guard
             let index =
@@ -383,7 +537,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -408,8 +562,27 @@ actor Prompt13CycleStore {
     ) async throws
         -> DailyLog?
     {
+        return try await withOperation { store in
+            try await store.dailyLogUnlocked(for: date, createIfMissing: createIfMissing, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func dailyLogUnlocked(
+        for date:
+            Prompt13LocalDate,
+        createIfMissing:
+            Bool,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> DailyLog?
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         if let existing =
             archive
@@ -469,11 +642,7 @@ actor Prompt13CycleStore {
             .lastUpdatedAt =
             now
 
-        try await
-            persistence
-                .save(
-                    archive
-                )
+        // The enclosing operation commits the complete candidate once.
 
         return log
     }
@@ -495,8 +664,27 @@ actor Prompt13CycleStore {
     ) async throws
         -> BleedingObservation
     {
+        return try await withOperation { store in
+            try await store.recordBleedingUnlocked(on: date, flowLevel: flowLevel, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordBleedingUnlocked(
+        on date:
+            Prompt13LocalDate,
+        flowLevel:
+            Prompt13BleedingFlowLevel,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> BleedingObservation
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -541,7 +729,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -570,8 +758,31 @@ actor Prompt13CycleStore {
     ) async throws
         -> SymptomObservation
     {
+        return try await withOperation { store in
+            try await store.recordSymptomUnlocked(on: date, type: type, severity: severity, userLabel: userLabel, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordSymptomUnlocked(
+        on date:
+            Prompt13LocalDate,
+        type:
+            Prompt13SymptomType,
+        severity:
+            Prompt13SymptomSeverity,
+        userLabel:
+            String? = nil,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> SymptomObservation
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -620,7 +831,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -652,8 +863,34 @@ actor Prompt13CycleStore {
     ) async throws
         -> TemperatureObservation
     {
+        return try await withOperation { store in
+            try await store.recordTemperatureUnlocked(on: date, value: value, unit: unit, timeRecorded: timeRecorded, measurementContext: measurementContext, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordTemperatureUnlocked(
+        on date:
+            Prompt13LocalDate,
+        value:
+            Double,
+        unit:
+            Prompt13TemperatureUnit,
+        timeRecorded:
+            Date? = nil,
+        measurementContext:
+            Prompt13TemperatureMeasurementContext =
+            .basal,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> TemperatureObservation
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -704,7 +941,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -729,8 +966,27 @@ actor Prompt13CycleStore {
     ) async throws
         -> CervicalFluidObservation
     {
+        return try await withOperation { store in
+            try await store.recordCervicalFluidUnlocked(on: date, category: category, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordCervicalFluidUnlocked(
+        on date:
+            Prompt13LocalDate,
+        category:
+            Prompt13CervicalFluidCategory,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> CervicalFluidObservation
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -775,7 +1031,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -808,8 +1064,35 @@ actor Prompt13CycleStore {
     ) async throws
         -> MedicationObservation
     {
+        return try await withOperation { store in
+            try await store.recordMedicationUnlocked(on: date, medicationName: medicationName, dose: dose, unit: unit, time: time, userNote: userNote, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordMedicationUnlocked(
+        on date:
+            Prompt13LocalDate,
+        medicationName:
+            String,
+        dose:
+            Double? = nil,
+        unit:
+            String? = nil,
+        time:
+            Date? = nil,
+        userNote:
+            String? = nil,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> MedicationObservation
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -862,7 +1145,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -887,8 +1170,27 @@ actor Prompt13CycleStore {
     ) async throws
         -> Note
     {
+        return try await withOperation { store in
+            try await store.recordNoteUnlocked(on: date, text: text, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordNoteUnlocked(
+        on date:
+            Prompt13LocalDate,
+        text:
+            String,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> Note
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -933,7 +1235,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -962,8 +1264,31 @@ actor Prompt13CycleStore {
     ) async throws
         -> PregnancyTestObservation
     {
+        return try await withOperation { store in
+            try await store.recordPregnancyTestUnlocked(on: date, result: result, timeRecorded: timeRecorded, userNote: userNote, accountID: accountID, now: now, today: today)
+        }
+    }
+
+    private func recordPregnancyTestUnlocked(
+        on date:
+            Prompt13LocalDate,
+        result:
+            Prompt13PregnancyTestResult,
+        timeRecorded:
+            Date? = nil,
+        userNote:
+            String? = nil,
+        accountID:
+            UUID? = nil,
+        now:
+            Date = Date(),
+        today:
+            Prompt13LocalDate? = nil
+    ) async throws
+        -> PregnancyTestObservation
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         try validateObservationDate(
             date,
@@ -1012,7 +1337,7 @@ actor Prompt13CycleStore {
             )
 
         try await
-            recomputeAndPersist(
+            recomputeDerivedState(
                 now:
                     now,
                 referenceDate:
@@ -1030,8 +1355,21 @@ actor Prompt13CycleStore {
         referenceDate:
             Prompt13LocalDate
     ) async throws {
+        return try await withOperation { store in
+            try await store.deleteObservationUnlocked(id: id, now: now, referenceDate: referenceDate)
+        }
+    }
+
+    private func deleteObservationUnlocked(
+        id:
+            UUID,
+        now:
+            Date = Date(),
+        referenceDate:
+            Prompt13LocalDate
+    ) async throws {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         if
             softDelete(
@@ -1099,7 +1437,7 @@ actor Prompt13CycleStore {
             )
         {
             try await
-                recomputeAndPersist(
+                recomputeDerivedState(
                     now:
                         now,
                     referenceDate:
@@ -1120,8 +1458,17 @@ actor Prompt13CycleStore {
         async throws
         -> Data
     {
+        return try await withOperation { store in
+            try await store.exportArchiveJSONUnlocked()
+        }
+    }
+
+    private func exportArchiveJSONUnlocked()
+        async throws
+        -> Data
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         let encoder =
             JSONEncoder()
@@ -1144,8 +1491,17 @@ actor Prompt13CycleStore {
         preserveLocalIdentity:
             Bool = true
     ) async throws {
+        return try await withOperation { store in
+            try await store.eraseAllLocalCycleDataUnlocked(preserveLocalIdentity: preserveLocalIdentity)
+        }
+    }
+
+    private func eraseAllLocalCycleDataUnlocked(
+        preserveLocalIdentity:
+            Bool = true
+    ) async throws {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         let profileID =
             archive.localProfileID
@@ -1165,15 +1521,7 @@ actor Prompt13CycleStore {
                     : UUID()
             )
 
-        try await
-            persistence
-                .erase()
-
-        try await
-            persistence
-                .save(
-                    archive
-                )
+        // Replace the archive once; do not erase the old file before saving.
     }
 
     // MARK: - Sync conflict detection
@@ -1184,8 +1532,19 @@ actor Prompt13CycleStore {
     ) async throws
         -> [Prompt13SyncConflict]
     {
+        return try await withOperation { store in
+            try await store.detectConflictsUnlocked(with: remote)
+        }
+    }
+
+    private func detectConflictsUnlocked(
+        with remote:
+            Prompt13CycleArchive
+    ) async throws
+        -> [Prompt13SyncConflict]
+    {
         try await
-            loadIfNeeded()
+            loadIfNeededUnlocked()
 
         return
             Prompt13SyncConflictDetector()
@@ -1341,7 +1700,7 @@ actor Prompt13CycleStore {
         )
     }
 
-    private func recomputeAndPersist(
+    private func recomputeDerivedState(
         now:
             Date,
         referenceDate:
@@ -1377,11 +1736,7 @@ actor Prompt13CycleStore {
             .lastUpdatedAt =
             now
 
-        try await
-            persistence
-                .save(
-                    archive
-                )
+        // The enclosing operation commits the complete candidate once.
     }
 
     private func refreshDailyLogCycleLinks(

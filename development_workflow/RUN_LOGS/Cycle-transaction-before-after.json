@@ -1,0 +1,16 @@
+{
+  "parent": "1eaecb0bb09362bbe947d06d13d52fad85299423",
+  "method": "Same six production-file tests against git-show parent source in temporary Swift package; working tree was not reverted. Filtered to Prompt1BCycleTransactionTests.",
+  "before": "6 tests,7 failures including1 missing-file assertion error",
+  "after": "6 tests pass in full629-test portable suite",
+  "failures": [
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:131: error: Prompt1BCycleTransactionTests.testCanceledQueuedOperationReleasesGateWithoutWriting : XCTAssertEqual failed: (\"[\"first\", \"canceled\"]\") is not equal to (\"[\"first\"]\") - ",
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:132: error: Prompt1BCycleTransactionTests.testCanceledQueuedOperationReleasesGateWithoutWriting : XCTAssertEqual failed: (\"2\") is not equal to (\"1\") - ",
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:78: error: Prompt1BCycleTransactionTests.testFailedClearPreservesActualFileAndReloadedRecords : XCTAssertEqual threw error \"Error Domain=NSCocoaErrorDomain Code=260 \"The file doesn\u2019t exist.\"UserInfo={NSUnderlyingError=Error Domain=NSPOSIXErrorDomain Code=2 \"No such file or directory\", NSFilePath=/tmp/A5B77041-3894-47E8-80AE-9F723DB70379.json, NSURL=file:///tmp/A5B77041-3894-47E8-80AE-9F723DB70379.json}\" - ",
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:79: error: Prompt1BCycleTransactionTests.testFailedClearPreservesActualFileAndReloadedRecords : XCTAssertEqual failed: (\"[]\") is not equal to (\"[\"retain\"]\") - ",
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:64: error: Prompt1BCycleTransactionTests.testRejectedObservationLeavesNeitherEmptyLogNorUncommittedNote : XCTAssertTrue failed - ",
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:64: error: Prompt1BCycleTransactionTests.testRejectedObservationLeavesNeitherEmptyLogNorUncommittedNote : XCTAssertTrue failed - ",
+    "/tmp/fruitfolio-portable-vnq7d2g4/Tests/FruitfolioTests/Prompt1BCycleTransactionTests.swift:67: error: Prompt1BCycleTransactionTests.testRejectedObservationLeavesNeitherEmptyLogNorUncommittedNote : XCTAssertEqual failed: (\"[\"rejected\", \"retry\"]\") is not equal to (\"[\"retry\"]\") - "
+  ],
+  "scope": "One store actor, not cross-process CAS or cross-file transaction. Observation linkage already staged its log before this change."
+}

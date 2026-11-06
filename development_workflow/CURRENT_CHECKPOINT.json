@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "229cc2390a9c60cb94230987bcce6014edf1d71b",
+  "current_HEAD": "1eaecb0bb09362bbe947d06d13d52fad85299423",
   "latest_verified_commit": null,
   "current_checklist_part": 10,
   "current_requirement": 474,
-  "current_implementation_batch": "Cycle-file-exact-snapshot-and-future-field-protection",
+  "current_implementation_batch": "Cycle-actor-serialized-commit-and-failure-recovery",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingPersistence.swift",
-    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
-    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CyclePersistence.swift",
-    "FruitfolioTests/Prompt1BCycleFileProtectionTests.swift",
+    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
+    "FruitfolioTests/Prompt1BCycleTransactionTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "development_workflow/CYCLE_TRANSACTION_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/Cycle-transaction-before-after.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -511,21 +511,25 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift suite",
-    "Full native CPU-linked Swift suite",
+    "Full629-test portable suite +21 SwiftTesting",
+    "Full635-test actual CPU native suite +21 SwiftTesting",
     "40 workflow tests",
-    "Swift compiler syntax parse",
+    "284 Swift syntax parses",
+    "Xcode project reference validation (not build)",
+    "Six new tests against git-show parent source in isolated temporary package",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable": "623 XCTest +21 SwiftTesting passed",
-    "native": "629 XCTest +21 SwiftTesting passed",
+    "portable": "629 XCTest+21 SwiftTesting passed",
+    "native": "635 XCTest+21 SwiftTesting passed",
     "workflow": "40 passed",
-    "syntax": "283 Swift files parsed,0 errors; not Apple typechecking",
-    "Apple/official MADLAD": "NOT_RUN or external resource blocked"
+    "syntax": "284 files parsed,0errors; no Apple typecheck",
+    "project": "Build-file references resolved,notbuilt",
+    "before": "6tests7failures(1unexpected missing-file assertion error),after6pass",
+    "Apple/MADLAD": "Apple UI/device/official T5 output NOT_RUN or resource blocked"
   },
-  "next_exact_implementation_action": "Implement serialized high-level cycle operations with one final persistence write, rollback/reload after failure and no intermediate empty daily-log saves. Add actual-file counting/fault/concurrency regressions, then protect onboarding actor state and continue independent checklist work.",
-  "updated_at": "2026-11-06T08:01:17.974938+00:00",
+  "next_exact_implementation_action": "Protect Prompt14 onboarding actor state with serialized operations and rollback/reload on failed saves or erases. Keep actual cross-file cycle-start import recovery explicit: a committed cycle file cannot be physically rolled back by an onboarding acknowledgment failure. Add actual-file faults/concurrency/retry tests, then continue independent checklist requirements.",
+  "updated_at": "2026-11-06T08:05:58.963583+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
