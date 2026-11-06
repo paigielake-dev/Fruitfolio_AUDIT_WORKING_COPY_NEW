@@ -316,6 +316,37 @@ actor Prompt13CycleStore {
         }
     }
 
+    /// Applies one explicitly supplied onboarding history as one archive write.
+    /// Independent user/imported starts survive. Ownership migration and removal
+    /// are limited to an edit of previously committed onboarding history.
+    func reconcileOnboardingCycleStarts(
+        dates: Set<Prompt13LocalDate>,
+        replacingCommittedHistory: Bool,
+        now: Date = Date(),
+        today: Prompt13LocalDate
+    ) async throws {
+        try await withOperation { store in
+            // Validate the whole candidate before deleting or inserting records.
+            for date in dates {
+                try store.validateObservationDate(date, today: today)
+            }
+            if replacingCommittedHistory {
+                try await store.adoptCycleStartsAsOnboardingUnlocked(dates: dates, now: now)
+                let obsolete = store.archive.cycleStarts.filter {
+                    !$0.metadata.isDeleted && $0.source == .onboardingConfirmed && !dates.contains($0.date)
+                }
+                for record in obsolete {
+                    try await store.deleteCycleStartUnlocked(id: record.id, now: now, referenceDate: dates.max() ?? record.date)
+                }
+            }
+            var activeDates = Set(store.archive.cycleStarts.filter { !$0.metadata.isDeleted }.map(\.date))
+            for date in dates.sorted() where !activeDates.contains(date) {
+                _ = try await store.recordCycleStartUnlocked(on: date, source: .onboardingConfirmed, now: now, today: today)
+                activeDates.insert(date)
+            }
+        }
+    }
+
     @discardableResult
     func editCycleStart(
         id:

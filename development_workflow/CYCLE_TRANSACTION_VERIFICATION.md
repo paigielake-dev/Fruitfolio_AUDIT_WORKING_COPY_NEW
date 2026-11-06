@@ -44,3 +44,23 @@ cycle records committed but onboarding save failed. Retrying that unchanged draf
 reuses the same actual cycle record IDs. It does not prove arbitrary draft edits
 after partial cross-file completion are reconciled, or that multiple period imports
 form one archive transaction. Those recovery/import improvements remain next.
+
+## Whole-history archive import
+
+Prompt13.reconcileOnboardingCycleStarts validates the entire explicit date set,
+then stages ownership migration/removal/insertion under its existing operation
+boundary. Prompt14 completion and committed-history correction now call this API
+instead of making separate public writes for every date. Initial completion reuses
+existing dates without claiming independent provenance. Committed-history edits
+retain the existing narrow migration behavior for matching user-confirmed dates,
+remove obsolete onboarding-owned starts only, and preserve unrelated user/imported
+records. An unchanged retry retains IDs and performs no archive write.
+
+Four actual-file tests verify one write for multiple dates, invalid-candidate
+rejection before changes, failed-replacement preservation of exact file bytes and
+reloaded records, and independent-record/ID preservation. Failed-write comparison
+uses the actual reloaded baseline because the pre-existing ISO8601 codec stores
+second-precision timestamps; this batch does not change that codec.
+
+This still does not commit the cycle and onboarding files atomically. A durable
+intent/recovery phase and ordered editor autosaves remain subsequent tasks.

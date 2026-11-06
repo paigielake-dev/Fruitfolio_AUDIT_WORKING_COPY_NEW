@@ -147,13 +147,12 @@ actor Prompt14CycleOnboardingStore {
         try await loadIfNeeded()
 
         let today = try Prompt13LocalDate(now, calendar: calendar)
-        let existing = try await cycleStore.snapshot().cycleStarts.filter { !$0.metadata.isDeleted }
-        var existingDates = Set(existing.map(\.date))
-
-        for date in draft.allSuppliedCycleStarts where !existingDates.contains(date) {
-            _ = try await cycleStore.recordCycleStart(on: date, source: .onboardingConfirmed, now: now, today: today)
-            existingDates.insert(date)
-        }
+        try await cycleStore.reconcileOnboardingCycleStarts(
+            dates: Set(draft.allSuppliedCycleStarts),
+            replacingCommittedHistory: false,
+            now: now,
+            today: today
+        )
 
         draft.didCommitCycleStarts = true
         draft.step = .complete
@@ -215,35 +214,12 @@ actor Prompt14CycleOnboardingStore {
         calendar: Calendar = .autoupdatingCurrent
     ) async throws {
         let today = try Prompt13LocalDate(now, calendar: calendar)
-        let desired = Set(draft.allSuppliedCycleStarts)
-        // Migrate dates committed by older Fruitfolio builds before Prompt 14
-        // had a dedicated provenance value. Only currently supplied dates are
-        // adopted; unrelated user-entered history is never claimed.
-        try await cycleStore.adoptCycleStartsAsOnboarding(dates: desired, now: now)
-        let snapshot = try await cycleStore.snapshot()
-        let onboardingRecords = snapshot.cycleStarts.filter {
-            !$0.metadata.isDeleted && $0.source == .onboardingConfirmed
-        }
-
-        for record in onboardingRecords where !desired.contains(record.date) {
-            try await cycleStore.deleteCycleStart(
-                id: record.id,
-                now: now,
-                referenceDate: referenceDate ?? record.date
-            )
-        }
-
-        let refreshed = try await cycleStore.snapshot().cycleStarts.filter { !$0.metadata.isDeleted }
-        var activeDates = Set(refreshed.map(\.date))
-        for date in desired where !activeDates.contains(date) {
-            _ = try await cycleStore.recordCycleStart(
-                on: date,
-                source: .onboardingConfirmed,
-                now: now,
-                today: today
-            )
-            activeDates.insert(date)
-        }
+        try await cycleStore.reconcileOnboardingCycleStarts(
+            dates: Set(draft.allSuppliedCycleStarts),
+            replacingCommittedHistory: true,
+            now: now,
+            today: today
+        )
     }
 
     func eraseOnboardingOnly() async throws {

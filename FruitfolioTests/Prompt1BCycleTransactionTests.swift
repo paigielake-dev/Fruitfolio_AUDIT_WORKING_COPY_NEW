@@ -131,4 +131,79 @@ final class Prompt1BCycleTransactionTests: XCTestCase {
         let snapshot = try await store.snapshot(); XCTAssertEqual(snapshot.notes.map(\.text), ["first"])
         let count = await backend.count(); XCTAssertEqual(count, 1)
     }
+    func testOnboardingImportCommitsAllDatesOnceAndRetryKeepsRecordIdentities() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = CycleWriteBoundary(url), today = try day()
+        let store = Prompt13CycleStore(persistence: backend)
+        let dates: Set<Prompt13LocalDate> = [today, try Prompt13LocalDate(year: 2026, month: 8, day: 10), try Prompt13LocalDate(year: 2026, month: 7, day: 12)]
+        try await store.reconcileOnboardingCycleStarts(dates: dates, replacingCommittedHistory: false, today: today)
+        let count = await backend.count(); XCTAssertEqual(count, 1)
+        let snapshot = try await store.snapshot()
+        XCTAssertEqual(Set(snapshot.cycleStarts.map(\.date)), dates)
+        XCTAssertTrue(snapshot.cycleStarts.allSatisfy { $0.source == .onboardingConfirmed })
+        try await store.reconcileOnboardingCycleStarts(dates: dates, replacingCommittedHistory: false, today: today)
+        let retried = try await store.snapshot()
+        XCTAssertEqual(retried.cycleStarts.map(\.id), snapshot.cycleStarts.map(\.id))
+        let retryCount = await backend.count(); XCTAssertEqual(retryCount, 1)
+    }
+
+    func testInvalidOnboardingDateRejectsWholeCandidateBeforeAnyHistoryChange() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = CycleWriteBoundary(url), today = try day()
+        let store = Prompt13CycleStore(persistence: backend)
+        _ = try await store.recordCycleStart(on: today, source: .onboardingConfirmed, today: today)
+        let bytes = try Data(contentsOf: url)
+        let future = try Prompt13LocalDate(year: 2027, month: 1, day: 1)
+        do {
+            try await store.reconcileOnboardingCycleStarts(dates: [future], replacingCommittedHistory: true, today: today)
+            XCTFail()
+        } catch { XCTAssertEqual(error as? Prompt13CycleError, .futureObservationNotAllowed) }
+        XCTAssertEqual(try Data(contentsOf: url), bytes)
+        let snapshot = try await store.snapshot()
+        XCTAssertEqual(snapshot.cycleStarts.filter { !$0.metadata.isDeleted }.map(\.date), [today])
+        let count = await backend.count(); XCTAssertEqual(count, 1)
+    }
+
+    func testFailedOnboardingReplacementPreservesAllOldDatesAndNoPartialNewRecords() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = CycleWriteBoundary(url), today = try day()
+        let store = Prompt13CycleStore(persistence: backend)
+        _ = try await store.recordCycleStart(on: today, source: .onboardingConfirmed, today: today)
+        let before = try await Prompt13FileCyclePersistence(fileURL: url).load(), bytes = try Data(contentsOf: url)
+        let replacement = try Prompt13LocalDate(year: 2026, month: 8, day: 10)
+        await backend.fail()
+        do {
+            try await store.reconcileOnboardingCycleStarts(dates: [replacement], replacingCommittedHistory: true, today: today)
+            XCTFail()
+        } catch { XCTAssertEqual(error as? Prompt13CycleError, .persistenceFailure) }
+        XCTAssertEqual(try Data(contentsOf: url), bytes)
+        let after = try await store.snapshot()
+        XCTAssertEqual(after.cycleStarts, before.cycleStarts)
+        try await store.reconcileOnboardingCycleStarts(dates: [replacement], replacingCommittedHistory: true, today: today)
+        let replaced = try await store.snapshot()
+        XCTAssertEqual(replaced.cycleStarts.filter { !$0.metadata.isDeleted }.map(\.date), [replacement])
+        XCTAssertTrue(replaced.cycleStarts.first { $0.id == before.cycleStarts[0].id }!.metadata.isDeleted)
+    }
+
+    func testOnboardingReplacementPreservesIndependentRecordsAndExistingIDs() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = CycleWriteBoundary(url), today = try day()
+        let store = Prompt13CycleStore(persistence: backend)
+        let old = try Prompt13LocalDate(year: 2026, month: 7, day: 12)
+        let matching = try Prompt13LocalDate(year: 2026, month: 8, day: 10)
+        let independent = try Prompt13LocalDate(year: 2026, month: 6, day: 15)
+        let oldRecord = try await store.recordCycleStart(on: old, source: .onboardingConfirmed, today: today)
+        let matchingRecord = try await store.recordCycleStart(on: matching, today: today)
+        let independentRecord = try await store.recordCycleStart(on: independent, source: .importedUserRecord, today: today)
+        let count = await backend.count()
+        try await store.reconcileOnboardingCycleStarts(dates: [matching, today], replacingCommittedHistory: true, today: today)
+        let afterCount = await backend.count(); XCTAssertEqual(afterCount, count + 1)
+        let snapshot = try await store.snapshot()
+        let retained = try XCTUnwrap(snapshot.cycleStarts.first { $0.id == independentRecord.id })
+        XCTAssertEqual(retained, independentRecord)
+        let adopted = try XCTUnwrap(snapshot.cycleStarts.first { $0.id == matchingRecord.id })
+        XCTAssertEqual(adopted.date, matching); XCTAssertEqual(adopted.source, .onboardingConfirmed)
+        XCTAssertTrue(snapshot.cycleStarts.first { $0.id == oldRecord.id }!.metadata.isDeleted)
+    }
+
 }
