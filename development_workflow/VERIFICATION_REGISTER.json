@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:14:56.709295+00:00",
+  "updated_at": "2026-11-06T21:16:06.304722+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -5036,6 +5036,37 @@
         ]
       },
       "timestamp": "2026-11-06T21:14:56.709295+00:00"
+    },
+    {
+      "batch": "Today-navigation-controls-active-owner-guards",
+      "commands": [
+        "60 workflow checks",
+        "311 Swift source syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "Apple_Today_navigation": "NOT_RUN",
+        "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Five actual callback paths gated; existing control/rendering/model ownership retained"
+        },
+        "not_run": [
+          "Apple active/inactive/shared-popup navigation rejection and canonical animation/sound behavior",
+          "Actual parent native-sheet coverage and integrated wheel/logging UI"
+        ],
+        "remaining": [
+          "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
+          "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
+          "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+        ]
+      },
+      "timestamp": "2026-11-06T21:16:06.304722+00:00"
     }
   ]
 }

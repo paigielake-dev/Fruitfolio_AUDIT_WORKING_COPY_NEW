@@ -1,5 +1,6 @@
 import SwiftUI
 import Foundation
+import UIKit
 
 struct Prompt16TodayView: View {
     var loader = Prompt16TodayLoader()
@@ -15,6 +16,11 @@ struct Prompt16TodayView: View {
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var viewIsVisible = false
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
+    }
 
     @Environment(\.scenePhase) private var scenePhase
     @State private var loadGeneration = UUID()
@@ -158,7 +164,8 @@ struct Prompt16TodayView: View {
             if phase == .active { loadGeneration = UUID() }
             else { revealTask?.cancel() }
         }
-        .onDisappear { revealTask?.cancel(); revealTask = nil }
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false; revealTask?.cancel(); revealTask = nil }
         .accessibilityIdentifier("prompt16.today")
     }
 
@@ -343,9 +350,11 @@ struct Prompt16TodayView: View {
                 revealProgress: revealProgress,
                 showCurrentMarker: showMarker,
                 onLearnWhy: { _ in
+                    guard canInteract else { return }
                     onSeeBiology()
                 },
                 onInteraction: {
+                    guard canInteract else { return }
                     audioManager.play(.buttonSoftPop)
                 }
             )
@@ -375,6 +384,7 @@ struct Prompt16TodayView: View {
 
                 HStack(spacing: 6) {
                     FruitfolioControlPillButton(label: "why is my wheel blank?") {
+                        guard canInteract else { return }
                         onPredictionInfoRequested(predictionLearningInfo)
                     }
                     .controlSize(.small)
@@ -404,13 +414,14 @@ struct Prompt16TodayView: View {
             FruitfolioControlPillButton(
                 label: "log today +"
             ) {
-
+                guard canInteract else { return }
                 onLogToday()
             }
             .frame(maxWidth: 238)
 
             if showBBT {
                 Button {
+                    guard canInteract else { return }
                     audioManager.play(
                         .buttonSoftPop
                     )

@@ -2609,3 +2609,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys_unchanged": 924, "Apple_VoiceOver": "NOT_RUN", "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue original responsive wheel artwork/control behavior then Today canonical interaction treatment; inspect active owner and fixed accessibility labels without changing scientific estimates.
 - Commit: containing commit for batch Today-wheel-fixed-accessibility-labels-and-native-day-values.
+
+## Today-navigation-controls-active-owner-guards
+
+- Parent checkpoint: f967793483d3dcc3c98a8a11f475d52d239eab65.
+- Source-order requirements: [292, 294, 297, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift.
+- Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_Today_navigation": "NOT_RUN", "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue calendar loading/month transitions in original order; inspect actual async ownership and canonical control callbacks, preserve existing caches/source/assets and avoid broad re-audit.
+- Commit: containing commit for batch Today-navigation-controls-active-owner-guards.
