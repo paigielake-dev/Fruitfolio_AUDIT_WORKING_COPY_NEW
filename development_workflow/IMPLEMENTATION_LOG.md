@@ -2026,3 +2026,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 723, "native_CPU_XCTest": 744, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 15, "catalog_keys": 675, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 9, "focused_initial_ownership_regressions": 7}.
 - Next action: Inspect cancellation/release handling for unshared overflow translation work and ensure memory-pressure release cannot cause queued multi-paragraph work to silently reload resources; preserve per-caller cancellation and accepted displays, add production regression coverage if a concrete gap is confirmed.
 - Commit: containing commit for batch Bounded-inflight-translation-ownership-without-result-cache.
+
+## Owned-unshared-translation-release-and-paragraph-cancellation
+
+- Parent checkpoint: 6bd4de7ae0750b7850f53a70ed85e62cd8b190b3.
+- Source-order requirements: [418, 419, 426, 427, 428, 431, 434, 443, 444, 466, 467, 474, 475, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift.
+- Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.
+- Tests added/updated: FruitfolioTests/Prompt1BScientificTranslationTests.swift, FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 725, "native_CPU_XCTest": 747, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 675, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "focused_current_ownership_regressions": 11, "prior_release_regression_XCTest": 1, "prior_release_regression_failures": 2}.
+- Next action: Localize the fixed source-excerpt game question instruction separately from the literal cloze and original word choices, with a clear original-language notice. Preserve stored question/excerpt bytes, correct-answer mapping and scientific citations; use existing semantic/display controls and add exact-source presentation regressions.
+- Commit: containing commit for batch Owned-unshared-translation-release-and-paragraph-cancellation.

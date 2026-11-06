@@ -91,6 +91,56 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         XCTAssertFalse(released.resourcesLoaded)
     }
 
+    func testReleaseOwnsUnsharedQueuedAndBetweenParagraphNativeWork() async throws {
+        for holdAfterNative in [false, true] {
+            let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
+            defer { try? FileManager.default.removeItem(at: directory) }
+            let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+            if !holdAfterNative {
+                let warmed = try await runtime.translate("fixture", targetTag: "de")
+                XCTAssertEqual(warmed, "fixture")
+            }
+            let gate = Prompt1BNativeTranslationGate(runtime: runtime, holdAfterNative: holdAfterNative)
+            let service = FruitfolioTranslationService(runtime: gate)
+            let source = "fixture\n\nfixture"
+            let protection = Array(repeating: "brand", count: 65) // Unshared metadata-overflow path.
+            let pending = Task { try await service.translate(source, language: .german,
+                protectedLiterals: protection, preferCatalog: false) }
+            let deadline = ContinuousClock.now.advanced(by: .seconds(3))
+            var ready = false
+            while ContinuousClock.now < deadline {
+                let active = await service.debugInFlightStatistics()
+                let native = await runtime.debugExecutionStatistics()
+                if active.unshared == 1, await gate.callCount() == 1, native.encoderCalls == 1 {
+                    ready = true; break
+                }
+                try? await Task.sleep(for: .milliseconds(1))
+            }
+            XCTAssertTrue(ready)
+            await service.releaseResources()
+            let released = await runtime.debugExecutionStatistics()
+            XCTAssertFalse(released.modelLoaded)
+            XCTAssertFalse(released.resourcesLoaded)
+            await gate.unblockAll()
+            do { _ = try await pending.value; XCTFail("Released unshared operation") }
+            catch { XCTAssertTrue(error is CancellationError) }
+            let stopped = await runtime.debugExecutionStatistics()
+            XCTAssertEqual(stopped.encoderCalls, 1, "No cancelled queued reload or second-paragraph decode")
+            XCTAssertFalse(stopped.modelLoaded)
+            let fresh = try await service.translate(source, language: .german,
+                protectedLiterals: protection, preferCatalog: false)
+            XCTAssertEqual(fresh, source)
+            let actual = await runtime.debugExecutionStatistics()
+            XCTAssertEqual(actual.encoderCalls, 3)
+            XCTAssertEqual(actual.decoderCalls, 6)
+            XCTAssertEqual(actual.checkedBlockingCalls, 13)
+            XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
+            let finished = await service.debugInFlightStatistics()
+            XCTAssertEqual(finished.unshared, 0)
+            await service.releaseResources()
+        }
+    }
+
     func testSharedRequestsUseOneActualNativeDecodeAndReleaseCancelsQueuedReload() async throws {
         let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -537,12 +587,21 @@ private actor Prompt1BNativeTranslationGate: FruitfolioLocalTranslationRuntime {
     private var calls = 0
     private var open = false
     private var gates: [CheckedContinuation<Void, Never>] = []
-    init(runtime: FruitfolioMADLADRuntime) { self.runtime = runtime }
+    private let holdAfterNative: Bool
+    init(runtime: FruitfolioMADLADRuntime, holdAfterNative: Bool = false) {
+        self.runtime = runtime
+        self.holdAfterNative = holdAfterNative
+    }
     func translate(_ text: String, targetTag: String) async throws -> String {
         calls += 1
+        if !holdAfterNative { try await pauseIfNeeded() }
+        let result = try await runtime.translate(text, targetTag: targetTag)
+        if holdAfterNative { try await pauseIfNeeded() }
+        return result
+    }
+    private func pauseIfNeeded() async throws {
         if !open { await withCheckedContinuation { gates.append($0) } }
         try Task.checkCancellation()
-        return try await runtime.translate(text, targetTag: targetTag)
     }
     func releaseResources() async { await runtime.releaseResources() }
     func callCount() -> Int { calls }

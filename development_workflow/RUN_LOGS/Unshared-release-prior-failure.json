@@ -1,0 +1,17 @@
+{
+  "parent": "6bd4de7ae0750b7850f53a70ed85e62cd8b190b3",
+  "workspace": "/tmp/fruitfolio-before-unshared-release-8969amah",
+  "runtime_SHA256": "a9725e215bc40989ecf4b76d3a6eec4c5020fd3f5dc6c77b3c532084b1f366b8",
+  "runtime_matches_parent_exactly": true,
+  "test_compatibility_change": "Removed only new DEBUG unshared-field assertions; cancellation, output and runtime-call-count checks unchanged",
+  "debug_assertions_removed": 4,
+  "exit_code": 1,
+  "substrate": "Actual prior production Foundation service with controlled protocol scheduling fixture; not native inference",
+  "XCTest_cases": 1,
+  "XCTest_failures": 2,
+  "log_SHA256": "88a470d560afd32cf9d541455f5ab6efe620a355ecb93fc58b87e4575dc11110",
+  "failure_evidence": [
+    "/tmp/fruitfolio-portable-3_s09gtm/Tests/FruitfolioTests/Prompt1BScientificTranslationTests.swift:370: error: Prompt1BSharedTranslationTests.testReleaseCancelsUnsharedMultiParagraphWorkBeforeTheNextParagraph : failed - Released unshared work",
+    "/tmp/fruitfolio-portable-3_s09gtm/Tests/FruitfolioTests/Prompt1BScientificTranslationTests.swift:373: error: Prompt1BSharedTranslationTests.testReleaseCancelsUnsharedMultiParagraphWorkBeforeTheNextParagraph : XCTAssertEqual failed: (\"2\") is not equal to (\"1\") - Second paragraph must not run after release"
+  ]
+}

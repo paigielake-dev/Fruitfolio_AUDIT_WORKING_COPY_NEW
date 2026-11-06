@@ -1,5 +1,7 @@
 # In-flight translation ownership and bounded sharing
 
+Historical checkpoint 6bd4de7: the overflow-release limitation below is superseded by [unshared release ownership](MADLAD_UNSHARED_RELEASE_VERIFICATION.md). The bounded sharing and no-result-cache contract remains.
+
 The production translation service now coalesces simultaneously active identical machine requests. Catalog lookup and source-language bypass still happen first, and paused callers cannot join inference. Sharing keys preserve source UTF-8 bytes, target tag, source language bytes and the exact explicit-protection context. Random scientific placeholders and restoration/validation belong to the shared operation; only its validated complete result can reach callers.
 
 Each caller owns a waiter. Cancelling one caller does not cancel another owner's work. Cancelling the last owner cancels and removes that operation. Generation identities prevent a stale completion/cancellation from removing a newly started same-source operation. Resource release cancels/removes shared operations before forwarding native release. Native C calls remain synchronous and non-preemptible.

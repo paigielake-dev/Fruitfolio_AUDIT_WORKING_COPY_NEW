@@ -120,16 +120,20 @@ actor FruitfolioTranslationService {
         var waiters: Set<UUID>
     }
     private var flights: [RequestKey: Flight] = [:]
+    // Handles only, no source-key/result cache. Overflow callers still own
+    // independent work, but service release must be able to cancel it as well.
+    private var unsharedTasks: [UUID: Task<FruitfolioDisplayTranslation, Error>] = [:]
 
     #if DEBUG
-    func debugInFlightStatistics() -> (requests: Int, waiters: Int) {
-        (flights.count, flights.values.reduce(0) { $0 + $1.waiters.count })
+    func debugInFlightStatistics() -> (requests: Int, waiters: Int, unshared: Int) {
+        (flights.count, flights.values.reduce(0) { $0 + $1.waiters.count }, unsharedTasks.count)
     }
     #endif
 
     func releaseResources() async {
-        let tasks = flights.values.map(\.task)
+        let tasks = flights.values.map(\.task) + Array(unsharedTasks.values)
         flights.removeAll()
+        unsharedTasks.removeAll()
         for task in tasks { task.cancel() }
         await runtime.releaseResources()
     }
@@ -174,7 +178,7 @@ actor FruitfolioTranslationService {
         // original uncached path; no text is truncated or rejected by this policy.
         guard let key = sharingKey(source: source, protectedLiterals: protectedLiterals,
                                    sourceLanguage: sourceLanguage, targetTag: tag) else {
-            return try await machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
+            return try await unsharedTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
         }
         let waiter = UUID()
         let flight: Flight
@@ -189,7 +193,7 @@ actor FruitfolioTranslationService {
             flight = Flight(id: UUID(), task: task, waiters: [waiter])
             flights[key] = flight
         } else {
-            return try await machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
+            return try await unsharedTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
         }
         defer { finishWaiter(key: key, flightID: flight.id, waiter: waiter, cancelIfLast: false) }
         return try await withTaskCancellationHandler {
@@ -199,6 +203,21 @@ actor FruitfolioTranslationService {
         } onCancel: {
             Task { await self.finishWaiter(key: key, flightID: flight.id, waiter: waiter, cancelIfLast: true) }
         }
+    }
+
+    private func unsharedTranslate(_ source: String, protectedLiterals: [String],
+                                   targetTag: String) async throws -> FruitfolioDisplayTranslation {
+        let id = UUID()
+        let task = Task {
+            try await self.machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: targetTag)
+        }
+        unsharedTasks[id] = task
+        defer { unsharedTasks.removeValue(forKey: id) }
+        return try await withTaskCancellationHandler {
+            let result = try await task.value
+            try Task.checkCancellation()
+            return result
+        } onCancel: { task.cancel() }
     }
 
     private func sharingKey(source: String, protectedLiterals: [String],

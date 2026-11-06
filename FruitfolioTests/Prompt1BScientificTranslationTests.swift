@@ -356,6 +356,54 @@ final class Prompt1BSharedTranslationTests: XCTestCase {
         XCTAssertEqual(result, "fixture")
     }
 
+    func testReleaseCancelsUnsharedMultiParagraphWorkBeforeTheNextParagraph() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let source = "fixture\n\nsecond paragraph"
+        let task = Task { try await service.translate(source, language: .german,
+            protectedLiterals: Array(repeating: "brand", count: 65), preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 0, waiters: 0, calls: 1)
+        let pending = await service.debugInFlightStatistics()
+        XCTAssertEqual(pending.unshared, 1)
+        await service.releaseResources()
+        await runtime.unblockAll()
+        do { _ = try await task.value; XCTFail("Released unshared work") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let actual = await runtime.counts()
+        XCTAssertEqual(actual.calls, 1, "Second paragraph must not run after release")
+        let cleared = await service.debugInFlightStatistics()
+        XCTAssertEqual(cleared.unshared, 0)
+        let fresh = try await service.translate(source, language: .german,
+            protectedLiterals: Array(repeating: "brand", count: 65), preferCatalog: false)
+        XCTAssertEqual(fresh, source)
+    }
+
+    func testCancellingUnsharedCallerPreservesOtherOwnerUntilExplicitRelease() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let protection = Array(repeating: "brand", count: 65)
+        let first = Task { try await service.translate("fixture", language: .german,
+            protectedLiterals: protection, preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 0, waiters: 0, calls: 1)
+        let second = Task { try await service.translate("fixture", language: .german,
+            protectedLiterals: protection, preferCatalog: false) }
+        await wait(service, runtime: runtime, requests: 0, waiters: 0, calls: 2)
+        first.cancel()
+        await runtime.unblockFirst()
+        do { _ = try await first.value; XCTFail("Cancelled independent owner") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let retained = await service.debugInFlightStatistics()
+        XCTAssertEqual(retained.unshared, 1)
+        let beforeRelease = await runtime.counts()
+        XCTAssertEqual(beforeRelease.cancelled, 1)
+        await service.releaseResources()
+        await runtime.unblockAll()
+        do { _ = try await second.value; XCTFail("Released remaining independent owner") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let cleared = await service.debugInFlightStatistics()
+        XCTAssertEqual(cleared.unshared, 0)
+    }
+
     func testSharingWaiterLimitBypassesInsteadOfGrowingUnboundedMetadata() async throws {
         let runtime = Prompt1BSharedTranslationGate()
         let service = FruitfolioTranslationService(runtime: runtime)
