@@ -6,4 +6,6 @@ Actual pre-fix fault suite: nine tests, 34 failed assertions and no unexpected f
 
 One English error key added, preserving all 841 prior entries: 842 total, no nonempty foreign translations. No storage schema, units/results/dates, source/citation data, artwork or model resources changed.
 
-This is UserDefaults API readback, not fsync, cross-process CAS or proof of cold-app restart/process-kill durability. All 12 measurement and 56 Guide Apple UI launches remain NOT_RUN. Actual save/erase fault UI and draft-preserving in-editor reload are the next local implementation batch. Apple SDK typecheck, real native-sheet focus/callback/persistence behavior, physical device and official MADLAD/clinical acceptance remain open.
+This is UserDefaults API readback, not fsync, cross-process CAS or proof of cold-app restart/process-kill durability. All 10 measurement and 56 Guide Apple UI launches remain NOT_RUN. Actual save/erase fault UI and draft-preserving in-editor reload are the next local implementation batch. Apple SDK typecheck, real native-sheet focus/callback/persistence behavior, physical device and official MADLAD/clinical acceptance remain open.
+
+UI launch accounting correction: the earlier description overstated the written measurement matrix by two. This paragraph now reflects the source at that batch. Historical run logs are preserved; see RUN_LOGS/Measurement-UI-launch-accounting-correction.json. No Apple execution is implied.

@@ -1884,13 +1884,154 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertNotEqual(draft, "12,500")
             for _ in 0..<24 { if save.isHittable { break }; editor.swipeUp() }
             save.tap()
-            let error = app.descendants(matching: .any).matching(identifier: "measurements.editor.error").firstMatch
+            let error = app.descendants(matching: .any).matching(identifier: "measurements.editor.errorText").firstMatch
             XCTAssertTrue(error.waitForExistence(timeout: 3))
             XCTAssertTrue(error.label.contains("choose the decimal separator used on the report"))
             XCTAssertTrue(editor.exists)
             for _ in 0..<24 { if result.isHittable { break }; editor.swipeDown() }
             XCTAssertEqual(result.value as? String, draft)
             captureGame(app, name: "unknown-measurement-format-source-fallback-\(language)")
+            app.terminate()
+        }
+    }
+
+    func testMeasurementEditorReloadRetainsRejectedDraftThenAcknowledgesRetry() {
+        for language in ["en", "fr"] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsDropNextWrite", "-fruitfolioMeasurementsLanguage", language,
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            app.launch()
+            let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            for _ in 0..<24 { if edit.isHittable { break }; app.swipeUp() }
+            edit.tap()
+            let editor = app.scrollViews["measurements.editor.scroll"]
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            let notes = app.descendants(matching: .any).matching(identifier: "measurements.editor.notes").firstMatch
+            for _ in 0..<32 { if notes.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(notes.isHittable); notes.tap(); notes.typeText(" QA retry draft")
+            let draft = notes.value as? String ?? ""
+            XCTAssertTrue(draft.contains("QA retry draft"))
+            let save = app.buttons["measurements.editor.save"]
+            for _ in 0..<32 { if save.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(save.isHittable); save.tap()
+            let error = app.descendants(matching: .any).matching(identifier: "measurements.editor.errorText").firstMatch
+            XCTAssertTrue(error.waitForExistence(timeout: 3))
+            XCTAssertTrue(error.label.contains("this measurement change could not be confirmed"))
+            XCTAssertTrue(editor.exists)
+            XCTAssertEqual(notes.value as? String, draft)
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            XCTAssertEqual(notes.value as? String, draft)
+            let reload = app.buttons["measurements.editor.reload"]
+            for _ in 0..<32 { if reload.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(reload.isHittable); reload.tap()
+            XCTAssertEqual(notes.value as? String, draft, "Reload must not reinitialize the native draft")
+            XCTAssertFalse(error.exists)
+            for _ in 0..<32 { if save.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(save.isHittable); save.tap()
+            let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: editor)
+            XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 3), .completed)
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            let expected = "persisted notes: " + draft
+            let acknowledged = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: app.staticTexts["measurementQA.persistedNotes"])
+            XCTAssertEqual(XCTWaiter.wait(for: [acknowledged], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
+            XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 2")
+            XCTAssertEqual(app.staticTexts["measurementQA.writeProtected"].label, "write protected: false")
+            XCTAssertEqual(app.staticTexts["measurementQA.originalBytesIntact"].label, "original bytes intact: false")
+            captureGame(app, name: "measurement-editor-reload-retry-language-\(language)")
+            app.terminate()
+        }
+    }
+
+    func testMeasurementDroppedDeletionPreservesRecordsUntilExplicitReloadAndFreshConfirmation() {
+        for language in ["en", "fr"] {
+        for all in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsLanguage", language,
+                all ? "-fruitfolioMeasurementsDropNextErase" : "-fruitfolioMeasurementsDropNextWrite",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            app.launch()
+            let remove = app.buttons[all ? "measurements.eraseAll" : "measurements.delete.CF310000-0000-0000-0000-000000000001"]
+            XCTAssertTrue(remove.waitForExistence(timeout: 5))
+            let scroll = app.scrollViews.firstMatch
+            for _ in 0..<32 { if remove.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(remove.isHittable); remove.tap()
+            let paper = app.scrollViews["tapedWhitePopup.scroll"]
+            XCTAssertTrue(paper.waitForExistence(timeout: 5))
+            let confirm = app.buttons["fruitPopup.paper.action.secondary"]
+            for _ in 0..<24 { if confirm.isHittable { break }; paper.swipeUp() }
+            XCTAssertTrue(confirm.isHittable); confirm.tap()
+            let protected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: true"), object: app.staticTexts["measurementQA.writeProtected"])
+            XCTAssertEqual(XCTWaiter.wait(for: [protected], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
+            XCTAssertEqual(app.staticTexts["measurementQA.originalBytesIntact"].label, "original bytes intact: true")
+            let reload = app.buttons["measurements.reloadSavedRecord"]
+            for _ in 0..<32 { if reload.isHittable { break }; scroll.swipeDown() }
+            XCTAssertTrue(reload.isHittable); reload.tap()
+            let writable = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: false"), object: app.staticTexts["measurementQA.writeProtected"])
+            XCTAssertEqual(XCTWaiter.wait(for: [writable], timeout: 3), .completed)
+            for _ in 0..<32 { if remove.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(remove.isHittable); remove.tap()
+            XCTAssertTrue(paper.waitForExistence(timeout: 5))
+            for _ in 0..<24 { if confirm.isHittable { break }; paper.swipeUp() }
+            XCTAssertTrue(confirm.isHittable); confirm.tap()
+            let erased = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "persisted measurement count: 0"), object: app.staticTexts["measurementQA.persistedCount"])
+            XCTAssertEqual(XCTWaiter.wait(for: [erased], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: \(all ? 0 : 2)")
+            XCTAssertEqual(app.staticTexts["measurementQA.eraseAttempts"].label, "erase attempts: \(all ? 2 : 0)")
+            XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "this measurement change could not be confirmed")).firstMatch.exists)
+            captureGame(app, name: "measurement-deletion-retry-all-\(all)-language-\(language)")
+            app.terminate()
+        }
+        }
+    }
+
+    func testMeasurementEditorReloadKeepsOldIntentAndCannotOverwriteNewerForeignRecord() {
+        for language in ["en", "fr"] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsForeignAfterDrop", "-fruitfolioMeasurementsLanguage", language]
+            app.launch()
+            let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            for _ in 0..<20 { if edit.isHittable { break }; app.swipeUp() }
+            edit.tap()
+            let editor = app.scrollViews["measurements.editor.scroll"]
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            let notes = app.descendants(matching: .any).matching(identifier: "measurements.editor.notes").firstMatch
+            for _ in 0..<24 { if notes.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(notes.isHittable); notes.tap(); notes.typeText(" QA still-open draft")
+            let draft = notes.value as? String
+            let save = app.buttons["measurements.editor.save"]
+            for _ in 0..<24 { if save.isHittable { break }; editor.swipeUp() }
+            save.tap()
+            let reload = app.buttons["measurements.editor.reload"]
+            XCTAssertTrue(reload.waitForExistence(timeout: 3))
+            for _ in 0..<24 { if reload.isHittable { break }; editor.swipeUp() }
+            reload.tap()
+            XCTAssertEqual(notes.value as? String, draft)
+            for _ in 0..<24 { if save.isHittable { break }; editor.swipeUp() }
+            save.tap()
+            let error = app.descendants(matching: .any).matching(identifier: "measurements.editor.errorText").firstMatch
+            XCTAssertTrue(error.waitForExistence(timeout: 3))
+            XCTAssertTrue(error.label.contains("this measurement changed or was removed while you were editing"))
+            XCTAssertTrue(editor.exists)
+            XCTAssertEqual(notes.value as? String, draft)
+            let cancel = app.buttons["measurements.editor.cancel"]
+            for _ in 0..<24 { if cancel.isHittable { break }; editor.swipeUp() }
+            cancel.tap()
+            let paper = app.scrollViews["tapedWhitePopup.scroll"]
+            XCTAssertTrue(paper.waitForExistence(timeout: 3))
+            let discard = app.buttons["fruitPopup.paper.action.secondary"]
+            for _ in 0..<24 { if discard.isHittable { break }; paper.swipeUp() }
+            discard.tap()
+            let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: editor)
+            XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["measurementQA.persistedResult"].label, "persisted result: 13.500")
+            XCTAssertEqual(app.staticTexts["measurementQA.persistedNotes"].label, "persisted notes: QA newer independent record")
+            XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 1", "Reload must not rebase authority over a newer record")
+            captureGame(app, name: "measurement-reload-keeps-conflict-language-\(language)")
             app.terminate()
         }
     }

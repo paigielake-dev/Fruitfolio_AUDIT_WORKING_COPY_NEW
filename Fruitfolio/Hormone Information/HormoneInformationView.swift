@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 
 struct FruitfolioHormoneInformationView: View {
@@ -45,6 +46,7 @@ struct FruitfolioHormoneInformationView: View {
                     WatercolorSecondaryButton(label: "reload saved measurements") {
                         measurementSavedThisVisit = false
                         store.reloadSavedMeasurements()
+                        errorMessage = store.storageProtectionReason?.localizedDescription
                     }
                         .accessibilityIdentifier("measurements.reloadSavedRecord")
                     .accessibilityFocused($deletionFocus, equals: .reload)
@@ -119,7 +121,7 @@ struct FruitfolioHormoneInformationView: View {
                 .disabled(store.records.isEmpty && !store.storageUnreadable)
                 .accessibilityIdentifier("measurements.eraseAll")
                 .accessibilityFocused($deletionFocus, equals: .eraseAll)
-                if let errorMessage {
+                if let errorMessage, errorMessage != store.storageProtectionReason?.localizedDescription {
                     FruitfolioTranslatedText(source: errorMessage,
                         font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
                 }
@@ -139,8 +141,15 @@ struct FruitfolioHormoneInformationView: View {
         .sheet(item: $editing, onDismiss: { if editing == nil { editingIntent = nil } }) { record in
             FruitfolioPresentedPopupHost {
                 FruitfolioHormoneMeasurementEditor(original: record, intent: editingIntent ?? .edit(record),
-                    onCancel: { editing = nil; editingIntent = nil }) { updated, intent in
+                    onCancel: { editing = nil; editingIntent = nil },
+                    onReload: {
+                        measurementSavedThisVisit = false
+                        store.reloadSavedMeasurements()
+                        errorMessage = store.storageProtectionReason?.localizedDescription
+                        return store.storageProtectionReason
+                    }) { updated, intent in
                     try store.save(updated, locale: appLocale, intent: intent)
+                    errorMessage = nil
                     measurementSavedThisVisit = true
                     editing = nil
                     editingIntent = nil
@@ -192,6 +201,7 @@ struct FruitfolioHormoneInformationView: View {
                     guard viewIsVisible, owner.consumeAction(for: id) else { return }
                     do {
                         try intent.perform(in: store)
+                        errorMessage = nil
                         measurementSavedThisVisit = false
                         returnDeletionFocus = .add
                     } catch {
@@ -211,10 +221,13 @@ private struct FruitfolioHormoneMeasurementEditor: View {
     @State private var saveIntent: FruitfolioMeasurementSaveIntent
     @Environment(\.locale) private var appLocale
     let onCancel: () -> Void
+    let onReload: @MainActor () -> FruitfolioHormoneMeasurementError?
     let onSave: (FruitfolioHormoneMeasurement, FruitfolioMeasurementSaveIntent) throws -> Void
     @State private var draft: FruitfolioHormoneMeasurement
     @State private var cycleDayText: String
     @State private var errorMessage: String?
+    @State private var canReloadSavedState = false
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
     @State private var viewIsVisible = false
@@ -228,15 +241,20 @@ private struct FruitfolioHormoneMeasurementEditor: View {
 
     init(original: FruitfolioHormoneMeasurement, intent: FruitfolioMeasurementSaveIntent,
          onCancel: @escaping () -> Void,
+         onReload: @escaping @MainActor () -> FruitfolioHormoneMeasurementError?,
          onSave: @escaping (FruitfolioHormoneMeasurement, FruitfolioMeasurementSaveIntent) throws -> Void) {
         var initial = original
         if case .create = intent { try? initial.setReportedTestDate(original.testDate, calendar: .autoupdatingCurrent) }
         _original = State(initialValue: initial)
         _saveIntent = State(initialValue: intent)
         self.onCancel = onCancel
+        self.onReload = onReload
         self.onSave = onSave
         _draft = State(initialValue: initial)
         _cycleDayText = State(initialValue: original.cycleDay.map(String.init) ?? "")
+    }
+    private var editorIsInteractive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
     }
     private var hasChanges: Bool { draft != original || cycleDayText != (original.cycleDay.map(String.init) ?? "") }
     var body: some View {
@@ -315,6 +333,7 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     FruitfolioTranslatedContent(source: errorMessage) { display, _ in
                         FruitfolioSemanticText(markdown: display,
                             baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                            .accessibilityIdentifier("measurements.editor.errorText")
                             .accessibilityFocused($errorFocused)
                     }
                     .accessibilityIdentifier("measurements.editor.error")
@@ -322,18 +341,37 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                         errorFocused = false
                         await Task.yield()
                         guard !Task.isCancelled, viewIsVisible, self.errorMessage == errorMessage,
-                              popupCoordinator.currentPopup == nil else { return }
+                              scenePhase == .active, UIApplication.shared.applicationState == .active, popupCoordinator.currentPopup == nil else { return }
                         errorFocused = true
                     }
                 }
+                if canReloadSavedState {
+                    WatercolorSecondaryButton(label: "reload saved measurements") {
+                        guard editorIsInteractive else { return }
+                        // Read only. Keep the draft and frozen save intent;
+                        // a newer same-record value must still conflict.
+                        let remainingFailure = onReload()
+                        errorMessage = remainingFailure?.localizedDescription
+                        canReloadSavedState = remainingFailure != nil
+                    }
+                    .accessibilityIdentifier("measurements.editor.reload")
+                }
                 WatercolorPrimaryButton(label: "save measurement") {
+                    guard editorIsInteractive else { return }
                     do {
                         draft.cycleDay = try FruitfolioHormoneMeasurement.parseCycleDay(cycleDayText)
                         try onSave(draft, saveIntent)
-                    } catch { errorMessage = error.localizedDescription }
+                    } catch {
+                        errorMessage = error.localizedDescription
+                        if let failure = error as? FruitfolioHormoneMeasurementError {
+                            let reloadable: [FruitfolioHormoneMeasurementError] = [.persistenceFailure, .storageChanged, .unreadableStorage, .unsupportedStorage]
+                            canReloadSavedState = reloadable.contains(failure)
+                        } else { canReloadSavedState = false }
+                    }
                 }
                 .accessibilityIdentifier("measurements.editor.save")
                 WatercolorSecondaryButton(label: "cancel") {
+                    guard editorIsInteractive else { return }
                     if hasChanges { requestDiscard() } else { onCancel() }
                 }
                 .accessibilityIdentifier("measurements.editor.cancel")

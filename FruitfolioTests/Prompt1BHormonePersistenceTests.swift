@@ -217,6 +217,35 @@ final class Prompt1BHormonePersistenceTests: XCTestCase {
         XCTAssertEqual(store.storageProtectionReason, .persistenceFailure)
         XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
         XCTAssertEqual(FruitfolioHormoneMeasurementStore(defaults: defaults, key: "measurements").records, [original])
+        store.reloadSavedMeasurements()
+        XCTAssertNil(store.storageProtectionReason)
+        defaults.writeFault = .accept
+        try store.save(draft, intent: .edit(original))
+        XCTAssertEqual(FruitfolioHormoneMeasurementStore(defaults: defaults, key: "measurements").records, [draft])
+    }
+
+    @MainActor
+    func testExplicitReloadCannotAuthorizeOldMeasurementIntentOverNewerSavedRecord() async throws {
+        let suite = "Fruitfolio.MeasurementReloadConflict." + UUID().uuidString
+        let defaults = try XCTUnwrap(HormoneFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "measurements")
+        let original = faultRecord()
+        try store.save(original)
+        let frozenIntent = FruitfolioMeasurementSaveIntent.edit(original)
+        var draft = original; draft.notes = "my still-open draft"
+        var newer = original; newer.result = "13.500"; newer.notes = "newer independent record"
+        defaults.set(try JSONEncoder().encode([newer]), forKey: "measurements")
+        store.reloadSavedMeasurements()
+        let bytes = defaults.data(forKey: "measurements")
+        let revision = store.savedRecordRevision
+        XCTAssertThrowsError(try store.save(draft, intent: frozenIntent)) {
+            XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .editingConflict)
+        }
+        XCTAssertEqual(store.records, [newer])
+        XCTAssertEqual(store.savedRecordRevision, revision)
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(draft.notes, "my still-open draft")
     }
 
 }
