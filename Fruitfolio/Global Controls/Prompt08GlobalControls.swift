@@ -40,11 +40,6 @@ struct FruitfolioControlPillButton: View {
 
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var translation = FruitfolioControlTranslationState()
-    private struct TranslationTask: Hashable {
-        let source: String
-        let language: FruitfolioLanguage
-        let paused: Bool
-    }
     private var translationKey: FruitfolioControlTranslationState.Key {
         .init(source: label, language: settings.language)
     }
@@ -67,7 +62,7 @@ struct FruitfolioControlPillButton: View {
                 FruitfolioSemanticText(markdown: display.text,
                     baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .headline),
                     color: DesignTokens.ColorToken.primaryBurgundy)
-                if let status = statusText(display.status) {
+                if let status = display.status.captionKey {
                     Text(LocalizedStringKey(status))
                         .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
                 }
@@ -98,29 +93,14 @@ struct FruitfolioControlPillButton: View {
             )
         )
         .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
-        .accessibilityHint(Text(accessibilityDetail(display.status)))
-        .task(id: TranslationTask(source: label, language: settings.language,
-                                  paused: settings.translationPausedForMemoryPressure)) {
+        .accessibilityHint(Text(display.status.accessibilityDetail(
+            original: FruitfolioSemanticDocument.plainText(from: label), localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: translationKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
             await translation.resolve(translationKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
         }
     }
 
-    private func statusText(_ status: FruitfolioControlTranslationState.Presentation.Status) -> String? {
-        switch status {
-        case .source, .catalog: return nil
-        case .preparing: return "original text"
-        case .machine: return "local machine translation"
-        case .unavailable: return "original text — translation unavailable"
-        }
-    }
-    private func accessibilityDetail(_ status: FruitfolioControlTranslationState.Presentation.Status) -> String {
-        switch status {
-        case .source, .catalog: return ""
-        case .preparing: return settings.localized("original text — preparing local translation…")
-        case .machine: return settings.localized("local machine translation") + ". " + settings.localized("original text") + ": " + FruitfolioSemanticDocument.plainText(from: label)
-        case .unavailable: return settings.localized("original text — translation unavailable")
-        }
-    }
 }
 
 // MARK: - FruitfolioLargeCard

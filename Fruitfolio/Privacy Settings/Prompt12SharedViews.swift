@@ -83,11 +83,18 @@ struct Prompt12RouteHeader: View {
     }
 }
 
+@MainActor
 struct Prompt12NavigationRow: View {
     let title: String
     let detail: String?
     let assetName: String?
     let action: () -> Void
+
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var titleTranslation = FruitfolioControlTranslationState()
+    @StateObject private var detailTranslation = FruitfolioControlTranslationState()
+    private var titleKey: FruitfolioControlTranslationState.Key { .init(source: title, language: settings.language) }
+    private var detailKey: FruitfolioControlTranslationState.Key { .init(source: detail ?? "", language: settings.language) }
 
     @EnvironmentObject
     private var motionPreferences: MotionPreferences
@@ -96,6 +103,8 @@ struct Prompt12NavigationRow: View {
     private var audioManager: AudioManager
 
     var body: some View {
+        let heading = titleTranslation.presentation(for: titleKey)
+        let explanation = detailTranslation.presentation(for: detailKey)
         Button {
             audioManager.play(.buttonSoftPop)
             action()
@@ -113,33 +122,16 @@ struct Prompt12NavigationRow: View {
                     alignment: .leading,
                     spacing: 2
                 ) {
-                    Text(title)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13
-                            )
-                        )
+                    FruitfolioSemanticText(markdown: heading.text,
+                        baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .headline),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
                         .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .primaryBurgundy
-                        )
-
-                    if let detail {
-                        Text(detail)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 10.5
-                                )
-                            )
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .secondaryBurgundy
-                            )
+                    statusCaption(heading.status)
+                    if detail != nil {
+                        FruitfolioSemanticText(markdown: explanation.text,
+                            baseFont: .custom("Chalkboard SE", size: 10.5, relativeTo: .body),
+                            color: DesignTokens.ColorToken.secondaryBurgundy)
+                        statusCaption(explanation.status)
                     }
                 }
 
@@ -169,8 +161,38 @@ struct Prompt12NavigationRow: View {
                         .reduceMotionActive
             )
         )
-        .accessibilityLabel(title)
-        .accessibilityHint(Text(detail ?? ""))
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: heading.text)))
+        .accessibilityHint(Text(accessibilityDetail(heading, explanation)))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: titleKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await titleTranslation.resolve(titleKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: detailKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            if detail != nil {
+                await detailTranslation.resolve(detailKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func statusCaption(_ status: FruitfolioControlTranslationState.Presentation.Status) -> some View {
+        if let key = status.captionKey {
+            Text(LocalizedStringKey(key))
+                .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                .foregroundStyle(DesignTokens.ColorToken.secondaryBurgundy)
+        }
+    }
+    private func accessibilityDetail(_ heading: FruitfolioControlTranslationState.Presentation,
+                                     _ explanation: FruitfolioControlTranslationState.Presentation) -> String {
+        var parts = [heading.status.accessibilityDetail(
+            original: FruitfolioSemanticDocument.plainText(from: title), localized: { settings.localized($0) })]
+        if let detail {
+            parts.insert(FruitfolioSemanticDocument.plainText(from: explanation.text), at: 0)
+            parts.append(explanation.status.accessibilityDetail(
+                original: FruitfolioSemanticDocument.plainText(from: detail), localized: { settings.localized($0) }))
+        }
+        return parts.filter { !$0.isEmpty }.joined(separator: ". ")
     }
 }
 

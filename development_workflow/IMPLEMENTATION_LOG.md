@@ -1784,3 +1784,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 688, "native_CPU_XCTest": 701, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 300, "sound_ownership_findings": 0, "control_state_methods": 8, "native_T5_contract_methods": 7, "Apple_UI_typecheck": "NOT_RUN; no Apple SDK", "official_MADLAD": "BLOCKED; actual synthetic T5 contracts are not linguistic or clinical acceptance"}.
 - Next action: Apply the same protected display-only resolution to actual account navigation title/detail controls; retain single genuine button, artwork/cues, explicit source fallback, and accessibility identity. Then proceed to the next independent source-order requirement.
 - Commit: containing commit for batch Canonical-control-label-catalog-MADLAD-display-state.
+
+## Account-navigation-title-detail-protected-localization
+
+- Parent checkpoint: 19eb52c3d4b23845991db94386e2d0c1cd66940c.
+- Source-order requirements: [18, 24, 26, 47, 48, 62, 63, 393, 394, 395, 397, 418, 419, 422, 425, 426, 427, 429, 443, 444, 446, 466, 476, 477, 478].
+- Source files: Fruitfolio/Privacy Settings/Prompt12SharedViews.swift, Fruitfolio/Global Controls/Prompt08GlobalControls.swift, Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift.
+- Actual navigation title/detail now resolve independently through shared catalog/scientific/MADLAD state, each with truthful original/machine/unavailable status, semantic/plain VO text and scalable type. Single genuine button/cue/artwork retained. Canonical controls share caption/hint/task keys. Actual independent concurrent title/detail regression passes; genuine Combine publisher test added but NOT_RUN on Linux.
+- Tests added/updated: FruitfolioTests/Prompt1BControlTranslationStateTests.swift.
+- Verification: {"portable_XCTest": 689, "native_CPU_XCTest": 702, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 300, "sound_ownership_findings": 0, "control_state_portable_methods": 9, "native_T5_contract_methods": 7, "Apple_Combine_publisher": "NOT_RUN; genuine publisher test requires Apple Combine", "Apple_UI_typecheck": "NOT_RUN; no Apple SDK", "official_MADLAD": "BLOCKED; synthetic T5 execution does not approve official/language/clinical behavior"}.
+- Next action: Localize existing account/privacy route headers and explanatory text through shared display-only translation, preserving provider/email literals in signed-in status; retain existing layout/artwork and add Apple large-text header coverage.
+- Commit: containing commit for batch Account-navigation-title-detail-protected-localization.

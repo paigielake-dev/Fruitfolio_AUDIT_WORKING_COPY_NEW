@@ -7,14 +7,36 @@ import Combine
 /// is rewritten. The generation guard owns results across actor suspension.
 @MainActor
 final class FruitfolioControlTranslationState {
-    struct Key: Equatable, Sendable {
+    struct Key: Hashable, Sendable {
         let source: String
         let language: FruitfolioLanguage
     }
     struct Presentation: Equatable, Sendable {
         let text: String
         let status: Status
-        enum Status: Equatable, Sendable { case source, preparing, catalog, machine, unavailable }
+        enum Status: Equatable, Sendable {
+            case source, preparing, catalog, machine, unavailable
+            var captionKey: String? {
+                switch self {
+                case .source, .catalog: return nil
+                case .preparing: return "original text"
+                case .machine: return "local machine translation"
+                case .unavailable: return "original text — translation unavailable"
+                }
+            }
+            func accessibilityDetail(original: String, localized: (String) -> String) -> String {
+                switch self {
+                case .source, .catalog: return ""
+                case .preparing: return localized("original text — preparing local translation…")
+                case .machine: return localized("local machine translation") + ". " + localized("original text") + ": " + original
+                case .unavailable: return localized("original text — translation unavailable")
+                }
+            }
+        }
+    }
+    struct TaskKey: Hashable, Sendable {
+        let key: Key
+        let inferenceAllowed: Bool
     }
     private let service: FruitfolioTranslationService
     private var generation = UUID()

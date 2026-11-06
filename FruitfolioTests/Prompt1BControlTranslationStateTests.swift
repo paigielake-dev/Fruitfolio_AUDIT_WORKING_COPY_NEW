@@ -1,5 +1,8 @@
 import Foundation
 import XCTest
+#if canImport(Combine)
+import Combine
+#endif
 @testable import Fruitfolio
 
 /// Explicit service fixtures test display ownership, not linguistic quality.
@@ -32,6 +35,19 @@ private actor ControlLabelFixtureRuntime: FruitfolioLocalTranslationRuntime {
 @MainActor
 final class Prompt1BControlTranslationStateTests: XCTestCase {
     private typealias Key = FruitfolioControlTranslationState.Key
+    #if canImport(Combine)
+    func testActualCombinePublisherAnnouncesResolvedControlDisplay() async {
+        let runtime = ControlLabelFixtureRuntime()
+        let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
+        var notifications = 0
+        let observation = state.objectWillChange.sink { notifications += 1 }
+        defer { observation.cancel() }
+        let key = Key(source: "save", language: .german)
+        await state.resolve(key, inferenceAllowed: true)
+        XCTAssertGreaterThan(notifications, 0)
+        XCTAssertEqual(state.presentation(for: key).text, "fixture output")
+    }
+    #endif
     func testActualCatalogResolvesControlLabelsWhileInferenceIsPaused() async throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".bundle")
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -131,6 +147,31 @@ final class Prompt1BControlTranslationStateTests: XCTestCase {
             XCTAssertEqual(state.presentation(for: old).text, old.source)
         }
     }
+    func testIndependentNavigationTitleAndDetailKeepTheirOwnResults() async {
+        for cancelTitle in [false, true] {
+            let runtime = ControlLabelFixtureRuntime(holdFirst: true)
+            let service = FruitfolioTranslationService(runtime: runtime)
+            let title = FruitfolioControlTranslationState(service: service)
+            let detail = FruitfolioControlTranslationState(service: service)
+            let titleKey = Key(source: "open", language: .german)
+            let detailKey = Key(source: "details", language: .german)
+            let task = Task { await title.resolve(titleKey, inferenceAllowed: true) }
+            await runtime.waitForHeldCall()
+            await detail.resolve(detailKey, inferenceAllowed: true)
+            if cancelTitle { task.cancel() }
+            await runtime.finishHeld()
+            await task.value
+            XCTAssertEqual(detail.presentation(for: detailKey).text, "fixture output")
+            XCTAssertEqual(detail.presentation(for: detailKey).status, .machine)
+            XCTAssertEqual(title.presentation(for: titleKey).text, cancelTitle ? "open" : "older fixture output")
+            let pausedDetail = Key(source: "new details", language: .german)
+            await detail.resolve(pausedDetail, inferenceAllowed: false)
+            XCTAssertEqual(detail.presentation(for: pausedDetail).text, "new details")
+            XCTAssertEqual(detail.presentation(for: pausedDetail).status, .unavailable)
+            XCTAssertEqual(title.presentation(for: titleKey).text, cancelTitle ? "open" : "older fixture output")
+        }
+    }
+
     func testCancelledLateResultCannotBecomeAcceptedDisplay() async {
         let runtime = ControlLabelFixtureRuntime(holdFirst: true)
         let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
