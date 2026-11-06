@@ -2895,3 +2895,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 859, "native_CPU_XCTest": 881, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 4, "Apple_UI_focus_native_dismissal": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Inspect actual frame credit on failed progress readback: stage controller ledger/session and star/pass updates until saved progress acknowledgement, reproduce real injected write failure without source-only certification, preserve recoverable originals, execute checks and checkpoint.
 - Commit: containing commit for batch Cancelled-reveal-and-actual-native-dismissal-boundaries.
+
+## Game-store-cache-after-readback-acknowledgement
+
+- Parent checkpoint: e6704f330481dd67e13b9184bb84e49fdd30213c.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift, development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md.
+- Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 861, "native_CPU_XCTest": 883, "SwiftTesting_each": 21, "focused_game_persistence_XCTest": 14, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 7, "earlier_invalid_fixture_executed_tests": 0, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Add actual controller good-fruit/star dropped-progress regressions; stage session/ledger until explicit store acknowledgement, stop further frame work on protected storage, preserve existing explicit-reload→topic-setup behavior (do not replay stale rounds after external reload). Terminal-round ownership remains separate until safe baseline context is verified.
+- Commit: containing commit for batch Game-store-cache-after-readback-acknowledgement.

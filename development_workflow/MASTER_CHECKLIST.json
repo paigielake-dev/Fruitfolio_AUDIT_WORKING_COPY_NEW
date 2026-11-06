@@ -17555,7 +17555,8 @@
         "development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md",
         "development_workflow/CLASSIFICATION_DECISION_OWNERSHIP.md",
         "development_workflow/GAME_CLOCK_OWNERSHIP.md",
-        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md"
+        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md",
+        "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -17569,9 +17570,10 @@
         "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)",
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Cancelled-reveal-and-actual-native-dismissal-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Game-store-cache-after-readback-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
@@ -17579,37 +17581,39 @@
         "Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted.",
         "Actual classification fruit/star decision callbacks capture interaction identity; fruit captures exact item UUID. Controller validates identities before any mutation; consume/spawn/pause invalidate old callbacks. Genuine 49-test pre-fix run reproduced2assertion failures. Six regressions exercise identity replacement, wrong fruit, replay after replacement, pause/resume, stale later star and valid current accept. No engine/art/source/citation/schema rewrite.",
         "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
-        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN."
+        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN.",
+        "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix."
       ],
-      "last_updated": "2026-11-06T23:15:30.501724+00:00",
+      "last_updated": "2026-11-06T23:21:23.405104+00:00",
       "latest_batch_verification": {
-        "batch": "Cancelled-reveal-and-actual-native-dismissal-boundaries",
+        "batch": "Game-store-cache-after-readback-acknowledgement",
         "executed": {
-          "portable_XCTest": 859,
-          "native_CPU_XCTest": 881,
+          "portable_XCTest": 861,
+          "native_CPU_XCTest": 883,
           "SwiftTesting_each": 21,
+          "focused_game_persistence_XCTest": 14,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 4,
-          "Apple_UI_focus_native_dismissal": "NOT_RUN",
+          "pre_fix_failed_assertions": 7,
+          "earlier_invalid_fixture_executed_tests": 0,
+          "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple actual native closing/reentry ordering and same-question/round VoiceOver focus return",
-          "Existing four-vector actual-root save UI matrix, Apple SDK/keyboard/background/physical device",
-          "Official MADLAD model/native-language and clinical validation"
+          "Genuine Combine notifications and Apple UI protected-storage/reload/draft handling",
+          "Official MADLAD/native-language/device/clinical verification"
         ],
         "remaining": [
-          "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-          "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-          "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+          "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+          "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+          "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-        "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-        "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+        "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+        "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
       ]
     },
     {
@@ -28560,7 +28564,8 @@
         "development_workflow/GAME_CLOCK_OWNERSHIP.md",
         "development_workflow/SAVE_DESTINATION_OWNERSHIP.md",
         "development_workflow/SAVE_DESTINATION_FIXED_COPY.md",
-        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md"
+        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md",
+        "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28696,7 +28701,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Cancelled-reveal-and-actual-native-dismissal-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Game-store-cache-after-readback-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -28818,37 +28823,39 @@
         "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
         "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance.",
         "Fixed save-sheet labels/native field prompt use existing compact semantic translation. Private saved names remain verbatim and typed Binding exact; book titles wrap fully, native book/chapter selected traits added. Existing game image accessibility helper moved unchanged (normalized SHA receipt) into existing shared translation file for reuse by fixed cover labels. Known library errors translated; unknown system errors remain verbatim. Exactly6English keys added, all959old entries/formatting retained:965English/0foreign. Actual UI matrix extended to4paused-English/French\u00d7ReduceMotion vectors, NOT_RUN. Linux Foundation pass does not execute SwiftUI or establish official MADLAD inference.",
-        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN."
+        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN.",
+        "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix."
       ],
-      "last_updated": "2026-11-06T23:15:30.501724+00:00",
+      "last_updated": "2026-11-06T23:21:23.405104+00:00",
       "latest_batch_verification": {
-        "batch": "Cancelled-reveal-and-actual-native-dismissal-boundaries",
+        "batch": "Game-store-cache-after-readback-acknowledgement",
         "executed": {
-          "portable_XCTest": 859,
-          "native_CPU_XCTest": 881,
+          "portable_XCTest": 861,
+          "native_CPU_XCTest": 883,
           "SwiftTesting_each": 21,
+          "focused_game_persistence_XCTest": 14,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 4,
-          "Apple_UI_focus_native_dismissal": "NOT_RUN",
+          "pre_fix_failed_assertions": 7,
+          "earlier_invalid_fixture_executed_tests": 0,
+          "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple actual native closing/reentry ordering and same-question/round VoiceOver focus return",
-          "Existing four-vector actual-root save UI matrix, Apple SDK/keyboard/background/physical device",
-          "Official MADLAD model/native-language and clinical validation"
+          "Genuine Combine notifications and Apple UI protected-storage/reload/draft handling",
+          "Official MADLAD/native-language/device/clinical verification"
         ],
         "remaining": [
-          "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-          "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-          "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+          "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+          "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+          "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-        "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-        "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+        "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+        "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
       ]
     },
     {
@@ -29018,7 +29025,8 @@
         "development_workflow/GAME_CLOCK_OWNERSHIP.md",
         "development_workflow/SAVE_DESTINATION_OWNERSHIP.md",
         "development_workflow/SAVE_DESTINATION_FIXED_COPY.md",
-        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md"
+        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md",
+        "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29200,7 +29208,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Cancelled-reveal-and-actual-native-dismissal-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Game-store-cache-after-readback-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -29356,37 +29364,39 @@
         "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
         "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance.",
         "Fixed save-sheet labels/native field prompt use existing compact semantic translation. Private saved names remain verbatim and typed Binding exact; book titles wrap fully, native book/chapter selected traits added. Existing game image accessibility helper moved unchanged (normalized SHA receipt) into existing shared translation file for reuse by fixed cover labels. Known library errors translated; unknown system errors remain verbatim. Exactly6English keys added, all959old entries/formatting retained:965English/0foreign. Actual UI matrix extended to4paused-English/French\u00d7ReduceMotion vectors, NOT_RUN. Linux Foundation pass does not execute SwiftUI or establish official MADLAD inference.",
-        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN."
+        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN.",
+        "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix."
       ],
-      "last_updated": "2026-11-06T23:15:30.501724+00:00",
+      "last_updated": "2026-11-06T23:21:23.405104+00:00",
       "latest_batch_verification": {
-        "batch": "Cancelled-reveal-and-actual-native-dismissal-boundaries",
+        "batch": "Game-store-cache-after-readback-acknowledgement",
         "executed": {
-          "portable_XCTest": 859,
-          "native_CPU_XCTest": 881,
+          "portable_XCTest": 861,
+          "native_CPU_XCTest": 883,
           "SwiftTesting_each": 21,
+          "focused_game_persistence_XCTest": 14,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 4,
-          "Apple_UI_focus_native_dismissal": "NOT_RUN",
+          "pre_fix_failed_assertions": 7,
+          "earlier_invalid_fixture_executed_tests": 0,
+          "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple actual native closing/reentry ordering and same-question/round VoiceOver focus return",
-          "Existing four-vector actual-root save UI matrix, Apple SDK/keyboard/background/physical device",
-          "Official MADLAD model/native-language and clinical validation"
+          "Genuine Combine notifications and Apple UI protected-storage/reload/draft handling",
+          "Official MADLAD/native-language/device/clinical verification"
         ],
         "remaining": [
-          "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-          "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-          "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+          "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+          "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+          "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-        "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-        "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+        "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+        "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
       ]
     },
     {
@@ -29528,7 +29538,8 @@
         "development_workflow/GAME_CLOCK_OWNERSHIP.md",
         "development_workflow/SAVE_DESTINATION_OWNERSHIP.md",
         "development_workflow/SAVE_DESTINATION_FIXED_COPY.md",
-        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md"
+        "development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md",
+        "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29664,7 +29675,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Cancelled-reveal-and-actual-native-dismissal-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Game-store-cache-after-readback-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -29766,37 +29777,39 @@
         "Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.",
         "Existing shared native save sheet validates active visible scene, covering popup, captured presentation identity and current destination membership. Scene changes invalidate callbacks without replacing draft. Acknowledged Save and Cancel consume ownership before parent completion; failures remain retryable. Actual library store/model/schema and pending source/citation builder SHA unchanged. Two Apple UI launch vectors written against actual private game/library fixture, asserting no saved page on Cancel then exactly one original-metadata page on Save; NOT_RUN on Linux. Foundation pass does not verify SwiftUI behavior or user-facing save confirmation acceptance.",
         "Fixed save-sheet labels/native field prompt use existing compact semantic translation. Private saved names remain verbatim and typed Binding exact; book titles wrap fully, native book/chapter selected traits added. Existing game image accessibility helper moved unchanged (normalized SHA receipt) into existing shared translation file for reuse by fixed cover labels. Known library errors translated; unknown system errors remain verbatim. Exactly6English keys added, all959old entries/formatting retained:965English/0foreign. Actual UI matrix extended to4paused-English/French\u00d7ReduceMotion vectors, NOT_RUN. Linux Foundation pass does not execute SwiftUI or establish official MADLAD inference.",
-        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN."
+        "Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN.",
+        "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix."
       ],
-      "last_updated": "2026-11-06T23:15:30.501724+00:00",
+      "last_updated": "2026-11-06T23:21:23.405104+00:00",
       "latest_batch_verification": {
-        "batch": "Cancelled-reveal-and-actual-native-dismissal-boundaries",
+        "batch": "Game-store-cache-after-readback-acknowledgement",
         "executed": {
-          "portable_XCTest": 859,
-          "native_CPU_XCTest": 881,
+          "portable_XCTest": 861,
+          "native_CPU_XCTest": 883,
           "SwiftTesting_each": 21,
+          "focused_game_persistence_XCTest": 14,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_failed_assertions": 4,
-          "Apple_UI_focus_native_dismissal": "NOT_RUN",
+          "pre_fix_failed_assertions": 7,
+          "earlier_invalid_fixture_executed_tests": 0,
+          "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple actual native closing/reentry ordering and same-question/round VoiceOver focus return",
-          "Existing four-vector actual-root save UI matrix, Apple SDK/keyboard/background/physical device",
-          "Official MADLAD model/native-language and clinical validation"
+          "Genuine Combine notifications and Apple UI protected-storage/reload/draft handling",
+          "Official MADLAD/native-language/device/clinical verification"
         ],
         "remaining": [
-          "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-          "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-          "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+          "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+          "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+          "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute Apple native dismissal/queued root action/focus and save UI cases; source-only native guard is not runtime verification",
-        "Verify actual controller frame/session/ledger state under rejected progress acknowledgement next",
-        "Whole original requirement acceptance, exact founder copy320\u2013322 and external official-model/clinical/device blockers remain open"
+        "Stage actual controller catch score/pass/ledger credits until store acknowledgement; cache correctness alone does not verify controller correctness",
+        "Execute Apple protected-store/reload UI and publication-order checks; existing reload deliberately returns to topic setup",
+        "Whole original requirement acceptance and official-model/external clinical/device blockers remain open"
       ]
     }
   ]

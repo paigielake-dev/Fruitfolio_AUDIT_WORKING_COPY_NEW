@@ -25,6 +25,68 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         let name = "Fruitfolio.game-persistence-tests." + UUID().uuidString
         return (name, try XCTUnwrap(UserDefaults(suiteName: name)))
     }
+    func testActualStoreDroppedProgressWriteKeepsAcknowledgedCacheAndOriginalBytes() async throws {
+        let suite = "Fruitfolio.game-store-ack." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
+        var progress = store.ensureProgress(for: "fixture")
+        progress.totalFruitCaught = 2
+        store.updateProgress(progress)
+        let accepted = store.topicProgress
+        let original = defaults.data(forKey: "game")
+        defaults.fault = .drop
+        progress.totalFruitCaught = 99
+        store.updateProgress(progress)
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertEqual(store.topicProgress, accepted)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        defaults.fault = .accept
+        store.reload()
+        XCTAssertFalse(store.isReadOnly)
+        XCTAssertEqual(store.topicProgress, accepted)
+        progress = try XCTUnwrap(store.progress(for: "fixture"))
+        progress.totalFruitCaught += 1
+        store.updateProgress(progress)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalFruitCaught, 3)
+    }
+
+    func testActualStoreDroppedCreationHistoryAndTourWritesRetainAcknowledgedValues() async throws {
+        for mutation in ["new-topic", "history", "complete-tour", "reset-tour", "preferences"] {
+            let suite = "Fruitfolio.game-store-ack." + UUID().uuidString
+            let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
+            _ = store.ensureProgress(for: "fixture")
+            store.recordQuestion("accepted-question", topic: "fixture")
+            if mutation == "reset-tour" { store.completeTour() }
+            let progress = store.topicProgress
+            let history = store.questionHistory
+            let tour = store.tourState
+            let mode = store.controlMode
+            let difficulty = store.preferredDifficulty
+            let original = defaults.data(forKey: "game")
+            defaults.fault = .drop
+            switch mutation {
+            case "new-topic": _ = store.ensureProgress(for: "unconfirmed")
+            case "history": store.recordQuestion("unconfirmed", topic: "fixture")
+            case "complete-tour": store.completeTour()
+            case "reset-tour": store.resetTourForReplay()
+            default:
+                store.controlMode = .classification
+                store.preferredDifficulty = .hard
+                store.persistPreferences()
+            }
+            XCTAssertTrue(store.isReadOnly, mutation)
+            XCTAssertEqual(store.topicProgress, progress, mutation)
+            XCTAssertEqual(store.questionHistory, history, mutation)
+            XCTAssertEqual(store.tourState, tour, mutation)
+            XCTAssertEqual(store.controlMode, mode, mutation)
+            XCTAssertEqual(store.preferredDifficulty, difficulty, mutation)
+            XCTAssertEqual(defaults.data(forKey: "game"), original, mutation)
+        }
+    }
+
     func testExistingStateKeysAndProgressSurviveStoreReinitialization() async throws {
         let (name, defaults) = try defaults(); defer { defaults.removePersistentDomain(forName: name) }
         let store = Prompt28GamePersistence(defaults: defaults, key: "game")

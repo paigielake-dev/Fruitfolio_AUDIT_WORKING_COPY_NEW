@@ -40,6 +40,7 @@ final class Prompt28FruitBasketStore {
     #endif
     private(set) var persistenceMessage: String?
     var isReadOnly: Bool { persistence.isWriteBlocked }
+    private var acknowledgedState = Prompt28PersistedGameState()
 
     init(
         defaults: UserDefaults = .standard,
@@ -63,8 +64,9 @@ final class Prompt28FruitBasketStore {
         if let existing = topicProgress[normalizedTopic] { return existing }
         guard !isReadOnly, !normalizedTopic.isEmpty else { return Prompt28TopicProgress(normalizedTopicID: normalizedTopic) }
         let created = Prompt28TopicProgress(normalizedTopicID: normalizedTopic)
-        topicProgress[normalizedTopic] = created
-        persist()
+        var candidate = currentState
+        candidate.topicProgress[normalizedTopic] = created
+        persist(candidate)
         return created
     }
 
@@ -77,33 +79,39 @@ final class Prompt28FruitBasketStore {
             max(clean.highestGameLevelReached, clean.currentGameLevel)
         )
         clean.lastPlayedAt = Date()
-        topicProgress[clean.normalizedTopicID] = clean
-        persist()
+        var candidate = currentState
+        candidate.topicProgress[clean.normalizedTopicID] = clean
+        persist(candidate)
     }
 
     func resetCurrentGameLevel(for normalizedTopic: String) {
         guard !isReadOnly else { return }
-        var progress = Prompt28ProgressionPolicy.resettingLevel(ensureProgress(for: normalizedTopic))
+        let original = ensureProgress(for: normalizedTopic)
+        guard !isReadOnly else { return }
+        var progress = Prompt28ProgressionPolicy.resettingLevel(original)
         progress.lastPlayedAt = Date()
-        topicProgress[normalizedTopic] = progress
-        persist()
+        var candidate = currentState
+        candidate.topicProgress[normalizedTopic] = progress
+        persist(candidate)
     }
 
     func recordQuestion(_ questionID: String, topic: String) {
         guard !isReadOnly else { return }
         var ids = questionHistory[topic] ?? []
         ids.insert(questionID)
-        questionHistory[topic] = ids
-        persist()
+        var candidate = currentState
+        candidate.questionHistory[topic] = Array(ids).sorted()
+        persist(candidate)
     }
 
     func completeTour() {
         guard !isReadOnly else { return }
-        tourState.hasCompletedTour = true
-        tourState.currentStep = 0
-        tourState.tutorialBasketCount = 0
-        tourState.tutorialCatchState = "idle"
-        persist()
+        var candidate = currentState
+        candidate.tourState.hasCompletedTour = true
+        candidate.tourState.currentStep = 0
+        candidate.tourState.tutorialBasketCount = 0
+        candidate.tourState.tutorialCatchState = "idle"
+        persist(candidate)
     }
 
     func skipTourAfterRules() {
@@ -112,34 +120,28 @@ final class Prompt28FruitBasketStore {
 
     func resetTourForReplay() {
         guard !isReadOnly else { return }
-        tourState = Prompt28TourState()
-        persist()
+        var candidate = currentState
+        candidate.tourState = Prompt28TourState()
+        persist(candidate)
     }
 
     func persistPreferences() {
-        persist()
+        persist(currentState)
     }
 
     func reload() {
         do {
             let state = try persistence.load() ?? Prompt28PersistedGameState()
-            topicProgress = state.topicProgress
-            questionHistory = state.questionHistory.mapValues(Set.init)
-            tourState = state.tourState
-            leaderboardPseudonym = Prompt28LeaderboardUsernamePolicy.sanitized(state.leaderboardPseudonym ?? "")
-            // Legacy local opt-in is not proof of global registration.
-            appearOnLeaderboard = false
-            controlMode = state.controlMode
-            preferredDifficulty = state.preferredDifficulty
+            apply(state, loadedRecord: true)
+            acknowledgedState = currentState
             persistenceMessage = nil
         } catch {
             persistenceMessage = persistence.failure?.message ?? "game progress could not be loaded. original local data is retained."
         }
     }
 
-    private func persist() {
-        guard !isReadOnly else { return }
-        let state = Prompt28PersistedGameState(
+    private var currentState: Prompt28PersistedGameState {
+        Prompt28PersistedGameState(
             topicProgress: topicProgress,
             questionHistory: questionHistory.mapValues { Array($0).sorted() },
             tourState: tourState,
@@ -148,9 +150,38 @@ final class Prompt28FruitBasketStore {
             controlMode: controlMode,
             preferredDifficulty: preferredDifficulty
         )
-        do { try persistence.save(state); persistenceMessage = nil }
-        catch { persistenceMessage = persistence.failure?.message ?? "game progress could not be saved; reload the current local state." }
     }
+
+    private func apply(_ state: Prompt28PersistedGameState, loadedRecord: Bool = false) {
+        if topicProgress != state.topicProgress { topicProgress = state.topicProgress }
+        let history = state.questionHistory.mapValues(Set.init)
+        if questionHistory != history { questionHistory = history }
+        if tourState != state.tourState { tourState = state.tourState }
+        let name = loadedRecord ? Prompt28LeaderboardUsernamePolicy.sanitized(state.leaderboardPseudonym ?? "")
+            : state.leaderboardPseudonym ?? ""
+        if leaderboardPseudonym != name { leaderboardPseudonym = name }
+        // Preserve reload policy: a legacy local opt-in is not global registration.
+        let optIn = loadedRecord ? false : state.appearOnLeaderboard
+        if appearOnLeaderboard != optIn { appearOnLeaderboard = optIn }
+        if controlMode != state.controlMode { controlMode = state.controlMode }
+        if preferredDifficulty != state.preferredDifficulty { preferredDifficulty = state.preferredDifficulty }
+    }
+
+    private func persist(_ state: Prompt28PersistedGameState) {
+        guard !isReadOnly else { return }
+        do {
+            try persistence.save(state)
+            apply(state)
+            acknowledgedState = currentState
+            persistenceMessage = nil
+        } catch {
+            // Restore only the last acknowledged in-memory snapshot. An explicit
+            // reload still owns accepting external bytes and clearing protection.
+            apply(acknowledgedState)
+            persistenceMessage = persistence.failure?.message ?? "game progress could not be saved; reload the current local state."
+        }
+    }
+
 }
 
 #if canImport(Combine)
