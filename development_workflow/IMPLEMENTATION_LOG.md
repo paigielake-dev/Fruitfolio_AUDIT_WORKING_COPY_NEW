@@ -2774,3 +2774,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 800, "native_CPU_XCTest": 822, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "prior_focused_XCTest": 5, "prior_failed_assertions": 13, "Apple_external_link_privacy": "NOT_RUN", "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"}.
 - Next action: Continue actual LifeBridge information UI fixed-label/source/missing-content privacy localization and active owner, keeping reviewed URLs/source text/version metadata unchanged. Then original Part7 Fruit Basket home/instructions requirements; no fabricated company facts or network bypass.
 - Commit: containing commit for batch LifeBridge-exact-source-URL-and-review-metadata-boundaries.
+
+## LifeBridge-private-source-interface-and-localized-link-labels
+
+- Parent checkpoint: dd4653dee721779e5d900a69fea7b7737e106f8d.
+- Source-order requirements: [318, 319, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/LifeBridge/LifeBridgeInformationView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual LifeBridge missing-content/privacy/relationship explanations use serious source translation; fixed heading/link/date metadata labels use compact owner. Approved title/URL/version remain verbatim; dates native-formatted separately from translated labels. Brand literals protected in relevant labels/text. Back requires active visible owner; native Links disabled when inactive/shared-popup covered. Reviewed destinations and validator byte-preserved, no company facts/private context supplied. Seven English additions preserve949 entries,956 total; actual approved snapshots/Apple link behavior remain unverified.
+- Tests added/updated: FruitfolioTests/Prompt1BLifeBridgeTests.swift (five genuine parent-tested cases; unchanged/not rerun UI batch).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 956, "new_English_entries": 7, "Apple_LifeBridge_links_privacy": "NOT_RUN", "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue original Part7 Fruit Basket revised founder home/instructions/topic wording and interaction requirements. Before further broad work, preserve any directly discovered shared-modal host omissions in existing LifeBridge entry sheets without inventing content; retain315–317external blockers.
+- Commit: containing commit for batch LifeBridge-private-source-interface-and-localized-link-labels.
