@@ -129,6 +129,20 @@ final class SettingsStore {
         }
     }
 
+    /// The actual audio engine and portable policy tests share one finite,
+    /// category-specific gate. Stored preferences remain independent of mute.
+    func playbackVolume(for category: FruitfolioAudioCategory) -> Float {
+        guard allowsAudio(category) else { return 0 }
+        let raw: Double
+        switch category {
+        case .music: raw = musicVolume
+        case .rainAmbience: raw = rainVolume
+        case .soundEffects: raw = soundEffectsVolume
+        case .typingASMR: raw = typingVolume
+        }
+        return Float(Self.clamp(raw))
+    }
+
     private func persistClamped(_ value: Double, key: String) {
         defaults.set(Self.clamp(value), forKey: key)
     }

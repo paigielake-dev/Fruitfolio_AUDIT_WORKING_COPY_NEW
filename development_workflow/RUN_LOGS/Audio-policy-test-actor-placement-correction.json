@@ -1,0 +1,38 @@
+{
+  "scope": "The newly added policy tests initially failed Swift actor checking because they were placed in the nonisolated percentage-test class. Moved into the existing MainActor settings suite without weakening production/test isolation. No assertions executed in failed builds; genuine Combine/AVFoundation remain Apple-only.",
+  "logs": [
+    {
+      "path": "/tmp/fruitfolio-audio-reconcile-focused.log",
+      "sha256": "1dbff38d6b5305b0e052ee8309d77f89cdb1bf99e9e1f32383c19385887146e8",
+      "diagnostics": [
+        "main actor-isolated property 'musicVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'rainVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'soundEffectsVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'typingVolume' can not be mutated from a nonisolated context",
+        "call to main actor-isolated instance method 'playbackVolume(for:)' in a synchronous nonisolated context [#ActorIsolatedCall]"
+      ]
+    },
+    {
+      "path": "/tmp/fruitfolio-audio-reconcile-portable.log",
+      "sha256": "58722804185f07cfb945f4ed42da9702caae8457b317dacc5b593f6e8912b52f",
+      "diagnostics": [
+        "main actor-isolated property 'musicVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'rainVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'soundEffectsVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'typingVolume' can not be mutated from a nonisolated context",
+        "call to main actor-isolated instance method 'playbackVolume(for:)' in a synchronous nonisolated context [#ActorIsolatedCall]"
+      ]
+    },
+    {
+      "path": "/tmp/fruitfolio-audio-reconcile-native.log",
+      "sha256": "09b6c9f0c82a6109d353916b5657892bcd535d5a67ab2182bfc1f2dba031fb11",
+      "diagnostics": [
+        "main actor-isolated property 'musicVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'rainVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'soundEffectsVolume' can not be mutated from a nonisolated context",
+        "main actor-isolated property 'typingVolume' can not be mutated from a nonisolated context",
+        "call to main actor-isolated instance method 'playbackVolume(for:)' in a synchronous nonisolated context [#ActorIsolatedCall]"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T19:01:32.143074+00:00",
+  "updated_at": "2026-11-06T19:08:11.532699+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -4091,6 +4091,51 @@
         ]
       },
       "timestamp": "2026-11-06T19:01:32.143074+00:00"
+    },
+    {
+      "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+      "commands": [
+        "Final full portable/native suites: /tmp/fruitfolio-audio-reconcile-final-{portable,native}.log",
+        "50 workflow checks with actual Swift compiler",
+        "311 final Swift files syntax parsed; project references resolved and actual SwiftSyntax sound ownership clean",
+        "Initial new-test actor placement compile errors corrected without weakening isolation; no assertions executed in those builds",
+        "Seven real Apple AudioSettings unit cases written but NOT_RUN; Mac script includes full target",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 777,
+        "native_CPU_XCTest": 799,
+        "SwiftTesting_each_run": 21,
+        "workflow_checks": 50,
+        "syntax_files": 311,
+        "new_portable_volume_policy_cases": 2,
+        "Apple_audio_unit_cases_written_NOT_RUN": 7,
+        "new_Apple_AVAudioPlayer_cases_NOT_RUN": 3,
+        "Apple_Guide_UI_launch_cases_written_NOT_RUN": 56,
+        "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ]
+      },
+      "timestamp": "2026-11-06T19:08:11.532699+00:00"
     }
   ]
 }

@@ -337,44 +337,21 @@ final class AudioManager: ObservableObject {
 
         settings.$musicEnabled
             .removeDuplicates()
-            .sink { [weak self] enabled in
-                self?.handleContinuousSettingChange(
-                    category: .music,
-                    enabled: enabled
-                )
-            }
-            .store(
-                in: &settingsCancellables
-            )
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.synchronizePlaybackWithSettings() }
+            .store(in: &settingsCancellables)
 
         settings.$rainEnabled
             .removeDuplicates()
-            .sink { [weak self] enabled in
-                self?.handleContinuousSettingChange(
-                    category: .rainAmbience,
-                    enabled: enabled
-                )
-            }
-            .store(
-                in: &settingsCancellables
-            )
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.synchronizePlaybackWithSettings() }
+            .store(in: &settingsCancellables)
 
         settings.$soundEffectsEnabled
             .removeDuplicates()
-            .sink { [weak self] enabled in
-                guard let self else {
-                    return
-                }
-
-                if !enabled {
-                    self.stopOneShots(
-                        category: .soundEffects
-                    )
-                }
-            }
-            .store(
-                in: &settingsCancellables
-            )
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.synchronizePlaybackWithSettings() }
+            .store(in: &settingsCancellables)
 
         settings.$typingASMREnabled
             .removeDuplicates()
@@ -384,6 +361,7 @@ final class AudioManager: ObservableObject {
 
         settings.$musicVolume
             .removeDuplicates()
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.applyCurrentVolume(
                     to: .music
@@ -395,6 +373,7 @@ final class AudioManager: ObservableObject {
 
         settings.$rainVolume
             .removeDuplicates()
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.applyCurrentVolume(
                     to: .rainAmbience
@@ -406,6 +385,7 @@ final class AudioManager: ObservableObject {
 
         settings.$soundEffectsVolume
             .removeDuplicates()
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.applyCurrentVolume(
                     to: .soundEffects
@@ -417,6 +397,7 @@ final class AudioManager: ObservableObject {
 
         settings.$typingVolume
             .removeDuplicates()
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.applyCurrentVolume(
                     to: .typingASMR
@@ -425,21 +406,6 @@ final class AudioManager: ObservableObject {
             .store(
                 in: &settingsCancellables
             )
-    }
-
-    private func handleContinuousSettingChange(
-        category: FruitfolioAudioCategory,
-        enabled: Bool
-    ) {
-        if enabled {
-            resumeContinuousAudio(
-                category: category
-            )
-        } else {
-            muteContinuousAudio(
-                category: category
-            )
-        }
     }
 
     private func muteContinuousAudio(
@@ -451,8 +417,10 @@ final class AudioManager: ObservableObject {
 
         player.setVolume(
             0,
-            fadeDuration: 0.12
+            fadeDuration: 0
         )
+
+        player.pause()
 
         debugLog(
             "muted \(String(describing: category))"
@@ -462,7 +430,7 @@ final class AudioManager: ObservableObject {
     private func resumeContinuousAudio(
         category: FruitfolioAudioCategory
     ) {
-        guard !audioInterrupted, applicationIsActive,
+        guard isEnabled(category), !audioInterrupted, applicationIsActive,
               !suspendedLoopCategories.contains(category) else {
             return
         }
@@ -528,39 +496,14 @@ final class AudioManager: ObservableObject {
     }
 
     private func synchronizePlaybackWithSettings() {
-        if isEnabled(.music) {
-            resumeContinuousAudio(
-                category: .music
-            )
-        } else {
-            muteContinuousAudio(
-                category: .music
-            )
-        }
-
-        if isEnabled(.rainAmbience) {
-            resumeContinuousAudio(
-                category: .rainAmbience
-            )
-        } else {
-            muteContinuousAudio(
-                category: .rainAmbience
-            )
-        }
-
-        if !isEnabled(.soundEffects) {
-            stopOneShots(
-                category: .soundEffects
-            )
-        }
-
-        if isEnabled(.typingASMR) {
-            resumeContinuousAudio(category: .typingASMR)
-        } else {
-            muteContinuousAudio(category: .typingASMR)
-            stopOneShots(
-                category: .typingASMR
-            )
+        for category in FruitfolioAudioCategory.allCases {
+            if isEnabled(category) {
+                resumeContinuousAudio(category: category)
+            } else {
+                // Retain the logical request but stop physical playback now.
+                muteContinuousAudio(category: category)
+                stopOneShots(category: category)
+            }
         }
     }
 
@@ -756,29 +699,7 @@ final class AudioManager: ObservableObject {
             }
         }
 
-        let value: Double
-
-        switch category {
-
-        case .music:
-            value = settings.musicVolume
-
-        case .rainAmbience:
-            value = settings.rainVolume
-
-        case .soundEffects:
-            value = settings.soundEffectsVolume
-
-        case .typingASMR:
-            value = settings.typingVolume
-        }
-
-        return Float(
-            min(
-                max(value, 0),
-                1
-            )
-        )
+        return settings.playbackVolume(for: category)
     }
 
     private func applyCurrentVolume(

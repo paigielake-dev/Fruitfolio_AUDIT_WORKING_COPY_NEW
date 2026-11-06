@@ -11424,13 +11424,45 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAudioSettingsTests"
+        "Prompt1BAudioSettingsTests",
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-05T18:50:48.044327+00:00"
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
+      "latest_batch_verification": {
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+      ]
     },
     {
       "sequence": 223,
@@ -11448,13 +11480,45 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAudioSettingsTests"
+        "Prompt1BAudioSettingsTests",
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-05T18:50:48.044327+00:00"
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
+      "latest_batch_verification": {
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+      ]
     },
     {
       "sequence": 224,
@@ -11472,13 +11536,45 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAudioSettingsTests"
+        "Prompt1BAudioSettingsTests",
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-05T18:50:48.044327+00:00"
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
+      "latest_batch_verification": {
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+      ]
     },
     {
       "sequence": 225,
@@ -11496,13 +11592,45 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAudioSettingsTests"
+        "Prompt1BAudioSettingsTests",
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-05T18:50:48.044327+00:00"
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
+      "latest_batch_verification": {
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+      ]
     },
     {
       "sequence": 226,
@@ -11520,13 +11648,45 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAudioSettingsTests"
+        "Prompt1BAudioSettingsTests",
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-05T18:50:48.044327+00:00"
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
+      "latest_batch_verification": {
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+      ]
     },
     {
       "sequence": 227,
@@ -11544,13 +11704,45 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAudioSettingsTests"
+        "Prompt1BAudioSettingsTests",
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-05T18:50:48.044327+00:00"
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
+      "latest_batch_verification": {
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
+        "executed": {
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
+        },
+        "not_run": [
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
+      ]
     },
     {
       "sequence": 228,
@@ -23579,9 +23771,10 @@
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
-        "FruitfolioTests/Prompt1BPopupLayoutTests.swift"
+        "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:Compact-Guide-copy-and-adaptive-Strawberry-save-card (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -23636,37 +23829,38 @@
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
         "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.",
-        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN."
+        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-06T19:01:32.143074+00:00",
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
       "latest_batch_verification": {
-        "batch": "Compact-Guide-copy-and-adaptive-Strawberry-save-card",
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
         "executed": {
-          "portable_XCTest": "775 passed",
-          "native_CPU_XCTest": "797 passed; synthetic T5 is not official MADLAD",
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
           "SwiftTesting": "21 passed per run",
-          "popup_geometry": "14 cases passed including two new expanded/invalid-viewport cases",
           "workflow": "50 passed",
-          "source_checks": "311 final syntax parsed; Xcode references resolve and SwiftSyntax sound ownership clean; original save-art identifiers retained, 815-key catalog unchanged"
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
         },
         "not_run": [
-          "All 56 Guide Apple UI launches; four new paused-French/source-fallback cases plus accepted-save writing-frame assertions",
-          "Apple typecheck/link, actual compact owner/frame/scroll/timer rendering, AX/RTL and real AVAudioPlayer/device acceptance",
-          "Official MADLAD weights/tokenizer inference, each language and scientific/citation review"
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-          "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-          "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-          "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-        "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-        "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-        "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
       ]
     },
     {
@@ -24254,9 +24448,10 @@
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
         "development_workflow/tests/test_control_sound_ownership.py",
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
-        "FruitfolioTests/Prompt1BPopupLayoutTests.swift"
+        "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:Compact-Guide-copy-and-adaptive-Strawberry-save-card (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -24306,37 +24501,38 @@
         "Legacy Library/Guide pill delegates to canonical adaptive artwork/semantic controls with extra Reduce Motion support. Real SwiftSyntax ownership now handles alias and synchronous nested branches while preserving delayed/named callbacks and raw controls; nine duplicate sites normalized and six raw Guide cues added. Prior nested fixture miss reproduced; two new syntax regressions pass. Twenty existing Apple Guide cases extended with exact interaction counts but NOT_RUN. Original data callbacks/art/audio remain.",
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "27 direct Guide fixed/error renderers plus fixed branch labels now use the existing shared semantic translation owner, with original source strings/font sizes and relative text styles. User titles/bindings and scientific body/source/citation ownership remain. Twelve English keys added; all 803 prior entries unchanged, 815 total, zero nonempty foreign units. Existing Apple UI assertions extended for source headings and readable conflicts, not executed.",
-        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN."
+        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-06T19:01:32.143074+00:00",
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
       "latest_batch_verification": {
-        "batch": "Compact-Guide-copy-and-adaptive-Strawberry-save-card",
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
         "executed": {
-          "portable_XCTest": "775 passed",
-          "native_CPU_XCTest": "797 passed; synthetic T5 is not official MADLAD",
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
           "SwiftTesting": "21 passed per run",
-          "popup_geometry": "14 cases passed including two new expanded/invalid-viewport cases",
           "workflow": "50 passed",
-          "source_checks": "311 final syntax parsed; Xcode references resolve and SwiftSyntax sound ownership clean; original save-art identifiers retained, 815-key catalog unchanged"
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
         },
         "not_run": [
-          "All 56 Guide Apple UI launches; four new paused-French/source-fallback cases plus accepted-save writing-frame assertions",
-          "Apple typecheck/link, actual compact owner/frame/scroll/timer rendering, AX/RTL and real AVAudioPlayer/device acceptance",
-          "Official MADLAD weights/tokenizer inference, each language and scientific/citation review"
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-          "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-          "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-          "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-        "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-        "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-        "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
       ]
     },
     {
@@ -24796,7 +24992,8 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift",
         "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24879,9 +25076,10 @@
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
-        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -24928,37 +25126,38 @@
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
-        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-06T18:52:17.459715+00:00",
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
       "latest_batch_verification": {
-        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
         "executed": {
-          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
-          "portable_XCTest": "773 passed",
-          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
         },
         "not_run": [
-          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
-          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
-          "Official MADLAD offline/language/scientific verification"
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
-          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
-          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
-          "Complete external resource, model, clinical, localization and device gates"
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
-        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
-        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
-        "Complete external resource, model, clinical, localization and device gates"
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
       ]
     },
     {
@@ -25272,9 +25471,10 @@
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
-        "FruitfolioTests/Prompt1BPopupLayoutTests.swift"
+        "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:Compact-Guide-copy-and-adaptive-Strawberry-save-card (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -25347,37 +25547,38 @@
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
         "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.",
         "27 direct Guide fixed/error renderers plus fixed branch labels now use the existing shared semantic translation owner, with original source strings/font sizes and relative text styles. User titles/bindings and scientific body/source/citation ownership remain. Twelve English keys added; all 803 prior entries unchanged, 815 total, zero nonempty foreign units. Existing Apple UI assertions extended for source headings and readable conflicts, not executed.",
-        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN."
+        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-06T19:01:32.143074+00:00",
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
       "latest_batch_verification": {
-        "batch": "Compact-Guide-copy-and-adaptive-Strawberry-save-card",
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
         "executed": {
-          "portable_XCTest": "775 passed",
-          "native_CPU_XCTest": "797 passed; synthetic T5 is not official MADLAD",
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
           "SwiftTesting": "21 passed per run",
-          "popup_geometry": "14 cases passed including two new expanded/invalid-viewport cases",
           "workflow": "50 passed",
-          "source_checks": "311 final syntax parsed; Xcode references resolve and SwiftSyntax sound ownership clean; original save-art identifiers retained, 815-key catalog unchanged"
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
         },
         "not_run": [
-          "All 56 Guide Apple UI launches; four new paused-French/source-fallback cases plus accepted-save writing-frame assertions",
-          "Apple typecheck/link, actual compact owner/frame/scroll/timer rendering, AX/RTL and real AVAudioPlayer/device acceptance",
-          "Official MADLAD weights/tokenizer inference, each language and scientific/citation review"
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-          "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-          "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-          "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-        "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-        "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-        "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
       ]
     },
     {
@@ -25677,9 +25878,10 @@
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
-        "FruitfolioTests/Prompt1BPopupLayoutTests.swift"
+        "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
+        "FruitfolioTests/Prompt1BAudioSettingsTests.swift"
       ],
-      "commit_reference": "batch:Compact-Guide-copy-and-adaptive-Strawberry-save-card (resolve containing commit with git log)",
+      "commit_reference": "batch:Four-channel-audio-publication-and-mute-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -25786,37 +25988,38 @@
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
         "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.",
         "27 direct Guide fixed/error renderers plus fixed branch labels now use the existing shared semantic translation owner, with original source strings/font sizes and relative text styles. User titles/bindings and scientific body/source/citation ownership remain. Twelve English keys added; all 803 prior entries unchanged, 815 total, zero nonempty foreign units. Existing Apple UI assertions extended for source headings and readable conflicts, not executed.",
-        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN."
+        "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
+        "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed."
       ],
-      "last_updated": "2026-11-06T19:01:32.143074+00:00",
+      "last_updated": "2026-11-06T19:08:11.532699+00:00",
       "latest_batch_verification": {
-        "batch": "Compact-Guide-copy-and-adaptive-Strawberry-save-card",
+        "batch": "Four-channel-audio-publication-and-mute-reconciliation",
         "executed": {
-          "portable_XCTest": "775 passed",
-          "native_CPU_XCTest": "797 passed; synthetic T5 is not official MADLAD",
+          "portable_XCTest": "777 passed, including two actual SettingsStore playback-policy cases",
+          "native_CPU_XCTest": "799 passed; native synthetic T5 does not establish official MADLAD",
           "SwiftTesting": "21 passed per run",
-          "popup_geometry": "14 cases passed including two new expanded/invalid-viewport cases",
           "workflow": "50 passed",
-          "source_checks": "311 final syntax parsed; Xcode references resolve and SwiftSyntax sound ownership clean; original save-art identifiers retained, 815-key catalog unchanged"
+          "source_checks": "311 final syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; no Apple SDK typecheck"
         },
         "not_run": [
-          "All 56 Guide Apple UI launches; four new paused-French/source-fallback cases plus accepted-save writing-frame assertions",
-          "Apple typecheck/link, actual compact owner/frame/scroll/timer rendering, AX/RTL and real AVAudioPlayer/device acceptance",
-          "Official MADLAD weights/tokenizer inference, each language and scientific/citation review"
+          "All seven real AudioSettings Apple unit cases, including three new AVAudioPlayer/Combine regression cases",
+          "Settings actual slider/toggle UI, physical sound/mute/pause/resume, audio route/interruption and device performance",
+          "Existing 56 Guide Apple UI launches",
+          "Official MADLAD model/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-          "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-          "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-          "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+          "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+          "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+          "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+          "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run compact-heading/error and saved-card actual Apple UI cases; verify complete text fits or scrolls, original art paints correctly and no extra controls or false saved status appear",
-        "Verify four-second timer/cancellation/scene behavior and real VoiceOver announcement language after asynchronous translation",
-        "Confirm all language-specific geometry, fonts, keyboard/draft state and physical audio/device performance",
-        "Complete external official model, clinical and app-wide acceptance; source and geometry do not certify whole requirements"
+        "Execute real Apple volume/publication and global-mute/player tests with actual bundled assets; verify four channels apply the latest independent value",
+        "Verify mute and channel toggles pause physical playback, enabled changes under mute stay silent and logical requests resume only when eligible",
+        "Run Settings UI sliders, persistence/restart, route/interruption/foreground/background and hardware hearing checks; portable policy is not physical audio evidence",
+        "Complete all remaining Apple, device, scientific and official-model verification; these original requirements remain in progress"
       ]
     },
     {

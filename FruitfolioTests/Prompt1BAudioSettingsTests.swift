@@ -80,4 +80,86 @@ final class Prompt1BAudioSettingsTests: XCTestCase {
         defaults.set(Double.infinity, forKey: "fruitfolio.settings.musicVolume")
         XCTAssertEqual(SettingsStore(defaults: defaults).musicVolume, 0)
     }
+    #if DEBUG
+    func testFourLivePlayerVolumesUseNewPublishedValuesAfterRunLoopReconciliation() async throws {
+        let suite = "Fruitfolio.LiveAudioVolumes." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        defer { audio.resetAllAudio() }
+        let channels: [(FruitfolioAudioCategory, FruitfolioAudioID)] = [(.music, .fruitBasketMusicbox), (.rainAmbience, .fruitBasketRainAmbience), (.soundEffects, .buttonSoftPop), (.typingASMR, .typingSoft)]
+        for (_, id) in channels { audio.play(id, loop: true) }
+        try await Task.sleep(for: .milliseconds(250)) // Drain initial real Combine deliveries first.
+        for (category, _) in channels { _ = try XCTUnwrap(audio.debugLoopSnapshot(category: category).volume, "Actual bundled AVAudioPlayer must load") }
+        settings.musicVolume = 0.71; settings.rainVolume = 0.62
+        settings.soundEffectsVolume = 0.53; settings.typingVolume = 0.44
+        try await Task.sleep(for: .milliseconds(250))
+        let expectedVolumes: [(FruitfolioAudioCategory, Float)] = [(.music, 0.71), (.rainAmbience, 0.62), (.soundEffects, 0.53), (.typingASMR, 0.44)]
+        for (category, expected) in expectedVolumes {
+            XCTAssertEqual(audio.debugLoopSnapshot(category: category).volume ?? -1, expected, accuracy: 0.001)
+        }
+        settings.musicVolume = 0.11; settings.musicVolume = 0.72; settings.musicVolume = 0.63
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertEqual(audio.debugLoopSnapshot(category: .music).volume ?? -1, 0.63, accuracy: 0.001)
+        XCTAssertEqual(audio.debugLoopSnapshot(category: .rainAmbience).volume ?? -1, 0.62, accuracy: 0.001)
+    }
+
+    func testEnablingMusicAndRainWhileGloballyMutedCannotStartRequestedLoops() async throws {
+        let suite = "Fruitfolio.AudioEnableMuted." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.globallyMuted = true; settings.musicEnabled = false; settings.rainEnabled = false
+        let audio = AudioManager(settings: settings)
+        defer { audio.resetAllAudio() }
+        audio.play(.fruitBasketMusicbox, loop: true); audio.play(.fruitBasketRainAmbience, loop: true)
+        try await Task.sleep(for: .milliseconds(250))
+        settings.musicEnabled = true; settings.rainEnabled = true
+        try await Task.sleep(for: .milliseconds(250))
+        for category: FruitfolioAudioCategory in [.music, .rainAmbience] {
+            XCTAssertTrue(audio.debugLoopSnapshot(category: category).requested)
+            XCTAssertFalse(audio.debugLoopSnapshot(category: category).playing)
+            XCTAssertEqual(audio.debugLoopSnapshot(category: category).volume ?? 0, 0)
+        }
+        settings.globallyMuted = false
+        try await Task.sleep(for: .milliseconds(350))
+        for category: FruitfolioAudioCategory in [.music, .rainAmbience] {
+            XCTAssertTrue(audio.debugLoopSnapshot(category: category).playing, "Real playback must resume only after unmute")
+            XCTAssertGreaterThan(audio.debugLoopSnapshot(category: category).volume ?? 0, 0)
+        }
+    }
+
+    func testGlobalMutePausesAllExplicitLoopCategoriesAndDisabledChannelsStayPaused() async throws {
+        let suite = "Fruitfolio.AudioPauseAll." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        defer { audio.resetAllAudio() }
+        for id: FruitfolioAudioID in [.fruitBasketMusicbox, .fruitBasketRainAmbience, .buttonSoftPop, .typingSoft] { audio.play(id, loop: true) }
+        try await Task.sleep(for: .milliseconds(250))
+        for category in FruitfolioAudioCategory.allCases { _ = try XCTUnwrap(audio.debugLoopSnapshot(category: category).volume) }
+        settings.globallyMuted = true
+        try await Task.sleep(for: .milliseconds(250))
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertTrue(audio.debugLoopSnapshot(category: category).requested)
+            XCTAssertFalse(audio.debugLoopSnapshot(category: category).playing)
+            XCTAssertEqual(audio.debugLoopSnapshot(category: category).volume ?? -1, 0, accuracy: 0.001)
+        }
+        settings.soundEffectsEnabled = false; settings.typingASMREnabled = false
+        settings.globallyMuted = false
+        try await Task.sleep(for: .milliseconds(350))
+        for category: FruitfolioAudioCategory in [.soundEffects, .typingASMR] {
+            XCTAssertFalse(audio.debugLoopSnapshot(category: category).playing)
+            XCTAssertEqual(audio.debugLoopSnapshot(category: category).volume ?? -1, 0, accuracy: 0.001)
+        }
+        audio.forgetLoop(category: .music)
+        settings.musicEnabled = false; settings.musicEnabled = true
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).requested)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing)
+    }
+    #endif
+
 }

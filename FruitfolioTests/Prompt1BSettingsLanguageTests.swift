@@ -137,6 +137,48 @@ final class Prompt1BSettingsLanguageTests: XCTestCase {
         XCTAssertEqual(reloaded.typingVolume, 0)
     }
 
+    func testActualPlaybackVolumeGatesFourIndependentChannelsWithoutChangingPreferences() async throws {
+        let suite = "Fruitfolio.AudioPlaybackPolicy." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicVolume = 0.71; settings.rainVolume = 0.62
+        settings.soundEffectsVolume = 0.53; settings.typingVolume = 0.44
+        let volumes: [FruitfolioAudioCategory: Float] = [.music: 0.71, .rainAmbience: 0.62, .soundEffects: 0.53, .typingASMR: 0.44]
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertEqual(settings.playbackVolume(for: category), volumes[category]!, accuracy: 0.0001)
+        }
+        settings.globallyMuted = true
+        for category in FruitfolioAudioCategory.allCases { XCTAssertEqual(settings.playbackVolume(for: category), 0) }
+        settings.musicEnabled = false; settings.soundEffectsEnabled = false
+        let reloaded = SettingsStore(defaults: defaults)
+        reloaded.globallyMuted = false
+        XCTAssertEqual(reloaded.playbackVolume(for: .music), 0)
+        XCTAssertEqual(reloaded.playbackVolume(for: .soundEffects), 0)
+        XCTAssertEqual(reloaded.playbackVolume(for: .rainAmbience), 0.62, accuracy: 0.0001)
+        XCTAssertEqual(reloaded.playbackVolume(for: .typingASMR), 0.44, accuracy: 0.0001)
+        XCTAssertEqual(reloaded.musicVolume, 0.71)
+        XCTAssertEqual(reloaded.soundEffectsVolume, 0.53)
+    }
+
+    func testLiveAndReloadedPlaybackVolumesAreFiniteClampedForEveryChannel() async throws {
+        let suite = "Fruitfolio.AudioFinitePlayback." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        for raw in [-1.0, 2.0, Double.infinity, -Double.infinity, Double.nan] {
+            settings.musicVolume = raw; settings.rainVolume = raw
+            settings.soundEffectsVolume = raw; settings.typingVolume = raw
+            let expected: Float = raw.isFinite ? Float(min(max(raw, 0), 1)) : 0
+            let reloaded = SettingsStore(defaults: defaults)
+            for category in FruitfolioAudioCategory.allCases {
+                XCTAssertEqual(settings.playbackVolume(for: category), expected)
+                XCTAssertEqual(reloaded.playbackVolume(for: category), expected)
+                XCTAssertTrue(settings.playbackVolume(for: category).isFinite)
+            }
+        }
+    }
+
 }
 
 final class Prompt1BSettingsPercentageTests: XCTestCase {
@@ -176,4 +218,5 @@ final class Prompt1BSettingsPercentageTests: XCTestCase {
         XCTAssertFalse(settings.debugStoredEffects.enabled)
         #endif
     }
+
 }
