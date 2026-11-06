@@ -719,6 +719,7 @@ struct Prompt28FruitBasketView: View {
                                 ) {
                                     viewModel.updateDifficulty(option)
                                 }
+                                .accessibilityIdentifier("fruitBasket.difficulty." + option.rawValue)
                             }
                         }
                         .frame(maxWidth: 286)
@@ -858,6 +859,7 @@ struct Prompt28FruitBasketView: View {
                     ) {
                         viewModel.setControlMode(mode)
                     }
+                    .accessibilityIdentifier("fruitBasket.controlMode." + mode.rawValue)
                 }
             }
 
@@ -2620,73 +2622,17 @@ private struct Prompt28WatercolorButton: View {
     }
 }
 
+@MainActor
 private struct Prompt28MiniControlPill: View {
     let title: String
     let isSelected: Bool
     var width: CGFloat = 88
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            ZStack {
-                Image("control_pill_outline")
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(
-                        isSelected
-                        ? 1
-                        : 0.56
-                    )
-                    .accessibilityHidden(true)
-
-                Text(title)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 12,
-                            relativeTo: .subheadline
-                        )
-                    )
-                    .fontWeight(
-                        isSelected
-                        ? .bold
-                        : .semibold
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.76)
-                    .padding(.horizontal, 8)
-            }
-            .frame(
-                width: width,
-                height: 52
-            )
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityAddTraits(
-            isSelected
-            ? .isSelected
-            : []
-        )
+        FruitfolioControlPillButton(label: title, isSelected: isSelected, action: action)
+            .controlSize(.small)
+            .frame(maxWidth: width)
     }
 }
 

@@ -191,6 +191,43 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameCompactSelectorsWrapAndRetainSelectionAtAccessibilitySize() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "setup",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioGameRTL"] }
+            app.launch()
+            let medium = app.buttons["fruitBasket.difficulty.medium"]
+            XCTAssertTrue(medium.waitForExistence(timeout: 5))
+            let scroll = app.scrollViews.firstMatch
+            for _ in 0..<24 { if medium.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(medium.isHittable)
+            XCTAssertGreaterThanOrEqual(medium.frame.height, 44)
+            XCTAssertGreaterThanOrEqual(medium.frame.width, 44)
+            XCTAssertEqual(medium.label, "medium")
+            medium.tap()
+            XCTAssertTrue(medium.isSelected)
+            XCTAssertFalse(app.buttons["fruitBasket.difficulty.easy"].isSelected)
+            let classification = app.buttons["fruitBasket.controlMode.classification"]
+            for _ in 0..<24 { if classification.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(classification.isHittable)
+            XCTAssertEqual(classification.label, "classification")
+            XCTAssertGreaterThan(classification.frame.height, 52, "Large label must grow instead of shrinking into the old fixed height")
+            let catching = app.buttons["fruitBasket.controlMode.catch"]
+            catching.tap()
+            XCTAssertTrue(catching.isSelected)
+            XCTAssertFalse(classification.isSelected)
+            classification.tap()
+            XCTAssertTrue(classification.isSelected)
+            captureGame(app, name: "game-compact-selector-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testSettingsToggleEnablesBeforeItsSingleCueAndVolumePersists() {
         for reduced in [false, true] {
         for muted in [false, true] {

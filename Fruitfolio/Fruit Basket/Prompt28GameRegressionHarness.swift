@@ -64,6 +64,11 @@ struct Prompt28GameRegressionHarness: View {
     }
 
     private func configure() {
+        if scenario == "setup" {
+            model.rawTopic = "QA control layout fixture"
+            model.screen = .setup
+            return
+        }
         if scenario == "rules" { model.screen = .howItWorks; return }
         if scenario == "leaderboard" || scenario == "leaderboard-username-future" {
             model.screen = .leaderboard

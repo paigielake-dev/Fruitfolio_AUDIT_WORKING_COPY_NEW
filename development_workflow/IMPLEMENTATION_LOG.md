@@ -1916,3 +1916,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 730, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "native_T5_contract_methods": 12, "native_concurrent_child_tasks": 8, "complete_native_translations_in_concurrent_phase": 16, "Apple_UI_typecheck": "NOT_RUN", "official_MADLAD": "BLOCKED; untrained synthetic execution does not approve official model, linguistic/clinical or device behavior"}.
 - Next action: Replace game compact selector fixed-height/one-line shrinking text with existing canonical wrapping control while preserving selected artwork/traits and one cue owner; verify actual UI source scenarios without claiming Apple runtime.
 - Commit: containing commit for batch Concurrent-real-native-T5-translation-release-and-reload.
+
+## Wrapping-selected-game-controls
+
+- Parent checkpoint: a4a1d6e3f28a0a5bd05f798c9a75bf5e17e42a2c.
+- Source-order requirements: [7, 18, 24, 410, 411, 446, 468, 471, 472, 477].
+- Source files: Fruitfolio/Global Controls/Prompt08GlobalControls.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift.
+- Game compact selectors delegate to the existing canonical wrapping localized control, retaining selected bold/trait and dimming artwork only. Removed duplicate button/sound owner and fixed-height single-line shrinking. Four Apple UI scenarios added but not run on Linux.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 730, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "SwiftSyntax_sound_ownership_findings": 0, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md"}.
+- Next action: Replace suggested topic chips shrinking labels with the existing canonical localized wrapping control while passing the original source title to the existing game model.
+- Commit: containing commit for batch Wrapping-selected-game-controls.

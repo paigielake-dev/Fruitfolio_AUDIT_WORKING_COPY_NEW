@@ -37,6 +37,13 @@ struct WatercolorSecondaryButton: View {
 struct FruitfolioControlPillButton: View {
     let label: String
     let action: () -> Void
+    let isSelected: Bool?
+
+    init(label: String, isSelected: Bool? = nil, action: @escaping () -> Void) {
+        self.label = label
+        self.isSelected = isSelected
+        self.action = action
+    }
 
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var translation = FruitfolioControlTranslationState()
@@ -68,7 +75,7 @@ struct FruitfolioControlPillButton: View {
                 }
             }
                 .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
-                .fontWeight(.semibold)
+                .fontWeight(isSelected == true ? .bold : .semibold)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
@@ -82,6 +89,7 @@ struct FruitfolioControlPillButton: View {
                             capInsets: EdgeInsets(top: 80, leading: 180, bottom: 80, trailing: 180),
                             resizingMode: .stretch
                         )
+                        .opacity(isSelected == false ? 0.56 : 1)
                         .accessibilityHidden(true)
                 }
             .contentShape(Rectangle())
@@ -92,6 +100,7 @@ struct FruitfolioControlPillButton: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityAddTraits(isSelected == true ? .isSelected : [])
         .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
         .accessibilityHint(Text(display.status.accessibilityDetail(
             original: FruitfolioSemanticDocument.plainText(from: label), localized: { settings.localized($0) })))

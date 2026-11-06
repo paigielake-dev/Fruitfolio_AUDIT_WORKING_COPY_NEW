@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "59e8b545770e5958c5dc53c52069358151cf7fb3",
+  "current_HEAD": "a4a1d6e3f28a0a5bd05f798c9a75bf5e17e42a2c",
   "latest_verified_commit": null,
-  "current_checklist_part": 9,
+  "current_checklist_part": 1,
   "current_requirement": 18,
-  "current_implementation_batch": "Concurrent-real-native-T5-translation-release-and-reload",
+  "current_implementation_batch": "Wrapping-selected-game-controls",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
-    "development_workflow/MADLAD_CONCURRENT_RELEASE_VERIFICATION.md",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+    "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/COMPACT_GAME_SELECTOR_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -512,7 +515,7 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+    "actual SwiftSyntax control-sound-ownership --check"
   ],
   "last_test_results": {
     "portable_XCTest": 712,
@@ -520,14 +523,12 @@
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 306,
-    "native_T5_contract_methods": 12,
-    "native_concurrent_child_tasks": 8,
-    "complete_native_translations_in_concurrent_phase": 16,
-    "Apple_UI_typecheck": "NOT_RUN",
-    "official_MADLAD": "BLOCKED; untrained synthetic execution does not approve official model, linguistic/clinical or device behavior"
+    "SwiftSyntax_sound_ownership_findings": 0,
+    "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
+    "official_MADLAD": "BLOCKED; see BLOCKERS.md"
   },
-  "next_exact_implementation_action": "Replace game compact selector fixed-height/one-line shrinking text with existing canonical wrapping control while preserving selected artwork/traits and one cue owner; verify actual UI source scenarios without claiming Apple runtime.",
-  "updated_at": "2026-11-06T13:22:23.847663+00:00",
+  "next_exact_implementation_action": "Replace suggested topic chips shrinking labels with the existing canonical localized wrapping control while passing the original source title to the existing game model.",
+  "updated_at": "2026-11-06T13:29:10.358526+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
