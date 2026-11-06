@@ -827,3 +827,14 @@
 - Verification: {"Swift_6_headless": "407 XCTest +21 Swift Testing passed", "Swift_5_native": "411 XCTest +21 Swift Testing passed", "workflow": "16 Python tests passed; 36 source-exact supplemental requirements retained", "Swift_syntax": "213 changed Swift files parsed; zero errors", "Apple_UI_and_view_model": "NOT_RUN; engineering geometry registration, source rim mask and visible settlement not runtime validated", "unfinished": "Classification-mode star interaction and settlement parity next; no completed-478 or full inference claim"}.
 - Next action: Complete classification/accessibility mode standalone-star and shared delayed-settlement parity, then proceed immediately to wind/rain/puddle/branch/vine mechanics requirements339 onward. Add Mac regression route for physical acceptance when available; do not claim Apple runtime verified.
 - Commit: containing commit for batch Measured-fruit-and-star-entry-before-awards.
+
+## Classification-stars-and-shared-settlement-parity
+
+- Parent checkpoint: a1294fb82dccc9bbf04cc9b3be41352f95f591d4.
+- Source-order requirements: [328, 329, 330, 334, 335, 336, 338, 381].
+- Source files: Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift.
+- Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.
+- Tests added/updated: Prompt1BCatchPresentationTests, Prompt1BCatchViewModelTests (Apple NOT_RUN).
+- Verification: {"Swift_6_headless": "408 XCTest +21 Swift Testing passed", "Swift_5_native": "412 XCTest +21 Swift Testing passed", "workflow": "16 Python tests passed;36 exact supplemental entries preserved", "Swift_syntax": "213 changed Swift files parsed; zero errors", "Apple": "NOT_RUN: classification input, clock suspension and settlement visuals/VoiceOver await Apple SDK/runtime"}.
+- Next action: Correct overly broad sensitive-topic exclusion in new game provider: retain serious sourced educational feedback while preserving urgent-request bypass. Then immediately continue wind/rain/puddle/branch/vine requirements339 onward.
+- Commit: containing commit for batch Classification-stars-and-shared-settlement-parity.

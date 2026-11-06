@@ -17,6 +17,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var lastBadFruit: Prompt28FruitID?
     @Published var message: String?
     @Published var isPaused = false
+    @Published var classificationStarAvailable = false
     @Published var classificationFruit: Prompt28FallingFruit?
     @Published var didSetPersonalBestThisRound = false
 
@@ -206,6 +207,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         activeStars.removeAll()
         catchTransits.removeAll()
         collectedFruit.removeAll()
+        classificationStarAvailable = false
         classificationFruit = nil
         basketX = 0.5
         roundResultLocked = false
@@ -256,20 +258,23 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         else { return }
 
         classificationFruit = nil
-        switch (fruit.classification, accept) {
-        case (.good, true):
-            handleGoodCatch(fruit.fruitID)
-        case (.good, false):
-            handleGoodMiss()
-        case (.bad, true):
-            handleBadCatch(fruit.fruitID)
-        case (.bad, false):
-            handleBadMiss()
-        }
-
-        if screen == .catchActive, !roundResultLocked {
+        if accept {
+            catchTransits.append(.init(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification), relativeX: 0))
+            startGameplayLoop()
+        } else {
+            if fruit.classification == .good { handleGoodMiss() } else { handleBadMiss() }
             spawnClassificationFruit()
         }
+    }
+
+    func classificationStarDecision(accept: Bool) {
+        guard screen == .catchActive, !isPaused, store.controlMode == .classification,
+              classificationStarAvailable, catchTransits.isEmpty, !roundResultLocked else { return }
+        classificationStarAvailable = false
+        if accept {
+            catchTransits.append(.init(id: UUID(), kind: .star, relativeX: 0))
+            startGameplayLoop()
+        } else { spawnClassificationFruit() }
     }
 
     func pause() {
@@ -285,8 +290,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         guard screen == .paused, !roundResultLocked else { return }
         isPaused = false
         screen = .catchActive
-        if store.controlMode == .catchMode { startGameplayLoop() }
-        else if classificationFruit == nil { spawnClassificationFruit() }
+        if store.controlMode == .catchMode || !catchTransits.isEmpty { startGameplayLoop() }
+        else if classificationFruit == nil && !classificationStarAvailable { spawnClassificationFruit() }
     }
 
     func retryRound() {
@@ -329,6 +334,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func setControlMode(_ mode: Prompt28ControlMode) {
+        guard mode != store.controlMode else { return }
+        // Earned counters and entering objects survive the control change.
+        // Unselected presentations are replaced so no invisible object can catch.
+        activeFruit.removeAll(); activeStars.removeAll()
+        classificationFruit = nil; classificationStarAvailable = false
         store.controlMode = mode
         store.persistPreferences()
     }
@@ -403,6 +413,13 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
         catchTransits = roundResultLocked ? [] : pending
         guard !roundResultLocked else { return }
+        if store.controlMode == .classification {
+            if catchTransits.isEmpty {
+                stopGameplay()
+                if classificationFruit == nil && !classificationStarAvailable { spawnClassificationFruit() }
+            }
+            return
+        }
         var remaining: [Prompt28FallingFruit] = []
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
@@ -507,6 +524,12 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     private func spawnClassificationFruit() {
         guard let question = currentQuestion else { return }
+        if starPlanner.shouldDropStar(randomUnit: Double.random(in: 0...1)) {
+            classificationFruit = nil
+            classificationStarAvailable = true
+            return
+        }
+        classificationStarAvailable = false
         let classification = spawnPlanner.nextClassification(
             goodProbability: levelConfig.goodProbability,
             randomUnit: Double.random(in: 0...1)

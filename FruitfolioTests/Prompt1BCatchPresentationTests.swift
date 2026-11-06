@@ -77,4 +77,18 @@ final class Prompt1BCatchPresentationTests: XCTestCase {
         let valid = Prompt28CatchGeometry(playfield: CGSize(width: 390, height: 700))
         XCTAssertFalse(valid.crossedMouth(x: .nan, previousY: 0, currentY: 1, basketX: 0.5, objectSize: 30))
     }
+    func testClassificationSettlementUsesTheSameTransitWithinItsBasketCanvas() {
+        let size = CGSize(width: 150, height: 132)
+        for kind: Prompt28CatchTransit.Kind in [.star, .fruit(.pear, .good)] {
+            var transit = Prompt28CatchTransit(id: UUID(), kind: kind, relativeX: 0)
+            XCTAssertFalse(transit.advance(by: Prompt28CatchTransit.entryDuration))
+            let pose = Prompt28CatchGeometry.localPose(for: transit, basketSize: size, reducedMotion: false)
+            XCTAssertGreaterThanOrEqual(pose.center.x - pose.size.width / 2, 0)
+            XCTAssertLessThanOrEqual(pose.center.x + pose.size.width / 2, size.width)
+            XCTAssertGreaterThanOrEqual(pose.center.y - pose.size.height / 2, 0)
+            XCTAssertLessThanOrEqual(pose.center.y + pose.size.height / 2, size.height)
+            XCTAssertTrue(transit.advance(by: Prompt28CatchTransit.duration))
+        }
+    }
+
 }

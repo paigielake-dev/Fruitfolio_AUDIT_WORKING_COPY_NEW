@@ -17,7 +17,9 @@ nonisolated struct Prompt28CatchGeometry: Sendable {
                       y: playfield.height * 0.89 + 66 - size.height, width: size.width, height: size.height)
     }
     func mouth(basketX: Double) -> CGRect {
-        let art = artRect(basketX: basketX)
+        Self.mouth(in: artRect(basketX: basketX))
+    }
+    private static func mouth(in art: CGRect) -> CGRect {
         return CGRect(x: art.minX + art.width * 0.18, y: art.minY + art.height * 0.48,
                       width: art.width * 0.60, height: art.height * 0.18)
     }
@@ -29,13 +31,24 @@ nonisolated struct Prompt28CatchGeometry: Sendable {
             && playfield.width * x >= opening.minX && playfield.width * x <= opening.maxX
     }
     func pose(for transit: Prompt28CatchTransit, basketX: Double, reducedMotion: Bool) -> (center: CGPoint, size: CGSize) {
+        Self.pose(for: transit, opening: mouth(basketX: basketX),
+                  originalSize: transit.kind == .star ? starSize : fruitSize,
+                  offsetWidth: playfield.width, reducedMotion: reducedMotion)
+    }
+    static func localPose(for transit: Prompt28CatchTransit, basketSize: CGSize, reducedMotion: Bool) -> (center: CGPoint, size: CGSize) {
+        let width = basketSize.width * 0.90
+        let height = width * 380 / 398
+        let art = CGRect(x: (basketSize.width - width) / 2, y: basketSize.height - height, width: width, height: height)
+        return pose(for: transit, opening: mouth(in: art), originalSize: transit.kind == .star ? 52 : 66,
+                    offsetWidth: basketSize.width, reducedMotion: reducedMotion)
+    }
+    private static func pose(for transit: Prompt28CatchTransit, opening: CGRect, originalSize: CGFloat,
+                             offsetWidth: CGFloat, reducedMotion: Bool) -> (center: CGPoint, size: CGSize) {
         let progress = reducedMotion ? 1 : transit.progress
-        let opening = mouth(basketX: basketX)
-        let originalSize = transit.kind == .star ? starSize : fruitSize
         let width = originalSize * (1 - 0.42 * progress)
         let height = originalSize * (1 - 0.62 * progress)
         let allowableOffset = max(0, opening.width / 2 - originalSize * 0.58 / 2)
-        let originalOffset = CGFloat(transit.relativeX) * playfield.width
+        let originalOffset = CGFloat(transit.relativeX) * offsetWidth
         let finalOffset = min(max(originalOffset, -allowableOffset), allowableOffset)
         let offset = originalOffset + (finalOffset - originalOffset) * progress
         let start = opening.minY - originalSize / 2

@@ -1227,13 +1227,28 @@ struct Prompt28FruitBasketView: View {
                     }
                 }
                 .frame(maxWidth: 292)
+            } else if viewModel.classificationStarAvailable {
+                FruitfolioImage(id: .fruitbasket_star).frame(width: 52, height: 52)
+                    .accessibilityHidden(true)
+                Text("a standalone star — catch it to bank one star pass. it does not fill the fruit basket.")
+                    .prompt28Text(.body).multilineTextAlignment(.center)
+                Prompt28WatercolorButton(title: "catch star", accent: .paleYellow) {
+                    viewModel.classificationStarDecision(accept: true)
+                }
+                .accessibilityIdentifier("fruitBasket.classification.catchStar")
+                Prompt28WatercolorButton(title: "let star pass", accent: .mint) {
+                    viewModel.classificationStarDecision(accept: false)
+                }
+            } else if !viewModel.catchTransits.isEmpty {
+                Text("settling in the basket…").prompt28Text(.body)
             }
 
             Spacer()
 
             Prompt28BasketProgressView(
                 count: viewModel.basketCount,
-                fruitIDs: viewModel.collectedFruit
+                fruitIDs: viewModel.collectedFruit,
+                transits: viewModel.catchTransits
             )
             .frame(
                 width: 150,
@@ -1970,21 +1985,21 @@ private struct Prompt28BasketProgressView: View {
                                       y: artTop + artHeight * (row == 0 ? 0.57 : 0.51))
                             .accessibilityHidden(true)
                     }
-                    if geometry.isValid {
-                        ForEach(transits) { transit in
-                            let pose = geometry.pose(for: transit, basketX: basketX, reducedMotion: motionPreferences.reduceMotionActive)
-                            let asset: FruitfolioAssetID = {
-                                switch transit.kind {
-                                case .star: return .fruitbasket_star
-                                case .fruit(let fruit, _): return fruit.assetID
-                                }
-                            }()
-                            FruitfolioImage(id: asset)
-                                .frame(width: pose.size.width, height: pose.size.height)
-                                .position(x: pose.center.x - playfield.width * basketX + width / 2,
-                                          y: pose.center.y - playfield.height * 0.89 + height / 2)
-                                .accessibilityHidden(true)
-                        }
+                    ForEach(transits) { transit in
+                        let pose = geometry.isValid
+                            ? geometry.pose(for: transit, basketX: basketX, reducedMotion: motionPreferences.reduceMotionActive)
+                            : Prompt28CatchGeometry.localPose(for: transit, basketSize: CGSize(width: width, height: height), reducedMotion: motionPreferences.reduceMotionActive)
+                        let center = geometry.isValid
+                            ? CGPoint(x: pose.center.x - playfield.width * basketX + width / 2, y: pose.center.y - playfield.height * 0.89 + height / 2)
+                            : pose.center
+                        let asset: FruitfolioAssetID = {
+                            switch transit.kind {
+                            case .star: return .fruitbasket_star
+                            case .fruit(let fruit, _): return fruit.assetID
+                            }
+                        }()
+                        FruitfolioImage(id: asset).frame(width: pose.size.width, height: pose.size.height)
+                            .position(center).accessibilityHidden(true)
                     }
                 }
                 .frame(width: width, height: height)

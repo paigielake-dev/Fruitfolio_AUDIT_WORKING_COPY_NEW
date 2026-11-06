@@ -5,7 +5,7 @@ import XCTest
 
 @MainActor
 final class Prompt1BCatchViewModelTests: XCTestCase {
-    func testActualModelAwardsStarOnlyAfterEntryAndSettlementExactlyOnce() throws {
+    func testActualModelAwardsStarOnlyAfterEntryAndSettlementExactlyOnce() async throws {
         let name = "Fruitfolio.star-entry." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
         defer { defaults.removePersistentDomain(forName: name) }
@@ -30,7 +30,7 @@ final class Prompt1BCatchViewModelTests: XCTestCase {
         XCTAssertTrue(model.collectedFruit.isEmpty)
     }
 
-    func testActualModelPreservesWhichFruitWasCaughtAfterItsEntry() throws {
+    func testActualModelPreservesWhichFruitWasCaughtAfterItsEntry() async throws {
         let name = "Fruitfolio.fruit-entry." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
         defer { defaults.removePersistentDomain(forName: name) }
@@ -51,5 +51,45 @@ final class Prompt1BCatchViewModelTests: XCTestCase {
         model.advanceGameplayFrame(delta: .nan, now: Date())
         XCTAssertEqual(model.basketCount, 1)
     }
+    func testClassificationStarCatchIsDelayedAndDoubleSelectionCannotDuplicateAward() async throws {
+        let name = "Fruitfolio.classification-star." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.setControlMode(.classification)
+        model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        model.screen = .catchActive
+        model.classificationStarAvailable = true
+        model.classificationStarDecision(accept: true)
+        model.classificationStarDecision(accept: true)
+        XCTAssertEqual(model.catchTransits.count, 1)
+        XCTAssertEqual(model.session?.availableStarPasses, 0)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        XCTAssertEqual(model.basketCount, 0)
+        XCTAssertTrue(model.activeFruit.isEmpty)
+        XCTAssertTrue(model.activeStars.isEmpty)
+        model.pause()
+    }
+
+    func testClassificationStarCanPassWithoutPenaltyOrFruitCount() async throws {
+        let name = "Fruitfolio.classification-skip." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.setControlMode(.classification)
+        model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        model.screen = .catchActive
+        model.classificationStarAvailable = true
+        model.classificationStarDecision(accept: false)
+        XCTAssertFalse(model.classificationStarAvailable)
+        XCTAssertTrue(model.catchTransits.isEmpty)
+        XCTAssertEqual(model.session?.availableStarPasses, 0)
+        XCTAssertEqual(model.basketCount, 0)
+        XCTAssertEqual(model.screen, .catchActive)
+    }
+
 }
 #endif
