@@ -191,6 +191,53 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameTutorialBackgroundKeepsPageAndEscapeHandlerClosesOnePresentation() {
+        for language in ["en", "ar"] {
+        for muted in [false, true] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "tour",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-fruitfolioAudioDiagnostics", "-fruitfolioGameQAEscape",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let next = app.buttons["fruitBasket.tour.next"]
+            XCTAssertTrue(next.waitForExistence(timeout: 5))
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            for _ in 0..<2 {
+                for _ in 0..<24 { if next.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(next.isHittable)
+                next.tap()
+            }
+            let counter = app.descendants(matching: .any).matching(identifier: "fruitBasket.tour.step").firstMatch
+            let beforeBackground = counter.value as? String
+            XCTAssertNotNil(beforeBackground)
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 0")
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(next.waitForExistence(timeout: 5))
+            XCTAssertEqual(counter.value as? String, beforeBackground)
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 0")
+            let escape = app.buttons["gameQA.tourEscape"]
+            for _ in 0..<24 { if escape.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(escape.isHittable)
+            escape.tap() // Invokes the same real handler as the accessibility escape action.
+            XCTAssertFalse(next.exists)
+            XCTAssertEqual(app.staticTexts["gameQA.screen"].label, "game screen: howItWorks")
+            XCTAssertEqual(app.staticTexts["gameQA.tourCompleted"].label, "tour completed: true")
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 1")
+            captureGame(app, name: "game-tour-background-language-\(language)-muted-\(muted)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGameTutorialKeepsTenStepsAndRealCompletionAcrossLocaleFallback() throws {
         for skip in [false, true] {
         for language in ["en", "ar"] {

@@ -52,6 +52,18 @@ final class AudioManager: ObservableObject {
         configureAudioSession()
         observeAudioLifecycle()
 
+        #if DEBUG
+        let args = ProcessInfo.processInfo.arguments
+        let gameDiagnostics = args.contains("-fruitfolioGameQA") && args.contains("-fruitfolioAudioDiagnostics")
+        if gameDiagnostics {
+            // The QA root injects its disposable authority. Capture first-run
+            // popup requests before child onAppear/task callbacks can fire.
+            settings?.globallyMuted = args.contains("-fruitfolioAudioMuted")
+            settings?.soundEffectsEnabled = true
+            settings?.soundEffectsVolume = 0.5
+            debugRecordInteractions(true)
+        }
+        #endif
         if let settings {
             attach(settings: settings)
         }

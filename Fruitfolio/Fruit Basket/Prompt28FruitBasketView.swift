@@ -61,6 +61,7 @@ struct Prompt28FruitBasketView: View {
     @State private var returnExitFocus = false
     private enum UsernameFocus: Hashable { case back, input, error }
     @AccessibilityFocusState private var usernameFocus: UsernameFocus?
+    @AccessibilityFocusState private var tourHeadingFocused: Bool
     @FocusState private var usernameKeyboardFocused: Bool
     private var usernameLabelKey: FruitfolioControlTranslationState.Key {
         .init(source: "public username", language: settings.language)
@@ -162,7 +163,7 @@ struct Prompt28FruitBasketView: View {
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
-            if !store.isReadOnly && !store.tourState.hasCompletedTour {
+            if !store.isReadOnly && !store.tourState.hasCompletedTour && !showTour {
                 showTour = true
                 tourStep = 0
             }
@@ -204,10 +205,15 @@ struct Prompt28FruitBasketView: View {
             viewModel.pause()
             audioManager.play(.popupOpen)
         }
+        .onChange(of: showTour) { _, visible in
+            audioManager.play(visible ? .popupOpen : .popupClose)
+            if !visible { tourHeadingFocused = false }
+        }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
+                tourHeadingFocused = false
                 viewModel.sceneBecameInactive()
-            }
+            } else if showTour { tourHeadingFocused = true }
         }
         .sheet(isPresented: $showingSaveDestination) {
             if let pending = viewModel.savePendingContent() {
@@ -2129,16 +2135,16 @@ struct Prompt28FruitBasketView: View {
                         font: Prompt28TextRole.metadata.font)
                         .accessibilityIdentifier("fruitBasket.tour.step")
 
-                    FruitfolioTranslatedText(source: tourPage.title,
-                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
-                        .accessibilityAddTraits(.isHeader)
-                        .accessibilityIdentifier("fruitBasket.tour.title")
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(
-                            horizontal: false,
-                            vertical: true
-                        )
+                    FruitfolioTranslatedContent(source: tourPage.title) { display, _ in
+                        FruitfolioSemanticText(markdown: display,
+                            baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityFocused($tourHeadingFocused)
+                            .accessibilityIdentifier("fruitBasket.tour.title")
+                    }
 
                     FruitfolioTranslatedText(source: tourPage.body,
                         font: .custom("Chalkboard SE", size: 13, relativeTo: .body),
@@ -2172,6 +2178,7 @@ struct Prompt28FruitBasketView: View {
                             : "next ♡",
                         accent: .paleYellow
                     ) {
+                        guard showTour else { return }
                         if tourStep >= Prompt28TourCatalog.pages.count - 1 {
                             store.completeTour()
                             showTour = false
@@ -2185,17 +2192,43 @@ struct Prompt28FruitBasketView: View {
                     .accessibilityIdentifier("fruitBasket.tour.next")
 
                     if tourStep == 0 {
-                        FruitfolioControlPillButton(label: "skip tour") {
-                            viewModel.screen = .howItWorks
-                            store.skipTourAfterRules()
-                            showTour = false
-                        }
+                        FruitfolioControlPillButton(label: "skip tour", action: skipGameTour)
                         .controlSize(.small)
                         .accessibilityIdentifier("fruitBasket.tour.skip")
                     }
+                    #if DEBUG
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+                        Text("tour completed: \(store.tourState.hasCompletedTour)")
+                            .font(.caption2).accessibilityIdentifier("gameQA.tourCompleted")
+                        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQAEscape") {
+                            FruitfolioControlPillButton(label: "QA accessibility escape", action: skipGameTour)
+                                .controlSize(.small).accessibilityIdentifier("gameQA.tourEscape")
+                        }
+                        if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                            FruitfolioInteractionSoundDiagnostics()
+                        }
+                    }
+                    #endif
                 }
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .accessibilityIdentifier("fruitBasket.tour")
+        .accessibilityAction(.escape) { skipGameTour() }
+        .task(id: tourStep) {
+            tourHeadingFocused = false
+            await Task.yield()
+            guard showTour, !Task.isCancelled else { return }
+            tourHeadingFocused = true
+        }
+    }
+
+    private func skipGameTour() {
+        guard showTour else { return }
+        viewModel.screen = .howItWorks
+        store.skipTourAfterRules()
+        showTour = false
     }
 
     private var tourPage: Prompt28TourPage { Prompt28TourCatalog.pages[tourStep] }

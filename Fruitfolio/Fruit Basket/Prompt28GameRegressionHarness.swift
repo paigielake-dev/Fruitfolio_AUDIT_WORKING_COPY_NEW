@@ -139,6 +139,7 @@ private struct Prompt28GameDiagnosticReadback: View {
     @ObservedObject var store: Prompt28FruitBasketStore
     let backRequests: Int
     var body: some View {
+        if store.tourState.hasCompletedTour {
         VStack(alignment: .leading) {
             Text("back requests: \(backRequests)")
                 .accessibilityIdentifier("gameQA.backRequests")
@@ -155,6 +156,7 @@ private struct Prompt28GameDiagnosticReadback: View {
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
                 FruitfolioInteractionSoundDiagnostics()
             }
+        }
         }
     }
 }

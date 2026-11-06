@@ -1,0 +1,9 @@
+# Standalone tutorial modal lifecycle
+
+The existing tutorial now declares the same modal accessibility scope used by shared popup hosts, focuses the actual semantic heading after page layout and on foreground return, and supports accessibility escape through the existing skip-to-rules action. A guard prevents repeated final/skip actions after closure. Opening/closing cues follow logical showTour transitions; step/language/foreground changes do not request additional open/close sounds. Reappearance no longer resets an already displayed tutorial's current step. Per-page process-death restoration is not claimed.
+
+Original artwork, measured taped-white layout, blur and domain completion writes remain. The actual translated heading is focused, keeping original-text controls separate. QA-only completion/audio readback sits inside the active tutorial instead of outside its modal scope. Other game fixtures retain their observed readback after tutorial completion.
+
+DEBUG game audio diagnostics initialize early enough to capture the first onAppear presentation, applying only the injected disposable QA sound preferences. Production recording and preference behavior are unchanged. Eight new Apple launches combine English/Arabic fallback, mute and Reduce Motion at accessibility XXXL. They advance to page three, background/reactivate, require the same counter and one opening request, then invoke the real shared escape handler and require one closing request and actual rules/completion state. The QA callback is not an OS VoiceOver escape gesture.
+
+Apple SDK typechecking, focus/rotor behavior, real escape dispatch, background UIKit behavior, physical audibility/mute/animation and screenshots are NOT_RUN. Logical cue/source checks and Linux suites do not establish those runtime behaviors. Source copy, source records and all saved health/user data remain unchanged. Feasible results are in the batch log.

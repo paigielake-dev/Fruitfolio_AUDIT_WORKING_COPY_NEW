@@ -2103,3 +2103,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 730, "native_CPU_XCTest": 752, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 731, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 710, "tutorial_source_pairs_preserved": 10}.
 - Next action: Give standalone Fruit Basket tutorial modal scope an escape-to-existing-skip action, heading focus and once-per-logical-open/close cues; preserve current step across reappearance. Exercise actual cue/background/escape handler through private QA without claiming OS VoiceOver gesture verification.
 - Commit: containing commit for batch Fruit-Basket-tutorial-copy-localization-and-ten-page-catalog.
+
+## Tutorial-modal-focus-escape-cues-and-reappearance
+
+- Parent checkpoint: 1435d1db8f1ced41e1a08bcc2312e82e8305467a.
+- Source-order requirements: [6, 9, 11, 18, 23, 26, 27, 42, 63, 443, 446, 447, 468, 471, 472, 473, 476, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Core/Assets/AudioManager.swift.
+- Standalone tutorial gains modal scope, real semantic-heading focus and guarded escape-to-existing-skip handler. Logical show/hide owns opening/closing cues; reappearance keeps current step. Private QA diagnostics capture initial presentation before onAppear and stay in modal scope. Eight Apple background/handler/cue cases added but unrun, with QA handler explicitly distinct from OS VoiceOver gesture proof.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 730, "native_CPU_XCTest": 752, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 731, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0}.
+- Next action: Apply the same modal scope/heading focus and logical cue ownership to the existing storm note; keep pause/resume and guarded dismissal intact. Use actual overlay visibility for private diagnostic placement and add close/acknowledge/escape/background regression cases without OS-gesture or physical-sound claims.
+- Commit: containing commit for batch Tutorial-modal-focus-escape-cues-and-reappearance.
