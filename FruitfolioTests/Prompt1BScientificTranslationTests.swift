@@ -63,6 +63,19 @@ private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRunt
 }
 
 final class Prompt1BTranslationPipelineTests: XCTestCase {
+    func testNewFounderSelectorsForwardDistinctModelTagsWithoutClaimingSupport() async throws {
+        let fixture = Prompt1BIdentityTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: fixture)
+        let languages: [FruitfolioLanguage] = [.thai, .mongolian, .indonesian, .russian, .polish,
+            .dutch, .swedish, .ukrainian, .turkish, .kurdishKurmanji, .kurdishSorani, .hebrew]
+        for language in languages {
+            _ = try await service.translate("source text", language: language)
+        }
+        let tags = await fixture.requestedTags()
+        XCTAssertEqual(tags, ["th", "mn", "id", "ru", "pl", "nl", "sv", "uk", "tr", "ku", "ckb", "he"])
+        // This records the real service's requests, not real tokenizer support or output.
+    }
+
     func testServiceForwardsExplicitResourceReleaseWithoutChangingSourceText() async throws {
         let fixture = Prompt1BIdentityTranslationFixture()
         let service = FruitfolioTranslationService(runtime: fixture)

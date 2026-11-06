@@ -33,8 +33,8 @@ final class Prompt1BLanguagePreferencesTests: XCTestCase {
         XCTAssertFalse(FruitfolioLanguagePreferences.needsReview(in: a))
         XCTAssertEqual(FruitfolioLanguagePreferences.load(from: b), .japanese)
     }
-    func testOnlyArabicPersianAndUrduSelectRightToLeftLayout() {
-        XCTAssertEqual(Set(FruitfolioLanguage.allCases.filter(\.isRightToLeft)), [.arabic, .persian, .urdu])
+    func testScriptSpecificLanguagesSelectRightToLeftLayout() {
+        XCTAssertEqual(Set(FruitfolioLanguage.allCases.filter(\.isRightToLeft)), [.arabic, .persian, .urdu, .hebrew, .kurdishSorani])
         XCTAssertEqual(Set(FruitfolioLanguage.allCases.map(\.rawValue)).count, FruitfolioLanguage.allCases.count)
     }
     func testFounderSouthAmericanLanguagesAreIndividualSelectorsWithStableNativeLabels() {
@@ -55,6 +55,32 @@ final class Prompt1BLanguagePreferencesTests: XCTestCase {
         XCTAssertEqual(FruitfolioLanguagePreferences.load(from: defaults), .english)
         XCTAssertTrue(FruitfolioLanguagePreferences.needsReview(in: defaults))
         XCTAssertEqual(defaults.dictionary(forKey: FruitfolioLanguagePreferences.defaultsKey) as? [String: String], ["future": "record"])
+    }
+
+    func testExplicitFounderAsianEuropeanAndMiddleEasternLanguagesHaveDistinctPersistentSelectors() {
+        let expected: [FruitfolioLanguage: String] = [
+            .thai: "th",
+            .mongolian: "mn",
+            .indonesian: "id",
+            .russian: "ru",
+            .polish: "pl",
+            .dutch: "nl",
+            .swedish: "sv",
+            .ukrainian: "uk",
+            .turkish: "tr",
+            .kurdishKurmanji: "ku",
+            .kurdishSorani: "ckb",
+            .hebrew: "he",
+        ]
+        for (language, tag) in expected {
+            XCTAssertEqual(language.rawValue, tag)
+            XCTAssertTrue(FruitfolioLanguage.allCases.contains(language))
+            XCTAssertNotEqual(language.nativeDisplayName, tag)
+        }
+        XCTAssertFalse(FruitfolioLanguage.kurdishKurmanji.isRightToLeft)
+        XCTAssertTrue(FruitfolioLanguage.kurdishSorani.isRightToLeft)
+        XCTAssertTrue(FruitfolioLanguage.hebrew.isRightToLeft)
+        // Listing a language does not assert installed MADLAD support or quality.
     }
 
 }
