@@ -17,11 +17,12 @@ explicitly identify SYNTHETIC UNTRAINED / NOT MADLAD. The runtime's production
 manifest, actual streaming digest, T5 metadata, actual loader, context, exact
 language-token round trip and inference code run without validation bypasses.
 
-Five native-only XCTest methods verify:
+Six native-only XCTest methods verify:
 
 - Both graph variants successfully encode/decode, then reject immediate EOS with
   empty output. Explicit release is repeatable, and a later request reloads and
   executes again.
+- A hard-wired normal token followed by EOS exercises the nonempty return path. The actual translation service rejects its output when it drops protected laboratory values and citation markers. This is synthetic output plumbing, not a translation.
 - Unsupported tags and over-budget input execute no encoder/decoder call.
 - A deterministic repeating-token graph reaches all eight decoder steps, rejects
   the partial result, and repeats correctly on the retained context. Cancellation
@@ -44,3 +45,5 @@ still runs. Apple framework linking, Metal, iPhone offline execution, actual 3B
 MADLAD compatibility, language quality and scientific meaning remain NOT_RUN.
 
 Final complete verification: 680 portable XCTest +21 Swift Testing; 691 native CPU XCTest +21 Swift Testing; 42 workflow checks; 298 Swift files parsed. Actual C-header API typecheck passed. Apple SDK typechecking/linking/UI/device behavior remains NOT_RUN.
+
+Nonempty-output follow-up: all 692 native XCTest +21 Swift Testing cases pass, with 42 workflow checks and 298 parsed Swift files. The unchanged portable Foundation branches retain the preceding complete 680 +21 result. No official model/language/device gate is closed.

@@ -1751,3 +1751,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 680, "native_CPU_XCTest": 691, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 298, "actual_C_API_typecheck": "PASS; not Apple ABI/link", "native_T5_contract_methods": 5, "official_MADLAD": "BLOCKED; synthetic untrained T5 only, no language or semantic approval", "Apple_UI_device": "NOT_RUN"}.
 - Next action: Add deterministic nonempty synthetic T5 token-output contract and execute scientific protection through actual native runtime/service; no claim of linguistic translation. Then continue next independent source-order shared-modal requirements.
 - Commit: containing commit for batch Actual-native-synthetic-T5-encoder-decoder-contract.
+
+## Actual-native-T5-output-scientific-envelope-contract
+
+- Parent checkpoint: 25475102288a31542e68bef099d521c9641d205d.
+- Source-order requirements: [422, 426, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift, Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift.
+- A deterministic untrained T5 token followed by EOS executes the actual native nonempty return path. The actual translation service rejects this output when protected lab values/citation markers are absent. Six native methods pass; this is output/protection plumbing, not learned translation or semantic/clinical equivalence.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 680, "portable_status": "unchanged production Foundation branches; complete suite passed immediately preceding batch", "native_CPU_XCTest": 692, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 298, "native_T5_contract_methods": 6, "official_MADLAD": "BLOCKED; no linguistic/clinical acceptance from synthetic untrained tensors", "Apple_UI_device": "NOT_RUN"}.
+- Next action: Complete local data-management popup modal identity, entry/return accessibility focus, Escape and one-opening-cue lifecycle using existing measured paper; preserve existing background blur/hit-testing and export behavior.
+- Commit: containing commit for batch Actual-native-T5-output-scientific-envelope-contract.

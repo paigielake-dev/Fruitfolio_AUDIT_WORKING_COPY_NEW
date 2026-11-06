@@ -44,6 +44,27 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         await runtime.releaseResources()
     }
 
+    func testActualNativeTokenOutputAndScientificEnvelopeRejection() async throws {
+        let directory = try SyntheticT5Contract.write(gated: true, oneTokenThenEOS: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        // A hard-wired token followed by EOS tests output plumbing, NOT language.
+        let output = try await runtime.translate("fixture", targetTag: "de")
+        XCTAssertEqual(output, "fixture")
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let source = "LH 5.0 mIU/mL; doi:10.1000/fixture [1]"
+        do {
+            _ = try await service.translateForDisplay(source, language: .german, preferCatalog: false)
+            XCTFail("Native output that drops protected scientific/citation markers must be rejected")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+        let actual = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(actual.encoderCalls, 2)
+        XCTAssertEqual(actual.decoderCalls, 4)
+        await service.releaseResources()
+        let released = await runtime.debugExecutionStatistics()
+        XCTAssertFalse(released.resourcesLoaded)
+    }
+
     func testActualDecoderBudgetRejectsPartialOutputAndClearsSequenceForRetry() async throws {
         let directory = try SyntheticT5Contract.write(gated: true, repeatToken: true)
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -117,12 +138,12 @@ private enum SyntheticT5Contract {
         for value in values { data += integer(UInt64(value.bitPattern), bytes: 4) }
         return data
     }
-    static func write(gated: Bool, repeatToken: Bool = false) throws -> URL {
+    static func write(gated: Bool, repeatToken: Bool = false, oneTokenThenEOS: Bool = false) throws -> URL {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("fruitfolio-SYNTHETIC-T5-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         do {
             let url = directory.appendingPathComponent("SYNTHETIC-UNTRAINED-NOT-MADLAD.gguf")
-            try model(gated: gated, repeatToken: repeatToken).write(to: url)
+            try model(gated: gated, repeatToken: repeatToken, oneTokenThenEOS: oneTokenThenEOS).write(to: url)
             let file = try FileHandle(forReadingFrom: url)
             defer { try? file.close() }
             let hash = try FruitfolioModelChecksum.sha256(file: file)
@@ -134,7 +155,7 @@ private enum SyntheticT5Contract {
             return directory
         } catch { try? FileManager.default.removeItem(at: directory); throw error }
     }
-    static func model(gated: Bool, repeatToken: Bool) -> Data {
+    static func model(gated: Bool, repeatToken: Bool, oneTokenThenEOS: Bool) -> Data {
         var metadata: [(String, UInt64, Data)] = []
         func text(_ key: String, _ value: String) { metadata.append((key, 8, string(value))) }
         func number(_ key: String, _ value: UInt64) { metadata.append((key, 4, integer(value, bytes: 4))) }
@@ -168,15 +189,18 @@ private enum SyntheticT5Contract {
             metadata.append(("tokenizer.ggml." + key, 7, Data([value ? 1 : 0])))
         }
         var tensors: [(String, [Int], [Float])] = []
-        func tensor(_ name: String, _ dimensions: [Int], ones: Range<Int>? = nil) {
+        func tensor(_ name: String, _ dimensions: [Int], ones: Range<Int>? = nil, negatives: Range<Int>? = nil) {
             var values = [Float](repeating: 0, count: dimensions.reduce(1, *))
             if let ones { for index in ones { values[index] = 1 } }
+            if let negatives { for index in negatives { values[index] = -1 } }
             tensors.append((name + ".weight", dimensions, values))
         }
-        tensor("token_embd", [32, tokens.count], ones: repeatToken ? 0..<(32 * tokens.count) : 0..<32)
+        tensor("token_embd", [32, tokens.count], ones: repeatToken ? 0..<(32 * tokens.count) : 0..<32,
+               negatives: oneTokenThenEOS ? 192..<224 : nil)
         // Either EOS or the same normal token wins deterministically. Neither
         // configuration contains learned linguistic knowledge or translations.
-        tensor("output", [32, tokens.count], ones: repeatToken ? 192..<224 : 32..<64)
+        tensor("output", [32, tokens.count], ones: (repeatToken || oneTokenThenEOS) ? 192..<224 : 32..<64,
+               negatives: oneTokenThenEOS ? 32..<64 : nil)
         for side in ["enc", "dec"] {
             tensor(side + ".output_norm", [32], ones: 0..<32)
             let prefix = side + ".blk.0."
