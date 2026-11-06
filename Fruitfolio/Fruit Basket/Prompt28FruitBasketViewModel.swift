@@ -1,30 +1,95 @@
+#if canImport(Combine)
 import Combine
+#endif
 import Foundation
 
 @MainActor
-final class Prompt28FruitBasketViewModel: ObservableObject {
-    @Published var screen: Prompt28ScreenState = .home
-    @Published var rawTopic = ""
-    @Published var difficulty: Prompt28EducationalDifficulty
-    @Published var currentQuestion: Prompt28Question?
-    @Published var selectedAnswerID: String?
-    @Published var session: Prompt28Session?
-    @Published var activeFruit: [Prompt28FallingFruit] = []
-    @Published var activeStars: [Prompt28FallingStar] = []
-    @Published private(set) var catchTransits: [Prompt28CatchTransit] = []
-    @Published private(set) var roundLedger = Prompt28RoundLedger()
-    @Published private(set) var roundResult: Prompt28RoundResult?
+final class Prompt28FruitBasketViewModel {
+    #if canImport(Combine)
+    @Published
+    #endif
+    var screen: Prompt28ScreenState = .home
+    #if canImport(Combine)
+    @Published
+    #endif
+    var rawTopic = ""
+    #if canImport(Combine)
+    @Published
+    #endif
+    var difficulty: Prompt28EducationalDifficulty
+    #if canImport(Combine)
+    @Published
+    #endif
+    var currentQuestion: Prompt28Question?
+    #if canImport(Combine)
+    @Published
+    #endif
+    var selectedAnswerID: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    var session: Prompt28Session?
+    #if canImport(Combine)
+    @Published
+    #endif
+    var activeFruit: [Prompt28FallingFruit] = []
+    #if canImport(Combine)
+    @Published
+    #endif
+    var activeStars: [Prompt28FallingStar] = []
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var catchTransits: [Prompt28CatchTransit] = []
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var roundLedger = Prompt28RoundLedger()
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var roundResult: Prompt28RoundResult?
     var collectedFruit: [Prompt28FruitID] { roundLedger.caughtFruit }
-    @Published var basketX: Double = 0.5
-    @Published var lastBadFruit: Prompt28FruitID?
-    @Published var message: String?
-    @Published private(set) var vineContactSequence = 0
-    @Published private(set) var basketResistance = 0.0
-    @Published private(set) var basketIsInPuddle = false
-    @Published var isPaused = false
-    @Published var classificationStarAvailable = false
-    @Published var classificationFruit: Prompt28FallingFruit?
-    @Published var didSetPersonalBestThisRound = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var basketX: Double = 0.5
+    #if canImport(Combine)
+    @Published
+    #endif
+    var lastBadFruit: Prompt28FruitID?
+    #if canImport(Combine)
+    @Published
+    #endif
+    var message: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var vineContactSequence = 0
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var basketResistance = 0.0
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var basketIsInPuddle = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var isPaused = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var classificationStarAvailable = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var classificationFruit: Prompt28FallingFruit?
+    #if canImport(Combine)
+    @Published
+    #endif
+    var didSetPersonalBestThisRound = false
 
     let store: Prompt28FruitBasketStore
     let engine: Prompt28FruitBasketEngine
@@ -690,3 +755,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         Double.random(in: range)
     }
 }
+
+#if canImport(Combine)
+extension Prompt28FruitBasketViewModel: ObservableObject {}
+#endif

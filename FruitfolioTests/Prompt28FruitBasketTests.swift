@@ -48,7 +48,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.leaveScreen()
     }
 
-    func testCanonicalRoundRulesNeverScaleTarget() {
+    func testCanonicalRoundRulesNeverScaleTarget() async {
         XCTAssertEqual(Prompt28FruitBasketEngine.goodFruitTarget, 10)
         XCTAssertEqual(Prompt28RoundRules.canonical.goodFruitTarget, 10)
         for level in 1...Prompt28FruitBasketEngine.maxGameLevel {
@@ -57,17 +57,17 @@ final class Prompt28FruitBasketTests: XCTestCase {
         }
     }
 
-    func testGameLevelCeilingIsEight() {
+    func testGameLevelCeilingIsEight() async {
         XCTAssertEqual(engine.clampedLevel(0), 1)
         XCTAssertEqual(engine.clampedLevel(9), 8)
         XCTAssertEqual(engine.config(for: 99).level, 8)
     }
 
-    func testTopicNormalizationIsStable() {
+    func testTopicNormalizationIsStable() async {
         XCTAssertEqual(engine.normalizeTopic("  PCOS   and Insulin Resistance  "), "pcos and insulin resistance")
     }
 
-    func testGoodCatchAddsExactlyTenPointsAndOneProgress() {
+    func testGoodCatchAddsExactlyTenPointsAndOneProgress() async {
         var session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .hard, startingLevel: 1)
         let outcome = engine.registerGoodCatch(session: &session)
         XCTAssertEqual(outcome, .active)
@@ -76,7 +76,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(session.fruitCaught, 1)
     }
 
-    func testTenthGoodCatchCompletesRound() {
+    func testTenthGoodCatchCompletesRound() async {
         var session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .easy, startingLevel: 8)
         for _ in 0..<9 { XCTAssertEqual(engine.registerGoodCatch(session: &session), .active) }
         XCTAssertEqual(engine.registerGoodCatch(session: &session), .success)
@@ -84,7 +84,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(session.score, 100)
     }
 
-    func testMissingGoodFruitHasNoPenalty() {
+    func testMissingGoodFruitHasNoPenalty() async {
         var session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .medium, startingLevel: 4)
         _ = engine.registerGoodCatch(session: &session)
         let before = session
@@ -94,19 +94,19 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(session.currentStreak, before.currentStreak)
     }
 
-    func testMissingBadFruitHasNoPenalty() {
+    func testMissingBadFruitHasNoPenalty() async {
         var session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .medium, startingLevel: 4)
         let before = session
         XCTAssertEqual(engine.registerBadMiss(session: &session), .active)
         XCTAssertEqual(session, before)
     }
 
-    func testBadCatchWithoutStarPassEndsRound() {
+    func testBadCatchWithoutStarPassEndsRound() async {
         var session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .hard, startingLevel: 7)
         XCTAssertEqual(engine.registerBadCatch(.lemon, session: &session), .unsuccessful(badFruit: .lemon))
     }
 
-    func testLifetimeStarsPersistAcrossEncoding() throws {
+    func testLifetimeStarsPersistAcrossEncoding() async throws {
         let original = Prompt28TopicProgress(
             normalizedTopicID: "pcos",
             totalStarsEarned: 7
@@ -119,7 +119,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(restored.normalizedTopicID, "pcos")
     }
 
-    func testLegacyProgressDefaultsLifetimeStarsToZero() throws {
+    func testLegacyProgressDefaultsLifetimeStarsToZero() async throws {
         let original = Prompt28TopicProgress(
             normalizedTopicID: "endometriosis",
             totalFruitCaught: 45,
@@ -144,7 +144,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
     }
 
     @MainActor
-    func testLifetimeStarsSurviveProgressStoreUpdates() {
+    func testLifetimeStarsSurviveProgressStoreUpdates() async {
         let suite = "Prompt28Stars.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -165,7 +165,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(store.progress(for: "pcos")?.totalStarsEarned, 1)
     }
 
-    func testLeaderboardTotalsAggregateAllTopics() {
+    func testLeaderboardTotalsAggregateAllTopics() async {
         let first = Prompt28TopicProgress(
             normalizedTopicID: "topic-a", highestGameLevelReached: 4,
             totalFruitCaught: 20, totalStarsEarned: 5, totalSuccessfulRounds: 2
@@ -181,7 +181,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(totals.highestLevel, 7)
     }
 
-    func testLeaderboardTotalsEmptyProgress() {
+    func testLeaderboardTotalsEmptyProgress() async {
         let totals = Prompt28LeaderboardTotals(progress: [:])
         XCTAssertEqual(totals.fruitCollected, 0)
         XCTAssertEqual(totals.starsEarned, 0)
@@ -189,7 +189,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(totals.highestLevel, 0)
     }
 
-    func testStandaloneStarsBankWithoutLimitAndProtectBadCatch() {
+    func testStandaloneStarsBankWithoutLimitAndProtectBadCatch() async {
         var session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .hard, startingLevel: 7)
         for _ in 0..<3 { XCTAssertEqual(engine.registerStarCatch(session: &session), .active) }
         XCTAssertEqual(session.availableStarPasses, 3)
@@ -199,26 +199,26 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(session.goodFruitCaughtThisRound, 0)
     }
 
-    func testEducationalDifficultyDoesNotChangePhysicsConfig() {
+    func testEducationalDifficultyDoesNotChangePhysicsConfig() async {
         let easy = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .easy, startingLevel: 7)
         let hard = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .hard, startingLevel: 7)
         XCTAssertEqual(engine.config(for: easy.currentGameLevel), engine.config(for: hard.currentGameLevel))
     }
 
-    func testNewSessionKeepsTopicDifficultyAndGameLevelIndependent() {
+    func testNewSessionKeepsTopicDifficultyAndGameLevelIndependent() async {
         let session = engine.newSession(topic: "endometriosis", normalizedTopic: "endometriosis", difficulty: .hard, startingLevel: 1)
         XCTAssertEqual(session.educationalDifficulty, .hard)
         XCTAssertEqual(session.currentGameLevel, 1)
     }
 
-    func testSuccessfulRoundProgressionPlateaus() {
+    func testSuccessfulRoundProgressionPlateaus() async {
         XCTAssertEqual(engine.levelAfterSuccessfulRounds(0), 1)
         XCTAssertEqual(engine.levelAfterSuccessfulRounds(2), 2)
         XCTAssertEqual(engine.levelAfterSuccessfulRounds(20), 8)
         XCTAssertEqual(engine.levelAfterSuccessfulRounds(200), 8)
     }
 
-    func testSpawnPlannerNeverCreatesMoreThanTwoBadInARow() {
+    func testSpawnPlannerNeverCreatesMoreThanTwoBadInARow() async {
         var planner = Prompt28SpawnPlanner()
         let results = (0..<12).map { _ in planner.nextClassification(goodProbability: 0, randomUnit: 1) }
         var run = 0
@@ -229,7 +229,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertLessThanOrEqual(maxRun, 2)
     }
 
-    func testQuestionRequiresSourcesAndDisjointFruitSets() {
+    func testQuestionRequiresSourcesAndDisjointFruitSets() async {
         let valid = fixtureQuestion()
         XCTAssertTrue(valid.isPlayable)
         let invalid = Prompt28Question(
@@ -245,7 +245,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
     }
 
     @MainActor
-    func testResetPreservesHistoricalProgress() {
+    func testResetPreservesHistoricalProgress() async {
         let suite = "Prompt28FruitBasketTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -260,7 +260,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
     }
 
     @MainActor
-    func testNewTopicStartsAtLevelOneWithoutMutatingOtherTopic() {
+    func testNewTopicStartsAtLevelOneWithoutMutatingOtherTopic() async {
         let suite = "Prompt28FruitBasketTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -271,13 +271,13 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(store.progress(for: "pcos")?.currentGameLevel, 7)
     }
 
-    func testAllTenFruitAssetsHaveCanonicalMappings() {
+    func testAllTenFruitAssetsHaveCanonicalMappings() async {
         XCTAssertEqual(Prompt28FruitID.allCases.count, 10)
         XCTAssertEqual(Set(Prompt28FruitID.allCases.map(\.assetID)).count, 10)
     }
 
     @MainActor
-    func testAllTwentyFourFruitBasketAssetsAreRegisteredForProductionRoutes() {
+    func testAllTwentyFourFruitBasketAssetsAreRegisteredForProductionRoutes() async {
         XCTAssertEqual(Prompt28AssetUsageRegistrar.allFruitBasketAssets.count, 24)
         XCTAssertEqual(Set(Prompt28AssetUsageRegistrar.allFruitBasketAssets).count, 24)
         Prompt28AssetUsageRegistrar.markProductionRoutes()
@@ -286,25 +286,29 @@ final class Prompt28FruitBasketTests: XCTestCase {
         }
     }
 
-    func testCollisionUsesNormalizedCoordinates() {
+    func testCollisionUsesNormalizedCoordinates() async {
         XCTAssertTrue(engine.collision(fruitX: 0.5, fruitY: 0.85, basketX: 0.5))
         XCTAssertFalse(engine.collision(fruitX: 0.1, fruitY: 0.85, basketX: 0.9))
         XCTAssertFalse(engine.collision(fruitX: 0.5, fruitY: 0.5, basketX: 0.5))
     }
 
-    func testWeatherStaysLevelDrivenNotEducationalDifficultyDriven() {
+    func testWeatherStaysLevelDrivenNotEducationalDifficultyDriven() async {
         XCTAssertEqual(engine.weather(level: 1, round: 3), .clear)
         XCTAssertEqual(engine.weather(level: 3, round: 2), .breezy)
         XCTAssertEqual(engine.weather(level: 6, round: 3), .softRain)
     }
 
 
-    func testObstaclePlanStaysLimitedAndLevelDriven() {
+    func testObstaclePlanStaysLimitedAndLevelDriven() async {
         XCTAssertTrue(engine.activeObstacles(level: 1, round: 1).isEmpty)
         XCTAssertEqual(engine.activeObstacles(level: 2, round: 1), [.vines])
 
         for level in 1...Prompt28FruitBasketEngine.maxGameLevel {
             for round in 1...12 {
+                if engine.weather(level: level, round: round) == .softRain {
+                    XCTAssertTrue(engine.activeObstacles(level: level, round: round).contains(.puddle))
+                    XCTAssertFalse(engine.activeObstacles(level: level, round: round).contains(.wind))
+                }
                 XCTAssertLessThanOrEqual(
                     engine.activeObstacles(level: level, round: round).count,
                     2,
@@ -314,19 +318,19 @@ final class Prompt28FruitBasketTests: XCTestCase {
         }
     }
 
-    func testWindDirectionIsPredictableByRound() {
+    func testWindDirectionIsPredictableByRound() async {
         XCTAssertEqual(engine.windDirection(round: 1), 1)
         XCTAssertEqual(engine.windDirection(round: 2), -1)
         XCTAssertEqual(engine.windDirection(round: 3), 1)
     }
 
-    func testVinesOnlyNarrowLaneAtHigherLevels() {
+    func testVinesOnlyNarrowLaneAtHigherLevels() async {
         XCTAssertEqual(engine.fruitLaneBounds(level: 1, round: 1), 0.08...0.92)
         XCTAssertEqual(engine.fruitLaneBounds(level: 2, round: 1), 0.09...0.91)
         XCTAssertEqual(engine.fruitLaneBounds(level: 5, round: 4), 0.12...0.88)
     }
 
-    func testLeaderboardUsernamePolicyProtectsBoardLayoutAndModeration() {
+    func testLeaderboardUsernamePolicyProtectsBoardLayoutAndModeration() async {
         XCTAssertTrue(Prompt28LeaderboardUsernamePolicy.isValid("fruit.friend_12"))
         XCTAssertFalse(Prompt28LeaderboardUsernamePolicy.isValid("ab"))
         XCTAssertFalse(Prompt28LeaderboardUsernamePolicy.isValid("abcdefghijklmnopq"))
@@ -339,7 +343,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
     }
 
     @MainActor
-    func testPuddleAddsMildInertiaWithoutTakingAwayBasketControl() {
+    func testPuddleAddsMildInertiaWithoutTakingAwayBasketControl() async throws {
         let suite = "Prompt28FruitBasketTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -347,7 +351,9 @@ final class Prompt28FruitBasketTests: XCTestCase {
         let viewModel = Prompt28FruitBasketViewModel(
             store: store,
             researchProvider: Prompt28UnavailableResearchProvider(),
-            engine: engine
+            engine: engine,
+            obstacleLibrary: try .load(url: ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+                ?? Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json"))
         )
         viewModel.session = Prompt28Session(
             rawTopicQuery: "demo",
@@ -357,9 +363,13 @@ final class Prompt28FruitBasketTests: XCTestCase {
             currentRound: 4
         )
         viewModel.screen = .catchActive
+        viewModel.updatePlayfield(size: CGSize(width: 390, height: 620))
         viewModel.basketX = 0.5
         viewModel.moveBasket(to: 0.9)
-
+        XCTAssertEqual(viewModel.basketX, 0.5, "Puddle movement advances on the owned frame clock")
+        viewModel.advanceGameplayFrame(delta: 1.0 / 60, now: Date())
+        XCTAssertTrue(viewModel.basketIsInPuddle)
+        XCTAssertGreaterThan(viewModel.basketResistance, 0)
         XCTAssertGreaterThan(viewModel.basketX, 0.5)
         XCTAssertLessThan(viewModel.basketX, 0.9)
         XCTAssertGreaterThanOrEqual(viewModel.basketX, 0.10)
@@ -378,14 +388,14 @@ final class Prompt28FruitBasketTests: XCTestCase {
         )
     }
 
-    func testFounderFacingLearningTopicsAreExact() {
+    func testFounderFacingLearningTopicsAreExact() async {
         XCTAssertEqual(
             Prompt28LearningTopic.allCases.map(\.displayName),
             ["reproductive health", "hormones", "nutrition", "surrogacy", "women’s wellness"]
         )
     }
 
-    func testNewAudioSemanticIDsAreRegistered() {
+    func testNewAudioSemanticIDsAreRegistered() async {
         XCTAssertNotNil(FruitfolioAudioDesign.descriptors[.fruitBasketWind])
         XCTAssertNotNil(FruitfolioAudioDesign.descriptors[.notificationSoftSparkle])
         XCTAssertEqual(FruitfolioAudioID.notificationSoftSparkle.rawValue, "audio_notification")

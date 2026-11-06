@@ -103,7 +103,13 @@ struct Prompt28FruitBasketEngine: Sendable {
 
     func activeObstacles(level: Int, round: Int) -> Set<Prompt28ObstacleKind> {
         let base = baseObstacles(level: level, round: round)
-        return clampedLevel(level) >= 6 && round.isMultiple(of: 3) ? base.union([.puddle]) : base
+        guard clampedLevel(level) >= 6 && round.isMultiple(of: 3) else { return base }
+        // Soft rain must create a puddle without adding a third obstacle or
+        // retaining a hidden breezy-weather force beneath the rain artwork.
+        var rainy = base.subtracting([.wind])
+        rainy.insert(.puddle)
+        if rainy.count > 2 { rainy.remove(.branch) }
+        return rainy
     }
 
     private func baseObstacles(level: Int, round: Int) -> Set<Prompt28ObstacleKind> {

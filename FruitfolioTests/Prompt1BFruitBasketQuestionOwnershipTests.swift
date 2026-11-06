@@ -1,4 +1,3 @@
-#if canImport(Combine)
 import Foundation
 import XCTest
 @testable import Fruitfolio
@@ -65,4 +64,3 @@ final class Prompt1BFruitBasketQuestionOwnershipTests: XCTestCase {
         XCTAssertNil(store.questionHistory["fixture"])
     }
 }
-#endif

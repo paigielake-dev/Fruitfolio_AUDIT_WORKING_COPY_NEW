@@ -1,18 +1,44 @@
+#if canImport(Combine)
 import Combine
+#endif
 import Foundation
 
 @MainActor
-final class Prompt28FruitBasketStore: ObservableObject {
-    @Published private(set) var topicProgress: [String: Prompt28TopicProgress] = [:]
-    @Published private(set) var questionHistory: [String: Set<String>] = [:]
-    @Published var tourState = Prompt28TourState()
-    @Published var appearOnLeaderboard = false
-    @Published var leaderboardPseudonym = ""
-    @Published var controlMode = Prompt28ControlMode.catchMode
-    @Published var preferredDifficulty = Prompt28EducationalDifficulty.easy
+final class Prompt28FruitBasketStore {
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var topicProgress: [String: Prompt28TopicProgress] = [:]
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var questionHistory: [String: Set<String>] = [:]
+    #if canImport(Combine)
+    @Published
+    #endif
+    var tourState = Prompt28TourState()
+    #if canImport(Combine)
+    @Published
+    #endif
+    var appearOnLeaderboard = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var leaderboardPseudonym = ""
+    #if canImport(Combine)
+    @Published
+    #endif
+    var controlMode = Prompt28ControlMode.catchMode
+    #if canImport(Combine)
+    @Published
+    #endif
+    var preferredDifficulty = Prompt28EducationalDifficulty.easy
 
     private let persistence: Prompt28GamePersistence
-    @Published private(set) var persistenceMessage: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var persistenceMessage: String?
     var isReadOnly: Bool { persistence.isWriteBlocked }
 
     init(
@@ -126,3 +152,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
         catch { persistenceMessage = persistence.failure?.message ?? "game progress could not be saved; reload the current local state." }
     }
 }
+
+#if canImport(Combine)
+extension Prompt28FruitBasketStore: ObservableObject {}
+#endif

@@ -133,6 +133,12 @@ SOURCES = [
     'Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift',
     'Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift',
     'Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift',
+    'Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift',
+    'Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift',
+    'Fruitfolio/Fruit Basket/Prompt28FruitBasketAssetUsage.swift',
+    'Fruitfolio/Core/Assets/FruitfolioAsset.swift',
+    'Fruitfolio/Core/Assets/AssetRegistry.swift',
+    'Fruitfolio/Core/Assets/AssetUsageLedger.swift',
     'Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift',
     'Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift',
     'Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift',
@@ -144,6 +150,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt28FruitBasketTests.swift', 'Prompt1BFruitBasketQuestionOwnershipTests.swift',
     'Prompt1BCatalogTranslationTests.swift',
     'Prompt1BSavedDraftConflictTests.swift',
     'Prompt1BContextConfirmationRevisionTests.swift',
