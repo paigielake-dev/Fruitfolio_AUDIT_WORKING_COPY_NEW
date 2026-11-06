@@ -1,9 +1,10 @@
 import Foundation
+#if canImport(Combine)
 import Combine
-import SwiftUI
+#endif
 
 @MainActor
-public final class Prompt20DailyLogViewModel: ObservableObject {
+public final class Prompt20DailyLogViewModel {
     public enum LoadState: Equatable {
         case idle
         case loading
@@ -18,13 +19,34 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
         case failed
     }
 
-    @Published public private(set) var loadState: LoadState = .idle
-    @Published public private(set) var saveState: SaveState = .idle
-    @Published public var draft: Prompt20DailyLogDraft
-    @Published public var expandedSections: Set<Prompt20DailyLogSection> = []
-    @Published public private(set) var validationIssues: [Prompt20DailyLogValidationIssue] = []
-    @Published public private(set) var existingLog: Prompt20DailyLog?
-    @Published public private(set) var hasUnsavedChanges = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var loadState: LoadState = .idle
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var saveState: SaveState = .idle
+    #if canImport(Combine)
+    @Published
+    #endif
+    public var draft: Prompt20DailyLogDraft
+    #if canImport(Combine)
+    @Published
+    #endif
+    public var expandedSections: Set<Prompt20DailyLogSection> = []
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var validationIssues: [Prompt20DailyLogValidationIssue] = []
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var existingLog: Prompt20DailyLog?
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var hasUnsavedChanges = false
 
     public let ownerID: Prompt20DailyLogOwnerID
     public let selectedDate: Date
@@ -242,54 +264,9 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
         }
 
         mutateDraft { draft in
-            let trimmed =
-                draft.temperatureText
-                    .trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    )
-
-            if let value = Double(
-                trimmed.replacingOccurrences(
-                    of: ",",
-                    with: "."
-                )
-            ) {
-                let celsius: Double
-
-                switch draft.temperatureUnit {
-                case .celsius:
-                    celsius = value
-
-                case .fahrenheit:
-                    celsius =
-                        (value - 32.0) *
-                        5.0 /
-                        9.0
-                }
-
-                let converted: Double
-
-                switch newUnit {
-                case .celsius:
-                    converted = celsius
-
-                case .fahrenheit:
-                    converted =
-                        celsius *
-                        9.0 /
-                        5.0 +
-                        32.0
-                }
-
-                draft.temperatureText =
-                    Prompt20TemperatureFormatter.string(
-                        converted,
-                        unit: newUnit
-                    )
-            }
-
-            draft.temperatureUnit =
-                newUnit
+            // This chooses the unit reported by the thermometer. Conversion
+            // helpers remain available for read-only displays, never this edit.
+            draft.temperatureUnit = newUnit
         }
     }
 
@@ -383,22 +360,26 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
         switch issue {
         case .invalidDate: return "choose a valid calendar date before saving."
         case .bleedingLevelRequiredForNote:
-            "choose the bleeding option that goes with this note"
+            return "choose the bleeding option that goes with this note"
 
         case .invalidTemperatureFormat:
-            "enter the temperature as a number"
+            return "enter the temperature as a number"
 
         case .implausibleTemperature:
-            "that number looks like a typo — check the temperature and try again"
+            return "that number looks like a typo — check the temperature and try again"
 
         case .temperatureValueRequired:
-            "add the temperature value for this reading"
+            return "add the temperature value for this reading"
 
         case .cervicalCategoryRequiredForNote:
-            "choose the cervical fluid option that goes with this note"
+            return "choose the cervical fluid option that goes with this note"
 
         case .medicationNameRequired:
-            "add a name for this medication or supplement"
+            return "add a name for this medication or supplement"
         }
     }
 }
+
+#if canImport(Combine)
+extension Prompt20DailyLogViewModel: ObservableObject {}
+#endif

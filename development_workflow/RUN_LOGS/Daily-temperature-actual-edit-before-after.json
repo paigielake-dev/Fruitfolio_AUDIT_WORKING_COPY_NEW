@@ -1,0 +1,41 @@
+{
+  "before": {
+    "behaviorCommit": "aa87856f9c3a1d7568e9fac61a42cee1a116c79d",
+    "platformPort": "Actual view model with conditional genuine Combine; mixed-return validationMessage compiler error fixed before behavior regressions could execute; temperature algorithms still unchanged.",
+    "failedTests": 2,
+    "failedAssertions": 11,
+    "notesOnlyExamples": [
+      {
+        "recordedValue": 98.6789012345,
+        "recordedUnit": "fahrenheit",
+        "preferredDisplayUnit": "celsius",
+        "incorrectSavedValue": 37.04,
+        "incorrectSavedUnit": "celsius"
+      },
+      {
+        "recordedValue": 36.987654321,
+        "recordedUnit": "celsius",
+        "preferredDisplayUnit": "fahrenheit",
+        "incorrectSavedValue": 98.6,
+        "incorrectSavedUnit": "fahrenheit"
+      }
+    ],
+    "unitSelectionExample": {
+      "typed": "37.123456789",
+      "incorrectAutomaticConversion": "98.8",
+      "incorrectRoundTrip": "37.11"
+    }
+  },
+  "after": {
+    "actualViewModelAndPersistentRepository": true,
+    "notesOnlyPreserveDoubleBitPatternAndOriginalUnit": true,
+    "readOnlyConversionHelpersRetained": true,
+    "unitSelectionDoesNotConvertTypedNumber": true,
+    "invalidUnitValuePairCannotOverwriteStoredRecord": true,
+    "portableXCTest": 595,
+    "nativeXCTest": 601,
+    "swiftTestingPerRun": 21,
+    "previouslyGuardedViewModelTestsNowExecute": 2
+  },
+  "limits": "Original formatting/trailing zeros were never stored in the existing Double schema and are not reconstructed. Actual Combine publisher/UI behavior and Apple SDK/device checks remain NOT_RUN."
+}

@@ -428,6 +428,8 @@ public struct Prompt20DailyLogView: View {
                 .frame(maxWidth: 142)
             }
 
+            notePrompt("enter the number and unit shown on your thermometer. choosing a unit keeps the number you typed.")
+
             notePrompt("what kind of reading?")
             Prompt20AdaptiveChips {
                 ForEach(Prompt20TemperatureReadingType.allCases) { kind in

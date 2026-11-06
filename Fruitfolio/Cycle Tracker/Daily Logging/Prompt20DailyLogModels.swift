@@ -441,10 +441,10 @@ public struct Prompt20DailyLogDraft: Equatable, Sendable {
         symptomNote = log.symptoms?.note ?? ""
         temperatureUnit = displayTemperatureUnit
         if let temperature = log.temperature {
-            temperatureText = Prompt20TemperatureFormatter.string(
-                temperature.value(in: displayTemperatureUnit),
-                unit: displayTemperatureUnit
-            )
+            // Editing is a recorded-input path, not a converted display. A
+            // notes-only save must keep the original unit and Double precision.
+            temperatureUnit = temperature.originalUnit
+            temperatureText = String(temperature.originalValue)
             temperatureReadingType = temperature.readingType
             temperatureNote = temperature.note
         }

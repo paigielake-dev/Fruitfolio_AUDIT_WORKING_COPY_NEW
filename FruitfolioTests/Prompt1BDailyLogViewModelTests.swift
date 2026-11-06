@@ -1,4 +1,3 @@
-#if canImport(SwiftUI) && canImport(Combine)
 import Foundation
 import XCTest
 @testable import Fruitfolio
@@ -32,6 +31,62 @@ private actor Prompt1BDelayedDailyLogRepository: Prompt20DailyLogRepository {
 
 @MainActor
 final class Prompt1BDailyLogViewModelTests: XCTestCase {
+    func testNotesOnlyEditsPreserveOriginalTemperaturePrecisionAndUnitAcrossPreferences() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 9, day: 7, hour: 12))!
+        let selected = Prompt20LocalDay(date: now, calendar: calendar)
+        let cases: [(String, Prompt20TemperatureUnit, Prompt20TemperatureUnit)] = [
+            ("98.6789012345", .fahrenheit, .celsius), ("36.987654321", .celsius, .fahrenheit)]
+        for (text, originalUnit, preference) in cases {
+            let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+            defer { try? FileManager.default.removeItem(at: file) }
+            let repository = Prompt20CycleDailyLogStore(fileURL: file, calendar: calendar)
+            var draft = Prompt20DailyLogDraft(); draft.temperatureText = text; draft.temperatureUnit = originalUnit
+            draft.temperatureReadingType = .basalWaking; draft.temperatureNote = "reported reading note"
+            let saved = try await repository.save(ownerID: .localDevice, date: selected, draft: draft, now: now)
+            let original = try XCTUnwrap(saved?.temperature)
+            let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+                repository: repository, calendar: calendar, preferredTemperatureUnit: preference, nowProvider: { now })
+            await model.load()
+            XCTAssertEqual(model.draft.temperatureUnit, originalUnit)
+            XCTAssertEqual(try XCTUnwrap(Double(model.draft.temperatureText)).bitPattern, original.originalValue.bitPattern)
+            XCTAssertFalse(model.hasUnsavedChanges)
+            model.mutateDraft { $0.generalNote = "only the general note changed" }
+            let accepted = await model.save()
+            XCTAssertTrue(accepted)
+            let restored = Prompt20CycleDailyLogStore(fileURL: file, calendar: calendar)
+            let actual = try await restored.load(ownerID: .localDevice, date: selected)
+            XCTAssertEqual(actual?.temperature, original)
+            XCTAssertEqual(actual?.generalNote?.text, "only the general note changed")
+        }
+    }
+
+    func testUnitChoicePreservesTypedNumberAndInvalidReinterpretationCannotOverwriteSavedReading() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 9, day: 7, hour: 12))!
+        let selected = Prompt20LocalDay(date: now, calendar: calendar)
+        let repository = Prompt20CycleDailyLogStore(fileURL: nil, calendar: calendar)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: repository, calendar: calendar, preferredTemperatureUnit: .celsius, nowProvider: { now })
+        await model.load()
+        XCTAssertEqual(model.draft.temperatureUnit, .celsius)
+        XCTAssertEqual(model.draft.temperatureText, "")
+        model.mutateDraft { $0.temperatureText = "37.123456789" }
+        let initialSave = await model.save()
+        XCTAssertTrue(initialSave)
+        let original = try await repository.load(ownerID: .localDevice, date: selected)
+        model.changeTemperatureUnit(to: .fahrenheit)
+        XCTAssertEqual(model.draft.temperatureText, "37.123456789")
+        XCTAssertEqual(model.draft.temperatureUnit, .fahrenheit)
+        XCTAssertFalse(model.canSave)
+        let rejected = await model.save()
+        XCTAssertFalse(rejected)
+        let after = try await repository.load(ownerID: .localDevice, date: selected)
+        XCTAssertEqual(after, original)
+        model.changeTemperatureUnit(to: .celsius)
+        XCTAssertEqual(model.draft.temperatureText, "37.123456789")
+    }
+
     func testEditsDuringActualRepositoryAwaitRemainDirty() async {
         let repository = Prompt1BDelayedDailyLogRepository()
         let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: Date(), repository: repository)
@@ -68,4 +123,3 @@ final class Prompt1BDailyLogViewModelTests: XCTestCase {
         XCTAssertEqual(model.saveState, .saved)
     }
 }
-#endif
