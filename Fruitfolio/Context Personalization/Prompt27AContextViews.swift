@@ -5,7 +5,14 @@ import SwiftUI
 struct Prompt27AMyContextView: View {
     @StateObject private var viewModel: Prompt27AContextViewModel
     @ObservedObject private var observedStore: Prompt27AContextStore
-    @State private var confirmClearContext = false
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var viewIsVisible = false
+    @State private var pendingClearRevision: UUID?
+    @State private var returnClearFocus = false
+    @State private var failureNoticeFocus: UUID?
+    @State private var popupInstanceID = UUID()
+    @AccessibilityFocusState private var clearFocused: Bool
     @State private var showHormoneInformation = false
     @State private var showPersonalHealthContext = false
 
@@ -44,7 +51,7 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
-                        FruitfolioContextStorageNotice(store: viewModel.store)
+                        FruitfolioContextStorageNotice(store: viewModel.store, messageFocusRequest: failureNoticeFocus)
                         WatercolorPrimaryButton(label: "optional personal health context") { showPersonalHealthContext = true }
                         WatercolorPrimaryButton(label: "Hormone Information") {
                             showHormoneInformation = true
@@ -138,9 +145,11 @@ struct Prompt27AMyContextView: View {
                         FruitfolioControlPillButton(
                             label: "clear my context"
                         ) {
-                            confirmClearContext = true
+                            requestClearContext()
                         }
                         .frame(maxWidth: 280, alignment: .leading)
+                        .accessibilityIdentifier("myContext.clear")
+                        .accessibilityFocused($clearFocused)
                         .accessibilityHint(
                             "Clears context selections without deleting cycle history, Daily Log entries, symptoms, temperatures, notes, or Trends."
                         )
@@ -163,9 +172,27 @@ struct Prompt27AMyContextView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
-        .confirmationDialog("clear all My Context information from this device?", isPresented: $confirmClearContext, titleVisibility: .visible) {
-            Button("clear my context", role: .destructive) { viewModel.store.clearContext() }
-            Button("cancel", role: .cancel) {}
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+        }
+        .onDisappear {
+            viewIsVisible = false
+            popupOwner?.cancel()
+            pendingClearRevision = nil
+            returnClearFocus = false
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            if let revision = pendingClearRevision {
+                pendingClearRevision = nil
+                if !viewModel.store.clearContext(expectedRevision: revision) {
+                    returnClearFocus = false
+                    failureNoticeFocus = UUID()
+                }
+            }
+            if returnClearFocus { returnClearFocus = false; clearFocused = true }
         }
         .sheet(isPresented: $showPersonalHealthContext) {
             FruitfolioPresentedPopupHost {
@@ -178,6 +205,27 @@ struct Prompt27AMyContextView: View {
             }
         }
         .accessibilityIdentifier("prompt27a.myContext")
+    }
+
+    private func requestClearContext() {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        let revision = viewModel.store.savedRecordRevision
+        returnClearFocus = true
+        clearFocused = false
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .blueberry,
+                message: "clear all My Context selections and personal health notes from this device? this cannot be undone. cycle history and Daily Log entries will be kept.",
+                primaryAction: .init(label: "keep my context") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                },
+                secondaryAction: .init(label: "clear my context") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingClearRevision = revision
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "my-context-clear", deduplicationKey: "my-context-clear-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
+        }
     }
 
     private var header: some View {

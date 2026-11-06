@@ -197,7 +197,7 @@ struct FruitPopupView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .layoutPriority(2)
 
-            if request.primaryAction != nil || request.secondaryAction != nil {
+            if request.primaryAction != nil || request.secondaryAction != nil || request.tertiaryAction != nil {
                 VStack(alignment: .center, spacing: 2) {
                     if let primaryAction = request.primaryAction {
                         popupActionButton(primaryAction, isPrimary: true)
@@ -205,6 +205,9 @@ struct FruitPopupView: View {
 
                     if let secondaryAction = request.secondaryAction {
                         popupActionButton(secondaryAction, isPrimary: false)
+                    }
+                    if let tertiaryAction = request.tertiaryAction {
+                        popupActionButton(tertiaryAction, isPrimary: false, identifier: "fruitPopup.action.tertiary")
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -227,7 +230,8 @@ struct FruitPopupView: View {
 
     private func popupActionButton(
         _ action: FruitPopupAction,
-        isPrimary: Bool
+        isPrimary: Bool,
+        identifier: String? = nil
     ) -> some View {
         Button {
             action.handler()
@@ -248,6 +252,6 @@ struct FruitPopupView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
-        .accessibilityIdentifier(isPrimary ? "fruitPopup.action.primary" : "fruitPopup.action.secondary")
+        .accessibilityIdentifier(identifier ?? (isPrimary ? "fruitPopup.action.primary" : "fruitPopup.action.secondary"))
     }
 }

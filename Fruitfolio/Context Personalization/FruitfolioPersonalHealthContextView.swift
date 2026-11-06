@@ -34,6 +34,7 @@ struct FruitfolioPersonalHealthContextView: View {
                                 }
                                 .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                                 .disabled(store.storageProtectionReason != nil)
+                                .accessibilityIdentifier("personalHealth.category." + category.rawValue)
                                 .accessibilityLabel(category.title)
                                 .accessibilityValue(status(category))
                                 .accessibilityHint("opens an optional editable context field")
@@ -72,18 +73,30 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
     let onClose: () -> Void
     @State private var text: String
     @State private var clinicianConfirmed: Bool
-    @State private var confirmDiscard = false
-    @State private var confirmRemove = false
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var viewIsVisible = false
+    @State private var pendingAction: PendingAction?
+    @State private var returnCloseFocus = false
+    @State private var popupInstanceID = UUID()
+    @AccessibilityFocusState private var closeFocused: Bool
+    @AccessibilityFocusState private var errorFocused: Bool
+    @State private var errorFocusRequest = UUID()
+    @FocusState private var textFocused: Bool
+    private enum PendingAction { case save, discard, remove }
     @State private var errorMessage: String?
-    private let baselineText: String
-    private let baselineConfirmation: Bool
+    @State private var baselineText: String
+    @State private var baselineConfirmation: Bool
+    @State private var baselineRevision: UUID
 
     init(store: Prompt27AContextStore, category: FruitfolioPersonalHealthCategory, onClose: @escaping () -> Void) {
         self.store = store; self.category = category; self.onClose = onClose
         let record = store.context.personalHealthEntries[category.rawValue]
         let initial = record?.status == .provided ? (record?.text ?? "") : ""
         let confirmed = record?.status == .provided && record?.provenance == .userReportsClinicianConfirmed
-        baselineText = initial; baselineConfirmation = confirmed
+        _baselineText = State(initialValue: initial)
+        _baselineConfirmation = State(initialValue: confirmed)
+        _baselineRevision = State(initialValue: store.savedRecordRevision)
         _text = State(initialValue: initial); _clinicianConfirmed = State(initialValue: confirmed)
     }
     private var changed: Bool { text != baselineText || clinicianConfirmed != baselineConfirmation }
@@ -96,6 +109,8 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                 }
                 Text("anything you want Fruitfolio to know? this is your report, not something Fruitfolio has verified.")
                 TextEditor(text: $text).frame(minHeight: 180).accessibilityLabel("optional personal health context")
+                    .accessibilityIdentifier("personalHealth.editor.text")
+                    .focused($textFocused)
                 Text("\(text.count) / 10000 characters").font(.caption)
                 Toggle("a clinician confirmed this information, as i report it", isOn: $clinicianConfirmed)
                 if category.group == .genetics {
@@ -105,41 +120,101 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                     Text("this remains user-reported history. it does not confirm ovulation or replace Cycle Tracker’s separately labeled estimates.").font(.callout)
                 }
                 FruitfolioContextStorageNotice(store: store)
-                if let errorMessage { Text(errorMessage).foregroundStyle(Color.red) }
+                if let errorMessage {
+                    FruitfolioTranslatedContent(source: errorMessage) { display, _ in
+                        FruitfolioSemanticText(markdown: display,
+                            baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                            .accessibilityFocused($errorFocused)
+                    }
+                    .task(id: errorFocusRequest) {
+                        await Task.yield()
+                        guard !Task.isCancelled, viewIsVisible else { return }
+                        errorFocused = true
+                    }
+                }
                 WatercolorPrimaryButton(label: "save my context") { save(status: .provided) }
                     .disabled(store.storageProtectionReason != nil)
                 WatercolorSecondaryButton(label: "prefer not to say") { save(status: .preferNotToSay) }
                     .disabled(store.storageProtectionReason != nil)
                 if store.context.personalHealthEntries[category.rawValue]?.isActive == true {
-                    WatercolorSecondaryButton(label: "remove this context") { confirmRemove = true }
+                    WatercolorSecondaryButton(label: "remove this context") { requestConfirmation(removal: true) }
+                        .accessibilityIdentifier("personalHealth.editor.remove")
                         .disabled(store.storageProtectionReason != nil)
                 }
                 WatercolorSecondaryButton(label: "skip / close") {
-                    if changed { confirmDiscard = true } else { onClose() }
+                    if changed { requestConfirmation(removal: false) } else { onClose() }
                 }
+                .accessibilityIdentifier("personalHealth.editor.close")
+                .accessibilityFocused($closeFocused)
             }
             .padding(20).frame(maxWidth: 680, alignment: .leading).frame(maxWidth: .infinity)
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .accessibilityIdentifier("personalHealth.editor.scroll")
         .interactiveDismissDisabled(changed)
-        .confirmationDialog("save or discard your context changes?", isPresented: $confirmDiscard, titleVisibility: .visible) {
-            Button("save changes") { save(status: .provided) }
-            Button("discard changes", role: .destructive) { onClose() }
-            Button("keep editing", role: .cancel) {}
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
         }
-        .confirmationDialog("remove this user-provided context?", isPresented: $confirmRemove, titleVisibility: .visible) {
-            Button("remove context", role: .destructive) { save(status: .removed) }
-            Button("cancel", role: .cancel) {}
+        .onDisappear {
+            viewIsVisible = false
+            popupOwner?.cancel()
+            pendingAction = nil
+            returnCloseFocus = false
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            let action = pendingAction
+            pendingAction = nil
+            switch action {
+            case .save: save(status: .provided)
+            case .remove: save(status: .removed)
+            case .discard: onClose()
+            case nil: break
+            }
+            if returnCloseFocus { returnCloseFocus = false; closeFocused = true }
         }
     }
+
+    private func requestConfirmation(removal: Bool) {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        returnCloseFocus = true
+        closeFocused = false
+        textFocused = false
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .blueberry,
+                message: removal ? "remove this user-provided context from this device? your other My Context selections will be kept."
+                    : "save, discard or keep editing your unsaved context changes?",
+                primaryAction: .init(label: removal ? "keep this context" : "keep editing") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                },
+                secondaryAction: .init(label: removal ? "remove context" : "save changes") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingAction = removal ? .remove : .save
+                },
+                tertiaryAction: removal ? nil : .init(label: "discard changes") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingAction = .discard
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "personal-health-confirmation", deduplicationKey: "personal-health-confirmation-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
     private func save(status: FruitfolioPersonalHealthStatus) {
         do {
             try store.savePersonalHealth(category, text: text, status: status,
-                provenance: clinicianConfirmed ? .userReportsClinicianConfirmed : .userProvided)
+                provenance: clinicianConfirmed ? .userReportsClinicianConfirmed : .userProvided,
+                expectedRevision: baselineRevision)
             onClose()
-        } catch { errorMessage = error.localizedDescription }
+        } catch {
+            errorMessage = error.localizedDescription
+            errorFocusRequest = UUID()
+        }
     }
 }
 

@@ -12,9 +12,10 @@ nonisolated final class Prompt27ALocalContextPersistence {
     private let key: String
     private let codec: Prompt27AContextCodec
     enum Failure: LocalizedError, Equatable, Sendable {
-        case unreadableStorage, unsupportedStorage, storageChanged
+        case unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged
         var errorDescription: String? {
             switch self {
+            case .confirmationChanged: return "your saved context changed after this screen or confirmation opened. nothing was overwritten or cleared. review the saved context before trying again."
             case .unreadableStorage: return "your saved context could not be read. the original local data has been preserved; changes are paused."
             case .unsupportedStorage: return "your saved context contains fields this version cannot safely update. readable selections remain available. the original data has been preserved; changes are paused."
             case .storageChanged: return "your saved context changed or was cleared elsewhere. the latest local data has been preserved. reload it before making changes, exporting or clearing."

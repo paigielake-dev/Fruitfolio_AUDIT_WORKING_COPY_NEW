@@ -45,11 +45,15 @@ final class Prompt27AContextStore {
     func setFertilityTreatmentContext(_ value: Prompt27AFertilityTreatmentContext) { update { $0.setFertilityTreatmentContext(value) } }
     func setContraceptionContext(_ value: Prompt27AContraceptionContext) { update { $0.setContraceptionContext(value) } }
     @discardableResult
-    func clearContext() -> Bool { eraseLocalContextData() }
+    func clearContext(expectedRevision: UUID? = nil) -> Bool { eraseLocalContextData(expectedRevision: expectedRevision) }
 
     func savePersonalHealth(_ category: FruitfolioPersonalHealthCategory, text: String,
         status: FruitfolioPersonalHealthStatus = .provided,
-        provenance: FruitfolioPersonalHealthProvenance = .userProvided) throws {
+        provenance: FruitfolioPersonalHealthProvenance = .userProvided,
+        expectedRevision: UUID? = nil) throws {
+        if let expectedRevision, expectedRevision != savedRecordRevision {
+            throw Prompt27ALocalContextPersistence.Failure.confirmationChanged
+        }
         defer { refresh() }
         try persistence.apply { try $0.setPersonalHealth(category, text: text, status: status, provenance: provenance) }
     }
@@ -111,7 +115,11 @@ final class Prompt27AContextStore {
 
     /// Explicit local erase does not rewrite cycle history, logs or predictions.
     @discardableResult
-    func eraseLocalContextData() -> Bool {
+    func eraseLocalContextData(expectedRevision: UUID? = nil) -> Bool {
+        if let expectedRevision, expectedRevision != savedRecordRevision {
+            persistenceMessage = Prompt27ALocalContextPersistence.Failure.confirmationChanged.localizedDescription
+            return false
+        }
         do { try persistence.erase(); refresh(); return true }
         catch { refresh(); persistenceMessage = error.localizedDescription; return false }
     }

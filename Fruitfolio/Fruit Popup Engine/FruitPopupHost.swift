@@ -174,6 +174,9 @@ struct FruitPopupHost<Content: View>: View {
                 }
                 if let action = request.primaryAction { paperAction(action, primary: true) }
                 if let action = request.secondaryAction { paperAction(action, primary: false) }
+                if let action = request.tertiaryAction {
+                    paperAction(action, primary: false, identifier: "fruitPopup.paper.action.tertiary")
+                }
             }
             .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         }
@@ -188,12 +191,12 @@ struct FruitPopupHost<Content: View>: View {
         }
     }
 
-    private func paperAction(_ action: FruitPopupAction, primary: Bool) -> some View {
+    private func paperAction(_ action: FruitPopupAction, primary: Bool, identifier: String? = nil) -> some View {
         FruitfolioControlPillButton(label: settings.localized(action.label)) {
             action.handler()
         }
         .accessibilityLabel(settings.localized(action.accessibilityLabel ?? action.label))
-        .accessibilityIdentifier(primary ? "fruitPopup.paper.action.primary" : "fruitPopup.paper.action.secondary")
+        .accessibilityIdentifier(identifier ?? (primary ? "fruitPopup.paper.action.primary" : "fruitPopup.paper.action.secondary"))
     }
 
     // MARK: - Popup Layer

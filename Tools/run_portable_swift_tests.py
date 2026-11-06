@@ -128,6 +128,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BContextConfirmationRevisionTests.swift',
     'Prompt1BContextSnapshotProtectionTests.swift',
     'Prompt1BOwnedConfirmationTests.swift',
     'Prompt1BHormoneMeasurementTests.swift',

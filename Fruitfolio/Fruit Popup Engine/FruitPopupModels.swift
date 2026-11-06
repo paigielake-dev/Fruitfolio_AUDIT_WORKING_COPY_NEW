@@ -79,6 +79,7 @@ struct FruitPopupRequest: Identifiable {
     let message: String
     let primaryAction: FruitPopupAction?
     let secondaryAction: FruitPopupAction?
+    let tertiaryAction: FruitPopupAction?
     let positionPreference: FruitPopupPositionPreference
     let dismissBehavior: FruitPopupDismissBehavior
     let tone: FruitPopupTone
@@ -94,6 +95,7 @@ struct FruitPopupRequest: Identifiable {
         message: String,
         primaryAction: FruitPopupAction? = nil,
         secondaryAction: FruitPopupAction? = nil,
+        tertiaryAction: FruitPopupAction? = nil,
         positionPreference: FruitPopupPositionPreference = .automatic,
         dismissBehavior: FruitPopupDismissBehavior = .tapOutside,
         tone: FruitPopupTone = .neutral,
@@ -108,6 +110,7 @@ struct FruitPopupRequest: Identifiable {
         self.message = message
         self.primaryAction = primaryAction
         self.secondaryAction = secondaryAction
+        self.tertiaryAction = tertiaryAction
         self.positionPreference = positionPreference
         self.dismissBehavior = dismissBehavior
         self.tone = tone

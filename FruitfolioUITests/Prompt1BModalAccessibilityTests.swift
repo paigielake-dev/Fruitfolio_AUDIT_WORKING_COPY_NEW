@@ -38,6 +38,16 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         return app
     }
 
+    private func tapSharedPaperAction(_ name: String, in app: XCUIApplication) {
+        let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+        let action = app.buttons["fruitPopup.paper.action." + name]
+        for _ in 0..<20 { if action.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(action.isHittable)
+        XCTAssertGreaterThanOrEqual(action.frame.height, 44)
+        action.tap()
+    }
+
     private func captureGame(_ app: XCUIApplication, name: String) {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name
@@ -196,6 +206,89 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(app.buttons["dataQA.background"].waitForExistence(timeout: 3))
             app.terminate()
         }
+    }
+
+    func testContextClearUsesSharedPaperAndCancelPreservesUnsupportedOriginal() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioContextStorageQA", "-fruitfolioContextReduceMotion",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let clear = app.buttons["myContext.clear"]
+        XCTAssertTrue(clear.waitForExistence(timeout: 5))
+        for _ in 0..<60 { if clear.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(clear.isHittable)
+        clear.tap()
+        XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+        XCTAssertFalse(clear.exists)
+        captureGame(app, name: "my-context-clear-shared-paper-large-text")
+        tapSharedPaperAction("primary", in: app)
+        XCTAssertTrue(clear.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["myContext.reloadSavedRecord"].exists)
+        for _ in 0..<20 { if clear.isHittable { break }; app.swipeUp() }
+        clear.tap()
+        tapSharedPaperAction("secondary", in: app)
+        XCTAssertTrue(clear.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["myContext.reloadSavedRecord"].exists)
+        let goal = app.buttons.matching(NSPredicate(format: "label == %@", "trying to conceive")).firstMatch
+        for _ in 0..<60 { if goal.isHittable { break }; app.swipeDown() }
+        XCTAssertTrue(goal.isEnabled)
+        XCTAssertEqual(goal.value as? String, "not selected")
+        app.terminate()
+    }
+
+    func testPersonalHealthDirtyDraftRetainsAllThreeChoicesAndScopedRemoval() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioPersonalHealthQA"]
+        app.launch()
+        let group = app.buttons["family, genetic and biological context"]
+        XCTAssertTrue(group.waitForExistence(timeout: 5))
+        group.tap()
+        let category = app.buttons["personalHealth.category.dna"]
+        for _ in 0..<20 { if category.isHittable { break }; app.swipeUp() }
+        category.tap()
+        let editor = app.scrollViews["personalHealth.editor.scroll"]
+        let text = app.textViews["personalHealth.editor.text"]
+        XCTAssertTrue(text.waitForExistence(timeout: 5))
+        text.tap(); text.typeText("QA original draft")
+        let close = app.buttons["personalHealth.editor.close"]
+        for _ in 0..<20 { if close.isHittable { break }; editor.swipeUp() }
+        close.tap()
+        let paper = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(paper.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["fruitPopup.paper.action.primary"].exists)
+        XCTAssertTrue(app.buttons["fruitPopup.paper.action.secondary"].exists)
+        XCTAssertTrue(app.buttons["fruitPopup.paper.action.tertiary"].exists)
+        XCTAssertFalse(text.exists)
+        captureGame(app, name: "personal-health-three-choice-native-sheet")
+        tapSharedPaperAction("primary", in: app)
+        XCTAssertTrue(text.waitForExistence(timeout: 5))
+        XCTAssertEqual(text.value as? String, "QA original draft")
+        for _ in 0..<20 { if close.isHittable { break }; editor.swipeUp() }
+        close.tap()
+        tapSharedPaperAction("secondary", in: app)
+        XCTAssertTrue(category.waitForExistence(timeout: 5))
+        XCTAssertEqual(category.value as? String, "saved user-provided context · edit")
+        category.tap()
+        XCTAssertTrue(text.waitForExistence(timeout: 5))
+        text.tap(); text.typeText(" QA discarded addition")
+        for _ in 0..<20 { if close.isHittable { break }; editor.swipeUp() }
+        close.tap()
+        tapSharedPaperAction("tertiary", in: app)
+        XCTAssertTrue(category.waitForExistence(timeout: 5))
+        category.tap()
+        XCTAssertTrue(text.waitForExistence(timeout: 5))
+        XCTAssertEqual(text.value as? String, "QA original draft")
+        let remove = app.buttons["personalHealth.editor.remove"]
+        for _ in 0..<20 { if remove.isHittable { break }; editor.swipeUp() }
+        remove.tap()
+        tapSharedPaperAction("primary", in: app)
+        XCTAssertTrue(remove.waitForExistence(timeout: 5))
+        for _ in 0..<20 { if remove.isHittable { break }; editor.swipeUp() }
+        remove.tap()
+        tapSharedPaperAction("secondary", in: app)
+        XCTAssertTrue(category.waitForExistence(timeout: 5))
+        XCTAssertEqual(category.value as? String, "removed · add again")
+        app.terminate()
     }
 
     func testContextUnknownFieldsKeepKnownSelectionAndPauseEditsAfterReadOnlyReload() {
