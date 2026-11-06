@@ -5,8 +5,12 @@ import SwiftUI
 /// genuine UserDefaults reads and all normal cases use the real setter.
 private final class Prompt11GuideFaultDefaults: UserDefaults, @unchecked Sendable {
     var rejectLibraryWrites = false
+    var libraryWriteAttempts = 0
     override func set(_ value: Any?, forKey key: String) {
-        if rejectLibraryWrites, key == "fruitfolio.guideSaveQA.library" { return }
+        if key == "fruitfolio.guideSaveQA.library" {
+            libraryWriteAttempts += 1
+            if rejectLibraryWrites { return }
+        }
         super.set(value, forKey: key)
     }
 }
@@ -35,7 +39,7 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
                     subtitle: "QA original description", style: .sage).id
             } catch { preconditionFailure("Could not create the private Guide Builder fixture") }
         }
-        if scenario == "pages", let guideID = initialGuideID {
+        if ["pages", "batch-pages", "dropped-batch-pages"].contains(scenario), let guideID = initialGuideID {
             do {
                 _ = try store.createChapter(in: guideID, name: "QA first section")
                 _ = try store.createChapter(in: guideID, name: "QA second section")
@@ -44,6 +48,11 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
                 let page = Prompt10SavedPage(chapterID: section.id, question: "QA source page",
                     answer: "Nonclinical private fixture only.", saveType: .fullAnswer)
                 _ = try store.savePage(page, to: source.id, chapterID: section.id)
+                if scenario != "pages" {
+                    let second = Prompt10SavedPage(chapterID: section.id, question: "QA second source page",
+                        answer: "Second nonclinical private fixture.", saveType: .excerpt, excerptText: "Second fixture")
+                    _ = try store.savePage(second, to: source.id, chapterID: section.id)
+                }
             } catch { preconditionFailure("Could not create the private saved-page fixture") }
         }
         if scenario == "stale-description" {
@@ -51,9 +60,10 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
             // normal save baseline guard must reject it, not a fake UI flag.
             defaults.set(Data(#"{"futureSchema":3,"preserve":{"field":null}}"#.utf8), forKey: Self.key)
         }
-        if scenario == "dropped-description" {
+        if ["dropped-description", "dropped-batch-pages"].contains(scenario) {
             (defaults as? Prompt11GuideFaultDefaults)?.rejectLibraryWrites = true
         }
+        (defaults as? Prompt11GuideFaultDefaults)?.libraryWriteAttempts = 0
         baselineBytes = defaults.data(forKey: Self.key)
     }
     deinit { UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite) }
@@ -107,6 +117,7 @@ private struct Prompt11GuideSaveReadback: View {
             Text("persisted name: " + (persisted.prompt11Guides.first?.name ?? "none")).accessibilityIdentifier("guideQA.persistedName")
             Text("persisted description: " + (persisted.prompt11Guides.first?.subtitle ?? "none")).accessibilityIdentifier("guideQA.persistedDescription")
             Text("original bytes intact: \(defaults.data(forKey: Prompt11GuideSaveFixture.key) == baseline)").accessibilityIdentifier("guideQA.originalBytesIntact")
+            Text("library write attempts: \((defaults as? Prompt11GuideFaultDefaults)?.libraryWriteAttempts ?? -1)").accessibilityIdentifier("guideQA.writeAttempts")
             Text("write protected: \(store.storageProtectionReason != nil)").accessibilityIdentifier("guideQA.writeProtected")
             Text("fixture owner: " + token).accessibilityIdentifier("guideQA.owner")
             Text("saved status requests: \(savedStatusRequests)").accessibilityIdentifier("guideQA.savedStatusRequests")

@@ -66,7 +66,49 @@ extension Prompt10SavedLibraryStore {
             return existing
         }
 
-        let referencePage = Prompt10SavedPage(
+        return try prompt11AddSavedMaterials([sourcePage], to: encyclopediaID, chapterID: chapterID)[0]
+    }
+
+    /// Returns only newly added references, deduplicating the whole guide and batch.
+    @discardableResult
+    func prompt11AddSavedMaterials(
+        _ sourcePages: [Prompt10SavedPage],
+        to encyclopediaID: UUID,
+        chapterID: UUID
+    ) throws -> [Prompt10SavedPage] {
+        guard let guide = encyclopedia(id: encyclopediaID) else {
+            throw Prompt10LibraryError.encyclopediaNotFound
+        }
+        guard guide.chapters.contains(where: { $0.id == chapterID }) else {
+            throw Prompt10LibraryError.chapterNotFound
+        }
+        var seen = Prompt10SharedLibraryCatalog.containedSourceKeys(in: guide)
+        let references = sourcePages.compactMap { sourcePage -> Prompt10SavedPage? in
+            let key = Prompt10SharedLibraryCatalog.sourceKey(sourcePage)
+            guard seen.insert(key).inserted else { return nil }
+            return prompt11ReferencePage(sourcePage, chapterID: chapterID)
+        }
+        return try savePages(references, to: encyclopediaID, chapterID: chapterID)
+    }
+
+    /// Resolve selection against the current shared catalog, independently of
+    /// the picker's visible search/filter. Never silently save a surviving subset.
+    @discardableResult
+    func prompt11AddSavedMaterialSelection(
+        sourceKeys: Set<UUID>, to encyclopediaID: UUID, chapterID: UUID
+    ) throws -> [Prompt10SavedPage] {
+        let pages = prompt11AllSavedMaterial().filter {
+            sourceKeys.contains(Prompt10SharedLibraryCatalog.sourceKey($0))
+        }
+        guard Set(pages.map(Prompt10SharedLibraryCatalog.sourceKey)) == sourceKeys else {
+            throw Prompt10LibraryError.contentChanged
+        }
+        return try prompt11AddSavedMaterials(pages, to: encyclopediaID, chapterID: chapterID)
+    }
+
+    private func prompt11ReferencePage(_ sourcePage: Prompt10SavedPage, chapterID: UUID) -> Prompt10SavedPage {
+        let sourceKey = Prompt10SharedLibraryCatalog.sourceKey(sourcePage)
+        return Prompt10SavedPage(
             chapterID: chapterID,
             question: sourcePage.question,
             answer: sourcePage.answer,
@@ -88,12 +130,6 @@ extension Prompt10SavedLibraryStore {
             sourceRecords: sourcePage.sourceRecords,
             educationalAssetIDs: sourcePage.educationalAssetIDs,
             userMaterial: sourcePage.userMaterial
-        )
-
-        return try savePage(
-            referencePage,
-            to: encyclopediaID,
-            chapterID: chapterID
         )
     }
 

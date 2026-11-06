@@ -326,21 +326,14 @@ struct Prompt11SavedPagePicker: View {
         }
 
         do {
-            var added = 0
-
-            for candidate in candidates
-            where selectedSourceKeys.contains(candidate.sourceKey) &&
-                !candidate.isAlreadyInGuide {
-                _ = try store.prompt11AddSavedMaterial(
-                    candidate.page,
-                    to: encyclopediaID,
-                    chapterID: chapterID
-                )
-                added += 1
-            }
+            let added = try store.prompt11AddSavedMaterialSelection(
+                sourceKeys: selectedSourceKeys, to: encyclopediaID, chapterID: chapterID
+            )
+            // A changed filter/selection must never produce a false saved card.
+            guard !added.isEmpty else { return }
 
             audioManager.play(.pageTurn)
-            onAdded(added)
+            onAdded(added.count)
         } catch {
             errorMessage = error.localizedDescription
         }

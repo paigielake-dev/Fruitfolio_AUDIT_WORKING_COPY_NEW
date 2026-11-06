@@ -181,24 +181,40 @@ final class Prompt10SavedLibraryStore {
         to encyclopediaID: UUID,
         chapterID: UUID
     ) throws -> Prompt10SavedPage {
+        try savePages([page], to: encyclopediaID, chapterID: chapterID)[0]
+    }
+
+    /// Stage the complete selection and acknowledge one canonical library write.
+    /// Failure restores the last acknowledged snapshot through `persist()`.
+    @discardableResult
+    func savePages(
+        _ pages: [Prompt10SavedPage],
+        to encyclopediaID: UUID,
+        chapterID: UUID
+    ) throws -> [Prompt10SavedPage] {
         guard let encyclopediaIndex = encyclopedias.firstIndex(where: { $0.id == encyclopediaID }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
         }
-
         guard let chapterIndex = encyclopedias[encyclopediaIndex].chapters.firstIndex(where: { $0.id == chapterID }) else {
             throw Prompt10LibraryError.chapterNotFound
         }
-
-        var savedPage = page
-        savedPage.chapterID = chapterID
-        savedPage.order = encyclopedias[encyclopediaIndex].chapters[chapterIndex].pages.count
-        savedPage.savedAt = Date()
-        savedPage.updatedAt = Date()
-
-        encyclopedias[encyclopediaIndex].chapters[chapterIndex].pages.append(savedPage)
-        encyclopedias[encyclopediaIndex].updatedAt = Date()
+        guard !pages.isEmpty else { return [] }
+        let firstOrder = encyclopedias[encyclopediaIndex].chapters[chapterIndex].pages.count
+        let now = Date()
+        let savedPages = pages.enumerated().map { offset, page in
+            var saved = page
+            saved.chapterID = chapterID
+            saved.order = firstOrder + offset
+            saved.savedAt = now
+            saved.updatedAt = now
+            return saved
+        }
+        var staged = encyclopedias
+        staged[encyclopediaIndex].chapters[chapterIndex].pages.append(contentsOf: savedPages)
+        staged[encyclopediaIndex].updatedAt = now
+        encyclopedias = staged
         try persist()
-        return savedPage
+        return savedPages
     }
 
     @discardableResult

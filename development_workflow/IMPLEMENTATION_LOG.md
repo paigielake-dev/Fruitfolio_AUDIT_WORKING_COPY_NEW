@@ -2290,3 +2290,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 761, "native_CPU_XCTest": 783, "SwiftTesting_each_run": 21, "workflow_checks": 50, "syntax_files": 311, "focused_library_tests": 6, "Apple_Guide_UI_cases_written_NOT_RUN": 32, "official_MADLAD": "BLOCKED; synthetic CPU tests are not official inference", "catalog_English_keys": 802, "foreign_units": 0}.
 - Next action: Replace Guide saved-page picker individual-write submission loop with one canonical staged batch commit preserving every original source/page field and source references. Add actual-library fault injection for failed writes, complete batch acknowledgment, stale/external data and duplicate/empty selections; demonstrate no partially committed selection. Preserve single-page compatibility and UI callbacks; run supported tests and record remaining Apple/official-model/clinical gates.
 - Commit: containing commit for batch Canonical-library-write-acknowledgment.
+
+## Single-acknowledged-Guide-page-selection
+
+- Parent checkpoint: a2df8c27f78f630007ea9116cb1323562830fc6b.
+- Source-order requirements: [200, 206, 207, 209, 210, 453, 467, 474, 476, 477].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift, Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift, Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift.
+- Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.
+- Tests added/updated: FruitfolioTests/Prompt1BLibraryPersistenceTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 767, "native_CPU_XCTest": 789, "SwiftTesting_each_run": 21, "workflow_checks": 50, "syntax_files": 311, "focused_library_tests": 12, "Apple_Guide_UI_cases_written_NOT_RUN": 40, "official_MADLAD": "BLOCKED; no official inference demonstrated"}.
+- Next action: Protect Guide metadata edits against concurrent changes within the shared live Store. Inspect existing rename/description/cover editor baselines and add expected-field checks where missing, preserving drafts on failure and unrelated metadata changes. Add real Store regressions, run supported suites, update individual checklist evidence and checkpoint locally.
+- Commit: containing commit for batch Single-acknowledged-Guide-page-selection.

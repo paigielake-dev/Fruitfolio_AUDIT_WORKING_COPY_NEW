@@ -256,6 +256,47 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGuideMultiplePageSelectionIsOneAcknowledgedSaveOrNoSavedStatus() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for dropped in [false, true] {
+            let app = launchGuideSave(dropped ? "dropped-batch-pages" : "batch-pages", reduced: reduced, rtl: rtl)
+            let open = app.buttons["guide.savedPages.open"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            let workspace = app.scrollViews.firstMatch
+            for _ in 0..<24 { if open.isHittable { break }; workspace.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let scroll = app.scrollViews["fruitfolio.notebookPopup.scroll"]
+            let candidates = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "guide.savedPages.candidate."))
+            XCTAssertEqual(candidates.count, 2)
+            for index in 0..<2 {
+                let candidate = candidates.element(boundBy: index)
+                for _ in 0..<24 { if candidate.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(candidate.isHittable); candidate.tap()
+            }
+            tapGuideFormAction("guide.savedPages.add", in: app)
+            let expected = dropped ? "first section pages: 0" : "first section pages: 2"
+            let persisted = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: app.staticTexts["guideQA.firstSectionPages"])
+            XCTAssertEqual(XCTWaiter.wait(for: [persisted], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["guideQA.secondSectionPages"].label, "second section pages: 0")
+            XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 1")
+            if dropped {
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.writeProtected"].label, "write protected: true")
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 0")
+                XCTAssertTrue(app.buttons["guide.savedPages.add"].exists)
+                expectGuidePopupRequests(open: 1, close: 0, in: app)
+            } else {
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 1")
+                expectGuidePopupRequests(open: 2, close: 2, in: app)
+            }
+            captureGame(app, name: "guide-batch-dropped-\(dropped)-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGuideFormReplacementClosesAndOpensOneOwnerWithoutSavingOnCancel() {
         for reduced in [false, true] {
         for rtl in [false, true] {
