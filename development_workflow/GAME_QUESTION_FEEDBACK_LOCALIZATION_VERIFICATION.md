@@ -1,0 +1,7 @@
+# Question feedback and catch-instruction display translation
+
+The existing correct/incorrect feedback strings now enter the shared display translation pipeline. Original wording and serious-versus-playful selection remain unchanged, including the existing character visibility rules. Catch instructions and their fixed visual legend also use the pipeline; source IDs/records remain explicit protected context. The app's question/answer identity, literal cloze, stored fields and scoring are unchanged. No machine result is treated as clinically reviewed.
+
+Sixteen added Apple UI launches combine serious/normal, correct/incorrect, English/Arabic fallback and Reduce Motion. They select actual question answers, inspect the chosen English feedback where applicable, follow the actual review/catch transition and check the original source words remain. The serious fixture is explicitly synthetic nonmedical UI data. Inference is paused only in these DEBUG launches for deterministic catalog/source fallback. Apple SDK typechecking and UI, VoiceOver/RTL/animation execution remain NOT_RUN.
+
+Four missing English-only source keys bring the catalog from 677 to 681; all prior entries are unchanged and nonempty foreign-language translations remain zero. Existing explanations and citation data are preserved. Official MADLAD resources, linguistic/clinical quality and device acceptance remain blocked; the lexical integrity checks do not prove meaning in other languages. Final feasible counts are in the batch log.

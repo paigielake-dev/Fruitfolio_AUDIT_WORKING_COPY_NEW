@@ -2059,3 +2059,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 727, "native_CPU_XCTest": 749, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 677, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0}.
 - Next action: Route existing fixed correct/incorrect game feedback and catch legend through shared display translation with serious-tone selection and citation protection intact; preserve original excerpt word choices and all domain fields. Extend actual question-flow UI scenarios.
 - Commit: containing commit for batch Catch-navigation-cue-owner-and-star-bank-event-diagnostics.
+
+## Question-feedback-and-catch-instruction-display-translation
+
+- Parent checkpoint: 170821fbe5ce618ed5ce640d4571fe72c9e8bbf8.
+- Source-order requirements: [47, 48, 59, 62, 63, 393, 394, 395, 397, 410, 411, 422, 431, 433, 434, 466, 468, 471, 472, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Existing correct/incorrect feedback and catch instructions/legend use shared display translation with original copy, serious-tone choice and explicit source protection. Domain questions, literal choices, scoring and metadata unchanged. Sixteen synthetic Apple UI launch cases added for correct/incorrect, serious, English/Arabic fallback and motion; unrun. Four English-only keys preserve all 677 prior entries.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 727, "native_CPU_XCTest": 749, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 681, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 677}.
+- Next action: Localize failed-attempt fixed feedback and round-statistic labels; keep count/score formatting separate from inference using the selected app locale. Preserve failed-round ledger/citations and serious retry tone. Add actual numeric integrity and result UI regressions.
+- Commit: containing commit for batch Question-feedback-and-catch-instruction-display-translation.

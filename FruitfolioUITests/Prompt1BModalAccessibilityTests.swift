@@ -191,6 +191,57 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameFeedbackKeepsSeriousSelectionAndExactQuestionAcrossTranslationFallback() {
+        for serious in [false, true] {
+        for correct in [false, true] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario",
+                serious ? "question-excerpt-serious" : "question-excerpt",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let scroll = app.scrollViews["fruitBasket.question.scroll"]
+            let answer = app.buttons["fruitBasket.question.answer." + (correct ? "first" : "second")]
+            XCTAssertTrue(answer.waitForExistence(timeout: 5))
+            for _ in 0..<24 { if answer.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(answer.isHittable)
+            answer.tap()
+            let feedbackID = correct ? "fruitBasket.question.correctFeedback" : "fruitBasket.question.incorrectFeedback"
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: feedbackID).firstMatch.waitForExistence(timeout: 3))
+            if language == "en" {
+                let expected: String
+                if correct {
+                    expected = serious ? "that answer matches the source. continue when you’re ready." : "YAYYY! catch your fruit! :-)"
+                } else {
+                    expected = serious ? "that answer does not match the original source. review the excerpt and its citations below."
+                        : "not quite :,) here’s the little reason why."
+                }
+                XCTAssertTrue(app.staticTexts[expected].exists)
+            }
+            let action = app.buttons[correct ? "fruitBasket.question.correctContinue" : "fruitBasket.question.review"]
+            for _ in 0..<24 { if action.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(action.isHittable)
+            action.tap()
+            if correct {
+                XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "fruitBasket.question.catchRule").firstMatch.exists)
+                XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "fruitBasket.question.catchLegend").firstMatch.exists)
+            } else {
+                XCTAssertFalse(app.descendants(matching: .any).matching(identifier: feedbackID).firstMatch.exists)
+            }
+            let excerpt = app.descendants(matching: .any).matching(identifier: "fruitBasket.question.literalExcerpt").firstMatch
+            XCTAssertEqual(excerpt.label, "UI fixture only: the selected word is [blank].")
+            XCTAssertEqual(app.buttons["fruitBasket.question.answer.first"].label, "first")
+            captureGame(app, name: "game-feedback-serious-\(serious)-correct-\(correct)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+        }
+    }
+
     func testCorrectAnswerNavigationOwnsOnlyItsCanonicalPopWhileStarBankKeepsItsEventCue() {
         for muted in [false, true] {
         for reduced in [false, true] {

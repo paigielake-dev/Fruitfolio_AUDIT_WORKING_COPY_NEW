@@ -94,7 +94,7 @@ struct Prompt28GameRegressionHarness: View {
             return
         }
         model.rawTopic = "QA visual fixture"
-        let isExcerpt = scenario == "question-excerpt"
+        let isExcerpt = ["question-excerpt", "question-excerpt-serious"].contains(scenario)
         model.currentQuestion = Prompt28Question(id: "qa-only", topicQuery: "QA visual fixture",
             normalizedTopic: "qa visual fixture", category: isExcerpt ? Prompt28ExcerptQuestionPresentation.category : "UI fixture — not medical research",
             educationalDifficulty: .easy, questionText: isExcerpt
@@ -104,7 +104,8 @@ struct Prompt28GameRegressionHarness: View {
             explanation: "UI regression fixture only. This is not medical content.", sourceIDs: ["qa-only"],
             sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
             catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
-            contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0))
+            contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0),
+            seriousFeedback: scenario == "question-excerpt-serious" ? true : nil)
         var session = model.engine.newSession(topic: model.rawTopic, normalizedTopic: "qa visual fixture",
             difficulty: .easy, startingLevel: scenario == "storm" ? 6 : 1)
         if scenario == "storm" { session.currentRound = 3 }

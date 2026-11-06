@@ -994,10 +994,10 @@ struct Prompt28FruitBasketView: View {
                                     alignment: .leading,
                                     spacing: 5
                                 ) {
-                                    Text(
-                                        Prompt28FeedbackCopy.incorrect(serious: question.usesSeriousFeedback)
-                                    )
-                                    .prompt28Text(.body)
+                                    FruitfolioTranslatedText(
+                                        source: Prompt28FeedbackCopy.incorrect(serious: question.usesSeriousFeedback),
+                                        font: Prompt28TextRole.body.font, serious: question.usesSeriousFeedback)
+                                        .accessibilityIdentifier("fruitBasket.question.incorrectFeedback")
 
                                     FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true, sourceRecords: question.sourceRecords ?? [])
                                         .prompt28Text(.body)
@@ -1016,6 +1016,7 @@ struct Prompt28FruitBasketView: View {
                                 viewModel.selectedAnswerID = nil
                                 viewModel.screen = .question
                             }
+                            .accessibilityIdentifier("fruitBasket.question.review")
 
                         } else if viewModel.screen == .correctFeedback {
                             HStack(spacing: 10) {
@@ -1030,8 +1031,10 @@ struct Prompt28FruitBasketView: View {
                                 .accessibilityLabel("Strawberry")
                                 }
 
-                                Text(Prompt28FeedbackCopy.correct(serious: question.usesSeriousFeedback))
-                                    .prompt28Text(.body)
+                                FruitfolioTranslatedText(
+                                    source: Prompt28FeedbackCopy.correct(serious: question.usesSeriousFeedback),
+                                    font: Prompt28TextRole.body.font, serious: question.usesSeriousFeedback)
+                                    .accessibilityIdentifier("fruitBasket.question.correctFeedback")
                             }
 
                             Prompt28WatercolorButton(
@@ -1043,13 +1046,14 @@ struct Prompt28FruitBasketView: View {
                             .accessibilityIdentifier("fruitBasket.question.correctContinue")
 
                         } else if viewModel.screen == .catchIntro {
-                            Text(question.catchRule)
-                                .prompt28Text(.body)
+                            FruitfolioTranslatedText(source: question.catchRule,
+                                protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font,
+                                serious: true, sourceRecords: question.sourceRecords ?? [])
+                                .accessibilityIdentifier("fruitBasket.question.catchRule")
 
-                            Text(
-                                "starred = catch it · no star = let it pass"
-                            )
-                            .prompt28Text(.secondary)
+                            FruitfolioTranslatedText(source: "starred = catch it · no star = let it pass",
+                                font: Prompt28TextRole.secondary.font, serious: true)
+                                .accessibilityIdentifier("fruitBasket.question.catchLegend")
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
                             Prompt28WatercolorButton(
