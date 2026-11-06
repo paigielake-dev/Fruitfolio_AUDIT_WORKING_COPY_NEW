@@ -127,10 +127,10 @@ nonisolated struct Prompt16TodayLoader: Sendable {
 
     func loadSnapshot(now: Date = Date()) async throws -> Prompt16TodayLoadSnapshot {
         let today = try Prompt13LocalDate(now, calendar: calendar)
-        async let cycleTask = cycleStore.snapshotWithDerivedState(on: today, generatedAt: now)
-        async let onboardingTask = onboardingStore.snapshot()
-        let cycle = try await cycleTask
-        let onboarding = try await onboardingTask
+        // Loading onboarding may resume a persisted cycle-history commit. Capture
+        // archive + derived state only after that recovery has acknowledged.
+        let onboarding = try await onboardingStore.snapshot()
+        let cycle = try await cycleStore.snapshotWithDerivedState(on: today, generatedAt: now)
         try Task.checkCancellation()
         let state = Prompt16TodayStateBuilder().makeState(archive: cycle.archive,
             derivedState: cycle.derivedState, onboarding: onboarding)

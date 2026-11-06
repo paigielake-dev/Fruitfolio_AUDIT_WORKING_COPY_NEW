@@ -18,13 +18,12 @@ struct Prompt24TrendsLoader {
         let resolvedOwnerID =
             ownerID ?? Prompt20DailyLogOwnerID.localDevice
 
-        async let archiveTask = todayLoader.cycleStore.snapshot()
-        async let onboardingTask = todayLoader.onboardingStore.snapshot()
         async let logsTask =
             repository.allActiveLogs(ownerID: resolvedOwnerID)
 
-        let archive = try await archiveTask
-        let onboarding = try await onboardingTask
+        // Onboarding load may resume its journaled cycle-file change.
+        let onboarding = try await todayLoader.onboardingStore.snapshot()
+        let archive = try await todayLoader.cycleStore.snapshot()
         let logs = try await logsTask
 
         let bridge = try Prompt24Prompt17Bridge.makePredictionAndPeriods(

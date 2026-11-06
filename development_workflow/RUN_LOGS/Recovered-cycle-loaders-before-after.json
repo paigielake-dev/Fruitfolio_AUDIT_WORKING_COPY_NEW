@@ -1,0 +1,17 @@
+{
+  "parent": "d938e03b29e0ad56608da26c7ec48d0699063258",
+  "method": "Four unchanged real-file recovery tests with git-show parent versions of all four actual loaders, copied into isolated temporary package. Actual current stores/models and genuine production loaders; no mirror or source mutation.",
+  "before": "4tests,8failures,0unexpected",
+  "after": "4tests pass in full660-test portable suite",
+  "failures": [
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:71: error: Prompt1BRecoveredCycleLoaderTests.testCalendarUsesRecoveredStartsWithoutOldRecordedStartMarker : XCTAssertFalse failed - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:72: error: Prompt1BRecoveredCycleLoaderTests.testCalendarUsesRecoveredStartsWithoutOldRecordedStartMarker : XCTAssertTrue failed - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:92: error: Prompt1BRecoveredCycleLoaderTests.testHormoneRhythmUsesOneRecoveredTodaySnapshotForContextAndPrediction : XCTAssertEqual failed: (\"Optional(7)\") is not equal to (\"Optional(3)\") - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:57: error: Prompt1BRecoveredCycleLoaderTests.testTodayCapturesArchiveAfterHeldJournalRecoveryAcknowledges : XCTAssertEqual failed: (\"Optional(7)\") is not equal to (\"Optional(3)\") - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:58: error: Prompt1BRecoveredCycleLoaderTests.testTodayCapturesArchiveAfterHeldJournalRecoveryAcknowledges : XCTAssertEqual failed: (\"Optional(7)\") is not equal to (\"Optional(3)\") - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:60: error: Prompt1BRecoveredCycleLoaderTests.testTodayCapturesArchiveAfterHeldJournalRecoveryAcknowledges : XCTAssertEqual failed: (\"[D56767FB-5FD3-4B38-B037-380AC9574651, D245D2CF-E7C5-4727-8983-CCDE5B188A88]\") is not equal to (\"[D56767FB-5FD3-4B38-B037-380AC9574651, 3835461C-B358-4EAA-B64B-36A398B0A3A3]\") - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:81: error: Prompt1BRecoveredCycleLoaderTests.testTrendsUsesRecoveredThirtyFiveDayIntervalRatherThanOldThirtyOneDays : XCTAssertEqual failed: (\"[31]\") is not equal to (\"[35]\") - ",
+    "/tmp/fruitfolio-portable-bsp356ko/Tests/FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift:82: error: Prompt1BRecoveredCycleLoaderTests.testTrendsUsesRecoveredThirtyFiveDayIntervalRatherThanOldThirtyOneDays : XCTAssertEqual failed: (\"Optional(31.0)\") is not equal to (\"Optional(35.0)\") - "
+  ],
+  "scope": "Recovery completes before cycle capture. Not a transaction against arbitrary concurrent external user edits."
+}

@@ -21,11 +21,10 @@ struct Prompt22HormoneRhythmLoader {
     func load(
         now: Date = Date()
     ) async throws -> Prompt22HormoneRhythmInput {
-        async let bodyInputTask = bodyBiologyLoader.load(now: now)
-        async let predictionTask = loadExistingPrompt17Prediction(now: now)
-
-        let bodyInput = try await bodyInputTask
-        let prediction = try await predictionTask
+        // Body context and prediction consume one captured, recovered snapshot.
+        let snapshot = try await bodyBiologyLoader.todayLoader.loadSnapshot(now: now)
+        let bodyInput = Prompt21BodyBiologyLoader.makeInput(from: snapshot.state)
+        let prediction = try existingPrompt17Prediction(from: snapshot, now: now)
         let mapped = Self.mapBodyContext(bodyInput.state)
         let resolvedCycleDay = prediction?.currentCycleDay ?? bodyInput.cycleDay
         let hasRepresentedCyclePosition =
@@ -90,16 +89,14 @@ struct Prompt22HormoneRhythmLoader {
     /// already used by the app, then asks the unchanged Prompt 17 engine for its
     /// existing currentCycleProgress output. Phase 22 never edits Prompt 17 or
     /// derives a competing prediction.
-    private func loadExistingPrompt17Prediction(
+    private func existingPrompt17Prediction(
+        from snapshot: Prompt16TodayLoadSnapshot,
         now: Date
-    ) async throws -> Prompt17CyclePredictionResult? {
+    ) throws -> Prompt17CyclePredictionResult? {
         let todayLoader = bodyBiologyLoader.todayLoader
 
-        async let archiveTask = todayLoader.cycleStore.snapshot()
-        async let onboardingTask = todayLoader.onboardingStore.snapshot()
-
-        let archive = try await archiveTask
-        let onboarding = try await onboardingTask
+        let archive = snapshot.archive
+        let onboarding = snapshot.onboarding
 
         let storedCycleStarts = archive.cycleStarts
             .filter { !$0.metadata.isDeleted }

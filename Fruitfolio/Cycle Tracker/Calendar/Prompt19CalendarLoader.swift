@@ -19,13 +19,12 @@ nonisolated struct Prompt19CalendarLoader: Sendable {
         month: Prompt19CalendarMonth,
         now: Date = Date()
     ) async throws -> Prompt19CalendarSnapshot {
-        async let archiveTask = todayLoader.cycleStore.snapshot()
-        async let onboardingTask = todayLoader.onboardingStore.snapshot()
         let calendar = todayLoader.calendar
         async let supplementalTask = supplementalProvider.load(month, calendar)
 
-        let archive = try await archiveTask
-        let onboarding = try await onboardingTask
+        // Onboarding load may resume its journaled cycle-file change.
+        let onboarding = try await todayLoader.onboardingStore.snapshot()
+        let archive = try await todayLoader.cycleStore.snapshot()
 
         let engine = Prompt19CalendarEngine(calendar: calendar)
 

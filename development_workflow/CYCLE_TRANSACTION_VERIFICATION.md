@@ -137,3 +137,24 @@ ObservableObject rendering, keyboard, VoiceOver, Dynamic Type or UI sound playba
 Next integration concern: loaders that concurrently read cycle and onboarding
 snapshots must await onboarding journal recovery before capturing cycle history;
 otherwise they may combine an older archive with a newly recovered draft.
+
+## Loader ordering after recovery
+
+Today, Calendar and Trends now await the onboarding snapshot before reading cycle
+history. Independent supplemental/log reads remain concurrent. Hormone Rhythm
+captures one Today snapshot and derives both its existing body context and unchanged
+Prompt17 prediction input from that captured archive/draft, removing two competing
+loads. The actual Trends and Hormone Rhythm Foundation loaders are now compiled
+in the portable suite as well as their unchanged engines.
+
+Four real-file integration tests persist a pending correction from September 1 to
+September 5, retaining August 1. They hold the final onboarding acknowledgment
+while the new archive has already committed, then verify the screens use day3,
+September5's recorded marker and35-day interval instead of old day7/September1/
+31days. They verify recovery creates no temperatures or laboratory measurements.
+The same tests using parent d938e03's actual four loader sources in an isolated
+package reported8failures across4tests; the current sources pass all4.
+
+This closes the known self-recovery read-order gap. It does not provide atomic
+cross-file snapshots against unrelated operations after recovery, nor verify Apple
+screen rendering, clinical interpretation or reviewed educational copy.

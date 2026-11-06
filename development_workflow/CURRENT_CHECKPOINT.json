@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "de9b589d465faf5c386a917fe7296e7e221cf2d6",
+  "current_HEAD": "d938e03b29e0ad56608da26c7ec48d0699063258",
   "latest_verified_commit": null,
   "current_checklist_part": 10,
   "current_requirement": 474,
-  "current_implementation_batch": "Onboarding-editor-ordered-saves-stale-baselines-and-saved-receipts",
+  "current_implementation_batch": "Cycle-loaders-capture-history-after-journal-recovery",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,15 +493,15 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingPersistence.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingStore.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingViewModel.swift",
-    "FruitfolioTests/Prompt1BOnboardingTransactionTests.swift",
-    "FruitfolioTests/Prompt1BOnboardingViewModelTests.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+    "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
+    "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
+    "FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift",
     "Tools/run_portable_swift_tests.py",
     "development_workflow/CYCLE_TRANSACTION_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/Recovered-cycle-loaders-before-after.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -514,24 +514,25 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Final656portable XCTest+21SwiftTesting",
-    "Final662native CPU XCTest+21SwiftTesting",
+    "Full660portable XCTest+21SwiftTesting",
+    "Full666native CPU XCTest+21SwiftTesting",
     "40workflow tests",
-    "288Swift compiler parses",
-    "Xcode project reference validation",
+    "289Swift compiler parses",
+    "Four new tests with parent actual loader sources in isolated package",
+    "Xcode project references",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable": "656XCTest+21SwiftTesting passed",
-    "native": "662XCTest+21SwiftTesting passed",
+    "portable": "660XCTest+21SwiftTesting passed",
+    "native": "666XCTest+21SwiftTesting passed",
     "workflow": "40passed",
-    "syntax": "288files parsed,0errors;notAppletypecheck",
+    "syntax": "289files parsed,0errors;notAppletypecheck",
     "project": "References resolved,notbuilt",
-    "editor": "11actual view-model/file regressions passed; no mirrored implementation",
-    "limits": "Apple UI/Combine rendering/VO/DT/sound and officialMADLAD device inference remainNOT_RUN/blocked; journal loader read ordering next"
+    "before": "4tests8failures0unexpected;after4pass",
+    "limits": "Cross-file atomic visibility,Apple screen/runtime/clinical and officialMADLAD output notverified"
   },
-  "next_exact_implementation_action": "Fix downstream recovery ordering: Today, Calendar, Trends and Hormone Rhythm concurrently read cycle/onboarding snapshots, so onboarding journal recovery can produce an old archive/new draft pair. Await recovery before capturing cycle history, use one Today snapshot for Hormone Rhythm body/prediction input, compile the actual remaining Foundation loaders in portable suite and add real-file pending-recovery integration regressions. Then protect unsaved onboarding exit and retained shared daily-log confirmation controls.",
-  "updated_at": "2026-11-06T08:29:22.979934+00:00",
+  "next_exact_implementation_action": "Migrate the active DailyLog local unsaved overlay to the existing identity-owned taped-white popup pipeline with canonical controls, delayed exit after dismissal and save/discard/keep-editing actions. Add onboarding dirty-exit protection using the same existing ownership pattern, with actual view-model discard/wait tests, cancellation/focus guards and source-level UI test coverage; keep Apple runtime NOT_RUN. Continue the original checklist and independent MADLAD/localization work.",
+  "updated_at": "2026-11-06T08:33:52.270462+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
