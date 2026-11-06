@@ -2455,3 +2455,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_measurement_launches_written_NOT_RUN": 22, "Apple_Guide_launches_written_NOT_RUN": 56, "English_catalog_keys": 864, "last_confirmed_prior_full_suites_NOT_RERUN": {"portable_XCTest": 793, "native_CPU_XCTest": 815, "SwiftTesting_each": 21}}.
 - Next action: Inspect original requirement259 and existing implementation for the next independent incomplete behavior; preserve clinical boundaries and record actual verification separately from written Apple checks.
 - Commit: containing commit for batch Hormone-library-request-scoped-presentation-and-retry.
+
+## Hormone-original-decorative-art-touch-exclusion
+
+- Parent checkpoint: e13eb121eac07aca2196c2b717fcbce81671c625.
+- Source-order requirements: [259, 260, 261].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryView.swift, Fruitfolio/Hormone Information/HormoneInformationView.swift.
+- Existing bounded original hormone artwork now explicitly rejects touch hit testing in measurement header and library. Existing accessibility exclusion, original image identity and layout bounds retained. No assets changed. This is source-level interaction hardening, not Apple runtime verification.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing written library/control checks; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_UI": "NOT_RUN; no new launch vectors", "Foundation": "unchanged, not rerun; prior793/815 XCTest and21 SwiftTesting each"}.
+- Next action: Continue measurement accessible interaction ownership: guard root navigation/editor/export/reload and deletion actions against inactive/background/covered presentation; preserve drafts and exact persisted measurements.
+- Commit: containing commit for batch Hormone-original-decorative-art-touch-exclusion.

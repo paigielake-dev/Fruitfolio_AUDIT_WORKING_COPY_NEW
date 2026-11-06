@@ -42,6 +42,7 @@ struct FruitfolioHormoneLibraryView: View {
                 .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 if let asset = artwork {
                     FruitfolioImage(id: asset).scaledToFit().frame(maxWidth: 100, maxHeight: 100)
+                        .allowsHitTesting(false)
                         .accessibilityHidden(true)
                 }
                 FruitfolioTranslatedText(source: "educational library excerpts, not an interpretation of your measurements. keep each excerpt’s original topic and source context in view. coverage is partial; these sections do not establish a diagnosis, normal range or treatment recommendation.", font: .callout, serious: true)

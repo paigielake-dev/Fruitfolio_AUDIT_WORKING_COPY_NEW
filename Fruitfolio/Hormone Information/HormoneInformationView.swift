@@ -37,6 +37,7 @@ struct FruitfolioHormoneInformationView: View {
                         .accessibilityAddTraits(.isHeader)
                     FruitfolioImage(id: .hormone_estrogen)
                         .scaledToFit().frame(width: 56, height: 56)
+                        .allowsHitTesting(false)
                         .accessibilityHidden(true)
                 }
                 WatercolorSecondaryButton(label: "explore the hormone library") { showingLibrary = true }
