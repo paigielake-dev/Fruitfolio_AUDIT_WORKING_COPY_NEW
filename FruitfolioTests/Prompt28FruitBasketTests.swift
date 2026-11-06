@@ -21,20 +21,24 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.classificationFruit = Prompt28FallingFruit(fruitID: .lemon, classification: .bad,
             x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
         model.classificationDecision(accept: true)
+        // Accepting starts entry; drive the shared clock through settlement.
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
         model.sceneBecameInactive()
         model.resume()
         model.sceneBecameInactive()
-        try await Task.sleep(for: .milliseconds(350))
+        await Task.yield()
         XCTAssertEqual(model.screen, .catchUnsuccessful)
         XCTAssertEqual(model.store.progress(for: "demo")?.totalRoundsCompleted, 1)
         XCTAssertEqual(model.store.progress(for: "demo")?.totalSuccessfulRounds, 0)
     }
 
-    func testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume() {
+    func testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume() async {
         let model = roundModel(starPasses: 2)
         model.classificationFruit = Prompt28FallingFruit(fruitID: .lemon, classification: .bad,
             x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
         model.classificationDecision(accept: true)
+        // Accepting starts entry; drive the shared clock through settlement.
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
         XCTAssertEqual(model.session?.availableStarPasses, 1)
         XCTAssertEqual(model.screen, .catchActive)
         model.sceneBecameInactive()
@@ -141,7 +145,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
 
     @MainActor
     func testLifetimeStarsSurviveProgressStoreUpdates() {
-        let suite = "Prompt28Stars.\\(UUID().uuidString)"
+        let suite = "Prompt28Stars.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
 

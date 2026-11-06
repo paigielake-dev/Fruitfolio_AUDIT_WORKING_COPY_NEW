@@ -3,16 +3,6 @@ import Foundation
 
 @MainActor
 final class Prompt28FruitBasketStore: ObservableObject {
-    private struct PersistedState: Codable {
-        var topicProgress: [String: Prompt28TopicProgress] = [:]
-        var questionHistory: [String: [String]] = [:]
-        var tourState = Prompt28TourState()
-        var appearOnLeaderboard = false
-        var leaderboardPseudonym: String? = nil
-        var controlMode = Prompt28ControlMode.catchMode
-        var preferredDifficulty = Prompt28EducationalDifficulty.easy
-    }
-
     @Published private(set) var topicProgress: [String: Prompt28TopicProgress] = [:]
     @Published private(set) var questionHistory: [String: Set<String>] = [:]
     @Published var tourState = Prompt28TourState()
@@ -21,16 +11,16 @@ final class Prompt28FruitBasketStore: ObservableObject {
     @Published var controlMode = Prompt28ControlMode.catchMode
     @Published var preferredDifficulty = Prompt28EducationalDifficulty.easy
 
-    private let defaults: UserDefaults
-    private let persistenceKey: String
+    private let persistence: Prompt28GamePersistence
+    @Published private(set) var persistenceMessage: String?
+    var isReadOnly: Bool { persistence.isWriteBlocked }
 
     init(
         defaults: UserDefaults = .standard,
         persistenceKey: String = "fruitfolio.prompt28.fruitBasket.v1"
     ) {
-        self.defaults = defaults
-        self.persistenceKey = persistenceKey
-        load()
+        persistence = Prompt28GamePersistence(defaults: defaults, key: persistenceKey)
+        reload()
     }
 
     var leaderboardTotals: Prompt28LeaderboardTotals {
@@ -43,6 +33,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
 
     func ensureProgress(for normalizedTopic: String) -> Prompt28TopicProgress {
         if let existing = topicProgress[normalizedTopic] { return existing }
+        guard !isReadOnly, !normalizedTopic.isEmpty else { return Prompt28TopicProgress(normalizedTopicID: normalizedTopic) }
         let created = Prompt28TopicProgress(normalizedTopicID: normalizedTopic)
         topicProgress[normalizedTopic] = created
         persist()
@@ -50,6 +41,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
     }
 
     func updateProgress(_ progress: Prompt28TopicProgress) {
+        guard !isReadOnly else { return }
         var clean = progress
         clean.currentGameLevel = min(max(clean.currentGameLevel, 1), Prompt28FruitBasketEngine.maxGameLevel)
         clean.highestGameLevelReached = min(
@@ -62,14 +54,15 @@ final class Prompt28FruitBasketStore: ObservableObject {
     }
 
     func resetCurrentGameLevel(for normalizedTopic: String) {
-        var progress = ensureProgress(for: normalizedTopic)
-        progress.currentGameLevel = 1
+        guard !isReadOnly else { return }
+        var progress = Prompt28ProgressionPolicy.resettingLevel(ensureProgress(for: normalizedTopic))
         progress.lastPlayedAt = Date()
         topicProgress[normalizedTopic] = progress
         persist()
     }
 
     func recordQuestion(_ questionID: String, topic: String) {
+        guard !isReadOnly else { return }
         var ids = questionHistory[topic] ?? []
         ids.insert(questionID)
         questionHistory[topic] = ids
@@ -77,6 +70,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
     }
 
     func completeTour() {
+        guard !isReadOnly else { return }
         tourState.hasCompletedTour = true
         tourState.currentStep = 0
         tourState.tutorialBasketCount = 0
@@ -89,6 +83,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
     }
 
     func resetTourForReplay() {
+        guard !isReadOnly else { return }
         tourState = Prompt28TourState()
         persist()
     }
@@ -97,24 +92,26 @@ final class Prompt28FruitBasketStore: ObservableObject {
         persist()
     }
 
-    private func load() {
-        guard
-            let data = defaults.data(forKey: persistenceKey),
-            let state = try? JSONDecoder().decode(PersistedState.self, from: data)
-        else { return }
-
-        topicProgress = state.topicProgress
-        questionHistory = state.questionHistory.mapValues(Set.init)
-        tourState = state.tourState
-        leaderboardPseudonym = Prompt28LeaderboardUsernamePolicy.sanitized(state.leaderboardPseudonym ?? "")
-        // Legacy local opt-in is not proof of global registration.
-        appearOnLeaderboard = false
-        controlMode = state.controlMode
-        preferredDifficulty = state.preferredDifficulty
+    func reload() {
+        do {
+            let state = try persistence.load() ?? Prompt28PersistedGameState()
+            topicProgress = state.topicProgress
+            questionHistory = state.questionHistory.mapValues(Set.init)
+            tourState = state.tourState
+            leaderboardPseudonym = Prompt28LeaderboardUsernamePolicy.sanitized(state.leaderboardPseudonym ?? "")
+            // Legacy local opt-in is not proof of global registration.
+            appearOnLeaderboard = false
+            controlMode = state.controlMode
+            preferredDifficulty = state.preferredDifficulty
+            persistenceMessage = nil
+        } catch {
+            persistenceMessage = persistence.failure?.message ?? "game progress could not be loaded. original local data is retained."
+        }
     }
 
     private func persist() {
-        let state = PersistedState(
+        guard !isReadOnly else { return }
+        let state = Prompt28PersistedGameState(
             topicProgress: topicProgress,
             questionHistory: questionHistory.mapValues { Array($0).sorted() },
             tourState: tourState,
@@ -123,7 +120,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
             controlMode: controlMode,
             preferredDifficulty: preferredDifficulty
         )
-        guard let data = try? JSONEncoder().encode(state) else { return }
-        defaults.set(data, forKey: persistenceKey)
+        do { try persistence.save(state); persistenceMessage = nil }
+        catch { persistenceMessage = persistence.failure?.message ?? "game progress could not be saved; reload the current local state." }
     }
 }

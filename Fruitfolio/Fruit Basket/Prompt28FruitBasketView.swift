@@ -128,7 +128,7 @@ struct Prompt28FruitBasketView: View {
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
-            if !store.tourState.hasCompletedTour {
+            if !store.isReadOnly && !store.tourState.hasCompletedTour {
                 showTour = true
                 tourStep = 0
             }
@@ -138,6 +138,14 @@ struct Prompt28FruitBasketView: View {
             viewModel.leaveScreen()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
+        }
+        .onChange(of: store.isReadOnly) { _, blocked in
+            if blocked {
+                questionOperationTask?.cancel()
+                viewModel.leaveScreen()
+                showStormNote = false
+                showTour = false
+            }
         }
         .onChange(of: viewModel.screen) { _, screen in
             guard screen == .catchActive, viewModel.weather == .softRain,
@@ -276,42 +284,46 @@ struct Prompt28FruitBasketView: View {
 
     @ViewBuilder
     private var content: some View {
-        switch viewModel.screen {
-        case .home:
-            home
+        if store.isReadOnly {
+            progressRecovery
+        } else {
+            switch viewModel.screen {
+            case .home:
+                home
 
-        case .howItWorks:
-            howItWorks
+            case .howItWorks:
+                howItWorks
 
-        case .learningSetup,
-             .topicProgressChoice,
-             .loading,
-             .topicUnsupported,
-             .topicExhausted,
-             .error:
-            learningFlow
+            case .learningSetup,
+                 .topicProgressChoice,
+                 .loading,
+                 .topicUnsupported,
+                 .topicExhausted,
+                 .error:
+                learningFlow
 
-        case .question,
-             .correctFeedback,
-             .incorrectFeedback,
-             .catchIntro:
-            questionFlow
+            case .question,
+                 .correctFeedback,
+                 .incorrectFeedback,
+                 .catchIntro:
+                questionFlow
 
-        case .catchActive,
-             .paused:
-            gameplay
+            case .catchActive,
+                 .paused:
+                gameplay
 
-        case .catchUnsuccessful:
-            unsuccessful
+            case .catchUnsuccessful:
+                unsuccessful
 
-        case .basketReveal:
-            basketReveal
+            case .basketReveal:
+                basketReveal
 
-        case .leaderboard:
-            leaderboard
+            case .leaderboard:
+                leaderboard
 
-        case .resetConfirmation:
-            resetConfirmation
+            case .resetConfirmation:
+                resetConfirmation
+            }
         }
     }
 
@@ -339,6 +351,31 @@ struct Prompt28FruitBasketView: View {
         }
         .padding(.horizontal, 18)
         .padding(.top, 8)
+    }
+
+    private var progressRecovery: some View {
+        ScrollView {
+            VStack(spacing: 18) {
+                topBar
+                FruitfolioLargeCard {
+                    Text("game progress is protected").prompt28Text(.sectionHeading)
+                        .accessibilityAddTraits(.isHeader)
+                    Text(store.persistenceMessage ?? "the original local game data is retained while progress changes are paused.")
+                        .prompt28Text(.body)
+                    FruitfolioControlPillButton(label: "reload local progress") {
+                        store.reload()
+                        if !store.isReadOnly {
+                            viewModel.changeTopic()
+                            viewModel.difficulty = store.preferredDifficulty
+                            tourStep = 0
+                            showTour = !store.tourState.hasCompletedTour
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .accessibilityIdentifier("fruitBasket.progressRecovery")
     }
 
     private var stormNote: some View {

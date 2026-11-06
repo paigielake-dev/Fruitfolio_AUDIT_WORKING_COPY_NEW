@@ -108,7 +108,8 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     }
 
     var isPlayable: Bool {
-        answerOptions.count >= 2
+        !id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && answerOptions.count >= 2
             && Set(answerOptions.map(\.id)).count == answerOptions.count
             && Set(answerOptions.map { $0.text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }).count == answerOptions.count
             && answerOptions.allSatisfy({ !$0.id.isEmpty && !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
@@ -132,6 +133,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
     var totalFruitCaught: Int
     var totalStarsEarned: Int
     var totalSuccessfulRounds: Int
+    var successesInCurrentLevel: Int?
     var bestScore: Int
     var bestStreak: Int
     var lastPlayedAt: Date
@@ -148,7 +150,8 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         totalSuccessfulRounds: Int = 0,
         bestScore: Int = 0,
         bestStreak: Int = 0,
-        lastPlayedAt: Date = Date()
+        lastPlayedAt: Date = Date(),
+        successesInCurrentLevel: Int? = 0
     ) {
         self.normalizedTopicID = normalizedTopicID
         self.currentGameLevel = currentGameLevel
@@ -157,6 +160,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         self.totalFruitCaught = totalFruitCaught
         self.totalStarsEarned = totalStarsEarned
         self.totalSuccessfulRounds = totalSuccessfulRounds
+        self.successesInCurrentLevel = successesInCurrentLevel
         self.bestScore = bestScore
         self.bestStreak = bestStreak
         self.lastPlayedAt = lastPlayedAt
@@ -165,7 +169,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case normalizedTopicID, currentGameLevel, highestGameLevelReached
         case totalRoundsCompleted, totalFruitCaught, totalStarsEarned
-        case totalSuccessfulRounds, bestScore, bestStreak, lastPlayedAt
+        case totalSuccessfulRounds, bestScore, bestStreak, lastPlayedAt, successesInCurrentLevel
     }
 
     init(from decoder: Decoder) throws {
@@ -177,6 +181,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         totalFruitCaught = try c.decode(Int.self, forKey: .totalFruitCaught)
         totalStarsEarned = try c.decodeIfPresent(Int.self, forKey: .totalStarsEarned) ?? 0
         totalSuccessfulRounds = try c.decode(Int.self, forKey: .totalSuccessfulRounds)
+        successesInCurrentLevel = try c.decodeIfPresent(Int.self, forKey: .successesInCurrentLevel)
         bestScore = try c.decode(Int.self, forKey: .bestScore)
         bestStreak = try c.decode(Int.self, forKey: .bestStreak)
         lastPlayedAt = try c.decode(Date.self, forKey: .lastPlayedAt)

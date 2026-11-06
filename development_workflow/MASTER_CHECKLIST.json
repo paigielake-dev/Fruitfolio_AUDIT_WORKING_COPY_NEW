@@ -12717,15 +12717,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Increase falling speed gradually as game levels advance.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 359,
@@ -12733,15 +12746,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Base progression primarily on successfully completed rounds.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 360,
@@ -12749,15 +12775,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Keep early levels slow and forgiving.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 361,
@@ -12765,15 +12804,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Introduce bounded difficulty increases at later levels.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 362,
@@ -12781,15 +12833,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Do not increase difficulty after an unsuccessful round.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 363,
@@ -12797,15 +12862,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Stop increasing difficulty after the tested maximum level.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 364,
@@ -12813,15 +12891,28 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Never change an object\u2019s velocity while it is already falling.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
+      ],
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
+      ],
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 365,
@@ -12831,7 +12922,11 @@
       "description": "Keep gameplay challenging but not excessively demanding.",
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12839,13 +12934,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
-        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume",
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
       ],
-      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
       ],
-      "last_updated": "2026-11-05T18:57:53.164725+00:00"
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 366,
@@ -12978,7 +13077,10 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
-        "Tools/compile_fruit_basket_masks.py"
+        "Tools/compile_fruit_basket_masks.py",
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12992,16 +13094,20 @@
         "Prompt1BObstacleGeometryTests",
         "Prompt1BObstaclePhysicsTests",
         "Prompt1BPopupLayoutTests",
-        "test_fruit_basket_masks"
+        "test_fruit_basket_masks",
+        "Prompt1BProgressionPolicyTests",
+        "Prompt1BGamePersistenceTests",
+        "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)"
       ],
-      "commit_reference": "batch:Source-painted-game-obstacles-and-responsive-storm-note (resolve containing commit with git log)",
+      "commit_reference": "batch:Reset-safe-game-progression-and-protected-existing-state (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.",
         "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization.",
-        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified."
+        "Reproducible read-only alpha analysis of untouched founder vine/branch/puddle PNGs produces cached source-hash collision masks. Shared renderer/physics frames ignore transparent padding; vines at left actual paint, mirrored branch rooted at right playfield edge. Code wind affects trajectories; one bounded branch bounce/persistent reflection preserves captured base speed/drift. Good fruit/stars slow and visibly strain at actual painted vines; bad fruit never does; rustle emits on entry only. Rain always creates puddles, original puddle art subtly moves with pause/Reduce Motion cancellation. Painted lower-basket water contact gives target-following inertia that survives stopped touch events and restores dry response. Responsive basket/ground fits short landscape field and bottom safe area instead of offscreen counting. Canonical measured large original contact/control card shows exact Strawberry storm dialogue once per session/round, pauses until explicit close/ack, whole-background modal blur/AX exclusion. Restored missing good-fruit star badge used by instructions. No image bytes edited. Corrected three earlier game-evidence mappings erroneously attached to Contact decoration rows378/379/381; original requirement text/source work retained. Apple visual/typecheck/audio/touch/performance acceptance remains unverified.",
+        "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim."
       ],
-      "last_updated": "2026-11-06T00:29:34.824842+00:00"
+      "last_updated": "2026-11-06T00:53:08.203224+00:00"
     },
     {
       "sequence": 373,

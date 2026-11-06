@@ -106,6 +106,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func startTopic() async {
+        guard !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else {
             message = "type a topic first ♡"
@@ -129,6 +130,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func continueReturningTopic(resetLevel: Bool) async {
+        guard !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         if resetLevel { store.resetCurrentGameLevel(for: normalized) }
@@ -143,6 +145,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func loadQuestion() async {
+        guard !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         let request = UUID()
@@ -206,6 +209,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func beginCatch() {
+        guard !store.isReadOnly else { return }
         guard currentQuestion != nil, var session else { return }
         stopGameplay()
         if !activeObstacles.intersection([.vines, .branch, .puddle]).isEmpty && obstacleLibrary == nil {
@@ -255,7 +259,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     func classificationDecision(accept: Bool) {
         guard
-            screen == .catchActive,
+            screen == .catchActive, !isPaused, !store.isReadOnly, catchTransits.isEmpty,
             store.controlMode == .classification,
             let fruit = classificationFruit,
             !roundResultLocked
@@ -272,7 +276,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func classificationStarDecision(accept: Bool) {
-        guard screen == .catchActive, !isPaused, store.controlMode == .classification,
+        guard screen == .catchActive, !isPaused, !store.isReadOnly, store.controlMode == .classification,
               classificationStarAvailable, catchTransits.isEmpty, !roundResultLocked else { return }
         classificationStarAvailable = false
         if accept {
@@ -307,6 +311,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func resetGameLevel() {
+        guard !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         stopGameplay()
@@ -338,6 +343,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func setControlMode(_ mode: Prompt28ControlMode) {
+        guard !store.isReadOnly else { return }
         guard mode != store.controlMode else { return }
         // Earned counters and entering objects survive the control change.
         // Unselected presentations are replaced so no invisible object can catch.
@@ -403,7 +409,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     func advanceGameplayFrame(delta: TimeInterval, now: Date) {
         guard delta.isFinite, delta > 0 else { return }
         let frameDelta = min(delta, 0.08)
-        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+        guard screen == .catchActive, !isPaused, !roundResultLocked, !store.isReadOnly else { return }
         let geometry = Prompt28CatchGeometry(playfield: playfieldSize)
         var pending: [Prompt28CatchTransit] = []
         for var transit in catchTransits {
@@ -556,7 +562,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     private func handleGoodCatch(_ fruit: Prompt28FruitID) {
-        guard !roundResultLocked, var session else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
         let outcome = engine.registerGoodCatch(session: &session)
         collectedFruit.append(fruit)
         self.session = session
@@ -575,19 +581,19 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     private func handleGoodMiss() {
-        guard !roundResultLocked, var session else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
         _ = engine.registerGoodMiss(session: &session)
         self.session = session
     }
 
     private func handleBadMiss() {
-        guard !roundResultLocked, var session else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
         _ = engine.registerBadMiss(session: &session)
         self.session = session
     }
 
     private func handleStarCatch() {
-        guard !roundResultLocked, var session else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
         _ = engine.registerStarCatch(session: &session)
         self.session = session
 
@@ -597,7 +603,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     private func handleBadCatch(_ fruit: Prompt28FruitID) {
-        guard !roundResultLocked, var session else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
         let outcome = engine.registerBadCatch(fruit, session: &session)
         self.session = session
         lastBadFruit = fruit
@@ -616,17 +622,13 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     private func finishSuccessfulRound(expectedRoundID: UUID) {
-        guard expectedRoundID == roundID, finalizedRoundID != expectedRoundID,
+        guard !store.isReadOnly, expectedRoundID == roundID, finalizedRoundID != expectedRoundID,
               pendingRoundSuccess == true, var session else { return }
         finalizedRoundID = expectedRoundID
         pendingRoundSuccess = nil
         var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.totalSuccessfulRounds += 1
+        progress = Prompt28ProgressionPolicy.afterSuccessfulRound(progress)
         progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
-        let newLevel = engine.levelAfterSuccessfulRounds(progress.totalSuccessfulRounds)
-        progress.currentGameLevel = max(progress.currentGameLevel, newLevel)
-        progress.highestGameLevelReached = max(progress.highestGameLevelReached, progress.currentGameLevel)
         didSetPersonalBestThisRound = session.score > progress.bestScore
         progress.bestScore = max(progress.bestScore, session.score)
         progress.bestStreak = max(progress.bestStreak, session.currentStreak)
@@ -637,12 +639,12 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     private func finishUnsuccessfulRound(expectedRoundID: UUID) {
-        guard expectedRoundID == roundID, finalizedRoundID != expectedRoundID,
+        guard !store.isReadOnly, expectedRoundID == roundID, finalizedRoundID != expectedRoundID,
               pendingRoundSuccess == false, var session else { return }
         finalizedRoundID = expectedRoundID
         pendingRoundSuccess = nil
         var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
+        progress = Prompt28ProgressionPolicy.afterUnsuccessfulRound(progress)
         progress.bestScore = max(progress.bestScore, session.score)
         progress.bestStreak = max(progress.bestStreak, session.currentStreak)
         store.updateProgress(progress)
