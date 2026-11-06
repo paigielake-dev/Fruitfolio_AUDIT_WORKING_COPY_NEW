@@ -1,0 +1,15 @@
+{
+  "parent": "1f107f9e2b2326b8fe005bd9479fdc7684d06498",
+  "beforeMethod": "Two isolated probes using only existing signOut API and actual git-show parent store; real private UserDefaults suites and a controlled dropped-write subclass. Working tree not reverted.",
+  "before": "2tests6failures0unexpected",
+  "current": "8 broader production-store regressions pass in full678-test portable and684-test native CPU suites. Before probes not rerun verbatim against current source.",
+  "failures": [
+    "/tmp/fruitfolio-portable-4nx3zbgb/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:34: error: Prompt1BAccountBeforeTests.testRejectedWriteThrowsAndKeepsAcknowledgedSessionCache : XCTAssertThrowsError failed: did not throw error - ",
+    "/tmp/fruitfolio-portable-4nx3zbgb/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:35: error: Prompt1BAccountBeforeTests.testRejectedWriteThrowsAndKeepsAcknowledgedSessionCache : XCTAssertEqual failed: (\"nil\") is not equal to (\"Optional(Fruitfolio.Prompt12AccountIdentity(accountID: 32E52651-CF25-41DF-BEE0-8A7650B93ACE, provider: \"demo\", email: \"fixture@example.invalid\", username: \"fixture\", createdAt: 2026-11-06 09:30:20 +0000, updatedAt: 2026-11-06 09:30:20 +0000))\") - ",
+    "/tmp/fruitfolio-portable-4nx3zbgb/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:36: error: Prompt1BAccountBeforeTests.testRejectedWriteThrowsAndKeepsAcknowledgedSessionCache : XCTAssertEqual failed: (\"signedOut\") is not equal to (\"signedIn\") - ",
+    "/tmp/fruitfolio-portable-4nx3zbgb/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:37: error: Prompt1BAccountBeforeTests.testRejectedWriteThrowsAndKeepsAcknowledgedSessionCache : XCTAssertTrue failed - ",
+    "/tmp/fruitfolio-portable-4nx3zbgb/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:21: error: Prompt1BAccountBeforeTests.testSignOutRetainsUnsyncedMarkerInCacheAndActualDefaults : XCTAssertTrue failed - ",
+    "/tmp/fruitfolio-portable-4nx3zbgb/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:23: error: Prompt1BAccountBeforeTests.testSignOutRetainsUnsyncedMarkerInCacheAndActualDefaults : XCTAssertEqual failed: (\"Optional(false)\") is not equal to (\"Optional(true)\") - "
+  ],
+  "limits": "Development identities are fixtures, not production authentication. UserDefaults readback is not fsync durability or cross-process CAS."
+}

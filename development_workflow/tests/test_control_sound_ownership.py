@@ -109,6 +109,20 @@ WatercolorSecondaryButton(label: "audioManager.play(.buttonSoftPop)") {
             self.assertNotIn('buttonSoftPop', path.read_text())
             self.assertEqual(self.invoke(path, '--check').returncode, 0)
 
+    def testNavigationRowRemovesDuplicatePressButRetainsDistinctModalCue(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'navigation.swift'
+            path.write_text('Prompt12NavigationRow(title: "account", action: {\n audioManager.play(.buttonSoftPop)\n audioManager.play(.popupClose)\n openAccount()\n})\n')
+            check = self.invoke(path, '--check')
+            self.assertEqual(check.returncode, 1)
+            self.assertEqual([item['control'] for item in json.loads(check.stdout)], ['Prompt12NavigationRow'])
+            applied = self.invoke(path, '--apply')
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            self.assertNotIn('.buttonSoftPop', path.read_text())
+            self.assertIn('audioManager.play(.popupClose)', path.read_text())
+            self.assertIn('openAccount()', path.read_text())
+            self.assertEqual(self.invoke(path, '--check').returncode, 0)
+
 
 if __name__ == '__main__':
     unittest.main()

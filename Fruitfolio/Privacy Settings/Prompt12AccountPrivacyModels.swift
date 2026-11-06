@@ -170,6 +170,13 @@ struct Prompt12AccountIdentity: Codable, Equatable, Sendable {
     }
 }
 
+struct Prompt12AccountActionSnapshot: Equatable, Sendable {
+    let account: Prompt12AccountIdentity?
+    let authenticationState: Prompt12AuthenticationState
+    let pendingLocalChanges: Bool
+    let localDataContainerID: UUID
+}
+
 struct Prompt12DataExportRecord: Codable, Equatable, Sendable {
     var id: UUID
     var createdAt: Date
@@ -191,6 +198,8 @@ struct Prompt12DataExportRecord: Codable, Equatable, Sendable {
 
 enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case blankEmail
+    case accountChanged
+    case localDataDeletionRequiresReview
     case localRecordProtected
     case serviceNotConfigured
     case notSignedIn
@@ -200,6 +209,10 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
 
     var errorDescription: String? {
         switch self {
+        case .accountChanged:
+            return "the account or pending local information changed while confirmation was open. nothing was changed by this action. review the current account before trying again."
+        case .localDataDeletionRequiresReview:
+            return "signing out keeps local information. review local data separately in data management before choosing any deletion."
         case .localRecordProtected:
             return "the saved account/settings record has been preserved. reload it before making account changes."
         case .serviceNotConfigured:

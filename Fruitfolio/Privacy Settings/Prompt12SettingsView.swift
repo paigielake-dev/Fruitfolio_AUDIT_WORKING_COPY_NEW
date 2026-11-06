@@ -301,9 +301,6 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "hub_account",
                 action: {
-                    audioManager.play(
-                        .buttonSoftPop
-                    )
                     onShowAccount()
                 }
             )
@@ -325,9 +322,6 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "popup_info",
                 action: {
-                    audioManager.play(
-                        .buttonSoftPop
-                    )
                     onShowPrivacy()
                 }
             )
@@ -372,9 +366,6 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "ask_source_pages",
                 action: {
-                    audioManager.play(
-                        .buttonSoftPop
-                    )
                     showDataManagement = true
                 }
             )
@@ -394,9 +385,6 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "fruit_blueberry_friendly",
                 action: {
-                    audioManager.play(
-                        .buttonSoftPop
-                    )
                     appState.beginManualTourReplay()
                     navigation.returnToHub()
                 }
@@ -412,9 +400,6 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "fruitfolio_logo",
                 action: {
-                    audioManager.play(
-                        .buttonSoftPop
-                    )
                     showAbout = true
                 }
             )

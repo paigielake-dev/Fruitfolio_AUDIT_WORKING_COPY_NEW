@@ -15,9 +15,9 @@ private final class ControlVisitor: SyntaxVisitor {
     let path: String
     let locations: SourceLocationConverter
     var findings: [Finding] = []
-    // These compatibility controls delegate to the one canonical pill, whose
-    // actual action already owns buttonSoftPop. Other Buttons remain untouched.
-    private let owners: Set<String> = ["FruitfolioControlPillButton", "WatercolorPrimaryButton", "WatercolorSecondaryButton", "BackControl", "CloseControl", "Prompt28WatercolorButton", "Prompt28MiniControlPill"]
+    // These controls own one buttonSoftPop directly or through the canonical
+    // pill. Other Buttons and distinct operation/modal cues remain untouched.
+    private let owners: Set<String> = ["FruitfolioControlPillButton", "WatercolorPrimaryButton", "WatercolorSecondaryButton", "BackControl", "CloseControl", "Prompt28WatercolorButton", "Prompt28MiniControlPill", "Prompt12NavigationRow"]
     init(path: String, tree: SourceFileSyntax) {
         self.path = path
         locations = SourceLocationConverter(fileName: path, tree: tree)

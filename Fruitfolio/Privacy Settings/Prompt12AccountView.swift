@@ -12,8 +12,20 @@ struct Prompt12AccountView: View {
 
     @State private var email = ""
     @State private var message: String?
-    @State private var showSignOutConfirmation = false
-    @State private var showDeleteConfirmation = false
+    private enum AccountControl: Hashable { case signOut, deleteAccount, sync, message }
+    private enum AccountAction {
+        case signOut(Prompt12AccountActionSnapshot)
+        case sync(Prompt12AccountActionSnapshot)
+        case delete(Prompt12AccountActionSnapshot)
+    }
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var popupScope = UUID()
+    @State private var pendingAccountAction: AccountAction?
+    @State private var returnAccountFocus: AccountControl?
+    @State private var viewIsVisible = false
+    @State private var messageFocusRequest = UUID()
+    @AccessibilityFocusState private var accountFocus: AccountControl?
     @State private var showDataExport = false
     @State private var usernameDraft = ""
     @State private var usernameNonIdentifying = false
@@ -67,6 +79,18 @@ struct Prompt12AccountView: View {
                     }
 
                     accountActions
+                    if let message {
+                        FruitfolioTranslatedText(source: message,
+                            font: .custom("Chalkboard SE", size: 14, relativeTo: .body),
+                            color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
+                            .accessibilityFocused($accountFocus, equals: .message)
+                            .accessibilityIdentifier("account.actionMessage")
+                            .task(id: messageFocusRequest) {
+                                await Task.yield()
+                                guard !Task.isCancelled, viewIsVisible, popupCoordinator.currentPopup == nil else { return }
+                                accountFocus = .message
+                            }
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 42)
@@ -88,10 +112,32 @@ struct Prompt12AccountView: View {
                 .zIndex(100)
         }
         .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+        }
+        .onDisappear {
+            viewIsVisible = false
+            popupOwner?.cancel()
+            pendingAccountAction = nil
+            returnAccountFocus = nil
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            if let action = pendingAccountAction {
+                pendingAccountAction = nil
+                returnAccountFocus = nil
+                performAccountAction(action)
+            } else if let control = returnAccountFocus {
+                returnAccountFocus = nil
+                accountFocus = control
+            }
+        }
     }
 
     private var activeOverlay: Bool {
-        showSignOutConfirmation || showDeleteConfirmation || showDataExport
+        showDataExport
     }
 
     private var ownershipCard: some View {
@@ -213,10 +259,6 @@ struct Prompt12AccountView: View {
                 alignment: .center
             )
 
-            if let message {
-                Prompt12InfoText(message)
-                    .multilineTextAlignment(.center)
-            }
         }
     }
 
@@ -243,9 +285,11 @@ struct Prompt12AccountView: View {
             )
 
             if store.pendingLocalChanges {
-                WatercolorSecondaryButton(label: "sync now") {
-                    store.syncNow()
+                WatercolorSecondaryButton(label: "try cloud sync") {
+                    performAccountAction(.sync(store.accountActionSnapshot))
                 }
+                .accessibilityFocused($accountFocus, equals: .sync)
+                .accessibilityIdentifier("account.sync")
             }
         }
     }
@@ -257,7 +301,6 @@ struct Prompt12AccountView: View {
                 detail: "how Fruitfolio handles your information",
                 assetName: "popup_info",
                 action: {
-                    audioManager.play(.buttonSoftPop)
                     onShowPrivacy()
                 }
             )
@@ -270,7 +313,6 @@ struct Prompt12AccountView: View {
                 detail: "prepare supported account and local data",
                 assetName: "ask_source_pages",
                 action: {
-                    audioManager.play(.buttonSoftPop)
                     showDataExport = true
                 }
             )
@@ -284,76 +326,31 @@ struct Prompt12AccountView: View {
                     detail: "keep local data separate from account access",
                     assetName: "control_undo",
                     action: {
-                        audioManager.play(.buttonSoftPop)
-                        showSignOutConfirmation = true
+                        requestSignOut()
                     }
                 )
+                .accessibilityFocused($accountFocus, equals: .signOut)
+                .accessibilityIdentifier("account.signOut")
 
                 Divider()
                     .opacity(0.18)
 
                 Prompt12NavigationRow(
-                    title: "delete account + data",
-                    detail: "requires confirmation before anything changes",
+                    title: "delete account",
+                    detail: "review account deletion; local health information is separate",
                     assetName: "guide_delete",
                     action: {
-                        audioManager.play(.buttonSoftPop)
-                        showDeleteConfirmation = true
+                        requestAccountDeletion()
                     }
                 )
+                .accessibilityFocused($accountFocus, equals: .deleteAccount)
+                .accessibilityIdentifier("account.deleteAccount")
             }
         }
     }
 
     @ViewBuilder
     private var overlayLayer: some View {
-        if showSignOutConfirmation {
-            Prompt12ConfirmationPopup(
-                assetName: "popup_warning",
-                title: "before you go…",
-                message: store.pendingLocalChanges
-                    ? "some changes on this device haven’t finished syncing yet."
-                    : "signing out removes the account session. it does not erase local health data.",
-                primaryLabel: store.pendingLocalChanges
-                    ? "sync now"
-                    : "keep on this device + sign out",
-                secondaryLabel: "cancel",
-                destructiveLabel: nil,
-                primaryAction: {
-                    if store.pendingLocalChanges {
-                        store.syncNow()
-                    } else {
-                        try? store.signOut(keepLocalData: true)
-                    }
-
-                    showSignOutConfirmation = false
-                },
-                secondaryAction: {
-                    showSignOutConfirmation = false
-                },
-                destructiveAction: nil
-            )
-        }
-
-        if showDeleteConfirmation {
-            Prompt12ConfirmationPopup(
-                assetName: "popup_warning",
-                title: "delete your account?",
-                message: "this removes the Fruitfolio account and applicable associated account data. deleting an account does not cancel or refund the app purchase.",
-                primaryLabel: "keep my account",
-                secondaryLabel: nil,
-                destructiveLabel: "delete account + data",
-                primaryAction: {
-                    showDeleteConfirmation = false
-                },
-                secondaryAction: nil,
-                destructiveAction: {
-                    try? store.deleteAccountAndAssociatedRemoteData()
-                    showDeleteConfirmation = false
-                }
-            )
-        }
-
         if showDataExport {
             Prompt12DataManagementView(
                 store: store,
@@ -365,12 +362,82 @@ struct Prompt12AccountView: View {
         }
     }
 
+    private func showMessage(_ text: String) {
+        message = text
+        messageFocusRequest = UUID()
+    }
+
+    private func performAccountAction(_ action: AccountAction) {
+        guard viewIsVisible else { return }
+        do {
+            switch action {
+            case .signOut(let expected):
+                try store.signOut(keepLocalData: true, expecting: expected)
+                showMessage(store.pendingLocalChanges
+                    ? "signed out. local information and pending changes remain on this device."
+                    : "signed out. local information remains on this device.")
+            case .sync(let expected):
+                try store.attemptSyncNow(expecting: expected)
+            case .delete(let expected):
+                try store.deleteAccountAndAssociatedRemoteData(expecting: expected)
+            }
+        } catch { showMessage(error.localizedDescription) }
+    }
+
+    private func requestSignOut() {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
+        let expected = store.accountActionSnapshot
+        returnAccountFocus = .signOut
+        accountFocus = nil
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .peach,
+                message: expected.pendingLocalChanges
+                    ? "**before you go…**\n\nsome local changes have not been synced. signing out can keep them on this device. cloud synchronization requires a configured account service."
+                    : "**before you go…**\n\nsigning out removes the account session and keeps local health information on this device.",
+                primaryAction: .init(label: "cancel") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                }, secondaryAction: .init(label: "keep on this device + sign out") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .signOut(expected)
+                }, tertiaryAction: expected.pendingLocalChanges ? .init(label: "try cloud sync") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .sync(expected)
+                } : nil,
+                dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "account-sign-out", deduplicationKey: "account-sign-out-" + popupScope.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
+    private func requestAccountDeletion() {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
+        let expected = store.accountActionSnapshot
+        returnAccountFocus = .deleteAccount
+        accountFocus = nil
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .peach,
+                message: "**request account deletion?**\n\naccount deletion needs confirmation from the account service. this action does not erase local health files or cancel or refund the app purchase. any failure will be shown before success is claimed.",
+                primaryAction: .init(label: "keep my account") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                }, secondaryAction: .init(label: "request account deletion") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .delete(expected)
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "account-deletion", deduplicationKey: "account-deletion-" + popupScope.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
     private func signIn() {
         do {
             try store.requestSignIn(email: email)
             message = nil
         } catch {
-            message = error.localizedDescription
+            showMessage(error.localizedDescription)
         }
     }
 }

@@ -49,7 +49,7 @@ final class Prompt12AccountPrivacyStore {
                 usePrivacyModeOnLockScreen = oldValue
                 return
             }
-            saveSnapshot()
+            if !saveSnapshot() { usePrivacyModeOnLockScreen = oldValue }
         }
     }
 
@@ -157,7 +157,7 @@ final class Prompt12AccountPrivacyStore {
             guard !Task.isCancelled else {
                 self.ownershipState = .validationUnavailable
                 self.ownershipValidationMessage = "ownership checking was cancelled. local features remain available."
-                self.saveSnapshot()
+                _ = self.saveSnapshot()
                 return
             }
             switch result {
@@ -165,7 +165,7 @@ final class Prompt12AccountPrivacyStore {
             case .verifiedTestInstallation: self.ownershipState = .verifiedTestInstallation
             case .unverified, .unavailable: self.ownershipState = .validationUnavailable
             }
-            self.saveSnapshot()
+            _ = self.saveSnapshot()
         }
         ownershipValidationTask = task
         return task
@@ -227,36 +227,57 @@ final class Prompt12AccountPrivacyStore {
         saveSnapshot()
     }
 
-    func syncNow() {
-        guard checkPersistenceWritable() else { return }
-        // Keep pending local edits. Successful cloud synchronization requires a
-        // configured service and an acknowledged upload, neither exists here.
+    var accountActionSnapshot: Prompt12AccountActionSnapshot {
+        Prompt12AccountActionSnapshot(account: account, authenticationState: authenticationState,
+            pendingLocalChanges: pendingLocalChanges, localDataContainerID: localDataContainerID)
+    }
+
+    private func requireAccountAction(_ expected: Prompt12AccountActionSnapshot?) throws {
+        guard checkPersistenceWritable() else { throw Prompt12AccountPrivacyError.localRecordProtected }
+        if let expected, accountActionSnapshot != expected { throw Prompt12AccountPrivacyError.accountChanged }
+    }
+
+    @discardableResult
+    func syncNow() -> Bool {
+        guard checkPersistenceWritable() else { return false }
+        // Keep pending edits: there is no configured/acknowledged cloud upload.
+        let previous = syncState
         syncState = isSignedIn ? .unavailable : .localOnly
-        saveSnapshot()
+        guard saveSnapshot() else { syncState = previous; return false }
+        return true
+    }
+
+    func attemptSyncNow(expecting expected: Prompt12AccountActionSnapshot) throws {
+        try requireAccountAction(expected)
+        guard isSignedIn else { throw Prompt12AccountPrivacyError.notSignedIn }
+        guard syncNow() else { throw Prompt12AccountPrivacyError.localRecordProtected }
+        throw Prompt12AccountPrivacyError.serviceNotConfigured
     }
 
     func signOut(
-        keepLocalData: Bool = true
+        keepLocalData: Bool = true,
+        expecting expected: Prompt12AccountActionSnapshot? = nil
     ) throws {
-        guard checkPersistenceWritable() else { throw Prompt12AccountPrivacyError.localRecordProtected }
-        guard account != nil else {
-            authenticationState = .signedOut
-            syncState = .localOnly
-            saveSnapshot()
-            return
-        }
-
-        authenticationState = .signingOut
-        saveSnapshot()
-
+        try requireAccountAction(expected)
+        guard keepLocalData else { throw Prompt12AccountPrivacyError.localDataDeletionRequiresReview }
+        let previousAccount = account
+        let previousAuthentication = authenticationState
+        let previousSync = syncState
         account = nil
         authenticationState = .signedOut
-        syncState = keepLocalData ? .localOnly : .localOnly
-        pendingLocalChanges = false
-        saveSnapshot()
+        syncState = .localOnly
+        // Signing out is not an upload acknowledgment. Keep the pending marker
+        // and local container identity along with the actual local health files.
+        guard saveSnapshot() else {
+            account = previousAccount
+            authenticationState = previousAuthentication
+            syncState = previousSync
+            throw Prompt12AccountPrivacyError.localRecordProtected
+        }
     }
 
-    func deleteAccountAndAssociatedRemoteData() throws {
+    func deleteAccountAndAssociatedRemoteData(expecting expected: Prompt12AccountActionSnapshot? = nil) throws {
+        try requireAccountAction(expected)
         guard account != nil else { throw Prompt12AccountPrivacyError.notSignedIn }
         // A local mutation cannot prove an unconfigured remote account was erased.
         throw Prompt12AccountPrivacyError.remoteDeletionUnavailable
@@ -278,8 +299,9 @@ final class Prompt12AccountPrivacyStore {
         saveSnapshot()
     }
 
-    private func saveSnapshot() {
-        guard checkPersistenceWritable() else { return }
+    @discardableResult
+    private func saveSnapshot() -> Bool {
+        guard checkPersistenceWritable() else { return false }
         let snapshot = Prompt12StoreSnapshot(
             ownershipState: ownershipState,
             authenticationState: authenticationState,
@@ -291,12 +313,14 @@ final class Prompt12AccountPrivacyStore {
             usePrivacyModeOnLockScreen: usePrivacyModeOnLockScreen
         )
 
-        guard let data = try? JSONEncoder().encode(snapshot) else {
-            return
-        }
-
+        guard let data = try? JSONEncoder().encode(snapshot) else { return false }
         defaults.set(data, forKey: persistenceKey)
+        guard defaults.data(forKey: persistenceKey) == data else {
+            persistenceRecoveryMessage = "the account/settings update could not be acknowledged locally. reload the saved record before making another change."
+            return false
+        }
         expectedPersistedObject = data as NSData
+        return true
     }
 
     /// Read the latest record explicitly; never restore/repair by writing defaults.
@@ -343,7 +367,10 @@ final class Prompt12AccountPrivacyStore {
         ] {
             if let nested = object[name] as? [String: Any], !Set(nested.keys).isSubset(of: keys) { return nil }
         }
-        return try? JSONDecoder().decode(Prompt12StoreSnapshot.self, from: data)
+        guard let snapshot = try? JSONDecoder().decode(Prompt12StoreSnapshot.self, from: data),
+              let encoded = try? JSONEncoder().encode(snapshot),
+              FruitfolioJSONFieldCoverage.preservesFields(original: data, encoded: encoded) else { return nil }
+        return snapshot
     }
 }
 

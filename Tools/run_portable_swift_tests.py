@@ -147,7 +147,7 @@ TESTS = [
     'Prompt1BAccountPersistenceTests.swift',
     'Prompt1BSettingsLanguageTests.swift',
     'Prompt1BExplicitLocalizationTests.swift',
-    'Prompt12AccountPrivacyStoreTests.swift',
+    'Prompt12AccountPrivacyStoreTests.swift', 'Prompt1BAccountActionTests.swift',
     'Prompt1BOwnershipValidationTests.swift',
     'Prompt1BAccountRestorationPolicyTests.swift',
     'Prompt06FruitPopupTests.swift',

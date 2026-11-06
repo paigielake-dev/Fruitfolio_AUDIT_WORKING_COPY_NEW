@@ -140,7 +140,6 @@ struct Prompt12NavigationRow: View {
                                     .ColorToken
                                     .secondaryBurgundy
                             )
-                            .lineLimit(2)
                     }
                 }
 
@@ -164,13 +163,14 @@ struct Prompt12NavigationRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(
-            Prompt12NavigationRowPopStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     motionPreferences
                         .reduceMotionActive
             )
         )
         .accessibilityLabel(title)
+        .accessibilityHint(Text(detail ?? ""))
     }
 }
 
