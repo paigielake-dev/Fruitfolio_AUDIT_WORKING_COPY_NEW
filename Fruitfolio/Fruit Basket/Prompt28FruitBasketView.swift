@@ -1705,67 +1705,54 @@ struct Prompt28FruitBasketView: View {
                 }
 
 
-                ZStack {
-                    FruitfolioImage(id: .fruitbasket_chalkboard)
-                        .frame(maxWidth: 340)
-                        .accessibilityHidden(true)
-                        .onAppear {
-                            Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_chalkboard)
-                        }
+                VStack(spacing: 8) {
+                    Text("top 3 players")
+                        .font(.custom("Chalkboard SE", size: 20, relativeTo: .title2))
+                        .fontWeight(.bold)
 
-                    VStack(spacing: 8) {
-                        Text("top 3 players")
-                            .font(.custom("Chalkboard SE", size: 20, relativeTo: .title2))
-                            .fontWeight(.bold)
-
-                        VStack(spacing: 6) {
-                            ForEach(Prompt28LeaderboardCategory.allCases, id: \.self) { category in
-                                Button {
-                                    selectedLeaderboardCategory = category
-                                } label: {
-                                    Text(category.rawValue)
-                                        .font(.custom("Chalkboard SE", size: 12, relativeTo: .caption))
-                                        .fontWeight(selectedLeaderboardCategory == category ? .bold : .regular)
-                                        .foregroundStyle(
-                                            selectedLeaderboardCategory == category
-                                            ? Color.white
-                                            : DesignTokens.ColorToken.backgroundCream.opacity(0.72)
-                                        )
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.75)
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityAddTraits(
-                                    selectedLeaderboardCategory == category ? .isSelected : []
-                                )
+                    VStack(spacing: 6) {
+                        ForEach(Prompt28LeaderboardCategory.allCases, id: \.self) { category in
+                            Prompt28LeaderboardCategoryButton(category: category,
+                                isSelected: selectedLeaderboardCategory == category) {
+                                selectedLeaderboardCategory = category
                             }
                         }
-                        .frame(maxWidth: 245)
-
-                        VStack(spacing: 6) {
-                            Prompt28LeaderboardRow(rank: 1, username: "—", scoreText: "—", unit: selectedLeaderboardCategory.accessibilityUnit)
-                            Prompt28LeaderboardRow(rank: 2, username: "—", scoreText: "—", unit: selectedLeaderboardCategory.accessibilityUnit)
-                            Prompt28LeaderboardRow(rank: 3, username: "—", scoreText: "—", unit: selectedLeaderboardCategory.accessibilityUnit)
-                        }
-                        .frame(maxWidth: 245)
-
-                        Text("your on-device total: \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
-                            .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
-                            .multilineTextAlignment(.center)
-                            .accessibilityLabel("your on-device \(selectedLeaderboardCategory.accessibilityUnit): \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
-
-                        Text("worldwide rankings unavailable until secure registration is configured ♡")
-                            .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .frame(maxWidth: 220)
                     }
-                    .foregroundStyle(DesignTokens.ColorToken.backgroundCream)
-                    .padding(.horizontal, 34)
-                    .padding(.vertical, 30)
+                    .frame(maxWidth: 245)
+
+                    VStack(spacing: 6) {
+                        Prompt28LeaderboardRow(rank: 1, username: "—", scoreText: "—", unit: selectedLeaderboardCategory.accessibilityUnit)
+                        Prompt28LeaderboardRow(rank: 2, username: "—", scoreText: "—", unit: selectedLeaderboardCategory.accessibilityUnit)
+                        Prompt28LeaderboardRow(rank: 3, username: "—", scoreText: "—", unit: selectedLeaderboardCategory.accessibilityUnit)
+                    }
+                    .frame(maxWidth: 245)
+
+                    Text("your on-device total: \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .multilineTextAlignment(.center)
+                        .accessibilityLabel("your on-device \(selectedLeaderboardCategory.accessibilityUnit): \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
+
+                    Text("worldwide rankings unavailable until secure registration is configured ♡")
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: 220)
                 }
-                .frame(maxWidth: 340)
+                .foregroundStyle(DesignTokens.ColorToken.backgroundCream)
+                .padding(.horizontal, 56)
+                .padding(.vertical, 60)
+                .frame(maxWidth: 340, minHeight: 220)
+                .background {
+                    // Preserve the original frame corners while the writing
+                    // region grows with Dynamic Type instead of overflowing.
+                    FruitfolioAssetLoader.image(.fruitbasket_chalkboard)
+                        .resizable(capInsets: EdgeInsets(top: 64, leading: 64, bottom: 64, trailing: 64),
+                                   resizingMode: .stretch)
+                        .accessibilityHidden(true)
+                        .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_chalkboard) }
+                }
                 .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("fruitBasket.leaderboard.board")
 
                 Prompt28PaperPanel {
                     VStack(alignment: .leading, spacing: 10) {
@@ -2352,6 +2339,58 @@ private enum Prompt28LeaderboardCategory: String, CaseIterable {
     }
 }
 
+/// Uses the shared noninteractive control translation state inside one button.
+/// The chalkboard keeps its original ink rather than gaining pill artwork.
+@MainActor
+private struct Prompt28LeaderboardCategoryButton: View {
+    let category: Prompt28LeaderboardCategory
+    let isSelected: Bool
+    let action: () -> Void
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: category.rawValue, language: settings.language)
+    }
+
+    var body: some View {
+        let display = translation.presentation(for: key)
+        Button {
+            audioManager.play(.buttonSoftPop)
+            action()
+        } label: {
+            VStack(spacing: 4) {
+                FruitfolioSemanticText(markdown: display.text,
+                    baseFont: .custom("Chalkboard SE", size: 12, relativeTo: .caption),
+                    color: isSelected ? Color.white : DesignTokens.ColorToken.backgroundCream.opacity(0.72))
+                if let status = display.status.captionKey {
+                    Text(LocalizedStringKey(status)).font(.caption)
+                }
+            }
+            .fontWeight(isSelected ? .bold : .regular)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(8)
+            .frame(minWidth: DesignTokens.Layout.minimumHitTarget, maxWidth: .infinity,
+                   minHeight: DesignTokens.Layout.minimumHitTarget)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityIdentifier("fruitBasket.leaderboard.category." + category.accessibilityUnit)
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+        .accessibilityHint(Text(display.status.accessibilityDetail(
+            original: FruitfolioSemanticDocument.plainText(from: category.rawValue),
+            localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+    }
+}
+
 private struct Prompt28LeaderboardRow: View {
     let rank: Int
     let username: String
@@ -2359,23 +2398,27 @@ private struct Prompt28LeaderboardRow: View {
     let unit: String
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text("\(rank).")
-                .frame(width: 24, alignment: .trailing)
+                .frame(minWidth: 24, alignment: .trailing)
+                .fixedSize(horizontal: true, vertical: false)
 
             Text(username)
-                .lineLimit(1)
-                .minimumScaleFactor(0.76)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .layoutPriority(1)
 
             Text(scoreText)
                 .monospacedDigit()
-                .lineLimit(1)
+                .lineLimit(nil)
+                .multilineTextAlignment(.trailing)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(minWidth: 44, alignment: .trailing)
         }
         .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
         .frame(maxWidth: .infinity)
+        .accessibilityIdentifier("fruitBasket.leaderboard.rank.\(rank)")
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
             scoreText == "—"

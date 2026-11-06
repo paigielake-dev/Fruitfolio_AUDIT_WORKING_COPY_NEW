@@ -1949,3 +1949,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 731, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13}.
 - Next action: Make existing leaderboard category controls wrap and retain at least 44pt targets without changing the original chalkboard artwork or suggesting unavailable worldwide rankings are configured. Add large-text selection regression scenarios.
 - Commit: containing commit for batch Bound-native-input-token-buffer-before-allocation.
+
+## Wrapping-chalkboard-categories-and-growing-writing-region
+
+- Parent checkpoint: 38148356e8d5f2ade0fc30ae0c3f5b5ee3c745ba.
+- Source-order requirements: [18, 24, 62, 63, 393, 394, 397, 410, 411, 446, 468, 471, 472, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift.
+- Original chalkboard artwork now has content-owned growing center and preserved corners. Categories wrap with 44pt targets, actual shared control translation state, selected traits and one sound owner. Rank/name/score rows stop shrinking. Four Apple UI scenarios added but unrun; PNG unchanged; global rankings still explicitly unavailable.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 731, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "SwiftSyntax_sound_ownership_findings": 0}.
+- Next action: Localize fixed leaderboard headings, rules and unavailable-service copy using existing translated content outside buttons; keep usernames/source data out of translation and preserve exact local totals.
+- Commit: containing commit for batch Wrapping-chalkboard-categories-and-growing-writing-region.

@@ -191,6 +191,48 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testLeaderboardCategoriesGrowAndRetainSelectedTraitsAtAccessibilitySize() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "leaderboard",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioGameRTL"] }
+            app.launch()
+            let fruit = app.buttons["fruitBasket.leaderboard.category.fruit collected"]
+            XCTAssertTrue(fruit.waitForExistence(timeout: 5))
+            XCTAssertTrue(fruit.isSelected)
+            let scroll = app.scrollViews.firstMatch
+            for unit in ["stars earned", "basket reveals", "highest level"] {
+                let category = app.buttons["fruitBasket.leaderboard.category." + unit]
+                for _ in 0..<24 { if category.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(category.isHittable)
+                XCTAssertGreaterThanOrEqual(category.frame.width, 44)
+                XCTAssertGreaterThanOrEqual(category.frame.height, 44)
+                category.tap()
+                XCTAssertTrue(category.isSelected)
+                XCTAssertFalse(fruit.isSelected)
+            }
+            let board = app.otherElements["fruitBasket.leaderboard.board"]
+            XCTAssertTrue(board.exists)
+            XCTAssertGreaterThan(board.frame.height, 220)
+            for rank in 1...3 {
+                let row = app.descendants(matching: .any)
+                    .matching(identifier: "fruitBasket.leaderboard.rank.\(rank)").firstMatch
+                XCTAssertTrue(row.exists)
+                XCTAssertEqual(row.label, "\(rank) place, awaiting player")
+                XCTAssertGreaterThanOrEqual(row.frame.minX, board.frame.minX + 44)
+                XCTAssertLessThanOrEqual(row.frame.maxX, board.frame.maxX - 44)
+                XCTAssertGreaterThanOrEqual(row.frame.minY, board.frame.minY)
+                XCTAssertLessThanOrEqual(row.frame.maxY, board.frame.maxY)
+            }
+            captureGame(app, name: "leaderboard-categories-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testGameSuggestedTopicsWrapAndKeepOriginalResearchInput() {
         for reduced in [false, true] {
         for rtl in [false, true] {
