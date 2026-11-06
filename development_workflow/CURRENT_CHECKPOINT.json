@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "e8eef92e37775b4caf42bfbd9e9c002ade6654eb",
+  "current_HEAD": "bb0dd1ac0d90a78361fe342a79f97ff35f008c56",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 474,
-  "current_implementation_batch": "Game-level-reset-owned-shared-confirmation",
+  "current_requirement": 63,
+  "current_implementation_batch": "Game-persistence-readback-and-unknown-field-protection",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,16 +493,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-    "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
-    "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+    "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
     "Fruitfolio/Localizable.xcstrings",
-    "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/GAME_LEVEL_RESET_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+    "development_workflow/GAME_PERSISTENCE_ACKNOWLEDGMENT_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/Game-write-acknowledgment-prior-failure.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -521,28 +517,31 @@
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "actual SwiftSyntax control-sound-ownership --check",
     "JSON preservation comparison of all prior catalog entries",
-    "swift Tools/validate_xcode_project.swift"
+    "swift Tools/validate_xcode_project.swift",
+    "portable focused Prompt1BGamePersistenceTests against unchanged prior production: 12 tests/32 failures",
+    "portable focused Prompt1BGamePersistenceTests after fix: 12 tests/0 failures"
   ],
   "last_test_results": {
-    "portable_XCTest": 739,
-    "native_CPU_XCTest": 761,
+    "portable_XCTest": 743,
+    "native_CPU_XCTest": 765,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 308,
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 16,
-    "catalog_keys": 786,
+    "catalog_keys": 787,
     "nonempty_foreign_units": 0,
     "Foundation_shared_ownership_regressions": 11,
     "SwiftSyntax_sound_ownership_findings": 0,
-    "catalog_existing_entries_preserved": 785,
-    "focused_reset_ownership_XCTest": 7,
-    "Apple_UI_reset_launches_added_NOT_RUN": 16,
-    "Xcode_project_references": "PASS; not an Apple build"
+    "catalog_existing_entries_preserved": 786,
+    "Xcode_project_references": "PASS; not an Apple build",
+    "focused_game_persistence_XCTest": 12,
+    "empirical_prior_assertion_failures": 32,
+    "empirical_prior_failed_cases": 4
   },
-  "next_exact_implementation_action": "Fault-test actual Prompt28GamePersistence acknowledgment and preservation before further game mutations: inject rejected UserDefaults writes and unknown same-version top-level/nested/null fields, record the current failure, then enforce strict coverage and exact readback without overwriting external/newer data. Verify load/recovery and existing game regressions. Continue independent requirements after blocked Apple/runtime checks.",
-  "updated_at": "2026-11-06T16:47:08.749552+00:00",
+  "next_exact_implementation_action": "Localize and focus the actual protected-game progress recovery screen using shared semantic translation presentation. Add disposable same-version top/nested-null future-blob fixtures, test reload/background/source-byte preservation through real store readback, and keep all play/reset writes blocked until explicit compatible reload. Continue other independent Prompt 1B requirements after runtime blockers.",
+  "updated_at": "2026-11-06T16:53:04.677968+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

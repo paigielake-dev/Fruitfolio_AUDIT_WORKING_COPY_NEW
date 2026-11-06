@@ -2,6 +2,23 @@ import Foundation
 import XCTest
 @testable import Fruitfolio
 
+/// Faults affect only this test suite's game key; production uses real defaults.
+private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    enum Fault { case accept, drop, replace(Data), wrongType }
+    var fault: Fault = .accept
+    private(set) var writeAttempts = 0
+    override func set(_ value: Any?, forKey key: String) {
+        guard key == "game" else { super.set(value, forKey: key); return }
+        writeAttempts += 1
+        switch fault {
+        case .accept: super.set(value, forKey: key)
+        case .drop: break
+        case .replace(let bytes): super.set(bytes, forKey: key)
+        case .wrongType: super.set("external replacement", forKey: key)
+        }
+    }
+}
+
 @MainActor
 final class Prompt1BGamePersistenceTests: XCTestCase {
     private func defaults() throws -> (String, UserDefaults) {
@@ -137,6 +154,95 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(final?.highestGameLevelReached, 8)
         XCTAssertEqual(final?.totalSuccessfulRounds, 201)
         XCTAssertEqual(final?.bestScore, 20000)
+    }
+
+    func testDroppedReplacementIsNotAcknowledgedAndRequiresExplicitReload() async throws {
+        let name = "Fruitfolio.game-write-fault." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let persistence = Prompt28GamePersistence(defaults: defaults, key: "game")
+        _ = try persistence.load()
+        var state = Prompt28PersistedGameState()
+        try persistence.save(state)
+        let original = try XCTUnwrap(defaults.data(forKey: "game"))
+        defaults.fault = .drop
+        state.controlMode = .classification
+        XCTAssertThrowsError(try persistence.save(state))
+        XCTAssertEqual(persistence.failure, .failedToSave)
+        XCTAssertTrue(persistence.isWriteBlocked)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        defaults.fault = .accept
+        let attempts = defaults.writeAttempts
+        XCTAssertThrowsError(try persistence.save(state))
+        XCTAssertEqual(defaults.writeAttempts, attempts)
+        XCTAssertEqual(try persistence.load()?.controlMode, .catchMode)
+        try persistence.save(state)
+        XCTAssertEqual(try Prompt28GamePersistence(defaults: defaults, key: "game").load()?.controlMode, .classification)
+    }
+    func testDroppedFirstSaveCannotInventAnAcknowledgedRecord() async throws {
+        let name = "Fruitfolio.game-first-write-fault." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let persistence = Prompt28GamePersistence(defaults: defaults, key: "game")
+        XCTAssertNil(try persistence.load())
+        defaults.fault = .drop
+        XCTAssertThrowsError(try persistence.save(.init()))
+        XCTAssertNil(defaults.object(forKey: "game"))
+        XCTAssertEqual(persistence.failure, .failedToSave)
+        XCTAssertTrue(persistence.isWriteBlocked)
+    }
+    func testPostWriteExternalReplacementRemainsUntouchedRatherThanRolledBack() async throws {
+        for wrongType in [false, true] {
+            let name = "Fruitfolio.game-replaced-write." + UUID().uuidString
+            let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: name))
+            defer { defaults.removePersistentDomain(forName: name) }
+            let persistence = Prompt28GamePersistence(defaults: defaults, key: "game")
+            _ = try persistence.load()
+            try persistence.save(.init())
+            var foreign = Prompt28PersistedGameState()
+            foreign.preferredDifficulty = .hard
+            let foreignBytes = try JSONEncoder().encode(foreign)
+            defaults.fault = wrongType ? .wrongType : .replace(foreignBytes)
+            XCTAssertThrowsError(try persistence.save(.init()))
+            XCTAssertEqual(persistence.failure, .failedToSave)
+            XCTAssertTrue(persistence.isWriteBlocked)
+            XCTAssertEqual(defaults.writeAttempts, 2, "No rollback may overwrite a replacement")
+            if wrongType { XCTAssertEqual(defaults.string(forKey: "game"), "external replacement") }
+            else { XCTAssertEqual(defaults.data(forKey: "game"), foreignBytes) }
+        }
+    }
+    func testUnknownSameVersionFieldsIncludingNestedNullCannotBeDiscarded() async throws {
+        for variant in 0..<4 {
+            let (name, defaults) = try defaults()
+            defer { defaults.removePersistentDomain(forName: name) }
+            var state = Prompt28PersistedGameState()
+            state.topicProgress["fixture"] = .init(normalizedTopicID: "fixture")
+            var json = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(state)) as? [String: Any])
+            switch variant {
+            case 0: json["future"] = ["preserve": "original"]
+            case 1:
+                var topics = try XCTUnwrap(json["topicProgress"] as? [String: [String: Any]])
+                topics["fixture"]?["future"] = ["sequence": 1]
+                json["topicProgress"] = topics
+            case 2:
+                var tour = try XCTUnwrap(json["tourState"] as? [String: Any])
+                tour["future"] = NSNull()
+                json["tourState"] = tour
+            default:
+                var topics = try XCTUnwrap(json["topicProgress"] as? [String: [String: Any]])
+                topics["fixture"]?["future"] = NSNull()
+                json["topicProgress"] = topics
+            }
+            let bytes = try JSONSerialization.data(withJSONObject: json)
+            defaults.set(bytes, forKey: "game")
+            let persistence = Prompt28GamePersistence(defaults: defaults, key: "game")
+            XCTAssertThrowsError(try persistence.load(), "Future field variant \(variant)")
+            XCTAssertEqual(persistence.failure, .unsupportedFormat)
+            XCTAssertTrue(persistence.isWriteBlocked)
+            XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+            XCTAssertThrowsError(try persistence.save(state))
+            XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+        }
     }
 
 }

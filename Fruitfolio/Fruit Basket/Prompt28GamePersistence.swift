@@ -21,7 +21,7 @@ final class Prompt28GamePersistence {
             case .notLoaded: return "game progress has not been loaded yet."
             case .wrongStoredType, .unreadable, .invalidState:
                 return "game progress could not be read safely. the original stored data is retained; play and progress changes are paused."
-            case .failedToSave: return "game progress could not be saved. the previous stored state is retained; reload before playing."
+            case .failedToSave: return "game progress could not be confirmed as saved. reload the current local state before playing."
             case .unsupportedFormat: return "this game data uses a newer format. the original data is retained; open it with a compatible Fruitfolio build."
             case .changedElsewhere:
                 return "game progress changed or was cleared in another view. reload the current local state before playing."
@@ -51,6 +51,11 @@ final class Prompt28GamePersistence {
         catch { failure = .unreadable; throw Failure.unreadable }
         guard state.schemaVersion == nil || state.schemaVersion == 1 else { failure = .unsupportedFormat; throw Failure.unsupportedFormat }
         guard Self.isValid(state) else { failure = .invalidState; throw Failure.invalidState }
+        guard let encoded = try? JSONEncoder().encode(state),
+              FruitfolioJSONFieldCoverage.preservesFields(original: data, encoded: encoded) else {
+            failure = .unsupportedFormat
+            throw Failure.unsupportedFormat
+        }
         baseline = data; failure = nil
         return state
     }
@@ -65,6 +70,13 @@ final class Prompt28GamePersistence {
         do { data = try JSONEncoder().encode(state) }
         catch { failure = .failedToSave; throw Failure.failedToSave }
         defaults.set(data, forKey: key)
+        // A setter returning is not an acknowledgment. Do not advance the
+        // baseline or roll back a replacement observed after this write.
+        guard let acknowledged = defaults.object(forKey: key) as? Data,
+              acknowledged == data else {
+            failure = .failedToSave
+            throw Failure.failedToSave
+        }
         baseline = data
     }
     private static func isValid(_ state: Prompt28PersistedGameState) -> Bool {

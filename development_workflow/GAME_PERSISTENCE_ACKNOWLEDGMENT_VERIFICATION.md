@@ -1,0 +1,11 @@
+# Game persistence acknowledgment and field coverage
+
+The actual pre-fix production persistence ran against four new fault/coverage regressions. All twelve focused cases executed; four cases produced 32 failed assertions. The receipt in RUN_LOGS/Game-write-acknowledgment-prior-failure.json records the parent commit, exact production/test/log hashes, failed cases and excerpts. The test double faults only its disposable game key; the production persistence and Foundation UserDefaults read path are unchanged by the fixture.
+
+A save now advances its baseline only after exact Data readback equals the bytes submitted. Dropped first/replacement writes and substituted Data/wrong-type records fail, block later writes and require explicit reload. A mismatching replacement is never rolled back. The failure copy now says the save could not be confirmed; it no longer asserts that a concurrent replacement equals the previous state.
+
+Loading now applies the existing shared field-coverage guard after typed validation and before accepting a writable baseline. Unknown top-level, per-topic and tour fields, including nested nulls that re-encoding would lose, keep the original bytes protected as unsupported. Existing schema/version/counter checks and exact pre-write baseline protection remain. The coverage helper detects lost keyed structure; it is not scalar scientific-value validation. No schema migration or automatic field stripping is introduced.
+
+All twelve focused game persistence tests now pass, including the existing legacy-with-missing-fields, stale writer, deleted state, invalid/future format and reset/next-win round trips. Full feasible suite results are in the batch log. One English-only truthful failure key preserves all 786 prior catalog entries. Original resources and research remain untouched.
+
+Acknowledgment means immediate local UserDefaults readback, not fsync, power-loss durability or cross-process compare-and-swap. Other writers can race outside the observed pre/post checks. Apple lifecycle, actual store/view-model recovery transitions, simulator UI and device behavior remain NOT_RUN. The recovery screen's remaining fixed English/error accessibility presentation is the next independent source task; catalog presence alone is not UI localization or official MADLAD verification.
