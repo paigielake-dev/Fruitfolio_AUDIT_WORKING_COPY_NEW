@@ -1011,7 +1011,8 @@ struct Prompt28FruitBasketView: View {
             alignment: .center,
             spacing: 7
         ) {
-            Text("controls")
+            FruitfolioFixedText(source: "controls", font: Prompt28TextRole.secondary.font)
+                .accessibilityAddTraits(.isHeader)
                 .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
@@ -1031,9 +1032,8 @@ struct Prompt28FruitBasketView: View {
                 }
             }
 
-            Text(
-                "classification keeps the same rules + points without reflex dragging."
-            )
+            FruitfolioFixedText(source: "classification keeps the same rules + points without reflex dragging.",
+                font: Prompt28TextRole.metadata.font)
             .prompt28Text(.metadata)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
             .multilineTextAlignment(.center)
@@ -1043,6 +1043,8 @@ struct Prompt28FruitBasketView: View {
             )
             .frame(maxWidth: 280)
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("fruitBasket.controlModePicker")
     }
 
     @ViewBuilder

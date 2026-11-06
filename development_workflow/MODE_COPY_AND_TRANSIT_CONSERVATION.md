@@ -1,0 +1,9 @@
+# Mode copy and entering transit conservation
+
+The existing fixed mode-picker heading/help now use compact semantic translation helpers with their exact original registered wording and fonts. Controls are a semantic heading/contained group; native individual button selected traits and guarded callbacks remain. Catalog and game controller/store/engine bytes are unchanged in this batch (SHA receipt). Catalog remains 965 English entries and zero nonempty foreign units.
+
+One new actual controller regression runs good-fruit and star scenarios through both accepted mode changes while the real capture transit is entering. It checks the same transit values and unchanged session/ledger before settlement, then uses the shared frame driver to verify exactly one basket/score/pass/cumulative event. Further frames leave both the ledger and actual persisted bytes unchanged. This is deterministic Foundation gameplay coverage, not a SwiftUI gesture/visual test.
+
+The existing four actual-root home/setup UI launch vectors (English/French paused inference × Reduce Motion, accessibility XXXL) now select the other mode and check native selected traits before entering the unchanged research input. Home checks retain both orientations; mode selection is exercised in portrait. All four launch vectors remain NOT RUN on Linux. Paused French checks fallback when executed, not actual French translation.
+
+Final supported suite results are recorded in matching batch/checklist entries. Apple SDK/VoiceOver grouping and focus, wrapping/keyboard/layout, actual gestures/audio/device behavior and official MADLAD/native-language/clinical validation remain unexecuted. The mode change primitive and source-code presence do not certify any whole original requirement. Exact founder replacements for 320–322 remain pending clarification and are not inferred from this fixed-copy wiring.

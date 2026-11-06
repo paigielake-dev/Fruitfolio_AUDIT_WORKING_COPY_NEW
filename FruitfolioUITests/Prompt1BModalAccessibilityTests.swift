@@ -183,6 +183,17 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 XCTAssertTrue(anyInput.waitForExistence(timeout: 5))
                 let native = input.exists ? input : app.textViews["fruitBasket.topicInput"]
                 XCTAssertTrue(native.exists)
+                let catchMode = app.buttons["fruitBasket.controlMode.catch"]
+                let classificationMode = app.buttons["fruitBasket.controlMode.classification"]
+                XCTAssertTrue(catchMode.exists); XCTAssertTrue(classificationMode.exists)
+                for _ in 0..<16 { if catchMode.isHittable && classificationMode.isHittable { break }; app.swipeUp() }
+                XCTAssertTrue(catchMode.isHittable); XCTAssertTrue(classificationMode.isHittable)
+                XCTAssertNotEqual(catchMode.isSelected, classificationMode.isSelected)
+                let chosen = catchMode.isSelected ? classificationMode : catchMode
+                let previous = catchMode.isSelected ? catchMode : classificationMode
+                chosen.tap()
+                XCTAssertTrue(chosen.isSelected); XCTAssertFalse(previous.isSelected)
+                for _ in 0..<16 { if native.isHittable { break }; app.swipeDown() }
                 for _ in 0..<16 { if native.isHittable { break }; app.swipeUp() }
                 XCTAssertTrue(native.isHittable); native.tap(); native.typeText("reproductive health")
                 XCTAssertEqual(native.value as? String, "reproductive health")

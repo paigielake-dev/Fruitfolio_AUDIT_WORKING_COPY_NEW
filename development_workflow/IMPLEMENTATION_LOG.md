@@ -2961,3 +2961,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 878, "native_CPU_XCTest": 900, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 7, "pre_fix_failed_assertions": 6, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify actual entering good-fruit/star transits survive accepted mode changes and credit exactly once; localize fixed mode-picker heading/help using existing semantic translation helpers while preserving source wording/native selected traits. Extend existing actual-root UI matrix, explicitly NOT_RUN Apple, execute supported checks and record evidence.
 - Commit: containing commit for batch Question-delivery-after-history-acknowledgement.
+
+## Mode-fixed-copy-and-entering-transit-conservation
+
+- Parent checkpoint: 3e3cb8c3706dce2406e41228b976b7accf43cb14.
+- Source-order requirements: [48, 326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, development_workflow/MODE_COPY_AND_TRANSIT_CONSERVATION.md.
+- Existing registered fixed mode heading/help use shared semantic translation and contained native selection group. Exact wording/fonts retained; model/store/engine/catalog SHA unchanged. One actual controller test covers good-fruit+star entering through both accepted mode changes, identical transit/session/ledger before settlement, exactly1credit and no repeated write onlaterframes. Existing4English/Frenchpaused×ReduceMotion home/setup UI launchvectors extended to native selected-mode checks, NOT_RUN. Catalog965English/0foreign. Final879/901XCTest+21SwiftTesting each pass; Apple/officialmodel notcertified.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 879, "native_CPU_XCTest": 901, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "English_catalog_entries": 965, "nonempty_foreign_units": 0, "written_Apple_home_setup_launch_vectors_extended": 4, "executed_new_Apple_UI_launch_vectors": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Inspect actual sourced-question validation and saved research metadata construction for duplicate/reference boundary correctness; implement only reproduced gaps with genuine Foundation regression and preserve original citations. If already guarded, proceed to remaining fixed question setup labels without changing pending founder replacements320–322.
+- Commit: containing commit for batch Mode-fixed-copy-and-entering-transit-conservation.

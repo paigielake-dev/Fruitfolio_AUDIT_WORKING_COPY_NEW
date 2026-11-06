@@ -235,6 +235,49 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(model.roundResult?.succeeded, true)
     }
 
+    func testAcceptedModeCyclePreservesEnteringFruitOrStarAndCreditsOnce() async throws {
+        for isStar in [false, true] {
+            let (suite, defaults, store, model) = try activeModeFixture()
+            defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+            if isStar {
+                model.classificationFruit = nil; model.classificationStarAvailable = true
+                model.classificationStarDecision(accept: true)
+            } else {
+                model.classificationStarAvailable = false
+                model.classificationFruit = .init(fruitID: .pear, classification: .good,
+                    x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+                model.classificationDecision(accept: true)
+            }
+            let entering = model.catchTransits
+            XCTAssertEqual(entering.count, 1)
+            let session = model.session
+            let ledger = model.roundLedger
+            model.setControlMode(.catchMode)
+            XCTAssertEqual(store.controlMode, .catchMode)
+            XCTAssertEqual(model.catchTransits, entering)
+            XCTAssertEqual(model.session, session)
+            XCTAssertEqual(model.roundLedger, ledger)
+            model.setControlMode(.classification)
+            XCTAssertEqual(store.controlMode, .classification)
+            XCTAssertEqual(model.catchTransits, entering)
+            XCTAssertEqual(model.session, session)
+            XCTAssertEqual(model.roundLedger, ledger)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+            XCTAssertTrue(model.catchTransits.isEmpty)
+            XCTAssertEqual(model.basketCount, isStar ? 0 : 1)
+            XCTAssertEqual(model.session?.availableStarPasses, isStar ? 1 : 0)
+            XCTAssertEqual(model.session?.score, isStar ? 0 : 10)
+            XCTAssertEqual(model.roundLedger.starsCollected, isStar ? 1 : 0)
+            XCTAssertEqual(store.progress(for: "fixture")?.totalFruitCaught, isStar ? 0 : 1)
+            XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, isStar ? 1 : 0)
+            let credited = model.roundLedger
+            let accepted = defaults.data(forKey: "game")
+            for _ in 0..<20 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+            XCTAssertEqual(model.roundLedger, credited)
+            XCTAssertEqual(defaults.data(forKey: "game"), accepted)
+        }
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
