@@ -1729,11 +1729,8 @@ struct Prompt28FruitBasketView: View {
                     }
                     .frame(maxWidth: 245)
 
-                    Text("your on-device total: \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
-                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
-                        .multilineTextAlignment(.center)
-                        .accessibilityLabel("your on-device \(selectedLeaderboardCategory.accessibilityUnit): \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
-                        .accessibilityIdentifier("fruitBasket.leaderboard.localTotal")
+                    Prompt28LeaderboardLocalTotal(category: selectedLeaderboardCategory,
+                        total: selectedLeaderboardCategory.localTotal(store.leaderboardTotals))
 
                     FruitfolioTranslatedText(source: "worldwide rankings unavailable until secure registration is configured ♡",
                         font: .custom("Chalkboard SE", size: 11, relativeTo: .caption))
@@ -2390,6 +2387,44 @@ private struct Prompt28LeaderboardCategoryButton: View {
         .accessibilityHint(Text(display.status.accessibilityDetail(
             original: FruitfolioSemanticDocument.plainText(from: category.rawValue),
             localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+    }
+}
+
+/// Translate fixed category copy only. The stored integer never enters inference.
+@MainActor
+private struct Prompt28LeaderboardLocalTotal: View {
+    let category: Prompt28LeaderboardCategory
+    let total: Int
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: "your on-device \(category.accessibilityUnit):", language: settings.language)
+    }
+
+    var body: some View {
+        let display = translation.presentation(for: key)
+        let number = total.formatted(.number.locale(Locale(identifier: settings.language.localeIdentifier)))
+        VStack(spacing: 4) {
+            FruitfolioSemanticText(markdown: display.text,
+                baseFont: Prompt28TextRole.metadata.font,
+                color: DesignTokens.ColorToken.backgroundCream)
+            Text(verbatim: number).monospacedDigit()
+            if let status = display.status.captionKey {
+                Text(LocalizedStringKey(status)).font(.caption)
+            }
+        }
+        .font(Prompt28TextRole.metadata.font)
+        .multilineTextAlignment(.center)
+        .fixedSize(horizontal: false, vertical: true)
+        .accessibilityElement(children: .ignore)
+        .accessibilityIdentifier("fruitBasket.leaderboard.localTotal")
+        .accessibilityLabel(Text("\(FruitfolioSemanticDocument.plainText(from: display.text)) \(number)"))
+        .accessibilityHint(Text(display.status.accessibilityDetail(
+            original: key.source, localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
             inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
             await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)

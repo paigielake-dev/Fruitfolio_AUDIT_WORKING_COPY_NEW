@@ -1982,3 +1982,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 733, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "catalog_keys": 656, "catalog_existing_entries_preserved": 652, "nonempty_foreign_units": 0, "initial_workflow_failure": "One static assertion expected inline suite creation; updated route invariant and reran all 42 successfully"}.
 - Next action: Translate the leaderboard total label separately from the locale-formatted integer using shared control translation state; keep actual count and usernames out of model input and preserve stored totals.
 - Commit: containing commit for batch Disposable-root-preference-owner-lifetime.
+
+## Leaderboard-label-and-locale-number-separation
+
+- Parent checkpoint: d745bb3129c05fdeba2066b415d3b85210afd023.
+- Source-order requirements: [393, 394, 397, 410, 411, 426, 431, 434, 466, 468, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Only fixed category total labels enter shared control translation. Original integer is separately Foundation-formatted with app locale and shown verbatim; model cannot rewrite it. Four English catalog keys added preserving 656 existing entries. Four new English/Arabic Apple UI cases read real private-fixture count with inference deliberately paused for fallback coverage; not executed on Linux.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 733, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "catalog_keys": 660, "catalog_existing_entries_preserved": 656, "nonempty_foreign_units": 0, "SwiftSyntax_sound_ownership_findings": 0}.
+- Next action: Exercise real Ask decoder runtime concurrently with synthetic native T5 translation/release using the shared backend, verifying translation resource release does not invalidate the existing separate Ask model. Keep this distinct from official MADLAD/clinical/device approval.
+- Commit: containing commit for batch Leaderboard-label-and-locale-number-separation.

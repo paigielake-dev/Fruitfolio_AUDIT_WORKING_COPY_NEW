@@ -1,0 +1,7 @@
+# Leaderboard label and number separation
+
+The leaderboard total now resolves only a fixed category label through the actual shared control translation state. The integer never enters translation: Foundation formats it using the selected app language locale and displays the result verbatim. The original integer and game store are not modified. VoiceOver receives the plain resolved label plus the separately formatted number, with the shared translation-origin/fallback hint. No raw username enters this path.
+
+Four English-only source entries bring the catalog from 656 to 660 keys; every prior entry is retained unchanged. Foreign translation and review are still pending. The displayed category-specific wording matches the former English accessibility wording and identifies which total is shown.
+
+Four new Apple UI launches cover English/Arabic number locale and both motion settings, read the actual private-fixture stored highest-level value and compare display against the separate Foundation NumberFormatter API. These cases deliberately pause inference in the DEBUG fixture to exercise honest catalog/source fallback; they do not replace production inference or claim Arabic translation. The real game fixture can now select a QA language, and exposes only its synthetic integer for readback. Apple RTL rendering, digits, VoiceOver and layout remain NOT_RUN until the SDK is available. Linux feasible results are in the batch run log.

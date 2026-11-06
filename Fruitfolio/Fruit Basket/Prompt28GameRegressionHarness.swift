@@ -49,15 +49,24 @@ struct Prompt28GameRegressionHarness: View {
     var body: some View {
         Prompt28FruitBasketView(onBack: { backRequests += 1 }, regressionModel: model, usernameStore: fixture.username, libraryStore: fixture.library)
             .overlay(alignment: .bottomLeading) {
-                Text("back requests: \(backRequests)")
-                    .font(.caption2)
-                    .accessibilityIdentifier("gameQA.backRequests")
-                    .allowsHitTesting(false)
+                VStack(alignment: .leading) {
+                    Text("back requests: \(backRequests)")
+                        .accessibilityIdentifier("gameQA.backRequests")
+                    Text("stored highest level: \(model.store.leaderboardTotals.highestLevel)")
+                        .accessibilityIdentifier("gameQA.storedHighestLevel")
+                }
+                .font(.caption2)
+                .allowsHitTesting(false)
             }
             .task {
                 guard !configured else { return }
                 configured = true
-                settings.language = .english
+                let args = ProcessInfo.processInfo.arguments
+                if let index = args.firstIndex(of: "-fruitfolioGameQALanguage"), index + 1 < args.count,
+                   let language = FruitfolioLanguage(rawValue: args[index + 1]) {
+                    settings.language = language
+                } else { settings.language = .english }
+                settings.translationPausedForMemoryPressure = args.contains("-fruitfolioGameQAPauseInference")
                 settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioGameReduceMotion")
                 configure()
             }

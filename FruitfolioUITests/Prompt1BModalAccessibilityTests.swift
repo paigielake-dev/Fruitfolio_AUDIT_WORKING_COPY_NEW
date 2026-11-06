@@ -191,6 +191,36 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testLeaderboardTotalUsesAppNumberLocaleWithoutChangingStoredCount() throws {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "leaderboard",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let category = app.buttons["fruitBasket.leaderboard.category.highest level"]
+            XCTAssertTrue(category.waitForExistence(timeout: 5))
+            let scroll = app.scrollViews.firstMatch
+            for _ in 0..<24 { if category.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(category.isHittable)
+            category.tap()
+            let total = app.descendants(matching: .any)
+                .matching(identifier: "fruitBasket.leaderboard.localTotal").firstMatch
+            XCTAssertTrue(total.exists)
+            let formatter = NumberFormatter()
+            formatter.locale = Locale(identifier: language)
+            formatter.numberStyle = .decimal
+            let expected = try XCTUnwrap(formatter.string(from: 0))
+            XCTAssertTrue(total.label.hasSuffix(" " + expected))
+            XCTAssertEqual(app.staticTexts["gameQA.storedHighestLevel"].label, "stored highest level: 0")
+            captureGame(app, name: "leaderboard-count-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testLeaderboardCategoriesGrowAndRetainSelectedTraitsAtAccessibilitySize() {
         for reduced in [false, true] {
         for rtl in [false, true] {
