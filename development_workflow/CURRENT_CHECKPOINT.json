@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "ef9e23ce5c69aafda769211c1e51506859a9bf45",
+  "current_HEAD": "8f81d4e4f837bb7700579d7a16271f014b02d322",
   "latest_verified_commit": null,
-  "current_checklist_part": 6,
-  "current_requirement": 461,
-  "current_implementation_batch": "Record-specific-measurement-editor-save-conflict-protection",
+  "current_checklist_part": 8,
+  "current_requirement": 432,
+  "current_implementation_batch": "Daily-log-nonsuspending-save-transactions-and-revision-integrity",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-    "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
-    "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
-    "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
-    "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogStore.swift",
+    "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/Daily-log-actual-concurrency-before-after.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -511,21 +511,23 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite",
-    "Full actual native-linked Swift5 suite",
-    "40 workflow tests including real SwiftSyntax and compiled palette/PNG comparison",
-    "Final279 Swift compiler syntax parses",
+    "Before-fix full portable regression run against actual prior production source (expected2test/4assertion failures)",
+    "Final full portable Swift6 suite",
+    "Final full actual native-linked Swift5 suite",
+    "40 workflow tests with actual SwiftSyntax/compiled palette PNG checks",
+    "280 Swift compiler syntax parses",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable": "585 XCTest +21 Swift Testing passed",
-    "native": "591 XCTest +21 Swift Testing passed with actual CPU llama",
-    "workflow": "40 passed including9 actual SwiftSyntax and actual compiled palette/PNG test",
-    "syntax": "279 Swift files parsed,0errors; no Apple typecheck",
-    "Apple": "NOT_RUN editor sheet/frozen-baseline/focus/keyboard UI and actual app SDK build"
+    "beforeFix": "Actual64 same-day requests ->finalrevision2;32 identical requests ->32identities;2tests/4assertions failed",
+    "portable": "591 XCTest +21 Swift Testing passed after fix",
+    "native": "597 XCTest +21 Swift Testing passed with actual CPU llama after fix",
+    "workflow": "40 passed including9 real SwiftSyntax and actual compiled palette/PNG check",
+    "syntax": "280 Swift files parsed,0errors; no Apple typecheck",
+    "Apple": "NOT_RUN app/UI/device/performance/clinical acceptance"
   },
-  "next_exact_implementation_action": "Fix a concrete Cycle daily-log actor reentrancy gap: Prompt20CycleDailyLogStore captures previous log/idempotency state then awaits MainActor.run for pure Prompt20DailyLogRules.makeLog, permitting another save to interleave and reuse a stale revision or rollback newer request state. Make pure rules explicitly nonisolated and execute validation/candidate construction synchronously inside the persistence actor while preserving its async public API. Add real concurrent-save revision/idempotency regressions. Then inspect independent daily-log file snapshot/future-field preservation without broad re-auditing.",
-  "updated_at": "2026-11-06T06:32:24.075047+00:00",
+  "next_exact_implementation_action": "Fix actual daily-temperature edit precision/source-unit loss: Prompt20DailyLogDraft.init(log:displayTemperatureUnit:) currently converts a saved original to the preferred display unit and rounds it through the display formatter, so a notes-only save can change the recorded value/unit. Keep edit inputs in their original unit with round-trip precision, make unit selection retain the entered number with a clear thermometer-value caption, and port the actual Foundation-only DailyLogViewModel using conditional genuine Combine so its real load/edit/save behavior can be tested on Linux. Preserve read-only conversion helpers. Then implement daily-log file snapshot/future-field guards and record-specific stale editor protection independently.",
+  "updated_at": "2026-11-06T06:43:15.460789+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

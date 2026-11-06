@@ -20,7 +20,7 @@ public struct Prompt20DailyLogValidationResult: Equatable, Sendable {
     public var isValid: Bool { issues.isEmpty }
 }
 
-public enum Prompt20DailyLogRules {
+public nonisolated enum Prompt20DailyLogRules {
     public static func isFuture(
         _ day: Prompt20LocalDay,
         relativeTo now: Date,
@@ -90,6 +90,11 @@ public enum Prompt20DailyLogRules {
         existing: Prompt20DailyLog?,
         now: Date
     ) throws -> Prompt20DailyLog {
+        let previousRevision = existing?.revision ?? 0
+        guard previousRevision >= 0, previousRevision < Int.max else {
+            throw Prompt20DailyLogDomainError.corruptPersistence
+        }
+        let nextRevision = previousRevision + 1
         let utc = FruitfolioCanonicalCalendar.gregorian(timeZone: TimeZone(secondsFromGMT: 0)!)
         guard date.date(in: utc) != nil else { throw Prompt20DailyLogDomainError.validation([.invalidDate]) }
         let validation = validate(draft)
@@ -173,7 +178,7 @@ public enum Prompt20DailyLogRules {
             generalNote: note,
             createdAt: existing?.createdAt ?? now,
             updatedAt: now,
-            revision: max((existing?.revision ?? 0) + 1, 1),
+            revision: nextRevision,
             isDeleted: false
         )
     }

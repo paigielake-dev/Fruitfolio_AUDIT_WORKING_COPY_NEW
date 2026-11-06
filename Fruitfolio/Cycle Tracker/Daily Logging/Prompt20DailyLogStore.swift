@@ -135,27 +135,12 @@ public actor Prompt20CycleDailyLogStore:
     ) async throws
         -> Prompt20DailyLog? {
 
+        try Task.checkCancellation()
         try ensureLoaded()
 
-        /*
-         Prompt20DailyLogRules currently inherits
-         the project's default MainActor isolation.
-
-         The persistence actor itself should NOT
-         become MainActor-bound, so only the pure
-         rules operation crosses to MainActor.
-         */
-        let dateIsFuture =
-            await MainActor.run {
-                Prompt20DailyLogRules
-                    .isFuture(
-                        date,
-                        relativeTo:
-                            now,
-                        calendar:
-                            calendar
-                    )
-            }
+        // Pure rules run within this actor transaction. A suspension between
+        // reading the baseline and committing could overwrite another save.
+        let dateIsFuture = Prompt20DailyLogRules.isFuture(date, relativeTo: now, calendar: calendar)
 
         guard
             !dateIsFuture
@@ -210,31 +195,9 @@ public actor Prompt20CycleDailyLogStore:
         let previousRequestSet =
             processedRequestSet
 
-        /*
-         Prompt20DailyLogRules is currently
-         MainActor-isolated by project default
-         isolation.
-
-         Keep the store actor independent from
-         UI execution while crossing explicitly
-         for this deterministic transformation.
-         */
-        let candidate =
-            try await MainActor.run {
-                try Prompt20DailyLogRules
-                    .makeLog(
-                        ownerID:
-                            ownerID,
-                        date:
-                            date,
-                        draft:
-                            draft,
-                        existing:
-                            previousLog,
-                        now:
-                            now
-                    )
-            }
+        let candidate = try Prompt20DailyLogRules.makeLog(
+            ownerID: ownerID, date: date, draft: draft, existing: previousLog, now: now)
+        try Task.checkCancellation()
 
         if candidate
             .hasRecordedContent {
@@ -281,13 +244,7 @@ public actor Prompt20CycleDailyLogStore:
             tombstone.updatedAt =
                 now
 
-            tombstone.revision =
-                max(
-                    previousLog
-                        .revision
-                    + 1,
-                    1
-                )
+            tombstone.revision = candidate.revision
 
             tombstone.isDeleted =
                 true
@@ -796,17 +753,8 @@ public actor
     ) async throws
         -> Prompt20DailyLog? {
 
-        let dateIsFuture =
-            await MainActor.run {
-                Prompt20DailyLogRules
-                    .isFuture(
-                        date,
-                        relativeTo:
-                            now,
-                        calendar:
-                            calendar
-                    )
-            }
+        try Task.checkCancellation()
+        let dateIsFuture = Prompt20DailyLogRules.isFuture(date, relativeTo: now, calendar: calendar)
 
         guard
             !dateIsFuture
@@ -845,22 +793,9 @@ public actor
                 storageKey
             ]
 
-        let candidate =
-            try await MainActor.run {
-                try Prompt20DailyLogRules
-                    .makeLog(
-                        ownerID:
-                            ownerID,
-                        date:
-                            date,
-                        draft:
-                            draft,
-                        existing:
-                            existing,
-                        now:
-                            now
-                    )
-            }
+        let candidate = try Prompt20DailyLogRules.makeLog(
+            ownerID: ownerID, date: date, draft: draft, existing: existing, now: now)
+        try Task.checkCancellation()
 
         processedRequestIDs
             .insert(

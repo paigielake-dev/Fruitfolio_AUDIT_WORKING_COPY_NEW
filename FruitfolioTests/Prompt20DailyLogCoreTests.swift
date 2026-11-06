@@ -33,6 +33,163 @@ final class Prompt20CoreTests: XCTestCase {
         Prompt20LocalDay(year: year, month: month, day: day)
     }
 
+    func testConcurrentWritesToOneDayReceiveDistinctSequentialRevisions() async throws {
+        let cal = calendar()
+        let now = date(2026, 9, 7, calendar: cal)
+        let selected = day(2026, 9, 7)
+        let store = Prompt20CycleDailyLogStore(fileURL: nil, calendar: cal)
+        let revisions = try await withThrowingTaskGroup(of: Int.self) { group in
+            for index in 0..<64 {
+                group.addTask {
+                    var draft = Prompt20DailyLogDraft(); draft.generalNote = "observation \(index)"
+                    let saved = try await store.save(ownerID: .localDevice, date: selected,
+                        draft: draft, now: now, requestID: UUID())
+                    return try XCTUnwrap(saved).revision
+                }
+            }
+            var revisions: [Int] = []
+            for try await revision in group { revisions.append(revision) }
+            return revisions
+        }
+        XCTAssertEqual(revisions.count, 64)
+        XCTAssertEqual(Set(revisions), Set(1...64))
+        let final = try await store.load(ownerID: .localDevice, date: selected)
+        XCTAssertEqual(final?.revision, 64)
+    }
+
+    func testConcurrentIdenticalRequestIDsCommitOneStableRecordIdentity() async throws {
+        let cal = calendar()
+        let now = date(2026, 9, 7, calendar: cal)
+        let selected = day(2026, 9, 7)
+        let store = Prompt20CycleDailyLogStore(fileURL: nil, calendar: cal)
+        let requestID = UUID()
+        let ids = try await withThrowingTaskGroup(of: UUID.self) { group in
+            for _ in 0..<32 {
+                group.addTask {
+                    var draft = Prompt20DailyLogDraft(); draft.generalNote = "one observation"
+                    let saved = try await store.save(ownerID: .localDevice, date: selected,
+                        draft: draft, now: now, requestID: requestID)
+                    return try XCTUnwrap(saved).id
+                }
+            }
+            var ids: [UUID] = []
+            for try await id in group { ids.append(id) }
+            return ids
+        }
+        XCTAssertEqual(Set(ids).count, 1)
+        let final = try await store.load(ownerID: .localDevice, date: selected)
+        XCTAssertEqual(final?.revision, 1)
+        XCTAssertEqual(final?.id, ids.first)
+        XCTAssertEqual(final?.generalNote?.text, "one observation")
+    }
+
+    func testConcurrentIndependentDaysPersistAllRecordsAndRetryIdentities() async throws {
+        let cal = calendar()
+        let now = date(2026, 9, 7, calendar: cal)
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let file = folder.appendingPathComponent("daily-logs.json")
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let store = Prompt20CycleDailyLogStore(fileURL: file, calendar: cal)
+        let requests = (1...16).map { (Prompt20LocalDay(year: 2026, month: 8, day: $0), UUID()) }
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for (selected, request) in requests {
+                group.addTask {
+                    var draft = Prompt20DailyLogDraft(); draft.generalNote = "retained observation"
+                    _ = try await store.save(ownerID: .localDevice, date: selected,
+                        draft: draft, now: now, requestID: request)
+                }
+            }
+            try await group.waitForAll()
+        }
+        let baseline = try Data(contentsOf: file)
+        let restored = Prompt20CycleDailyLogStore(fileURL: file, calendar: cal)
+        let saved = try await restored.allActiveLogs(ownerID: .localDevice)
+        XCTAssertEqual(saved.count, 16)
+        XCTAssertTrue(saved.allSatisfy { $0.revision == 1 })
+        for (selected, request) in requests {
+            var retry = Prompt20DailyLogDraft(); retry.generalNote = "must not overwrite committed request"
+            let actual = try await restored.save(ownerID: .localDevice, date: selected,
+                draft: retry, now: now, requestID: request)
+            XCTAssertEqual(actual?.generalNote?.text, "retained observation")
+            XCTAssertEqual(actual?.revision, 1)
+        }
+        XCTAssertEqual(try Data(contentsOf: file), baseline)
+    }
+
+    func testInMemoryRepositoryRetainsConcurrentRevisionAndRetryContract() async throws {
+        let cal = calendar()
+        let now = date(2026, 9, 7, calendar: cal)
+        let selected = day(2026, 9, 7)
+        let repository = Prompt20InMemoryDailyLogRepository(calendar: cal)
+        let revisions = try await withThrowingTaskGroup(of: Int.self) { group in
+            for index in 0..<64 {
+                group.addTask {
+                    var draft = Prompt20DailyLogDraft(); draft.generalNote = "observation \(index)"
+                    let saved = try await repository.save(ownerID: .localDevice, date: selected,
+                        draft: draft, now: now, requestID: UUID())
+                    return try XCTUnwrap(saved).revision
+                }
+            }
+            var values: [Int] = []
+            for try await revision in group { values.append(revision) }
+            return values
+        }
+        XCTAssertEqual(Set(revisions), Set(1...64))
+        let request = UUID()
+        var original = Prompt20DailyLogDraft(); original.generalNote = "one retry identity"
+        let saved = try await repository.save(ownerID: .localDevice, date: selected, draft: original, now: now, requestID: request)
+        var retry = original; retry.generalNote = "must not overwrite"
+        let retried = try await repository.save(ownerID: .localDevice, date: selected, draft: retry, now: now, requestID: request)
+        XCTAssertEqual(saved, retried)
+        XCTAssertEqual(retried?.revision, 65)
+        XCTAssertEqual(retried?.generalNote?.text, "one retry identity")
+    }
+
+    func testCancellationBeforeStoreEntryCannotWriteARecord() async throws {
+        let cal = calendar()
+        let now = date(2026, 9, 7, calendar: cal)
+        let selected = day(2026, 9, 7)
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let store = Prompt20CycleDailyLogStore(fileURL: file, calendar: cal)
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            var draft = Prompt20DailyLogDraft(); draft.generalNote = "cancelled before entry"
+            return try await store.save(ownerID: .localDevice, date: selected, draft: draft, now: now)
+        }
+        do { _ = try await task.value; XCTFail("Cancelled request must not write") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        XCTAssertFalse(FileManager.default.fileExists(atPath: file.path))
+        let active = try await store.allActiveLogs(ownerID: .localDevice)
+        XCTAssertTrue(active.isEmpty)
+    }
+
+    func testRevisionOverflowRejectsWithoutChangingOriginalPersistence() async throws {
+        let cal = calendar()
+        let now = date(2026, 9, 7, calendar: cal)
+        let selected = day(2026, 9, 7)
+        var draft = Prompt20DailyLogDraft(); draft.generalNote = "original observation"
+        var log = try Prompt20DailyLogRules.makeLog(ownerID: .localDevice, date: selected,
+                                                  draft: draft, existing: nil, now: now)
+        log.revision = Int.max
+        let encoder = JSONEncoder(); encoder.dateEncodingStrategy = .millisecondsSince1970
+        let encodedLog = try JSONSerialization.jsonObject(with: encoder.encode(log))
+        let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion": 1, "logs": [encodedLog], "recentlyProcessedRequestIDs": []])
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        try bytes.write(to: file)
+        let store = Prompt20CycleDailyLogStore(fileURL: file, calendar: cal)
+        draft.generalNote = "must not overwrite"
+        do {
+            _ = try await store.save(ownerID: .localDevice, date: selected, draft: draft, now: now)
+            XCTFail("Revision overflow must reject, not trap or overwrite")
+        } catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .corruptPersistence) }
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+        let original = try await store.load(ownerID: .localDevice, date: selected)
+        XCTAssertEqual(original?.revision, Int.max)
+        XCTAssertEqual(original?.generalNote?.text, "original observation")
+    }
+
     func testLocalDayRoundTripUsesCalendarDay() async {
         let cal = calendar()
         let source = date(2026, 9, 7, hour: 23, calendar: cal)

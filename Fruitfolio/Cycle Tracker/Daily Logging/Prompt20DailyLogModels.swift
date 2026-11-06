@@ -470,7 +470,7 @@ public struct Prompt20DailyLogDraft: Equatable, Sendable {
     }
 }
 
-public enum Prompt20TemperatureFormatter {
+public nonisolated enum Prompt20TemperatureFormatter {
     public static func string(_ value: Double, unit: Prompt20TemperatureUnit) -> String {
         let places = unit == .fahrenheit ? 1 : 2
         return String(format: "%.*f", places, value)
