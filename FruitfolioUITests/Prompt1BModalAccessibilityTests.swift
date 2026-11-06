@@ -2354,13 +2354,18 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         let group = app.buttons["family, genetic and biological context"]
         XCTAssertTrue(group.waitForExistence(timeout: 5))
         group.tap()
-        let dna = app.buttons["known DNA / genetic findings"]
+        let dna = app.buttons["personalHealth.category.dna"]
         for _ in 0..<10 { if dna.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(dna.isHittable)
         dna.tap()
         let text = app.textViews["optional personal health context"]
         XCTAssertTrue(text.waitForExistence(timeout: 3))
         text.tap(); text.typeText("only my explicitly supplied finding")
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+        XCTAssertTrue(text.waitForExistence(timeout: 3))
+        XCTAssertTrue((text.value as? String)?.contains("only my explicitly supplied finding") == true, "Unsent context draft survives backgrounding")
         let save = app.buttons["save my context"]
         for _ in 0..<10 { if save.isHittable { break }; app.swipeUp() }
         save.tap()

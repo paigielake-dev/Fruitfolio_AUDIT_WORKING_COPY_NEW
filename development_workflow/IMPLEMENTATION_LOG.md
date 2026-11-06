@@ -2543,3 +2543,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 920, "preserved_entries": 870, "new_English_entries": 50, "Apple": "NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21 SwiftTesting each not rerun"}.
 - Next action: Continue actual personal-health editor ownership, localizable native labels and unsaved-draft preservation; preserve frozen original record revision and existing source/clinical boundaries.
 - Commit: containing commit for batch Personal-context-controlled-copy-and-scientific-label-preservation.
+
+## Personal-context-active-owner-and-unsent-draft-resume
+
+- Parent checkpoint: 1ce8332401ab59ef7a60d93ef1fb97358bc07319.
+- Source-order requirements: [281, 287, 476, 477, 478].
+- Source files: Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift.
+- Actual personal context root gates Back/category sheets by active visible owner without a covering presentation. Editor gates Save/prefer-not/Close/confirmation requests and popup actions, and rejects inactive asynchronous focus. Existing frozen baseline revision, pending confirmed dismissal workflow and native patient text remain unchanged. Existing Apple add/edit/remove regression uses stable category ID and checks unsent draft after background/reactivation; NOT_RUN.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_personal_context_UI": "extended existing launch, NOT_RUN", "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Guard shared context storage reload/focus notice against inactive/covered owner while preserving read-only reload and protected original data, then continue next independent context requirement.
+- Commit: containing commit for batch Personal-context-active-owner-and-unsent-draft-resume.

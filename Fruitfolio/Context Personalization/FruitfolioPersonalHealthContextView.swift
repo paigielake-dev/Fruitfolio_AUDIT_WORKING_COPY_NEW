@@ -1,15 +1,22 @@
 import SwiftUI
+import UIKit
 
 struct FruitfolioPersonalHealthContextView: View {
     @ObservedObject var store: Prompt27AContextStore
     let onBack: () -> Void
     @State private var editing: FruitfolioPersonalHealthCategory?
+    @State private var viewIsVisible = false
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil && editing == nil
+    }
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                BackControl(action: onBack)
+                BackControl(action: { guard canInteract else { return }; onBack() })
                 FruitfolioFixedText(source: "personal health context", font: .title2.bold(), serious: true).accessibilityAddTraits(.isHeader)
                 FruitfolioTranslatedText(source: "entirely optional, user-provided context, stored on this device. explore only what matters to you. skip anything; no biological findings or diagnoses are guessed from your answers. these notes do not replace approved research or clinical advice.", serious: true)
                 FruitfolioTranslatedText(source: "for laboratory artwork, choose a technique or sample category only if it was actually reported or you know it applies. otherwise use other labs / testing.", font: .callout, serious: true)
@@ -19,7 +26,7 @@ struct FruitfolioPersonalHealthContextView: View {
                     DisclosureGroup {
                         VStack(spacing: 12) {
                             ForEach(FruitfolioPersonalHealthCategory.allCases.filter { $0.group == group }) { category in
-                                Button { editing = category } label: {
+                                Button { guard canInteract else { return }; editing = category } label: {
                                     HStack(alignment: .center, spacing: 14) {
                                         if let asset = category.asset {
                                             FruitfolioImage(id: asset).scaledToFit().frame(width: 64, height: 64).allowsHitTesting(false).accessibilityHidden(true)
@@ -49,6 +56,8 @@ struct FruitfolioPersonalHealthContextView: View {
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false }
         .sheet(item: $editing) { category in
             FruitfolioPresentedPopupHost {
                 FruitfolioPersonalHealthEntryEditor(store: store, category: category, onClose: { editing = nil })
@@ -74,6 +83,11 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
     @State private var viewIsVisible = false
+    @Environment(\.scenePhase) private var scenePhase
+    private var ownerIsActive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
+    private var canInteract: Bool { ownerIsActive && popupCoordinator.currentPopup == nil }
     @State private var pendingAction: PendingAction?
     @State private var returnCloseFocus = false
     @State private var popupInstanceID = UUID()
@@ -126,13 +140,13 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                     }
                     .task(id: errorFocusRequest) {
                         await Task.yield()
-                        guard !Task.isCancelled, viewIsVisible else { return }
+                        guard !Task.isCancelled, ownerIsActive else { return }
                         errorFocused = true
                     }
                 }
-                WatercolorPrimaryButton(label: "save my context") { save(status: .provided) }
+                WatercolorPrimaryButton(label: "save my context") { guard canInteract else { return }; save(status: .provided) }
                     .disabled(store.storageProtectionReason != nil)
-                WatercolorSecondaryButton(label: "prefer not to say") { save(status: .preferNotToSay) }
+                WatercolorSecondaryButton(label: "prefer not to say") { guard canInteract else { return }; save(status: .preferNotToSay) }
                     .disabled(store.storageProtectionReason != nil)
                 if store.context.personalHealthEntries[category.rawValue]?.isActive == true {
                     WatercolorSecondaryButton(label: "remove this context") { requestConfirmation(removal: true) }
@@ -140,6 +154,7 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                         .disabled(store.storageProtectionReason != nil)
                 }
                 WatercolorSecondaryButton(label: "skip / close") {
+                    guard canInteract else { return }
                     if changed { requestConfirmation(removal: false) } else { onClose() }
                 }
                 .accessibilityIdentifier("personalHealth.editor.close")
@@ -178,7 +193,7 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
     }
 
     private func requestConfirmation(removal: Bool) {
-        guard viewIsVisible, let owner = popupOwner else { return }
+        guard canInteract, let owner = popupOwner else { return }
         returnCloseFocus = true
         closeFocused = false
         textFocused = false
@@ -187,15 +202,15 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                 message: removal ? "remove this user-provided context from this device? your other My Context selections will be kept."
                     : "save, discard or keep editing your unsaved context changes?",
                 primaryAction: .init(label: removal ? "keep this context" : "keep editing") {
-                    guard viewIsVisible else { return }
+                    guard ownerIsActive else { return }
                     _ = owner.consumeAction(for: id)
                 },
                 secondaryAction: .init(label: removal ? "remove context" : "save changes") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     pendingAction = removal ? .remove : .save
                 },
                 tertiaryAction: removal ? nil : .init(label: "discard changes") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     pendingAction = .discard
                 }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
                 source: "personal-health-confirmation", deduplicationKey: "personal-health-confirmation-" + popupInstanceID.uuidString,
