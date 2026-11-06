@@ -2763,3 +2763,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 949, "new_English_entries": 1, "Apple_body_biology": "NOT_RUN", "Foundation": "unchanged; prior797/819 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Original315–317 LifeBridge approved exact-host snapshots remain externally blocked in BLOCKERS.md, not completed. Continue independent318–319 privacy/research boundaries for informational access then original Part7/game requirements; preserve all pending clinical/Apple verification.
 - Commit: containing commit for batch Body-biology-canonical-fallback-and-qualified-source-copy.
+
+## LifeBridge-exact-source-URL-and-review-metadata-boundaries
+
+- Parent checkpoint: e02aead4f164b8b58596d1745b23d32a8bf327a2.
+- Source-order requirements: [318, 319, 476, 477, 478].
+- Source files: Fruitfolio/LifeBridge/LifeBridgeInformation.swift.
+- Actual structural validator requires exact HTTPS hosts, no URL credentials and default/443 port for reviewed snapshots/application. Blank ID/title/version/body and nonfinite dates rejected without rewriting accepted originals. Literal approved query/fragment stays intact; no local health data appended. Three nonclinical fixture cases reproduce13 failed assertions before fix; full800/822 XCTest +21SwiftTesting each pass. No reviewer authentication/company facts/approved-snapshot availability established;315–317 remain blocked.
+- Tests added/updated: FruitfolioTests/Prompt1BLifeBridgeTests.swift.
+- Verification: {"portable_XCTest": 800, "native_CPU_XCTest": 822, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "prior_focused_XCTest": 5, "prior_failed_assertions": 13, "Apple_external_link_privacy": "NOT_RUN", "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"}.
+- Next action: Continue actual LifeBridge information UI fixed-label/source/missing-content privacy localization and active owner, keeping reviewed URLs/source text/version metadata unchanged. Then original Part7 Fruit Basket home/instructions requirements; no fabricated company facts or network bypass.
+- Commit: containing commit for batch LifeBridge-exact-source-URL-and-review-metadata-boundaries.

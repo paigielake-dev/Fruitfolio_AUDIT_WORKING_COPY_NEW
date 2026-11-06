@@ -15,18 +15,27 @@ struct FruitfolioLifeBridgeContent: Codable, Equatable, Sendable {
     let officialApplicationURL: URL?
     let relationshipDisclosure: String?
 
+    private static func isOfficialURL(_ url: URL, hosts: Set<String>) -> Bool {
+        url.scheme?.lowercased() == "https" && hosts.contains(url.host?.lowercased() ?? "") &&
+            url.user == nil && url.password == nil && (url.port == nil || url.port == 443)
+    }
+    private static func hasVisibleContent(_ text: String) -> Bool {
+        !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     func validate(now: Date = Date()) -> Bool {
+        guard now.timeIntervalSinceReferenceDate.isFinite else { return false }
         let hosts = Set(snapshots.compactMap { $0.sourceURL.host?.lowercased() })
         guard hosts.contains("lifebridgesurrogacy.com"), hosts.contains("fruitsoflifexo.carrd.co"),
               Set(snapshots.map(\.id)).count == snapshots.count else { return false }
         guard snapshots.allSatisfy({ snapshot in
-            snapshot.sourceURL.scheme == "https" &&
-            ["lifebridgesurrogacy.com", "fruitsoflifexo.carrd.co"].contains(snapshot.sourceURL.host?.lowercased() ?? "") &&
-            !snapshot.title.isEmpty && !snapshot.version.isEmpty && !snapshot.approvedText.isEmpty &&
+            Self.isOfficialURL(snapshot.sourceURL, hosts: ["lifebridgesurrogacy.com", "fruitsoflifexo.carrd.co"]) &&
+            [snapshot.id, snapshot.title, snapshot.version, snapshot.approvedText].allSatisfy(Self.hasVisibleContent) &&
+            snapshot.retrievedAt.timeIntervalSinceReferenceDate.isFinite && snapshot.reviewedAt.timeIntervalSinceReferenceDate.isFinite &&
             snapshot.retrievedAt <= snapshot.reviewedAt && snapshot.reviewedAt <= now
         }) else { return false }
         if let application = officialApplicationURL {
-            guard application.scheme == "https", application.host?.lowercased() == "lifebridgesurrogacy.com" else { return false }
+            guard Self.isOfficialURL(application, hosts: ["lifebridgesurrogacy.com"]) else { return false }
         }
         return true
     }
