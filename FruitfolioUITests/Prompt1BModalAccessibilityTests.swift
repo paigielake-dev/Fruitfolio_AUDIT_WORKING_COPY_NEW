@@ -951,6 +951,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertFalse(scroll.exists)
         app.terminate()
     }
+    private func qaArgument(_ flag: String, in app: XCUIApplication) -> String {
+        let args = app.launchArguments
+        guard let index = args.firstIndex(of: flag), args.indices.contains(index + 1) else { return "default" }
+        return args[index + 1]
+    }
+
     private func launchCycleModal(_ scenario: String, reduced: Bool, rtl: Bool, landscape: Bool = false) -> XCUIApplication {
         XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
         let app = XCUIApplication()
@@ -992,7 +998,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(action.frame.minY, scroll.frame.minY - 1)
         XCTAssertLessThanOrEqual(action.frame.maxY, scroll.frame.maxY + 1)
         let screenshot = XCTAttachment(screenshot: app.screenshot())
-        screenshot.name = "cycle-paper-" + label
+        screenshot.name = "cycle-" + qaArgument("-fruitfolioCycleModalQAScenario", in: app)
+            + "-override-" + String(app.launchArguments.contains("-fruitfolioCycleModalReduceMotion"))
+            + "-rtl-" + String(app.launchArguments.contains("-fruitfolioCycleModalRTL")) + "-" + label
         screenshot.lifetime = .keepAlways
         add(screenshot)
         action.tap()
@@ -1119,6 +1127,125 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             }
         }
         XCUIDevice.shared.orientation = .portrait
+    }
+
+    private func launchAccountAction(_ scenario: String, reduced: Bool, rtl: Bool) -> XCUIApplication {
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioAccountActionQA", "-fruitfolioAccountActionQAScenario", scenario,
+                                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if reduced { app.launchArguments += ["-fruitfolioAccountActionReduceMotion"] }
+        if rtl { app.launchArguments += ["-fruitfolioAccountActionRTL"] }
+        app.launch()
+        let target = app.buttons["account.signOut"]
+        XCTAssertTrue(target.waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["accountQA.username"].label, "empty private username")
+        return app
+    }
+
+    private func openAccountAction(_ identifier: String, app: XCUIApplication) {
+        let target = app.buttons[identifier], scroll = app.scrollViews["account.scroll"]
+        for _ in 0..<25 { if target.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(target.isHittable); target.tap()
+        XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["account.signOut"].exists)
+        XCTAssertFalse(app.buttons["account.deleteAccount"].exists)
+    }
+
+    private func tapAccountPaperAction(_ slot: String, label: String, app: XCUIApplication) {
+        let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+        let action = app.buttons["fruitPopup.paper.action." + slot]
+        for _ in 0..<25 { if action.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(action.isHittable); XCTAssertEqual(action.label, label)
+        XCTAssertGreaterThanOrEqual(action.frame.height, 44)
+        XCTAssertGreaterThanOrEqual(action.frame.minX, scroll.frame.minX - 1)
+        XCTAssertLessThanOrEqual(action.frame.maxX, scroll.frame.maxX + 1)
+        XCTAssertGreaterThanOrEqual(action.frame.minY, scroll.frame.minY - 1)
+        XCTAssertLessThanOrEqual(action.frame.maxY, scroll.frame.maxY + 1)
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "account-" + qaArgument("-fruitfolioAccountActionQAScenario", in: app)
+            + "-override-" + String(app.launchArguments.contains("-fruitfolioAccountActionReduceMotion"))
+            + "-rtl-" + String(app.launchArguments.contains("-fruitfolioAccountActionRTL")) + "-" + slot + "-" + label
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        action.tap()
+    }
+
+    private func waitForAccountValue(_ identifier: String, value: String, app: XCUIApplication) {
+        let element = app.staticTexts[identifier]
+        expectation(for: NSPredicate(format: "label == %@", value), evaluatedWith: element)
+        waitForExpectations(timeout: 5)
+    }
+
+    private func assertReadableAccountFailure(_ fragment: String, app: XCUIApplication) {
+        let message = app.descendants(matching: .any).matching(identifier: "account.actionMessage").firstMatch
+        XCTAssertTrue(message.waitForExistence(timeout: 5))
+        let scroll = app.scrollViews["account.scroll"]
+        for _ in 0..<25 { if message.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(message.isHittable)
+        XCTAssertTrue(message.label.contains(fragment), message.label)
+    }
+
+    func testAccountCancelAndSignOutKeepPendingLocalHealthInformation() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                let app = launchAccountAction("sign-out", reduced: reduced, rtl: rtl)
+                openAccountAction("account.signOut", app: app)
+                tapAccountPaperAction("primary", label: "cancel", app: app)
+                XCTAssertTrue(app.buttons["account.signOut"].waitForExistence(timeout: 5))
+                waitForAccountValue("accountQA.recordUnchanged", value: "yes", app: app)
+                waitForAccountValue("accountQA.identity", value: "fixture-a@example.invalid", app: app)
+                openAccountAction("account.signOut", app: app)
+                tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
+                waitForAccountValue("accountQA.identity", value: "none", app: app)
+                waitForAccountValue("accountQA.pending", value: "yes", app: app)
+                waitForAccountValue("accountQA.healthUnchanged", value: "yes", app: app)
+                XCTAssertFalse(app.buttons["account.deleteAccount"].exists)
+                app.terminate()
+            }
+        }
+    }
+
+    func testUnavailableAccountDeletionAndSyncReportFailureWithoutErasingLocalData() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                for operation in ["delete", "sync"] {
+                    let app = launchAccountAction("unavailable-" + operation, reduced: reduced, rtl: rtl)
+                    if operation == "delete" {
+                        openAccountAction("account.deleteAccount", app: app)
+                        tapAccountPaperAction("secondary", label: "request account deletion", app: app)
+                        assertReadableAccountFailure("could not be completed", app: app)
+                        waitForAccountValue("accountQA.recordUnchanged", value: "yes", app: app)
+                    } else {
+                        openAccountAction("account.signOut", app: app)
+                        tapAccountPaperAction("tertiary", label: "try cloud sync", app: app)
+                        assertReadableAccountFailure("not available yet", app: app)
+                    }
+                    waitForAccountValue("accountQA.identity", value: "fixture-a@example.invalid", app: app)
+                    waitForAccountValue("accountQA.pending", value: "yes", app: app)
+                    waitForAccountValue("accountQA.healthUnchanged", value: "yes", app: app)
+                    app.terminate()
+                }
+            }
+        }
+    }
+
+    func testStaleOrUnacknowledgedAccountSignOutKeepsCurrentIdentityAndShowsError() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                for scenario in ["stale-sign-out", "rejected-write"] {
+                    let app = launchAccountAction(scenario, reduced: reduced, rtl: rtl)
+                    openAccountAction("account.signOut", app: app)
+                    tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
+                    assertReadableAccountFailure(scenario == "stale-sign-out" ? "changed" : "preserved", app: app)
+                    waitForAccountValue("accountQA.identity", value: scenario == "stale-sign-out" ? "fixture-b@example.invalid" : "fixture-a@example.invalid", app: app)
+                    waitForAccountValue("accountQA.recordUnchanged", value: "yes", app: app)
+                    waitForAccountValue("accountQA.pending", value: "yes", app: app)
+                    waitForAccountValue("accountQA.healthUnchanged", value: "yes", app: app)
+                    app.terminate()
+                }
+            }
+        }
     }
 
 }

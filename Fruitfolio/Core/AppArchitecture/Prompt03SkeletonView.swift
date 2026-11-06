@@ -19,6 +19,19 @@ struct Prompt03SkeletonView: View {
     @Environment(\.accessibilityReduceMotion)
     private var systemReduceMotion
 
+    private var rootLayoutDirection: LayoutDirection {
+        #if DEBUG
+        let args = ProcessInfo.processInfo.arguments
+        // Layout-only QA keeps English fixture labels while exercising the real
+        // outer popup host. Child-view environment overrides cannot reach it.
+        if (args.contains("-fruitfolioCycleModalQA") && args.contains("-fruitfolioCycleModalRTL")) ||
+           (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) {
+            return .rightToLeft
+        }
+        #endif
+        return settings.language.isRightToLeft ? .rightToLeft : .leftToRight
+    }
+
     init(defaults: UserDefaults = .standard) {
         let settingsStore = SettingsStore(defaults: defaults)
         let popup = PopupCoordinator()
@@ -130,13 +143,15 @@ struct Prompt03SkeletonView: View {
         .environmentObject(introLaunchStore)
         .environmentObject(prompt27AContextStore)
         .environment(\.locale, Locale(identifier: settings.language.localeIdentifier))
-        .environment(\.layoutDirection, settings.language.isRightToLeft ? .rightToLeft : .leftToRight)
+        .environment(\.layoutDirection, rootLayoutDirection)
     }
 
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioAccountActionQA") {
+            Prompt12AccountActionRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalQA") {
             Prompt1BCycleModalRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioContextStorageQA") {
             FruitfolioContextStorageRegressionHarness()

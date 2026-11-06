@@ -192,6 +192,7 @@ struct Prompt1BCycleModalRegressionHarness: View {
             didShowPrediction = false
         }
         .task {
+            settings.language = .english
             settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalReduceMotion")
             await Task.yield()
             if fixture.scenario.hasPrefix("onboarding-") {

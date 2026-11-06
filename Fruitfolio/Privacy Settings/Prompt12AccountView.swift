@@ -5,10 +5,11 @@ struct Prompt12AccountView: View {
 
     let onBack: () -> Void
     let onShowPrivacy: () -> Void
+    private let onShowDataExport: (() -> Void)?
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
-    @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
+    @ObservedObject private var usernameStore: FruitfolioUsernameStore
 
     @State private var email = ""
     @State private var message: String?
@@ -30,6 +31,16 @@ struct Prompt12AccountView: View {
     @State private var usernameDraft = ""
     @State private var usernameNonIdentifying = false
     @State private var usernameMessage: String?
+
+    init(store: Prompt12AccountPrivacyStore, onBack: @escaping () -> Void,
+         onShowPrivacy: @escaping () -> Void, usernameStore: FruitfolioUsernameStore = .shared,
+         onShowDataExport: (() -> Void)? = nil) {
+        _store = ObservedObject(wrappedValue: store)
+        _usernameStore = ObservedObject(wrappedValue: usernameStore)
+        self.onBack = onBack
+        self.onShowPrivacy = onShowPrivacy
+        self.onShowDataExport = onShowDataExport
+    }
 
     var body: some View {
         ZStack {
@@ -96,6 +107,7 @@ struct Prompt12AccountView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .accessibilityIdentifier("account.scroll")
             .fruitfolioModalBlur(
                 active: activeOverlay,
                 reduceMotion: motionPreferences.reduceMotionActive
@@ -313,7 +325,7 @@ struct Prompt12AccountView: View {
                 detail: "prepare supported account and local data",
                 assetName: "ask_source_pages",
                 action: {
-                    showDataExport = true
+                    if let onShowDataExport { onShowDataExport() } else { showDataExport = true }
                 }
             )
 
@@ -419,7 +431,7 @@ struct Prompt12AccountView: View {
         accountFocus = nil
         owner.present { id in
             FruitPopupRequest(id: id, character: .peach,
-                message: "**request account deletion?**\n\naccount deletion needs confirmation from the account service. this action does not erase local health files or cancel or refund the app purchase. any failure will be shown before success is claimed.",
+                message: "**request account deletion?**\n\naccount deletion needs confirmation from the account service. this action does not erase local health information or cancel or refund the app purchase. your account stays in place unless deletion is confirmed.",
                 primaryAction: .init(label: "keep my account") {
                     guard viewIsVisible else { return }
                     _ = owner.consumeAction(for: id)

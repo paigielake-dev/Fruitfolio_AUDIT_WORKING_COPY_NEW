@@ -1,12 +1,20 @@
-import Combine
 import Foundation
+#if canImport(Combine)
+import Combine
+#endif
 
 /// Shared local pseudonym authority. No health/cycle data or remote reservation.
 @MainActor
-final class FruitfolioUsernameStore: ObservableObject {
+final class FruitfolioUsernameStore {
     static let shared = FruitfolioUsernameStore()
-    @Published private(set) var username: String
-    @Published private(set) var confirmedNonIdentifying: Bool
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var username: String
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var confirmedNonIdentifying: Bool
     private let persistence: FruitfolioUsernamePersistence
 
     init(defaults: UserDefaults = .standard, key: String = "fruitfolio.identity.publicUsername.v1") {
@@ -30,3 +38,7 @@ final class FruitfolioUsernameStore: ObservableObject {
         confirmedNonIdentifying = saved.confirmedNonIdentifying
     }
 }
+
+#if canImport(Combine)
+extension FruitfolioUsernameStore: ObservableObject {}
+#endif

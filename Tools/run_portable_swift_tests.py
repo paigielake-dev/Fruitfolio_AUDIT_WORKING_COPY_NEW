@@ -87,6 +87,8 @@ SOURCES = [
     'Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift',
+    'Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift',
+    'Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift',
     'Fruitfolio/Saved Library/Prompt10BookMotion.swift',
     'Fruitfolio/Saved Library/Prompt10UserMaterial.swift',
     'Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift',
@@ -238,7 +240,11 @@ def main():
         environment['SWIFTPM_MODULECACHE_OVERRIDE'] = str(work / 'module-cache')
         environment['XDG_CACHE_HOME'] = str(work / 'xdg-cache')
         environment['XDG_CONFIG_HOME'] = str(work / 'xdg-config')
-        return subprocess.run([args.swift, 'test', '--jobs', '2',
+        # Swift 6.2.1's batched frontend can diagnose an inferred nonisolated
+        # initializer on the unchanged cycle actor when DEBUG fixture files move
+        # primary-file boundaries. The same complete sources typecheck and emit
+        # a library unbatched. Keep every real source/test; disable batching only.
+        return subprocess.run([args.swift, 'test', '-Xswiftc', '-disable-batch-mode', '--jobs', '2',
                                '--cache-path', str(work / 'cache'),
                                '--config-path', str(work / 'configuration'),
                                '--security-path', str(work / 'security')],

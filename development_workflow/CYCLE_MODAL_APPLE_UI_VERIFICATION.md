@@ -19,6 +19,8 @@ UUID preferences/context suite. Its scenario argument
 
 `-fruitfolioCycleModalReduceMotion` selects the existing settings override;
 `-fruitfolioCycleModalRTL` forces RTL layout, including inside the daily sheet.
+The registered DEBUG root now applies this override to the outer popup host, not
+only its feature child. Scenes explicitly select English in their private settings.
 This is layout coverage with English fixture/source text, not reviewed Arabic or
 other translated output. System accessibility preferences still apply.
 

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T09:37:10.812306+00:00",
+  "updated_at": "2026-11-06T10:41:10.111996+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -2402,6 +2402,27 @@
         "external": "Productionauth/cloud absent; realremote deletion/sync notperformed. AppleUI/Combine/VO/DT/motion/audio and officialMADLAD inference stillNOT_RUN/blocked"
       },
       "timestamp": "2026-11-06T09:37:10.812306+00:00"
+    },
+    {
+      "batch": "Account-action-disposable-UI-QA",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+        "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+        "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+      ],
+      "results": {
+        "portable_XCTest": 680,
+        "native_CPU_XCTest": 686,
+        "SwiftTesting_each_suite": 21,
+        "workflow_checks": 42,
+        "Swift_syntax_files": 297,
+        "Apple_UI": "NOT_RUN; 20 new launch scenarios are source only",
+        "official_MADLAD": "BLOCKED: official host excluded by enforced network policy",
+        "sound_ownership": "actual SwiftSyntax checker: zero findings",
+        "project_references": "resolved; not Apple build"
+      },
+      "timestamp": "2026-11-06T10:41:10.111996+00:00"
     }
   ]
 }

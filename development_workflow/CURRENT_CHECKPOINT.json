@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1f107f9e2b2326b8fe005bd9479fdc7684d06498",
+  "current_HEAD": "ed6981592eb79d198cdef6dcb0d0437971ad67ce",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 26,
-  "current_implementation_batch": "Account-owned-confirmations-frozen-intents-and-acknowledged-local-signout",
+  "current_requirement": 418,
+  "current_implementation_batch": "Account-action-disposable-UI-QA",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,19 +493,19 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+    "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+    "Fruitfolio/Cycle Tracker/Prompt1BCycleModalRegressionHarness.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
     "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
-    "FruitfolioTests/Prompt1BAccountActionTests.swift",
-    "Tools/normalize_control_sound_ownership.swift",
+    "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/ACCOUNT_OWNED_CONFIRMATION_VERIFICATION.md",
+    "development_workflow/ACCOUNT_ACTION_APPLE_UI_VERIFICATION.md",
+    "development_workflow/CYCLE_MODAL_APPLE_UI_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/Account-settings-row-duplicate-press-cues.json",
-    "development_workflow/RUN_LOGS/Account-signout-before-current-regressions.json",
-    "development_workflow/tests/test_control_sound_ownership.py"
+    "development_workflow/RUN_LOGS/Account-QA-SwiftPM-compiler-recovery.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -518,27 +518,24 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full678portable XCTest+21SwiftTesting",
-    "Full684native CPU XCTest+21SwiftTesting",
-    "42workflow tests including10actualSwiftSyntax cases and2compiled artwork checks",
-    "296Swift compiler parses",
-    "Actual all-app sound owner check emptyfindings",
-    "2old-API probes with parent actualstore in temporary package",
-    "Xcode project references",
-    "git diff --check"
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
   ],
   "last_test_results": {
-    "portable": "678XCTest+21SwiftTesting passed",
-    "native": "684XCTest+21SwiftTesting passed",
-    "workflow": "42passed",
-    "syntax": "296files parsed,0errors;notAppletypecheck",
-    "before": "2oldAPI probes6failures0unexpected; current8broader regressionspass;notidenticalafterprobe",
-    "soundSource": "9duplicates removed from actual owned row callers; final all-app findings empty;notplaybackproof",
-    "project": "References resolved,notbuilt",
-    "external": "Productionauth/cloud absent; realremote deletion/sync notperformed. AppleUI/Combine/VO/DT/motion/audio and officialMADLAD inference stillNOT_RUN/blocked"
+    "portable_XCTest": 680,
+    "native_CPU_XCTest": 686,
+    "SwiftTesting_each_suite": 21,
+    "workflow_checks": 42,
+    "Swift_syntax_files": 297,
+    "Apple_UI": "NOT_RUN; 20 new launch scenarios are source only",
+    "official_MADLAD": "BLOCKED: official host excluded by enforced network policy",
+    "sound_ownership": "actual SwiftSyntax checker: zero findings",
+    "project_references": "resolved; not Apple build"
   },
-  "next_exact_implementation_action": "Add disposable account-specific Apple UI route with actual AccountView/store, private UserDefaults/temporary cycle file and explicitly injected private username store. Cover cancel, pending-preserving sign-out, unconfigured remote deletion/sync, stale-identity confirmation and refused-write error without using production identity/preferences or any network operation. Register private-shell route and source UI scenarios with full feasible compiler/Foundation/workflow checks. Then continue remaining shared-modal original-order coverage and independent MADLAD/localization requirements.",
-  "updated_at": "2026-11-06T09:37:10.812306+00:00",
+  "next_exact_implementation_action": "Execute actual native T5 encoder/decoder through existing MADLAD runtime with explicitly synthetic untrained contract fixtures; retain official model/tokenizer blocker and do not claim semantic or official compatibility verification.",
+  "updated_at": "2026-11-06T10:41:10.111996+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
