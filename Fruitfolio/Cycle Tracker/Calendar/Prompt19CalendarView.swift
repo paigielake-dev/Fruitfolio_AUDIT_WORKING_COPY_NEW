@@ -137,8 +137,8 @@ struct Prompt19CalendarView: View {
         }
         .padding(.horizontal, 2)
         .frame(maxWidth: .infinity)
-        .task(id: loadIdentity) {
-            await loadMonth()
+        .task(id: loadIdentity) { [requested = loadIdentity] in
+            await loadMonth(requested: requested)
         }
         .sheet(
             isPresented: Binding(
@@ -453,8 +453,8 @@ struct Prompt19CalendarView: View {
     }
 
     @MainActor
-    private func loadMonth() async {
-        let requested = loadIdentity
+    private func loadMonth(requested: Prompt19CalendarLoadIdentity) async {
+        guard !Task.isCancelled, requested == loadIdentity else { return }
         let requestedMonth = requested.month
         loadState = .loading
 

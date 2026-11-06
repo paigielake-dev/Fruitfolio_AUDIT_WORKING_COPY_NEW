@@ -15497,15 +15497,44 @@
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
         "Prompt16TodayStateBuilderTests",
-        "Prompt1BCanonicalCalendarTests"
+        "Prompt1BCanonicalCalendarTests",
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
       ],
-      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-cancelled-load-entry-and-supplemental-result-rejection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
-        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
+        "Calendar view captures immutable requested month/context at task creation and rejects cancelled/stale request before loading state/work. Actual loader checks cancellation before supplemental start, after snapshot reads/calculation, before/after supplemental await and before return. Two genuine in-memory/held-provider regression cases reproduce two pre-fix assertions; full suites pass. Actor journal consistency and prediction/history/artwork unchanged; no mid-calculation preemption or device performance claim."
       ],
-      "last_updated": "2026-11-05T23:10:03.932755+00:00"
+      "last_updated": "2026-11-06T21:20:22.295882+00:00",
+      "latest_batch_verification": {
+        "batch": "Calendar-cancelled-load-entry-and-supplemental-result-rejection",
+        "executed": {
+          "portable_XCTest": "796 passed",
+          "native_CPU_XCTest": "818 passed; syntheticT5/real independent Qwen, not official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "prior_reproduction": "Four cases/two failed assertions; SHA receipt preserved"
+        },
+        "not_run": [
+          "Apple SDK build and actual rapid month transitions/context/background/cancellation rendering",
+          "Physical-device large-history latency/energy and VoiceOver/Reduce Motion",
+          "Official MADLAD model/tokenizer/language acceptance"
+        ],
+        "remaining": [
+          "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+          "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+          "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+        "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+        "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
+      ]
     },
     {
       "sequence": 296,
@@ -27049,7 +27078,9 @@
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Tools/create_local_recovery_bundle.py",
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
-        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27164,9 +27195,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/Today UI; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/source tests; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN)",
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
       ],
-      "commit_reference": "batch:Today-navigation-controls-active-owner-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-cancelled-load-entry-and-supplemental-result-rejection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -27263,31 +27295,36 @@
         "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.",
         "Actual limited-data wheel and day indicator display existing cycleDay Int using native number format with active environment locale. Missing-day em dash remains literal. No date, source data, inference or prediction change; integers never supplied to translation. Remaining English-only accessible wheel description explicitly not solved by this numeric batch.",
         "Limited-data wheel description and optional day indicator label resolve fixed source through existing keyed control translation owners. CycleDay remains separately native-formatted and is never translated. Both description and day-label machine/unavailable provenance enter accessible hints; original insufficient-history meaning retained. Existing catalog already has all keys; no data/geometry/artwork/model changes.",
-        "Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards."
+        "Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards.",
+        "Calendar view captures immutable requested month/context at task creation and rejects cancelled/stale request before loading state/work. Actual loader checks cancellation before supplemental start, after snapshot reads/calculation, before/after supplemental await and before return. Two genuine in-memory/held-provider regression cases reproduce two pre-fix assertions; full suites pass. Actor journal consistency and prediction/history/artwork unchanged; no mid-calculation preemption or device performance claim."
       ],
-      "last_updated": "2026-11-06T21:16:06.304722+00:00",
+      "last_updated": "2026-11-06T21:20:22.295882+00:00",
       "latest_batch_verification": {
-        "batch": "Today-navigation-controls-active-owner-guards",
+        "batch": "Calendar-cancelled-load-entry-and-supplemental-result-rejection",
         "executed": {
+          "portable_XCTest": "796 passed",
+          "native_CPU_XCTest": "818 passed; syntheticT5/real independent Qwen, not official MADLAD",
+          "SwiftTesting": "21 passed per run",
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Five actual callback paths gated; existing control/rendering/model ownership retained"
+          "prior_reproduction": "Four cases/two failed assertions; SHA receipt preserved"
         },
         "not_run": [
-          "Apple active/inactive/shared-popup navigation rejection and canonical animation/sound behavior",
-          "Actual parent native-sheet coverage and integrated wheel/logging UI"
+          "Apple SDK build and actual rapid month transitions/context/background/cancellation rendering",
+          "Physical-device large-history latency/energy and VoiceOver/Reduce Motion",
+          "Official MADLAD model/tokenizer/language acceptance"
         ],
         "remaining": [
-          "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
-          "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
-          "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+          "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+          "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+          "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
-        "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
-        "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+        "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+        "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+        "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
       ]
     },
     {
@@ -27442,7 +27479,8 @@
         "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
         "Tools/create_local_recovery_bundle.py",
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
-        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27603,9 +27641,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/Today UI; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/source tests; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN)",
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
       ],
-      "commit_reference": "batch:Today-navigation-controls-active-owner-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-cancelled-load-entry-and-supplemental-result-rejection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -27736,31 +27775,36 @@
         "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.",
         "Actual limited-data wheel and day indicator display existing cycleDay Int using native number format with active environment locale. Missing-day em dash remains literal. No date, source data, inference or prediction change; integers never supplied to translation. Remaining English-only accessible wheel description explicitly not solved by this numeric batch.",
         "Limited-data wheel description and optional day indicator label resolve fixed source through existing keyed control translation owners. CycleDay remains separately native-formatted and is never translated. Both description and day-label machine/unavailable provenance enter accessible hints; original insufficient-history meaning retained. Existing catalog already has all keys; no data/geometry/artwork/model changes.",
-        "Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards."
+        "Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards.",
+        "Calendar view captures immutable requested month/context at task creation and rejects cancelled/stale request before loading state/work. Actual loader checks cancellation before supplemental start, after snapshot reads/calculation, before/after supplemental await and before return. Two genuine in-memory/held-provider regression cases reproduce two pre-fix assertions; full suites pass. Actor journal consistency and prediction/history/artwork unchanged; no mid-calculation preemption or device performance claim."
       ],
-      "last_updated": "2026-11-06T21:16:06.304722+00:00",
+      "last_updated": "2026-11-06T21:20:22.295882+00:00",
       "latest_batch_verification": {
-        "batch": "Today-navigation-controls-active-owner-guards",
+        "batch": "Calendar-cancelled-load-entry-and-supplemental-result-rejection",
         "executed": {
+          "portable_XCTest": "796 passed",
+          "native_CPU_XCTest": "818 passed; syntheticT5/real independent Qwen, not official MADLAD",
+          "SwiftTesting": "21 passed per run",
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Five actual callback paths gated; existing control/rendering/model ownership retained"
+          "prior_reproduction": "Four cases/two failed assertions; SHA receipt preserved"
         },
         "not_run": [
-          "Apple active/inactive/shared-popup navigation rejection and canonical animation/sound behavior",
-          "Actual parent native-sheet coverage and integrated wheel/logging UI"
+          "Apple SDK build and actual rapid month transitions/context/background/cancellation rendering",
+          "Physical-device large-history latency/energy and VoiceOver/Reduce Motion",
+          "Official MADLAD model/tokenizer/language acceptance"
         ],
         "remaining": [
-          "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
-          "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
-          "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+          "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+          "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+          "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
-        "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
-        "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+        "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+        "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+        "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
       ]
     },
     {
@@ -27885,7 +27929,8 @@
         "Tools/create_local_recovery_bundle.py",
         "Tools/record_prompt1b_batch.py",
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
-        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28000,9 +28045,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/Today UI; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/source tests; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing Today/wheel/source controls; NOT_RUN)",
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
       ],
-      "commit_reference": "batch:Today-navigation-controls-active-owner-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-cancelled-load-entry-and-supplemental-result-rejection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -28079,31 +28125,36 @@
         "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.",
         "Actual limited-data wheel and day indicator display existing cycleDay Int using native number format with active environment locale. Missing-day em dash remains literal. No date, source data, inference or prediction change; integers never supplied to translation. Remaining English-only accessible wheel description explicitly not solved by this numeric batch.",
         "Limited-data wheel description and optional day indicator label resolve fixed source through existing keyed control translation owners. CycleDay remains separately native-formatted and is never translated. Both description and day-label machine/unavailable provenance enter accessible hints; original insufficient-history meaning retained. Existing catalog already has all keys; no data/geometry/artwork/model changes.",
-        "Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards."
+        "Actual Today owns visible lifecycle and checks active scene/UIKit/no shared popup before Log Today, BBT, prediction help, biology navigation and explicit wheel interaction cue. Existing canonical control styles/sounds and loading/reveal/cancellation remain. No date, model, archive, artwork, policy or prediction change. Native parent-sheet coverage is not newly established by these local guards.",
+        "Calendar view captures immutable requested month/context at task creation and rejects cancelled/stale request before loading state/work. Actual loader checks cancellation before supplemental start, after snapshot reads/calculation, before/after supplemental await and before return. Two genuine in-memory/held-provider regression cases reproduce two pre-fix assertions; full suites pass. Actor journal consistency and prediction/history/artwork unchanged; no mid-calculation preemption or device performance claim."
       ],
-      "last_updated": "2026-11-06T21:16:06.304722+00:00",
+      "last_updated": "2026-11-06T21:20:22.295882+00:00",
       "latest_batch_verification": {
-        "batch": "Today-navigation-controls-active-owner-guards",
+        "batch": "Calendar-cancelled-load-entry-and-supplemental-result-rejection",
         "executed": {
+          "portable_XCTest": "796 passed",
+          "native_CPU_XCTest": "818 passed; syntheticT5/real independent Qwen, not official MADLAD",
+          "SwiftTesting": "21 passed per run",
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Five actual callback paths gated; existing control/rendering/model ownership retained"
+          "prior_reproduction": "Four cases/two failed assertions; SHA receipt preserved"
         },
         "not_run": [
-          "Apple active/inactive/shared-popup navigation rejection and canonical animation/sound behavior",
-          "Actual parent native-sheet coverage and integrated wheel/logging UI"
+          "Apple SDK build and actual rapid month transitions/context/background/cancellation rendering",
+          "Physical-device large-history latency/energy and VoiceOver/Reduce Motion",
+          "Official MADLAD model/tokenizer/language acceptance"
         ],
         "remaining": [
-          "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
-          "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
-          "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+          "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+          "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+          "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Today callback/background/popup/return actions and Reduce Motion on Apple",
-        "Verify canonical controls emit appropriate single cues and parent native presentations cannot cause duplicate navigation",
-        "Whole interaction/accessibility/device requirements remain IN_PROGRESS"
+        "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
+        "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
+        "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
       ]
     }
   ]

@@ -19,12 +19,15 @@ nonisolated struct Prompt19CalendarLoader: Sendable {
         month: Prompt19CalendarMonth,
         now: Date = Date()
     ) async throws -> Prompt19CalendarSnapshot {
+        try Task.checkCancellation()
         let calendar = todayLoader.calendar
         async let supplementalTask = supplementalProvider.load(month, calendar)
 
         // Onboarding load may resume its journaled cycle-file change.
         let onboarding = try await todayLoader.onboardingStore.snapshot()
+        try Task.checkCancellation()
         let archive = try await todayLoader.cycleStore.snapshot()
+        try Task.checkCancellation()
 
         let engine = Prompt19CalendarEngine(calendar: calendar)
 
@@ -59,6 +62,7 @@ nonisolated struct Prompt19CalendarLoader: Sendable {
             )
         )
 
+        try Task.checkCancellation()
         let todayKey = Prompt19CalendarDateKey(
             date: now,
             calendar: calendar
@@ -163,7 +167,9 @@ nonisolated struct Prompt19CalendarLoader: Sendable {
 
         // Prompt 17 currently does not emit validated fertile/ovulation windows.
         // Those states stay absent unless a deterministic upstream provider supplies them.
+        try Task.checkCancellation()
         let supplemental = try await supplementalTask
+        try Task.checkCancellation()
         for incoming in supplemental {
             var presentationAnnotation = incoming
 
@@ -185,6 +191,7 @@ nonisolated struct Prompt19CalendarLoader: Sendable {
             )
         }
 
+        try Task.checkCancellation()
         return Prompt19CalendarSnapshot(
             month: month,
             annotations: annotations,

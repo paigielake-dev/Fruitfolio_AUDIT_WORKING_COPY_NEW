@@ -2620,3 +2620,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_Today_navigation": "NOT_RUN", "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue calendar loading/month transitions in original order; inspect actual async ownership and canonical control callbacks, preserve existing caches/source/assets and avoid broad re-audit.
 - Commit: containing commit for batch Today-navigation-controls-active-owner-guards.
+
+## Calendar-cancelled-load-entry-and-supplemental-result-rejection
+
+- Parent checkpoint: c081075f1b6ddd21f1e1816e72490600bbcee761.
+- Source-order requirements: [295, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift, Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift.
+- Calendar view captures immutable requested month/context at task creation and rejects cancelled/stale request before loading state/work. Actual loader checks cancellation before supplemental start, after snapshot reads/calculation, before/after supplemental await and before return. Two genuine in-memory/held-provider regression cases reproduce two pre-fix assertions; full suites pass. Actor journal consistency and prediction/history/artwork unchanged; no mid-calculation preemption or device performance claim.
+- Tests added/updated: FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift.
+- Verification: {"portable_XCTest": 796, "native_CPU_XCTest": 818, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "prior_focused_XCTest": 4, "prior_failed_assertions": 2, "Apple_calendar_month_transitions": "NOT_RUN", "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"}.
+- Next action: Continue canonical calendar controls and logging interaction ownership: reject inactive/covered requests and stale selected cell callbacks while preserving original artwork, source annotations and accepted action intent.
+- Commit: containing commit for batch Calendar-cancelled-load-entry-and-supplemental-result-rejection.

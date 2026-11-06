@@ -2,6 +2,38 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BCalendarPresentationPolicyTests: XCTestCase {
+    @MainActor
+    func testCancelledCalendarLoadDoesNotStartSupplementalWork() async throws {
+        let gate = CalendarCancellationProbe()
+        let cycle = Prompt13CycleStore.inMemory()
+        let loader = Prompt19CalendarLoader(todayLoader: .init(cycleStore: cycle,
+            onboardingStore: .inMemory(cycleStore: cycle)), supplementalProvider: .init { _, _ in await gate.record(); return [] })
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            return try await loader.load(month: .init(year: 2026, month: 11))
+        }
+        do { _ = try await task.value; XCTFail("Cancelled load must throw") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let calls = await gate.calls
+        XCTAssertEqual(calls, 0)
+    }
+
+    @MainActor
+    func testCancellationWhileSupplementalProviderIsHeldRejectsReturnedSnapshot() async throws {
+        let gate = CalendarCancellationProbe()
+        let cycle = Prompt13CycleStore.inMemory()
+        let loader = Prompt19CalendarLoader(todayLoader: .init(cycleStore: cycle,
+            onboardingStore: .inMemory(cycleStore: cycle)), supplementalProvider: .init { _, _ in await gate.hold(); return [] })
+        let task = Task { try await loader.load(month: .init(year: 2026, month: 11)) }
+        await gate.waitUntilHeld()
+        task.cancel()
+        await gate.release()
+        do { _ = try await task.value; XCTFail("Late supplemental result must not return a cancelled snapshot") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let calls = await gate.calls
+        XCTAssertEqual(calls, 1)
+    }
+
     func testContextChangeHidesOnlyInapplicableEstimatesWithoutChangingRecordedData() {
         let key = Prompt19CalendarDateKey(year: 2026, month: 11, day: 5)
         let original = Prompt19CalendarDayAnnotation(key: key, cycleDay: 7, recordedPeriod: true, predictedPeriod: true,
@@ -27,4 +59,24 @@ final class Prompt1BCalendarPresentationPolicyTests: XCTestCase {
         XCTAssertFalse(old.accepts(.empty(month: month), current: changedContext))
         XCTAssertFalse(old.accepts(.empty(month: .init(year: 2026, month: 12)), current: old))
     }
+}
+
+private actor CalendarCancellationProbe {
+    private(set) var calls = 0
+    private var continuation: CheckedContinuation<Void, Never>?
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+    func record() { calls += 1 }
+    func hold() async {
+        calls += 1
+        await withCheckedContinuation { continuation in
+            self.continuation = continuation
+            let ready = waiters; waiters.removeAll()
+            for waiter in ready { waiter.resume() }
+        }
+    }
+    func waitUntilHeld() async {
+        if continuation != nil { return }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+    func release() { continuation?.resume(); continuation = nil }
 }
