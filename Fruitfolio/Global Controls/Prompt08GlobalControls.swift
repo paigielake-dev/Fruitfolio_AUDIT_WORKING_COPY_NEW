@@ -38,10 +38,12 @@ struct FruitfolioControlPillButton: View {
     let label: String
     let action: () -> Void
     let isSelected: Bool?
+    let artworkOpacity: Double
 
-    init(label: String, isSelected: Bool? = nil, action: @escaping () -> Void) {
+    init(label: String, isSelected: Bool? = nil, artworkOpacity: Double = 1, action: @escaping () -> Void) {
         self.label = label
         self.isSelected = isSelected
+        self.artworkOpacity = artworkOpacity
         self.action = action
     }
 
@@ -89,7 +91,7 @@ struct FruitfolioControlPillButton: View {
                             capInsets: EdgeInsets(top: 80, leading: 180, bottom: 80, trailing: 180),
                             resizingMode: .stretch
                         )
-                        .opacity(isSelected == false ? 0.56 : 1)
+                        .opacity(artworkOpacity * (isSelected == false ? 0.56 : 1))
                         .accessibilityHidden(true)
                 }
             .contentShape(Rectangle())

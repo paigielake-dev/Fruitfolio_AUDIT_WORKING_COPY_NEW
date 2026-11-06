@@ -1927,3 +1927,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 730, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "SwiftSyntax_sound_ownership_findings": 0, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md"}.
 - Next action: Replace suggested topic chips shrinking labels with the existing canonical localized wrapping control while passing the original source title to the existing game model.
 - Commit: containing commit for batch Wrapping-selected-game-controls.
+
+## Wrapping-localized-suggested-topic-controls
+
+- Parent checkpoint: 15bd0f12010ae3eae869448274471fbc922af5f7.
+- Source-order requirements: [7, 18, 24, 410, 411, 446, 468, 471, 472, 477].
+- Source files: Fruitfolio/Global Controls/Prompt08GlobalControls.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift.
+- Suggested topics delegate to canonical localized wrapping pills with preserved original artwork opacity and one cue owner. Existing research callback receives original source title. Four source UI scenarios added for large text, motion, RTL and input readback. Debug fixture now calls real openSetup rather than nonexistent setup case.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 730, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "SwiftSyntax_sound_ownership_findings": 0, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md"}.
+- Next action: Bound native T5 tokenizer allocation using actual reported token count before allocating the token buffer; preserve exact context validation, source and failure behavior. Add actual native oversized-input regression.
+- Commit: containing commit for batch Wrapping-localized-suggested-topic-controls.

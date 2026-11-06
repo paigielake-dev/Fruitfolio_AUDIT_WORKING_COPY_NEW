@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T13:29:10.358526+00:00",
+  "updated_at": "2026-11-06T13:32:43.681367+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -2807,6 +2807,27 @@
         "official_MADLAD": "BLOCKED; see BLOCKERS.md"
       },
       "timestamp": "2026-11-06T13:29:10.358526+00:00"
+    },
+    {
+      "batch": "Wrapping-localized-suggested-topic-controls",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+        "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+        "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "actual SwiftSyntax control-sound-ownership --check"
+      ],
+      "results": {
+        "portable_XCTest": 712,
+        "native_CPU_XCTest": 730,
+        "SwiftTesting_each_suite": 21,
+        "workflow_checks": 42,
+        "Swift_syntax_files": 306,
+        "SwiftSyntax_sound_ownership_findings": 0,
+        "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
+        "official_MADLAD": "BLOCKED; see BLOCKERS.md"
+      },
+      "timestamp": "2026-11-06T13:32:43.681367+00:00"
     }
   ]
 }

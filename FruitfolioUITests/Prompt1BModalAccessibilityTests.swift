@@ -191,6 +191,34 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameSuggestedTopicsWrapAndKeepOriginalResearchInput() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "setup",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioGameRTL"] }
+            app.launch()
+            let scroll = app.scrollViews.firstMatch
+            for title in ["reproductive health", "women’s wellness"] {
+                let chip = app.buttons["fruitBasket.suggestedTopic." + title]
+                XCTAssertTrue(chip.waitForExistence(timeout: 5))
+                for _ in 0..<24 { if chip.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(chip.isHittable)
+                XCTAssertEqual(chip.label, title)
+                XCTAssertGreaterThanOrEqual(chip.frame.width, 44)
+                XCTAssertGreaterThan(chip.frame.height, 48)
+                chip.tap()
+                let input = app.descendants(matching: .any).matching(identifier: "fruitBasket.topicInput").firstMatch
+                XCTAssertEqual(input.value as? String, title)
+            }
+            captureGame(app, name: "game-topic-chips-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testGameCompactSelectorsWrapAndRetainSelectionAtAccessibilitySize() {
         for reduced in [false, true] {
         for rtl in [false, true] {

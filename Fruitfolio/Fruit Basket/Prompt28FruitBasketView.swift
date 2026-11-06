@@ -658,6 +658,7 @@ struct Prompt28FruitBasketView: View {
                             text: $viewModel.rawTopic,
                             axis: .vertical
                         )
+                        .accessibilityIdentifier("fruitBasket.topicInput")
                         .textInputAutocapitalization(.never)
                         .font(
                             .custom(
@@ -2636,86 +2637,25 @@ private struct Prompt28MiniControlPill: View {
     }
 }
 
+@MainActor
 private struct Prompt28ChipWrap: View {
     let titles: [String]
     let onSelect: (String) -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(
-                    .flexible(),
-                    spacing: 6
-                ),
-                GridItem(
-                    .flexible(),
-                    spacing: 6
-                )
-            ],
-            spacing: 6
-        ) {
-            ForEach(
-                titles,
-                id: \.self
-            ) { title in
-                Button {
-                    audioManager.play(.buttonSoftPop)
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 6),
+                            GridItem(.flexible(), spacing: 6)], spacing: 6) {
+            ForEach(titles, id: \.self) { title in
+                FruitfolioControlPillButton(label: title, artworkOpacity: 0.72) {
+                    // Presentation may be translated; research receives the source topic.
                     onSelect(title)
-                } label: {
-                    ZStack {
-                        Image("control_pill_outline")
-                            .resizable()
-                            .scaledToFit()
-                            .opacity(0.72)
-                            .accessibilityHidden(true)
-
-                        Text(title)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 11,
-                                    relativeTo: .caption
-                                )
-                            )
-                            .fontWeight(.semibold)
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
-                            )
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.76)
-                            .padding(.horizontal, 10)
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        minHeight: 48
-                    )
                 }
-                .buttonStyle(
-                    CutePopButtonStyle(
-                        reduceMotion:
-                            motionPreferences.reduceMotionActive
-                    )
-                )
+                .controlSize(.small)
+                .accessibilityIdentifier("fruitBasket.suggestedTopic." + title)
             }
         }
     }
 }
-
-
-
-
-
-
-
 
 private struct Prompt28WindGust: View {
     let reduceMotion: Bool
