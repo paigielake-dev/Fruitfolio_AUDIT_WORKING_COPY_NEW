@@ -53,14 +53,17 @@ struct Prompt12RouteHeader: View {
                     Spacer()
                 }
 
-                Text(title)
-                    .font(.custom("Chalkboard SE", size: 25))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 58)
+                FruitfolioTranslatedContent(source: title, protectedLiterals: ["Fruitfolio", "LifeBridge"]) { display, _ in
+                    FruitfolioSemanticText(markdown: display,
+                        baseFont: .custom("Chalkboard SE", size: 25, relativeTo: .title),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
+                        .fontWeight(.bold)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityIdentifier("settings.routeHeader.title")
+                }
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 58)
             }
 
             if let assetName {
@@ -71,12 +74,11 @@ struct Prompt12RouteHeader: View {
                     .accessibilityHidden(true)
             }
 
-            Text(subtitle)
-                .font(.custom("Chalkboard SE", size: 12.5))
-                .foregroundStyle(
-                    DesignTokens.ColorToken.secondaryBurgundy
-                )
+            FruitfolioTranslatedText(source: subtitle, protectedLiterals: ["Fruitfolio", "LifeBridge"],
+                font: .custom("Chalkboard SE", size: 12.5, relativeTo: .subheadline),
+                color: DesignTokens.ColorToken.secondaryBurgundy)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: 300)
         }
         .padding(.top, 10)
@@ -262,6 +264,7 @@ private struct Prompt12NavigationRowPopStyle: ButtonStyle {
 struct Prompt12StatusPill: View {
     let text: String
     let assetName: String?
+    var protectedLiterals: [String] = []
 
     var body: some View {
         HStack(spacing: 6) {
@@ -276,19 +279,10 @@ struct Prompt12StatusPill: View {
                     .accessibilityHidden(true)
             }
 
-            Text(text)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 10.5
-                    )
-                )
+            FruitfolioTranslatedText(source: text, protectedLiterals: protectedLiterals + ["Fruitfolio", "LifeBridge"],
+                font: .custom("Chalkboard SE", size: 10.5, relativeTo: .caption),
+                color: DesignTokens.ColorToken.primaryBurgundy)
                 .fontWeight(.bold)
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .primaryBurgundy
-                )
         }
         .padding(
             .horizontal,
@@ -310,33 +304,19 @@ struct Prompt12StatusPill: View {
 
 struct Prompt12InfoText: View {
     let text: String
+    let protectedLiterals: [String]
 
-    init(
-        _ text: String
-    ) {
+    init(_ text: String, protectedLiterals: [String] = []) {
         self.text = text
+        self.protectedLiterals = protectedLiterals + ["Fruitfolio", "LifeBridge"]
     }
 
     var body: some View {
-        Text(text)
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 11.5
-                )
-            )
-            .foregroundStyle(
-                DesignTokens
-                    .ColorToken
-                    .secondaryBurgundy
-            )
-            .multilineTextAlignment(
-                .leading
-            )
-            .fixedSize(
-                horizontal: false,
-                vertical: true
-            )
+        FruitfolioTranslatedText(source: text, protectedLiterals: protectedLiterals,
+            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body),
+            color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 

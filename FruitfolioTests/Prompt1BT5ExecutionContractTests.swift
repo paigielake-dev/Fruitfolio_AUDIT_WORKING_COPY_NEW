@@ -78,9 +78,16 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
             _ = try await service.translateForDisplay(source, language: .german, preferCatalog: false)
             XCTFail("Native output that drops protected scientific/citation markers must be rejected")
         } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+        let status = Prompt12AccountStatusText(identity: .init(provider: "Fixture **Provider**",
+            email: "Fixture_Name@Example.invalid", username: "literal_name"))
+        do {
+            _ = try await service.translateForDisplay(status.source, language: .german,
+                protectedLiterals: status.protectedLiterals, preferCatalog: false)
+            XCTFail("Native output dropping identity fields must not be accepted")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
         let actual = await runtime.debugExecutionStatistics()
-        XCTAssertEqual(actual.encoderCalls, 2)
-        XCTAssertEqual(actual.decoderCalls, 4)
+        XCTAssertEqual(actual.encoderCalls, 3)
+        XCTAssertEqual(actual.decoderCalls, 6)
         await service.releaseResources()
         let released = await runtime.debugExecutionStatistics()
         XCTAssertFalse(released.resourcesLoaded)

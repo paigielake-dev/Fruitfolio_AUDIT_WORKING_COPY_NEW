@@ -35,7 +35,8 @@ struct Prompt12OwnershipView: View {
 
                         Prompt12StatusPill(
                             text: "$9.99 one-time purchase",
-                            assetName: "control_check"
+                            assetName: "control_check",
+                            protectedLiterals: ["$9.99"]
                         )
                     }
 

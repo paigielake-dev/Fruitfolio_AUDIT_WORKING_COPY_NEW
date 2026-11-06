@@ -1225,6 +1225,31 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(message.label.contains(fragment), message.label)
     }
 
+    func testAccountHeaderAndIdentityRemainReadableAtAccessibilitySize() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioAccountActionQA", "-fruitfolioAccountActionQAScenario", "sign-out",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioAccountActionReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioAccountActionRTL"] }
+            app.launch()
+            let heading = app.staticTexts["settings.routeHeader.title"]
+            XCTAssertTrue(heading.waitForExistence(timeout: 5))
+            XCTAssertEqual(heading.label, "your account")
+            XCTAssertGreaterThan(heading.frame.height, 0)
+            XCTAssertGreaterThanOrEqual(heading.frame.minX, app.frame.minX)
+            XCTAssertLessThanOrEqual(heading.frame.maxX, app.frame.maxX)
+            let scroll = app.scrollViews["account.scroll"]
+            let identity = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "fixture-a@example.invalid")).firstMatch
+            for _ in 0..<20 { if identity.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(identity.isHittable)
+            captureGame(app, name: "account-header-identity-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testAccountCancelAndSignOutKeepPendingLocalHealthInformation() {
         for reduced in [false, true] {
             for rtl in [false, true] {

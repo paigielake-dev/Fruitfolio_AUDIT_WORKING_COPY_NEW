@@ -230,3 +230,16 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
         }
     }
 }
+
+/// English app wording with escaped, invariant identity fields. Neither provider
+/// nor email is prose to translate or Markdown to interpret. No record is changed.
+struct Prompt12AccountStatusText: Sendable {
+    let source: String
+    let protectedLiterals: [String]
+    init(identity: Prompt12AccountIdentity) {
+        let provider = FruitfolioSemanticMarkup.markdown([.init(text: identity.provider)])
+        let email = FruitfolioSemanticMarkup.markdown([.init(text: identity.email)])
+        source = "signed in with \(provider) / \(email)"
+        protectedLiterals = [provider, email]
+    }
+}

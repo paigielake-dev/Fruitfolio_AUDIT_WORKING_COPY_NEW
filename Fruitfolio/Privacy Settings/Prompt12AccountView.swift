@@ -174,8 +174,9 @@ struct Prompt12AccountView: View {
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(store.ownershipDisplayText)
-                        .font(.custom("Chalkboard SE", size: 14))
+                    FruitfolioTranslatedText(source: store.ownershipDisplayText,
+                        protectedLiterals: ["Fruitfolio"],
+                        font: .custom("Chalkboard SE", size: 14, relativeTo: .headline))
                         .fontWeight(.bold)
                         .foregroundStyle(
                             DesignTokens.ColorToken.primaryBurgundy
@@ -190,8 +191,8 @@ struct Prompt12AccountView: View {
 
     private var usernameCard: some View {
         Prompt12PaperCard {
-            Text("fruit basket username")
-                .font(.custom("Chalkboard SE", size: 16, relativeTo: .headline))
+            FruitfolioTranslatedText(source: "fruit basket username",
+                font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                 .fontWeight(.bold)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
@@ -240,8 +241,8 @@ struct Prompt12AccountView: View {
 
     private var signedOutCard: some View {
         Prompt12PaperCard {
-            Text("sign in")
-                .font(.custom("Chalkboard SE", size: 16))
+            FruitfolioTranslatedText(source: "sign in",
+                font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -288,17 +289,16 @@ struct Prompt12AccountView: View {
 
     private var signedInCard: some View {
         Prompt12PaperCard {
-            Text(store.accountDisplayName)
-                .font(.custom("Chalkboard SE", size: 17))
+            Text(verbatim: store.accountDisplayName)
+                .font(.custom("Chalkboard SE", size: 17, relativeTo: .headline))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
 
             if let account = store.account {
-                Prompt12InfoText(
-                    "signed in with \(account.provider) / \(account.email)"
-                )
+                let status = Prompt12AccountStatusText(identity: account)
+                Prompt12InfoText(status.source, protectedLiterals: status.protectedLiterals)
             }
 
             Prompt12StatusPill(

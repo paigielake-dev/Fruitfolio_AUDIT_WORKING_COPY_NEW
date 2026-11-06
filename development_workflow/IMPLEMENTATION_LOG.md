@@ -1795,3 +1795,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 689, "native_CPU_XCTest": 702, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 300, "sound_ownership_findings": 0, "control_state_portable_methods": 9, "native_T5_contract_methods": 7, "Apple_Combine_publisher": "NOT_RUN; genuine publisher test requires Apple Combine", "Apple_UI_typecheck": "NOT_RUN; no Apple SDK", "official_MADLAD": "BLOCKED; synthetic T5 execution does not approve official/language/clinical behavior"}.
 - Next action: Localize existing account/privacy route headers and explanatory text through shared display-only translation, preserving provider/email literals in signed-in status; retain existing layout/artwork and add Apple large-text header coverage.
 - Commit: containing commit for batch Account-navigation-title-detail-protected-localization.
+
+## Account-privacy-text-localization-and-literal-identity
+
+- Parent checkpoint: 9e2b40d0e8267e508a13d4001cbe2f9cb2503ace.
+- Source-order requirements: [18, 24, 47, 48, 62, 63, 393, 394, 395, 397, 418, 419, 422, 425, 426, 427, 443, 444, 466, 468, 471, 472, 476, 477, 478].
+- Source files: Fruitfolio/Privacy Settings/Prompt12SharedViews.swift, Fruitfolio/Privacy Settings/Prompt12AccountView.swift, Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift, Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift.
+- Existing route headers/explanatory/status text now uses actual protected catalog/MADLAD display path and scalable type. Username remains verbatim. Actual Foundation account-status source escapes and masks provider/email as whole literals; two service regressions and actual native output rejection cover identity preservation. Original price token explicitly preserved. Four Apple large-text heading/identity scenarios added but NOT_RUN.
+- Tests added/updated: FruitfolioTests/Prompt1BAccountActionTests.swift, FruitfolioTests/Prompt1BT5ExecutionContractTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 691, "native_CPU_XCTest": 704, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 300, "sound_ownership_findings": 0, "account_identity_service_methods": 2, "native_T5_contract_methods": 7, "Apple_UI_typecheck": "NOT_RUN; four new source-only launch scenarios", "official_MADLAD": "BLOCKED; synthetic graph contracts do not approve language or clinical equivalence"}.
+- Next action: Localize actual canonical toggle labels/values and settings volume labels; format accessibility percentages for the selected locale without feeding numbers through translation or mutating saved preferences. Preserve binding-before-audio behavior and actual control identity.
+- Commit: containing commit for batch Account-privacy-text-localization-and-literal-identity.

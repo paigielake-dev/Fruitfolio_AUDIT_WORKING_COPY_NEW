@@ -153,3 +153,47 @@ final class Prompt1BAccountActionTests: XCTestCase {
     }
 
 }
+
+/// Explicit inference fixture preserves placeholders, never translates identities.
+private actor AccountStatusTranslationFixture: FruitfolioLocalTranslationRuntime {
+    private let dropMarkers: Bool
+    private(set) var input: String?
+    init(dropMarkers: Bool = false) { self.dropMarkers = dropMarkers }
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        input = text
+        return dropMarkers ? "fixture heading" : text.replacingOccurrences(of: "signed in with", with: "fixture heading")
+    }
+    func releaseResources() {}
+}
+
+final class Prompt1BAccountStatusTranslationTests: XCTestCase {
+    private func identity() -> Prompt12AccountIdentity {
+        .init(provider: "[**Fixture Provider**]", email: "Fixture_Name+tag@Example.invalid", username: "literal_name")
+    }
+    func testActualAccountStatusMasksAndRestoresEscapedIdentityFields() async throws {
+        let account = identity()
+        let status = Prompt12AccountStatusText(identity: account)
+        XCTAssertTrue(status.source.contains(#"\[\*\*Fixture Provider\*\*\]"#))
+        XCTAssertTrue(status.source.contains(#"Fixture\_Name+tag@Example.invalid"#))
+        let runtime = AccountStatusTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let result = try await service.translateForDisplay(status.source, language: .german,
+            protectedLiterals: status.protectedLiterals, preferCatalog: false)
+        XCTAssertEqual(result.text, status.source.replacingOccurrences(of: "signed in with", with: "fixture heading"))
+        let captured = await runtime.input
+        let input = try XCTUnwrap(captured)
+        for literal in status.protectedLiterals { XCTAssertFalse(input.contains(literal)) }
+        XCTAssertFalse(input.contains(account.email))
+        XCTAssertFalse(input.contains(account.provider))
+        XCTAssertTrue(input.contains("FFPROTECT_"))
+    }
+    func testActualAccountStatusRejectsOutputThatDropsIdentityFields() async throws {
+        let status = Prompt12AccountStatusText(identity: identity())
+        let service = FruitfolioTranslationService(runtime: AccountStatusTranslationFixture(dropMarkers: true))
+        do {
+            _ = try await service.translateForDisplay(status.source, language: .german,
+                protectedLiterals: status.protectedLiterals, preferCatalog: false)
+            XCTFail("Identity loss must not be presented as translated account status")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+    }
+}
