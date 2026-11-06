@@ -70,11 +70,14 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 XCTAssertTrue(button.isHittable)
                 captureGame(app, name: "game-\(scenario)-reduced-\(reduced)-before")
                 button.tap()
-                let progress = app.staticTexts["fruitBasket.classification.progress"]
-                for _ in 0..<12 { if progress.isHittable { break }; scroll.swipeDown() }
-                let expected = scenario == "star" ? "basket 0 of 10; star passes 1" : "basket 1 of 10; star passes 0"
-                let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: progress)
-                XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 5), .completed)
+                let basket = app.descendants(matching: .any).matching(identifier: "fruitBasket.classification.basket").firstMatch
+                let passes = app.descendants(matching: .any).matching(identifier: "fruitBasket.classification.passes").firstMatch
+                for _ in 0..<12 { if basket.isHittable { break }; scroll.swipeDown() }
+                let expectedBasket = scenario == "star" ? "0 / 10" : "1 / 10"
+                let expectedPasses = scenario == "star" ? "1" : "0"
+                let updatedBasket = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expectedBasket), object: basket)
+                let updatedPasses = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expectedPasses), object: passes)
+                XCTAssertEqual(XCTWaiter.wait(for: [updatedBasket, updatedPasses], timeout: 5), .completed)
                 captureGame(app, name: "game-\(scenario)-reduced-\(reduced)-settled")
                 app.terminate()
             }
@@ -187,6 +190,46 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             background.tap()
             XCTAssertTrue(app.staticTexts["background actions: 1"].exists)
             app.terminate()
+        }
+        }
+    }
+
+    func testClassificationLocalizedPresentationRetainsRealCatchAndPassLedger() {
+        for serious in [false, true] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", serious ? "good-serious" : "good",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let scroll = app.scrollViews["fruitBasket.classification.scroll"]
+            XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+            let fruit = app.descendants(matching: .any).matching(identifier: "fruitBasket.classification.fruit").firstMatch
+            XCTAssertTrue(fruit.label.contains("pear. attached star marker."))
+            let basket = app.descendants(matching: .any).matching(identifier: "fruitBasket.classification.basket").firstMatch
+            let value = basket.value as? String ?? ""
+            XCTAssertEqual(value.compactMap(\.wholeNumberValue), [0, 1, 0])
+            let catchFruit = app.buttons["fruitBasket.classification.catchFruit"]
+            let passFruit = app.buttons["fruitBasket.classification.passFruit"]
+            for _ in 0..<24 { if catchFruit.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(catchFruit.isHittable)
+            XCTAssertTrue(catchFruit.label.contains(serious ? "catch fruit" : "yes ♡"))
+            XCTAssertTrue(passFruit.label.contains(serious ? "let fruit pass" : "nope!"))
+            catchFruit.tap()
+            let actualCount = app.staticTexts["gameQA.rawBasketCount"]
+            let caught = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "raw basket count: 1"), object: actualCount)
+            XCTAssertEqual(XCTWaiter.wait(for: [caught], timeout: 5), .completed)
+            XCTAssertEqual(app.staticTexts["gameQA.rawSessionScore"].label, "raw session score: 10")
+            for _ in 0..<24 { if passFruit.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(passFruit.isHittable)
+            passFruit.tap()
+            XCTAssertEqual(actualCount.label, "raw basket count: 1")
+            XCTAssertEqual(app.staticTexts["gameQA.rawSessionScore"].label, "raw session score: 10")
+            captureGame(app, name: "classification-serious-\(serious)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
         }
         }
     }

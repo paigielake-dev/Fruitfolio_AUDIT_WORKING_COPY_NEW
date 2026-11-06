@@ -1422,35 +1422,35 @@ struct Prompt28FruitBasketView: View {
     ) -> some View {
         ScrollView {
         VStack(spacing: 14) {
-            Text("basket \(viewModel.basketCount) of \(viewModel.engine.rules.goodFruitTarget); star passes \(viewModel.session?.availableStarPasses ?? 0)")
-                .prompt28Text(.secondary)
-                .accessibilityIdentifier("fruitBasket.classification.progress")
-                .accessibilityFocused($gameplayFocus, equals: .classificationProgress)
+            VStack(spacing: 8) {
+                Prompt28StatisticRow(label: "basket", value: Prompt28GameStatisticFormatting.fraction(
+                    viewModel.basketCount, target: viewModel.engine.rules.goodFruitTarget, language: settings.language),
+                    font: Prompt28TextRole.secondary.font)
+                    .accessibilityIdentifier("fruitBasket.classification.basket")
+                    .accessibilityFocused($gameplayFocus, equals: .classificationProgress)
+                Prompt28StatisticRow(label: "star passes", value: Prompt28GameStatisticFormatting.integer(
+                    viewModel.session?.availableStarPasses ?? 0, language: settings.language),
+                    font: Prompt28TextRole.secondary.font)
+                    .accessibilityIdentifier("fruitBasket.classification.passes")
+            }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("fruitBasket.classification.progress")
 
             if let fruit =
                 viewModel.classificationFruit {
 
-                Prompt28MovingFruit(
-                    fruit: fruit,
-                    reduceMotion: true
-                )
-                .frame(
-                    width: 100,
-                    height: 100
-                )
-                .accessibilityLabel(
-                    "\(fruit.fruitID.displayName). \(fruit.classification == .good ? "attached star marker" : "no attached star marker"). Does this belong in the basket?"
-                )
-                .onAppear {
-                    Prompt28AssetUsageRegistrar.markRendered(
-                        fruit.fruitID.assetID
-                    )
+                FruitfolioTranslatedContent(source: "\(fruit.fruitID.displayName). \(fruit.classification == .good ? "attached star marker" : "no attached star marker"). Does this belong in the basket?") { display, _ in
+                    Prompt28MovingFruit(fruit: fruit, reduceMotion: true)
+                        .frame(width: 100, height: 100)
+                        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display)))
+                        .accessibilityIdentifier("fruitBasket.classification.fruit")
+                        .onAppear { Prompt28AssetUsageRegistrar.markRendered(fruit.fruitID.assetID) }
                 }
 
-                Text(
-                    "does this belong in the basket?"
-                )
-                .prompt28Text(.sectionHeading)
+                FruitfolioTranslatedText(source: "does this belong in the basket?",
+                    font: Prompt28TextRole.sectionHeading.font,
+                    serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
+                    .accessibilityIdentifier("fruitBasket.classification.question")
 
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 12) {
@@ -1467,8 +1467,9 @@ struct Prompt28FruitBasketView: View {
             } else if viewModel.classificationStarAvailable {
                 FruitfolioImage(id: .fruitbasket_star).frame(width: 52, height: 52)
                     .accessibilityHidden(true)
-                Text("a standalone star — catch it to bank one star pass. it does not fill the fruit basket.")
-                    .prompt28Text(.body).multilineTextAlignment(.center)
+                FruitfolioTranslatedText(source: "a standalone star — catch it to bank one star pass. it does not fill the fruit basket.",
+                    font: Prompt28TextRole.body.font, serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
+                    .multilineTextAlignment(.center)
                 Prompt28WatercolorButton(title: "catch star", accent: .paleYellow) {
                     viewModel.classificationStarDecision(accept: true)
                 }
@@ -1477,7 +1478,7 @@ struct Prompt28FruitBasketView: View {
                     viewModel.classificationStarDecision(accept: false)
                 }
             } else if !viewModel.catchTransits.isEmpty {
-                Text("settling in the basket…").prompt28Text(.body)
+                FruitfolioTranslatedText(source: "settling in the basket…", font: Prompt28TextRole.body.font, serious: true)
             }
 
             Spacer()
@@ -1505,7 +1506,7 @@ struct Prompt28FruitBasketView: View {
 
     private var classificationYesButton: some View {
         Prompt28WatercolorButton(
-            title: "yes ♡",
+            title: viewModel.currentQuestion?.usesSeriousFeedback == true ? "catch fruit" : "yes ♡",
             accent: .mint
         ) {
             viewModel.classificationDecision(accept: true)
@@ -1515,7 +1516,7 @@ struct Prompt28FruitBasketView: View {
 
     private var classificationNoButton: some View {
         Prompt28WatercolorButton(
-            title: "nope!",
+            title: viewModel.currentQuestion?.usesSeriousFeedback == true ? "let fruit pass" : "nope!",
             accent: .peach
         ) {
             viewModel.classificationDecision(accept: false)

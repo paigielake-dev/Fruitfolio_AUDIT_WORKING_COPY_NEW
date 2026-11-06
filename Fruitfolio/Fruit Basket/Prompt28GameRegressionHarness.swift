@@ -107,7 +107,7 @@ struct Prompt28GameRegressionHarness: View {
             sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
             catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
             contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0),
-            seriousFeedback: ["question-excerpt-serious", "failure-serious", "storm-serious"].contains(scenario) ? true : nil)
+            seriousFeedback: ["question-excerpt-serious", "failure-serious", "storm-serious", "good-serious"].contains(scenario) ? true : nil)
         let isStorm = ["storm", "storm-serious"].contains(scenario)
         var session = model.engine.newSession(topic: model.rawTopic, normalizedTopic: "qa visual fixture",
             difficulty: .easy, startingLevel: isStorm ? 6 : 1)
@@ -159,6 +159,10 @@ private struct Prompt28GameDiagnosticReadback: View {
                 .accessibilityIdentifier("gameQA.tourCompleted")
             Text("game screen: \(String(describing: model.screen))")
                 .accessibilityIdentifier("gameQA.screen")
+            Text("raw basket count: \(model.basketCount)")
+                .accessibilityIdentifier("gameQA.rawBasketCount")
+            Text("raw session score: \(model.score)")
+                .accessibilityIdentifier("gameQA.rawSessionScore")
             if let result = model.roundResult {
                 Text("raw fruit count: \(result.caughtFruit.count) / \(result.targetFruit)")
                     .accessibilityIdentifier("gameQA.rawResultFruit")
