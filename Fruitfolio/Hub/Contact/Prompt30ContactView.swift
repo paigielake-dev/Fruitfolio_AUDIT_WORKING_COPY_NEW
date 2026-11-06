@@ -86,9 +86,7 @@ struct Prompt30ContactView: View {
                     Text(destination.url.absoluteString)
                         .textSelection(.enabled)
                         .fixedSize(horizontal: false, vertical: true)
-                    Button("close") { dismissFailure(destination) }
-                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    FruitfolioControlPillButton(label: "close") { dismissFailure(destination) }
                         .accessibilityIdentifier("contact.linkFailure.close")
                     #if DEBUG
                     if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
@@ -100,7 +98,7 @@ struct Prompt30ContactView: View {
             }
             .accessibilityIdentifier("contact.linkFailure")
             .accessibilityAddTraits(.isModal)
-            .accessibilityAction(.escape) { dismissFailure(destination, buttonFeedback: false) }
+            .accessibilityAction(.escape) { dismissFailure(destination) }
             .onAppear {
                 errorHeadingFocused = true
                 audioManager.play(.popupOpen)
@@ -108,9 +106,8 @@ struct Prompt30ContactView: View {
         }
     }
 
-    private func dismissFailure(_ destination: Prompt30ContactDestination, buttonFeedback: Bool = true) {
+    private func dismissFailure(_ destination: Prompt30ContactDestination) {
         guard linkState.failedDestination != nil else { return }
-        if buttonFeedback { audioManager.play(.buttonSoftPop) }
         audioManager.play(.popupClose)
         linkState.dismiss()
         focusedLink = destination

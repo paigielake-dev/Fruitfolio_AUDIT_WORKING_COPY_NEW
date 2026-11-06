@@ -3,8 +3,9 @@ import SwiftUI
 import UIKit
 #endif
 
-/// Prompt 03 deliberately renders restrained, responsive placeholders only.
-/// Final Intro/Hub/feature production interfaces belong to later prompts.
+/// Shared navigation and environment shell for the existing feature screens.
+/// Earlier placeholder declarations remain below for implementation history;
+/// their controls delegate to the same canonical artwork and feedback system.
 struct Prompt03SkeletonView: View {
     @StateObject private var appState: AppState
     @StateObject private var navigation: NavigationCoordinator
@@ -498,63 +499,7 @@ private struct Prompt03TextButton: View {
     }
 
     var body: some View {
-        Button(
-            action: action
-        ) {
-            Text(title)
-                .font(
-                    .body.weight(
-                        .semibold
-                    )
-                )
-                .foregroundStyle(
-                    DesignTokens.ColorToken
-                        .primaryBurgundy
-                )
-                .multilineTextAlignment(
-                    .center
-                )
-                .frame(
-                    maxWidth: .infinity
-                )
-                .frame(
-                    minHeight:
-                        DesignTokens.Layout
-                            .minimumHitTarget
-                )
-                .padding(
-                    .horizontal,
-                    DesignTokens.Spacing.md
-                )
-                .padding(
-                    .vertical,
-                    DesignTokens.Spacing.xs
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 18
-                    )
-                    .fill(
-                        DesignTokens.ColorToken
-                            .softWhite
-                            .opacity(0.82)
-                    )
-                    .overlay(
-                        RoundedRectangle(
-                            cornerRadius: 18
-                        )
-                        .stroke(
-                            DesignTokens
-                                .ColorToken
-                                .secondaryBurgundy
-                                .opacity(0.22),
-                            lineWidth: 1
-                        )
-                    )
-                )
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(title)
+        FruitfolioControlPillButton(label: title, action: action)
     }
 }
 
@@ -565,50 +510,8 @@ private struct Prompt03BackControl: View {
     let action: () -> Void
 
     var body: some View {
-        Button(
-            action: action
-        ) {
-            HStack(
-                spacing:
-                    DesignTokens.Spacing.xs
-            ) {
-                FruitfolioImage(
-                    id: .control_previous,
-                    accessibilityLabelOverride:
-                        "Back"
-                )
-                .frame(
-                    width: 26,
-                    height: 26
-                )
-
-                Text("Back")
-                    .font(
-                        .body.weight(
-                            .semibold
-                        )
-                    )
-            }
-            .foregroundStyle(
-                DesignTokens.ColorToken
-                    .primaryBurgundy
-            )
-            .frame(
-                minWidth:
-                    DesignTokens.Layout
-                        .minimumHitTarget,
-                minHeight:
-                    DesignTokens.Layout
-                        .minimumHitTarget
-            )
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .frame(
-            maxWidth: .infinity,
-            alignment: .leading
-        )
-        .accessibilityLabel("Back")
+        BackControl(action: action)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

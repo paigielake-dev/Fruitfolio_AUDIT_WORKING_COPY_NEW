@@ -20,6 +20,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertFalse(app.buttons["contact.link.email"].exists)
             for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
             XCTAssertTrue(close.isHittable)
+            XCTAssertGreaterThanOrEqual(close.frame.height, 44)
+            XCTAssertGreaterThanOrEqual(close.frame.minX, scroll.frame.minX)
+            XCTAssertLessThanOrEqual(close.frame.maxX, scroll.frame.maxX)
             XCTAssertGreaterThanOrEqual(close.frame.minY, app.frame.minY)
             XCTAssertLessThanOrEqual(close.frame.maxY, app.frame.maxY)
             close.tap()

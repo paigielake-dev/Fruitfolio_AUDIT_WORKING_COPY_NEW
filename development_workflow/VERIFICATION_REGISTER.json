@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T05:50:35.804981+00:00",
+  "updated_at": "2026-11-06T05:53:06.348090+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -1913,6 +1913,25 @@
         "external": "Official T5 inference/translation quality/clinical review and Apple app/UI/device checks NOT_RUN"
       },
       "timestamp": "2026-11-06T05:50:35.804981+00:00"
+    },
+    {
+      "batch": "Canonical-Contact-failure-and-retained-architecture-controls",
+      "commands": [
+        "Full portable Swift6 suite",
+        "Full native-linked Swift5 suite",
+        "39 workflow tests with real SwiftSyntax cases",
+        "Final278 Swift syntax parses after Contact/UI changes",
+        "All-app actual SwiftSyntax canonical sound-owner check",
+        "git diff --check"
+      ],
+      "results": {
+        "portable": "571 XCTest +21 Swift Testing passed",
+        "native": "576 XCTest +21 Swift Testing passed with actual CPU llama",
+        "workflow": "39 passed including9 real SwiftSyntax cases",
+        "syntax": "278 Swift files parsed,0errors; all-app direct canonical sound-owner scan clean",
+        "Apple": "NOT_RUN updated Contact UI assertions, actual playback, Apple SDK build, layout/VO/DT/Reduce Motion"
+      },
+      "timestamp": "2026-11-06T05:53:06.348090+00:00"
     }
   ]
 }
