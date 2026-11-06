@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:52:33.356745+00:00",
+  "updated_at": "2026-11-06T21:54:23.189962+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -5608,6 +5608,37 @@
         ]
       },
       "timestamp": "2026-11-06T21:52:33.356745+00:00"
+    },
+    {
+      "batch": "LifeBridge-native-sheet-shared-presentation-surfaces",
+      "commands": [
+        "60 workflow checks",
+        "311 Swift syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "Apple_native_LifeBridge_layering": "NOT_RUN",
+        "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Both actual sheet closures wrap same existing view/dismissal in canonical native presentation host"
+        },
+        "not_run": [
+          "Apple actual Ask/FAQ sheet focus, root queued popup isolation, layering/blur/Reduce Motion and link behavior",
+          "Apple SDK build and whole integrated modal suite"
+        ],
+        "remaining": [
+          "Execute both real LifeBridge sheet paths with queued root popup and verify controls/focus remain on presented surface",
+          "Verify native dismissal restores original entry control and canonical popup layer behavior",
+          "Do not infer verified native blur/rendering or whole modal requirement completion from wrapper source"
+        ]
+      },
+      "timestamp": "2026-11-06T21:54:23.189962+00:00"
     }
   ]
 }

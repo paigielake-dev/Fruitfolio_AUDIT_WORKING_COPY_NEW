@@ -75,7 +75,9 @@ private struct Prompt29FAQSectionCard: View {
             }
         }
         .sheet(isPresented: $showLifeBridge) {
-            FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
+            }
         }
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .padding(16)

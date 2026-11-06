@@ -247,7 +247,9 @@ struct Prompt09AskView: View {
             }
         }
         .sheet(isPresented: $showLifeBridge) {
-            FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
+            }
         }
         .safeAreaInset(
             edge: .bottom,

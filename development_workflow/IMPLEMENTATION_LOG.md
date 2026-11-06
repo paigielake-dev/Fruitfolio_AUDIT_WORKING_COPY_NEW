@@ -2785,3 +2785,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 956, "new_English_entries": 7, "Apple_LifeBridge_links_privacy": "NOT_RUN", "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue original Part7 Fruit Basket revised founder home/instructions/topic wording and interaction requirements. Before further broad work, preserve any directly discovered shared-modal host omissions in existing LifeBridge entry sheets without inventing content; retain315–317external blockers.
 - Commit: containing commit for batch LifeBridge-private-source-interface-and-localized-link-labels.
+
+## LifeBridge-native-sheet-shared-presentation-surfaces
+
+- Parent checkpoint: afcf88ecddb87ccefbbc58f959e9d81ee0f02a13.
+- Source-order requirements: [6, 13, 26, 70, 318, 476, 477, 478].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Hub/FAQ/Prompt29FAQView.swift.
+- Both actual Ask and FAQ LifeBridge native-sheet entrypoints use existing FruitfolioPresentedPopupHost. This gives presented surface its own canonical popup coordinator instead of inheriting unrelated root overlay state. Existing boolean dismissal/content/links unchanged; no new popup framework, blur constants, assets, company facts or model source. Source surface isolation only; Apple layering/focus/blur behavior unverified.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing whole shared-host class; LifeBridge-specific runtime NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_native_LifeBridge_layering": "NOT_RUN", "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Resume original Part7 Fruit Basket founder-revised home/How It Works/topic wording and canonical interaction requirements; use immutable founder text and preserve existing game mechanics/art/research.315–317remain external source blockers.
+- Commit: containing commit for batch LifeBridge-native-sheet-shared-presentation-surfaces.
