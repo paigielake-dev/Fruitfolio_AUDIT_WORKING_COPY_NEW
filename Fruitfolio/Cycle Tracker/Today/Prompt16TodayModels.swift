@@ -146,3 +146,9 @@ nonisolated struct Prompt16TodayLoadSnapshot: Sendable {
     let onboarding: Prompt14OnboardingDraft
     let asOfDate: Date
 }
+
+nonisolated struct Prompt16PredictionLearningInfo: Equatable, Sendable {
+    let title: String
+    let body: String
+    let progress: String
+}

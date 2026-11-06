@@ -4,8 +4,11 @@ struct Prompt15CycleTrackerView: View {
     let onBack: () -> Void
 
     @State private var selectedSection: Prompt15CycleSection = .today
-    @State private var predictionLearningInfo:
-        Prompt16PredictionLearningInfo?
+    @State private var predictionPopupOwner: FruitfolioOwnedPopupSession?
+    @State private var predictionPopupScope = UUID()
+    @State private var viewIsVisible = false
+    @State private var returnPredictionFocus = false
+    @AccessibilityFocusState private var predictionInfoFocused: Bool
     @State private var dailyLogRequest: Prompt20DailyLogRequest?
     @State private var dailyLogHasUnsavedChanges = false
     @State private var calendarRefreshID = UUID()
@@ -14,6 +17,7 @@ struct Prompt15CycleTrackerView: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var contextStore: Prompt27AContextStore
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
 
     private var contextPolicy: Prompt27AContextPolicyResult {
         Prompt27AContextPolicyEngine().policy(for: contextStore.context)
@@ -60,27 +64,7 @@ struct Prompt15CycleTrackerView: View {
                 .scrollBounceBehavior(.basedOnSize)
             }
 
-            if let predictionLearningInfo {
-                Prompt15PredictionInfoOverlay(
-                    info: predictionLearningInfo,
-                    onDismiss: dismissPredictionInfo
-                )
-                .transition(
-                    motionPreferences.reduceMotionActive
-                        ? .opacity
-                        : .opacity.combined(
-                            with: .scale(scale: 0.97)
-                        )
-                )
-                .zIndex(50)
-            }
         }
-        .animation(
-            motionPreferences.reduceMotionActive
-                ? nil
-                : .easeOut(duration: 0.20),
-            value: predictionLearningInfo
-        )
         .sheet(item: $dailyLogRequest, onDismiss: {
             dailyLogHasUnsavedChanges = false
         }) { request in
@@ -111,6 +95,22 @@ struct Prompt15CycleTrackerView: View {
                 .ignoresSafeArea()
         )
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            viewIsVisible = true
+            if predictionPopupOwner == nil { predictionPopupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+        }
+        .onDisappear {
+            viewIsVisible = false
+            predictionPopupOwner?.cancel()
+            returnPredictionFocus = false
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            predictionPopupOwner?.observeDismissal()
+            guard viewIsVisible, returnPredictionFocus, predictionPopupOwner?.requestID == nil,
+                  popupCoordinator.currentPopup == nil else { return }
+            returnPredictionFocus = false
+            predictionInfoFocused = true
+        }
     }
 
     private var globalBackRow: some View {
@@ -161,6 +161,7 @@ struct Prompt15CycleTrackerView: View {
                 Prompt16TodayView(
                     context: contextStore.context,
                     contextPolicy: contextPolicy,
+                    predictionInfoFocus: $predictionInfoFocused,
                     onSeeBiology: {
                         select(.body)
                     },
@@ -176,9 +177,7 @@ struct Prompt15CycleTrackerView: View {
                             section: .temperature
                         )
                     },
-                    onPredictionInfoRequested: { info in
-                        predictionLearningInfo = info
-                    }
+                    onPredictionInfoRequested: requestPredictionInfo
                 )
 
             case .calendar:
@@ -274,14 +273,15 @@ struct Prompt15CycleTrackerView: View {
         )
     }
 
-    private func dismissPredictionInfo() {
-        audioManager.play(.buttonSoftPop)
-
-        if motionPreferences.reduceMotionActive {
-            predictionLearningInfo = nil
-        } else {
-            withAnimation(.easeOut(duration: 0.18)) {
-                predictionLearningInfo = nil
+    private func requestPredictionInfo(_ info: Prompt16PredictionLearningInfo) {
+        guard viewIsVisible, let owner = predictionPopupOwner else { return }
+        if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
+        predictionInfoFocused = false
+        returnPredictionFocus = true
+        owner.present { id in
+            Prompt16PredictionPopupRequest.make(info: info, id: id, scope: predictionPopupScope) {
+                guard viewIsVisible else { return }
+                _ = owner.consumeAction(for: id)
             }
         }
     }
@@ -293,6 +293,8 @@ struct Prompt15CycleTrackerView: View {
             return
         }
 
+        predictionPopupOwner?.cancel()
+        returnPredictionFocus = false
         audioManager.play(.buttonSoftPop)
 
         if motionPreferences.reduceMotionActive {
@@ -303,142 +305,6 @@ struct Prompt15CycleTrackerView: View {
             ) {
                 selectedSection = section
             }
-        }
-    }
-}
-
-private struct Prompt15PredictionInfoOverlay: View {
-    let info: Prompt16PredictionLearningInfo
-    let onDismiss: () -> Void
-
-    var body: some View {
-        ZStack {
-            Prompt15Palette.paper
-                .opacity(0.82)
-                .ignoresSafeArea()
-
-            Prompt15Palette.burgundy
-                .opacity(0.055)
-                .ignoresSafeArea()
-
-            Prompt15WoodenPredictionPopup(
-                info: info,
-                onDismiss: onDismiss
-            )
-            .padding(.horizontal, 18)
-        }
-        .ignoresSafeArea()
-    }
-}
-
-private struct Prompt15WoodenPredictionPopup: View {
-    let info: Prompt16PredictionLearningInfo
-    let onDismiss: () -> Void
-
-    var body: some View {
-        GeometryReader { proxy in
-            let signWidth = min(
-                356,
-                max(
-                    292,
-                    proxy.size.width - 44
-                )
-            )
-
-            let signHeight =
-                signWidth * (517.0 / 594.0)
-
-            ZStack {
-                Image("popup_wooden_sign")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(
-                        width: signWidth,
-                        height: signHeight
-                    )
-                    .accessibilityHidden(true)
-
-                VStack(spacing: 5) {
-                    FruitfolioImage(
-                        id: .fruit_peach_soft
-                    )
-                    .frame(
-                        width: 42,
-                        height: 42
-                    )
-                    .accessibilityHidden(true)
-
-                    Text(info.title)
-                        .font(
-                            Prompt15Type.popupTitle
-                        )
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.82)
-                        .foregroundStyle(Prompt15Palette.burgundy)
-
-                    Text(info.body)
-                        .font(
-                            Prompt15Type.popupBody
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.78)
-                        .foregroundStyle(Prompt15Palette.burgundy)
-
-                    Text(info.progress)
-                        .font(
-                            Prompt15Type.popupProgress
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.76)
-                        .foregroundStyle(Prompt15Palette.burgundy)
-
-                    Button {
-                        onDismiss()
-                    } label: {
-                        Text("got it ♡")
-                            .font(
-                                Prompt15Type.popupButton
-                            )
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Prompt15Palette.burgundy)
-                            .padding(.horizontal, 12)
-                            .frame(minHeight: 30)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(
-                        Prompt15SoftPressButtonStyle()
-                    )
-                    .accessibilityHint(
-                        "Closes this explanation."
-                    )
-                }
-                .frame(
-                    width: signWidth * 0.70,
-                    height: signHeight * 0.61,
-                    alignment: .center
-                )
-                .offset(
-                    y: signHeight * 0.105
-                )
-            }
-            .frame(
-                width: signWidth,
-                height: signHeight
-            )
-            .position(
-                x: proxy.size.width / 2,
-                y: proxy.size.height / 2
-            )
-            .accessibilityElement(
-                children: .contain
-            )
-            .accessibilityLabel(
-                "\(info.title). \(info.body) \(info.progress)"
-            )
         }
     }
 }

@@ -951,8 +951,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertFalse(scroll.exists)
         app.terminate()
     }
-    private func launchCycleModal(_ scenario: String, reduced: Bool, rtl: Bool) -> XCUIApplication {
-        XCUIDevice.shared.orientation = .portrait
+    private func launchCycleModal(_ scenario: String, reduced: Bool, rtl: Bool, landscape: Bool = false) -> XCUIApplication {
+        XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioCycleModalQA", "-fruitfolioCycleModalQAScenario", scenario,
                                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
@@ -1086,6 +1086,39 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 }
             }
         }
+    }
+
+    func testWoodenPredictionUsesSharedMeasuredHostInBothOrientationsAndDirections() {
+        for reduced in [false, true] {
+            for rtl in [false, true] {
+                for landscape in [false, true] {
+                    let app = launchCycleModal("prediction-sign", reduced: reduced, rtl: rtl, landscape: landscape)
+                    let trigger = app.buttons["cycleModalQA.predictionInfo"]
+                    XCTAssertTrue(trigger.waitForExistence(timeout: 5)); trigger.tap()
+                    let scroll = app.scrollViews["woodenSignPopup.scroll"]
+                    XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+                    XCTAssertFalse(trigger.exists)
+                    let close = app.buttons["fruitPopup.paper.action.primary"]
+                    for _ in 0..<30 { if close.isHittable { break }; scroll.swipeUp() }
+                    XCTAssertTrue(close.isHittable)
+                    XCTAssertEqual(close.label, "got it ♡")
+                    XCTAssertGreaterThanOrEqual(close.frame.height, 44)
+                    XCTAssertGreaterThanOrEqual(close.frame.minX, scroll.frame.minX - 1)
+                    XCTAssertLessThanOrEqual(close.frame.maxX, scroll.frame.maxX + 1)
+                    XCTAssertGreaterThanOrEqual(close.frame.minY, scroll.frame.minY - 1)
+                    XCTAssertLessThanOrEqual(close.frame.maxY, scroll.frame.maxY + 1)
+                    let image = XCTAttachment(screenshot: app.screenshot())
+                    image.name = "wooden-prediction-reduced-\(reduced)-rtl-\(rtl)-landscape-\(landscape)"
+                    image.lifetime = .keepAlways
+                    add(image)
+                    close.tap()
+                    XCTAssertTrue(trigger.waitForExistence(timeout: 5)); XCTAssertTrue(trigger.isHittable)
+                    XCTAssertEqual(app.staticTexts["cycleModalQA.predictionStatus"].label, "prediction explanation closed")
+                    app.terminate()
+                }
+            }
+        }
+        XCUIDevice.shared.orientation = .portrait
     }
 
 }

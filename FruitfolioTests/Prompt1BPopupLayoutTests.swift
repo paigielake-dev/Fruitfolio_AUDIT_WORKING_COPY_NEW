@@ -130,4 +130,33 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
         }
     }
 
+    func testWoodenSignKeepsOriginalAspectAndBoardWritingAreaWithinSmallViewports() {
+        let pixels = FruitfolioPopupLayout.woodenSignPixelSize
+        XCTAssertEqual(pixels, CGSize(width: 594, height: 517))
+        let writing = FruitfolioPopupLayout.woodenSignWritingRect
+        XCTAssertTrue(CGRect(x: 0, y: 0, width: 1, height: 1).contains(writing))
+        XCTAssertGreaterThan(writing.minY, 0.45, "Writing must be below rope and screw region")
+        XCTAssertLessThan(writing.maxY, 0.9, "Keep bottom painted edge clear")
+        for width: CGFloat in [0, 12, 32, 64, 100, 160, 240, 320, 390, 852] {
+            for height: CGFloat in [0, 12, 32, 100, 180, 320, 700] {
+                let available = CGSize(width: width, height: height)
+                let metrics = FruitfolioPopupLayout.woodenSign(available: available)
+                XCTAssertLessThanOrEqual(metrics.paperSize.width, width)
+                XCTAssertLessThanOrEqual(metrics.paperSize.height, height)
+                XCTAssertGreaterThanOrEqual(metrics.paperSize.width, 0)
+                XCTAssertGreaterThanOrEqual(metrics.paperSize.height, 0)
+                if metrics.paperSize.height > 0 {
+                    XCTAssertEqual(metrics.paperSize.width / metrics.paperSize.height, pixels.width / pixels.height, accuracy: 0.0001)
+                    let board = CGRect(origin: .zero, size: metrics.paperSize)
+                    let area = CGRect(x: board.width * writing.minX, y: board.height * writing.minY,
+                                      width: metrics.writingSize.width, height: metrics.writingSize.height)
+                    XCTAssertTrue(board.contains(area))
+                }
+            }
+        }
+        for invalid in [CGSize(width: CGFloat.infinity, height: 320), CGSize(width: 320, height: CGFloat.nan), CGSize(width: -1, height: 320)] {
+            XCTAssertEqual(FruitfolioPopupLayout.woodenSign(available: invalid).paperSize, .zero)
+        }
+    }
+
 }

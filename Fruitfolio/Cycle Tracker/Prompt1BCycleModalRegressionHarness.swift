@@ -78,6 +78,7 @@ private final class Prompt1BCycleModalFixture {
     func prepare() async {
         guard !ready else { return }
         do {
+            if scenario == "prediction-sign" { ready = true; return }
             if scenario.hasPrefix("daily-") {
                 var draft = Prompt20DailyLogDraft()
                 draft.generalNote = "original fixture note"
@@ -126,6 +127,13 @@ struct Prompt1BCycleModalRegressionHarness: View {
     @StateObject private var fixture = Prompt1BCycleModalFixture()
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var contextStore: Prompt27AContextStore
+    @EnvironmentObject private var coordinator: PopupCoordinator
+    @State private var predictionOwner: FruitfolioOwnedPopupSession?
+    @State private var predictionScope = UUID()
+    @State private var predictionVisible = false
+    @State private var didShowPrediction = false
+    @State private var predictionClosed = false
+    @AccessibilityFocusState private var predictionFocused: Bool
     @State private var dailyPresented = false
     @State private var didPresentDaily = false
 
@@ -135,6 +143,14 @@ struct Prompt1BCycleModalRegressionHarness: View {
                 Text(error).accessibilityIdentifier("cycleModalQA.error")
             } else if !fixture.ready {
                 ProgressView().accessibilityLabel("Preparing disposable cycle fixture")
+            } else if fixture.scenario == "prediction-sign" {
+                VStack(spacing: 16) {
+                    FruitfolioControlPillButton(label: "open prediction explanation") { presentPredictionFixture() }
+                        .accessibilityFocused($predictionFocused)
+                        .accessibilityIdentifier("cycleModalQA.predictionInfo")
+                    Text(predictionClosed ? "prediction explanation closed" : "prediction fixture ready")
+                        .accessibilityIdentifier("cycleModalQA.predictionStatus")
+                }
             } else if fixture.scenario.hasPrefix("onboarding-") && !fixture.didExit {
                 Prompt14CycleOnboardingView(store: fixture.onboarding) {
                     Task { await fixture.readActualSavedFilesAfterExit() }
@@ -160,6 +176,21 @@ struct Prompt1BCycleModalRegressionHarness: View {
             }
             .environment(\.layoutDirection, ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalRTL") ? .rightToLeft : .leftToRight)
         }
+        .onAppear {
+            predictionVisible = true
+            if predictionOwner == nil { predictionOwner = FruitfolioOwnedPopupSession(coordinator: coordinator) }
+        }
+        .onDisappear {
+            predictionVisible = false
+            predictionOwner?.cancel()
+        }
+        .onChange(of: coordinator.currentPopup?.id) { _, _ in
+            predictionOwner?.observeDismissal()
+            guard predictionVisible, didShowPrediction, predictionOwner?.requestID == nil, coordinator.currentPopup == nil else { return }
+            predictionClosed = true
+            predictionFocused = true
+            didShowPrediction = false
+        }
         .task {
             settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalReduceMotion")
             await Task.yield()
@@ -176,6 +207,22 @@ struct Prompt1BCycleModalRegressionHarness: View {
             }
         }
     }
+    private func presentPredictionFixture() {
+        guard predictionVisible, let owner = predictionOwner else { return }
+        didShowPrediction = true
+        predictionClosed = false
+        predictionFocused = false
+        owner.present { id in
+            Prompt16PredictionPopupRequest.make(info: .init(title: "disposable prediction explanation fixture",
+                body: String(repeating: "This is disposable fixture text for checking scroll and layout. It supplies no clinical advice or measurements. ", count: 8),
+                progress: "The actual request factory preserves its original title, body and progress copy."),
+                id: id, scope: predictionScope) {
+                    guard predictionVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                }
+        }
+    }
+
 }
 #endif
 #endif

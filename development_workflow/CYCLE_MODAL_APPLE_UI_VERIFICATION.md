@@ -12,6 +12,8 @@ UUID preferences/context suite. Its scenario argument
 - `daily-medication`: same view with one explicitly marked fixture medication.
 - `onboarding-failure`: actual onboarding view/shared-context merge, actual file
   codec with an explicit rejection boundary for answer saves.
+- `prediction-sign`: actual production prediction request factory and global wooden
+  popup host, with long explicitly nonclinical layout fixture copy.
 - `onboarding-retry`: the same boundary rejects only the first save, then actual
   save-for-exit can acknowledge the file.
 
@@ -28,19 +30,21 @@ and failure boundary compile in both portable and real CPU-linked suites; SwiftU
 composition and XCTest UI APIs still require the Apple SDK. DEBUG code is excluded
 from release builds.
 
-Three methods were added to the existing Prompt1BModalAccessibilityTests class,
+Four methods were added to the existing Prompt1BModalAccessibilityTests class,
 which Tools/verify_prompt1b_mac.sh already selects:
 
 - testDailyLogOwnedExitChoicesUsePresentedPaperAtAccessibilitySize
 - testMedicationRemovalUsesOwnedPaperAndPersistsOnlyAfterSavingDay
 - testOnboardingFailedAutosaveOffersKeepDiscardOrSaveWithoutLosingSavedAnswers
+- testWoodenPredictionUsesSharedMeasuredHostInBothOrientationsAndDirections
 
 The cycle test helper uses the production host’s primary/secondary/tertiary action
 identifiers and separately checks each expected label. A source review corrected
 an initial label-based selector before Apple execution.
 
-They define28 scenario executions across override on/off, LTR/forced RTL, and the
-available keep/discard/save choices, all at Accessibility XXXL. Assertions cover
+They define36 scenario executions across override on/off, LTR/forced RTL, and the
+available keep/discard/save choices, all at Accessibility XXXL. The8wooden-sign
+cases additionally include portrait/landscape. Assertions cover
 minimum44pt action height and visible scroll bounds, hidden underlying controls,
 retained dirty text after Keep, saved-file readback after Save/Discard, removal only
 after an acknowledged day save, and screenshot attachments. The Daily Log opens

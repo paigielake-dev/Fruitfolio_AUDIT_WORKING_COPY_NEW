@@ -71,7 +71,7 @@ struct FruitPopupAction: Identifiable {
     }
 }
 
-enum FruitPopupSurface: Equatable, Sendable { case characterSpeech, tapedWhite }
+enum FruitPopupSurface: Equatable, Sendable { case characterSpeech, tapedWhite, woodenSign }
 
 struct FruitPopupRequest: Identifiable {
     let id: UUID

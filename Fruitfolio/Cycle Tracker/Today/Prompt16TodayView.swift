@@ -5,6 +5,8 @@ struct Prompt16TodayView: View {
     var loader = Prompt16TodayLoader()
     var context: Prompt27AUserReproductiveContext = .unspecified
     var contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult()
+    var predictionInfoFocus: AccessibilityFocusState<Bool>.Binding? = nil
+    @AccessibilityFocusState private var localPredictionInfoFocus: Bool
 
     let onSeeBiology: () -> Void
     let onLogToday: () -> Void
@@ -376,40 +378,19 @@ struct Prompt16TodayView: View {
             HStack {
                 Spacer()
 
-                Button {
-                    audioManager.play(.buttonSoftPop)
-                    onPredictionInfoRequested(
-                        predictionLearningInfo
-                    )
-                } label: {
-                    HStack(spacing: 6) {
-                        Text("why is my wheel blank?")
-
-                        Image("ask_question_mark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(
-                                width: 30,
-                                height: 30
-                            )
-                            .accessibilityHidden(true)
+                HStack(spacing: 6) {
+                    FruitfolioControlPillButton(label: "why is my wheel blank?") {
+                        onPredictionInfoRequested(predictionLearningInfo)
                     }
-                    .font(Prompt16Type.small)
-                    .foregroundStyle(
-                        Prompt16Palette.burgundy.opacity(0.78)
-                    )
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 10)
-                    .contentShape(Rectangle())
+                    .controlSize(.small)
+                    .accessibilityFocused(predictionInfoFocus ?? $localPredictionInfoFocus)
+                    .accessibilityIdentifier("cycleTracker.predictionInfo")
+                    .accessibilityLabel("Why is my cycle wheel blank?")
+                    .accessibilityHint("Explains how much cycle history Fruitfolio needs before it can begin estimating your cycle length.")
+                    Image("ask_question_mark")
+                        .resizable().scaledToFit().frame(width: 30, height: 30)
+                        .accessibilityHidden(true)
                 }
-                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                .accessibilityLabel(
-                    "Why is my cycle wheel blank?"
-                )
-                .accessibilityHint(
-                    "Explains how much cycle history Fruitfolio needs before it can begin estimating your cycle length."
-                )
 
                 Spacer()
             }
@@ -1194,12 +1175,6 @@ private struct Prompt16LimitedDataCycleWheel: View {
             ?? "Cycle wheel. Fruitfolio needs more completed cycle history before showing personalized phase geometry."
         )
     }
-}
-
-struct Prompt16PredictionLearningInfo: Equatable {
-    let title: String
-    let body: String
-    let progress: String
 }
 
 private enum Prompt16LoadState {

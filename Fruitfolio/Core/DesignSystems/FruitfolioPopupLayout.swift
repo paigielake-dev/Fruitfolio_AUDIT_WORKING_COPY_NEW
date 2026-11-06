@@ -97,6 +97,16 @@ enum FruitfolioPopupLayout {
                 writingFraction: CGSize(width: 0.76, height: 0.64))
     }
 
+    static let woodenSignPixelSize = CGSize(width: 594, height: 517)
+    // Visually reviewed against the unchanged PNG: below rope/top screws and
+    // inside the middle/lower wooden boards. Fractions are canvas coordinates.
+    static let woodenSignWritingRect = CGRect(x: 0.12, y: 0.46, width: 0.76, height: 0.40)
+
+    static func woodenSign(available: CGSize) -> Metrics {
+        artwork(available: available, pixels: woodenSignPixelSize, maximumWidth: 356,
+                writingFraction: woodenSignWritingRect.size)
+    }
+
     static func largeControlCard(available: CGSize) -> Metrics {
         artwork(available: available, pixels: saveCardPixelSize, maximumWidth: 340,
                 writingFraction: CGSize(width: 0.78, height: 0.72))

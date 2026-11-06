@@ -63,8 +63,8 @@ struct FruitPopupHost<Content: View>: View {
                     )
                     .zIndex(998)
 
-                    if request.surface == .tapedWhite {
-                        tapedWhitePopup(request, available: proxy.size)
+                    if request.surface != .characterSpeech {
+                        measuredPopup(request, available: proxy.size)
                             .zIndex(999)
                     } else {
                         popupLayer(request: request, proxy: proxy)
@@ -174,37 +174,54 @@ struct FruitPopupHost<Content: View>: View {
             .accessibilityHidden(true)
     }
 
-    private func tapedWhitePopup(_ request: FruitPopupRequest, available: CGSize) -> some View {
-        FruitfolioTapedWhitePopup {
-            VStack(spacing: 12) {
-                FruitfolioTranslatedContent(source: request.message) { display, _ in
-                    FruitfolioSemanticText(markdown: display,
-                        baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true)
-                        .textSelection(.enabled)
-                        .accessibilityFocused($paperMessageFocus, equals: request.id)
+    private func measuredPopup(_ request: FruitPopupRequest, available: CGSize) -> some View {
+        Group {
+            if request.surface == .woodenSign {
+                FruitfolioWoodenSignPopup {
+                    VStack(spacing: 10) {
+                        FruitfolioImage(id: .fruit_peach_soft)
+                            .scaledToFit().frame(width: 42, height: 42)
+                            .accessibilityHidden(true)
+                        measuredPopupContent(request)
+                    }
+                    .controlSize(.small)
                 }
-                .task(id: request.id) {
-                    await Task.yield()
-                    guard !Task.isCancelled, popupCoordinator.currentPopup?.id == request.id,
-                          popupCoordinator.presentationState != .dismissing else { return }
-                    paperMessageFocus = request.id
-                }
-                if let action = request.primaryAction { paperAction(action, primary: true) }
-                if let action = request.secondaryAction { paperAction(action, primary: false) }
-                if let action = request.tertiaryAction {
-                    paperAction(action, primary: false, identifier: "fruitPopup.paper.action.tertiary")
-                }
+            } else {
+                FruitfolioTapedWhitePopup { measuredPopupContent(request) }
             }
-            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         }
         .frame(width: available.width, height: available.height)
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
-        .accessibilityIdentifier("fruitPopup.tapedWhite")
+        .accessibilityIdentifier(request.surface == .woodenSign ? "fruitPopup.woodenSign" : "fruitPopup.tapedWhite")
         .accessibilityAction(.escape) {
             popupCoordinator.dismissUsingAccessibilityEscape(expectedPopupID: request.id)
         }
     }
+
+    private func measuredPopupContent(_ request: FruitPopupRequest) -> some View {
+        VStack(spacing: 12) {
+            FruitfolioTranslatedContent(source: request.message) { display, _ in
+                FruitfolioSemanticText(markdown: display,
+                    baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true)
+                    .textSelection(.enabled)
+                    .accessibilityFocused($paperMessageFocus, equals: request.id)
+            }
+            .task(id: request.id) {
+                await Task.yield()
+                guard !Task.isCancelled, popupCoordinator.currentPopup?.id == request.id,
+                      popupCoordinator.presentationState != .dismissing else { return }
+                paperMessageFocus = request.id
+            }
+            if let action = request.primaryAction { paperAction(action, primary: true) }
+            if let action = request.secondaryAction { paperAction(action, primary: false) }
+            if let action = request.tertiaryAction {
+                paperAction(action, primary: false, identifier: "fruitPopup.paper.action.tertiary")
+            }
+        }
+        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+    }
+
 
     private func paperAction(_ action: FruitPopupAction, primary: Bool, identifier: String? = nil) -> some View {
         FruitfolioControlPillButton(label: settings.localized(action.label)) {
