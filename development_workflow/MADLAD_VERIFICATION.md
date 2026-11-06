@@ -12,7 +12,7 @@ Full on-device inference remains required. A local T5 encoder/decoder implementa
 ## Not executed / unresolved
 
 - No verified MADLAD GGUF/tokenizer is present. No language, including the requested Pacific languages, is claimed inference-verified.
-- Swift build/link and real model inference have NOT_RUN. Existing Apple framework device/simulator ABI must be checked in Xcode.
+- Production Swift/native CPU compilation and synthetic T5 graph execution have run; see MADLAD_NATIVE_T5_CONTRACT_VERIFICATION.md. Official MADLAD inference remains NOT_RUN. Existing Apple framework device/simulator ABI must be checked in Xcode.
 - No offline device, loading/memory/latency/thermal/battery measurements or clinical translation-quality review have run.
 - Chinese Traditional does not silently reuse the generic zh tag. All runtime targets require manifest membership and exact tokenizer tag round trip.
 - Static String Catalog target values remain unfilled where the repository supplied no translation; English copies are not presented as translations.
@@ -32,3 +32,7 @@ Full on-device inference remains required. A local T5 encoder/decoder implementa
 The display-translation envelope now protects complete signed/comparison quantities, ranges, ratios, uncertainties, scientific powers, extended hormone/laboratory units and selected invariant assay/genetic labels. It preserves the original case, spelling and spacing rather than converting units. Escaped Markdown comparison/power operators remain attached to their quantities. After placeholder restoration, quantity and structured-reference signatures reject added numerical/unit claims or invented URLs/bracket citations. Bare grammatical words such as Norwegian `min` are not treated as newly introduced measured units.
 
 Regressions cover negative temperature changes, `ng/dL`, `µIU/mL`, `HbA1c`, `<`/`≤`, `±`, scientific notation, source-format escaping and injected references. These are executed protection-policy/fixture tests, not real T5 translation or proof of medical semantics in another language. Non-numerical meaning, negation, uncertainty and language quality still require actual MADLAD resources and acceptance review.
+
+## Native T5 contract evidence
+
+The actual production encoder/decoder now executes with explicitly synthetic untrained test tensors, including gated/nongated graphs, empty/truncated output rejection, resource reload and cancellation. This does not verify official MADLAD or translations. See [the execution evidence](MADLAD_NATIVE_T5_CONTRACT_VERIFICATION.md).

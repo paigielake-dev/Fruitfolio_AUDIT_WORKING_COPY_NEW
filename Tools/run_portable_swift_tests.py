@@ -175,13 +175,14 @@ TESTS = [
     'Prompt1BGGUFResourceTests.swift', 'Prompt1BLogoRevealTests.swift', 'Prompt1BSpotlightGeometryTests.swift',
     'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift', 'Prompt1BAskPaperLayoutTests.swift', 'Prompt1BEducationalArtworkTests.swift', 'Prompt1BCitationDestinationTests.swift', 'Prompt1BPendingSavePrivacyTests.swift', 'Prompt1BLibraryPersistenceTests.swift', 'Prompt1BResearchRetrievalTests.swift', 'Prompt1BResearchPackageTests.swift', 'Prompt1BEvidenceBoundaryTests.swift', 'Prompt1BResearchEngineIntegrationTests.swift', 'Prompt1BEvidenceBudgetTests.swift',
     'Prompt1BHormoneCivilDateTests.swift', 'Prompt1BCanonicalCalendarTests.swift', 'Prompt1BTodaySnapshotTests.swift', 'Prompt13CycleEngineTests.swift', 'Prompt14CycleOnboardingTests.swift', 'Prompt1BCycleFileProtectionTests.swift', 'Prompt1BCycleTransactionTests.swift', 'Prompt1BOnboardingTransactionTests.swift', 'Prompt1BOnboardingViewModelTests.swift', 'Prompt1BRecoveredCycleLoaderTests.swift', 'Prompt16TodayStateBuilderTests.swift', 'Prompt1BCalendarPresentationPolicyTests.swift', 'Prompt1BWheelNoteLayoutTests.swift', 'Prompt18CycleWheelTests.swift', 'Prompt19CalendarEngineTests.swift', 'Prompt1BAskUserContextTests.swift', 'Prompt1BPersonalHealthContextTests.swift', 'Prompt1BContextPersistenceTests.swift', 'Prompt27AContextPersonalizationTests.swift', 'Prompt1BHormoneAdjustmentTests.swift', 'Prompt22HormoneRhythmCoreTests.swift', 'Prompt1BHormoneLibraryTests.swift', 'Prompt1BHormonePersistenceTests.swift', 'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
-    'Prompt56ResearchIntelligenceTests.swift', 'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
+    'Prompt1BT5ExecutionContractTests.swift', 'Prompt56ResearchIntelligenceTests.swift', 'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
 ]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--swift', default='swift')
     parser.add_argument('--native-llama-build', type=Path, help='Optional existing CPU build of the checked-in llama source; no mocks or downloads')
+    parser.add_argument('--test-filter', help='Optional Swift test name filter for focused diagnostics; omit for complete verification')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     with tempfile.TemporaryDirectory(prefix='fruitfolio-portable-') as temporary:
@@ -247,7 +248,8 @@ def main():
         return subprocess.run([args.swift, 'test', '-Xswiftc', '-disable-batch-mode', '--jobs', '2',
                                '--cache-path', str(work / 'cache'),
                                '--config-path', str(work / 'configuration'),
-                               '--security-path', str(work / 'security')],
+                               '--security-path', str(work / 'security')] +
+                              (['--filter', args.test_filter] if args.test_filter else []),
                               cwd=work, env=environment).returncode
 
 if __name__ == '__main__':

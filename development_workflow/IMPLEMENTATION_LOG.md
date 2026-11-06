@@ -1740,3 +1740,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 680, "native_CPU_XCTest": 686, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 297, "Apple_UI": "NOT_RUN; 20 new launch scenarios are source only", "official_MADLAD": "BLOCKED: official host excluded by enforced network policy", "sound_ownership": "actual SwiftSyntax checker: zero findings", "project_references": "resolved; not Apple build"}.
 - Next action: Execute actual native T5 encoder/decoder through existing MADLAD runtime with explicitly synthetic untrained contract fixtures; retain official model/tokenizer blocker and do not claim semantic or official compatibility verification.
 - Commit: containing commit for batch Account-action-disposable-UI-QA.
+
+## Actual-native-synthetic-T5-encoder-decoder-contract
+
+- Parent checkpoint: 8912dea4c0e970637e5fd726d2c4ab4e03d15888.
+- Source-order requirements: [418, 419, 425, 426, 427, 428, 430, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift, Tools/run_portable_swift_tests.py.
+- Actual production runtime executes native CPU nongated/gated T5 graphs from explicitly synthetic untrained temporary tensors. Five tests verify native encoder/decoder success counters, empty/partial output rejection, input/tag guards, cancellation, repeated release/reload and changed-file checksum revalidation. No official MADLAD, translations, clinical/device acceptance or verified language coverage is claimed.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 680, "native_CPU_XCTest": 691, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 298, "actual_C_API_typecheck": "PASS; not Apple ABI/link", "native_T5_contract_methods": 5, "official_MADLAD": "BLOCKED; synthetic untrained T5 only, no language or semantic approval", "Apple_UI_device": "NOT_RUN"}.
+- Next action: Add deterministic nonempty synthetic T5 token-output contract and execute scientific protection through actual native runtime/service; no claim of linguistic translation. Then continue next independent source-order shared-modal requirements.
+- Commit: containing commit for batch Actual-native-synthetic-T5-encoder-decoder-contract.

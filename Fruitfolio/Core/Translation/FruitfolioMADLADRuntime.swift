@@ -12,6 +12,16 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     private var sampler: UnsafeMutablePointer<llama_sampler>?
     private var manifest: FruitfolioMADLADManifest?
     private let resourceDirectory: URL?
+    #if DEBUG
+    private var successfulEncoderCalls = 0
+    private var successfulDecoderCalls = 0
+
+    /// Counts only actual successful native calls, never user content. Synthetic
+    /// contract execution does not establish official MADLAD or language quality.
+    func debugExecutionStatistics() -> (encoderCalls: Int, decoderCalls: Int, resourcesLoaded: Bool) {
+        (successfulEncoderCalls, successfulDecoderCalls, model != nil && context != nil)
+    }
+    #endif
 
     init(resourceDirectory: URL? = nil) { self.resourceDirectory = resourceDirectory }
     deinit {
@@ -60,6 +70,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         for (index, token) in input.enumerated() { try add(token, position: index, logits: false, batch: &batch) }
         try Task.checkCancellation()
         guard llama_encode(context, batch) == 0 else { throw FruitfolioTranslationError.inferenceFailed }
+        #if DEBUG
+        successfulEncoderCalls += 1
+        #endif
         var decoderToken = llama_model_decoder_start_token(model)
         if decoderToken == LLAMA_TOKEN_NULL { decoderToken = llama_vocab_bos(vocab) }
         guard decoderToken != LLAMA_TOKEN_NULL else { throw FruitfolioTranslationError.incompatibleModel }
@@ -69,6 +82,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
             batch.n_tokens = 0
             try add(decoderToken, position: position, logits: true, batch: &batch)
             guard llama_decode(context, batch) == 0 else { throw FruitfolioTranslationError.inferenceFailed }
+            #if DEBUG
+            successfulDecoderCalls += 1
+            #endif
             let sampled = llama_sampler_sample(sampler, context, -1)
             if llama_vocab_is_eog(vocab, sampled) {
                 guard let result = String(bytes: output, encoding: .utf8), !result.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
