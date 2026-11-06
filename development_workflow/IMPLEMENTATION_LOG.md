@@ -1960,3 +1960,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 731, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "SwiftSyntax_sound_ownership_findings": 0}.
 - Next action: Localize fixed leaderboard headings, rules and unavailable-service copy using existing translated content outside buttons; keep usernames/source data out of translation and preserve exact local totals.
 - Commit: containing commit for batch Wrapping-chalkboard-categories-and-growing-writing-region.
+
+## Leaderboard-fixed-copy-display-translation
+
+- Parent checkpoint: 0115b12456b498f349213cc49fa90743adaa172f.
+- Source-order requirements: [393, 394, 397, 410, 411, 431, 434, 466, 468, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Localizable.xcstrings.
+- Fixed leaderboard headings/rules/unavailable-service copy uses the existing translation display with original wording/fonts. Four English source keys added; all 652 original catalog entries preserved exactly, now 656 keys with zero nonempty foreign units. No username/total value sent to translation, no fabricated translation. Apple catalog/UI remains unrun.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 731, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "catalog_keys": 656, "catalog_existing_entries_preserved": 652, "nonempty_foreign_units": 0}.
+- Next action: Keep disposable regression preference suite alive across transient root disappearance/background; remove persistent-domain cleanup from onDisappear and attach it to fixture owner lifetime. Extend actual Apple background preference scenario, without touching production defaults.
+- Commit: containing commit for batch Leaderboard-fixed-copy-display-translation.

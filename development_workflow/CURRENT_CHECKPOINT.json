@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "38148356e8d5f2ade0fc30ae0c3f5b5ee3c745ba",
+  "current_HEAD": "0115b12456b498f349213cc49fa90743adaa172f",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 393,
-  "current_implementation_batch": "Wrapping-chalkboard-categories-and-growing-writing-region",
+  "current_checklist_part": 9,
+  "current_requirement": 473,
+  "current_implementation_batch": "Leaderboard-fixed-copy-display-translation",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -494,8 +494,9 @@
   ],
   "uncommitted_changes": [
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Localizable.xcstrings",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/LEADERBOARD_CATEGORY_CONTROL_VERIFICATION.md",
+    "development_workflow/LEADERBOARD_FIXED_COPY_LOCALIZATION_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -513,7 +514,7 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "actual SwiftSyntax control-sound-ownership --check"
+    "JSON compare all existing catalog entries against parent HEAD and count actual nonempty foreign units"
   ],
   "last_test_results": {
     "portable_XCTest": 712,
@@ -524,10 +525,12 @@
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 13,
-    "SwiftSyntax_sound_ownership_findings": 0
+    "catalog_keys": 656,
+    "catalog_existing_entries_preserved": 652,
+    "nonempty_foreign_units": 0
   },
-  "next_exact_implementation_action": "Localize fixed leaderboard headings, rules and unavailable-service copy using existing translated content outside buttons; keep usernames/source data out of translation and preserve exact local totals.",
-  "updated_at": "2026-11-06T13:40:52.430223+00:00",
+  "next_exact_implementation_action": "Keep disposable regression preference suite alive across transient root disappearance/background; remove persistent-domain cleanup from onDisappear and attach it to fixture owner lifetime. Extend actual Apple background preference scenario, without touching production defaults.",
+  "updated_at": "2026-11-06T13:44:54.943902+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

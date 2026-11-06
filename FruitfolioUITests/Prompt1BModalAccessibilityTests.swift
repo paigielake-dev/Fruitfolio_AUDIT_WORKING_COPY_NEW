@@ -203,6 +203,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let fruit = app.buttons["fruitBasket.leaderboard.category.fruit collected"]
             XCTAssertTrue(fruit.waitForExistence(timeout: 5))
             XCTAssertTrue(fruit.isSelected)
+            let heading = app.descendants(matching: .any)
+                .matching(identifier: "fruitBasket.leaderboard.heading").firstMatch
+            XCTAssertTrue(heading.exists)
+            let serviceStatus = app.descendants(matching: .any)
+                .matching(identifier: "fruitBasket.leaderboard.serviceStatus").firstMatch
+            XCTAssertTrue(serviceStatus.exists)
             let scroll = app.scrollViews.firstMatch
             for unit in ["stars earned", "basket reveals", "highest level"] {
                 let category = app.buttons["fruitBasket.leaderboard.category." + unit]

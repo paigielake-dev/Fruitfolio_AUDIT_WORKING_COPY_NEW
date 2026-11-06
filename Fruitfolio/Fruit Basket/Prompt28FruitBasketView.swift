@@ -1706,9 +1706,11 @@ struct Prompt28FruitBasketView: View {
 
 
                 VStack(spacing: 8) {
-                    Text("top 3 players")
-                        .font(.custom("Chalkboard SE", size: 20, relativeTo: .title2))
+                    FruitfolioTranslatedText(source: "top 3 players",
+                        font: .custom("Chalkboard SE", size: 20, relativeTo: .title2))
                         .fontWeight(.bold)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityIdentifier("fruitBasket.leaderboard.heading")
 
                     VStack(spacing: 6) {
                         ForEach(Prompt28LeaderboardCategory.allCases, id: \.self) { category in
@@ -1731,9 +1733,11 @@ struct Prompt28FruitBasketView: View {
                         .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
                         .multilineTextAlignment(.center)
                         .accessibilityLabel("your on-device \(selectedLeaderboardCategory.accessibilityUnit): \(selectedLeaderboardCategory.localTotal(store.leaderboardTotals))")
+                        .accessibilityIdentifier("fruitBasket.leaderboard.localTotal")
 
-                    Text("worldwide rankings unavailable until secure registration is configured ♡")
-                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                    FruitfolioTranslatedText(source: "worldwide rankings unavailable until secure registration is configured ♡",
+                        font: .custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .accessibilityIdentifier("fruitBasket.leaderboard.serviceStatus")
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: 220)
@@ -1756,12 +1760,14 @@ struct Prompt28FruitBasketView: View {
 
                 Prompt28PaperPanel {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("what counts")
-                            .prompt28Text(.sectionHeading)
+                        FruitfolioTranslatedText(source: "what counts",
+                            font: Prompt28TextRole.sectionHeading.font)
                             .accessibilityAddTraits(.isHeader)
-                        Text(Prompt28RulesCopy.totals)
+                        FruitfolioTranslatedText(source: Prompt28RulesCopy.totals,
+                            font: Prompt28TextRole.secondary.font)
                             .fixedSize(horizontal: false, vertical: true)
-                        Text(Prompt28RulesCopy.results)
+                        FruitfolioTranslatedText(source: Prompt28RulesCopy.results,
+                            font: Prompt28TextRole.secondary.font)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .prompt28Text(.secondary)

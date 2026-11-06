@@ -1,0 +1,5 @@
+# Leaderboard fixed-copy translation
+
+The existing top-players and rules headings, totals/results rules and unavailable-worldwide-service explanation now use the actual shared display translation view. Original wording and role fonts are retained. Translation disclosure/status stays outside category buttons. Four missing English source keys were added to the existing catalog, preserving all 652 previous entries exactly; the catalog now has 656 keys and still zero nonempty foreign-language units. No foreign translation or clinical review is claimed.
+
+Typed usernames, protected/future records and local total values are unchanged and are not supplied as translation input by these replacements. The existing local-total sentence and remaining game text still need separate localization work. English debug UI scenarios now also locate the translated heading and explicit service-status container. These UI scenarios and Apple catalog compilation/typechecking remain NOT_RUN without the SDK. Feasible checks are recorded in the batch log; machine translation still requires official compatible model resources, currently externally blocked.
