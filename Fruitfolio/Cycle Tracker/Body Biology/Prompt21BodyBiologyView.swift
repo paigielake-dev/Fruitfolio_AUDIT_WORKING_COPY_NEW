@@ -58,35 +58,27 @@ struct Prompt21BodyBiologyView: View {
                 .frame(width: 58, height: 58)
                 .accessibilityHidden(true)
 
-            Text("opening your biology page…")
+            FruitfolioFixedText(source: "opening your biology page…", font: Prompt21Type.body, serious: true)
                 .font(Prompt21Type.body)
                 .foregroundStyle(Prompt21Palette.burgundy.opacity(0.70))
         }
         .frame(maxWidth: .infinity, minHeight: 430)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Loading body biology")
     }
 
     private var fallbackView: some View {
         VStack(alignment: .leading, spacing: 18) {
             header
 
-            Image(Prompt21BodyBiologyAsset.ovary)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 230)
+            FruitfolioScientificIllustration(imageName: Prompt21BodyBiologyAsset.ovary,
+                accessibilityDescription: "watercolor educational illustration of an ovary, shown as a general biology reference", maximumWidth: 230)
                 .frame(maxWidth: .infinity)
-                .accessibilityLabel(
-                    "watercolor educational illustration of an ovary, shown as a general biology reference"
-                )
 
-            Text("your biology, in context")
+            FruitfolioFixedText(source: "your biology, in context", font: Prompt21Type.contextTitle, serious: true)
                 .font(Prompt21Type.contextTitle)
                 .foregroundStyle(Prompt21Palette.burgundy)
 
-            Text(
-                "as your cycle picture develops, this space can show the biology that may be most relevant."
-            )
+            FruitfolioTranslatedText(source: "as your cycle picture develops, this space can show the biology that may be most relevant.", font: Prompt21Type.body, serious: true)
             .font(Prompt21Type.body)
             .foregroundStyle(Prompt21Palette.burgundy.opacity(0.82))
             .fixedSize(horizontal: false, vertical: true)
@@ -110,7 +102,7 @@ struct Prompt21BodyBiologyView: View {
                 font: Prompt21Type.note, color: Prompt21Palette.burgundy.opacity(0.76), serious: true)
 
             VStack(alignment: .leading, spacing: 9) {
-                Text(presentation.title)
+                FruitfolioFixedText(source: presentation.title, font: Prompt21Type.contextTitle, serious: true)
                     .font(Prompt21Type.contextTitle)
                     .foregroundStyle(Prompt21Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
@@ -123,11 +115,10 @@ struct Prompt21BodyBiologyView: View {
             }
 
             if presentation.state == .menstruation {
-                Text("the illustration separates structures for clarity — inside the body, these structures sit much more closely together.")
+                FruitfolioTranslatedText(source: "the illustration separates structures for clarity — inside the body, these structures sit much more closely together.", font: Prompt21Type.note, serious: true)
                     .font(Prompt21Type.note)
                     .foregroundStyle(Prompt21Palette.burgundy.opacity(0.76))
                     .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityLabel("Educational illustration note. The illustration separates structures for clarity. Inside the body, these structures sit much more closely together.")
             }
 
             if presentation.showsBlueberryUncertainty {
@@ -169,12 +160,12 @@ struct Prompt21BodyBiologyView: View {
             }
             .frame(height: 54)
 
-            Text("what may be happening")
+            FruitfolioFixedText(source: "what may be happening", font: Prompt21Type.title, serious: true)
                 .font(Prompt21Type.title)
                 .foregroundStyle(Prompt21Palette.burgundy)
                 .accessibilityAddTraits(.isHeader)
 
-            Text("educational view based on your current cycle context")
+            FruitfolioTranslatedText(source: "educational view based on your current cycle context", font: Prompt21Type.subtitle, serious: true)
                 .font(Prompt21Type.subtitle)
                 .foregroundStyle(Prompt21Palette.burgundy.opacity(0.66))
                 .fixedSize(horizontal: false, vertical: true)
@@ -265,7 +256,7 @@ struct Prompt21BodyBiologyView: View {
                 .frame(width: 54, height: 54)
                 .accessibilityHidden(true)
 
-            Text("this is an estimate, not a confirmation ✿")
+            FruitfolioTranslatedText(source: "this is an estimate, not a confirmation ✿", font: Prompt21Type.note, serious: true)
                 .font(Prompt21Type.note)
                 .foregroundStyle(Prompt21Palette.burgundy.opacity(0.82))
                 .fixedSize(horizontal: false, vertical: true)
@@ -303,9 +294,7 @@ struct Prompt21BodyBiologyView: View {
                         accessibilityDescription: "watercolor educational illustration of the fimbriae beside the ovary and uterine tube",
                         maximumWidth: 112, maximumHeight: 140)
 
-                    Text(
-                        "these finger-like structures help sweep the released oocyte toward the uterine tube."
-                    )
+                    FruitfolioTranslatedText(source: "these finger-like structures help sweep the released oocyte toward the uterine tube.", font: Prompt21Type.note, serious: true)
                     .font(Prompt21Type.note)
                     .foregroundStyle(Prompt21Palette.burgundy.opacity(0.82))
                     .fixedSize(horizontal: false, vertical: true)

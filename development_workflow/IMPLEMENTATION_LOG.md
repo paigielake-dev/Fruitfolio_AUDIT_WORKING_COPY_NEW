@@ -2752,3 +2752,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 948, "new_English_entries": 1, "source_call_site_sizing_files_unchanged": 5, "Apple_science_art_AX": "NOT_RUN", "Foundation": "unchanged; prior797/819 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue shared semantic/generated education explanations and sensitive qualifications in existing Body Biology/Fertilization/Pregnancy source paths, preserve exact evidence/citation ownership and do not introduce unsupported personalization. LifeBridge315–317 externally blocked, continue independent requirements.
 - Commit: containing commit for batch Canonical-scientific-art-keyed-accessible-description.
+
+## Body-biology-canonical-fallback-and-qualified-source-copy
+
+- Parent checkpoint: 21d633a1253f80ef414edd70fa115be8d6cb1280.
+- Source-order requirements: [310, 311, 312, 313, 314, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.
+- Tests added/updated: FruitfolioTests/Prompt1BScientificArtSizingTests.swift (unchanged; pure parent suite coverage only).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 949, "new_English_entries": 1, "Apple_body_biology": "NOT_RUN", "Foundation": "unchanged; prior797/819 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Original315–317 LifeBridge approved exact-host snapshots remain externally blocked in BLOCKERS.md, not completed. Continue independent318–319 privacy/research boundaries for informational access then original Part7/game requirements; preserve all pending clinical/Apple verification.
+- Commit: containing commit for batch Body-biology-canonical-fallback-and-qualified-source-copy.
