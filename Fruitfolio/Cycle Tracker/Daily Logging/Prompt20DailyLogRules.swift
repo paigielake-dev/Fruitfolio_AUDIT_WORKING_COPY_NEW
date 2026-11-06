@@ -49,7 +49,7 @@ public nonisolated enum Prompt20DailyLogRules {
         }
 
         if !trimmedTemperature.isEmpty {
-            if let value = Double(trimmedTemperature.replacingOccurrences(of: ",", with: ".")), value.isFinite {
+            if let value = Prompt20TemperatureInput.value(trimmedTemperature) {
                 let celsius: Double
                 switch draft.temperatureUnit {
                 case .celsius:
@@ -128,7 +128,7 @@ public nonisolated enum Prompt20DailyLogRules {
         let temperature: Prompt20TemperatureObservation?
         let trimmedTemperature = draft.temperatureText.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmedTemperature.isEmpty,
-           let value = Double(trimmedTemperature.replacingOccurrences(of: ",", with: ".")) {
+           let value = Prompt20TemperatureInput.value(trimmedTemperature) {
             temperature = Prompt20TemperatureObservation(
                 originalValue: value,
                 originalUnit: draft.temperatureUnit,

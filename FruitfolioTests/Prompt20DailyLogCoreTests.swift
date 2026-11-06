@@ -355,6 +355,55 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(try Data(contentsOf: file), bytes)
     }
 
+    func testUnicodeTemperatureDigitsShareValidationAndRecordedConstructionWithoutTextChanges() throws {
+        let cal = calendar("UTC"); let now = date(2026, 9, 7, calendar: cal)
+        for text in ["٣٧٫١٢", "۳۷٫۱۲", "३७.१२", "３７．１２", "37,12", "๓๗.๑๒", "৩৭.১২"] {
+            var draft = Prompt20DailyLogDraft(); draft.temperatureText = text; draft.temperatureUnit = .celsius
+            XCTAssertTrue(Prompt20DailyLogRules.validate(draft).isValid, text)
+            let log = try Prompt20DailyLogRules.makeLog(ownerID: .localDevice, date: day(2026, 9, 7),
+                                                       draft: draft, existing: nil, now: now)
+            XCTAssertEqual(log.temperature?.originalValue, 37.12, text)
+            XCTAssertEqual(log.temperature?.originalUnit, .celsius)
+            XCTAssertNil(log.temperature?.readingType)
+            XCTAssertEqual(draft.temperatureText, text)
+        }
+        for text in ["NaN", "inf", "∞", "٣٧٬١٢", "3 7", "37.1.2", "37,1.2", "37e999", "0x1.28p5", "37/12", "½"] {
+            var draft = Prompt20DailyLogDraft(); draft.temperatureText = text; draft.temperatureUnit = .celsius
+            XCTAssertTrue(Prompt20DailyLogRules.validate(draft).issues.contains(.invalidTemperatureFormat), text)
+        }
+        var tooHigh = Prompt20DailyLogDraft(); tooHigh.temperatureText = "١٠٠"; tooHigh.temperatureUnit = .celsius
+        XCTAssertTrue(Prompt20DailyLogRules.validate(tooHigh).issues.contains(.implausibleTemperature))
+    }
+
+    func testLocalizedDayLabelsUseSelectedLanguageAndGregorianYearAcrossCalendars() {
+        let selected = day(2026, 1, 2)
+        var japanese = Calendar(identifier: .japanese); japanese.timeZone = TimeZone(secondsFromGMT: 0)!
+        let english = selected.localizedDisplay(locale: Locale(identifier: "en_US"), calendar: japanese)
+        let french = selected.localizedDisplay(locale: Locale(identifier: "fr_FR"), calendar: japanese)
+        let german = selected.localizedDisplay(locale: Locale(identifier: "de_DE"), calendar: japanese)
+        XCTAssertTrue(english.contains("january")); XCTAssertTrue(english.contains("2026"))
+        XCTAssertTrue(french.contains("janvier")); XCTAssertTrue(french.hasPrefix("2 "))
+        XCTAssertTrue(german.contains("Januar"))
+        XCTAssertNotEqual(english, french)
+        for identifier in ["ar", "th_TH", "ja_JP"] {
+            var calendar = Calendar(identifier: .buddhist); calendar.timeZone = TimeZone(identifier: "Pacific/Kiritimati")!
+            let label = selected.localizedDisplay(locale: Locale(identifier: identifier), calendar: calendar)
+            let digits = label.unicodeScalars.map { scalar -> String in
+                if CharacterSet.decimalDigits.contains(scalar), let digit = Character(String(scalar)).wholeNumberValue { return String(digit) }
+                return String(scalar)
+            }.joined()
+            XCTAssertTrue(digits.contains("2026"), label)
+            XCTAssertFalse(digits.contains("2569"), label)
+        }
+    }
+
+    func testSkippedCivilDayKeepsExactLabelInsteadOfInventingAnotherDate() {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(identifier: "Pacific/Apia")!
+        let skipped = day(2011, 12, 30)
+        XCTAssertNil(skipped.date(in: calendar))
+        XCTAssertEqual(skipped.localizedDisplay(locale: Locale(identifier: "fr_FR"), calendar: calendar), "2011-12-30")
+    }
+
     func testLocalDayRoundTripUsesCalendarDay() async {
         let cal = calendar()
         let source = date(2026, 9, 7, hour: 23, calendar: cal)

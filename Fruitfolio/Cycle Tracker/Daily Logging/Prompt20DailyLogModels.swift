@@ -53,6 +53,24 @@ public nonisolated struct Prompt20LocalDay: Hashable, Codable, Comparable, Senda
     public func date(in calendar: Calendar) -> Date? {
         FruitfolioCanonicalCalendar.date(year: year, month: month, day: day, calendar: calendar)
     }
+    /// Calendar-day labels follow the app locale while retaining the recorded
+    /// Gregorian day. A zone that skipped this day gets its exact ISO label.
+    public func localizedDisplay(locale: Locale, calendar: Calendar) -> String {
+        let civil = FruitfolioCanonicalCalendar.gregorian(timeZone: calendar.timeZone)
+        guard let value = date(in: civil) else {
+            return String(format: "%04d-%02d-%02d", year, month, day)
+        }
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.calendar = civil
+        formatter.timeZone = civil.timeZone
+        formatter.setLocalizedDateFormatFromTemplate("MMMMdyyyy")
+        let label = formatter.string(from: value)
+        // Preserve the founder's lowercase English style without changing
+        // capitalization required by other languages.
+        return locale.language.languageCode?.identifier == "en" ? label.lowercased(with: locale) : label
+    }
+
     private enum CodingKeys: String, CodingKey { case year, month, day }
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -467,6 +485,24 @@ public struct Prompt20DailyLogDraft: Equatable, Sendable {
         !cervicalFluidNote.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
         medications.contains(where: \.hasAnyContent) ||
         !generalNote.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+}
+
+/// Parsing only: decimal scripts/separators never rewrite an editor's text or
+/// convert its chosen unit. Commas retain the existing decimal-input meaning.
+public nonisolated enum Prompt20TemperatureInput {
+    public static func value(_ text: String) -> Double? {
+        let normalized = text.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.map { scalar -> String in
+            if CharacterSet.decimalDigits.contains(scalar), let digit = Character(String(scalar)).wholeNumberValue {
+                return String(digit)
+            }
+            if scalar == "," || scalar == "٫" || scalar == "．" { return "." }
+            return String(scalar)
+        }.joined()
+        let pattern = #"^[+\-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+\-]?[0-9]+)?$"#
+        guard normalized.range(of: pattern, options: .regularExpression) != nil,
+              let value = Double(normalized), value.isFinite else { return nil }
+        return value
     }
 }
 

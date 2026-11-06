@@ -263,6 +263,30 @@ final class Prompt1BDailyLogViewModelTests: XCTestCase {
         XCTAssertEqual(model.saveFailureMessage, Prompt20DailyLogDomainError.storageChanged.errorDescription)
     }
 
+    func testUnicodeTemperatureEntryPersistsNumericalValueWithoutChangingDraftOrRecordedUnit() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await savedFixture(file)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: fixture.repository, calendar: fixture.calendar, preferredTemperatureUnit: .celsius, nowProvider: { fixture.now })
+        await model.load(); model.mutateDraft { $0.temperatureText = "٣٧٫١٢" }
+        let accepted = await model.save(); XCTAssertTrue(accepted)
+        XCTAssertEqual(model.draft.temperatureText, "٣٧٫١٢")
+        XCTAssertEqual(model.existingLog?.temperature?.originalValue, 37.12)
+        XCTAssertEqual(model.existingLog?.temperature?.originalUnit, .celsius)
+        XCTAssertNil(model.existingLog?.temperature?.readingType)
+        let restored = Prompt20CycleDailyLogStore(fileURL: file, calendar: fixture.calendar)
+        let reopened = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: restored, calendar: fixture.calendar, preferredTemperatureUnit: .fahrenheit, nowProvider: { fixture.now })
+        await reopened.load()
+        XCTAssertEqual(reopened.draft.temperatureUnit, .celsius)
+        XCTAssertEqual(Double(reopened.draft.temperatureText), 37.12)
+        reopened.mutateDraft { $0.generalNote = "notes after language change" }
+        let savedAgain = await reopened.save(); XCTAssertTrue(savedAgain)
+        XCTAssertEqual(reopened.existingLog?.temperature?.originalValue, 37.12)
+        XCTAssertEqual(reopened.existingLog?.temperature?.originalUnit, .celsius)
+    }
+
     func testNotesOnlyEditsPreserveOriginalTemperaturePrecisionAndUnitAcrossPreferences() async throws {
         var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
         let now = calendar.date(from: DateComponents(year: 2026, month: 9, day: 7, hour: 12))!

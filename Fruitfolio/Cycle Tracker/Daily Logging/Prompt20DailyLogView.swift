@@ -4,6 +4,7 @@ public struct Prompt20DailyLogView: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.locale) private var appLocale
 
     @StateObject private var model: Prompt20DailyLogViewModel
     @State private var showCervicalInfo = false
@@ -142,12 +143,7 @@ public struct Prompt20DailyLogView: View {
     }
 
     private var displayDate: String {
-        let formatter = DateFormatter()
-        formatter.calendar = model.calendar
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = model.calendar.timeZone
-        formatter.dateFormat = "MMMM d, yyyy"
-        return formatter.string(from: model.selectedDate).lowercased()
+        model.selectedDay.localizedDisplay(locale: appLocale, calendar: model.calendar)
     }
 
     private var loadingView: some View {
