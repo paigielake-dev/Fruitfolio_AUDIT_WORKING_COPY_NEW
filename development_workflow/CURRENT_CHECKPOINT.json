@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "bd5427d670454fc2a2c87d93d488cf322e231c28",
+  "current_HEAD": "16bcac00f6b982c94554a41d0c9dfd5398569302",
   "latest_verified_commit": null,
   "current_checklist_part": 10,
   "current_requirement": 474,
-  "current_implementation_batch": "Account-snapshot-preservation-and-immediate-privacy-preference-persistence",
+  "current_implementation_batch": "Actual-scoped-local-data-and-referenced-image-ZIP-export",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,19 +493,19 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Core/DataExport/FruitfolioDataExportPicker.swift",
+    "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift",
+    "Fruitfolio/Core/DataExport/FruitfolioZIPArchive.swift",
     "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
     "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
     "Fruitfolio/Privacy Settings/Prompt12DataManagementRegressionHarness.swift",
     "Fruitfolio/Privacy Settings/Prompt12DataManagementView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12PrivacyView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
-    "FruitfolioTests/Prompt1BAccountPersistenceTests.swift",
+    "FruitfolioTests/Prompt12AccountPrivacyStoreTests.swift",
+    "FruitfolioTests/Prompt1BLocalDataExportTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/ACCOUNT_SNAPSHOT_PROTECTION_VERIFICATION.md",
+    "development_workflow/BLOCKERS.md",
+    "development_workflow/LOCAL_DATA_ARCHIVE_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -519,23 +519,28 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite",
-    "35 Python workflow tests with real SwiftSyntax",
+    "Final full portable Swift6 suite",
+    "Final full native-linked Swift5 suite",
+    "Independent Python zipfile via desktop POSIX spawn/wait",
+    "35 workflow tests with all6 SwiftSyntax cases",
     "Swift compiler syntax parse",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "504 XCTest +21 Swift Testing passed",
+    "Swift6": "512 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "517 XCTest +21 Swift Testing passed against actual CPU llama libraries",
+    "archive": "8 production export tests executed; independent Python zipfile CRC/payload checks, pre-start/mid-stream cancellation and source preservation passed",
     "workflow": "35 passed with6 actual SwiftSyntax cases",
-    "Apple": "NOT_RUN inline recovery UI, large text/VO and Apple publishers; unit byte preservation is executed",
-    "syntax": "257 Swift files parsed,0errors; no Apple typecheck"
+    "syntax": "261 Swift files parsed,0errors; Xcode references resolved;36 supplemental exact source texts retained",
+    "Apple": "NOT_RUN SDK/typecheck, real iOS document provider saved/cancelled callbacks, UI/screenshots/VO/DT, large-data device memory/latency",
+    "limitations": "Sequential local snapshot; ZIP32 bounds; no cloud-only export or import/restore; archives are not encrypted"
   },
-  "next_exact_implementation_action": "Implement actual combined local data/image export. Capture only explicitly enumerated saved app preference records and known cycle files, preserve original saved page/guide/notes/source bytes and local images, exclude unsaved Ask transcripts and model/research bundles. Produce a real portable archive, independently validate archive payloads and failure/cancellation cleanup, connect actual file export UI without metadata-only success.",
-  "updated_at": "2026-11-06T03:36:01.346739+00:00",
+  "next_exact_implementation_action": "Continue source preservation in actual Saved Library persistence: guard commits against cleared/newer UserDefaults values and unknown nested fields that Codable would otherwise discard. Keep original bytes and known readable pages available, retain candidate rollback/media safety, add exact production Foundation regressions and a user-visible reload path without overwriting storage. Then apply the same preservation boundary to measurement/context stores where applicable.",
+  "updated_at": "2026-11-06T03:47:32.091672+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
-    "Implement actual combined local saved-data/image export without metadata-only success",
-    "Reconcile remaining unnumbered founder requirements and full UI/localization/clinical acceptance",
-    "Verify protected account UI/ownership and selected resource tables on Apple hardware"
+    "Protect Saved Library and remaining measurement/context persistence against stale/newer/unsupported records; retain original scientific values and explicit read-only reload",
+    "Verify actual local export save/cancel/provider behavior and other affected UI on Apple",
+    "Reconcile remaining unnumbered founder requirements and full UI/localization/clinical acceptance"
   ]
 }

@@ -16,12 +16,46 @@ struct Prompt12DataManagementView: View {
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var navigation: NavigationCoordinator
 
+    // Injectable so the DEBUG route never exports the real user's storage.
+    var exportPreferences: () throws -> [FruitfolioLocalDataExport.PreferenceRecord] = {
+        try FruitfolioLocalDataExport.capturePreferences(defaults: .standard)
+    }
+    var exportApplicationSupport: URL? = nil
+    @State private var exportTask: Task<Void, Never>?
+    @State private var exportMessage: String?
+    @State private var exportFolder: URL?
+    @State private var exportDocument: ExportDocument?
+    @State private var exportGeneration = UUID()
+    private struct ExportDocument: Identifiable {
+        let id = UUID()
+        let result: FruitfolioLocalDataExport.Result
+    }
+
     @State private var showingMeasurements = false
     @State private var showLocalDeletionNotice = false
 
     var body: some View {
         content
             .toolbar(.hidden, for: .navigationBar)
+            .onDisappear {
+                exportGeneration = UUID()
+                exportTask?.cancel()
+                exportTask = nil
+                if exportDocument == nil { cleanExportFolder() }
+            }
+            #if canImport(UIKit)
+            .sheet(item: $exportDocument, onDismiss: {
+                if exportMessage == nil { exportMessage = "export cancelled. your saved data has not changed." }
+                cleanExportFolder()
+            }) { document in
+                FruitfolioDataExportPicker(url: document.result.url) { saved in
+                    exportMessage = saved
+                        ? (document.result.warnings.isEmpty ? "your local data export was saved." : "your local data export was saved with missing or unreadable items. see manifest.json for details.")
+                        : "export cancelled. your saved data has not changed."
+                    exportDocument = nil
+                }
+            }
+            #endif
             .sheet(isPresented: $showingMeasurements) {
                 FruitfolioPresentedPopupHost {
                     FruitfolioHormoneInformationView(onBack: { showingMeasurements = false })
@@ -125,6 +159,18 @@ struct Prompt12DataManagementView: View {
                 "available exports"
             )
 
+            centeredInfoText("export your saved books, guides, notes, referenced images, measurements, My Context, cycle records, local account state, username, game progress and app preferences. the ZIP contains private information and is not encrypted. choose a private place to keep it. unsaved Ask conversations and cloud-only data are not included.")
+
+            FruitfolioControlPillButton(label: "export saved local data") { beginLocalExport() }
+                .disabled(exportTask != nil)
+                .accessibilityIdentifier("dataManagement.localExport")
+            if exportTask != nil {
+                ProgressView("preparing your local data export…")
+                WatercolorSecondaryButton(label: "cancel export") { exportTask?.cancel() }
+                    .accessibilityIdentifier("dataManagement.cancelExport")
+            }
+            if let exportMessage { centeredInfoText(exportMessage) }
+
             centeredInfoText(
                 "open Hormone Information to export your measurements as a readable JSON file. choose where to keep the file; it contains the measurements you saved."
             )
@@ -140,6 +186,61 @@ struct Prompt12DataManagementView: View {
                 alignment: .center
             )
         }
+    }
+
+    private func beginLocalExport() {
+        guard exportTask == nil else { return }
+        exportMessage = nil
+        exportGeneration = UUID()
+        let generation = exportGeneration
+        do {
+            let records = try exportPreferences()
+            guard let support = exportApplicationSupport ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+                throw FruitfolioZIPArchive.Failure.invalidSource
+            }
+            let folder = FileManager.default.temporaryDirectory.appendingPathComponent("FruitfolioExport-" + UUID().uuidString)
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true,
+                                                    attributes: [.posixPermissions: 0o700])
+            exportFolder = folder
+            let output = folder.appendingPathComponent("Fruitfolio-Local-Data.zip")
+            exportTask = Task {
+                let worker = Task.detached(priority: .userInitiated) {
+                    try FruitfolioLocalDataExport.create(preferences: records, applicationSupport: support, output: output)
+                }
+                do {
+                    let result = try await withTaskCancellationHandler(operation: { try await worker.value },
+                                                                       onCancel: { worker.cancel() })
+                    try Task.checkCancellation()
+                    guard exportGeneration == generation else {
+                        try? FileManager.default.removeItem(at: folder)
+                        return
+                    }
+                    exportTask = nil
+                    #if canImport(UIKit)
+                    exportDocument = ExportDocument(result: result)
+                    #else
+                    exportMessage = "saving local exports requires the iOS document picker."
+                    cleanExportFolder()
+                    #endif
+                } catch {
+                    try? FileManager.default.removeItem(at: folder)
+                    guard exportGeneration == generation else { return }
+                    exportTask = nil
+                    exportFolder = nil
+                    exportMessage = error is CancellationError
+                        ? "export cancelled. your saved data has not changed."
+                        : "the local export could not be prepared. your saved data has not changed."
+                }
+            }
+        } catch {
+            cleanExportFolder()
+            exportMessage = "the local export could not be prepared. your saved data has not changed."
+        }
+    }
+
+    private func cleanExportFolder() {
+        if let folder = exportFolder { try? FileManager.default.removeItem(at: folder) }
+        exportFolder = nil
     }
 
     private var includedAreasCard: some View {

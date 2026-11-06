@@ -195,7 +195,6 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case serviceNotConfigured
     case notSignedIn
     case exportFailed
-    case consolidatedExportUnavailable
     case remoteDeletionUnavailable
     case deletionFailed
 
@@ -209,8 +208,6 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
             return "enter an email before signing in."
         case .notSignedIn:
             return "there isn’t a signed-in account to change."
-        case .consolidatedExportUnavailable:
-            return "a combined export is not available yet. measurements can be exported from Hormone Information."
         case .remoteDeletionUnavailable:
             return "account deletion could not be completed because the account service is unavailable. your account record and local information have been preserved."
         case .exportFailed:

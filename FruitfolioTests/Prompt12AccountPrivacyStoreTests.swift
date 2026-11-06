@@ -54,15 +54,21 @@ final class Prompt12AccountPrivacyStoreTests: XCTestCase {
         XCTAssertTrue(store.pendingLocalChanges)
     }
 
-    func testUnavailableConsolidatedExportDoesNotCreateAReadinessRecord() async throws {
-        let suite = "Fruitfolio.export-unavailable." + UUID().uuidString
+    func testRealLocalArchiveDoesNotCreateAnAccountReadinessRecord() async throws {
+        let suite = "Fruitfolio.export-side-effects." + UUID().uuidString
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
         let store = Prompt12AccountPrivacyStore(defaults: defaults)
-        XCTAssertThrowsError(try store.prepareDataExport()) {
-            XCTAssertEqual($0 as? Prompt12AccountPrivacyError, .consolidatedExportUnavailable)
-        }
+        let before = defaults.data(forKey: "fruitfolio.prompt12.accountPrivacy.v1")
+        let result = try FruitfolioLocalDataExport.create(
+            preferences: FruitfolioLocalDataExport.capturePreferences(defaults: defaults),
+            applicationSupport: root, output: root.appendingPathComponent("export.zip"))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: result.url.path))
         XCTAssertNil(store.lastExport)
+        XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt12.accountPrivacy.v1"), before)
     }
 
     func testUnavailableRemoteDeletionKeepsIdentityAndPendingLocalChanges() async throws {

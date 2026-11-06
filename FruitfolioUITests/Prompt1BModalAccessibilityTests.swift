@@ -198,6 +198,31 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testLocalDataExportOpensRealSavePickerAndCancellationDoesNotClaimSaved() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioDataReduceMotion",
+            "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+        let export = app.buttons["dataManagement.localExport"]
+        for _ in 0..<16 { if export.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(export.isHittable)
+        XCTAssertGreaterThanOrEqual(export.frame.height, 44)
+        export.tap()
+        let cancel = app.buttons.matching(identifier: "Cancel").firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 15))
+        captureGame(app, name: "local-data-export-system-save-picker-private-fixture")
+        cancel.tap()
+        XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+        let cancelled = app.staticTexts["export cancelled. your saved data has not changed."]
+        for _ in 0..<12 { if cancelled.exists { break }; scroll.swipeUp() }
+        XCTAssertTrue(cancelled.exists)
+        XCTAssertFalse(app.staticTexts["your local data export was saved."].exists)
+        app.terminate()
+    }
+
     func testUnreadableAccountNoticeCanReloadWithoutBlockingLocalDataNavigation() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioDataUnreadableAccount",

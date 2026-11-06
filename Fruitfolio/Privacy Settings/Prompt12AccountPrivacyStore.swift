@@ -256,12 +256,6 @@ final class Prompt12AccountPrivacyStore {
         saveSnapshot()
     }
 
-    func prepareDataExport() throws -> Prompt12DataExportRecord {
-        // A summary/metadata record is not an exported user-data document.
-        // Keep existing historical metadata, but never fabricate a new success.
-        throw Prompt12AccountPrivacyError.consolidatedExportUnavailable
-    }
-
     func deleteAccountAndAssociatedRemoteData() throws {
         guard account != nil else { throw Prompt12AccountPrivacyError.notSignedIn }
         // A local mutation cannot prove an unconfigured remote account was erased.

@@ -97,6 +97,8 @@ SOURCES = [
     'Fruitfolio/LifeBridge/LifeBridgeInformation.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift',
+    'Fruitfolio/Core/DataExport/FruitfolioZIPArchive.swift',
+    'Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift',
     'Fruitfolio/Core/AppArchitecture/SettingsStore.swift',
@@ -119,6 +121,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BLocalDataExportTests.swift',
     'Prompt1BAccountPersistenceTests.swift',
     'Prompt1BSettingsLanguageTests.swift',
     'Prompt1BExplicitLocalizationTests.swift',

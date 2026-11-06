@@ -5,7 +5,8 @@ import SwiftUI
 private final class Prompt12DataRegressionFixture: ObservableObject {
     let store: Prompt12AccountPrivacyStore
     private let suite = "Fruitfolio.dataUIQA." + UUID().uuidString
-    private let defaults: UserDefaults
+    let defaults: UserDefaults
+    let support = FileManager.default.temporaryDirectory.appendingPathComponent("Fruitfolio.dataUIQA." + UUID().uuidString)
     init() {
         defaults = UserDefaults(suiteName: suite)!
         if ProcessInfo.processInfo.arguments.contains("-fruitfolioDataUnreadableAccount") {
@@ -13,7 +14,10 @@ private final class Prompt12DataRegressionFixture: ObservableObject {
         }
         store = Prompt12AccountPrivacyStore(defaults: defaults)
     }
-    func cleanUp() { defaults.removePersistentDomain(forName: suite) }
+    func cleanUp() {
+        defaults.removePersistentDomain(forName: suite)
+        try? FileManager.default.removeItem(at: support)
+    }
 }
 
 /// Popup/layout checks only: no measurement export or destructive operation is
@@ -31,7 +35,9 @@ struct Prompt12DataManagementRegressionHarness: View {
             if presented {
                 DesignTokens.ColorToken.backgroundCream.opacity(FruitfolioModalBlurSpec.dimOpacity)
                     .ignoresSafeArea().accessibilityHidden(true)
-                Prompt12DataManagementView(store: fixture.store, mode: .popup, onBack: { presented = false })
+                Prompt12DataManagementView(store: fixture.store, mode: .popup, onBack: { presented = false },
+                    exportPreferences: { try FruitfolioLocalDataExport.capturePreferences(defaults: fixture.defaults) },
+                    exportApplicationSupport: fixture.support)
             }
         }
         .onAppear {
