@@ -15,5 +15,6 @@ class UIQAPreferenceIsolationTests(unittest.TestCase):
         self.assertGreater(len(entrypoints), 5, 'Source inspection must find real entrypoints')
         self.assertFalse(entrypoints - declared, f'QA routes missing private shell preferences: {entrypoints - declared}')
         self.assertIn('Prompt03SkeletonView(defaults: defaults)', content)
-        self.assertIn('UserDefaults(suiteName: regressionSuite)', content)
+        # Actual suite creation/cleanup is covered by Foundation Swift tests.
+        self.assertIn('let defaults = regressionPreferences.defaults', content)
         self.assertIn('UI regression environment could not be created.', content)

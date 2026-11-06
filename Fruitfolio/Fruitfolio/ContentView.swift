@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     #if DEBUG
-    @State private var regressionSuite = "fruitfolio.uiQA." + UUID().uuidString
+    @StateObject private var regressionPreferences = FruitfolioRegressionPreferenceSuite()
     private var isRegressionRun: Bool {
         let flags = ["-fruitfolioSettingsControlsQA", "-fruitfolioAccountActionQA", "-fruitfolioCycleModalQA", "-fruitfolioMeasurementsQA", "-fruitfolioLibraryStorageQA", "-fruitfolioContextStorageQA", "-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
                      "-fruitfolioAskPaperQA", "-fruitfolioTourQA", "-fruitfolioModalQA"]
@@ -13,11 +13,10 @@ struct ContentView: View {
     var body: some View {
         #if DEBUG
         if isRegressionRun {
-            if let defaults = UserDefaults(suiteName: regressionSuite) {
+            if let defaults = regressionPreferences.defaults {
                 // All regression routes receive the real shell's environment
                 // objects, backed by a disposable preferences/context suite.
                 Prompt03SkeletonView(defaults: defaults)
-                    .onDisappear { defaults.removePersistentDomain(forName: regressionSuite) }
             } else {
                 Text("UI regression environment could not be created.")
             }

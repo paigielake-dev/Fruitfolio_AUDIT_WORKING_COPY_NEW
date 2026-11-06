@@ -1971,3 +1971,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 731, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "catalog_keys": 656, "catalog_existing_entries_preserved": 652, "nonempty_foreign_units": 0}.
 - Next action: Keep disposable regression preference suite alive across transient root disappearance/background; remove persistent-domain cleanup from onDisappear and attach it to fixture owner lifetime. Extend actual Apple background preference scenario, without touching production defaults.
 - Commit: containing commit for batch Leaderboard-fixed-copy-display-translation.
+
+## Disposable-root-preference-owner-lifetime
+
+- Parent checkpoint: 01f9c584a6704311232ae386ab4ccfe0cc8fde0f.
+- Source-order requirements: [443, 467, 468, 473, 474, 476, 477, 478].
+- Source files: Fruitfolio/Core/AppArchitecture/SettingsStore.swift, Fruitfolio/Fruitfolio/ContentView.swift.
+- DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun.
+- Tests added/updated: FruitfolioTests/Prompt1BSettingsLanguageTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, development_workflow/tests/test_ui_qa_preference_isolation.py.
+- Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 733, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "catalog_keys": 656, "catalog_existing_entries_preserved": 652, "nonempty_foreign_units": 0, "initial_workflow_failure": "One static assertion expected inline suite creation; updated route invariant and reran all 42 successfully"}.
+- Next action: Translate the leaderboard total label separately from the locale-formatted integer using shared control translation state; keep actual count and usernames out of model input and preserve stored totals.
+- Commit: containing commit for batch Disposable-root-preference-owner-lifetime.

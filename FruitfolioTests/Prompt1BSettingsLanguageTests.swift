@@ -7,6 +7,43 @@ import XCTest
 
 @MainActor
 final class Prompt1BSettingsLanguageTests: XCTestCase {
+    #if DEBUG
+    func testRegressionPreferencesSurviveStoreRecreationUntilOwnerRelease() async throws {
+        var owner: FruitfolioRegressionPreferenceSuite? = FruitfolioRegressionPreferenceSuite()
+        weak var reference = owner
+        let suite = try XCTUnwrap(owner?.suiteName)
+        let defaults = try XCTUnwrap(owner?.defaults)
+        let settings = SettingsStore(defaults: defaults)
+        settings.language = .french
+        settings.soundEffectsEnabled = false
+        settings.musicVolume = 0.73
+        let reappearing = SettingsStore(defaults: try XCTUnwrap(UserDefaults(suiteName: suite)))
+        XCTAssertEqual(reappearing.language, .french)
+        XCTAssertFalse(reappearing.soundEffectsEnabled)
+        XCTAssertEqual(reappearing.musicVolume, 0.73)
+        XCTAssertNotNil(reference)
+        XCTAssertFalse(defaults.persistentDomain(forName: suite)?.isEmpty ?? true)
+        owner = nil
+        XCTAssertNil(reference)
+        XCTAssertTrue(try XCTUnwrap(UserDefaults(suiteName: suite)).persistentDomain(forName: suite)?.isEmpty ?? true)
+    }
+
+    func testRegressionPreferenceOwnersHaveIsolatedDomainsAndIndependentCleanup() async throws {
+        var first: FruitfolioRegressionPreferenceSuite? = FruitfolioRegressionPreferenceSuite()
+        let second = FruitfolioRegressionPreferenceSuite()
+        let firstName = try XCTUnwrap(first?.suiteName)
+        XCTAssertNotEqual(firstName, second.suiteName)
+        let key = "fixture-isolation-" + UUID().uuidString
+        let standardBefore = UserDefaults.standard.object(forKey: key) as? String
+        try XCTUnwrap(first?.defaults).set("first", forKey: key)
+        try XCTUnwrap(second.defaults).set("second", forKey: key)
+        first = nil
+        XCTAssertNil(UserDefaults(suiteName: firstName)?.persistentDomain(forName: firstName)?[key])
+        XCTAssertEqual(second.defaults?.string(forKey: key), "second")
+        XCTAssertEqual(UserDefaults.standard.object(forKey: key) as? String, standardBefore)
+    }
+    #endif
+
     func testActualSettingsStorePersistsLanguageInItsInjectedAuthorityAndPublishesChanges() async throws {
         let suite = "Fruitfolio.SettingsLanguage." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

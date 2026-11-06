@@ -315,7 +315,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
             if rtl { app.launchArguments += ["-fruitfolioSettingsControlsRTL"] }
             app.launch()
-            let toggle = app.descendants(matching: .any)["settingsControls.effects"].firstMatch
+            let toggle = app.descendants(matching: .any).matching(identifier: "settingsControls.effects").firstMatch
             XCTAssertTrue(toggle.waitForExistence(timeout: 5))
             XCTAssertTrue(toggle.isHittable)
             XCTAssertGreaterThanOrEqual(toggle.frame.height, 44)
@@ -336,6 +336,15 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let amount = Double(saved.label.replacingOccurrences(of: "saved volume: ", with: ""))
             XCTAssertNotNil(amount)
             XCTAssertEqual(amount ?? -1, 0.75, accuracy: 0.05)
+            let savedBeforeBackground = saved.label
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(saved.waitForExistence(timeout: 5))
+            XCTAssertEqual(saved.label, savedBeforeBackground)
+            XCTAssertEqual(app.staticTexts["settingsControls.savedEffects"].label, "saved effects: true")
+            for _ in 0..<12 { if toggle.isHittable { break }; app.swipeDown() }
+            XCTAssertTrue(toggle.isHittable)
+            XCTAssertEqual(toggle.value as? String, "on")
             captureGame(app, name: "settings-toggle-volume-muted-\(muted)-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()
         }
@@ -1414,7 +1423,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             revealLeaderboardInput(field, app: app)
             field.tap(); field.typeText("sprout_one")
             if choice == "save" {
-                let confirm = app.descendants(matching: .any)["fruitBasket.usernameConfirmation"].firstMatch
+                let confirm = app.descendants(matching: .any).matching(identifier: "fruitBasket.usernameConfirmation").firstMatch
                 revealLeaderboardInput(confirm, app: app); confirm.tap()
             }
             openGameUsernameExit(app)
@@ -1450,7 +1459,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             tapMeasuredPaperAction("secondary", label: future ? "review saved username" : "save + leave",
                 app: app, context: context)
             waitForLabelValue("gameQA.backRequests", value: "back requests: 0", app: app)
-            let message = app.descendants(matching: .any)["fruitBasket.usernameMessage"].firstMatch
+            let message = app.descendants(matching: .any).matching(identifier: "fruitBasket.usernameMessage").firstMatch
             XCTAssertTrue(message.waitForExistence(timeout: 5))
             revealLeaderboardInput(field, app: app)
             XCTAssertEqual(field.value as? String, draft)
@@ -1497,7 +1506,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             app.activate()
             revealLeaderboardInput(field, app: app)
             XCTAssertEqual(field.value as? String, "sprout_one")
-            let confirm = app.descendants(matching: .any)["fruitBasket.usernameConfirmation"].firstMatch
+            let confirm = app.descendants(matching: .any).matching(identifier: "fruitBasket.usernameConfirmation").firstMatch
             revealLeaderboardInput(confirm, app: app)
             confirm.tap()
             let save = app.buttons["fruitBasket.saveUsername"]
@@ -1568,7 +1577,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 revealAccountInput(username, app: app)
                 username.tap(); username.typeText("sprout_one")
                 if choice == "save" {
-                    let confirm = app.descendants(matching: .any)["account.usernameConfirmation"].firstMatch
+                    let confirm = app.descendants(matching: .any).matching(identifier: "account.usernameConfirmation").firstMatch
                     revealAccountInput(confirm, app: app); confirm.tap()
                 }
             }
@@ -1618,7 +1627,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             username.tap()
             username.typeText("sprout_one")
             XCTAssertEqual(username.value as? String, "sprout_one")
-            let confirmation = app.descendants(matching: .any)["account.usernameConfirmation"].firstMatch
+            let confirmation = app.descendants(matching: .any).matching(identifier: "account.usernameConfirmation").firstMatch
             revealAccountInput(confirmation, app: app)
             confirmation.tap()
             XCTAssertEqual(confirmation.value as? String, "on")

@@ -151,3 +151,27 @@ final class SettingsStore {
 #if canImport(Combine)
 extension SettingsStore: ObservableObject {}
 #endif
+
+#if DEBUG
+/// Disposable UI-test preferences live as long as the root fixture owner, not
+/// as long as one appearance. Production defaults never enter this authority.
+@MainActor
+final class FruitfolioRegressionPreferenceSuite {
+    let suiteName: String
+    let defaults: UserDefaults?
+
+    init() {
+        let name = "fruitfolio.uiQA." + UUID().uuidString
+        suiteName = name
+        defaults = UserDefaults(suiteName: name)
+    }
+
+    deinit {
+        UserDefaults(suiteName: suiteName)?.removePersistentDomain(forName: suiteName)
+    }
+}
+
+#if canImport(Combine)
+extension FruitfolioRegressionPreferenceSuite: ObservableObject {}
+#endif
+#endif
