@@ -3728,3 +3728,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest_passed": 982, "native_CPU_XCTest_passed": 1007, "SwiftTesting_passed_each": 21, "workflow_checks_passed": 71, "swift_syntax_files": 319, "sound_ownership_findings": 0, "new_Apple_test_vectors_executed": 0}.
 - Next action: Continue independent remaining requirements across all parts; source dependency ordering limits safe Ask parallelism. Preserve full checklist/founder reconciliation as unfinished and Apple/official model/clinical acceptance separately pending.
 - Commit: containing commit for batch Single-press-owner-for-gesture-wrapped-controls.
+
+## Shared-icon-identification-and-accessibility-language-owner
+
+- Parent checkpoint: 60bf87912f7d9b56661dd4167c4ed0fe0cac595f.
+- Source-order requirements: [393, 394, 395, 397].
+- Separate founder additions: ['SPEC-7.9.2', 'SPEC-7.9.10'].
+- Source files: Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift, Fruitfolio/Ask/Prompt09AskView.swift.
+- Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"swift_syntax_files": 319, "syntax_errors": 0, "Apple_UI_vectors_executed": 0}.
+- Next action: Continue independent missing functionality; shared icon language propagation still needs Apple/official MADLAD acceptance. Do not treat this component change as whole393–397 or founder language consistency completion.
+- Commit: containing commit for batch Shared-icon-identification-and-accessibility-language-owner.

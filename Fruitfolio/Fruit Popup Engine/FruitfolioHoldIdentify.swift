@@ -74,9 +74,15 @@ extension View {
 
 struct FruitfolioMicroLabel: View {
     let word: String
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var translationKey: FruitfolioControlTranslationState.Key {
+        .init(source: word.lowercased(), language: settings.language)
+    }
 
     var body: some View {
-        Text(word.lowercased())
+        let display = translation.presentation(for: translationKey)
+        Text(verbatim: FruitfolioSemanticDocument.plainText(from: display.text))
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -110,6 +116,10 @@ struct FruitfolioMicroLabel: View {
                 horizontal: true,
                 vertical: true
             )
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: translationKey,
+                inferenceAllowed: settings.translationInferenceAllowed)) {
+                await translation.resolve(translationKey, inferenceAllowed: settings.translationInferenceAllowed)
+            }
     }
 }
 
@@ -219,9 +229,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
             .accessibilityElement(
                 children: .ignore
             )
-            .accessibilityLabel(
-                Text(LocalizedStringKey(accessibilityLabel))
-            )
+            .modifier(FruitfolioFixedAccessibilityLabel(source: accessibilityLabel))
             .accessibilityAddTraits(
                 .isButton
             )

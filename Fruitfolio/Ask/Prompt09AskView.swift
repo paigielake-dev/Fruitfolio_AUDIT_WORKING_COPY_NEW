@@ -427,6 +427,7 @@ struct Prompt09AskView: View {
                                 true
                             )
                         }
+                        .accessibilityIdentifier("ask.help.open")
                     }
                 }
 

@@ -3284,7 +3284,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let authored = "My original question 12.50"
             input.typeText(authored)
             XCTAssertEqual(input.value as? String, authored)
-            let help = app.buttons["Ask help"]
+            let help = app.buttons["ask.help.open"]
             XCTAssertTrue(help.isHittable)
             help.press(forDuration: 0.65)
             XCTAssertFalse(app.buttons["ask.help.close"].exists,
