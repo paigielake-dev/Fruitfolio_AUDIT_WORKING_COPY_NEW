@@ -3630,6 +3630,46 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         action.tap()
     }
 
+    func testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = launchCycleModal("daily-notes", reduced: reduced, rtl: rtl)
+            let journal = app.scrollViews["dailyLog.scroll"]
+            XCTAssertTrue(journal.waitForExistence(timeout: 5))
+            for section in ["bleeding", "symptoms", "temperature", "cervicalFluid", "medication", "notes"] {
+                let header = app.buttons["dailyLog.section." + section]
+                for _ in 0..<24 {
+                    if header.isHittable { break }
+                    if header.exists, header.frame.midY < journal.frame.midY { journal.swipeDown() }
+                    else { journal.swipeUp() }
+                }
+                XCTAssertTrue(header.isHittable)
+                if header.value as? String == "expanded" { header.tap() }
+                header.doubleTap()
+                let collapsed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "collapsed"), object: header)
+                XCTAssertEqual(XCTWaiter.wait(for: [collapsed], timeout: 3), .completed)
+            }
+            let notesHeader = app.buttons["dailyLog.section.notes"]
+            for _ in 0..<24 { if notesHeader.isHittable { break }; journal.swipeUp() }
+            XCTAssertTrue(notesHeader.isHittable)
+            notesHeader.tap()
+            let editor = app.textViews["dailyLog.notes"]
+            for _ in 0..<16 { if editor.isHittable { break }; journal.swipeUp() }
+            XCTAssertTrue(editor.isHittable)
+            editor.tap(); editor.typeText(" retained after section changes")
+            for _ in 0..<16 { if notesHeader.isHittable { break }; journal.swipeDown() }
+            XCTAssertTrue(notesHeader.isHittable)
+            notesHeader.doubleTap()
+            let expanded = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "expanded"), object: notesHeader)
+            XCTAssertEqual(XCTWaiter.wait(for: [expanded], timeout: 3), .completed)
+            XCTAssertTrue(editor.waitForExistence(timeout: 3))
+            XCTAssertTrue((editor.value as? String ?? "").contains("retained after section changes"))
+            captureGame(app, name: "daily-log-section-latest-state-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testDailyLogOwnedExitChoicesUsePresentedPaperAtAccessibilitySize() {
         for reduced in [false, true] {
             for rtl in [false, true] {

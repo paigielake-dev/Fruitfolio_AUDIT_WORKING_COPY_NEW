@@ -275,13 +275,14 @@ public struct Prompt20DailyLogView: View {
 
         return VStack(spacing: 0) {
             Button {
+                guard canInteract else { return }
                 audioManager.play(.buttonSoftPop)
-                withAnimation(
-                    motionPreferences.reduceMotionActive
-                        ? .easeOut(duration: 0.08)
-                        : .easeOut(duration: 0.21)
-                ) {
-                    model.toggle(section)
+                if motionPreferences.reduceMotionActive {
+                    var transaction = Transaction(animation: nil)
+                    transaction.disablesAnimations = true
+                    withTransaction(transaction) { model.toggle(section) }
+                } else {
+                    withAnimation(.easeOut(duration: 0.18)) { model.toggle(section) }
                 }
             } label: {
                 HStack(spacing: 12) {
@@ -322,6 +323,7 @@ public struct Prompt20DailyLogView: View {
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
             )
+            .accessibilityIdentifier("dailyLog.section." + section.rawValue)
             .accessibilityLabel(section.title)
             .accessibilityValue(expanded ? "expanded" : "collapsed")
             .accessibilityHint("double tap to \(expanded ? "collapse" : "expand")")
@@ -331,11 +333,9 @@ public struct Prompt20DailyLogView: View {
                     .padding(.horizontal, 14)
                     .padding(.top, 6)
                     .padding(.bottom, 16)
-                    .transition(
-                        motionPreferences.reduceMotionActive
-                            ? .opacity
-                            : .opacity.combined(with: .move(edge: .top))
-                    )
+                    // The owning layout transaction already handles reflow.
+                    // Do not retain a second moving/fading copy on removal.
+                    .transition(.identity)
             }
         }
         .background {

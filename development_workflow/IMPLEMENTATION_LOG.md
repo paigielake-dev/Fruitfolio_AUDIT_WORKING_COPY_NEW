@@ -4222,3 +4222,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"full_portable_XCTest": 1073, "Swift_Testing": 21, "focused_prior_to_final_ranking_fixture_strengthening": 46, "actual_native_CPU_Qwen_context_privacy_XCTest": 1, "swift_syntax_files": 327, "failures": 0, "logs": ["/tmp/fruitfolio_conversational_tone_full_portable.log", "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log", "/tmp/fruitfolio_conversational_tone_final_syntax.log"], "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."}.
 - Next action: Continue source1306 daily-log expansion/reduced-motion requirement and remaining founder applicability review from1195; preserve all native/official-model limitations.
 - Commit: containing commit for batch Shared-conversational-presentation-and-balanced-research-retrieval.
+
+## Daily-log-single-expansion-owner-and-founder-main-spec-scope
+
+- Parent checkpoint: 3b2685d81819f5888a41029e58d5e97e75e6987c.
+- Source-order requirements: [68, 69, 70, 297, 298, 299, 300, 390, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, development_workflow/FOUNDER_SOURCE_COVERAGE.json, development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json.
+- Keep one immediate daily-log expansion state change and normal0.18s layout animation; remove the second moving/fading content transition and use a disabled-animation transaction for Reduce Motion. Guard inactive/covered toggles and add stable section identifiers. Complete individual applicability review for remaining founder main-spec source units without any blanket implementation/VERIFIED promotions.
+- Tests added/updated: FruitfolioTests/Prompt1BDailyLogViewModelTests.swift, FruitfolioTests/Prompt1BDailyLogWriteTests.swift, FruitfolioTests/Prompt20DailyLogCoreTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"existing_actual_daily_log_domain_XCTest": 21, "swift_syntax_files": 327, "static_sound_diagnostics": 0, "failures": 0, "logs": ["/tmp/fruitfolio_daily_section_existing_domain_tests.log", "/tmp/fruitfolio_daily_section_final_syntax.log", "/tmp/fruitfolio_daily_section_sound.log"], "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."}.
+- Next action: Continue remaining source-grounded context/adaptation requirements and individual implementation reconciliation; inspect separate founder code-evidence appendix without treating quoted instructions as new directives.
+- Commit: containing commit for batch Daily-log-single-expansion-owner-and-founder-main-spec-scope.
