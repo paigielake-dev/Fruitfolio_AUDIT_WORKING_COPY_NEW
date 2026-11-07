@@ -47,9 +47,20 @@ private final class FruitfolioMeasurementRegressionFixture: ObservableObject {
     private let suite = "Fruitfolio.measurementUIQA." + UUID().uuidString
     let defaults: UserDefaults
     let baselineBytes: Data?
+    let rhythmLoader: Prompt22HormoneRhythmLoader
+    private let rhythmCycleURL: URL
+    private let rhythmOnboardingURL: URL
     init() {
         defaults = FruitfolioMeasurementFaultDefaults(suiteName: suite)!
         store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "fixture")
+        let prefix = "Fruitfolio.rhythmUIQA." + UUID().uuidString
+        rhythmCycleURL = FileManager.default.temporaryDirectory.appendingPathComponent(prefix + ".cycles.json")
+        rhythmOnboardingURL = FileManager.default.temporaryDirectory.appendingPathComponent(prefix + ".onboarding.json")
+        let cycle = Prompt13CycleStore(persistence: Prompt13FileCyclePersistence(fileURL: rhythmCycleURL))
+        let onboarding = Prompt14CycleOnboardingStore(persistence: Prompt14FileOnboardingPersistence(fileURL: rhythmOnboardingURL), cycleStore: cycle)
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        rhythmLoader = Prompt22HormoneRhythmLoader(bodyBiologyLoader: Prompt21BodyBiologyLoader(
+            todayLoader: Prompt16TodayLoader(cycleStore: cycle, onboardingStore: onboarding, calendar: calendar)))
         var failure: String?
         do {
             var record = FruitfolioHormoneMeasurement()
@@ -89,12 +100,18 @@ private final class FruitfolioMeasurementRegressionFixture: ObservableObject {
         }
         baselineBytes = defaults.data(forKey: "fixture")
     }
-    deinit { UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite) }
+    deinit {
+        UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite)
+        try? FileManager.default.removeItem(at: rhythmCycleURL)
+        try? FileManager.default.removeItem(at: rhythmOnboardingURL)
+    }
 }
 
 struct FruitfolioMeasurementRegressionHarness: View {
     @StateObject private var fixture = FruitfolioMeasurementRegressionFixture()
     @State private var presented = true
+    @State private var rhythmReadback = UUID()
+    private var isRhythmQA: Bool { ProcessInfo.processInfo.arguments.contains("-fruitfolioMeasurementsRhythmQA") }
     @EnvironmentObject private var settings: SettingsStore
     var body: some View {
         Group {
@@ -103,13 +120,30 @@ struct FruitfolioMeasurementRegressionHarness: View {
                 if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryRetryQA") {
                     FruitfolioHormoneLibraryView(onBack: { presented = false },
                         articleLoader: { [loader = fixture.libraryRetry] hormone in try await loader.article(for: hormone) })
+                } else if isRhythmQA {
+                    ScrollView(.vertical) {
+                        Prompt22HormoneRhythmView(loader: fixture.rhythmLoader, measurements: fixture.store)
+                            .padding(16)
+                    }
+                    .accessibilityIdentifier("rhythmQA.scroll")
+                    .safeAreaInset(edge: .bottom) {
+                        VStack {
+                            FruitfolioMeasurementWriteReadback(store: fixture.store, defaults: fixture.defaults, baseline: fixture.baselineBytes)
+                                .id(rhythmReadback).allowsHitTesting(false)
+                            Button("QA re-read measurements") { rhythmReadback = UUID() }
+                                .frame(minHeight: 44).accessibilityIdentifier("rhythmQA.refreshReadback")
+                        }
+                        .font(.caption2).padding(4)
+                    }
                 } else { FruitfolioHormoneInformationView(onBack: { presented = false }, store: fixture.store) }
             }
             else { Button("open measurements QA") { presented = true } }
         }
         .overlay(alignment: .bottomLeading) {
-            FruitfolioMeasurementWriteReadback(store: fixture.store, defaults: fixture.defaults, baseline: fixture.baselineBytes)
-                .font(.caption2).allowsHitTesting(false)
+            if !isRhythmQA {
+                FruitfolioMeasurementWriteReadback(store: fixture.store, defaults: fixture.defaults, baseline: fixture.baselineBytes)
+                    .font(.caption2).allowsHitTesting(false)
+            }
         }
         .onAppear {
             let args = ProcessInfo.processInfo.arguments

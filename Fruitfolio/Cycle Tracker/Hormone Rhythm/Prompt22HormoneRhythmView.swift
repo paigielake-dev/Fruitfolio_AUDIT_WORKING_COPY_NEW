@@ -10,16 +10,18 @@ struct Prompt22HormoneRhythmView: View {
     init(
         loader: Prompt22HormoneRhythmLoader? = nil,
         context: Prompt27AUserReproductiveContext = .unspecified,
-        contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult()
+        contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult(),
+        measurements: FruitfolioHormoneMeasurementStore? = nil
     ) {
         self.loader = loader ?? Prompt22HormoneRhythmLoader()
         self.context = context
         self.contextPolicy = contextPolicy
+        self._measurements = ObservedObject(wrappedValue: measurements ?? .shared)
     }
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
-    @ObservedObject private var measurements = FruitfolioHormoneMeasurementStore.shared
+    @ObservedObject private var measurements: FruitfolioHormoneMeasurementStore
     @State private var adjustmentRequested = false
     @State private var showingMeasurements = false
     @State private var loadState: LoadState = .loading
@@ -95,7 +97,7 @@ struct Prompt22HormoneRhythmView: View {
         }
         .sheet(isPresented: $showingMeasurements) {
             FruitfolioPresentedPopupHost {
-                FruitfolioHormoneInformationView(onBack: { showingMeasurements = false })
+                FruitfolioHormoneInformationView(onBack: { showingMeasurements = false }, store: measurements)
             }
         }
     }
@@ -108,13 +110,13 @@ struct Prompt22HormoneRhythmView: View {
                 .frame(width: 58, height: 58)
                 .accessibilityHidden(true)
 
-            Text("opening hormone rhythm…")
-                .font(Prompt22Type.body)
+            FruitfolioFixedText(source: "opening hormone rhythm…", font: Prompt22Type.body,
+                    color: Prompt22Palette.burgundy.opacity(0.70), serious: true)
                 .foregroundStyle(Prompt22Palette.burgundy.opacity(0.70))
         }
         .frame(maxWidth: .infinity, minHeight: 420)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Loading hormone rhythm")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Loading hormone rhythm"))
     }
 
     private var fallbackView: some View {
@@ -144,17 +146,16 @@ struct Prompt22HormoneRhythmView: View {
             adjustmentControls
 
             if let contextNote = displayedPresentation.contextNote {
-                Text(contextNote)
-                    .font(Prompt22Type.context)
+                FruitfolioFixedText(source: contextNote, font: Prompt22Type.context,
+                    color: Prompt22Palette.burgundy.opacity(0.72), serious: true)
                     .foregroundStyle(
                         Prompt22Palette.burgundy.opacity(0.72)
                     )
                     .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityLabel(
+                    .modifier(FruitfolioFixedAccessibilityLabel(source:
                         "Current Cycle Tracker context: \(contextNote). " +
                         "The marker shows estimated cycle-timeline position only; " +
-                        "its vertical placement follows an educational curve and is not a hormone measurement."
-                    )
+                        "its vertical placement follows an educational curve and is not a hormone measurement."))
             }
 
             ForEach(displayedPresentation.sections, id: \.hormone) { section in
@@ -169,37 +170,42 @@ struct Prompt22HormoneRhythmView: View {
 
     private var adjustmentControls: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Toggle("explore Adjusted Rhythm using my recorded measurements", isOn: $adjustmentRequested)
-                .font(Prompt22Type.body)
-            Text("Hormone Rhythm shows typical educational curves. My Measurements keeps only your actual recorded values, units and dates. measured values are not plotted on these unitless curves.")
-                .font(Prompt22Type.context)
+            WatercolorToggle(label: "explore Adjusted Rhythm using my recorded measurements", isOn: $adjustmentRequested)
+                .accessibilityIdentifier("rhythm.adjustment.request")
+            FruitfolioFixedText(source: "Hormone Rhythm shows typical educational curves. My Measurements keeps only your actual recorded values, units and dates. measured values are not plotted on these unitless curves.",
+                font: Prompt22Type.context, color: Prompt22Palette.burgundy, serious: true)
             if adjustmentRequested {
                 switch adjustmentDecision {
                 case .original: EmptyView()
                 case .measurementsUnavailable:
-                    Text("your measurement storage could not be read. the original Hormone Rhythm is unchanged.")
+                    FruitfolioFixedText(source: "your measurement storage could not be read. the original Hormone Rhythm is unchanged.",
+                        font: Prompt22Type.body, color: Prompt22Palette.burgundy, serious: true)
                 case .noMeasurements:
-                    Text("add measurements in My Measurements first. the original Hormone Rhythm is unchanged.")
+                    FruitfolioFixedText(source: "add measurements in My Measurements first. the original Hormone Rhythm is unchanged.",
+                        font: Prompt22Type.body, color: Prompt22Palette.burgundy, serious: true)
                 case .reviewedMethodUnavailable:
-                    Text(FruitfolioHormoneAdjustmentPolicy.insufficientTitle).font(.headline)
-                    Text(FruitfolioHormoneAdjustmentPolicy.insufficientMessage)
+                    FruitfolioFixedText(source: FruitfolioHormoneAdjustmentPolicy.insufficientTitle, protectedLiterals: ["☆"],
+                        font: .headline, color: Prompt22Palette.burgundy, serious: true)
+                    FruitfolioFixedText(source: FruitfolioHormoneAdjustmentPolicy.insufficientMessage,
+                        font: Prompt22Type.body, color: Prompt22Palette.burgundy, serious: true)
+                        .accessibilityIdentifier("rhythm.adjustment.reviewedMethodUnavailable")
                 }
-                Button("restore original Hormone Rhythm") { adjustmentRequested = false }
-                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                WatercolorSecondaryButton(label: "restore original Hormone Rhythm") { adjustmentRequested = false }
+                    .accessibilityIdentifier("rhythm.adjustment.restore")
             }
-            Button("open My Measurements") { showingMeasurements = true }
-                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+            WatercolorSecondaryButton(label: "open My Measurements") { showingMeasurements = true }
+                .accessibilityIdentifier("rhythm.openMeasurements")
         }
         .foregroundStyle(Prompt22Palette.burgundy)
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("educational rhythm and actual measurements remain separate")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "educational rhythm and actual measurements remain separate"))
     }
 
     @ViewBuilder
     private var contextClarificationView: some View {
         if let contextClarification {
-            Text(contextClarification)
-                .font(Prompt22Type.context)
+            FruitfolioFixedText(source: contextClarification, font: Prompt22Type.context,
+                    color: Prompt22Palette.burgundy.opacity(0.72), serious: true)
                 .foregroundStyle(
                     Prompt22Palette.burgundy.opacity(0.72)
                 )
@@ -214,20 +220,20 @@ struct Prompt22HormoneRhythmView: View {
                         style: .continuous
                     )
                 )
-                .accessibilityLabel(contextClarification)
+                .modifier(FruitfolioFixedAccessibilityLabel(source: contextClarification))
         }
     }
 
     private var header: some View {
         HStack(alignment: .top, spacing: 14) {
             VStack(alignment: .leading, spacing: 5) {
-                Text(displayedPresentation.title)
-                    .font(Prompt22Type.title)
+                FruitfolioFixedText(source: displayedPresentation.title, protectedLiterals: ["♡", "☆"], font: Prompt22Type.title,
+                    color: Prompt22Palette.burgundy, serious: true)
                     .foregroundStyle(Prompt22Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
-                Text(displayedPresentation.subtitle)
-                    .font(Prompt22Type.subtitle)
+                FruitfolioFixedText(source: displayedPresentation.subtitle, font: Prompt22Type.subtitle,
+                    color: Prompt22Palette.burgundy.opacity(0.68), serious: true)
                     .foregroundStyle(
                         Prompt22Palette.burgundy.opacity(0.68)
                     )
@@ -257,8 +263,8 @@ struct Prompt22HormoneRhythmView: View {
                     .frame(width: 82, height: 82)
                     .accessibilityHidden(true)
 
-                Text(section.title)
-                    .font(Prompt22Type.hormoneTitle)
+                FruitfolioFixedText(source: section.title, font: Prompt22Type.hormoneTitle,
+                    color: Prompt22Palette.burgundy, serious: true)
                     .foregroundStyle(Prompt22Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
@@ -275,9 +281,9 @@ struct Prompt22HormoneRhythmView: View {
             )
             .frame(height: 112)
             .accessibilityElement()
-            .accessibilityLabel(section.accessibilitySummary)
+            .modifier(FruitfolioFixedAccessibilityLabel(source: section.accessibilitySummary))
 
-            FruitfolioTranslatedText(source: section.summary, font: Prompt22Type.body, color: Prompt22Palette.burgundy.opacity(0.84))
+            FruitfolioTranslatedText(source: section.summary, protectedLiterals: section.researchIDs, font: Prompt22Type.body, color: Prompt22Palette.burgundy.opacity(0.84))
                 .font(Prompt22Type.body)
                 .foregroundStyle(
                     Prompt22Palette.burgundy.opacity(0.84)
@@ -296,8 +302,8 @@ struct Prompt22HormoneRhythmView: View {
                     .frame(width: 30, height: 30)
                     .accessibilityHidden(true)
 
-                Text("general direction only")
-                    .font(Prompt22Type.note)
+                FruitfolioFixedText(source: "general direction only", font: Prompt22Type.note,
+                    color: Prompt22Palette.burgundy.opacity(0.72), serious: true)
                     .foregroundStyle(
                         Prompt22Palette.burgundy.opacity(0.72)
                     )
@@ -316,10 +322,8 @@ struct Prompt22HormoneRhythmView: View {
                     .frame(width: 48, height: 48)
                     .accessibilityHidden(true)
 
-                Text(
-                    "these illustrations are educational references, not blood-test results."
-                )
-                .font(Prompt22Type.note)
+                FruitfolioFixedText(source: "these illustrations are educational references, not blood-test results.", font: Prompt22Type.note,
+                    color: Prompt22Palette.burgundy.opacity(0.72), serious: true)
                 .foregroundStyle(
                     Prompt22Palette.burgundy.opacity(0.72)
                 )

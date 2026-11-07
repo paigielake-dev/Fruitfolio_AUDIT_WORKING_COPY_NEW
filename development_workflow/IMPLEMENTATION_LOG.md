@@ -3225,3 +3225,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 918, "native_CPU_XCTest": 942, "SwiftTesting_each": 21, "baseline_native_XCTest": 2, "baseline_failed_assertions": 4, "focused_native_preflight_XCTest": 3, "new_native_XCTest": 2, "workflow_checks": 60, "syntax_files": 311, "official_MADLAD": "BLOCKED: synthetic untrained vocabulary/T5 fixtures are not official inference"}.
 - Next action: Continue original410–417 selected-language RTL, long text, wrapping/DynamicType/visualhierarchy using existing layouts and originalart. Preserve400–409 officialmodel/native-language/clinical/device gates; do not count native vocabulary membership or synthetic graph tests as official translation.
 - Commit: containing commit for batch Native-vocabulary-only-language-preflight-and-resource-epoch-cache.
+
+## Rhythm-translated-layout-and-measurement-store-boundary
+
+- Parent checkpoint: 48032d622087abd11fab61f8af84e72508ca7be8.
+- Source-order requirements: [395, 397, 410, 411, 412, 413, 414, 415, 416, 417, 422, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift, Fruitfolio/Hormone Information/HormoneInformationView.swift, Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift, development_workflow/RHYTHM_TRANSLATED_LAYOUT_AND_RECORD_BOUNDARY.md.
+- ActualRhythm controlledloading/header/context/section/key/adjustment copy andAX summaries nowselected-language withexistingfonts/colors/art/qualifiers. Canonicalcontrols +existingverticalgrowth. Optionalmeasurementstore injectionpropagatesactualsheet; productionshareddefaultunchanged. PrivateQAfile-backedcycle/onboarding +actualmeasurementstore;4newAppleUIvectors explicitlyresample backingbytes aftertoggle/restore/sheet,NOT_RUN. Fiveengine/models/policy/store/persistence filesSHAunchanged. Full918/942+21pass; notApple/officialmodel/clinicaladjustment acceptance.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, FruitfolioTests/Prompt1BHormoneAdjustmentTests.swift, FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift.
+- Verification: {"portable_XCTest": 918, "native_CPU_XCTest": 942, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Rhythm_Apple_UI_vectors_written": 4, "Rhythm_Apple_UI_vectors_executed": 0, "scientific_engine_policy_store_files_unchanged": 5}.
+- Next action: Continue original418–428 actual MADLAD SwiftUI/runtime/Ask evidence validation, citation/uncertainty/claim protection, availability/partial-output/off-main/memory. Reuse existing native/preflight evidence; do not repeat completed audits or count synthetic T5 as officialmodel proof. Preserve410–417Apple visual/linguistic acceptance and clinical-adjustment method blocker.
+- Commit: containing commit for batch Rhythm-translated-layout-and-measurement-store-boundary.

@@ -39,6 +39,7 @@ struct FruitfolioHormoneInformationView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 BackControl(action: { guard canInteractWithMeasurements else { return }; onBack() })
+                    .accessibilityIdentifier("measurements.back")
                 HStack {
                     FruitfolioFixedText(source: "hormone information ♡", protectedLiterals: ["♡"], font: .title2, serious: true).fontWeight(.bold)
                         .accessibilityIdentifier("measurements.heading")

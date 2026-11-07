@@ -2323,6 +2323,56 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testRhythmTranslationControlsPreserveOriginalMeasurementAndRestoreEducationalState() {
+        for language in ["fr", "ar"] {
+        for reduced in [false, true] {
+            XCUIDevice.shared.orientation = .portrait
+            let app = XCUIApplication()
+            app.launchArguments = ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsRhythmQA",
+                "-fruitfolioMeasurementsLanguage", language,
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioMeasurementsReduceMotion"] }
+            app.launch()
+            let scroll = app.scrollViews["rhythmQA.scroll"]
+            XCTAssertTrue(scroll.waitForExistence(timeout: 8))
+            func reveal(_ element: XCUIElement) {
+                XCTAssertTrue(element.waitForExistence(timeout: 8))
+                for _ in 0..<32 {
+                    if element.isHittable { break }
+                    if element.frame.midY < scroll.frame.midY { scroll.swipeDown() } else { scroll.swipeUp() }
+                }
+                XCTAssertTrue(element.isHittable)
+            }
+            func verifyOriginal() {
+                let refresh = app.buttons["rhythmQA.refreshReadback"]
+                XCTAssertTrue(refresh.isHittable); refresh.tap()
+                XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
+                XCTAssertEqual(app.staticTexts["measurementQA.persistedResult"].label, "persisted result: 12.50")
+                XCTAssertEqual(app.staticTexts["measurementQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 0")
+            }
+            let toggle = app.descendants(matching: .any).matching(identifier: "rhythm.adjustment.request").firstMatch
+            reveal(toggle); toggle.tap()
+            let unavailable = app.descendants(matching: .any).matching(identifier: "rhythm.adjustment.reviewedMethodUnavailable").firstMatch
+            XCTAssertTrue(unavailable.waitForExistence(timeout: 5))
+            verifyOriginal()
+            let restore = app.buttons["rhythm.adjustment.restore"]
+            reveal(restore); restore.tap()
+            XCTAssertFalse(unavailable.exists)
+            let open = app.buttons["rhythm.openMeasurements"]
+            reveal(open); open.tap()
+            let back = app.buttons["measurements.back"]
+            XCTAssertTrue(back.waitForExistence(timeout: 5))
+            for _ in 0..<20 { if back.isHittable { break }; app.swipeDown() }
+            XCTAssertTrue(back.isHittable); back.tap()
+            XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+            verifyOriginal()
+            captureGame(app, name: "rhythm-copy-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testMeasurementHormoneLibraryFixedHeadersRetainScientificSourcesAndRecords() {
         for language in ["en", "fr"] {
             let app = XCUIApplication()
