@@ -4258,3 +4258,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_XCTest": "82 passed, 0 failures, including72 context, Today state/snapshot, persistence tests", "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking", "sound_ownership": "0 diagnostics"}.
 - Next action: Implement independently applicable combined-context limitations in existing human-facing presentation helper without inventing biological facts or changing prediction confidence; preserve source1221 evidence-generation gap.
 - Commit: containing commit for batch Today-human-context-limitations-and-owned-biology-action.
+
+## Combined-explicit-context-limitations-without-inference
+
+- Parent checkpoint: 2b52fd4033f54b9833c36c5ba6657a06788dfdf4.
+- Source-order requirements: [281, 283, 284, 286, 289, 290, 291, 302, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift, FruitfolioTests/Prompt27AContextPersonalizationTests.swift, development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json.
+- Removed first-match early returns in actual Today human-facing copy. Independently supplied surrogacy/stage/lactation/avoiding-pregnancy limitations accumulate. Identical surrogacy/stage reports suppress duplicate stage copy. Conflicting explicit pregnancy/postpartum reports preserve each report and pregnancy-suppression explanation, never resolve a diagnosis or infer pregnancy. Existing text retained except removal of implementation-facing prediction-math phrase. No prediction algorithm/confidence/data edits. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json
+- Tests added/updated: Prompt27AContextPersonalizationTests.testCombinedTodayContextPreservesIndependentLimitationsAndExplicitPregnancySuppression, Prompt1BTodaySnapshotTests, Prompt1BContextPersistenceTests.
+- Verification: {"portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence", "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"}.
+- Next action: Continue scientific education artwork/hotspot interaction requirements310–314; inspect actual consumers for missing functionality and preserve canonical assets.
+- Commit: containing commit for batch Combined-explicit-context-limitations-without-inference.

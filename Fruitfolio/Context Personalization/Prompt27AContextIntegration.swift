@@ -91,44 +91,49 @@ nonisolated enum Prompt27AContextPresentationCopy {
     ) -> String? {
         let adapter = Prompt27AExistingSystemPolicyAdapter(result: policy)
 
+        var limitations: [String] = []
+        func include(_ text: String) {
+            if !limitations.contains(text) { limitations.append(text) }
+        }
+
         switch context.surrogacyContext.value {
         case .preparingForEmbryoTransfer:
-            return "you told Fruitfolio you’re preparing for embryo transfer as a gestational carrier. your cycle data stays yours, and Fruitfolio does not treat preparation as proof of pregnancy or change prediction math."
+            include("you told Fruitfolio you’re preparing for embryo transfer as a gestational carrier. your cycle data stays yours, and Fruitfolio does not treat preparation as proof of pregnancy.")
         case .pregnantGestationalCarrier:
-            return "you told Fruitfolio you’re currently pregnant as a gestational carrier. ordinary current-cycle predictions are hidden here, while anything you already logged stays saved."
+            include("you told Fruitfolio you’re currently pregnant as a gestational carrier. ordinary current-cycle predictions are hidden here, while anything you already logged stays saved.")
         case .postpartumAfterSurrogatePregnancy:
-            return "you told Fruitfolio you’re postpartum after a surrogate pregnancy. recovery and cycle-return context can be relevant here without assuming you’re parenting or caring for a newborn."
+            include("you told Fruitfolio you’re postpartum after a surrogate pregnancy. recovery and cycle-return context can be relevant here without assuming you’re parenting or caring for a newborn.")
         case .preferNotToSpecify, .unspecified:
             break
         }
 
         switch context.reproductiveStage.value {
-        case .pregnant:
-            return "you told Fruitfolio you’re pregnant. ordinary current-cycle predictions are hidden here, while anything you already logged stays saved."
+        case .pregnant where context.surrogacyContext.value != .pregnantGestationalCarrier:
+            include("you told Fruitfolio you’re pregnant. ordinary current-cycle predictions are hidden here, while anything you already logged stays saved.")
         case .menopause:
-            return "you told Fruitfolio you’re in menopause. ordinary current-cycle predictions are hidden here, while your past cycle history stays available."
-        case .postpartum:
-            return "postpartum context can make ordinary cycle timing less predictable. Fruitfolio keeps estimates labeled as estimates and your logged observations separate."
+            include("you told Fruitfolio you’re in menopause. ordinary current-cycle predictions are hidden here, while your past cycle history stays available.")
+        case .postpartum where context.surrogacyContext.value != .postpartumAfterSurrogatePregnancy:
+            include("postpartum context can make ordinary cycle timing less predictable. Fruitfolio keeps estimates labeled as estimates and your logged observations separate.")
         case .perimenopause:
-            return "perimenopause context can come with more cycle variation. Fruitfolio keeps your own recorded data separate from estimates."
-        case .cycling, .preferNotToSpecify, .unspecified:
+            include("perimenopause context can come with more cycle variation. Fruitfolio keeps your own recorded data separate from estimates.")
+        case .pregnant, .postpartum, .cycling, .preferNotToSpecify, .unspecified:
             break
         }
 
         if context.lactationContext.value == .breastfeedingOrLactating {
-            return "lactation does not tell Fruitfolio whether ovulation has resumed. any cycle timing shown here stays an estimate, not a confirmation."
+            include("lactation does not tell Fruitfolio whether ovulation has resumed. any cycle timing shown here stays an estimate, not a confirmation.")
         }
 
         if context.trackingGoal.value == .avoidingPregnancy {
-            return "cycle estimates are not a contraceptive guarantee or a “safe day.” Fruitfolio keeps uncertainty visible instead of treating an estimate as certainty."
+            include("cycle estimates are not a contraceptive guarantee or a “safe day.” Fruitfolio keeps uncertainty visible instead of treating an estimate as certainty.")
         }
 
-        if adapter.isSurfaced(.predictionUncertainty) ||
-            adapter.isClarified(.predictionUncertainty) {
-            return "your context can make prediction limits especially relevant. Fruitfolio does not use it to increase prediction certainty."
+        if limitations.isEmpty && (adapter.isSurfaced(.predictionUncertainty) ||
+            adapter.isClarified(.predictionUncertainty)) {
+            include("your context can make prediction limits especially relevant. Fruitfolio does not use it to increase prediction certainty.")
         }
 
-        return nil
+        return limitations.isEmpty ? nil : limitations.joined(separator: "\n\n")
     }
 
     static func calendarClarification(

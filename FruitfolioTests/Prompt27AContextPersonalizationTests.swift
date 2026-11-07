@@ -57,6 +57,35 @@ final class Prompt27AContextPersonalizationTests: XCTestCase {
         XCTAssertNil(Prompt27AContextPresentationCopy.todayClarification(context: absent, policy: engine.policy(for: absent)))
     }
 
+    func testCombinedTodayContextPreservesIndependentLimitationsAndExplicitPregnancySuppression() throws {
+        let context = make(trackingGoal: .avoidingPregnancy, stage: .postpartum,
+                           lactation: .breastfeedingOrLactating)
+        let copy = try XCTUnwrap(Prompt27AContextPresentationCopy.todayClarification(
+            context: context, policy: engine.policy(for: context)))
+        XCTAssertTrue(copy.contains("postpartum context"))
+        XCTAssertTrue(copy.contains("lactation does not tell Fruitfolio whether ovulation has resumed"))
+        XCTAssertTrue(copy.contains("not a contraceptive guarantee"))
+        XCTAssertEqual(copy.components(separatedBy: "\n\n").count, 3)
+        XCTAssertFalse(engine.policy(for: context).modifiesPredictionMathematics)
+
+        // Different explicit fields can conflict; no primary-copy early return
+        // may conceal the pregnancy suppression that the actual policy applies.
+        let reported = make(stage: .pregnant, surrogacy: .postpartumAfterSurrogatePregnancy)
+        let policy = engine.policy(for: reported)
+        let reportedCopy = try XCTUnwrap(Prompt27AContextPresentationCopy.todayClarification(context: reported, policy: policy))
+        assertActiveCyclePredictionsSuppressed(policy)
+        XCTAssertTrue(reportedCopy.contains("ordinary current-cycle predictions are hidden"))
+        XCTAssertTrue(reportedCopy.contains("you told Fruitfolio you’re postpartum after a surrogate pregnancy"))
+
+        for (stage, surrogacy) in [(Prompt27AReproductiveStage.pregnant, Prompt27ASurrogacyContext.pregnantGestationalCarrier),
+                                   (.postpartum, .postpartumAfterSurrogatePregnancy)] {
+            let overlapping = make(stage: stage, surrogacy: surrogacy)
+            let shown = try XCTUnwrap(Prompt27AContextPresentationCopy.todayClarification(
+                context: overlapping, policy: engine.policy(for: overlapping)))
+            XCTAssertEqual(shown.components(separatedBy: "\n\n").count, 1, "Avoid duplicate stage copy for one explicit surrogacy report")
+        }
+    }
+
     func test05SexuallyActive() {
         let result = engine.policy(for: make(sexualActivity: .sexuallyActive))
         XCTAssertEqual(result[.fertilizationEducation].effect, .unchanged)

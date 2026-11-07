@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-11-07T17:50:27.515428+00:00",
+  "requirements": [
+    281,
+    283,
+    284,
+    286,
+    289,
+    290,
+    291,
+    302,
+    443,
+    444
+  ],
+  "supplemental_requirements": [],
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt27AContextPersonalizationTests|Prompt1BTodaySnapshotTests|Prompt1BContextPersistenceTests'",
+    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+  ],
+  "results": {
+    "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+    "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+  },
+  "verification": {
+    "executed": {
+      "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+      "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+    },
+    "not_run": [
+      "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+      "Clinical/native-language review and official MADLAD translation"
+    ],
+    "remaining": [
+      "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+      "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+      "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+    ]
+  }
+}
