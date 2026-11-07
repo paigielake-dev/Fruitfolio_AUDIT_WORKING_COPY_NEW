@@ -3126,3 +3126,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 900, "native_CPU_XCTest": 922, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "new_Apple_UI_vectors_written": 4, "new_Apple_UI_vectors_executed": 0}.
 - Next action: Continue original373FAQ plain question emphasis without altering scientific text,374approvedtulip blocker, then remaining independent approved art/layout/accessibility. Preserve earlier checklist evidence; do not repeat completed broad audits or count source as Apple runtime proof.
 - Commit: containing commit for batch Shared-username-hints-and-native-length-counter.
+
+## FAQ-regular-question-labels-with-expanded-capture
+
+- Parent checkpoint: f4b9eb4d6feb70df35505635a825d4c594600b5a.
+- Source-order requirements: [373, 476, 477, 478].
+- Source files: Fruitfolio/Hub/FAQ/Prompt29FAQView.swift, development_workflow/FAQ_PLAIN_QUESTIONS.md.
+- FAQ question buttons explicitly render semantic plain words at regularweight; originalquestion/answer/citationrecords unchanged and answer semantic renderer retained. Existing4Apple disclosurevectors add expanded screenshot capture; NOT_RUN. Foundation suites do not certify SwiftUI typography. 374missingcanonicaltulip blocker preserved; no new substituteasset.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 900, "native_CPU_XCTest": 922, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "existing_FAQ_UI_vectors_updated": 4, "FAQ_UI_vectors_executed": 0}.
+- Next action: Continue original375–390 existing approved artwork/layout/dialogue/accessibility, preserve374missingcanonicaltulip and unsuitablecloud blockers. Separate Apple visual/audio/typechecking requirements from feasible Linux source/ownership fixes, then continue391global language persistence.
+- Commit: containing commit for batch FAQ-regular-question-labels-with-expanded-capture.

@@ -1439,6 +1439,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertNotEqual(question.value as? String, collapsed)
             if !arabic { XCTAssertEqual(question.value as? String, "expanded") }
             XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 1")
+            captureGame(app, name: "faq-plain-question-expanded-arabic-\(arabic)-reduced-\(reduced)")
             question.tap()
             XCTAssertFalse(answer.exists)
             XCTAssertEqual(question.value as? String, collapsed)

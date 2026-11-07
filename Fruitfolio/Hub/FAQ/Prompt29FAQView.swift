@@ -146,9 +146,10 @@ private struct Prompt29FAQQuestionButton: View {
         } label: {
             HStack(spacing: 10) {
                 VStack(alignment: .leading, spacing: 4) {
-                    FruitfolioSemanticText(markdown: question.text,
-                        baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body),
-                        color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
+                    Text(verbatim: FruitfolioSemanticDocument.plainText(from: question.text))
+                        .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .fontWeight(.regular)
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     if let status = question.status.captionKey {
                         Text(LocalizedStringKey(status)).font(.caption)
                     }
