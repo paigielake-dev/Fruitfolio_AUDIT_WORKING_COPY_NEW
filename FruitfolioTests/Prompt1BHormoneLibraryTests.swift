@@ -23,6 +23,24 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             print("HORMONE_LIBRARY_SOURCE_COVERAGE|\(hormone.rawValue)|\(coverage)|missing=\(missing)")
             XCTAssertFalse(article.excerpts.isEmpty, "Actual approved corpus should supply at least one \(hormone) excerpt")
             XCTAssertEqual(Set(article.excerpts.map(\.originalText)).count, article.excerpts.count)
+            if hormone == .estradiol {
+                let functions = try XCTUnwrap(article.excerpts.first(where: { $0.section == .functions }))
+                XCTAssertTrue(FruitfolioHormoneResearchMatch.makeMatcher(for: .estradiol, includeClassAliases: false)(functions.originalText),
+                              "An available specific estradiol paragraph must outrank general estrogen seed-cycling material")
+                XCTAssertTrue(functions.originalText.contains("these hormones support follicular development through local signaling."),
+                              "The actual approved paragraph must explain a biological role, not merely list estradiol as a test")
+            }
+            if hormone == .lh {
+                let functions = try XCTUnwrap(article.excerpts.first(where: { $0.section == .functions }))
+                XCTAssertTrue(functions.originalText.contains("the lh surge causes the follicular wall to rupture."))
+            }
+            if hormone == .amh {
+                let limitations = try XCTUnwrap(article.excerpts.first(where: { $0.section == .measurementLimitations }))
+                // Both cautions are literal statements in the actual approved
+                // source paragraph, not invented medical fixture content.
+                XCTAssertTrue(limitations.originalText.contains("AMH does not guarantee IVF success."))
+                XCTAssertTrue(limitations.originalText.contains("AMH does not confirm ovulation."))
+            }
             for excerpt in article.excerpts {
                 let note = try XCTUnwrap(notes[excerpt.noteID])
                 XCTAssertNotEqual(note.retrievalEligibility, false)

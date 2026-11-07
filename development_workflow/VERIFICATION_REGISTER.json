@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T08:30:17.833515+00:00",
+  "updated_at": "2026-11-07T08:53:41.822851+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -10867,6 +10867,104 @@
         ]
       },
       "timestamp": "2026-11-07T08:30:17.833515+00:00"
+    },
+    {
+      "batch": "Hormone-library-source-grounded-role-and-limitations",
+      "requirements": [
+        256,
+        257,
+        258,
+        262,
+        432,
+        433,
+        443,
+        444,
+        467,
+        476,
+        477
+      ],
+      "supplemental_requirements": [
+        "SPEC-4.9.7"
+      ],
+      "commands": [
+        "Actual-corpus focused7XCTest passed after stronger biological-role assertion exposed and corrected an initial failure",
+        "71workflow checks passed",
+        "315changed Swift syntax-only parses0errors",
+        "Read actual complete approved source paragraphs and preserved exact warning/role statements",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_focused_XCTest": 7,
+        "failures": 0,
+        "workflow_checks": 71,
+        "changed_Swift_syntax_only": 315,
+        "source_reviewed_examples": [
+          "AMH measurement limitations",
+          "LH surge biological function",
+          "Specific estradiol/E2 follicular-development role"
+        ],
+        "SwiftTesting_selected": 0,
+        "matched_existing_source_buckets": 32,
+        "missing_existing_source_buckets": 3,
+        "clinical_completeness_certified": false,
+        "initial_biological_role_failure": "Captured in role_review_final.log; corrected and final7passed",
+        "incremental_test_workspace_manifest": "/tmp/fruitfolio_hormone_incremental_workspace.json",
+        "log_receipts": {
+          "/tmp/fruitfolio_hormone_library_amh_limits.log": {
+            "bytes": 32784,
+            "sha256": "79774a7a6cced2134d5f7cf588da850456ef6d5152fbb349ea42fda709cf2ad2"
+          },
+          "/tmp/fruitfolio_hormone_library_contextual_final.log": {
+            "bytes": 32788,
+            "sha256": "dde80d1fdae695627ff7450a33518809655a72bd8015a1c0a71b833248068585"
+          },
+          "/tmp/fruitfolio_hormone_library_source_review_final.log": {
+            "bytes": 32815,
+            "sha256": "4c98f1dd7456102d8e49acdde9234036ca95f43a451747df51d6f31f6646eba3"
+          },
+          "/tmp/fruitfolio_hormone_library_role_review_final.log": {
+            "bytes": 33144,
+            "sha256": "c6a0d2ec4186ef273c57cd330b4130bcb8feb03945d34210491858d3383c5dac"
+          },
+          "/tmp/fruitfolio_hormone_library_role_incremental_final.log": {
+            "bytes": 10483,
+            "sha256": "1c67b4631f0b5656eb75016a2e2471b16af2ccaebe2d9779446b430ddb993e4b"
+          },
+          "/tmp/fruitfolio_hormone_role_final_syntax.log": {
+            "bytes": 106,
+            "sha256": "164012ba6ce6839f505801332a5ee14cfae9ae698468ae87dcbd13348ae9d3cc"
+          },
+          "/tmp/fruitfolio_hormone_role_final_workflow.log": {
+            "bytes": 171,
+            "sha256": "3aa531a38daf7bd9380b57696f4ab0713f9e7810b41ad448c0a61e47add5fadd"
+          }
+        }
+      },
+      "verification": {
+        "executed": {
+          "portable_focused_XCTest": 7,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "source_reviewed_examples": [
+            "AMH measurement limitations",
+            "LH surge biological function",
+            "Specific estradiol/E2 follicular-development role"
+          ]
+        },
+        "not_run": [
+          "Native followup rerun;14focused native tests passed at parent ea93b24",
+          "Apple SDK build/UI/VoiceOver/native hormone selection",
+          "Clinical completeness of7founder aspects for each hormone",
+          "Official MADLAD inference and translation-quality acceptance"
+        ],
+        "remaining": [
+          "Testosterone measurement limitations/medical guidance and prolactin measurement limitations remain empty in lexical retrieval; review specific approved source adequacy before assigning a genuine external-resource blocker",
+          "Review every founder aspect individually;32matched buckets are not complete or clinically verified content",
+          "Complete Apple and independent clinical/source acceptance; source/quoted-statement tests do not certify all medical content"
+        ]
+      },
+      "timestamp": "2026-11-07T08:53:41.822851+00:00"
     }
   ]
 }

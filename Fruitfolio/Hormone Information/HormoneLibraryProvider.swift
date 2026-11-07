@@ -16,7 +16,7 @@ nonisolated enum FruitfolioHormoneLibrarySection: String, CaseIterable, Identifi
         switch self {
         case .functions: return "function role production secretion regulation"
         case .reproductiveRelevance: return "reproductive ovulation cycle follicle fertility ovary sperm"
-        case .measurementLimitations: return "limitations measurement single fluctuation variability assay snapshot"
+        case .measurementLimitations: return "limitations measurement single fluctuation variability assay snapshot guarantee"
         case .testingContext: return "testing test sample blood laboratory timing reference"
         case .medicalGuidance: return "clinician doctor evaluate consult interpret diagnosis"
         }
@@ -45,13 +45,13 @@ nonisolated enum FruitfolioHormoneResearchMatch {
 
     /// Compile once for an exhaustive article lookup, retaining the exact
     /// existing Unicode/name boundary policy for every source paragraph.
-    static func makeMatcher(for hormone: FruitfolioMeasuredHormone) -> (String) -> Bool {
+    static func makeMatcher(for hormone: FruitfolioMeasuredHormone, includeClassAliases: Bool = true) -> (String) -> Bool {
         // Typography in an original medical name may use a Unicode hyphen or
         // nonbreaking space. This lookup never rewrites the quoted evidence.
         let compoundSeparator = #"[\p{Pd}\p{Zs}\t\r\n]+"#
         let alternatives: String
         switch hormone {
-        case .estradiol: alternatives = "estradiol|estrogen|oestrogen|e2"
+        case .estradiol: alternatives = includeClassAliases ? "estradiol|estrogen|oestrogen|e2" : "estradiol|e2"
         case .progesterone: alternatives = "progesterone"
         case .lh: alternatives = "luteinizing|luteinising|lh"
         case .fsh: alternatives = "follicle" + compoundSeparator + "stimulating|fsh"
@@ -115,12 +115,24 @@ actor FruitfolioHormoneLibraryProvider {
              headingTokens: FruitfolioQueryNormalizer.tokens(note.heading),
              normalizedBody: FruitfolioQueryNormalizer.normalize(note.text))
         }
+        // Estradiol is a specific estrogen. Prefer evidence that actually names
+        // estradiol/E2 over class-level material such as a seed-cycling discussion.
+        // Class context remains available when no specific candidate fits.
+        let matchesSpecificHormone = FruitfolioHormoneResearchMatch.makeMatcher(for: hormone, includeClassAliases: false)
+        let specificIDs = Set(candidates.filter { matchesSpecificHormone($0.note.text) }.map { $0.note.chunkID })
         var usedParagraphs: Set<String> = []
         var excerpts: [FruitfolioHormoneLibraryExcerpt] = []
         for section in FruitfolioHormoneLibrarySection.allCases {
             try Task.checkCancellation()
-            let terms = FruitfolioQueryNormalizer.tokens(section.retrievalTerms)
-            let question = aliases + " " + section.retrievalTerms
+            // The existing oogenesis evidence describes LH's function as its
+            // surge triggering follicular rupture, not with the word "function".
+            var sectionTerms = section.retrievalTerms
+            if section == .functions {
+                if hormone == .lh { sectionTerms += " surge" }
+                if hormone == .estradiol { sectionTerms += " support follicular development" }
+            }
+            let terms = FruitfolioQueryNormalizer.tokens(sectionTerms)
+            let question = aliases + " " + sectionTerms
             let queryTokens = FruitfolioQueryNormalizer.tokens(question)
             let normalizedQuestion = FruitfolioQueryNormalizer.normalize(question)
             var ranked: [FruitfolioRankedNote] = []
@@ -131,7 +143,10 @@ actor FruitfolioHormoneLibraryProvider {
                 ranked.append(.init(chunk: candidate.note, score: Double(headingScore + bodyScore + phraseScore)))
             }
             ranked.sort { lhs, rhs in
-                lhs.score == rhs.score ? lhs.chunk.chunkID < rhs.chunk.chunkID : lhs.score > rhs.score
+                let leftIsSpecific = specificIDs.contains(lhs.chunk.chunkID)
+                let rightIsSpecific = specificIDs.contains(rhs.chunk.chunkID)
+                if leftIsSpecific != rightIsSpecific { return leftIsSpecific }
+                return lhs.score == rhs.score ? lhs.chunk.chunkID < rhs.chunk.chunkID : lhs.score > rhs.score
             }
             for result in ranked {
                 let note = result.chunk
