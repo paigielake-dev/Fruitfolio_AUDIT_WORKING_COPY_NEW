@@ -22050,10 +22050,17 @@
         "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json",
         "development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json",
         "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json",
-        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json"
+        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -22061,9 +22068,13 @@
         "Prompt1BModalAccessibilityTests.testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize",
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords",
+        "testActualProviderPreservesUnicodeParagraphBytesAndCannotBypassEligibilityOrApproval",
+        "testMissingEvidenceStaysEmptyAndOtherHormoneCannotInventACard",
+        "testActualProviderRejectsHighRankedPapSTITestingAndRetainsRealHormoneTestingScope"
       ],
-      "commit_reference": "batch:AMH-existing-original-definition-and-age-factor-retrieval (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-grounding-and-explicit-sharing-individual-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Connected an educational Hormone Library for all seven named hormones to the actual indexed local research package. Five topic sections retrieve complete eligible paragraphs, require an actual hormone name/abbreviation and section terms, retain original topic headings, and show only each paragraph's own exact approved citation metadata. Repeated paragraphs deduplicate; missing sections stay explicitly unavailable; no unspecified Other hormone card or model-memory facts. Reuses only existing relevant estrogen/progesterone/testosterone art, shared semantic translation display and citation controls. Cached static articles contain no measurement/profile input. Actual corpus regressions verify original text/source association for all seven; empty package yields gaps. These are partial retrieved excerpts, not comprehensive clinically reviewed educational synthesis. Apple UI/VoiceOver/localized translation quality remain unrun.",
         "Only full AMH/FSH name separator matching expands to Unicode dash punctuation/space separators; existing word bounds, folding and short symbols remain. No original evidence/citation data rewritten. Six focused cases move from17 failed assertions to0; three new cases include actual provider byte preservation and approval/eligibility controls using explicit nonclinical fixtures. Actual corpus test still verifies complete eligible paragraphs/own sources across seven hormones. Full Linux suites pass; no Apple/clinical/official-model acceptance implied.",
@@ -22073,32 +22084,29 @@
         "Fix demonstrated progesterone biological-functions mismatch by including actual corpus role terms corpus luteum/endometrium/uterine lining in existing scoped retrieval. Actual selected complete paragraph now explains hormone production and lining/early-pregnancy role, retaining original no-pregnancy-guarantee qualification and all citations. Extend actual corpus regression with all three literal assertions, plus unchanged eligibility/approval/full paragraph/citation checks across seven hormones. Document unresolved testosterone/prolactin content quality instead of treating lexical coverage as full educational content. No facts, resources or measurement records rewritten; no whole requirement promotion.",
         "Actual testing scope/shared role source lookup and byte-exact citation provenance corrected; wrong Pap/STI mapping removed, source/citation gates unchanged. Complete seven-aspect Library and native/clinical acceptance remain unfinished.",
         "Original UTF8 paragraphs and own title/APA/source/URL/DOI/date/contentVersion asserted in actual corpus tests; clinical acceptance pending.",
-        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy."
+        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
+        "Educational output is restricted to complete original research paragraphs whose every source passes isApprovedForDisplay; notes require eligibility, actual hormone match and nonempty own sources. UI displays exact heading/source records and explicit coverage limits. No model-generated clinical prose is introduced.",
+        "Individual complete clause review: development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json#258; Educational output is restricted to complete original research paragraphs whose every source passes isApprovedForDisplay; notes require eligibility, actual hormone match and nonempty own sources. UI displays exact heading/source records and explicit coverage limits. No model-generated clinical prose is introduced."
       ],
-      "last_updated": "2026-11-07T15:46:09.109178+00:00",
+      "last_updated": "2026-11-07T15:54:40.975912+00:00",
       "latest_batch_verification": {
-        "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+        "batch": "Hormone-grounding-and-explicit-sharing-individual-clauses",
         "executed": {
-          "focused_hormone_XCTest": 14,
+          "focused_approval_and_explicit_context_XCTest": 22,
           "failures": 0,
-          "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
+          "log": "/tmp/fruitfolio_hormone_approval_explicit_share_clauses.log",
+          "scope": "14 actual library tests and8 actual Foundation/context engine tests; native llama conditional test not included."
         },
         "not_run": [
-          "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          "Apple SDK/UI/AskViewModel lifecycle tests; official MADLAD; real-device and external clinical/reference review."
         ],
         "remaining": [
-          "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-          "Missing bucket matches require source-specific review before identifying external content blockers.",
-          "Other four lexical-role selectors still need clinical suitability review.",
-          "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          "Apple rendering/translation and external clinical/reference verification remain pending. Complete clinical chapter coverage257/SPEC4.9.7 remains incomplete; this closes only approved-research grounding."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-        "Missing bucket matches require source-specific review before identifying external content blockers.",
-        "Other four lexical-role selectors still need clinical suitability review.",
-        "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+        "Apple rendering/translation and external clinical/reference verification remain pending. Complete clinical chapter coverage257/SPEC4.9.7 remains incomplete; this closes only approved-research grounding."
       ],
       "prior_batch_verifications": [
         {
@@ -22233,6 +22241,24 @@
             "Swift_Testing": 21,
             "syntax_files": 326,
             "failures": 0
+          },
+          "not_run": [
+            "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          ],
+          "remaining": [
+            "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
+            "Missing bucket matches require source-specific review before identifying external content blockers.",
+            "Other four lexical-role selectors still need clinical suitability review.",
+            "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+          "executed": {
+            "focused_hormone_XCTest": 14,
+            "failures": 0,
+            "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
           },
           "not_run": [
             "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
@@ -22619,10 +22645,14 @@
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/ASK_URGENT_CONTEXT_ADMISSION.json"
+        "development_workflow/ASK_URGENT_CONTEXT_ADMISSION.json",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -22637,9 +22667,12 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
-        "FruitfolioTests/Prompt1BAskUserContextTests.swift"
+        "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+        "testNothingIsSharedWithoutExplicitSelectionAndDeletedItemsCannotBeResolved",
+        "testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance",
+        "testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion"
       ],
-      "commit_reference": "batch:Urgent-question-before-optional-context-and-bounded-encoding (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-grounding-and-explicit-sharing-individual-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
@@ -22648,33 +22681,29 @@
         "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.",
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
         "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution.",
-        "Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified."
+        "Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified.",
+        "Default measurement/category selections are empty. Picker toggles only a local unsent set; selection without attachment/send never invokes Ask. Send snapshots selected records only, clears selections for the next question, rechecks current bytes and cancels on changed records/lifecycle. Engine accepts optional explicit context and never reads the measurement store itself.",
+        "Individual complete clause review: development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json#263; Default measurement/category selections are empty. Picker toggles only a local unsent set; selection without attachment/send never invokes Ask. Send snapshots selected records only, clears selections for the next question, rechecks current bytes and cancels on changed records/lifecycle. Engine accepts optional explicit context and never reads the measurement store itself."
       ],
-      "last_updated": "2026-11-07T10:18:48.452197+00:00",
+      "last_updated": "2026-11-07T15:54:40.975912+00:00",
       "latest_batch_verification": {
-        "batch": "Urgent-question-before-optional-context-and-bounded-encoding",
+        "batch": "Hormone-grounding-and-explicit-sharing-individual-clauses",
         "executed": {
-          "focused_XCTest_passed": 13,
-          "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases",
-          "workflow_passed": 71,
-          "swift_syntax_files": 319
+          "focused_approval_and_explicit_context_XCTest": 22,
+          "failures": 0,
+          "log": "/tmp/fruitfolio_hormone_approval_explicit_share_clauses.log",
+          "scope": "14 actual library tests and8 actual Foundation/context engine tests; native llama conditional test not included."
         },
         "not_run": [
-          "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
-          "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
-          "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+          "Apple SDK/UI/AskViewModel lifecycle tests; official MADLAD; real-device and external clinical/reference review."
         ],
         "remaining": [
-          "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
-          "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
-          "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+          "Actual Apple attach/cancel/reopen/send/background lifecycle UI and AskViewModel tests remain NOT_RUN; no claim of executed native UI."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
-        "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
-        "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+        "Actual Apple attach/cancel/reopen/send/background lifecycle UI and AskViewModel tests remain NOT_RUN; no claim of executed native UI."
       ],
       "prior_batch_verifications": [
         {
@@ -22692,6 +22721,26 @@
             "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
             "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
             "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Urgent-question-before-optional-context-and-bounded-encoding",
+          "executed": {
+            "focused_XCTest_passed": 13,
+            "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases",
+            "workflow_passed": 71,
+            "swift_syntax_files": 319
+          },
+          "not_run": [
+            "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
+            "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
+            "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+          ],
+          "remaining": [
+            "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
+            "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
+            "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -22715,10 +22764,14 @@
         "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/ASK_URGENT_CONTEXT_ADMISSION.json"
+        "development_workflow/ASK_URGENT_CONTEXT_ADMISSION.json",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -22729,41 +22782,41 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
-        "FruitfolioTests/Prompt1BAskUserContextTests.swift"
+        "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+        "testNothingIsSharedWithoutExplicitSelectionAndDeletedItemsCannotBeResolved",
+        "testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance",
+        "testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails",
+        "testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion"
       ],
-      "commit_reference": "batch:Urgent-question-before-optional-context-and-bounded-encoding (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-grounding-and-explicit-sharing-individual-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.",
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
         "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution.",
-        "Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified."
+        "Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified.",
+        "Sharing requires attach my context, choosing actual IDs/categories, attach selected context, then Send. Picker starts with caller selections, filters removed IDs, validates size and returns explicit choices; Send consumes one question snapshot, detects edits before submission and never inserts private fields into evidence/citations or saved-answer metadata.",
+        "Individual complete clause review: development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json#264; Sharing requires attach my context, choosing actual IDs/categories, attach selected context, then Send. Picker starts with caller selections, filters removed IDs, validates size and returns explicit choices; Send consumes one question snapshot, detects edits before submission and never inserts private fields into evidence/citations or saved-answer metadata."
       ],
-      "last_updated": "2026-11-07T10:18:48.452197+00:00",
+      "last_updated": "2026-11-07T15:54:40.975912+00:00",
       "latest_batch_verification": {
-        "batch": "Urgent-question-before-optional-context-and-bounded-encoding",
+        "batch": "Hormone-grounding-and-explicit-sharing-individual-clauses",
         "executed": {
-          "focused_XCTest_passed": 13,
-          "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases",
-          "workflow_passed": 71,
-          "swift_syntax_files": 319
+          "focused_approval_and_explicit_context_XCTest": 22,
+          "failures": 0,
+          "log": "/tmp/fruitfolio_hormone_approval_explicit_share_clauses.log",
+          "scope": "14 actual library tests and8 actual Foundation/context engine tests; native llama conditional test not included."
         },
         "not_run": [
-          "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
-          "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
-          "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+          "Apple SDK/UI/AskViewModel lifecycle tests; official MADLAD; real-device and external clinical/reference review."
         ],
         "remaining": [
-          "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
-          "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
-          "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+          "Actual Apple consent/attachment/lifecycle/VoiceOver UI and native AskViewModel execution remain pending; real-device verification unavailable."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
-        "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
-        "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+        "Actual Apple consent/attachment/lifecycle/VoiceOver UI and native AskViewModel execution remain pending; real-device verification unavailable."
       ],
       "prior_batch_verifications": [
         {
@@ -22781,6 +22834,26 @@
             "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
             "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
             "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Urgent-question-before-optional-context-and-bounded-encoding",
+          "executed": {
+            "focused_XCTest_passed": 13,
+            "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases",
+            "workflow_passed": 71,
+            "swift_syntax_files": 319
+          },
+          "not_run": [
+            "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
+            "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
+            "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+          ],
+          "remaining": [
+            "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
+            "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
+            "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

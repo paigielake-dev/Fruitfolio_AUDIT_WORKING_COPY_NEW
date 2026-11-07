@@ -4160,3 +4160,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_actual_wheel_and_layout_XCTest": 15, "swift_syntax_files": 327, "syntax_errors": 0, "static_sound_diagnostics": 0, "logs": ["/tmp/fruitfolio_wheel_owned_note_tests.log", "/tmp/fruitfolio_wheel_owned_note_syntax.log", "/tmp/fruitfolio_wheel_owned_note_sound.log"]}.
 - Next action: Continue independent missing original and founder functionality; wheel external annotations remain implementation work, not an external blocker.
 - Commit: containing commit for batch Cycle-wheel-owned-note-selection-and-stale-actions.
+
+## Hormone-grounding-and-explicit-sharing-individual-clauses
+
+- Parent checkpoint: c07d929ec7212ad1e873391ad793e04f48eaf612.
+- Source-order requirements: [258, 263, 264].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryProvider.swift, Fruitfolio/Hormone Information/HormoneLibraryView.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift, Fruitfolio/Ask/FruitfolioAskContextPicker.swift, Fruitfolio/Ask/FruitfolioAskUserContext.swift, Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, development_workflow/HORMONE_GROUNDING_AND_EXPLICIT_SHARING_CLAUSE_REVIEW.json.
+- Individually close258 approved research grounding and263/264 explicit measurement-sharing implementation after source boundary review and22 actual tests; all three retain Apple/external acceptance pending. No new source code or duplicate tests needed in this review batch.
+- Tests added/updated: FruitfolioTests/Prompt1BHormoneLibraryTests.swift, FruitfolioTests/Prompt1BAskUserContextTests.swift.
+- Verification: {"focused_approval_and_explicit_context_XCTest": 22, "failures": 0, "log": "/tmp/fruitfolio_hormone_approval_explicit_share_clauses.log", "scope": "14 actual library tests and8 actual Foundation/context engine tests; native llama conditional test not included."}.
+- Next action: Continue missing founder wheel phase annotations and other independent incomplete functionality; do not count approved paragraph retrieval as complete clinical chapters.
+- Commit: containing commit for batch Hormone-grounding-and-explicit-sharing-individual-clauses.
