@@ -215,6 +215,35 @@ final class Prompt1BEducationResearchTests: XCTestCase {
         print("Education chapter readback: \(examined) real chapters; \(expandedChapters) with distinct additional original paragraphs")
     }
 
+
+    func testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover() async throws {
+        let supplied = try store()
+        let package = try await supplied.load()
+        let research = FruitfolioEducationResearch(packageStore: supplied)
+        let unsupported = "education.science.rna"
+        do { _ = try await research.article(for: unsupported); XCTFail("Actual supplied corpus has no approved matching RNA paragraph") }
+        catch FruitfolioEducationResearchError.unavailable { }
+        let start = Date()
+        for _ in 0..<25 {
+            do { _ = try await research.article(for: unsupported); XCTFail("Missing content must not become an invented explanation") }
+            catch FruitfolioEducationResearchError.unavailable { }
+        }
+        print("ACTUAL_FIXED_UNAVAILABLE_LOOKUP warm_25_seconds=\(Date().timeIntervalSince(start))")
+
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let pending = FruitfolioEducationResearch(packageStore: .init(resourceURL: file))
+        let supported = "pregnancy.placenta.core"
+        do { _ = try await pending.article(for: supported); XCTFail("Missing package must not be manufactured") }
+        catch is FruitfolioEducationResearchError { XCTFail("Missing file is not an established unsupported topic") }
+        catch { /* Actual file IO failure must remain retryable. */ }
+        try JSONEncoder().encode(package).write(to: file, options: .atomic)
+        let recovered = try await pending.article(for: supported)
+        XCTAssertEqual(recovered.contentID, supported)
+        XCTAssertEqual(recovered.knowledgeBaseVersion, package.contentVersion)
+        XCTAssertFalse(recovered.sources.isEmpty)
+    }
+
 }
 
 #if canImport(SwiftUI) && canImport(UIKit)

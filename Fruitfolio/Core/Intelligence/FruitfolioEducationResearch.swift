@@ -83,6 +83,9 @@ actor FruitfolioEducationResearch {
     static let shared = FruitfolioEducationResearch()
     private let packageStore: FruitfolioResearchPackageStore
     private var cache: [String: FruitfolioEducationArticle] = [:]
+    // Only fixed registered education IDs after a successful immutable package
+    // scan. Never patient queries, model results or transient load failures.
+    private var unavailableContentIDs: Set<String> = []
     private var chapterCache: [String: FruitfolioEducationChapter] = [:]
 
     init(packageStore: FruitfolioResearchPackageStore = .shared) { self.packageStore = packageStore }
@@ -364,7 +367,13 @@ actor FruitfolioEducationResearch {
             throw FruitfolioEducationResearchError.unknownContent
         }
         if let cached = cache[contentID] { return cached }
+        if unavailableContentIDs.contains(contentID) { throw FruitfolioEducationResearchError.unavailable }
         let retriever = try await packageStore.retriever()
+        try Task.checkCancellation()
+        // Another actor request may have finished while this one awaited the
+        // shared static index. Reuse its result instead of scanning twice.
+        if let cached = cache[contentID] { return cached }
+        if unavailableContentIDs.contains(contentID) { throw FruitfolioEducationResearchError.unavailable }
         let package = retriever.package
         let records = package.sources.filter(\.isApprovedForDisplay)
         guard Set(records.map(\.sourceID)).count == records.count else {
@@ -389,8 +398,12 @@ actor FruitfolioEducationResearch {
                 + terms.intersection(FruitfolioQueryNormalizer.tokens(note.text)).count
             if best == nil || score > best!.score { best = (note, score) }
         }
-        guard let selected = best?.note,
-              let presentation = FruitfolioEvidenceCopyPolicy.validatedPresentation(selected.text, original: selected.text) else {
+        try Task.checkCancellation()
+        guard let selected = best?.note else {
+            unavailableContentIDs.insert(contentID)
+            throw FruitfolioEducationResearchError.unavailable
+        }
+        guard let presentation = FruitfolioEvidenceCopyPolicy.validatedPresentation(selected.text, original: selected.text) else {
             throw FruitfolioEducationResearchError.unavailable
         }
         var seen: Set<String> = []

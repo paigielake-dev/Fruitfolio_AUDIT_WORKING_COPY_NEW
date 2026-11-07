@@ -4462,3 +4462,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "40 passed, zero failures; actual hormone-provider excerpt display, canonical research engine and all reviewed-context byte/approval/identity tests", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."}.
 - Next action: Remove repeated full-source scans for fixed educational content IDs known unsupported in a successfully loaded immutable approved corpus; do not cache patient questions/context or transient package-load failures. Measure actual lookup behavior and preserve unavailable semantics, then continue remaining original/founder requirements.
 - Commit: containing commit for batch Hormone-source-context-anchors-and-qualifiers.
+
+## Static-education-unavailable-lookup-reuse
+
+- Parent checkpoint: 11c7579cd8e79ce90a05db91e83b1903bc998ea4.
+- Source-order requirements: [65, 67, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift, FruitfolioTests/Prompt1BEducationResearchTests.swift, development_workflow/STATIC_EDUCATION_UNAVAILABLE_LOOKUP_REUSE.json.
+- Existing canonical education actor remembers only established unavailable registered IDs in a successfully loaded immutable source corpus. Recheck positive/negative results after awaiting index to avoid concurrent redundant scans. Cancellation checked before reuse/cache insertion. Package IO errors, unknown IDs, patient queries and model outputs are not cached. Source matching, approvals, citations, unavailable states and scientific text unchanged.
+- Tests added/updated: Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover, Prompt1BEducationResearchTests, Prompt27ScienceContentTests, Prompt26PregnancyEducationTests, Prompt25FertilizationCoreTests.
+- Verification: {"focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test", "warm_fixed_missing_lookups": {"before_25_seconds": 1.252994418144226, "after_25_seconds": 0.004760146141052246, "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"}, "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."}.
+- Next action: Continue strict original/founder source alignment from remaining context interpretation gaps: evidence relevance to actual logged patterns beyond report counts and generic category queries; retain deterministic policy, explicit unknowns and canonical source claims. Then progress next independent checklist item; Apple/official MADLAD/clinical blockers remain documented.
+- Commit: containing commit for batch Static-education-unavailable-lookup-reuse.

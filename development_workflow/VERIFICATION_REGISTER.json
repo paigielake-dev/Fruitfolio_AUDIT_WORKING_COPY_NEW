@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T20:10:53.967772+00:00",
+  "updated_at": "2026-11-07T20:14:46.478790+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14452,6 +14452,51 @@
         ]
       },
       "timestamp": "2026-11-07T20:10:53.967772+00:00"
+    },
+    {
+      "batch": "Static-education-unavailable-lookup-reuse",
+      "requirements": [
+        65,
+        67,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py testFixedUnavailableLookupsRemainPrivateAndTransientPackageFailuresCanRecover (baseline)",
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt1BEducationResearchTests|Prompt27ScienceContentTests|Prompt26PregnancyEducationTests|Prompt25FertilizationCoreTests",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+      ],
+      "results": {
+        "focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test",
+        "warm_fixed_missing_lookups": {
+          "before_25_seconds": 1.252994418144226,
+          "after_25_seconds": 0.004760146141052246,
+          "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"
+        },
+        "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+      },
+      "verification": {
+        "executed": {
+          "focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test",
+          "warm_fixed_missing_lookups": {
+            "before_25_seconds": 1.252994418144226,
+            "after_25_seconds": 0.004760146141052246,
+            "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"
+          },
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+        },
+        "not_run": [
+          "Apple repeated unavailable-page navigation/retry and native cancellation/foreground acceptance",
+          "Real-device memory, latency and Apple Instruments measurements"
+        ],
+        "remaining": [
+          "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
+          "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
+          "Missing approved content stays unavailable and is not implemented by caching its absence"
+        ]
+      },
+      "timestamp": "2026-11-07T20:14:46.478790+00:00"
     }
   ]
 }
