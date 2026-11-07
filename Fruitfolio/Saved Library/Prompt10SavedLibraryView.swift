@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt10SavedLibraryView: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
@@ -7,6 +8,15 @@ struct Prompt10SavedLibraryView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var rootIsVisible = false
+    @State private var actionEpoch = UUID()
+    private var ownerIsActive: Bool {
+        rootIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
+    private var canBrowse: Bool { ownerIsActive && popup == nil && openingEncyclopediaID == nil }
+    private var canUseBook: Bool { ownerIsActive && popup == nil && selectedEncyclopediaID != nil }
 
     @State private var searchText = ""
     @State private var sort: Prompt10LibrarySort = .recentlyUpdated
@@ -36,8 +46,8 @@ struct Prompt10SavedLibraryView: View {
                 .ignoresSafeArea()
 
             libraryCollection
-                .allowsHitTesting(openingEncyclopediaID == nil)
-                .accessibilityHidden(openingEncyclopediaID != nil)
+                .allowsHitTesting(canBrowse)
+                .accessibilityHidden(openingEncyclopediaID != nil || popup != nil || !ownerIsActive)
                 .opacity(openingEncyclopediaID == nil ? 1 : 0.18)
                 .fruitfolioModalBlur(active: popup != nil, reduceMotion: motionPreferences.reduceMotionActive)
 
@@ -52,13 +62,30 @@ struct Prompt10SavedLibraryView: View {
                 .zIndex(80)
 
             popupLayer
+                .accessibilityHidden(!ownerIsActive)
                 .zIndex(100)
         }
         .coordinateSpace(name: "Prompt10BookSpace")
         .onPreferenceChange(Prompt10BookFramePreference.self) { bookFrames = $0 }
-        .onDisappear { cancelOpening() }
+        .onAppear { rootIsVisible = true }
+        .onDisappear { rootIsVisible = false; cancelOpening() }
         .onChange(of: scenePhase) { _, phase in
+            actionEpoch = UUID()
             if phase != .active, openingTask != nil { cancelOpening() }
+        }
+        .onChange(of: popupCoordinator.currentPopup != nil) { _, covered in
+            actionEpoch = UUID()
+            if covered, openingTask != nil { cancelOpening() }
+        }
+        .onChange(of: motionPreferences.reduceMotionActive) { _, reduced in
+            if reduced, openingTask != nil { settleOpeningForReducedMotion() }
+        }
+        .onChange(of: store.encyclopedias) { _, _ in
+            if let id = openingEncyclopediaID, store.encyclopedia(id: id) == nil {
+                // Another shared-library surface may delete this same record.
+                // Restore the shelf instead of leaving a dimmed, disabled shell.
+                cancelOpening()
+            }
         }
         .toolbar(
             .hidden,
@@ -66,7 +93,7 @@ struct Prompt10SavedLibraryView: View {
         )
         .animation(
             motionPreferences.reduceMotionActive
-                ? .easeOut(duration: 0.14)
+                ? nil
                 : .easeOut(duration: 0.24),
             value: store.encyclopedias
         )
@@ -99,10 +126,12 @@ struct Prompt10SavedLibraryView: View {
     }
 
     private var header: some View {
-        VStack(spacing: 5) {
+        let capturedEpoch = actionEpoch
+        return VStack(spacing: 5) {
             ZStack {
                 HStack {
                     BackControl {
+                        guard canBrowse, capturedEpoch == actionEpoch else { return }
                         onBack()
                     }
 
@@ -193,7 +222,8 @@ struct Prompt10SavedLibraryView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: 10) {
+        let capturedEpoch = actionEpoch
+        return VStack(spacing: 10) {
             FruitfolioFixedText(source: "nothing here yet! ☆", protectedLiterals: ["☆"],
                 font: .custom("Chalkboard SE", size: 17, relativeTo: .body))
                 .fontWeight(.bold)
@@ -214,30 +244,39 @@ struct Prompt10SavedLibraryView: View {
                 reduceMotion:
                     motionPreferences.reduceMotionActive
             ) {
-
+                guard canBrowse, capturedEpoch == actionEpoch else { return }
                 popup = .create
             }
         }
         .padding(.top, 2)
     }
 
+    private var searchBinding: Binding<String> {
+        let capturedEpoch = actionEpoch
+        return Binding(get: { searchText }, set: { value in
+            guard canBrowse, capturedEpoch == actionEpoch else { return }
+            searchText = value
+        })
+    }
+
     private var managementTools: some View {
         VStack(spacing: 8) {
             Prompt10QuietSearchField(
-                text: $searchText
+                text: searchBinding
             )
 
             HStack {
                 Spacer()
 
                 Prompt10SortPicker(sort: $sort, reduceMotion: motionPreferences.reduceMotionActive,
-                    isEnabled: popup == nil && openingEncyclopediaID == nil,
-                    canInteract: { popup == nil && openingEncyclopediaID == nil })
+                    isEnabled: canBrowse,
+                    canInteract: { canBrowse })
             }
         }
     }
 
     private var encyclopediaGrid: some View {
+        let capturedEpoch = actionEpoch
         let books = store.sorted(
             by: sort,
             searchText: searchText
@@ -260,6 +299,7 @@ struct Prompt10SavedLibraryView: View {
                     WatercolorSecondaryButton(
                         label: "clear search"
                     ) {
+                        guard canBrowse, capturedEpoch == actionEpoch else { return }
                         searchText = ""
                     }
                 }
@@ -288,6 +328,7 @@ struct Prompt10SavedLibraryView: View {
                                 motionPreferences
                                     .reduceMotionActive
                         ) {
+                            guard canBrowse, capturedEpoch == actionEpoch else { return }
                             beginOpening(
                                 encyclopedia
                             )
@@ -315,7 +356,9 @@ struct Prompt10SavedLibraryView: View {
     }
 
     private var createAnotherControl: some View {
-        Button {
+        let capturedEpoch = actionEpoch
+        return Button {
+            guard canBrowse, capturedEpoch == actionEpoch else { return }
             audioManager.play(
                 .buttonSoftPop
             )
@@ -339,6 +382,7 @@ struct Prompt10SavedLibraryView: View {
             )
             .padding(.horizontal, 12)
         }
+        .accessibilityIdentifier("library.createAnother")
         .buttonStyle(
             CutePopButtonStyle(
                 reduceMotion:
@@ -399,6 +443,7 @@ struct Prompt10SavedLibraryView: View {
 
     @ViewBuilder
     private var bookOpeningOverlay: some View {
+        let capturedEpoch = actionEpoch
         if let id = openingEncyclopediaID, let encyclopedia = store.encyclopedia(id: id) {
             let copy = Prompt10BookTileCopy.opening(name: encyclopedia.name)
             GeometryReader { geometry in
@@ -408,9 +453,10 @@ struct Prompt10SavedLibraryView: View {
                     if selectedEncyclopediaID == id {
                         Prompt10EncyclopediaDetailView(
                             store: store, encyclopediaID: id,
-                            onBack: { cancelOpening() },
-                            onRename: { popup = .rename(id, encyclopedia.name) },
-                            onDelete: { popup = .delete(id) })
+                            onBack: { guard canUseBook, capturedEpoch == actionEpoch else { return }; cancelOpening() },
+                            onRename: { guard canUseBook, capturedEpoch == actionEpoch else { return }; popup = .rename(id, encyclopedia.name) },
+                            onDelete: { guard canUseBook, capturedEpoch == actionEpoch else { return }; popup = .delete(id) })
+                        .allowsHitTesting(canUseBook)
                         .padding(.horizontal, max(12, frame.width * 0.06))
                         .padding(.vertical, max(18, frame.height * 0.075))
                         .transition(.opacity)
@@ -422,12 +468,14 @@ struct Prompt10SavedLibraryView: View {
             }
             .fruitfolioModalBlur(active: popup != nil, reduceMotion: motionPreferences.reduceMotionActive)
             .accessibilityElement(children: .contain)
+            .accessibilityHidden(popup != nil || !ownerIsActive)
             .modifier(FruitfolioFixedAccessibilityLabel(source: copy.source, protectedLiterals: copy.protectedLiterals))
         }
     }
 
     private func beginOpening(_ encyclopedia: Prompt10Encyclopedia) {
-        guard openingEncyclopediaID == nil else { return }
+        guard canBrowse else { return }
+        actionEpoch = UUID()
         audioManager.play(.buttonSoftPop)
         openingGeneration = UUID()
         let generation = openingGeneration
@@ -440,16 +488,18 @@ struct Prompt10SavedLibraryView: View {
             do {
                 // Give the source-sized surface a frame before changing targets.
                 try await Task.sleep(nanoseconds: 20_000_000)
-                guard !Task.isCancelled, generation == openingGeneration else { return }
+                guard !Task.isCancelled, ownerIsActive, popup == nil, generation == openingGeneration else { return }
                 if motionPreferences.reduceMotionActive {
                     bookTravel = 1
                     bookReveal = 1
                     bookOpenness = 1
-                    withAnimation(.easeOut(duration: 0.14)) { selectedEncyclopediaID = encyclopedia.id }
+                    var transaction = Transaction(); transaction.disablesAnimations = true
+                    withTransaction(transaction) { selectedEncyclopediaID = encyclopedia.id }
                 } else {
                     withAnimation(.easeInOut(duration: 0.32)) { bookTravel = 0.5; bookReveal = 1 }
                     try await Task.sleep(nanoseconds: 330_000_000)
                     try Task.checkCancellation()
+                    guard ownerIsActive, popup == nil, generation == openingGeneration else { return }
                     audioManager.play(.pageTurn)
                     withAnimation(.easeInOut(duration: 0.55)) { bookOpenness = 1 }
                     try await Task.sleep(nanoseconds: 560_000_000)
@@ -457,7 +507,7 @@ struct Prompt10SavedLibraryView: View {
                     withAnimation(.easeInOut(duration: 0.36)) { bookTravel = 1 }
                     try await Task.sleep(nanoseconds: 370_000_000)
                     try Task.checkCancellation()
-                    guard generation == openingGeneration else { return }
+                    guard ownerIsActive, popup == nil, generation == openingGeneration else { return }
                     withAnimation(.easeOut(duration: 0.16)) { selectedEncyclopediaID = encyclopedia.id }
                 }
                 openingTask = nil
@@ -465,7 +515,20 @@ struct Prompt10SavedLibraryView: View {
         }
     }
 
+    private func settleOpeningForReducedMotion() {
+        guard let id = openingEncyclopediaID, store.encyclopedia(id: id) != nil else { return }
+        openingGeneration = UUID()
+        openingTask?.cancel()
+        openingTask = nil
+        var transaction = Transaction(); transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            bookTravel = 1; bookReveal = 1; bookOpenness = 1
+            selectedEncyclopediaID = id
+        }
+    }
+
     private func cancelOpening() {
+        actionEpoch = UUID()
         openingGeneration = UUID()
         openingTask?.cancel()
         openingTask = nil

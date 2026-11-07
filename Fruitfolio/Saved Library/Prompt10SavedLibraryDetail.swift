@@ -91,6 +91,7 @@ struct Prompt10EncyclopediaDetailView: View {
                 )
 
                 Text(verbatim: encyclopedia.name)
+                    .accessibilityIdentifier("savedBook.title")
                     .font(.custom("Chalkboard SE", size: 21, relativeTo: .title2).bold())
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .multilineTextAlignment(.center)

@@ -1596,7 +1596,8 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
-        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1669,9 +1670,13 @@
         "Prompt1BRecoveredCycleLoaderTests",
         "Prompt1BTodaySnapshotTests",
         "Prompt1BDailyLogViewModelTests",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1712,35 +1717,39 @@
         "Actual Pregnancy save/source/navigation actions and menu bindings now gated by current owned active presentation; Apple queued-event acceptance pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
         "Science save/source/hotspot/retry callbacks now gate active visible uncovered owner; native event/audio acceptance pending. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
         "Final logging handoff rechecks foreground/uncovered ownership rather than visibility alone; no queued inactive navigation replay. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
-        "Shell/daily-log final callbacks require current active uncovered owner; consumed confirmation cannot survive scene inactivity. Native event/sound acceptance pending. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
+        "Shell/daily-log final callbacks require current active uncovered owner; consumed confirmation cannot survive scene inactivity. Native event/sound acceptance pending. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
+        "Actual Library/create/rename/delete actions and opening page sound now require owned active presentation; captured epochs reject stale callbacks. Apple event/sound acceptance pending. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T18:20:48.104466+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
-          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
-          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
-          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
-          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
-          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
-          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
-          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
-        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
-        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
-        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -2020,6 +2029,27 @@
             "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
+          "executed": {
+            "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+            "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+            "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+            "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
+          ],
+          "remaining": [
+            "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+            "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+            "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+            "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -2101,7 +2131,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
-        "FruitfolioTests/Prompt27ScienceContentTests.swift"
+        "FruitfolioTests/Prompt27ScienceContentTests.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2142,9 +2175,13 @@
         "Prompt26PregnancyPresentationLifecycleTests",
         "Prompt27SciencePresentationLifecycleTests",
         "Prompt27ScienceContentTests (portable only)",
-        "Prompt1BScientificArtSizingTests"
+        "Prompt1BScientificArtSizingTests",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -2161,39 +2198,39 @@
         "Selection and dismissal update synchronously; Reduce Motion uses nil animation without queued artificial delay.",
         "Cover/background/disappear cancels actual deferred transition/load acceptance and resets cue without animation; duplicate navigation rejected before sound. No device latency claim. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Topic/provider cancellation, generation validation and reference-task owner/defer prevent stale work replacing current visible topic; actual model noncooperative-provider regressions passed. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
-        "Actual model request identity rejects stale noncooperative provider results; preserves already loaded content/selection without redundant reload. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
+        "Actual model request identity rejects stale noncooperative provider results; preserves already loaded content/selection without redundant reload. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
+        "No scheduling delay added; background/cover cancels opening work and Reduced Motion settles immediately. Device lag not measured. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T18:10:14.720704+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
-          "full_portable_XCTest": "1104 passed,0failures",
-          "Swift_Testing": "21passed,0failures",
-          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
-          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
-          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
-          "Official MADLAD model and clinical/native-language acceptance"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
-          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
-          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
-          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
-          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
-        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
-        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
-        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
-        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -2302,6 +2339,30 @@
             "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
             "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
             "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
+          "executed": {
+            "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+            "full_portable_XCTest": "1104 passed,0failures",
+            "Swift_Testing": "21passed,0failures",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+            "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+            "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+            "Official MADLAD model and clinical/native-language acceptance"
+          ],
+          "remaining": [
+            "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+            "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+            "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+            "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+            "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -4081,7 +4142,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
-        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4125,9 +4188,13 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing whole shared-host class; LifeBridge-specific runtime NOT_RUN)",
         "FruitfolioTests/FounderOverrideIntegrationTests.swift",
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
-        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
@@ -4153,37 +4220,39 @@
         "Both actual Ask and FAQ LifeBridge native-sheet entrypoints use existing FruitfolioPresentedPopupHost. This gives presented surface its own canonical popup coordinator instead of inheriting unrelated root overlay state. Existing boolean dismissal/content/links unchanged; no new popup framework, blur constants, assets, company facts or model source. Source surface isolation only; Apple layering/focus/blur behavior unverified.",
         "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
         "One affected feature-specific About overlay now has explicit contained modal semantics/escape/owned focus with shared popup/backdrop. This is not proof all overlays are complete.",
-        "Existing shared taped-white educational note remains in its original wheel layout; actions are now bound to current note identity."
+        "Existing shared taped-white educational note remains in its original wheel layout; actions are now bound to current note identity.",
+        "Existing shared popup composition retained; inline form callback/input ownership and covered accessibility fixed. Whole-popup geometry acceptance separate. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T15:52:05.101803+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "focused_actual_wheel_and_layout_XCTest": 15,
-          "swift_syntax_files": 327,
-          "syntax_errors": 0,
-          "static_sound_diagnostics": 0,
-          "logs": [
-            "/tmp/fruitfolio_wheel_owned_note_tests.log",
-            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
-            "/tmp/fruitfolio_wheel_owned_note_sound.log"
-          ]
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
-          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -4248,6 +4317,30 @@
             "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
             "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
             "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+          "executed": {
+            "focused_actual_wheel_and_layout_XCTest": 15,
+            "swift_syntax_files": 327,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_wheel_owned_note_tests.log",
+              "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+              "/tmp/fruitfolio_wheel_owned_note_sound.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+            "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+            "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+            "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -15639,7 +15732,10 @@
         "Tools/record_prompt1b_batch.py",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -15650,83 +15746,47 @@
         "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Reduced-motion settlement retains current openingEncyclopediaID instead of rebuilding or substituting a book. Existing motion math tests passed; new UI acceptance unrun. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T07:35:33.139413+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "completion_category": "IMPLEMENTED \u2014 AWAITING APPLE/EXTERNAL VERIFICATION",
       "implementation_closure": {
@@ -15737,7 +15797,76 @@
           "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
         ],
         "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
-      }
+      },
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "initial_focused_XCTest": 37,
+            "final_focused_XCTest": 43,
+            "workflow_checks": 70,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "English_fallbacks_added": 6,
+            "existing_empty_English_records_populated": 2,
+            "official_MADLAD_verified": false,
+            "portable_command_exit_code": 0,
+            "native_command_exit_code": 0,
+            "Part4_implementation_reviews": 52,
+            "Part4_core_verified_ids": [
+              206,
+              210
+            ],
+            "Part4_awaiting_Apple_external": 50,
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_alignment_portable.log": {
+                "bytes": 311580,
+                "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+              },
+              "/tmp/fruitfolio_guide_alignment_native.log": {
+                "bytes": 1286769,
+                "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused.log": {
+                "bytes": 39613,
+                "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused_final.log": {
+                "bytes": 41508,
+                "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
+              },
+              "/tmp/fruitfolio_guide_alignment_workflow.log": {
+                "bytes": 170,
+                "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
+              },
+              "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_alignment_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
+            "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
+            "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          ],
+          "remaining": [
+            "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
+            "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
+            "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ]
     },
     {
       "sequence": 184,
@@ -15758,7 +15887,10 @@
         "Tools/record_prompt1b_batch.py",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -15769,83 +15901,47 @@
         "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Current selected book/style preserved by same record; create cover state retained across suspension. Native selected-cover regression written, unrun. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T07:35:33.139413+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "completion_category": "IMPLEMENTED \u2014 AWAITING APPLE/EXTERNAL VERIFICATION",
       "implementation_closure": {
@@ -15856,7 +15952,76 @@
           "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
         ],
         "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
-      }
+      },
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "initial_focused_XCTest": 37,
+            "final_focused_XCTest": 43,
+            "workflow_checks": 70,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "English_fallbacks_added": 6,
+            "existing_empty_English_records_populated": 2,
+            "official_MADLAD_verified": false,
+            "portable_command_exit_code": 0,
+            "native_command_exit_code": 0,
+            "Part4_implementation_reviews": 52,
+            "Part4_core_verified_ids": [
+              206,
+              210
+            ],
+            "Part4_awaiting_Apple_external": 50,
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_alignment_portable.log": {
+                "bytes": 311580,
+                "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+              },
+              "/tmp/fruitfolio_guide_alignment_native.log": {
+                "bytes": 1286769,
+                "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused.log": {
+                "bytes": 39613,
+                "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused_final.log": {
+                "bytes": 41508,
+                "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
+              },
+              "/tmp/fruitfolio_guide_alignment_workflow.log": {
+                "bytes": 170,
+                "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
+              },
+              "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_alignment_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
+            "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
+            "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          ],
+          "remaining": [
+            "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
+            "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
+            "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ]
     },
     {
       "sequence": 185,
@@ -16829,7 +16994,10 @@
         "Tools/record_prompt1b_batch.py",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -16840,83 +17008,47 @@
         "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Missing shared-store record now exits open-book shell; live reduced-motion change cancels old generation and settles single current book. Native regression written, unrun. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T07:35:33.139413+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "completion_category": "IMPLEMENTED \u2014 AWAITING APPLE/EXTERNAL VERIFICATION",
       "implementation_closure": {
@@ -16927,7 +17059,76 @@
           "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
         ],
         "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
-      }
+      },
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "initial_focused_XCTest": 37,
+            "final_focused_XCTest": 43,
+            "workflow_checks": 70,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "English_fallbacks_added": 6,
+            "existing_empty_English_records_populated": 2,
+            "official_MADLAD_verified": false,
+            "portable_command_exit_code": 0,
+            "native_command_exit_code": 0,
+            "Part4_implementation_reviews": 52,
+            "Part4_core_verified_ids": [
+              206,
+              210
+            ],
+            "Part4_awaiting_Apple_external": 50,
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_alignment_portable.log": {
+                "bytes": 311580,
+                "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+              },
+              "/tmp/fruitfolio_guide_alignment_native.log": {
+                "bytes": 1286769,
+                "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused.log": {
+                "bytes": 39613,
+                "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused_final.log": {
+                "bytes": 41508,
+                "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
+              },
+              "/tmp/fruitfolio_guide_alignment_workflow.log": {
+                "bytes": 170,
+                "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
+              },
+              "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_alignment_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
+            "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
+            "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          ],
+          "remaining": [
+            "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
+            "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
+            "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ]
     },
     {
       "sequence": 194,
@@ -18080,7 +18281,10 @@
         "Tools/record_prompt1b_batch.py",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -18093,85 +18297,50 @@
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
         "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open.",
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Explicit create/rename save/cancel and delete/keep callbacks gated by current form epoch; background never writes a draft. New UI save/keep/delete regression unrun. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T07:35:33.139413+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "completion_category": "IMPLEMENTED \u2014 AWAITING APPLE/EXTERNAL VERIFICATION",
       "implementation_closure": {
@@ -18182,7 +18351,76 @@
           "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
         ],
         "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
-      }
+      },
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "initial_focused_XCTest": 37,
+            "final_focused_XCTest": 43,
+            "workflow_checks": 70,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "English_fallbacks_added": 6,
+            "existing_empty_English_records_populated": 2,
+            "official_MADLAD_verified": false,
+            "portable_command_exit_code": 0,
+            "native_command_exit_code": 0,
+            "Part4_implementation_reviews": 52,
+            "Part4_core_verified_ids": [
+              206,
+              210
+            ],
+            "Part4_awaiting_Apple_external": 50,
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_alignment_portable.log": {
+                "bytes": 311580,
+                "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+              },
+              "/tmp/fruitfolio_guide_alignment_native.log": {
+                "bytes": 1286769,
+                "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused.log": {
+                "bytes": 39613,
+                "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused_final.log": {
+                "bytes": 41508,
+                "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
+              },
+              "/tmp/fruitfolio_guide_alignment_workflow.log": {
+                "bytes": 170,
+                "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
+              },
+              "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_alignment_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
+            "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
+            "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          ],
+          "remaining": [
+            "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
+            "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
+            "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ]
     },
     {
       "sequence": 204,
@@ -18209,7 +18447,10 @@
         "Tools/record_prompt1b_batch.py",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -18223,86 +18464,51 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
         "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open.",
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Create/rename @State values retained; stale queued field setters rejected after foregrounding. Actual native draft/style regression unrun. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T07:35:33.139413+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "completion_category": "IMPLEMENTED \u2014 AWAITING APPLE/EXTERNAL VERIFICATION",
       "implementation_closure": {
@@ -18313,7 +18519,76 @@
           "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
         ],
         "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
-      }
+      },
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "initial_focused_XCTest": 37,
+            "final_focused_XCTest": 43,
+            "workflow_checks": 70,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "English_fallbacks_added": 6,
+            "existing_empty_English_records_populated": 2,
+            "official_MADLAD_verified": false,
+            "portable_command_exit_code": 0,
+            "native_command_exit_code": 0,
+            "Part4_implementation_reviews": 52,
+            "Part4_core_verified_ids": [
+              206,
+              210
+            ],
+            "Part4_awaiting_Apple_external": 50,
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_alignment_portable.log": {
+                "bytes": 311580,
+                "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+              },
+              "/tmp/fruitfolio_guide_alignment_native.log": {
+                "bytes": 1286769,
+                "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused.log": {
+                "bytes": 39613,
+                "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused_final.log": {
+                "bytes": 41508,
+                "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
+              },
+              "/tmp/fruitfolio_guide_alignment_workflow.log": {
+                "bytes": 170,
+                "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
+              },
+              "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_alignment_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
+            "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
+            "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          ],
+          "remaining": [
+            "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
+            "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
+            "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ]
     },
     {
       "sequence": 205,
@@ -18793,7 +19068,11 @@
         "Tools/record_prompt1b_batch.py",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -18806,85 +19085,49 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests"
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
         "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Library observes canonical store removal of currently open record and restores shelf.2shared catalog domain tests passed; native external-delete regression unrun. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T07:35:33.139413+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple Combine/navigation propagation across the actual three feature views; canonical authority and identity are separately verified"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "completion_category": "IMPLEMENTED \u2014 AWAITING APPLE/EXTERNAL VERIFICATION",
       "implementation_closure": {
@@ -18895,7 +19138,76 @@
           "Apple Combine/navigation propagation across the actual three feature views; canonical authority and identity are separately verified"
         ],
         "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
-      }
+      },
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "initial_focused_XCTest": 37,
+            "final_focused_XCTest": 43,
+            "workflow_checks": 70,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "English_fallbacks_added": 6,
+            "existing_empty_English_records_populated": 2,
+            "official_MADLAD_verified": false,
+            "portable_command_exit_code": 0,
+            "native_command_exit_code": 0,
+            "Part4_implementation_reviews": 52,
+            "Part4_core_verified_ids": [
+              206,
+              210
+            ],
+            "Part4_awaiting_Apple_external": 50,
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_alignment_portable.log": {
+                "bytes": 311580,
+                "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+              },
+              "/tmp/fruitfolio_guide_alignment_native.log": {
+                "bytes": 1286769,
+                "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused.log": {
+                "bytes": 39613,
+                "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+              },
+              "/tmp/fruitfolio_guide_alignment_focused_final.log": {
+                "bytes": 41508,
+                "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
+              },
+              "/tmp/fruitfolio_guide_alignment_workflow.log": {
+                "bytes": 170,
+                "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
+              },
+              "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_alignment_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
+            "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
+            "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          ],
+          "remaining": [
+            "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
+            "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
+            "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ]
     },
     {
       "sequence": 209,
@@ -27613,7 +27925,11 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
-        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27637,9 +27953,13 @@
         "Prompt1BCalendarPresentationPolicyTests",
         "Prompt1BRecoveredCycleLoaderTests",
         "Prompt1BTodaySnapshotTests",
-        "Prompt1BDailyLogViewModelTests"
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
@@ -27651,35 +27971,39 @@
         "Existing reduced-motion/canonical controls retained with nonanimated cancellation and44pt action targets; Apple motion/accessibility acceptance pending. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Topic uses existing MotionPreferences authority for expansion motion; inactive interaction disabled; Apple Reduced Motion/VoiceOver acceptance unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
         "Presentation invalidation resets month drift in disabled-animation transaction; accessibility and reduced-motion UI acceptance unrun. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
-        "Save feedback settles on suspension without replay and uses no animation under Reduce Motion. Updated12launch native matrix unrun. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
+        "Save feedback settles on suspension without replay and uses no animation under Reduce Motion. Updated12launch native matrix unrun. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
+        "Library store-array layout has no animation under RM; in-progress opening settles final state in disabled-animation transaction. Apple runtime check pending. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T18:20:48.104466+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
-          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
-          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
-          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
-          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
-          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
-          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
-          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
-        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
-        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
-        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -27820,6 +28144,27 @@
             "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
             "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
             "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
+          "executed": {
+            "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+            "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+            "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+            "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
+          ],
+          "remaining": [
+            "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+            "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+            "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+            "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37070,7 +37415,8 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "FruitfolioTests/Prompt27ScienceContentTests.swift"
+        "FruitfolioTests/Prompt27ScienceContentTests.swift",
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37116,9 +37462,13 @@
         "Prompt26PregnancyPresentationLifecycleTests",
         "Prompt27SciencePresentationLifecycleTests",
         "Prompt27ScienceContentTests (portable only)",
-        "Prompt1BScientificArtSizingTests"
+        "Prompt1BScientificArtSizingTests",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -37140,39 +37490,39 @@
         "Accessible44pt fimbriae target and stable identifier; current context limitation remains intrinsically sized. Apple VoiceOver/UI acceptance pending. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Sources/Ask/Save44pt minimum targets, stage heading stable accessibility identifier and disabled inactive controls; Apple VoiceOver and translated layout acceptance unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Stable topic/topic-page identifiers and active-state accessibility/control ownership; Apple VoiceOver/dynamic layout pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
-        "Source image accessibility label remains separate from overlay controls; active controls and edge hit-target allowance. Native accessibility regression acceptance unrun. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
+        "Source image accessibility label remains separate from overlay controls; active controls and edge hit-target allowance. Native accessibility regression acceptance unrun. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
+        "Covered shelf/open-book accessibility hidden; popup remains isolated; title/style identifiers support real native checks. VoiceOver/layout acceptance pending. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T18:10:14.720704+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
-          "full_portable_XCTest": "1104 passed,0failures",
-          "Swift_Testing": "21passed,0failures",
-          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
-          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
-          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
-          "Official MADLAD model and clinical/native-language acceptance"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
-          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
-          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
-          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
-          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
-        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
-        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
-        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
-        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -37441,6 +37791,30 @@
             "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
             "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
             "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
+          "executed": {
+            "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+            "full_portable_XCTest": "1104 passed,0failures",
+            "Swift_Testing": "21passed,0failures",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+            "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+            "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+            "Official MADLAD model and clinical/native-language acceptance"
+          ],
+          "remaining": [
+            "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+            "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+            "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+            "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+            "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -45975,9 +46349,13 @@
         "Prompt1BCalendarPresentationPolicyTests",
         "Prompt1BRecoveredCycleLoaderTests",
         "Prompt1BDailyLogViewModelTests",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Body-biology-source-grounded-authored-semantic-roles (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -46131,30 +46509,39 @@
         "Three actual new model/payload regressions passed plus23existing science tests newly executed on Linux and6canvas math checks.1104full XCTest+21SwiftTesting passed; native UIImage test not run. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
         "New actual noncanceled held-provider race demonstrates old same-month/context snapshot rejected after epoch changes.28focused XCTest passed. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
         "Two actual production model regressions cover stale held-read/new-load defer and canceled repository admission with successful explicit retry; existing committed-write reconciliation test still passes in80tests. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
-        "New actual original-source golden checks7states, complete wording, deterministic presentation, uncertainty anchors, envelope roundtrip and mismatched-role fallback;28tests passed. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json"
+        "New actual original-source golden checks7states, complete wording, deterministic presentation, uncertainty anchors, envelope roundtrip and mismatched-role fallback;28tests passed. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json",
+        "Two native methods/3planned launches cover actual forms/background/cover selection/keep/delete and external shared-store deletion. Written NOT_RUN;49+2existing Foundation tests passed. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T18:26:36.325276+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Body-biology-source-grounded-authored-semantic-roles",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests",
-          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Body Biology semantic rendering/VoiceOver/large-text/RTL",
-          "Official MADLAD translation and clinical/native-language emphasis acceptance"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
-          "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
-          "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
-        "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
-        "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -47222,6 +47609,23 @@
             "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
             "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
             "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Body-biology-source-grounded-authored-semantic-roles",
+          "executed": {
+            "portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests",
+            "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple Body Biology semantic rendering/VoiceOver/large-text/RTL",
+            "Official MADLAD translation and clinical/native-language emphasis acceptance"
+          ],
+          "remaining": [
+            "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
+            "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
+            "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -47480,7 +47884,8 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
-        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift"
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -47674,9 +48079,13 @@
         "Prompt1BCalendarPresentationPolicyTests",
         "Prompt1BRecoveredCycleLoaderTests",
         "Prompt1BDailyLogViewModelTests",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
+        "Prompt10SavedLibraryTests",
+        "Prompt1BBookMotionTests",
+        "Prompt1BSharedLibraryCatalogTests"
       ],
-      "commit_reference": "batch:Body-biology-source-grounded-authored-semantic-roles (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -47813,30 +48222,39 @@
         "Actual production model/router/safety dependencies added to portable runner; project Swift regressions updated to executable async MainActor tests, no fake SDK. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
         "Regression in existing project Swift test source; no external-only assertion or fake Apple SDK. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
         "New regressions are project Swift source; existing native1method/12launch matrix updated and explicitly NOT_RUN. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
-        "Source-golden/production-model regression in existing project Swift tests; unavailable native source environment explicitly skips, never counted passed. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json"
+        "Source-golden/production-model regression in existing project Swift tests; unavailable native source environment explicitly skips, never counted passed. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json",
+        "Native tests and fixture changes in project Swift sources; no external-only/fake Apple runtime test. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
       ],
-      "last_updated": "2026-11-07T18:26:36.325276+00:00",
+      "last_updated": "2026-11-07T18:40:39.853144+00:00",
       "latest_batch_verification": {
-        "batch": "Body-biology-source-grounded-authored-semantic-roles",
+        "batch": "Library-owned-forms-and-shared-deletion-recovery",
         "executed": {
-          "portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests",
-          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Body Biology semantic rendering/VoiceOver/large-text/RTL",
-          "Official MADLAD translation and clinical/native-language emphasis acceptance"
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
         ],
         "remaining": [
-          "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
-          "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
-          "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
-        "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
-        "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
       ],
       "prior_batch_verifications": [
         {
@@ -48904,6 +49322,23 @@
             "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
             "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
             "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Body-biology-source-grounded-authored-semantic-roles",
+          "executed": {
+            "portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests",
+            "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple Body Biology semantic rendering/VoiceOver/large-text/RTL",
+            "Official MADLAD translation and clinical/native-language emphasis acceptance"
+          ],
+          "remaining": [
+            "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
+            "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
+            "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

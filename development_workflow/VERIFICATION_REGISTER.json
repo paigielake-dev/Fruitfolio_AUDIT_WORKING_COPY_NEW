@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T18:26:36.325276+00:00",
+  "updated_at": "2026-11-07T18:40:39.853144+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14058,6 +14058,59 @@
         ]
       },
       "timestamp": "2026-11-07T18:26:36.325276+00:00"
+    },
+    {
+      "batch": "Library-owned-forms-and-shared-deletion-recovery",
+      "requirements": [
+        11,
+        12,
+        26,
+        183,
+        184,
+        193,
+        203,
+        204,
+        208,
+        303,
+        390,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BLibrary|Prompt10Saved|Prompt1BBook|Prompt10Book'",
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BSharedLibraryCatalogTests'",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
+      ],
+      "results": {
+        "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+        "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+        "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+        "sound_ownership": "0diagnostics"
+      },
+      "verification": {
+        "executed": {
+          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
+        },
+        "not_run": [
+          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+        ],
+        "remaining": [
+          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+        ]
+      },
+      "timestamp": "2026-11-07T18:40:39.853144+00:00"
     }
   ]
 }

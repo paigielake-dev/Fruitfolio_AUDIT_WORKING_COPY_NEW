@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt10CreateEncyclopediaPopup: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
@@ -7,6 +8,15 @@ struct Prompt10CreateEncyclopediaPopup: View {
     let onFull: () -> Void
 
     @EnvironmentObject private var audioManager: AudioManager
+
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var formIsVisible = false
+    @State private var actionEpoch = UUID()
+    private var canInteract: Bool {
+        formIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var title = ""
@@ -14,11 +24,25 @@ struct Prompt10CreateEncyclopediaPopup: View {
     @State private var errorMessage: String?
     @State private var errorIsFixedCopy = false
 
+    private var titleBinding: Binding<String> {
+        let capturedEpoch = actionEpoch
+        return Binding(get: { title }, set: { value in
+            guard canInteract, capturedEpoch == actionEpoch else { return }
+            title = value
+        })
+    }
+
     var body: some View {
         Prompt10WatercolorPopup {
             popupContent
         }
+        .disabled(!canInteract)
+        .onDisappear { formIsVisible = false; actionEpoch = UUID() }
+        .onChange(of: scenePhase) { _, _ in actionEpoch = UUID() }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in actionEpoch = UUID() }
         .onAppear {
+            formIsVisible = true
+            guard canInteract else { return }
             audioManager.play(.popupOpen)
         }
     }
@@ -67,7 +91,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
     private var encyclopediaNameField: some View {
         FruitfolioFixedTextField(
             "encyclopedia name",
-            text: $title
+            text: titleBinding
         )
                 .accessibilityIdentifier("library.createBook.name")
         .bookLabelGuidance(text: title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
@@ -114,7 +138,9 @@ struct Prompt10CreateEncyclopediaPopup: View {
     private func coverButton(
         for style: Prompt10BookStyle
     ) -> some View {
-        Button {
+        let capturedEpoch = actionEpoch
+        return Button {
+            guard canInteract, capturedEpoch == actionEpoch else { return }
             selectedStyle = style
 
         } label: {
@@ -149,6 +175,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
                         .reduceMotionActive
             )
         )
+        .accessibilityIdentifier("library.createBook.style." + style.rawValue)
         .accessibilityLabel(
             "\(style.displayName) book"
         )
@@ -213,11 +240,13 @@ struct Prompt10CreateEncyclopediaPopup: View {
     }
 
     private var createButton: some View {
-        Prompt10PillArtButton(
+        let capturedEpoch = actionEpoch
+        return Prompt10PillArtButton(
             label: "create encyclopedia",
             reduceMotion:
                 motionPreferences.reduceMotionActive
         ) {
+            guard canInteract, capturedEpoch == actionEpoch else { return }
             createEncyclopedia()
         }
         .frame(maxWidth: 295)
@@ -225,9 +254,11 @@ struct Prompt10CreateEncyclopediaPopup: View {
     }
 
     private var cancelButton: some View {
-        WatercolorSecondaryButton(
+        let capturedEpoch = actionEpoch
+        return WatercolorSecondaryButton(
             label: "cancel"
         ) {
+            guard canInteract, capturedEpoch == actionEpoch else { return }
             audioManager.play(
                 .popupClose
             )
@@ -235,9 +266,11 @@ struct Prompt10CreateEncyclopediaPopup: View {
             onDismiss()
         }
         .frame(maxWidth: 170)
+        .accessibilityIdentifier("library.createBook.cancel")
     }
 
     private func createEncyclopedia() {
+        guard canInteract else { return }
         do {
             _ = try store.createEncyclopedia(
                 name: title,
@@ -270,6 +303,15 @@ struct Prompt10RenameEncyclopediaPopup: View {
 
     @EnvironmentObject private var audioManager: AudioManager
 
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var formIsVisible = false
+    @State private var actionEpoch = UUID()
+    private var canInteract: Bool {
+        formIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
+
     @State private var title: String
     @State private var errorMessage: String?
     @State private var errorIsFixedCopy = false
@@ -290,8 +332,17 @@ struct Prompt10RenameEncyclopediaPopup: View {
         )
     }
 
+    private var titleBinding: Binding<String> {
+        let capturedEpoch = actionEpoch
+        return Binding(get: { title }, set: { value in
+            guard canInteract, capturedEpoch == actionEpoch else { return }
+            title = value
+        })
+    }
+
     var body: some View {
-        Prompt10WatercolorPopup {
+        let capturedEpoch = actionEpoch
+        return Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 FruitfolioFixedText(source: "rename this little encyclopedia",
             font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
@@ -302,8 +353,9 @@ struct Prompt10RenameEncyclopediaPopup: View {
 
                 FruitfolioFixedTextField(
                     "encyclopedia name",
-                    text: $title
+                    text: titleBinding
                 )
+                .accessibilityIdentifier("library.renameBook.name")
                 .bookLabelGuidance(text: title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                 .font(
                     .custom(
@@ -343,6 +395,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 WatercolorPrimaryButton(
                     label: "save name"
                 ) {
+                    guard canInteract, capturedEpoch == actionEpoch else { return }
                     do {
                         try store.renameEncyclopedia(
                             id: encyclopediaID,
@@ -362,6 +415,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 WatercolorSecondaryButton(
                     label: "cancel"
                 ) {
+                    guard canInteract, capturedEpoch == actionEpoch else { return }
                     audioManager.play(
                         .popupClose
                     )
@@ -370,7 +424,13 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 }
             }
         }
+        .disabled(!canInteract)
+        .onDisappear { formIsVisible = false; actionEpoch = UUID() }
+        .onChange(of: scenePhase) { _, _ in actionEpoch = UUID() }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in actionEpoch = UUID() }
         .onAppear {
+            formIsVisible = true
+            guard canInteract else { return }
             audioManager.play(
                 .popupOpen
             )
@@ -390,11 +450,21 @@ struct Prompt10DeleteEncyclopediaPopup: View {
 
     @EnvironmentObject private var audioManager: AudioManager
 
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var formIsVisible = false
+    @State private var actionEpoch = UUID()
+    private var canInteract: Bool {
+        formIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
+
     @State private var errorMessage: String?
     @State private var errorIsFixedCopy = false
 
     var body: some View {
-        Prompt10WatercolorPopup {
+        let capturedEpoch = actionEpoch
+        return Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Image(
                     "fruit_peach_soft"
@@ -448,6 +518,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 WatercolorPrimaryButton(
                     label: "keep my encyclopedia"
                 ) {
+                    guard canInteract, capturedEpoch == actionEpoch else { return }
                     audioManager.play(
                         .popupClose
                     )
@@ -458,6 +529,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 WatercolorSecondaryButton(
                     label: "delete encyclopedia"
                 ) {
+                    guard canInteract, capturedEpoch == actionEpoch else { return }
                     do {
                         try store.deleteEncyclopedia(
                             id: encyclopediaID
@@ -476,7 +548,13 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 }
             }
         }
+        .disabled(!canInteract)
+        .onDisappear { formIsVisible = false; actionEpoch = UUID() }
+        .onChange(of: scenePhase) { _, _ in actionEpoch = UUID() }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in actionEpoch = UUID() }
         .onAppear {
+            formIsVisible = true
+            guard canInteract else { return }
             audioManager.play(
                 .popupOpen
             )
@@ -492,8 +570,18 @@ struct Prompt10FullLibraryPopup: View {
 
     @EnvironmentObject private var audioManager: AudioManager
 
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var formIsVisible = false
+    @State private var actionEpoch = UUID()
+    private var canInteract: Bool {
+        formIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
+
     var body: some View {
-        Prompt10WatercolorPopup {
+        let capturedEpoch = actionEpoch
+        return Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Image(
                     "fruit_blueberry_friendly"
@@ -521,6 +609,7 @@ struct Prompt10FullLibraryPopup: View {
                 WatercolorPrimaryButton(
                     label: "back to my library"
                 ) {
+                    guard canInteract, capturedEpoch == actionEpoch else { return }
                     audioManager.play(
                         .popupClose
                     )
@@ -529,7 +618,13 @@ struct Prompt10FullLibraryPopup: View {
                 }
             }
         }
+        .disabled(!canInteract)
+        .onDisappear { formIsVisible = false; actionEpoch = UUID() }
+        .onChange(of: scenePhase) { _, _ in actionEpoch = UUID() }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in actionEpoch = UUID() }
         .onAppear {
+            formIsVisible = true
+            guard canInteract else { return }
             audioManager.play(
                 .popupOpen
             )

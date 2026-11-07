@@ -3,6 +3,104 @@ import XCTest
 final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testSharedDeletionOfOpenLibraryBookRestoresInteractiveShelf() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioLibraryStorageQA", "-fruitfolioLibraryEditableFixture",
+            "-fruitfolioLibraryExternalDeleteFixture", "-fruitfolioLibraryReduceMotion",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let book = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "QA readable book")).firstMatch
+        XCTAssertTrue(book.waitForExistence(timeout: 8))
+        for _ in 0..<20 { if book.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(book.isHittable); book.tap()
+        let title = app.descendants(matching: .any).matching(identifier: "savedBook.title").firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 8))
+        let remove = app.buttons["libraryQA.externalDelete"]
+        XCTAssertTrue(remove.isHittable); remove.tap()
+        let first = app.buttons["build my first encyclopedia"]
+        XCTAssertTrue(first.waitForExistence(timeout: 5))
+        for _ in 0..<16 { if first.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(first.isEnabled); XCTAssertTrue(first.isHittable, "Shared deletion must not strand a dimmed, disabled shelf")
+        XCTAssertFalse(app.staticTexts["libraryQA.externalDeleteError"].exists)
+        first.tap()
+        XCTAssertTrue(app.textFields["library.createBook.name"].waitForExistence(timeout: 5))
+        app.terminate()
+    }
+
+    func testLibraryCreateRenameAndDeleteConfirmationRetainForegroundDrafts() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioLibraryStorageQA", "-fruitfolioLibraryEditableFixture",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioLibraryReduceMotion"] }
+            app.launch()
+            let create = app.buttons["library.createAnother"]
+            XCTAssertTrue(create.waitForExistence(timeout: 8))
+            for _ in 0..<20 { if create.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(create.isHittable); create.tap()
+            let field = app.textFields["library.createBook.name"]
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            let original = "owned library fixture 42"
+            field.tap(); field.typeText(original)
+            let styles = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "library.createBook.style."))
+            XCTAssertGreaterThan(styles.count, 1)
+            let selectedStyle = styles.element(boundBy: 1)
+            for _ in 0..<12 { if selectedStyle.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(selectedStyle.isHittable); selectedStyle.tap()
+            XCTAssertTrue(selectedStyle.isSelected)
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            XCTAssertEqual(field.value as? String, original)
+            XCTAssertTrue(selectedStyle.isSelected, "The user-selected cover must survive foregrounding")
+            let submit = app.buttons["library.createBook.submit"]
+            for _ in 0..<20 { if submit.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(submit.isHittable); submit.tap()
+            let tile = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", original)).firstMatch
+            XCTAssertTrue(tile.waitForExistence(timeout: 5))
+            for _ in 0..<20 { if tile.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(tile.isHittable); tile.tap()
+            let heading = app.descendants(matching: .any).matching(identifier: "savedBook.title").firstMatch
+            XCTAssertTrue(heading.waitForExistence(timeout: 8))
+            XCTAssertTrue(heading.label.contains(original))
+            let rename = app.buttons["savedBook.rename"]
+            XCTAssertTrue(rename.isHittable); rename.tap()
+            let renameField = app.textFields["library.renameBook.name"]
+            XCTAssertTrue(renameField.waitForExistence(timeout: 5)); renameField.tap(); renameField.typeText(" edited")
+            let authored = renameField.value as? String
+            XCTAssertNotEqual(authored, original)
+            XCTAssertTrue(authored?.contains("edited") == true)
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+            XCTAssertTrue(renameField.waitForExistence(timeout: 5))
+            XCTAssertEqual(renameField.value as? String, authored)
+            let save = app.buttons["save name"]
+            for _ in 0..<20 { if save.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(save.isHittable); save.tap()
+            XCTAssertTrue(heading.waitForExistence(timeout: 5))
+            XCTAssertEqual(heading.label, authored)
+            let remove = app.buttons["savedBook.delete"]
+            XCTAssertTrue(remove.isHittable); remove.tap()
+            let keep = app.buttons["keep my encyclopedia"]
+            XCTAssertTrue(keep.waitForExistence(timeout: 5))
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+            XCTAssertTrue(keep.waitForExistence(timeout: 5)); keep.tap()
+            XCTAssertTrue(heading.waitForExistence(timeout: 5))
+            XCTAssertEqual(heading.label, authored)
+            XCTAssertTrue(remove.isHittable); remove.tap()
+            let confirmDelete = app.buttons["delete encyclopedia"]
+            XCTAssertTrue(confirmDelete.waitForExistence(timeout: 5))
+            for _ in 0..<20 { if confirmDelete.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(confirmDelete.isHittable); confirmDelete.tap()
+            XCTAssertTrue(create.waitForExistence(timeout: 5))
+            let untouched = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "QA readable book")).firstMatch
+            XCTAssertTrue(untouched.exists, "Only the deliberately created QA book is deleted")
+            captureGame(app, name: "library-owned-create-rename-delete-reduced-\(reduced)")
+            app.terminate()
+        }
+    }
+
     func testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioAskPaperQA", "-fruitfolioAskControlsQA",

@@ -5,6 +5,7 @@ import SwiftUI
 private final class Prompt10LibraryStorageFixture: ObservableObject {
     let store: Prompt10SavedLibraryStore
     let setupFailure: String?
+    @Published private(set) var externalDeleteFailure: String?
     private let suite = "Fruitfolio.libraryStorageUIQA." + UUID().uuidString
     private let defaults: UserDefaults
     init() {
@@ -19,11 +20,19 @@ private final class Prompt10LibraryStorageFixture: ObservableObject {
             let book = Prompt10Encyclopedia(id: id, name: "QA readable book", style: .sage, chapters: [chapter])
             let bytes = try JSONEncoder().encode([book])
             var objects = try JSONSerialization.jsonObject(with: bytes) as! [[String: Any]]
-            objects[0]["futureFixtureField"] = ["revision": 99]
+            if !ProcessInfo.processInfo.arguments.contains("-fruitfolioLibraryEditableFixture") {
+                objects[0]["futureFixtureField"] = ["revision": 99]
+            }
             defaults.set(try JSONSerialization.data(withJSONObject: objects), forKey: "fixture")
         } catch { failure = "library QA fixture could not be prepared" }
         setupFailure = failure
         store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
+    }
+    func deleteFixtureBookThroughSharedStore() {
+        guard ProcessInfo.processInfo.arguments.contains("-fruitfolioLibraryExternalDeleteFixture"),
+              let id = store.encyclopedias.first?.id else { return }
+        do { try store.deleteEncyclopedia(id: id) }
+        catch { externalDeleteFailure = "disposable shared-delete fixture failed" }
     }
     func cleanUp() { defaults.removePersistentDomain(forName: suite) }
 }
@@ -35,7 +44,18 @@ struct Prompt10LibraryStorageRegressionHarness: View {
     var body: some View {
         Group {
             if let failure = fixture.setupFailure { Text(failure) }
-            else if presented { Prompt10SavedLibraryView(store: fixture.store, onBack: { presented = false }) }
+            else if presented {
+                VStack(spacing: 0) {
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioLibraryExternalDeleteFixture") {
+                        Button("delete disposable book through shared store") { fixture.deleteFixtureBookThroughSharedStore() }
+                            .accessibilityIdentifier("libraryQA.externalDelete")
+                        if let error = fixture.externalDeleteFailure {
+                            Text(verbatim: error).accessibilityIdentifier("libraryQA.externalDeleteError")
+                        }
+                    }
+                    Prompt10SavedLibraryView(store: fixture.store, onBack: { presented = false })
+                }
+            }
             else { Button("open library QA") { presented = true } }
         }
         .onAppear {
