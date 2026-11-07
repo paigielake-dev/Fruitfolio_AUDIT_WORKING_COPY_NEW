@@ -73,9 +73,9 @@ actor FruitfolioResearchPackageStore {
         return indexed
     }
 
-    func searchNotes(question: String) throws -> [FruitfolioRankedNote] {
+    func searchNotes(question: String, personalContextTerms: Set<String> = []) throws -> [FruitfolioRankedNote] {
         try Task.checkCancellation()
-        let result = try retriever().searchNotes(question: question)
+        let result = try retriever().searchNotes(question: question, personalContextTerms: personalContextTerms)
         try Task.checkCancellation()
         return result
     }
@@ -852,7 +852,8 @@ final class FruitfolioResearchIntelligenceEngine:
         // leaving the main actor available for typing, scrolling and controls.
         let retriever = try await packageStore.retriever()
         let package = retriever.package
-        let rankedNotes = try await packageStore.searchNotes(question: normalized)
+        let personalTerms = try userContext?.personalRetrievalTerms() ?? []
+        let rankedNotes = try await packageStore.searchNotes(question: normalized, personalContextTerms: personalTerms)
 
         var coverage =
             retriever.coverage(

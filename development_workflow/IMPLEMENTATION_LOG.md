@@ -4390,3 +4390,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer", "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included", "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD", "syntax": "337 parsed, zero syntax errors; not Apple typechecking", "sound_ownership": "zero diagnostics", "Swift_Testing": "21 passed, zero failures"}.
 - Next action: Implement source-grounded field-specific narrative evidence relevance beyond generic category queries, then continue remaining original/founder requirements without claiming blanket completion.
 - Commit: containing commit for batch Today-context-approved-research-and-observed-facts.
+
+## Selected-personal-narrative-approved-library-relevance
+
+- Parent checkpoint: 2d7b86466310772778ca3b95c4095a1334aaed60.
+- Source-order requirements: [281, 282, 285, 286, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/FruitfolioAskUserContext.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift, FruitfolioTests/Prompt1BAskUserContextTests.swift, FruitfolioTests/Prompt27AContextPersonalizationTests.swift, development_workflow/SELECTED_PERSONAL_NARRATIVE_LIBRARY_RELEVANCE.json.
+- Use explicitly selected personal narrative words for ephemeral local note ranking through eligible heading vocabulary, including possessive disease-name forms. No narrative instructions enter question or claim map, no measurement notes participate, and context limit is enforced before use. Actual supplied Hashimoto/Graves corpus test verifies relevant evidence reaches canonical engine. No mathematical, clinical-content, approval, stored-data or artwork change.
+- Tests added/updated: Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims, Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance, Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails.
+- Verification: {"focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.", "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"}.
+- Next action: Continue cross-part source reconciliation and missing scientific illustration/explanation requirements310–314, preserving executed evidence and separating Apple acceptance. Narrative clinical/translation limitations remain documented.
+- Commit: containing commit for batch Selected-personal-narrative-approved-library-relevance.

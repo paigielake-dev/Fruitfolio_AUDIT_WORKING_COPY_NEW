@@ -347,12 +347,27 @@ nonisolated struct FruitfolioLocalResearchRetriever:
 
     func searchNotes(
         question: String,
-        limit: Int = 8
+        limit: Int = 8,
+        personalContextTerms: Set<String> = []
     ) -> [FruitfolioRankedNote] {
-        let queryTokens =
+        var queryTokens =
             FruitfolioQueryNormalizer.tokens(
                 question
             )
+
+        // Personal text may influence lexical relevance only through words
+        // present in eligible library headings. Never concatenate narrative
+        // instructions into the question or turn these words into claims.
+        if !personalContextTerms.isEmpty {
+            let libraryVocabulary = Set(indexedNotes.flatMap { $0.headingTokens })
+            func nameForm(_ term: String) -> String {
+                if term.hasSuffix("'s") { return String(term.dropLast(2)) }
+                if term.hasSuffix("'") { return String(term.dropLast()) }
+                return term
+            }
+            let reportedForms = Set(personalContextTerms.map(nameForm))
+            queryTokens.formUnion(libraryVocabulary.filter { reportedForms.contains(nameForm($0)) })
+        }
 
         guard !queryTokens.isEmpty, limit > 0 else {
             return []

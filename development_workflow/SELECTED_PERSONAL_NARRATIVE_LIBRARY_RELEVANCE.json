@@ -1,0 +1,49 @@
+{
+  "scope": "Bounded lexical retrieval improvement, not full clinical or narrative interpretation completion",
+  "original_requirements": {
+    "281": "Personal narratives now influence relevant evidence ranking beyond category titles, only for explicitly selected current provided entries.",
+    "282": "Intersect selected narrative words with eligible local library heading vocabulary; match possessive condition-name forms; keep canonical approval and citation validation unchanged.",
+    "285": "Narrative relevance terms never become model instructions, normalized question, asserted claims or claim/evidence-map requirements. Exact narrative qualifiers remain separate untrusted context.",
+    "286": "Whole snapshot byte limit enforced before relevance extraction; no truncation, missing data invention or diagnostic conclusion from lexical matches.",
+    "443": "Actual Hashimoto/Graves corpus and canonical engine test verifies relevance and question/claim separation; existing consent/privacy/limit tests extended.",
+    "444": "Project XCTest source contains executed corpus test and note-exclusion/oversize assertions."
+  },
+  "founder_source_ids": [
+    "FOUNDER-SOURCE-L01221",
+    "FOUNDER-SOURCE-L01227"
+  ],
+  "verification": {
+    "executed": {
+      "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
+      "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+      "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim",
+      "workflow": "75 passed, zero failures; /tmp/fruitfolio_personal_retrieval_workflow.log"
+    },
+    "not_run": [
+      "Apple SDK build/UI/device tests",
+      "Native CPU synthesis after retrieval change; earlier actual Qwen result belongs to prior batch",
+      "Official MADLAD inference and clinical interpretation acceptance"
+    ],
+    "remaining": [
+      "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
+      "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
+      "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
+    ]
+  },
+  "source_sha256": {
+    "Fruitfolio/Ask/FruitfolioAskUserContext.swift": "852819f5e2bb59af491ec88dae328ec206cb850eb6d0a0afed6fd00c8634c35e",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift": "408cdaaf5ea484c4da76a096187062a29865e89f3b527dfe80732f275c0c1227",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift": "461b1bf497a1c343b9e1a8ca3225702d02b471158aa74817ec578e71cc6e71d6",
+    "FruitfolioTests/Prompt1BAskUserContextTests.swift": "3cb8840ad36449d9465f536a085b7a54360d8f05e9bebdd447b2d56c9a2f85d4",
+    "FruitfolioTests/Prompt27AContextPersonalizationTests.swift": "26dbe2b9189c722558457dda5be18663be1b37016087e68d923a74833620ce64"
+  },
+  "logs": [
+    "/tmp/fruitfolio_personal_retrieval_final_regressions.log",
+    "/tmp/fruitfolio_personal_retrieval_final_syntax.log",
+    "/tmp/fruitfolio_personal_retrieval_possessives.log"
+  ],
+  "failed_attempts": [
+    "/tmp/fruitfolio_personal_retrieval_actual_corpus.log (test referenced incorrect claim map property; corrected)",
+    "/tmp/fruitfolio_personal_retrieval_actual_corpus_fixed.log (four real corpus failures from possessive heading mismatch; corrected with bounded name forms)"
+  ]
+}

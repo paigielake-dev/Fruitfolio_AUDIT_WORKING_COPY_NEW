@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "40015e67a2383bb37a959cd7b94b7975b2cafea3",
+  "current_HEAD": "2d7b86466310772778ca3b95c4095a1334aaed60",
   "latest_verified_commit": null,
   "current_checklist_part": 6,
-  "current_requirement": 281,
-  "current_implementation_batch": "Today-context-approved-research-and-observed-facts",
+  "current_requirement": 310,
+  "current_implementation_batch": "Selected-personal-narrative-approved-library-relevance",
   "completed_requirements": [
     206,
     210
@@ -494,18 +494,14 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-    "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
-    "Fruitfolio/Cycle Tracker/Prompt1BCycleModalRegressionHarness.swift",
-    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+    "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+    "FruitfolioTests/Prompt1BAskUserContextTests.swift",
     "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/CURRENT_CHECKPOINT.json",
     "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/TODAY_CONTEXT_APPROVED_RESEARCH_AND_OBSERVED_FACTS.json"
+    "development_workflow/SELECTED_PERSONAL_NARRATIVE_LIBRARY_RELEVANCE.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -518,20 +514,16 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
-    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build --test-filter testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity"
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt27AContextResearchTests|Prompt1BAskUserContextTests|Prompt1BResearchEngineIntegrationTests|Prompt1BResearchPackageTests|Prompt1BResearchRetrievalTests",
+    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
   ],
   "last_test_results": {
-    "focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer",
-    "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included",
-    "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD",
-    "syntax": "337 parsed, zero syntax errors; not Apple typechecking",
-    "sound_ownership": "zero diagnostics",
-    "Swift_Testing": "21 passed, zero failures"
+    "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
+    "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+    "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"
   },
-  "next_exact_implementation_action": "Implement source-grounded field-specific narrative evidence relevance beyond generic category queries, then continue remaining original/founder requirements without claiming blanket completion.",
-  "updated_at": "2026-11-07T19:43:35.453304+00:00",
+  "next_exact_implementation_action": "Continue cross-part source reconciliation and missing scientific illustration/explanation requirements310\u2013314, preserving executed evidence and separating Apple acceptance. Narrative clinical/translation limitations remain documented.",
+  "updated_at": "2026-11-07T19:47:56.868599+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -541,22 +533,19 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer",
-      "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included",
-      "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD",
-      "syntax": "337 parsed, zero syntax errors; not Apple typechecking",
-      "sound_ownership": "zero diagnostics",
-      "Swift_Testing": "21 passed, zero failures"
+      "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
+      "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+      "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"
     },
     "not_run": [
-      "Apple SDK build and native UI test; real-device lifecycle/accessibility/memory acceptance",
-      "Official MADLAD inference and translation; clinical and native-language acceptance"
+      "Apple SDK build/UI/device tests",
+      "Native CPU synthesis after retrieval change; earlier actual Qwen result belongs to prior batch",
+      "Official MADLAD inference and clinical interpretation acceptance"
     ],
     "remaining": [
-      "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
-      "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
-      "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
-      "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+      "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
+      "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
+      "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
     ]
   },
   "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",

@@ -74,6 +74,10 @@ final class Prompt1BAskUserContextTests: XCTestCase {
         XCTAssertTrue(json.contains("12,50")); XCTAssertTrue(json.contains("µg/L"))
         XCTAssertTrue(json.contains("clinician_confirmation_reported_by_user_not_verified_by_fruitfolio"))
         XCTAssertFalse(json.contains("must not share"))
+        let terms = try snapshot.personalRetrievalTerms()
+        XCTAssertTrue(terms.contains("reported"))
+        XCTAssertFalse(terms.contains("private"), "Measurement notes cannot augment personal-context retrieval")
+        XCTAssertFalse(terms.contains("progesterone"), "Measurements retain their existing typed hormone hints")
     }
     func testExactEncodedContextBoundaryAndEscapedExpansionRemainEnforced() throws {
         func snapshot(_ text: String) -> FruitfolioAskUserContext {
@@ -100,6 +104,7 @@ final class Prompt1BAskUserContextTests: XCTestCase {
             personalCategories: [], measurements: [record], context: .unspecified))
         XCTAssertEqual(captured.records.first?.fields["notes_user_reported"], record.notes)
         XCTAssertThrowsError(try captured.promptJSON(), "Capture is not permission to send an oversized prompt")
+        XCTAssertThrowsError(try captured.personalRetrievalTerms(), "Ranking cannot bypass the whole-context byte limit")
     }
     @MainActor
     func testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion() async throws {

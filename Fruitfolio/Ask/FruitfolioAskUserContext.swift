@@ -64,6 +64,18 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
     }
     let records: [Record]
     let topicHints: [String]
+    /// Ephemeral lexical relevance only, never claims or model instructions.
+    /// Only explicitly selected personal entries participate; measurement notes,
+    /// identifiers, dates and provenance are deliberately excluded.
+    func personalRetrievalTerms() throws -> Set<String> {
+        _ = try promptJSON() // Reject the whole oversized snapshot before use.
+        return records.filter { $0.kind == "personal_health_context" }.reduce(into: Set<String>()) { terms, record in
+            if let text = record.fields["text_user_reported"] {
+                terms.formUnion(FruitfolioQueryNormalizer.tokens(text))
+            }
+        }
+    }
+
     static let maximumJSONBytes = 6_000
     enum Failure: LocalizedError {
         case tooLarge
