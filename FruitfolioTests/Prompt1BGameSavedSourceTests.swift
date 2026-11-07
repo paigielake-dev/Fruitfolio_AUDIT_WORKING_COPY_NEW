@@ -5,15 +5,30 @@ import XCTest
 final class Prompt1BGameSavedSourceTests: XCTestCase {
     private func question(records: [AskSourceRecord]? = nil,
                           text: String = "which word matches the exact test excerpt?",
-                          category: String = "source-excerpt practice") -> Prompt28Question {
+                          category: String = "source-excerpt practice",
+                          explanation: String = "test-only original field x_y = 2–4; not a medical claim",
+                          sourceIDs: [String]? = nil, version: String = "package-v2",
+                          review: String = "test-only", createdAt: Date = Date(timeIntervalSince1970: 1_700_000_000)) -> Prompt28Question {
         Prompt28Question(id: "fixture", topicQuery: "test", normalizedTopic: "test", category: category,
             educationalDifficulty: .easy, questionText: text,
             answerOptions: [.init(id: "a", text: "first"), .init(id: "b", text: "second")], correctAnswerID: "a",
-            explanation: "test-only original field x_y = 2–4; not a medical claim", sourceIDs: records?.map(\.id) ?? ["legacy"],
+            explanation: explanation, sourceIDs: sourceIDs ?? (records?.map(\.id) ?? ["legacy"]),
             sourceTitles: records?.map(\.title) ?? ["Legacy attribution"], catchConceptID: "visual-starred-fruit", catchRule: "starred fruit",
-            goodFruitIDs: [.pear], badFruitIDs: [.lemon], contentVersion: "package-v2", reviewStatus: "test-only",
-            createdAt: Date(timeIntervalSince1970: 1_700_000_000), sourceRecords: records)
+            goodFruitIDs: [.pear], badFruitIDs: [.lemon], contentVersion: version, reviewStatus: review,
+            createdAt: createdAt, sourceRecords: records)
     }
+    func testBlankProvenanceOrExplanationAndNonfiniteDatesCannotBecomeSavedResearch() {
+        let invalid = [question(explanation: " \n"), question(sourceIDs: [" "]), question(version: " "),
+            question(review: " "), question(createdAt: Date(timeIntervalSinceReferenceDate: .nan)),
+            question(createdAt: Date(timeIntervalSinceReferenceDate: .infinity))]
+        for (index, q) in invalid.enumerated() {
+            XCTAssertFalse(q.isPlayable, "Malformed scalar metadata case \(index)")
+            // Compare only the Boolean: printing a nonfinite Date is not part of this contract.
+            XCTAssertTrue(Prompt28SavedResearchCopy.pending(question: q) == nil,
+                "Malformed metadata must not reach saved research: \(index)")
+        }
+    }
+
     func testKnownExcerptPresentationPreservesLiteralBytesAndSavedOriginal() throws {
         let literal = "  synthetic [blank]; x_y; FSH ≤ −2.5 IU/L. DOI:10.1234/fixture cafe\u{301}\n\n  "
         let original = Prompt28ExcerptQuestionPresentation.prefix + literal

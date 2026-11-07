@@ -2994,3 +2994,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 882, "native_CPU_XCTest": 904, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 10, "pre_fix_failed_assertions": 3, "earlier_full_failed_assertions": 1, "English_catalog_entries": 967, "nonempty_foreign_units": 0, "Apple_status_launch_vectors_expanded_to": 20, "Apple_status_launch_vectors_executed": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Validate scalar sourced-question metadata before gameplay or saved-research construction: reproduce blank explanation/source identifiers/version/review labels or nonfinite creation date if currently accepted. Reject malformed metadata without changing valid legacy source-version fallback or treating structural labels as clinical approval; add genuine tests, run checks and checkpoint.
 - Commit: containing commit for batch Controlled-calm-research-errors-and-canonical-urgent-tone.
+
+## Reject-malformed-question-scalar-provenance-before-save
+
+- Parent checkpoint: 1c14feb9115018c826f6393933a9253093fbee54.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift, development_workflow/QUESTION_SCALAR_METADATA_VALIDATION.md.
+- Production question gate requires nonblank explanation/source identifiers/package-version/review label and finite creation date. Malformed values rejected before gameplay/saved builder; valid bytes notnormalized. Six-case saved-source baseline12assertions for6invalidscalarcases; full883/905XCTest+21SwiftTesting each pass incl UTF8/citation/version/legacy tests. Nonblank label is NOT clinicalapproval. Savedbuilder/schema/catalogSHA unchanged; source-record-specific versions separate next; Apple/officialmodel unverified.
+- Tests added/updated: FruitfolioTests/Prompt1BGameSavedSourceTests.swift.
+- Verification: {"portable_XCTest": 883, "native_CPU_XCTest": 905, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 6, "pre_fix_failed_assertions": 12, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify present-but-blank per-source version metadata is not saved as an empty version while nil legacy versions retain known package fallback. Add actual source-record regression, reject only reproduced malformed cases without inventing provenance or rewriting citations, execute checks and checkpoint.
+- Commit: containing commit for batch Reject-malformed-question-scalar-provenance-before-save.

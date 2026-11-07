@@ -107,6 +107,7 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
         seriousFeedback == true || Prompt34LocalSafetyRouter.classify(topicQuery + " " + questionText + " " + explanation).requiresSeriousTone
     }
 
+    // Structural/provenance presence only; labels do not certify clinical review.
     var isPlayable: Bool {
         !id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && answerOptions.count >= 2
@@ -115,7 +116,12 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
             && answerOptions.allSatisfy({ !$0.id.isEmpty && !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && answerOptions.filter({ $0.id == correctAnswerID }).count == 1
             && !questionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !explanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !reviewStatus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && createdAt.timeIntervalSinceReferenceDate.isFinite
             && !sourceIDs.isEmpty
+            && sourceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && Set(sourceIDs).count == sourceIDs.count
             && (sourceRecords.map { Set($0.map(\.id)) == Set(sourceIDs) && $0.count == sourceIDs.count } ?? true)
             && !catchRule.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
