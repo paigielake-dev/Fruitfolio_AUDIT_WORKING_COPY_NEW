@@ -1,0 +1,1421 @@
+{
+  "reviewed_at_utc": "2026-11-07T07:33:14.534761+00:00",
+  "base_commit": "8e3ecdde337bbb8ebebd0507fec72838f95e01ac",
+  "scope": "All original Part4 requirements; implementation closure is distinct from Apple/release acceptance. No blanket promotion of other sections.",
+  "counts": {
+    "IMPLEMENTED_VERIFIED": 2,
+    "IMPLEMENTED_AWAITING_EXTERNAL": 50
+  },
+  "requirements": [
+    {
+      "sequence": 170,
+      "original_requirement_id": "1",
+      "requirement": "Change the empty-state wording to the specified “nothing here yet!” version.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical decorative shelf and a separate interactive book collection; latest exact empty-library copy.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt10SavedLibraryTests.swift",
+        "FruitfolioTests/Prompt01AssetSystemTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple empty/populated shelf identity, duplicate-decoration inspection and actual copy rendering"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 171,
+      "original_requirement_id": "2",
+      "requirement": "Make the populated decorative bookshelf identical to the empty-state decorative bookshelf.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical decorative shelf and a separate interactive book collection; latest exact empty-library copy.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt10SavedLibraryTests.swift",
+        "FruitfolioTests/Prompt01AssetSystemTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple empty/populated shelf identity, duplicate-decoration inspection and actual copy rendering"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 172,
+      "original_requirement_id": "3",
+      "requirement": "Remove duplicate bookshelf artwork.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical decorative shelf and a separate interactive book collection; latest exact empty-library copy.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt10SavedLibraryTests.swift",
+        "FruitfolioTests/Prompt01AssetSystemTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple empty/populated shelf identity, duplicate-decoration inspection and actual copy rendering"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 173,
+      "original_requirement_id": "4",
+      "requirement": "Do not add duplicate books, flowers, labels, bookmarks, plants, or other decorations.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical decorative shelf and a separate interactive book collection; latest exact empty-library copy.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt10SavedLibraryTests.swift",
+        "FruitfolioTests/Prompt01AssetSystemTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple empty/populated shelf identity, duplicate-decoration inspection and actual copy rendering"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 174,
+      "original_requirement_id": "5",
+      "requirement": "Keep actual saved encyclopedias in their separate interactive collection.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical decorative shelf and a separate interactive book collection; latest exact empty-library copy.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt10SavedLibraryTests.swift",
+        "FruitfolioTests/Prompt01AssetSystemTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple empty/populated shelf identity, duplicate-decoration inspection and actual copy rendering"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 175,
+      "original_requirement_id": "6",
+      "requirement": "Improve accessibility of sorting controls.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Owned sort presentation, translated labels/values, focus restoration and native counts are implemented.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Execute actual sort/focus/VoiceOver/RTL/large-text vectors"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 176,
+      "original_requirement_id": "7",
+      "requirement": "Add appropriate character limits to encyclopedia titles.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Shared grapheme limits and explicit-content policy apply to canonical title/description mutations; legitimate clinical examples pass without substring censorship.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookLabelTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple validation/counter/layout acceptance and linguistic/product review of moderation coverage"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 177,
+      "original_requirement_id": "8",
+      "requirement": "Add appropriate character limits to descriptions.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Shared grapheme limits and explicit-content policy apply to canonical title/description mutations; legitimate clinical examples pass without substring censorship.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookLabelTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple validation/counter/layout acceptance and linguistic/product review of moderation coverage"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 178,
+      "original_requirement_id": "9",
+      "requirement": "Validate titles and descriptions against the specified non-explicit-content rules.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Shared grapheme limits and explicit-content policy apply to canonical title/description mutations; legitimate clinical examples pass without substring censorship.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookLabelTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple validation/counter/layout acceptance and linguistic/product review of moderation coverage"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 179,
+      "original_requirement_id": "10",
+      "requirement": "Do not incorrectly reject legitimate sexual-health terminology.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Shared grapheme limits and explicit-content policy apply to canonical title/description mutations; legitimate clinical examples pass without substring censorship.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookLabelTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple validation/counter/layout acceptance and linguistic/product review of moderation coverage"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 180,
+      "original_requirement_id": "11",
+      "requirement": "Improve the positioning of book titles and descriptions.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Authored title/description layout is below interactive book artwork with wrapping and protected native metadata.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookLabelTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple visual composition, font/large-text spacing and artwork collision acceptance"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 181,
+      "original_requirement_id": "12",
+      "requirement": "Prevent text from bunching up against book artwork.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Authored title/description layout is below interactive book artwork with wrapping and protected native metadata.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookLabelTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple visual composition, font/large-text spacing and artwork collision acceptance"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 182,
+      "original_requirement_id": "182",
+      "requirement": "Replace the staged artwork-swap animation with a continuous coded book animation.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 183,
+      "original_requirement_id": "183",
+      "requirement": "Begin with the user’s actual selected book spine.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 184,
+      "original_requirement_id": "184",
+      "requirement": "Preserve the selected book color throughout the sequence.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 185,
+      "original_requirement_id": "185",
+      "requirement": "Move the same book forward from the bookshelf.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 186,
+      "original_requirement_id": "186",
+      "requirement": "Center it in front of the user.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 187,
+      "original_requirement_id": "187",
+      "requirement": "Animate the book opening continuously.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 188,
+      "original_requirement_id": "188",
+      "requirement": "Move from closed to partially open to fully open without discrete image swaps.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 189,
+      "original_requirement_id": "189",
+      "requirement": "Keep the complete open book visible.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 190,
+      "original_requirement_id": "190",
+      "requirement": "Do not zoom into the right-hand page.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 191,
+      "original_requirement_id": "191",
+      "requirement": "Smoothly reposition and scale the entire book into the inside-book layout.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 192,
+      "original_requirement_id": "192",
+      "requirement": "Render saved content inside that same book.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 193,
+      "original_requirement_id": "193",
+      "requirement": "Prevent book duplication, disappearance, jumps, and color resets.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 194,
+      "original_requirement_id": "194",
+      "requirement": "Remove the smaller library_book_open artwork from inside the book.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 195,
+      "original_requirement_id": "195",
+      "requirement": "Center the final coded open book near the top of the screen.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 196,
+      "original_requirement_id": "196",
+      "requirement": "Remove the extra bottom bookmark and flower decorations.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One selected styled spine drives the continuous coded whole-book opening and final contained frame; old inside-book artwork/extra decorations removed.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BBookMotionTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple actual continuous animation, original spine/color, full-book visibility and final composition"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 197,
+      "original_requirement_id": "197",
+      "requirement": "Allow users to add their own notes.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 198,
+      "original_requirement_id": "198",
+      "requirement": "Allow users to import their own images from their device or photo library.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 199,
+      "original_requirement_id": "199",
+      "requirement": "Allow users to add independently researched material.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 200,
+      "original_requirement_id": "200",
+      "requirement": "Let users choose the chapter or location where material belongs.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 201,
+      "original_requirement_id": "201",
+      "requirement": "Allow user-added content to be edited.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 202,
+      "original_requirement_id": "202",
+      "requirement": "Allow imported images to be removed or replaced.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 203,
+      "original_requirement_id": "203",
+      "requirement": "Provide save and discard behavior.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 204,
+      "original_requirement_id": "204",
+      "requirement": "Protect unsaved edits.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 205,
+      "original_requirement_id": "205",
+      "requirement": "Do not generate images on the user’s behalf.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Existing note/user-material/chapter/image import/edit/remove/replace/save/discard flows use canonical writes and protect drafts; images come from user imports or registered artwork, not image generation.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+        "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple photo preparation/picker, draft exit choices, file cleanup and complete user-material flows"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 206,
+      "original_requirement_id": "206",
+      "requirement": "Create one shared source of truth for guides.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "TEST_PASSED",
+      "completion_category": "IMPLEMENTED — VERIFIED",
+      "implementation_acceptance": "One canonical store/record identity is shared by Ask, Library and Guide routes; projections reuse IDs and canonical mutations persist metadata/order without separate feature records.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BSharedLibraryCatalogTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+      ],
+      "verification_scope": "Canonical authority/record identity; actual Foundation store/projection tests executed",
+      "remaining_acceptance_conditions": [],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 207,
+      "original_requirement_id": "207",
+      "requirement": "Synchronize guides across Ask, My Encyclopedias, and Build Your Own Guide.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical store/record identity is shared by Ask, Library and Guide routes; projections reuse IDs and canonical mutations persist metadata/order without separate feature records.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BSharedLibraryCatalogTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple Combine/navigation propagation across the actual three feature views; canonical authority and identity are separately verified"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 208,
+      "original_requirement_id": "208",
+      "requirement": "Ensure creation, renaming, editing, recoloring, and deletion propagate everywhere.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical store/record identity is shared by Ask, Library and Guide routes; projections reuse IDs and canonical mutations persist metadata/order without separate feature records.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BSharedLibraryCatalogTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple Combine/navigation propagation across the actual three feature views; canonical authority and identity are separately verified"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 209,
+      "original_requirement_id": "209",
+      "requirement": "Preserve guide title, cover style, contents, ordering, and edits.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "One canonical store/record identity is shared by Ask, Library and Guide routes; projections reuse IDs and canonical mutations persist metadata/order without separate feature records.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BSharedLibraryCatalogTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple Combine/navigation propagation across the actual three feature views; canonical authority and identity are separately verified"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 210,
+      "original_requirement_id": "210",
+      "requirement": "Prevent duplicate feature-specific guide records.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "TEST_PASSED",
+      "completion_category": "IMPLEMENTED — VERIFIED",
+      "implementation_acceptance": "One canonical store/record identity is shared by Ask, Library and Guide routes; projections reuse IDs and canonical mutations persist metadata/order without separate feature records.",
+      "source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BSharedLibraryCatalogTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+      ],
+      "verification_scope": "Canonical authority/record identity; actual Foundation store/projection tests executed",
+      "remaining_acceptance_conditions": [],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 211,
+      "original_requirement_id": "211",
+      "requirement": "Apply the updated empty-shelf wording.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Latest founder shelf/section wording and exclamation point are retained; folder belongs to home state and selected workspace renders only the chosen isolated styled spine.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple copy, folder absence, chosen spine/style and translated composition inspection"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 212,
+      "original_requirement_id": "212",
+      "requirement": "Remove the decorative guide folder once a guide is selected.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Latest founder shelf/section wording and exclamation point are retained; folder belongs to home state and selected workspace renders only the chosen isolated styled spine.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple copy, folder absence, chosen spine/style and translated composition inspection"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 213,
+      "original_requirement_id": "213",
+      "requirement": "Show only the selected guide spine in its chosen color/style during editing.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Latest founder shelf/section wording and exclamation point are retained; folder belongs to home state and selected workspace renders only the chosen isolated styled spine.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple copy, folder absence, chosen spine/style and translated composition inspection"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 214,
+      "original_requirement_id": "214",
+      "requirement": "Keep the folder artwork in the initial Guide Builder state only.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Latest founder shelf/section wording and exclamation point are retained; folder belongs to home state and selected workspace renders only the chosen isolated styled spine.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple copy, folder absence, chosen spine/style and translated composition inspection"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 215,
+      "original_requirement_id": "215",
+      "requirement": "Apply the specified updated empty-section and empty-guide wording.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Latest founder shelf/section wording and exclamation point are retained; folder belongs to home state and selected workspace renders only the chosen isolated styled spine.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple copy, folder absence, chosen spine/style and translated composition inspection"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 216,
+      "original_requirement_id": "216",
+      "requirement": "Ensure the empty-section text includes the requested exclamation point.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "Latest founder shelf/section wording and exclamation point are retained; folder belongs to home state and selected workspace renders only the chosen isolated styled spine.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple copy, folder absence, chosen spine/style and translated composition inspection"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 217,
+      "original_requirement_id": "217",
+      "requirement": "Apply universal popup layout rules to guide creation and editing.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "All Guide forms use the canonical watercolor/notebook host and captured presentation tickets.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "development_workflow/tests/test_workflow.py"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Apple layout/scroll/focus/blur/VoiceOver/RTL acceptance for each form"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 218,
+      "original_requirement_id": "218",
+      "requirement": "Replace the save confirmation with the specified Strawberry presentation.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "The existing saved-status presentation uses Strawberry, saved! directly below, and the approved large card at its implemented geometry.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Execute written actual saved-card scale/label/timing/accessibility vectors on Apple"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 219,
+      "original_requirement_id": "219",
+      "requirement": "Show Strawberry with “saved!” directly underneath.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "The existing saved-status presentation uses Strawberry, saved! directly below, and the approved large card at its implemented geometry.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Execute written actual saved-card scale/label/timing/accessibility vectors on Apple"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 220,
+      "original_requirement_id": "220",
+      "requirement": "Use the existing large control-card popup artwork.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "The existing saved-status presentation uses Strawberry, saved! directly below, and the approved large card at its implemented geometry.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Execute written actual saved-card scale/label/timing/accessibility vectors on Apple"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    },
+    {
+      "sequence": 221,
+      "original_requirement_id": "221",
+      "requirement": "Adjust that card’s scale to fit the intended composition.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "completion_category": "IMPLEMENTED — AWAITING APPLE/EXTERNAL VERIFICATION",
+      "implementation_acceptance": "The existing saved-status presentation uses Strawberry, saved! directly below, and the approved large card at its implemented geometry.",
+      "source_files": [
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift"
+      ],
+      "test_references": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+      ],
+      "verification_scope": "Source implementation reviewed against founder requirement; relevant backend regressions executed; Apple display/interaction unrun",
+      "remaining_acceptance_conditions": [
+        "Execute written actual saved-card scale/label/timing/accessibility vectors on Apple"
+      ],
+      "release_integration_note": "Apple build/UI/device acceptance remains open in integration requirements; no visual result is certified"
+    }
+  ],
+  "source_sha256": {
+    "Fruitfolio/Ask/Prompt09AskView.swift": "a9b84f290228a97196a2e80f24465ae6ffa6889e5f9a7d7a76cb50aceecfe332",
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift": "f9067cdeec0e03d190d8ff074897531becd66122a6143bd66a4e97c9029ee447",
+    "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift": "a87010bd5bef682d4b702ec314d9a420a804fc9fa8a51bb468e7bb0b6127e0e4",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift": "da3543e5aa1298692d8c9265d502fa75d496f01770432827baec9c3e5917232c",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift": "4f3bdc2de8684b1190a3e74395c00b404c08b510aa1b24e664b4a0f272e3691b",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift": "55322703adcf3a40739849625c663b0f03da77e2efccc077a3c5b957778aa885",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift": "110d60918f035f6791d3bf86d5da7467d249b9da8f547ca8072c917607da69b0",
+    "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift": "c762da5fa2a9c6701749c62fe8c90affa7d7f797d3827a92cd55f068a7bedf93",
+    "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift": "952304ea86c9ec81852fcdda0601759650ca1577b7fc2e8ec5a315721572058b",
+    "Fruitfolio/Saved Library/Prompt10BookMotion.swift": "6f817984fa3101b579e0b2802b15fc6ff5964bf76dccc4019b4258f06ec187ff",
+    "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift": "2a461042040a3495d4a6a2814857fff7b08b4e9b4666becafe11ad0fc949ea23",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift": "69befedd2b346549fc5c3c757353b307fe563892fd2d5bf3da370c1b8b177a9d",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift": "bdad435dd0a14baf6b71e46c59727d048c4ccc45d3ef9e4b00f79dca25fde32c",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift": "f774eba48f6596f717c21d2eb628ca7cf4753eb3a5b7825a1737ef8f90cc0c81",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift": "9e3740a576d8b718507ddc567ffc78fe2be0aae4ceecff1f0cad940f57373829",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift": "89ca698f6812d882892594115f05e42a1baaf4f289df05fd92d81656566a61f9",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift": "dc8586cec4ed53f042185378a23289c98a1de201a2bf7676095d04c2ffd5c328",
+    "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift": "ffd98a1d48cdbf619595a7c4d8f40ac3d5e617bff1d48a1c24bc286b76922a0e",
+    "Fruitfolio/Saved Library/Prompt10UserMaterial.swift": "684a0998ad2b43a11bcf201c9205ac0880750024ecdf96c96f14361f6475775a",
+    "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift": "95326efe57ae495b90953a1ce37cbb94bf083f77293b8cb720c3e715a1c0da67"
+  },
+  "unnumbered_founder_paragraphs": [
+    {
+      "label": "4A",
+      "source_line": 1025,
+      "text": "4A — Empty library. Header my encyclopedias is shown with the empty-state artwork/copy including nothing here yet! ☆; the user is prompted toward creating/saving material. - GOOD but make the text ‘nothing here yet! ☆’.",
+      "raw_line_sha256": "f976c60cc6f33bfd98f54fcf0b58bac3cfa4f45115c120804beb39b9297c0a69"
+    },
+    {
+      "label": "4B",
+      "source_line": 1028,
+      "text": "4B — Populated library. Book tiles represent saved encyclopedias. Search and sort controls alter which books are shown and their order. - When the user has one or more saved encyclopedias, the decorative bookshelf must remain exactly the same as the decorative bookshelf shown in the Empty Library state. Do not layer, redistribute, or add duplicate SavedLibrary artwork onto the bookshelf in the populated state. This includes the books, book stack, bookmark, flower, potted plant, label, or any other artwork already present in the canonical bookshelf composition. The user’s actual saved encyclopedias remain in the separate coded collection underneath and do not alter the decorative bookshelf. Empty state bookshelf = populated state bookshelf. No duplicated decorative artwork.",
+      "raw_line_sha256": "7a71ac7c8464359be5175eab9557e75de2aee3a3ecde21894dfdf6d1193b47a3"
+    },
+    {
+      "label": "4C",
+      "source_line": 1031,
+      "text": "4C — Search with matches. Only matching encyclopedias remain visible. - GOOD",
+      "raw_line_sha256": "2d5b5237ded90b42108eb4c74d4ca860392bf87967e502134b8a152547683fa1"
+    },
+    {
+      "label": "4D",
+      "source_line": 1034,
+      "text": "4D — Search with no matches. The library shows its no-result state rather than books. - GOOD",
+      "raw_line_sha256": "0c646547f05f5272a36c754242885381f2e5c051c54c8d1093da1e473cf5ea8a"
+    },
+    {
+      "label": "4E",
+      "source_line": 1037,
+      "text": "4E — Sort menu collapsed/expanded. The sort picker toggles between a quiet control and its list of sort choices: recently updated, alphabetical, newest, oldest. - GOOD; add code to ensure that these are easily accessible to the user.",
+      "raw_line_sha256": "182291c06db353aa3ccb81ec9acb9757561e78b510d365588f0c944d5276dc55"
+    },
+    {
+      "label": "4F",
+      "source_line": 1040,
+      "text": "4F — Create encyclopedia popup. A watercolor popup contains title entry and cover/style choices. Blank title and library-limit failures can appear inside the popup. - GOOD. - Also the titles and description of the encyclopedias must have a character limit appropriate for the space constraints - AND a non-explicit rule [no profanity, violence, or anything crude[don’t just ban the word ‘sex’ b/c user can have a guide on sexual health or something’]]; and they should appear below the guide in an aesthetic fashion rather than being bunched up on it.",
+      "raw_line_sha256": "f13e77875b548b0c90ed22e296ee6372ba4063fc351aaf463d45436072c926c4"
+    },
+    {
+      "label": "4G",
+      "source_line": 1043,
+      "text": "4G — Rename popup. Existing title is editable; validation/persistence failure can keep the popup open with an error. - GOOD",
+      "raw_line_sha256": "a35fda4fddb69330ab20166e634853b2e15bd08a62f59e3976a6032122cf21f7"
+    },
+    {
+      "label": "4H",
+      "source_line": 1046,
+      "text": "4H — Delete confirmation popup. The selected encyclopedia remains in the background while the confirmation popup asks for the destructive action. - GOOD",
+      "raw_line_sha256": "9ba42bb5b2bb03188d58a33a13fd5a3ad0af89e91bef92af0174ed39ed762403"
+    },
+    {
+      "label": "4I",
+      "source_line": 1049,
+      "text": "4I — Library full. At the coded maximum, creation is disabled/redirected to the “full library” popup rather than creating another encyclopedia. - GOOD",
+      "raw_line_sha256": "e2d62c35529076b847034c4a1f2f08e554717cd3222cc53a3ebaac7e84685757"
+    },
+    {
+      "label": "4J",
+      "source_line": 1052,
+      "text": "4J — Book-opening animation. Opening a book is staged through idle → spine → front → closed → open; different book artwork is visible during those stages. - Implement this entirely in code so the user’s selected book colour and all other dynamic book properties are preserved. Use the provided book-opening artwork only as the exact visual reference for how the coded book should look; do not use staged image swaps to create the animation. Create a continuous, fully animated book-opening sequence in code, beginning from the user’s already-present book spine in their selected colour. Seamlessly transition that same book from its bookshelf position into the coded book as it moves forward and centers directly in front of the user like a popup, then physically opens from closed → partially open → fully open through continuous animation rather than discrete stages. Once fully open, DO NOT zoom into the right-hand page. Instead, continuously transform and reposition the entire coded open book into the exact final size, position, orientation, and layout used by the inside-book view. The whole open book must remain visibly present as the persistent container for the inside-book experience, with the user’s actual saved content appearing on/in the appropriate pages once the book settles into its final inside-book position. The transition into the inside-book state must therefore occur through the movement and settling of the complete coded open book itself—not through a camera zoom into one page, replacement with another book representation, or handoff to a separate page-only view. The entire sequence must read as one continuous physical interaction: existing coloured book spine → same book comes forward and centers → same book continuously opens → fully open book → complete open book smoothly moves/scales into its final inside-book position → inside-book content appears within that same book. Preserve the user’s selected book colour and all applicable dynamic book properties throughout the entire transition and resulting inside-book state. There must be no visual jump, asset swap, duplicated book, disappearing book, page-only zoom, reset to a default colour, or obvious handoff between the bookshelf book, opening animation, and final inside-book view.",
+      "raw_line_sha256": "ac39d4ca60bba0d502f74acd939206233ab89e8eb73cce494960240fc59c7f75"
+    },
+    {
+      "label": "4K",
+      "source_line": 1055,
+      "text": "4K — Encyclopedia detail. Inside a book, chapters/pages are shown. Chapter sections can be expanded/collapsed. - Remove the small library_book_open artwork currently rendered inside the open book. The book itself must be the coded fully open book in the user’s selected book colour, carried seamlessly from the opening animation (placed at the TOP and CENTERED in the screen; aesthetically pleasing). Do not place another book inside it. Keep all other inside-book content, layout, and behavior unchanged. Also remove the extra art on the bottom (the bookmark and the flower).",
+      "raw_line_sha256": "2480b290a90d9eaed11f3cb90324d191a2e63b91cc598b3cf36d1e47d10e1374"
+    },
+    {
+      "label": "4L",
+      "source_line": 1058,
+      "text": "4L — Saved page reading. Selecting a page opens its saved question/body. A full-answer page shows the saved full answer; an excerpt page shows the excerpt. Source metadata and notes are available where present.",
+      "raw_line_sha256": "eca87d273c46cbe9e179c3940f86ced49971de31a8dda0a5a51f0f5cdba6776e"
+    },
+    {
+      "label": "4M",
+      "source_line": 1061,
+      "text": "4M — Ask save destination. When Ask sends content here, the destination UI can have no encyclopedia selected, an encyclopedia selected but no chapter, both selected, new-encyclopedia creation open, validation error, and final successful save. - GOOD.",
+      "raw_line_sha256": "79126d7447ec93544a7f447f6b951ce66398dd45f4c310f015567452b8d769d1"
+    },
+    {
+      "label": "5A",
+      "source_line": 1073,
+      "text": "5A — Empty guide shelf. Header build your own guide is visible with folder/bow/star/Blueberry decoration and your bookshelf is waiting. :-). If no saved material exists, the page also explains that there is nothing available to build from and provides go to ask. NEW TEXT: your bookshelf is waiting. :-), everything else GOOD.",
+      "raw_line_sha256": "0c6a3945a78ceaceb66b668997307783c059ae65cd1d59043e87317eee691f91"
+    },
+    {
+      "label": "5B",
+      "source_line": 1076,
+      "text": "5B — Populated guide shelf. Existing guides appear as selectable guide objects with their chosen cover style. - GOOD.",
+      "raw_line_sha256": "cc0ad5f892ae594ef9c1b3e5a72b28f7361abfa732811186bf0c35590b92ec18"
+    },
+    {
+      "label": "5C",
+      "source_line": 1079,
+      "text": "5C — Create guide overlay. The user names/creates a new guide in an overlay. - GOOD; ensure popup rules apply.",
+      "raw_line_sha256": "a6b8e9de3ba732835da8a92434f35c29369d05fface1d3210cc01c144933bfa6"
+    },
+    {
+      "label": "5D",
+      "source_line": 1082,
+      "text": "5D — Selected guide editor. The guide’s name, optional subtitle/description, cover, saved-page count, sections, contents, and guide actions are visible. - GOOD BUT Remove guide folder from behind the selected guide. This state should display only the isolated guide spine in the user’s selected colour/style. Keep everything else unchanged. Guide folder should appear only in the initial/beginning Guide Builder state. Once a guide is selected or being edited, remove the folder entirely and display only the isolated guide spine in the user’s selected colour/style. Keep everything else unchanged.",
+      "raw_line_sha256": "8e5c4ed4cd0b340be0df30089880b80fef124015b1ae9a94b48e0b6b6637aae7"
+    },
+    {
+      "label": "5E",
+      "source_line": 1085,
+      "text": "5E — Guide options closed/open. guide options reveals rename, change cover, description, and delete actions. - GOOD",
+      "raw_line_sha256": "e154dc8d9d71ee61a5c3e6ce3b963ccf6a76d9a5d3bb0c71b1636241102a4129"
+    },
+    {
+      "label": "5F",
+      "source_line": 1088,
+      "text": "5F — Rename / description / cover overlays. Each edits one guide property without leaving the guide. - GOOD",
+      "raw_line_sha256": "0cd6ca9c4d08a6d1cca442167d851f87b79a1e6b30f6305581843619c63d2ea0"
+    },
+    {
+      "label": "5G",
+      "source_line": 1091,
+      "text": "5G — Delete guide confirmation. Destructive confirmation overlays the guide state. - GOOD",
+      "raw_line_sha256": "801da41c9222fb43bffc36a29813941fe1ddee3130c21688f25db0cc418e2627"
+    },
+    {
+      "label": "5H",
+      "source_line": 1094,
+      "text": "5H — Empty guide contents. Copy such as your sections will gather here as you build. / make a section, then tuck your saved pages inside! <3 appears when structure is absent. - GOOD BUT KEEP IN MIND NEW TEXT: your sections will gather here as you build. / make a section, then tuck your saved pages inside! <3",
+      "raw_line_sha256": "e3c8f18aa7188b06a7f06218dba2bc7697856e02d6542da52e1626b387d7adac"
+    },
+    {
+      "label": "5I",
+      "source_line": 1097,
+      "text": "5I — Add section. + new section opens the section-creation path. - GOOD",
+      "raw_line_sha256": "d749e48825f0c67878d070ce68290e2f404989cc35d2a040b2646a166b5c25fd"
+    },
+    {
+      "label": "5J",
+      "source_line": 1100,
+      "text": "5J — Populated sections. Sections list their pages. Section-level rename/reorder controls appear when the corresponding mode is active. - GOOD",
+      "raw_line_sha256": "d0d5041ca8a862c882349ed6551118d148a6a4f6b10547f28ae7347a22fa5c8b"
+    },
+    {
+      "label": "5K",
+      "source_line": 1103,
+      "text": "5K — Empty section. nothing tucked into this section yet! is shown. - GOOD (my only change is added the exclamation point)",
+      "raw_line_sha256": "9432c75ccc893454025a6f6b13bb6a35345fda73babbc6d620a6b4f177edb2fc"
+    },
+    {
+      "label": "5L",
+      "source_line": 1106,
+      "text": "5L — Add saved pages. A picker exposes saved encyclopedia material, filters it, and lets pages be inserted into the guide. - GOOD",
+      "raw_line_sha256": "424454a483b11e55ec8a4c3a323fc4b5502985e3174cd5a4e52eeced466f7d89"
+    },
+    {
+      "label": "5M",
+      "source_line": 1109,
+      "text": "5M — Page actions. A guide page can be moved, annotated with add a note, opened via view original when linked to a source saved page, reordered, or removed. - GOOD",
+      "raw_line_sha256": "132d3e69e3bba128da6ab369afcc4b65d84c7427d95bc808ba08596c0d452284"
+    },
+    {
+      "label": "5N",
+      "source_line": 1112,
+      "text": "5N — Read mode. read my guide changes from editing/contents into the assembled reading experience. - GOOD",
+      "raw_line_sha256": "1b3c0bcc394e7b166dd36ea0dfe78c92e24f8b40bd84f284cf13a891485b036c"
+    },
+    {
+      "label": "5O",
+      "source_line": 1115,
+      "text": "5O — Save confirmation / celebration.  After a successful save action, a temporary saved-status confirmation and/or appropriate Strawberry celebration may appear, then dismiss automatically. - Use Strawberry with “saved!” directly underneath inside the existing control large card artwork used for popups. Scale the card down slightly for this confirmation so it feels compact and celebratory rather than overbearing, while preserving its proportions and existing visual style.",
+      "raw_line_sha256": "2abd4e1f2bc7c1099f22a66b98393c1f0486e943ed7279cf8211b1cd6ef81914"
+    }
+  ],
+  "executed_evidence": {
+    "initial_focused_XCTest": 37,
+    "final_focused_XCTest": 43,
+    "Apple_UI_vectors_executed": 0,
+    "full_checkpoint_logs": [
+      "/tmp/fruitfolio_guide_alignment_portable.log",
+      "/tmp/fruitfolio_guide_alignment_native.log"
+    ]
+  }
+}

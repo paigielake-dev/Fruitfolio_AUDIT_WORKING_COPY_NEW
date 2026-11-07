@@ -11,6 +11,22 @@ struct Prompt11GuideBuilderView: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
+    @StateObject private var menuOptionsCopy = FruitfolioControlTranslationState()
+    @StateObject private var menuMoveCopy = FruitfolioControlTranslationState()
+    @StateObject private var menuNoteCopy = FruitfolioControlTranslationState()
+    @StateObject private var menuOriginalCopy = FruitfolioControlTranslationState()
+    @StateObject private var menuUpCopy = FruitfolioControlTranslationState()
+    @StateObject private var menuDownCopy = FruitfolioControlTranslationState()
+    @StateObject private var menuRemoveCopy = FruitfolioControlTranslationState()
+    private enum MenuCopy: String, CaseIterable {
+        case options = "page options", move = "move", note = "add a note", original = "view original"
+        case up = "move up", down = "move down", remove = "remove from guide"
+    }
+    private struct MenuTaskKey: Hashable {
+        let language: FruitfolioLanguage
+        let inferenceAllowed: Bool
+        let enabled: Bool
+    }
     @State private var selectedGuideID: UUID?
     @StateObject private var formSession = Prompt11GuideFormSession()
     @State private var rootIsVisible = false
@@ -119,6 +135,15 @@ struct Prompt11GuideBuilderView: View {
         .onChange(of: settings.language) { _, _ in actionEpoch = UUID() }
         .onChange(of: overlay) { _, _ in actionEpoch = UUID() }
         .onChange(of: showingReadMode) { _, _ in actionEpoch = UUID() }
+        .task(id: menuTaskKey) {
+            let task = menuTaskKey
+            guard task.enabled else { return }
+            for copy in MenuCopy.allCases {
+                guard !Task.isCancelled else { return }
+                await menuState(copy).resolve(.init(source: copy.rawValue, language: task.language),
+                    inferenceAllowed: task.inferenceAllowed)
+            }
+        }
         .toolbar(.hidden, for: .navigationBar)
         #if DEBUG
         .preference(key: Prompt11GuideSavedStatusRequestKey.self, value: savedStatusRequests)
@@ -348,9 +373,12 @@ struct Prompt11GuideBuilderView: View {
                         .accessibilityIdentifier("guide.reorder.toggle")
                     }
 
-                    Button("+ new section") {
+                    Button {
                         audioManager.play(.buttonSoftPop)
                         setGuideOverlay(.addSection(guide.id))
+                    } label: {
+                        FruitfolioFixedText(source: "+ new section", font: .custom("Chalkboard SE", size: 11.5).bold(),
+                            color: DesignTokens.ColorToken.primaryBurgundy)
                     }
                     .font(.custom("Chalkboard SE", size: 11.5))
                     .fontWeight(.bold)
@@ -447,7 +475,7 @@ struct Prompt11GuideBuilderView: View {
 
             if let subtitle = guide.subtitle,
                !subtitle.isEmpty {
-                Text(subtitle)
+                Text(verbatim: subtitle)
                     .font(.custom("Chalkboard SE", size: 9.5))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -477,22 +505,22 @@ struct Prompt11GuideBuilderView: View {
                             .frame(width: 28, height: 28)
                             .accessibilityHidden(true)
 
-                        Text("rename")
+                        FruitfolioFixedText(source: "rename", font: .custom("Chalkboard SE", size: 10.5).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
                     }
                 }
 
-                Button("change cover") {
+                Button {
                     audioManager.play(.buttonSoftPop)
                     setGuideOverlay(.changeCover(guide.id, guide.style))
-                }
+                } label: { FruitfolioFixedText(source: "change cover", font: .custom("Chalkboard SE", size: 10.5).bold(), color: DesignTokens.ColorToken.primaryBurgundy) }
 
-                Button("description") {
+                Button {
                     audioManager.play(.buttonSoftPop)
                     setGuideOverlay(.editDescription(
                         guide.id,
                         guide.subtitle ?? ""
                     ))
-                }
+                } label: { FruitfolioFixedText(source: "description", font: .custom("Chalkboard SE", size: 10.5).bold(), color: DesignTokens.ColorToken.primaryBurgundy) }
                 .accessibilityIdentifier("guide.description.open")
             }
 
@@ -507,7 +535,7 @@ struct Prompt11GuideBuilderView: View {
                         .frame(width: 26, height: 26)
                         .accessibilityHidden(true)
 
-                    Text("delete guide")
+                    FruitfolioFixedText(source: "delete guide", font: .custom("Chalkboard SE", size: 10.5).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
                 }
             }
         }
@@ -683,11 +711,8 @@ struct Prompt11GuideBuilderView: View {
 
         return VStack(spacing: 18) {
             if sortedChapters.isEmpty {
-                Text("make a section, then tuck your saved pages inside! <3")
-                    .font(.custom("Chalkboard SE", size: 12))
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
+                FruitfolioFixedText(source: "make a section, then tuck your saved pages inside! <3", protectedLiterals: ["<3"],
+                    font: .custom("Chalkboard SE", size: 12), color: DesignTokens.ColorToken.secondaryBurgundy)
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 18)
             }
@@ -763,11 +788,8 @@ struct Prompt11GuideBuilderView: View {
             )
 
             if chapter.pages.isEmpty {
-                Text("nothing tucked into this section yet!")
-                    .font(.custom("Chalkboard SE", size: 11))
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
+                FruitfolioFixedText(source: "nothing tucked into this section yet!",
+                    font: .custom("Chalkboard SE", size: 11), color: DesignTokens.ColorToken.secondaryBurgundy)
                     .padding(.vertical, 12)
             }
 
@@ -811,8 +833,8 @@ struct Prompt11GuideBuilderView: View {
         isLast: Bool,
         owner: Prompt11GuideReorderOwner?
     ) -> some View {
-        return Menu("page options") {
-            Button("move") {
+        return Menu {
+            Button(menuTitle(.move)) {
                 setGuideOverlay(.movePage(
                     guide.id,
                     chapter.id,
@@ -820,7 +842,7 @@ struct Prompt11GuideBuilderView: View {
                 ))
             }
 
-            Button("add a note") {
+            Button(menuTitle(.note)) {
                 setGuideOverlay(.addNote(
                     guide.id,
                     chapter.id,
@@ -829,14 +851,16 @@ struct Prompt11GuideBuilderView: View {
                 ))
             }
 
+            .accessibilityIdentifier("guide.menu.note")
+
             if let sourceKey = page.sourceSavedPageID {
-                Button("view original") {
+                Button(menuTitle(.original)) {
                     setGuideOverlay(.viewOriginal(sourceKey))
                 }
             }
 
             if reorderMode {
-                Button("move up") {
+                Button(menuTitle(.up)) {
                     movePage(
                         guide.id,
                         chapter.id,
@@ -846,7 +870,7 @@ struct Prompt11GuideBuilderView: View {
                 }
                 .disabled(isFirst || owner == nil)
 
-                Button("move down") {
+                Button(menuTitle(.down)) {
                     movePage(
                         guide.id,
                         chapter.id,
@@ -857,21 +881,59 @@ struct Prompt11GuideBuilderView: View {
                 .disabled(isLast || owner == nil)
             }
 
-            Button("remove from guide") {
+            Button(menuTitle(.remove)) {
                 setGuideOverlay(.removePage(
                     guide.id,
                     chapter.id,
                     page.id
                 ))
             }
+        } label: {
+            VStack(spacing: 3) {
+                Text(verbatim: menuTitle(.options))
+                if let caption = menuCaption {
+                    Text(verbatim: settings.localized(caption)).font(.caption2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
         }
-        .id(actionEpoch)
+        .accessibilityIdentifier("guide.pageOptions." + page.id.uuidString)
+        .id(actionEpoch.uuidString + (menuCaption ?? "ready"))
         .font(.custom("Chalkboard SE", size: 10.5))
         .fontWeight(.bold)
         .foregroundStyle(
             DesignTokens.ColorToken.primaryBurgundy
         )
         .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+    }
+
+    private var menuTaskKey: MenuTaskKey {
+        let hasPages = selectedGuideID.flatMap { store.encyclopedia(id: $0) }.map { $0.savedPageCount > 0 } ?? false
+        return .init(language: settings.language, inferenceAllowed: settings.translationInferenceAllowed,
+            enabled: rootIsVisible && scenePhase == .active && hasPages)
+    }
+    private func menuState(_ copy: MenuCopy) -> FruitfolioControlTranslationState {
+        switch copy {
+        case .options: return menuOptionsCopy
+        case .move: return menuMoveCopy
+        case .note: return menuNoteCopy
+        case .original: return menuOriginalCopy
+        case .up: return menuUpCopy
+        case .down: return menuDownCopy
+        case .remove: return menuRemoveCopy
+        }
+    }
+    private func menuTitle(_ copy: MenuCopy) -> String {
+        let display = menuState(copy).presentation(for: .init(source: copy.rawValue, language: settings.language))
+        return FruitfolioSemanticDocument.plainText(from: display.text)
+    }
+    private var menuCaption: String? {
+        let states = MenuCopy.allCases.map { menuState($0).presentation(for: .init(source: $0.rawValue, language: settings.language)).status }
+        if states.contains(.unavailable) { return FruitfolioControlTranslationState.Presentation.Status.unavailable.captionKey }
+        if states.contains(.preparing) { return FruitfolioControlTranslationState.Presentation.Status.preparing.captionKey }
+        if states.contains(.machine) { return FruitfolioControlTranslationState.Presentation.Status.machine.captionKey }
+        return nil
     }
 
     @ViewBuilder

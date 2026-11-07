@@ -294,7 +294,7 @@ final class Prompt1BBookPrivateFixtureTests: XCTestCase {
 final class Prompt1BSavedPageNoticeTests: XCTestCase {
     func testOnlyKnownOperationsAndTypedLibraryErrorsAuthorizeTranslation() {
         let operations: [Prompt10SavedPageNotice] = [.notesSaved, .imageAdded, .imageReplaced, .imageRemoved,
-            .imageImportFailed, .imageRemovalFailed, .saveDraftBeforeEditing]
+            .imageImportFailed, .imageRemovalFailed, .saveDraftBeforeEditing, .chooseGuideSection]
         let errors: [Prompt10LibraryError] = [.blankTitle, .titleTooLong, .descriptionTooLong, .inappropriateLabel,
             .encyclopediaLimitReached, .encyclopediaNotFound, .chapterNotFound, .pageNotFound,
             .persistenceFailure, .unreadableStorage, .unsupportedStorage, .storageChanged, .contentChanged]

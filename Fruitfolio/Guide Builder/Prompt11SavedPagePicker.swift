@@ -12,6 +12,7 @@ struct Prompt11SavedPagePicker: View {
     let onDismiss: () -> Void
     var isCurrent: @MainActor () -> Bool = { true }
 
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
@@ -19,7 +20,7 @@ struct Prompt11SavedPagePicker: View {
     @State private var filter: Prompt11SavedMaterialFilter = .all
     @State private var selectedSourceKeys = Set<UUID>()
     @State private var selectedChapterID: UUID?
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     private var guide: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -68,10 +69,14 @@ struct Prompt11SavedPagePicker: View {
 
                 HStack(spacing: 6) {
                     ForEach(Prompt11SavedMaterialFilter.allCases) { option in
-                        Button(option.label) {
+                        Button {
                             guard isCurrent() else { return }
                             audioManager.play(.buttonSoftPop)
                             filter = option
+                        } label: {
+                            FruitfolioFixedText(source: option.label,
+                                font: .custom("Chalkboard SE", size: 10.5).weight(filter == option ? .bold : .regular),
+                                color: DesignTokens.ColorToken.primaryBurgundy)
                         }
                         .font(.custom("Chalkboard SE", size: 10.5))
                         .fontWeight(filter == option ? .bold : .regular)
@@ -98,7 +103,6 @@ struct Prompt11SavedPagePicker: View {
                 if let guide,
                    !guide.chapters.isEmpty {
                     Picker(
-                        "section",
                         selection: Binding<UUID?>(
                             get: {
                                 selectedChapterID ??
@@ -117,12 +121,12 @@ struct Prompt11SavedPagePicker: View {
                         ForEach(
                             guide.chapters.sorted { $0.order < $1.order }
                         ) { chapter in
-                            Text(chapter.name)
+                            Text(verbatim: chapter.name)
                                 .tag(Optional(chapter.id))
                         }
-                    }
+                    } label: { FruitfolioFixedText(source: "section") }
                     .pickerStyle(.menu)
-                    .accessibilityLabel("Section")
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "Section"))
                     .accessibilityIdentifier("guide.savedPages.destination")
 
                 } else {
@@ -134,10 +138,13 @@ struct Prompt11SavedPagePicker: View {
                             )
                             .multilineTextAlignment(.center)
 
-                        Button("+ new section") {
+                        Button {
                             guard isCurrent() else { return }
                             audioManager.play(.buttonSoftPop)
                             onNeedsSection()
+                        } label: {
+                            FruitfolioFixedText(source: "+ new section", font: .custom("Chalkboard SE", size: 11.5).bold(),
+                                color: DesignTokens.ColorToken.primaryBurgundy)
                         }
                         .accessibilityIdentifier("guide.savedPages.newSection")
                         .font(.custom("Chalkboard SE", size: 11.5))
@@ -177,8 +184,8 @@ struct Prompt11SavedPagePicker: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -189,7 +196,7 @@ struct Prompt11SavedPagePicker: View {
                 Prompt10PillArtButton(
                     label: selectedSourceKeys.isEmpty
                         ? "add saved pages"
-                        : "add \(selectedSourceKeys.count) \(selectedSourceKeys.count == 1 ? "page" : "pages")",
+                        : "add \(selectedSourceKeys.count.formatted(.number.locale(Locale(identifier: settings.language.localeIdentifier)))) \(selectedSourceKeys.count == 1 ? "page" : "pages")",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
                     guard isCurrent() else { return }
@@ -263,12 +270,16 @@ struct Prompt11SavedPagePicker: View {
                     )
                     .lineLimit(2)
 
-                    Text(candidate.page.displayBody)
+                    Text(verbatim: candidate.page.displayBody)
                         .font(.custom("Chalkboard SE", size: 10.5))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
                         .lineLimit(3)
+
+                    if settings.language.rawValue != candidate.page.displaySourceLanguage {
+                        Text(verbatim: settings.localized("original text")).font(.caption2)
+                    }
 
                     HStack(spacing: 7) {
                         FruitfolioFixedText(source: candidate.page.saveType == .excerpt ? "excerpt" : "full answer",
@@ -308,17 +319,13 @@ struct Prompt11SavedPagePicker: View {
             )
         )
         .disabled(candidate.isAlreadyInGuide)
-        .accessibilityLabel(
-            candidate.isAlreadyInGuide
-                ? "\(candidate.page.question). Already in this guide."
-                : candidate.page.question
-        )
+        .modifier(Prompt11CandidateAccessibility(question: candidate.page.question, alreadyAdded: candidate.isAlreadyInGuide))
         .accessibilityIdentifier("guide.savedPages.candidate." + candidate.id.uuidString)
     }
 
     private func addSelected() {
         guard let chapterID = selectedChapterID else {
-            errorMessage = "make a section first so these pages have somewhere to settle."
+            errorMessage = .chooseGuideSection
             return
         }
 
@@ -332,7 +339,22 @@ struct Prompt11SavedPagePicker: View {
             audioManager.play(.pageTurn)
             onAdded(added.count)
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = Prompt10SavedPageNotice(error: error)
+        }
+    }
+}
+
+private struct Prompt11CandidateAccessibility: ViewModifier {
+    let question: String
+    let alreadyAdded: Bool
+    func body(content: Content) -> some View {
+        if question.isEmpty {
+            content.modifier(FruitfolioFixedAccessibilityLabel(source: alreadyAdded ? "saved page. Already in this guide." : "saved page"))
+        } else if alreadyAdded {
+            let literal = FruitfolioSemanticMarkup.markdown([.init(text: question)])
+            content.modifier(FruitfolioFixedAccessibilityLabel(source: literal + ". Already in this guide.", protectedLiterals: [literal]))
+        } else {
+            content.accessibilityLabel(Text(verbatim: question))
         }
     }
 }

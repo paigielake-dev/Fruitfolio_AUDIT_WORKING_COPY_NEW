@@ -52,6 +52,17 @@ class BatchRecorderTests(unittest.TestCase):
         self.assertEqual(checkpoint['last_batch_verification'],self.batch['verification'])
         log=json.loads((self.workflow/'RUN_LOGS/fixture.json').read_text())
         self.assertEqual(log['verification'],self.batch['verification'])
+    def testComponentEvidenceDoesNotDemoteImplementedRequirementClosure(self):
+        self.rows[58].update(implementation_status='IMPLEMENTED', verification_status='MANUAL_VERIFICATION_REQUIRED',
+            implementation_closure={'acceptance':'Source implementation complete; actual Apple rendering unrun'})
+        (self.workflow/'MASTER_CHECKLIST.json').write_text(json.dumps({'requirements':self.rows}))
+        result=self.run_recorder();self.assertEqual(result.returncode,0,result.stderr)
+        row=json.loads((self.workflow/'MASTER_CHECKLIST.json').read_text())['requirements'][58]
+        self.assertEqual(row['implementation_status'],'IMPLEMENTED')
+        self.assertEqual(row['verification_status'],'MANUAL_VERIFICATION_REQUIRED')
+        self.assertEqual(row['implementation_closure'],self.rows[58]['implementation_closure'])
+        self.assertEqual(row['latest_batch_verification']['not_run'],['Apple UI test'])
+
     def testInvalidOrDuplicateRequirementIDsCannotPartiallyWriteRecoveryFiles(self):
         before=self.snapshots()
         for ids in [[0],[479],[59,59],[True],['59'],[]]:

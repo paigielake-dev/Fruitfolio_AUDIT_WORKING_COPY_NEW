@@ -486,6 +486,35 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testNativeGuidePageMenuOpensOriginalNoteAndCancelKeepsCanonicalBytes() {
+        for language in ["fr", "ar"] {
+            for reduced in [false, true] {
+                let app = launchGuideSave("search", reduced: reduced, rtl: language == "ar", language: language)
+                let scroll = app.scrollViews.firstMatch
+                let menu = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "guide.pageOptions.")).firstMatch
+                for _ in 0..<48 { if menu.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(menu.isHittable)
+                XCTAssertGreaterThanOrEqual(menu.frame.height, 44)
+                menu.tap()
+                let noteAction = app.buttons["guide.menu.note"]
+                if !noteAction.waitForExistence(timeout: 2) { menu.tap() }
+                XCTAssertTrue(noteAction.waitForExistence(timeout: 5)); noteAction.tap()
+                let input = app.descendants(matching: .any).matching(identifier: "guide.note.input").firstMatch
+                XCTAssertTrue(input.waitForExistence(timeout: 5))
+                XCTAssertEqual(input.value as? String, "QA original note 12.50 pg/mL")
+                input.tap(); input.typeText(" QA unsaved menu draft")
+                XCTAssertTrue((input.value as? String)?.contains("QA unsaved menu draft") == true)
+                tapGuideFormAction("guide.note.cancel", in: app)
+                expectGuidePopupRequests(open: 1, close: 1, in: app)
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 0")
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 0")
+                captureGame(app, name: "guide-native-menu-\(language)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testGuideReorderRotatesActualVisitEpochAcrossBackgroundBeforeFreshAcknowledgedMove() {
         for language in ["fr", "ar"] {
             for reduced in [false, true] {

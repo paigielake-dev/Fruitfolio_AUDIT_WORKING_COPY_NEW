@@ -315,7 +315,7 @@ enum Prompt10SavedPageNotice: Equatable {
     case imageImportFailed, imageRemovalFailed, saveDraftBeforeEditing
     case library(Prompt10LibraryError)
     case userMaterial(Prompt10UserMaterialDraft.Failure)
-    case chooseChapter
+    case chooseChapter, chooseGuideSection
     case external(String)
 
     init(error: Error) {
@@ -346,6 +346,7 @@ enum Prompt10SavedPageNotice: Equatable {
         case .library(let error): return error.errorDescription ?? "that saved page could not be updated."
         case .userMaterial(let error): return error.errorDescription ?? "that saved page could not be updated."
         case .chooseChapter: return "choose a chapter before saving your page."
+        case .chooseGuideSection: return "make a section first so these pages have somewhere to settle."
         case .external(let original): return original
         }
     }

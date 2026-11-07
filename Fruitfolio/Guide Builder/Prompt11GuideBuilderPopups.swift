@@ -743,6 +743,7 @@ struct Prompt11NotePopup: View {
                     text: $note,
                     axis: .vertical
                 )
+                .accessibilityIdentifier("guide.note.input")
                 .font(.custom("Chalkboard SE", size: 12.5))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -777,7 +778,8 @@ struct Prompt11NotePopup: View {
                             encyclopediaID: encyclopediaID,
                             chapterID: chapterID,
                             pageID: pageID,
-                            notes: note
+                            notes: note,
+                            expectedNotes: initialNote
                         )
                         onSaved()
                     } catch {
@@ -789,6 +791,7 @@ struct Prompt11NotePopup: View {
                     guard isCurrent() else { return }
                     onDismiss()
                 }
+                .accessibilityIdentifier("guide.note.cancel")
             }
         }
     }

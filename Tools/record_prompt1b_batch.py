@@ -124,8 +124,12 @@ for n in b['requirements']:
  row=d['requirements'][n-1]
  entry=entries.get(str(n), {})
  row_verification=entry.get('verification', verification)
- if row.get('implementation_status') != 'BLOCKED':
+ if row.get('implementation_status') == 'NOT_STARTED':
   row.update(implementation_status='IN_PROGRESS',verification_status='SOURCE_REVIEWED')
+ elif row.get('implementation_status') == 'IN_PROGRESS':
+  row['verification_status']='SOURCE_REVIEWED'
+ # Keep evidenced whole-requirement closure; this component log cannot silently
+ # demote it. A demonstrated regression requires an explicit status correction.
  row['last_updated']=now
  for key,vals in [('relevant_source_files',entry.get('files', b['files'])),('related_tests',entry.get('tests', b['tests'])),('evidence_of_implementation',[entry.get('summary', b['summary'])])]:
   row[key]=list(dict.fromkeys(row[key]+vals))
