@@ -53,6 +53,42 @@ private actor Prompt1BCommitThenFailDailyLogRepository: Prompt20DailyLogReposito
     }
 }
 
+private actor Prompt1BHeldDailyLogReadRepository: Prompt20DailyLogRepository {
+    let started: [XCTestExpectation]
+    private var pending: [CheckedContinuation<Prompt20DailyLog?, any Error>] = []
+    init(started: [XCTestExpectation]) { self.started = started }
+    func load(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay) async throws -> Prompt20DailyLog? {
+        try await withCheckedThrowingContinuation { continuation in
+            let index = pending.count
+            pending.append(continuation)
+            started[index].fulfill()
+        }
+    }
+    func finish(_ index: Int, log: Prompt20DailyLog?) { pending[index].resume(returning: log) }
+    func allActiveLogs(ownerID: Prompt20DailyLogOwnerID) async throws -> [Prompt20DailyLog] { [] }
+    func save(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay, draft: Prompt20DailyLogDraft,
+              now: Date, requestID: UUID, expectation: Prompt20DailyLogSaveExpectation) async throws -> Prompt20DailyLog? {
+        throw Prompt20DailyLogDomainError.persistenceUnavailable
+    }
+}
+
+private actor Prompt1BDailyLogWriteAdmissionRepository: Prompt20DailyLogRepository {
+    let base = Prompt20CycleDailyLogStore(fileURL: nil)
+    private(set) var writeAttempts = 0
+    func load(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay) async throws -> Prompt20DailyLog? {
+        try await base.load(ownerID: ownerID, date: date)
+    }
+    func allActiveLogs(ownerID: Prompt20DailyLogOwnerID) async throws -> [Prompt20DailyLog] {
+        try await base.allActiveLogs(ownerID: ownerID)
+    }
+    func save(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay, draft: Prompt20DailyLogDraft,
+              now: Date, requestID: UUID, expectation: Prompt20DailyLogSaveExpectation) async throws -> Prompt20DailyLog? {
+        writeAttempts += 1
+        return try await base.save(ownerID: ownerID, date: date, draft: draft, now: now,
+                                   requestID: requestID, expectation: expectation)
+    }
+}
+
 @MainActor
 final class Prompt1BDailyLogViewModelTests: XCTestCase {
     private func savedFixture(_ file: URL) async throws -> (repository: Prompt20CycleDailyLogStore, now: Date, day: Prompt20LocalDay, calendar: Calendar) {
@@ -63,6 +99,64 @@ final class Prompt1BDailyLogViewModelTests: XCTestCase {
         var draft = Prompt20DailyLogDraft(); draft.generalNote = "saved original"
         _ = try await repository.save(ownerID: .localDevice, date: selected, draft: draft, now: now)
         return (repository, now, selected, calendar)
+    }
+
+    func testReactivatedReadRejectsOldResultAndDoesNotResetNewLoadingStateOrDraft() async throws {
+        let started = [expectation(description: "old read"), expectation(description: "current read")]
+        let repository = Prompt1BHeldDailyLogReadRepository(started: started)
+        let now = Date()
+        let selected = Prompt20LocalDay(date: now, calendar: .current)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: repository, nowProvider: { now })
+        let old = Task { await model.load() }
+        let oldStarted = await XCTWaiter.fulfillment(of: [started[0]], timeout: 2)
+        XCTAssertEqual(oldStarted, .completed)
+        model.suspendPendingLoad()
+        let current = Task { await model.load() }
+        let currentStarted = await XCTWaiter.fulfillment(of: [started[1]], timeout: 2)
+        XCTAssertEqual(currentStarted, .completed)
+        var stale = Prompt20DailyLogDraft(); stale.generalNote = "stale read fixture"
+        var fresh = Prompt20DailyLogDraft(); fresh.generalNote = "current read fixture"
+        await repository.finish(0, log: try Prompt20DailyLogRules.makeLog(ownerID: .localDevice,
+            date: selected, draft: stale, existing: nil, now: now))
+        await old.value
+        XCTAssertEqual(model.loadState, .loading, "Old defer must not reset a newer loading state")
+        XCTAssertNotEqual(model.draft.generalNote, stale.generalNote)
+        await repository.finish(1, log: try Prompt20DailyLogRules.makeLog(ownerID: .localDevice,
+            date: selected, draft: fresh, existing: nil, now: now))
+        await current.value
+        XCTAssertEqual(model.draft.generalNote, fresh.generalNote)
+        model.mutateDraft { $0.generalNote = "retained unsaved correction" }
+        model.suspendPendingLoad()
+        await model.load()
+        XCTAssertEqual(model.draft.generalNote, "retained unsaved correction")
+        XCTAssertTrue(model.hasUnsavedChanges)
+    }
+
+    func testAlreadyCanceledSaveDoesNotEnterRepositoryAndExplicitRetryPreservesDraft() async throws {
+        let repository = Prompt1BDailyLogWriteAdmissionRepository()
+        let now = Date()
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: repository, nowProvider: { now })
+        await model.load()
+        model.mutateDraft { $0.generalNote = "retained before save admission" }
+        let canceled = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            return await model.save()
+        }
+        let reported = await canceled.value
+        XCTAssertFalse(reported)
+        let before = await repository.writeAttempts
+        XCTAssertEqual(before, 0)
+        XCTAssertTrue(model.hasUnsavedChanges)
+        XCTAssertEqual(model.saveState, .idle)
+        let saved = await model.save()
+        XCTAssertTrue(saved)
+        let after = await repository.writeAttempts
+        XCTAssertEqual(after, 1)
+        let actual = try await repository.load(ownerID: .localDevice, date: model.selectedDay)
+        XCTAssertEqual(actual?.generalNote?.text, "retained before save admission")
+        XCTAssertFalse(model.hasUnsavedChanges)
     }
 
     func testTwoEditorsCannotOverwriteNewerSameStoreDayOrSilentlyRebase() async throws {

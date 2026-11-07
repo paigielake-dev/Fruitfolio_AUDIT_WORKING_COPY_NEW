@@ -3702,6 +3702,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                     XCTAssertTrue(editor.waitForExistence(timeout: 3))
                     XCTAssertTrue((editor.value as? String ?? "").contains("unsaved fixture edit"))
                     closeDirtyDailyLog(app)
+                    XCUIDevice.shared.press(.home); app.activate()
+                    XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+                    XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5), "An unconsumed confirmation must remain available after foregrounding")
                     tapCyclePaperAction(choice, app: app)
                     if choice == "keep editing" {
                         XCTAssertTrue(editor.waitForExistence(timeout: 5))

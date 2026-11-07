@@ -68,6 +68,7 @@ public final class Prompt20DailyLogViewModel {
     private var baselineSavedLog: Prompt20DailyLog?
     private var baselineDraft: Prompt20DailyLogDraft
     private var pendingWrite: Prompt20DailyLogWrite?
+    private var loadIdentity = UUID()
 
     public init(
         ownerID: Prompt20DailyLogOwnerID,
@@ -123,15 +124,25 @@ public final class Prompt20DailyLogViewModel {
         Prompt20DailyLogRules.validate(draft).isValid
     }
 
+    /// Invalidates reads only. An acknowledged write must still reconcile its
+    /// exact snapshot, and a loaded editor's unsaved draft is never reloaded.
+    public func suspendPendingLoad() {
+        loadIdentity = UUID()
+        if loadState == .loading { loadState = .idle }
+    }
+
     public func load() async {
+        guard !Task.isCancelled else { return }
         guard loadState != .loading, loadState != .loaded else {
             return
         }
 
+        loadIdentity = UUID()
+        let identity = loadIdentity
         loadState = .loading
         loadFailureMessage = nil
         // Cancellation must leave the same view model reloadable on reappearance.
-        defer { if loadState == .loading { loadState = .idle } }
+        defer { if loadIdentity == identity && loadState == .loading { loadState = .idle } }
         saveState = .idle
         validationIssues = []
 
@@ -141,7 +152,7 @@ public final class Prompt20DailyLogViewModel {
                 date: selectedDay
             )
 
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, loadIdentity == identity else {
                 return
             }
 
@@ -171,7 +182,7 @@ public final class Prompt20DailyLogViewModel {
             hasUnsavedChanges = false
             loadState = .loaded
         } catch {
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, loadIdentity == identity else {
                 return
             }
 
@@ -183,19 +194,22 @@ public final class Prompt20DailyLogViewModel {
     /// Only an initial failed load can reload its saved reference. A loaded
     /// editor's draft is never replaced by a retry/recovery action.
     public func retryLoad() async {
+        guard !Task.isCancelled else { return }
         guard loadState == .failed, !hasUnsavedChanges else { return }
+        loadIdentity = UUID()
+        let identity = loadIdentity
         loadState = .loading
         loadFailureMessage = nil
-        defer { if loadState == .loading { loadState = .idle } }
+        defer { if loadIdentity == identity && loadState == .loading { loadState = .idle } }
         do {
             if let reloadable = repository as? any Prompt20ReloadableDailyLogRepository {
                 try await reloadable.reloadSavedLogs()
             }
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, loadIdentity == identity else { return }
             loadState = .idle
             await load()
         } catch {
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, loadIdentity == identity else { return }
             loadFailureMessage = persistenceMessage(error)
             loadState = .failed
         }
@@ -321,6 +335,7 @@ public final class Prompt20DailyLogViewModel {
 
     @discardableResult
     public func save() async -> Bool {
+        guard !Task.isCancelled else { return false }
         guard loadState == .loaded else {
             return false
         }

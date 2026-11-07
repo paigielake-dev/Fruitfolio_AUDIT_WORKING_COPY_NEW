@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-11-07T18:20:48.104466+00:00",
+  "requirements": [
+    11,
+    295,
+    297,
+    298,
+    299,
+    300,
+    303,
+    443,
+    444
+  ],
+  "supplemental_requirements": [],
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BDailyLogViewModelTests|Prompt20CoreTests|Prompt1BDailyLogWriteTests|Prompt1BTodaySnapshotTests'",
+    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
+  ],
+  "results": {
+    "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
+    "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+    "sound_ownership": "0diagnostics"
+  },
+  "verification": {
+    "executed": {
+      "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
+      "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+      "sound_ownership": "0diagnostics"
+    },
+    "not_run": [
+      "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+      "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+      "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+      "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
+    ],
+    "remaining": [
+      "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+      "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+      "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+      "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+    ]
+  }
+}

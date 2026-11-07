@@ -77,21 +77,32 @@ public struct Prompt20DailyLogView: View {
             viewIsVisible = true
             if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
         }
-        .task { await model.load() }
+        .task(id: canInteract) {
+            guard canInteract else { return }
+            await model.load()
+        }
+        .onChange(of: canInteract) { _, active in
+            if !active { suspendPresentationWork() }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // canInteract is already false while confirmation is open; observe
+            // scene activity separately so a consumed action cannot survive it.
+            if phase != .active { suspendPresentationWork() }
+        }
         .allowsHitTesting(canInteract)
         .accessibilityHidden(popupCoordinator.currentPopup != nil)
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
             popupOwner?.observeDismissal()
-            guard viewIsVisible, returnFocusAfterConfirmation,
+            guard canInteract, returnFocusAfterConfirmation,
                   popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
             let action = pendingConfirmationAction
             pendingConfirmationAction = nil
             switch action {
             case .saveAndClose:
                 repositoryTask = Task { @MainActor in
-                    guard !Task.isCancelled, viewIsVisible else { return }
+                    guard !Task.isCancelled, canInteract else { return }
                     let saved = await model.save()
-                    guard saved, !Task.isCancelled, viewIsVisible else { return }
+                    guard saved, !Task.isCancelled, canInteract else { return }
                     onSaved(model.existingLog)
                     if !model.hasUnsavedChanges { dismiss() }
                 }
@@ -115,6 +126,7 @@ public struct Prompt20DailyLogView: View {
         .interactiveDismissDisabled(model.hasUnsavedChanges || model.saveState == .saving)
         .onDisappear {
             viewIsVisible = false
+            suspendPresentationWork()
             popupOwner?.cancel()
             pendingConfirmationAction = nil
             returnFocusAfterConfirmation = false
@@ -873,13 +885,28 @@ public struct Prompt20DailyLogView: View {
         return model.validationMessage(for: .medicationNameRequired(index: index))
     }
 
+    private func suspendPresentationWork() {
+        model.suspendPendingLoad()
+        repositoryTask?.cancel()
+        savedMessageTask?.cancel()
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) { showSavedMessage = false }
+        if pendingConfirmationAction != nil {
+            pendingConfirmationAction = nil
+            returnFocusAfterConfirmation = false
+            returnMedicationFocus = nil
+            confirmationMessage = "that action paused while this page was inactive. your current log and unsaved edits are still here."
+        }
+    }
+
     private func saveLog() {
         guard canInteract, model.canSave else { return }
         repositoryTask?.cancel()
         repositoryTask = Task { @MainActor in
-            guard !Task.isCancelled, viewIsVisible else { return }
+            guard !Task.isCancelled, canInteract else { return }
             let success = await model.save()
-            guard success, !Task.isCancelled, viewIsVisible else { return }
+            guard success, !Task.isCancelled, canInteract else { return }
             onSaved(model.existingLog)
             if !model.hasUnsavedChanges { showSaveFeedback() }
         }
@@ -890,7 +917,7 @@ public struct Prompt20DailyLogView: View {
 
         withAnimation(
             motionPreferences.reduceMotionActive
-                ? .easeOut(duration: 0.08)
+                ? nil
                 : .easeOut(duration: 0.18)
         ) {
             showSavedMessage = true
@@ -898,8 +925,8 @@ public struct Prompt20DailyLogView: View {
 
         savedMessageTask = Task { @MainActor in
             try? await Task.sleep(for: .seconds(1.6))
-            guard !Task.isCancelled else { return }
-            withAnimation(.easeOut(duration: 0.16)) {
+            guard !Task.isCancelled, canInteract else { return }
+            withAnimation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.16)) {
                 showSavedMessage = false
             }
         }

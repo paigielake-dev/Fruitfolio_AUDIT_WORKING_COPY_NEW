@@ -1595,7 +1595,8 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1666,9 +1667,11 @@
         "Prompt1BScientificArtSizingTests",
         "Prompt1BCalendarPresentationPolicyTests",
         "Prompt1BRecoveredCycleLoaderTests",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1708,33 +1711,36 @@
         "Page sound now admitted only with active/uncovered visible owner and no in-flight transition; actual final callbacks guarded. Apple event/audio correspondence unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Actual Pregnancy save/source/navigation actions and menu bindings now gated by current owned active presentation; Apple queued-event acceptance pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
         "Science save/source/hotspot/retry callbacks now gate active visible uncovered owner; native event/audio acceptance pending. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
-        "Final logging handoff rechecks foreground/uncovered ownership rather than visibility alone; no queued inactive navigation replay. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "Final logging handoff rechecks foreground/uncovered ownership rather than visibility alone; no queued inactive navigation replay. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "Shell/daily-log final callbacks require current active uncovered owner; consumed confirmation cannot survive scene inactivity. Native event/sound acceptance pending. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -1993,6 +1999,25 @@
             "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
             "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
             "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26527,7 +26552,12 @@
         "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
         "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26547,9 +26577,12 @@
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift (existing four executed parent cases; unchanged/not rerun this UI batch)",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift (unchanged; no Foundation rerun this UI batch)",
-        "Prompt1BRecoveredCycleLoaderTests"
+        "Prompt1BRecoveredCycleLoaderTests",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt20CoreTests",
+        "Prompt1BModalAccessibilityTests (NOT_RUN)"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
@@ -26557,33 +26590,36 @@
         "Calendar view captures immutable requested month/context at task creation and rejects cancelled/stale request before loading state/work. Actual loader checks cancellation before supplemental start, after snapshot reads/calculation, before/after supplemental await and before return. Two genuine in-memory/held-provider regression cases reproduce two pre-fix assertions; full suites pass. Actor journal consistency and prediction/history/artwork unchanged; no mid-calculation preemption or device performance claim.",
         "Calendar month/date controls require active visible owner without shared popup, selected native date sheet or pending action. Cell must belong to current displayed month; estimate disclosure reads current accepted annotations rather than stale captured cell. Date-sheet callbacks validate selected key and reject duplicate pending actions. Departure clears unconsumed pending action; accepted action remains single-consumed after dismissal. Existing style/cue/calculations/artwork retained. Actual SwiftUI paths not executed.",
         "Actual calendar previous/next labels use shared compact semantic translation with original arrow images/style. Decorative arrow AX hiding lets translated label remain authoritative. Context clarification and early/failure original explanations use existing long-form source/provenance owner; English-only AX override removed. Bottom status uses minHeight82 rather than fixed height to permit expanded text/disclosure. Existing catalog already has all keys. No calculation/data/source wording/artwork changed.",
-        "Avoid stale same-month loads after activation; inactive tasks suppressed, current request refreshed. Device performance/month-transition acceptance pending. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "Avoid stale same-month loads after activation; inactive tasks suppressed, current request refreshed. Device performance/month-transition acceptance pending. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "Shared refresh reloads current Today/Calendar data from existing loaders after log acknowledgement/dismissal, including writes completed after canceled UI. Device loading performance unmeasured. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -26601,6 +26637,25 @@
             "Execute Apple month controls/status/disclosure frames across locales and accessibility sizes",
             "Verify translated context/uncertainty wording and no hidden English AX override with actual VoiceOver",
             "Measure device month-transition performance; source layout edits do not certify runtime acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26732,7 +26787,8 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
-        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json"
+        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26753,9 +26809,11 @@
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
         "FruitfolioTests/Prompt1BDailyLogWriteTests.swift",
-        "FruitfolioTests/Prompt20DailyLogCoreTests.swift"
+        "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt1BModalAccessibilityTests (NOT_RUN)"
       ],
-      "commit_reference": "batch:Daily-log-single-expansion-owner-and-founder-main-spec-scope (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
@@ -26764,43 +26822,36 @@
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
         "All11 remaining legacy press-style adapters delegate to the canonical visual effect; shell default covers unstyled Buttons. Cycle custom/plain overrides unified. Preserve layout/art/callbacks; Apple control/animation execution remains unrun.",
-        "Existing shared CutePopButtonStyle and single cue remain; section activation rejects inactive/covered ownership. Calendar/Today route behavior is not newly executed."
+        "Existing shared CutePopButtonStyle and single cue remain; section activation rejects inactive/covered ownership. Calendar/Today route behavior is not newly executed.",
+        "Existing canonical controls preserved; inactive queued logging callbacks and reduced-motion feedback now guarded. Whole interaction acceptance pending. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T17:13:28.701838+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "existing_actual_daily_log_domain_XCTest": 21,
-          "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "failures": 0,
-          "logs": [
-            "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
-            "/tmp/fruitfolio_daily_section_final_syntax.log",
-            "/tmp/fruitfolio_daily_section_sound.log"
-          ],
-          "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Official MADLAD inference, Apple UI and physical-device verification."
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-          "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-          "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-        "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-        "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-        "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-        "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -26845,6 +26896,34 @@
             "Individual full-scope control inventory and runtime verification before whole requirement closure"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+          "executed": {
+            "existing_actual_daily_log_domain_XCTest": 21,
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
+              "/tmp/fruitfolio_daily_section_final_syntax.log",
+              "/tmp/fruitfolio_daily_section_sound.log"
+            ],
+            "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          },
+          "not_run": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Official MADLAD inference, Apple UI and physical-device verification."
+          ],
+          "remaining": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
+            "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
+            "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -26873,7 +26952,9 @@
         "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26894,42 +26975,47 @@
         "FruitfolioTests/Prompt1BDailyLogWriteTests.swift",
         "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
         "Prompt1BCalendarPresentationPolicyTests",
-        "Prompt1BRecoveredCycleLoaderTests"
+        "Prompt1BRecoveredCycleLoaderTests",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt1BModalAccessibilityTests (NOT_RUN)"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
         "Section toggling leaves existing date-specific draft/save model intact;21 existing domain tests pass, native cross-route draft preservation remains pending.",
-        "Selected date and persisted log state retained while canceled unserved date-sheet handoff not replayed. Actual Calendar\u2192Log\u2192Today UI acceptance unrun. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "Selected date and persisted log state retained while canceled unserved date-sheet handoff not replayed. Actual Calendar\u2192Log\u2192Today UI acceptance unrun. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "Actual shared refresh reaches Today as well as Calendar; model read-generation preserves newer state and loaded unsaved corrections. Actual SwiftUI parent/sheet identity acceptance pending. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -26977,6 +27063,25 @@
             "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -27003,7 +27108,9 @@
         "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27022,40 +27129,45 @@
         "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "Prompt1BCalendarPresentationPolicyTests",
-        "Prompt1BRecoveredCycleLoaderTests"
+        "Prompt1BRecoveredCycleLoaderTests",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt1BModalAccessibilityTests (NOT_RUN)"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "No delayed/debounced toggles or extra content movement; actual calendar/date opening latency still requires Apple runtime evidence.",
-        "No artificial delay added; consumed date-sheet handoff guarded on actual dismissal. Device latency not measured. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "No artificial delay added; consumed date-sheet handoff guarded on actual dismissal. Device latency not measured. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "Old read completion/defer cannot stall or reset replacement load; canceled save never enters repository. Device input latency not measured. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -27085,6 +27197,25 @@
             "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -27102,7 +27233,9 @@
         "Fruitfolio/Localizable.xcstrings",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
-        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json"
+        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27117,51 +27250,47 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
         "FruitfolioTests/Prompt1BDailyLogWriteTests.swift",
-        "FruitfolioTests/Prompt20DailyLogCoreTests.swift"
+        "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt1BTodaySnapshotTests",
+        "Prompt1BModalAccessibilityTests (NOT_RUN)"
       ],
-      "commit_reference": "batch:Daily-log-single-expansion-owner-and-founder-main-spec-scope (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
-        "Retain shared owned confirmation controls and journal; stable section identifiers support actual native regression, not new popup architecture."
+        "Retain shared owned confirmation controls and journal; stable section identifiers support actual native regression, not new popup architecture.",
+        "Existing shared popup/owned-confirmation system retained; unconsumed popup survives suspension while consumed action canceled. Native overlay acceptance unrun. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T17:13:28.701838+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "existing_actual_daily_log_domain_XCTest": 21,
-          "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "failures": 0,
-          "logs": [
-            "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
-            "/tmp/fruitfolio_daily_section_final_syntax.log",
-            "/tmp/fruitfolio_daily_section_sound.log"
-          ],
-          "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Official MADLAD inference, Apple UI and physical-device verification."
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-          "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-          "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-        "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-        "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-        "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-        "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -27181,6 +27310,34 @@
             "Execute actual five native note editors and dirty-exit/background regression on Apple",
             "Verify fixed labels vary by language while patient note text stays exact and no duplicate AX placeholder",
             "Whole localization/logging/clinical/device acceptance remains incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+          "executed": {
+            "existing_actual_daily_log_domain_XCTest": 21,
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
+              "/tmp/fruitfolio_daily_section_final_syntax.log",
+              "/tmp/fruitfolio_daily_section_sound.log"
+            ],
+            "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          },
+          "not_run": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Official MADLAD inference, Apple UI and physical-device verification."
+          ],
+          "remaining": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
+            "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
+            "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -27367,7 +27524,8 @@
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27390,9 +27548,10 @@
         "Prompt26PregnancyPresentationLifecycleTests",
         "Prompt1BCalendarPresentationPolicyTests",
         "Prompt1BRecoveredCycleLoaderTests",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt1BDailyLogViewModelTests"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
@@ -27403,33 +27562,36 @@
         "Inactive/covered/disappeared and reduced-motion transitions settle existing decorations without animation;44pt detail target. Apple lifecycle tests unrun. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Existing reduced-motion/canonical controls retained with nonanimated cancellation and44pt action targets; Apple motion/accessibility acceptance pending. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Topic uses existing MotionPreferences authority for expansion motion; inactive interaction disabled; Apple Reduced Motion/VoiceOver acceptance unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
-        "Presentation invalidation resets month drift in disabled-animation transaction; accessibility and reduced-motion UI acceptance unrun. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "Presentation invalidation resets month drift in disabled-animation transaction; accessibility and reduced-motion UI acceptance unrun. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "Save feedback settles on suspension without replay and uses no animation under Reduce Motion. Updated12launch native matrix unrun. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -27551,6 +27713,25 @@
             "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
             "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
             "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -45462,7 +45643,8 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -45659,9 +45841,11 @@
         "Prompt27ScienceContentTests (portable only)",
         "Prompt1BScientificArtSizingTests",
         "Prompt1BCalendarPresentationPolicyTests",
-        "Prompt1BRecoveredCycleLoaderTests"
+        "Prompt1BRecoveredCycleLoaderTests",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -45813,33 +45997,36 @@
         "Existing native lifecycle regression now asserts duplicate transition rejected; existing native UI test adds background/return stage and draft preservation. Both unrun on Linux;16underlying portable tests passed. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Two actual production model lifecycle tests run on Linux, including canceled noncooperative provider, newer result retention, reference retention and wrong-topic rejection;24focused tests passed. Fetal SwiftUI/UI acceptance remains unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
         "Three actual new model/payload regressions passed plus23existing science tests newly executed on Linux and6canvas math checks.1104full XCTest+21SwiftTesting passed; native UIImage test not run. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
-        "New actual noncanceled held-provider race demonstrates old same-month/context snapshot rejected after epoch changes.28focused XCTest passed. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "New actual noncanceled held-provider race demonstrates old same-month/context snapshot rejected after epoch changes.28focused XCTest passed. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "Two actual production model regressions cover stale held-read/new-load defer and canceled repository admission with successful explicit retry; existing committed-write reconciliation test still passes in80tests. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -46867,6 +47054,25 @@
             "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
             "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
             "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -47123,7 +47329,8 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
-        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift"
+        "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+        "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -47315,9 +47522,11 @@
         "Prompt27ScienceContentTests (portable only)",
         "Prompt1BScientificArtSizingTests",
         "Prompt1BCalendarPresentationPolicyTests",
-        "Prompt1BRecoveredCycleLoaderTests"
+        "Prompt1BRecoveredCycleLoaderTests",
+        "Prompt1BDailyLogViewModelTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Calendar-presentation-epoch-and-active-log-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-owned-reads-and-shared-cycle-refresh (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -47452,33 +47661,36 @@
         "Updated native lifecycle/UI assertions live in actual project test source, with explicit NOT_RUN status. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
         "Actual model and lifecycle tests are project Swift sources included in portable runner; native UI regression also updated with explicit NOT_RUN. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
         "Actual production model/router/safety dependencies added to portable runner; project Swift regressions updated to executable async MainActor tests, no fake SDK. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
-        "Regression in existing project Swift test source; no external-only assertion or fake Apple SDK. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json"
+        "Regression in existing project Swift test source; no external-only assertion or fake Apple SDK. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+        "New regressions are project Swift source; existing native1method/12launch matrix updated and explicitly NOT_RUN. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json"
       ],
-      "last_updated": "2026-11-07T18:13:28.180876+00:00",
+      "last_updated": "2026-11-07T18:20:48.104466+00:00",
       "latest_batch_verification": {
-        "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+        "batch": "Daily-log-owned-reads-and-shared-cycle-refresh",
         "executed": {
-          "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+          "portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests",
           "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
-          "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          "Apple shared Today/Calendar refresh and daily-log draft identity across parent refresh",
+          "Updated native owned-exit UI test:1method/12existing planned launches across RM\u00d7RTL\u00d73choices, with unconsumed confirmation backgrounding",
+          "Actual consumed-confirmation/inactive dismissal/foreground focus and save-feedback timing",
+          "Apple VoiceOver/dynamic-layout acceptance and real-device latency"
         ],
         "remaining": [
-          "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-          "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-          "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-          "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+          "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+          "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+          "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+          "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
-        "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
-        "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
-        "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
+        "Verify actual Calendar and Today reflect acknowledged logs after sheet close, including a canceled presentation whose write committed",
+        "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
+        "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
+        "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
       ],
       "prior_batch_verifications": [
         {
@@ -48506,6 +48718,25 @@
             "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
             "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
             "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Calendar-presentation-epoch-and-active-log-handoff",
+          "executed": {
+            "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
+            "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+            "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
+          ],
+          "remaining": [
+            "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+            "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+            "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+            "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

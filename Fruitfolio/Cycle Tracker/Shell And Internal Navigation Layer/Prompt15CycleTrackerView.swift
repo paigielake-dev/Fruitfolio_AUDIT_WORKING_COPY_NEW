@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt15CycleTrackerView: View {
     let onBack: () -> Void
@@ -11,13 +12,20 @@ struct Prompt15CycleTrackerView: View {
     @AccessibilityFocusState private var predictionInfoFocused: Bool
     @State private var dailyLogRequest: Prompt20DailyLogRequest?
     @State private var dailyLogHasUnsavedChanges = false
-    @State private var calendarRefreshID = UUID()
+    @State private var cycleDataRefreshID = UUID()
     @State private var bodyDetail: Prompt22BodyDetail = .bodyBiology
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var contextStore: Prompt27AContextStore
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @Environment(\.scenePhase) private var scenePhase
+    private var ownerIsActive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
+    private var canInteract: Bool {
+        ownerIsActive && popupCoordinator.currentPopup == nil && dailyLogRequest == nil
+    }
 
     private var contextPolicy: Prompt27AContextPolicyResult {
         Prompt27AContextPolicyEngine().policy(for: contextStore.context)
@@ -67,16 +75,19 @@ struct Prompt15CycleTrackerView: View {
         }
         .sheet(item: $dailyLogRequest, onDismiss: {
             dailyLogHasUnsavedChanges = false
+            // A write can commit after its presentation is cancelled. Reload the
+            // existing shared data on return even when no UI success callback ran.
+            cycleDataRefreshID = UUID()
         }) { request in
             FruitfolioPresentedPopupHost {
                 Prompt20DailyLogView(
                     selectedDate: request.selectedDate,
                     initialExpandedSection: request.initialSection,
                     onSaved: { _ in
-                        // Recreate only the calendar presentation after a secured local
-                        // save so Phase 19 reloads the existing metadata hierarchy.
-                        // This does not touch prediction calculations or calendar art.
-                        calendarRefreshID = UUID()
+                        // Reload Today and Calendar from their existing shared data
+                        // after an acknowledged save; the daily-log editor and its
+                        // draft remain owned by this sheet.
+                        cycleDataRefreshID = UUID()
                     },
                     onDirtyStateChange: { isDirty in
                         dailyLogHasUnsavedChanges = isDirty
@@ -106,7 +117,7 @@ struct Prompt15CycleTrackerView: View {
         }
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
             predictionPopupOwner?.observeDismissal()
-            guard viewIsVisible, returnPredictionFocus, predictionPopupOwner?.requestID == nil,
+            guard ownerIsActive, returnPredictionFocus, predictionPopupOwner?.requestID == nil,
                   popupCoordinator.currentPopup == nil else { return }
             returnPredictionFocus = false
             predictionInfoFocused = true
@@ -116,6 +127,7 @@ struct Prompt15CycleTrackerView: View {
     private var globalBackRow: some View {
         HStack {
             BackControl {
+                guard canInteract else { return }
                 onBack()
             }
 
@@ -173,6 +185,7 @@ struct Prompt15CycleTrackerView: View {
                     },
                     onPredictionInfoRequested: requestPredictionInfo
                 )
+                .id(cycleDataRefreshID)
 
             case .calendar:
                 Prompt19CalendarView(
@@ -207,7 +220,7 @@ struct Prompt15CycleTrackerView: View {
                         select(.body)
                     }
                 }
-                .id(calendarRefreshID)
+                .id(cycleDataRefreshID)
 
             case .body:
                 VStack(alignment: .leading, spacing: 18) {
@@ -243,7 +256,7 @@ struct Prompt15CycleTrackerView: View {
                     activeDate: Date(),
                     contextPolicy: contextPolicy,
                     onSaved: {
-                        calendarRefreshID = UUID()
+                        cycleDataRefreshID = UUID()
                     }
                 )
 
@@ -260,6 +273,7 @@ struct Prompt15CycleTrackerView: View {
         date: Date,
         section: Prompt20DailyLogSection?
     ) {
+        guard canInteract else { return }
         dailyLogHasUnsavedChanges = false
         dailyLogRequest = Prompt20DailyLogRequest(
             selectedDate: date,
@@ -268,13 +282,13 @@ struct Prompt15CycleTrackerView: View {
     }
 
     private func requestPredictionInfo(_ info: Prompt16PredictionLearningInfo) {
-        guard viewIsVisible, let owner = predictionPopupOwner else { return }
+        guard canInteract, let owner = predictionPopupOwner else { return }
         if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
         predictionInfoFocused = false
         returnPredictionFocus = true
         owner.present { id in
             Prompt16PredictionPopupRequest.make(info: info, id: id, scope: predictionPopupScope) {
-                guard viewIsVisible else { return }
+                guard ownerIsActive else { return }
                 _ = owner.consumeAction(for: id)
             }
         }
@@ -283,7 +297,7 @@ struct Prompt15CycleTrackerView: View {
     private func select(
         _ section: Prompt15CycleSection
     ) {
-        guard section != selectedSection else {
+        guard canInteract, section != selectedSection else {
             return
         }
 
