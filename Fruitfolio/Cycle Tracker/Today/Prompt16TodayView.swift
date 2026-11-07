@@ -97,9 +97,9 @@ struct Prompt16TodayView: View {
     }
 
     private var todayClarification: String? {
-        let policy = contextPolicy[.today]
-        guard policy.effect == .clarify || policy.effect == .suppress else { return nil }
-        return policy.reason
+        Prompt27AContextPresentationCopy.todayClarification(
+            context: context, policy: contextPolicy
+        )
     }
 
     private var predictionLearningInfo: Prompt16PredictionLearningInfo {
@@ -192,13 +192,7 @@ struct Prompt16TodayView: View {
             alignment: .leading,
             spacing: 16
         ) {
-            if let todayClarification {
-                FruitfolioTranslatedText(source: todayClarification, font: Prompt16Type.body, serious: true)
-                    .font(Prompt16Type.body)
-                    .foregroundStyle(Prompt16Palette.burgundy.opacity(0.78))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.bottom, 10)
-            }
+            contextClarification
 
             Prompt16DayIndicator(
                 cycleDay: displayCycleDay
@@ -241,6 +235,21 @@ struct Prompt16TodayView: View {
         )
     }
 
+    /// The same human-facing limitation remains visible in loaded and failed
+    /// presentations. It reads current explicit context without changing history,
+    /// prediction confidence, or the underlying prediction mathematics.
+    @ViewBuilder
+    private var contextClarification: some View {
+        if let todayClarification {
+            FruitfolioTranslatedText(source: todayClarification, font: Prompt16Type.body, serious: true)
+                .font(Prompt16Type.body)
+                .foregroundStyle(Prompt16Palette.burgundy.opacity(0.78))
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("cycleTracker.today.contextClarification")
+                .padding(.bottom, 10)
+        }
+    }
+
     private var contextRestrictedContent: some View {
         VStack(alignment: .leading, spacing: 14) {
             FruitfolioFixedText(source: "today", font: Prompt16Type.contextTitle, serious: true)
@@ -269,6 +278,8 @@ struct Prompt16TodayView: View {
             alignment: .leading,
             spacing: 0
         ) {
+            contextClarification
+
             Prompt16DayIndicator(
                 cycleDay: displayCycleDay
             )
@@ -318,7 +329,7 @@ struct Prompt16TodayView: View {
                 FruitfolioControlPillButton(
                     label: "see what’s happening"
                 ) {
-
+                    guard canInteract else { return }
                     onSeeBiology()
                 }
                 .frame(

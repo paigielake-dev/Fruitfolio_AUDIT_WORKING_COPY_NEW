@@ -31,6 +31,32 @@ final class Prompt27AContextPersonalizationTests: XCTestCase {
         XCTAssertEqual(result[.fertileWindowPrediction].effect, .clarify)
     }
 
+    func testTodayPresentationUsesHumanFacingContextLimitsWithoutChangingPolicies() throws {
+        let cases: [(Prompt27AUserReproductiveContext, String)] = [
+            (make(trackingGoal: .avoidingPregnancy), "not a contraceptive guarantee"),
+            (make(stage: .postpartum), "estimates labeled as estimates"),
+            (make(stage: .perimenopause), "recorded data separate from estimates"),
+            (make(lactation: .breastfeedingOrLactating), "not a confirmation"),
+            (make(health: [.pcos]), "does not use it to increase prediction certainty"),
+            (make(surrogacy: .postpartumAfterSurrogatePregnancy), "without assuming you’re parenting"),
+            (make(stage: .pregnant), "ordinary current-cycle predictions are hidden"),
+            (make(stage: .menopause), "past cycle history stays available")
+        ]
+        for (context, limitation) in cases {
+            let originalContext = context
+            let policy = engine.policy(for: context)
+            let originalPolicy = policy
+            let copy = try XCTUnwrap(Prompt27AContextPresentationCopy.todayClarification(context: context, policy: policy))
+            XCTAssertTrue(copy.contains(limitation), copy)
+            XCTAssertFalse(copy.contains("prediction math."), "No implementation-facing policy reason in these contexts")
+            XCTAssertEqual(policy, originalPolicy)
+            XCTAssertEqual(context, originalContext)
+            XCTAssertFalse(policy.modifiesPredictionMathematics)
+        }
+        let absent = Prompt27AUserReproductiveContext.unspecified
+        XCTAssertNil(Prompt27AContextPresentationCopy.todayClarification(context: absent, policy: engine.policy(for: absent)))
+    }
+
     func test05SexuallyActive() {
         let result = engine.policy(for: make(sexualActivity: .sexuallyActive))
         XCTAssertEqual(result[.fertilizationEducation].effect, .unchanged)

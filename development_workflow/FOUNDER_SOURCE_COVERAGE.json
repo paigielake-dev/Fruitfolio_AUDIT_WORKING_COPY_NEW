@@ -9378,7 +9378,31 @@
       "applicability": "APPLICABLE",
       "implementation_status": "IN_PROGRESS",
       "verification_status": "NOT_RUN",
-      "evidence": [],
+      "evidence": [
+        {
+          "batch": "Today-human-context-limitations-and-owned-biology-action",
+          "document": "development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
+          "summary": "Loaded/failed Today now render existing human-facing context limitation. Complete substantive context-AI/source-evidence adaptation still unfinished.",
+          "verification": {
+            "executed": {
+              "portable_XCTest": "82 passed, 0 failures, including72 context, Today state/snapshot, persistence tests",
+              "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking",
+              "sound_ownership": "0 diagnostics"
+            },
+            "not_run": [
+              "Apple SDK build and loaded/failure/restricted Today UI checks",
+              "VoiceOver, large text and RTL on Apple devices",
+              "Clinical/source acceptance of context explanations and official MADLAD translation"
+            ],
+            "remaining": [
+              "Verify actual loaded and failed Today surfaces render human-facing current context copy immediately after edits",
+              "Verify blocked/covered/background see-what-is-happening callback cannot navigate on Apple",
+              "Full evidence-mapped personalized biological explanations and complete combined-context handling remain unfinished; this change does not implement the source1221 AI layer",
+              "Original requirements281/289/294/302 and cross-app test coverage remain IN_PROGRESS pending full clause reconciliation"
+            ]
+          }
+        }
+      ],
       "remaining_verification_requirements": [],
       "scope_reviews": [
         {

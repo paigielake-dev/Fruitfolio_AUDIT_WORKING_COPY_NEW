@@ -4246,3 +4246,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites", "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention", "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"}.
 - Next action: Continue original context-integration requirements281–304 from actual policy/Today/wheel consumers; implement missing behavior before any individual status closure.
 - Commit: containing commit for batch Founder-appendix-exact-tour-and-context-copy.
+
+## Today-human-context-limitations-and-owned-biology-action
+
+- Parent checkpoint: d3b69506caaf8a35fa698620ad266eda3657a36d.
+- Source-order requirements: [281, 289, 294, 302, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift, Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift, FruitfolioTests/Prompt27AContextPersonalizationTests.swift, development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json.
+- Loaded and failed Today share one intrinsically sized translated clarification view, using existing context/policy human-facing helper. Restricted Today uses that same helper. No prediction math, confidence, logs, artwork or stored context mutated. Biology navigation now checks same active/visible/uncovered gate as logging controls. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json
+- Tests added/updated: Prompt27AContextPersonalizationTests.testTodayPresentationUsesHumanFacingContextLimitsWithoutChangingPolicies, Prompt1BTodaySnapshotTests, Prompt16TodayStateBuilderTests, Prompt1BContextPersistenceTests.
+- Verification: {"portable_XCTest": "82 passed, 0 failures, including72 context, Today state/snapshot, persistence tests", "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking", "sound_ownership": "0 diagnostics"}.
+- Next action: Implement independently applicable combined-context limitations in existing human-facing presentation helper without inventing biological facts or changing prediction confidence; preserve source1221 evidence-generation gap.
+- Commit: containing commit for batch Today-human-context-limitations-and-owned-biology-action.
