@@ -3093,3 +3093,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 896, "native_CPU_XCTest": 918, "SwiftTesting_each": 21, "focused_XCTest": 1, "painted_puddle_viewports": 2, "workflow_checks": 60, "syntax_files": 311}.
 - Next action: Execute actual controller branch/vine contact trajectories with validated painted masks, including bad-fruit exclusion, entry-only rustle sequence and captured-speed preservation; preserve original edge-rooted art. Apple playback and visible-believability remain unverified.
 - Commit: containing commit for batch Actual-puddle-entry-exit-and-visible-contact-cue.
+
+## Actual-controller-painted-branch-and-vine-contact
+
+- Parent checkpoint: 89b833626f184b09f91529ecbd96c83dbe35ad6d.
+- Source-order requirements: [351, 352, 353, 354, 355, 356, 357, 476, 477, 478].
+- Source files: development_workflow/ACTUAL_BRANCH_VINE_CONTACT.md.
+- Two actual controller regressions use real painted cells inside playable lanes after legitimate round setup. Branch bounce/reflection and vine good/star slowing versus bad-fruit control preserve captured base motion; entry-only rustle sequence and unchanged saved credits checked. Focus2pass. No art/audio/physics/renderer source changes or whole requirement certification.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 898, "native_CPU_XCTest": 920, "SwiftTesting_each": 21, "focused_XCTest": 2, "workflow_checks": 60, "syntax_files": 311}.
+- Next action: Verify actual fruit/star spawners use bounded level-driven speed ranges across1–8, preserve captured motion and plateau beyond8. Then actual acknowledged success/failure progression and reveal/result ownership, without repeating earlier persistence audits.
+- Commit: containing commit for batch Actual-controller-painted-branch-and-vine-contact.

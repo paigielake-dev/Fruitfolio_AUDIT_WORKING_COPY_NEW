@@ -557,6 +557,86 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         }
     }
 
+    private func controllerPaintedPoint(_ name: String, geometry: Prompt28ObstacleGeometry) throws -> CGPoint {
+        let mask = try XCTUnwrap(geometry.library.masks[name])
+        let frame = try XCTUnwrap(geometry.frame(name))
+        var candidate: CGPoint?
+        for row in 0..<mask.rows {
+            for column in 0..<mask.columns where mask.isPainted(column: column, row: row) {
+                let fraction = (CGFloat(column) + 0.5) / CGFloat(mask.columns)
+                let point = CGPoint(x: (frame.minX + frame.width * (name == "branch" ? 1 - fraction : fraction)) / geometry.playfield.width,
+                    y: (frame.minY + frame.height * (CGFloat(row) + 0.5) / CGFloat(mask.rows)) / geometry.playfield.height)
+                if (0.08...0.92).contains(point.x), (0.1...0.65).contains(point.y) { candidate = point; break }
+            }
+            if candidate != nil { break }
+        }
+        return try XCTUnwrap(candidate, "The actual painted obstacle must intersect a playable lane")
+    }
+
+    func testActualVineFramesSlowOnlyGoodFruitAndStarsAndEmitEntryOnce() async throws {
+        let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
+            ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+        let library = try Prompt28ObstacleMaskLibrary.load(url: url)
+        let (suite, defaults, store, model) = try activeModeFixture(mode: .catchMode,
+            gameLevel: 2, obstacleLibrary: library)
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        let geometry = Prompt28ObstacleGeometry(playfield: CGSize(width: 390, height: 620), level: 2, library: library)
+        let point = try controllerPaintedPoint("vines", geometry: geometry)
+        XCTAssertEqual(model.activeObstacles, [.vines])
+        let good = Prompt28FallingFruit(fruitID: .pear, classification: .good, x: point.x, y: point.y,
+            fallSpeed: 0.02, horizontalDrift: 0, rotationDegrees: 0)
+        let bad = Prompt28FallingFruit(fruitID: .lemon, classification: .bad, x: point.x, y: point.y,
+            fallSpeed: 0.02, horizontalDrift: 0, rotationDegrees: 0)
+        let star = Prompt28FallingStar(x: point.x, y: point.y, fallSpeed: 0.02, horizontalDrift: 0, rotationDegrees: 0)
+        model.activeFruit = [good, bad]; model.activeStars = [star]
+        let bytes = defaults.data(forKey: "game")
+        let initialCue = model.vineContactSequence
+        for tick in 0..<2 {
+            model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 20_000 + Double(tick) * 0.04))
+            let movedGood = try XCTUnwrap(model.activeFruit.first { $0.id == good.id })
+            let movedBad = try XCTUnwrap(model.activeFruit.first { $0.id == bad.id })
+            let movedStar = try XCTUnwrap(model.activeStars.first { $0.id == star.id })
+            XCTAssertTrue(movedGood.isInVines); XCTAssertTrue(movedStar.isInVines)
+            XCTAssertFalse(movedBad.isInVines); XCTAssertEqual(movedBad.vineContactTime, 0)
+            XCTAssertLessThan(movedGood.y, movedBad.y); XCTAssertEqual(movedGood.y, movedStar.y, accuracy: 0.000001)
+            XCTAssertEqual(movedGood.fallSpeed, good.fallSpeed); XCTAssertEqual(movedStar.fallSpeed, star.fallSpeed)
+            XCTAssertEqual(model.vineContactSequence, initialCue + 2, "One cue per eligible entry, not every frame")
+        }
+        XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+        XCTAssertFalse(store.isReadOnly); XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+    }
+
+    func testActualBranchFramesBounceAndRetainCapturedBaseMotion() async throws {
+        let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
+            ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+        let library = try Prompt28ObstacleMaskLibrary.load(url: url)
+        let (suite, defaults, store, model) = try activeModeFixture(mode: .catchMode,
+            gameLevel: 3, obstacleLibrary: library)
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        let geometry = Prompt28ObstacleGeometry(playfield: CGSize(width: 390, height: 620), level: 3, library: library)
+        let point = try controllerPaintedPoint("branch", geometry: geometry)
+        XCTAssertEqual(model.activeObstacles, [.vines, .branch])
+        let fruit = Prompt28FallingFruit(fruitID: .pear, classification: .good, x: point.x, y: point.y,
+            fallSpeed: 0.2, horizontalDrift: 0.04, rotationDegrees: 0)
+        model.activeFruit = [fruit]; model.activeStars = []
+        let bytes = defaults.data(forKey: "game")
+        model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 30_000))
+        let bounced = try XCTUnwrap(model.activeFruit.first { $0.id == fruit.id })
+        XCTAssertTrue(bounced.branchDeflected); XCTAssertGreaterThan(bounced.branchBounceRemaining, 0)
+        XCTAssertLessThan(bounced.x, fruit.x); XCTAssertLessThan(bounced.y, fruit.y)
+        let reflected = try XCTUnwrap(bounced.horizontalVelocityAfterBranch)
+        XCTAssertLessThan(reflected, 0)
+        for tick in 1...8 {
+            model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 30_000 + Double(tick) * 0.04))
+        }
+        let moved = try XCTUnwrap(model.activeFruit.first { $0.id == fruit.id })
+        XCTAssertEqual(moved.branchBounceRemaining, 0); XCTAssertEqual(moved.horizontalVelocityAfterBranch, reflected)
+        XCTAssertEqual(moved.fallSpeed, fruit.fallSpeed); XCTAssertEqual(moved.horizontalDrift, fruit.horizontalDrift)
+        XCTAssertGreaterThan(moved.y, bounced.y); XCTAssertLessThan(moved.x, bounced.x)
+        XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+        XCTAssertFalse(store.isReadOnly); XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+    }
+
     func testActualPaintedPuddleEntryAndExitRestoreNormalBasketMovement() async throws {
         let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
             ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
