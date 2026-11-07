@@ -1,0 +1,185 @@
+{
+  "scope": "Individual complete implementation review with external Apple/human acceptance pending; no source-only VERIFIED promotions, no new duplicate tests, no source changes needed where existing real tests exercise all domain conditions.",
+  "verification": {
+    "executed": {
+      "current_focused_controller_engine_physics_XCTest": 119,
+      "progression_policy_XCTest": 5,
+      "immutable_result_ledger_XCTest": 7,
+      "rule_catalog_XCTest_at_parent_closure": 3,
+      "failures": 0,
+      "logs": [
+        "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+        "/tmp/fruitfolio_progression_clause_closures.log",
+        "/tmp/fruitfolio_result_clause_closures.log",
+        "/tmp/fruitfolio_star_rule_catalog_closure.log"
+      ],
+      "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
+    },
+    "not_run": [
+      "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+      "Official MADLAD/native-language game-rule acceptance."
+    ],
+    "remaining": [
+      "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+      "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+      "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable."
+    ]
+  },
+  "entries": [
+    {
+      "sequence": 358,
+      "original_requirement_id": "358",
+      "description": "Increase falling speed gradually as game levels advance.",
+      "conditions_and_evidence": "Spawn fall-duration envelopes advance gradually from3.7\u20134.0s at level1 to2.8\u20133.15s at level8, with no random unbounded multiplier; actual fruit/star spawns at every supported level fall inside the selected envelope.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualFruitAndStarSpawnsUseBoundedLevelSpeedsAndPreserveCapturedMotion",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent"
+      ],
+      "pending": "Apple perceived speed/physical-device timing.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 359,
+      "original_requirement_id": "359",
+      "description": "Base progression primarily on successfully completed rounds.",
+      "conditions_and_evidence": "Only acknowledged successful rounds call tier-success advancement; two/three/four successes per tier control progress, while actual failure preserves level/credit. Reset uses tier-local credit rather than lifetime totals.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testResetDoesNotJumpBackToLifetimeLevelAfterOneSuccess"
+      ],
+      "pending": "Apple complete a natural multi-round session/restart workflow.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 360,
+      "original_requirement_id": "360",
+      "description": "Keep early levels slow and forgiving.",
+      "conditions_and_evidence": "Level1 has slow3.7\u20134.0s envelope,1.25\u20131.55s spawn interval, maximum2 objects and no weather/painted obstacles; no penalties for missed good/bad fruit. Classification alternative preserves learning without reflex dragging.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testMissingGoodFruitHasNoPenalty",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testMissingBadFruitHasNoPenalty"
+      ],
+      "pending": "Physical-device early-level forgivingness and accessible mode acceptance.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 361,
+      "original_requirement_id": "361",
+      "description": "Introduce bounded difficulty increases at later levels.",
+      "conditions_and_evidence": "All later levels use bounded fall/spawn/drift ranges, no more than4 concurrent objects and at most2 planned obstacles; educational question depth does not alter catching physics.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testObstaclePlanStaysLimitedAndLevelDriven",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testEducationalDifficultyDoesNotChangePhysicsConfig"
+      ],
+      "pending": "Apple difficulty/balance playtesting across supported viewports.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 362,
+      "original_requirement_id": "362",
+      "description": "Do not increase difficulty after an unsuccessful round.",
+      "conditions_and_evidence": "100 policy failures preserve successful credit/level, and actual adverse terminal catch at each level does not advance saved/current/next level. Earned counters remain independently retained.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testFailuresCannotIncreaseLevelOrConsumeSuccessfulProgressionCredit",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression"
+      ],
+      "pending": "Apple natural unsuccessful round/retry and restart acceptance.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 363,
+      "original_requirement_id": "363",
+      "description": "Stop increasing difficulty after the tested maximum level.",
+      "conditions_and_evidence": "Engine config and progression clamp at software-tested maximum8;1000 wins stay capped, next configuration at1000 equals8, and actual level8 completion does not increase it. This is Linux policy/controller testing, not tested device-balance certification.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testFreshProgressionRetainsGradualExistingThresholdsAndStopsAtMaximum",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression"
+      ],
+      "pending": "Physical-device acceptance of chosen maximum; no claim human balance testing passed.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 364,
+      "original_requirement_id": "364",
+      "description": "Never change an object\u2019s velocity while it is already falling.",
+      "conditions_and_evidence": "Each spawned object captures its base fall speed and drift once; actual fruit/star frame tests at levels1\u20138 preserve them, including branch/wind/vine influences acting separately as specified obstacle forces. No mid-flight reconfiguration to a new level.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualFruitAndStarSpawnsUseBoundedLevelSpeedsAndPreserveCapturedMotion",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualBranchFramesBounceAndRetainCapturedBaseMotion"
+      ],
+      "pending": "Apple actual flight transitions and frame pacing.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 365,
+      "original_requirement_id": "365",
+      "description": "Keep gameplay challenging but not excessively demanding.",
+      "conditions_and_evidence": "Implemented challenge is bounded by slow early stages, maximum4 objects, two-obstacle limit, no miss penalty, rare protection and non-reflex classification alternative. Subjective challenging-but-not-excessive behavior requires physical play acceptance; source/controller evidence cannot establish that judgment.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testObstaclePlanStaysLimitedAndLevelDriven"
+      ],
+      "pending": "External human physical-device playtesting; not fully verified from parameter bounds.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 366,
+      "original_requirement_id": "366",
+      "description": "Trigger basket reveal after the actual round finishes.",
+      "conditions_and_evidence": "Controller cannot accept catch before correct answer or continue/reveal before completed target; actual ledger rejects9-fruit successful snapshot, duplicate/late events cannot finish early, terminal current round is finalized once. SwiftUI reveal consumes that immutable actual result.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testNineGoodFruitCannotCreateACompletedRevealAndDuplicateEventsDoNotCount",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testContinueBeforeRevealCannotAdvanceRoundOrStartQuestionLoading",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testActualSuccessfulRevealConsumesNextRequestOnlyOnce"
+      ],
+      "pending": "Apple actual terminal timing/flattened tenth catch/reveal and background interruption.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 367,
+      "original_requirement_id": "367",
+      "description": "Include accumulated fruit, stars, rewards, and consequences in the result.",
+      "conditions_and_evidence": "Immutable result contains accepted fruit order/count, stars collected, carried/spent/remaining passes, actual ending bad fruit, passed objects, earned versus cumulative score and level outcome. Live result displays these values for success/failure rather than fixed10 or invented catches; source medical lesson remains separate.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testUnprotectedBadFruitProducesAnActualPartialAttemptResult",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testStarsPassSpendingAndEarnedVersusCumulativeScoreRemainDistinct",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testPassedFruitAndStarsNeverBecomeInventedCatchesOrPenalties",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testFinishedSnapshotRetainsItsOriginalValuesWhenAnotherRoundBegins",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualControllerBankBeyondThousandAcknowledgesEveryStarAndCarriesNextRound"
+      ],
+      "pending": "Apple actual result layout/localization/VoiceOver/art and consequences rendering.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "sequence": 368,
+      "original_requirement_id": "368",
+      "description": "Update leaderboard instructions and game rules to match the final mechanics.",
+      "conditions_and_evidence": "Current FAQ/rules/tutorial and leaderboard explanatory text share actual scoring/protection/result/totals semantics, explicitly describe local-only totals and unavailable secure worldwide rankings. Founder exact replacement home/HowItWorks/topic wording320\u2013322 stays separately blocked.",
+      "executed_methods": [
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift::testFAQExposesCurrentRulesResultsTotalsAndAccessibleAlternative",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift::testTutorialFAQAndCollectibleDescribeDelayedBankingAndNoFruitOrPoints",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift::testDocumentedScoreAndProtectionMatchActualEngineWithoutFruitCreditForStars"
+      ],
+      "pending": "Apple actual instructional/leaderboard rendering and localized rule meaning; secure remote ranking is not claimed configured.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED"
+    }
+  ],
+  "passed_method_log_crosscheck": {
+    "unique_methods": 22,
+    "all_cited_methods_have_actual_passed_log_lines": true,
+    "scope": "Exact method names checked in listed executed logs; this is not Apple runtime/whole-checklist verification."
+  }
+}

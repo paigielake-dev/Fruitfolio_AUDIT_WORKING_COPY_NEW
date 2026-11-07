@@ -30272,10 +30272,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30283,40 +30287,75 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualFruitAndStarSpawnsUseBoundedLevelSpeedsAndPreserveCapturedMotion",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Actual fruit/star spawners at all8levels produce speeds inside existing gradually increasing level ranges; two-frame controller execution uses genuine rarity spacing."
+        "Actual fruit/star spawners at all8levels produce speeds inside existing gradually increasing level ranges; two-frame controller execution uses genuine rarity spacing.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence358: Spawn fall-duration envelopes advance gradually from3.7\u20134.0s at level1 to2.8\u20133.15s at level8, with no random unbounded multiplier; actual fruit/star spawns at every supported level fall inside the selected envelope. Pending: Apple perceived speed/physical-device timing.",
+        "Spawn fall-duration envelopes advance gradually from3.7\u20134.0s at level1 to2.8\u20133.15s at level8, with no random unbounded multiplier; actual fruit/star spawns at every supported level fall inside the selected envelope."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple perceived speed/physical-device timing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple perceived speed/physical-device timing."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30332,10 +30371,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30343,40 +30386,75 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testResetDoesNotJumpBackToLifetimeLevelAfterOneSuccess"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Actual successful settled rounds advance acknowledged saved/session/result progression at per-level thresholds; repeat terminal resolution cannot advance again."
+        "Actual successful settled rounds advance acknowledged saved/session/result progression at per-level thresholds; repeat terminal resolution cannot advance again.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence359: Only acknowledged successful rounds call tier-success advancement; two/three/four successes per tier control progress, while actual failure preserves level/credit. Reset uses tier-local credit rather than lifetime totals. Pending: Apple complete a natural multi-round session/restart workflow.",
+        "Only acknowledged successful rounds call tier-success advancement; two/three/four successes per tier control progress, while actual failure preserves level/credit. Reset uses tier-local credit rather than lifetime totals."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple complete a natural multi-round session/restart workflow."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple complete a natural multi-round session/restart workflow."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30392,10 +30470,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30403,40 +30485,76 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testMissingGoodFruitHasNoPenalty",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testMissingBadFruitHasNoPenalty"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Existing pure early-level duration/spawn/concurrency bounds plus actual level1 fruit/star spawns execute. Forgiving feel remains unverified on device."
+        "Existing pure early-level duration/spawn/concurrency bounds plus actual level1 fruit/star spawns execute. Forgiving feel remains unverified on device.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence360: Level1 has slow3.7\u20134.0s envelope,1.25\u20131.55s spawn interval, maximum2 objects and no weather/painted obstacles; no penalties for missed good/bad fruit. Classification alternative preserves learning without reflex dragging. Pending: Physical-device early-level forgivingness and accessible mode acceptance.",
+        "Level1 has slow3.7\u20134.0s envelope,1.25\u20131.55s spawn interval, maximum2 objects and no weather/painted obstacles; no penalties for missed good/bad fruit. Classification alternative preserves learning without reflex dragging."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Physical-device early-level forgivingness and accessible mode acceptance."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Physical-device early-level forgivingness and accessible mode acceptance."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30452,10 +30570,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30463,40 +30585,76 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testObstaclePlanStaysLimitedAndLevelDriven",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testEducationalDifficultyDoesNotChangePhysicsConfig"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Existing bounded level configs and actual8level spawn matrix execute. Human late-level challenge evaluation remains open."
+        "Existing bounded level configs and actual8level spawn matrix execute. Human late-level challenge evaluation remains open.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence361: All later levels use bounded fall/spawn/drift ranges, no more than4 concurrent objects and at most2 planned obstacles; educational question depth does not alter catching physics. Pending: Apple difficulty/balance playtesting across supported viewports.",
+        "All later levels use bounded fall/spawn/drift ranges, no more than4 concurrent objects and at most2 planned obstacles; educational question depth does not alter catching physics."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple difficulty/balance playtesting across supported viewports."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple difficulty/balance playtesting across supported viewports."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30512,10 +30670,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30523,40 +30685,75 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testFailuresCannotIncreaseLevelOrConsumeSuccessfulProgressionCredit",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Actual unprotected bad-fruit failure at each level preserves level and earned per-level success credit while acknowledging one completed attempt."
+        "Actual unprotected bad-fruit failure at each level preserves level and earned per-level success credit while acknowledging one completed attempt.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence362: 100 policy failures preserve successful credit/level, and actual adverse terminal catch at each level does not advance saved/current/next level. Earned counters remain independently retained. Pending: Apple natural unsuccessful round/retry and restart acceptance.",
+        "100 policy failures preserve successful credit/level, and actual adverse terminal catch at each level does not advance saved/current/next level. Earned counters remain independently retained."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple natural unsuccessful round/retry and restart acceptance."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple natural unsuccessful round/retry and restart acceptance."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30572,10 +30769,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30583,40 +30784,75 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testFreshProgressionRetainsGradualExistingThresholdsAndStopsAtMaximum",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Actual level8 successful round stays8 in saved/session/result; existing1000success policy test plateaus. Level8 is not certified as a device-tested maximum."
+        "Actual level8 successful round stays8 in saved/session/result; existing1000success policy test plateaus. Level8 is not certified as a device-tested maximum.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence363: Engine config and progression clamp at software-tested maximum8;1000 wins stay capped, next configuration at1000 equals8, and actual level8 completion does not increase it. This is Linux policy/controller testing, not tested device-balance certification. Pending: Physical-device acceptance of chosen maximum; no claim human balance testing passed.",
+        "Engine config and progression clamp at software-tested maximum8;1000 wins stay capped, next configuration at1000 equals8, and actual level8 completion does not increase it. This is Linux policy/controller testing, not tested device-balance certification."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Physical-device acceptance of chosen maximum; no claim human balance testing passed."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Physical-device acceptance of chosen maximum; no claim human balance testing passed."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30632,10 +30868,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30643,40 +30883,75 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualFruitAndStarSpawnsUseBoundedLevelSpeedsAndPreserveCapturedMotion",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualBranchFramesBounceAndRetainCapturedBaseMotion"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Actual spawned fruit/star retain captured base speed/drift across a second frame; prior actual obstacle cases preserve base motion while applying contact forces."
+        "Actual spawned fruit/star retain captured base speed/drift across a second frame; prior actual obstacle cases preserve base motion while applying contact forces.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence364: Each spawned object captures its base fall speed and drift once; actual fruit/star frame tests at levels1\u20138 preserve them, including branch/wind/vine influences acting separately as specified obstacle forces. No mid-flight reconfiguration to a new level. Pending: Apple actual flight transitions and frame pacing.",
+        "Each spawned object captures its base fall speed and drift once; actual fruit/star frame tests at levels1\u20138 preserve them, including branch/wind/vine influences acting separately as specified obstacle forces. No mid-flight reconfiguration to a new level."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple actual flight transitions and frame pacing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple actual flight transitions and frame pacing."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30692,10 +30967,14 @@
         "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30705,41 +30984,76 @@
         "Prompt1BGamePersistenceTests",
         "Prompt28FruitBasketTests (Apple owner tests updated, NOT_RUN)",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift::testDifficultyBoundsAndQuestionDepthRemainIndependent",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testObstaclePlanStaysLimitedAndLevelDriven"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Fixed reset-to-one immediately jumping back to lifetime difficulty after one win. Optional per-level success credit resets independently; lifetime wins/highest level/fruit/stars/scores remain. Ordinary2/2/2/3/3/4/4 advancement thresholds and cap8 preserved, failures never advance/consume credit, question depth independent. Legacy coherent tiers retain existing observable offset; inconsistent legacy reset states keep visible tier without guessed reset dates. Extracted actual Foundation game persistence preserving existing defaults key/JSONfields, optional format marker, no read-time migration write. Wrong type/corrupt/future/invalid data retained read-only; changed/cleared raw state cannot be blindly overwritten/resurrected in tested sequential stale-writer cases. Scrollable recovery UI stops owned questions/gameplay; reload accepts fresh state/preferences without rewriting history. Existing two Apple consequence tests now drive entry/settlement before asserting awards; fixed literal escaped UUID fixture namespace. Eight real persistence and five progression tests pass, including reset-after200wins through storage reinitialization. No cross-process atomicity/disk-crash durability or actual Apple runtime/playtesting claim.",
-        "Only bounded configurations and controller matrices have executable evidence; comfortable challenge and demand level require human/device playtesting and are not marked complete."
+        "Only bounded configurations and controller matrices have executable evidence; comfortable challenge and demand level require human/device playtesting and are not marked complete.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence365: Implemented challenge is bounded by slow early stages, maximum4 objects, two-obstacle limit, no miss penalty, rare protection and non-reflex classification alternative. Subjective challenging-but-not-excessive behavior requires physical play acceptance; source/controller evidence cannot establish that judgment. Pending: External human physical-device playtesting; not fully verified from parameter bounds.",
+        "Implemented challenge is bounded by slow early stages, maximum4 objects, two-obstacle limit, no miss penalty, rare protection and non-reflex classification alternative. Subjective challenging-but-not-excessive behavior requires physical play acceptance; source/controller evidence cannot establish that judgment."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "External human physical-device playtesting; not fully verified from parameter bounds."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "External human physical-device playtesting; not fully verified from parameter bounds."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30758,10 +31072,14 @@
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30774,42 +31092,78 @@
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
         "Prompt1BFruitBasketResearchTests",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testNineGoodFruitCannotCreateACompletedRevealAndDuplicateEventsDoNotCount",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testContinueBeforeRevealCannotAdvanceRoundOrStartQuestionLoading",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift::testActualSuccessfulRevealConsumesNextRequestOnlyOnce"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "# Accepted-event round results and sourced saved lessons\n\nA per-round ledger now records actual accepted object IDs, exact caught fruit order, standalone stars, carried-in passes, protected bad catches, the actual unprotected ending event and passed objects. Duplicate events, rewards after terminal completion, and a successful snapshot before the target are rejected. The controller checks terminal ledger/session agreement before final round accounting, then retains an immutable result with level played/next level, earned points versus cumulative session score, stars collected versus passes remaining, and consequences. The existing round-ID finalization guard remains.\n\nActual good captures now increment lifetime fruit totals when awarded, including captures in failed/unfinished attempts, matching the existing per-capture star accounting. The old implementation only added ten on successful completion and omitted earlier caught fruit. No historical amount is guessed or backfilled. New topics record complete-from-start accounting; legacy missing provenance stays unknown and the local totals view explains possible historical omissions. Failed attempts never advance catching difficulty. Round results remain separate from the medical/source explanation and are not written into health context, Ask memory, or lab data.\n\nReveal artwork and accessibility now use the captured result rather than a fixed unconditional ten. Both success and failure expose actual fruit/star/pass/score details. The old wording implying the clinical paragraph explained why a fruit was \u201cgood\u201d is replaced by a separate library-explanation label; the catch rule remains its own game rule. Classification content and failed-attempt results scroll for short/large-text viewports.\n\nExplicit user saving copies the original sourced lesson/question, citations and each source record's own content version, with the package version separately retained. It does not present game counts as sourced medical claims. Legacy known package versions remain fallback metadata; invalid duplicate source identities cannot create a false saved trail. No automatic save/health-profile transfer is added.\n\nFive portable ledger regressions check premature completion, duplicate/late events, partial failure, pass conservation, score deltas, passed-object semantics and immutable snapshots; three portable saved-source regressions check actual payload/citation/version preservation and invalid-source refusal. The existing legacy document test now verifies unknown capture-accounting provenance is preserved. An additional actual Combine-controller test drives star protection, seven-fruit failure, ten-fruit retry, exact lifetime totals and repeated finalization; it is **NOT RUN on Linux**. UIKit rendering, source versus game visual hierarchy, VoiceOver, actual timers and app persistence remain behind the Apple/runtime gate. Source/core tests are not proof of device playability or clinical accuracy.\n",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
-        "Actual terminal success exposes basketReveal only after settled captures and acknowledged terminal round; failure exposes unsuccessful screen; scene-inactive completion tested, timed Apple animation remains unverified."
+        "Actual terminal success exposes basketReveal only after settled captures and acknowledged terminal round; failure exposes unsuccessful screen; scene-inactive completion tested, timed Apple animation remains unverified.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence366: Controller cannot accept catch before correct answer or continue/reveal before completed target; actual ledger rejects9-fruit successful snapshot, duplicate/late events cannot finish early, terminal current round is finalized once. SwiftUI reveal consumes that immutable actual result. Pending: Apple actual terminal timing/flattened tenth catch/reveal and background interruption.",
+        "Controller cannot accept catch before correct answer or continue/reveal before completed target; actual ledger rejects9-fruit successful snapshot, duplicate/late events cannot finish early, terminal current round is finalized once. SwiftUI reveal consumes that immutable actual result."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple actual terminal timing/flattened tenth catch/reveal and background interruption."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple actual terminal timing/flattened tenth catch/reveal and background interruption."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30828,10 +31182,14 @@
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
-        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md"
+        "development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30844,42 +31202,80 @@
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
         "Prompt1BFruitBasketResearchTests",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift"
+        "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testUnprotectedBadFruitProducesAnActualPartialAttemptResult",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testStarsPassSpendingAndEarnedVersusCumulativeScoreRemainDistinct",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testPassedFruitAndStarsNeverBecomeInventedCatchesOrPenalties",
+        "FruitfolioTests/Prompt1BRoundLedgerTests.swift::testFinishedSnapshotRetainsItsOriginalValuesWhenAnotherRoundBegins",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift::testActualControllerBankBeyondThousandAcknowledgesEveryStarAndCarriesNextRound"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "# Accepted-event round results and sourced saved lessons\n\nA per-round ledger now records actual accepted object IDs, exact caught fruit order, standalone stars, carried-in passes, protected bad catches, the actual unprotected ending event and passed objects. Duplicate events, rewards after terminal completion, and a successful snapshot before the target are rejected. The controller checks terminal ledger/session agreement before final round accounting, then retains an immutable result with level played/next level, earned points versus cumulative session score, stars collected versus passes remaining, and consequences. The existing round-ID finalization guard remains.\n\nActual good captures now increment lifetime fruit totals when awarded, including captures in failed/unfinished attempts, matching the existing per-capture star accounting. The old implementation only added ten on successful completion and omitted earlier caught fruit. No historical amount is guessed or backfilled. New topics record complete-from-start accounting; legacy missing provenance stays unknown and the local totals view explains possible historical omissions. Failed attempts never advance catching difficulty. Round results remain separate from the medical/source explanation and are not written into health context, Ask memory, or lab data.\n\nReveal artwork and accessibility now use the captured result rather than a fixed unconditional ten. Both success and failure expose actual fruit/star/pass/score details. The old wording implying the clinical paragraph explained why a fruit was \u201cgood\u201d is replaced by a separate library-explanation label; the catch rule remains its own game rule. Classification content and failed-attempt results scroll for short/large-text viewports.\n\nExplicit user saving copies the original sourced lesson/question, citations and each source record's own content version, with the package version separately retained. It does not present game counts as sourced medical claims. Legacy known package versions remain fallback metadata; invalid duplicate source identities cannot create a false saved trail. No automatic save/health-profile transfer is added.\n\nFive portable ledger regressions check premature completion, duplicate/late events, partial failure, pass conservation, score deltas, passed-object semantics and immutable snapshots; three portable saved-source regressions check actual payload/citation/version preservation and invalid-source refusal. The existing legacy document test now verifies unknown capture-accounting provenance is preserved. An additional actual Combine-controller test drives star protection, seven-fruit failure, ten-fruit retry, exact lifetime totals and repeated finalization; it is **NOT RUN on Linux**. UIKit rendering, source versus game visual hierarchy, VoiceOver, actual timers and app persistence remain behind the Apple/runtime gate. Source/core tests are not proof of device playability or clinical accuracy.\n",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
-        "Actual terminal result agrees with saved/session success,nextLevel and playedLevel across16vectors. Complete painted rewards/stars/consequences acceptance remains open; prior ledger tests supply separate evidence."
+        "Actual terminal result agrees with saved/session success,nextLevel and playedLevel across16vectors. Complete painted rewards/stars/consequences acceptance remains open; prior ledger tests supply separate evidence.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence367: Immutable result contains accepted fruit order/count, stars collected, carried/spent/remaining passes, actual ending bad fruit, passed objects, earned versus cumulative score and level outcome. Live result displays these values for success/failure rather than fixed10 or invented catches; source medical lesson remains separate. Pending: Apple actual result layout/localization/VoiceOver/art and consequences rendering.",
+        "Immutable result contains accepted fruit order/count, stars collected, carried/spent/remaining passes, actual ending bad fruit, passed objects, earned versus cumulative score and level outcome. Live result displays these values for success/failure rather than fixed10 or invented catches; source medical lesson remains separate."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "actual_spawn_vectors": 16,
-          "actual_terminal_vectors": 16,
-          "workflow_checks": 60,
-          "syntax_files": 311
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
-          "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-          "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-          "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple actual result layout/localization/VoiceOver/art and consequences rendering."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
-        "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
-        "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple actual result layout/localization/VoiceOver/art and consequences rendering."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "actual_spawn_vectors": 16,
+            "actual_terminal_vectors": 16,
+            "workflow_checks": 60,
+            "syntax_files": 311
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/audio/animation and physical-device challenge evaluation",
+            "Official MADLAD weights/tokenizer inference and native-language scientific quality review"
+          ],
+          "remaining": [
+            "Run Apple/device early and late-level playtesting before calling level8 a tested maximum or challenge comfortable",
+            "Verify complete painted result/reward/consequence presentation and accessibility on Apple",
+            "Continue original368 leaderboard/rules copy and369\u2013372 shared username/FAQ/AX evidence; keep external backend registration blocked truthfully"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -30898,10 +31294,14 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -30909,38 +31309,75 @@
         "Prompt1BUsernamePersistenceTests",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
-        "Prompt1BFruitBasketResearchTests"
+        "Prompt1BFruitBasketResearchTests",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift::testFAQExposesCurrentRulesResultsTotalsAndAccessibleAlternative",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift::testTutorialFAQAndCollectibleDescribeDelayedBankingAndNoFruitOrPoints",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift::testDocumentedScoreAndProtectionMatchActualEngineWithoutFruitCreditForStars"
       ],
-      "commit_reference": "batch:Actual-level-speed-and-acknowledged-progression-matrices (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-bounded-progression-and-accepted-result-implementation-closures (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
-        "Leaderboard already shares canonical totals/results rules. Remaining raw legacy-capture notice now uses FruitfolioFixedText and one English fallback catalog entry preserving missing-history qualification; all prior catalog objects unchanged. Foundation suites do not exercise SwiftUI translation rendering."
+        "Leaderboard already shares canonical totals/results rules. Remaining raw legacy-capture notice now uses FruitfolioFixedText and one English fallback catalog entry preserving missing-history qualification; all prior catalog objects unchanged. Foundation suites do not exercise SwiftUI translation rendering.",
+        "Individual source/test clause review in GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json sequence368: Current FAQ/rules/tutorial and leaderboard explanatory text share actual scoring/protection/result/totals semantics, explicitly describe local-only totals and unavailable secure worldwide rankings. Founder exact replacement home/HowItWorks/topic wording320\u2013322 stays separately blocked. Pending: Apple actual instructional/leaderboard rendering and localized rule meaning; secure remote ranking is not claimed configured.",
+        "Current FAQ/rules/tutorial and leaderboard explanatory text share actual scoring/protection/result/totals semantics, explicitly describe local-only totals and unavailable secure worldwide rankings. Founder exact replacement home/HowItWorks/topic wording320\u2013322 stays separately blocked."
       ],
-      "last_updated": "2026-11-07T01:19:39.939375+00:00",
+      "last_updated": "2026-11-07T14:02:39.659511+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+        "batch": "Individual-bounded-progression-and-accepted-result-implementation-closures",
         "executed": {
-          "syntax_files": 311,
-          "workflow_checks": 60,
-          "catalog_change": "one English fallback; all old catalog objects byte-value equivalent",
-          "catalog_keys": 970,
-          "explicit_English_localization_entries": 867,
-          "nonempty_foreign_catalog_units": 0
+          "current_focused_controller_engine_physics_XCTest": 119,
+          "progression_policy_XCTest": 5,
+          "immutable_result_ledger_XCTest": 7,
+          "rule_catalog_XCTest_at_parent_closure": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_progression_clause_closures.log",
+            "/tmp/fruitfolio_result_clause_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."
         },
         "not_run": [
-          "Apple actual legacy-notice localized rendering, Dynamic Type/RTL/VoiceOver",
-          "Official MADLAD translation quality and backend worldwide registration"
+          "Apple build/UI/device/gestures/audio/VoiceOver, real wall-clock flight/reveal timing and subjective balance.",
+          "Official MADLAD/native-language game-rule acceptance."
         ],
         "remaining": [
-          "Execute actual Apple leaderboard legacy-state fixture and translation/memory-pressure fallback",
-          "Verify localized copy meaning with official model/native-language review; no foreign-language completion claim"
+          "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+          "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+          "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+          "Apple actual instructional/leaderboard rendering and localized rule meaning; secure remote ranking is not claimed configured."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple leaderboard legacy-state fixture and translation/memory-pressure fallback",
-        "Verify localized copy meaning with official model/native-language review; no foreign-language completion claim"
+        "Run existing Apple natural gameplay, reveal/result and accessible classification regressions.",
+        "Human physical-device balance and maximum-level acceptance remain open, separate from implemented bounded policy.",
+        "Exact revised founder copy320\u2013322 and secure remote rankings remain independently unavailable.",
+        "Apple actual instructional/leaderboard rendering and localized rule meaning; secure remote ranking is not claimed configured."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-level-speed-and-acknowledged-progression-matrices",
+          "executed": {
+            "syntax_files": 311,
+            "workflow_checks": 60,
+            "catalog_change": "one English fallback; all old catalog objects byte-value equivalent",
+            "catalog_keys": 970,
+            "explicit_English_localization_entries": 867,
+            "nonempty_foreign_catalog_units": 0
+          },
+          "not_run": [
+            "Apple actual legacy-notice localized rendering, Dynamic Type/RTL/VoiceOver",
+            "Official MADLAD translation quality and backend worldwide registration"
+          ],
+          "remaining": [
+            "Execute actual Apple leaderboard legacy-state fixture and translation/memory-pressure fallback",
+            "Verify localized copy meaning with official model/native-language review; no foreign-language completion claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {

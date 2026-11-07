@@ -4028,3 +4028,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_actual_controller_engine_geometry_physics_XCTest": 119, "separate_actual_mask_geometry_XCTest": 6, "failures": 0, "PNG_verified": 8, "original_mask_hashes_matched": 3, "swift_syntax_files": 326, "logs": ["/tmp/fruitfolio_storm_resume_ticket_tests.log", "/tmp/fruitfolio_obstacle_geometry_closures.log", "/tmp/fruitfolio_storm_resume_ticket_syntax.log"]}.
 - Next action: Continue progression/result/username and other original sections; remaining Apple/model/clinical/source dependencies stay explicitly open.
 - Commit: containing commit for batch Founder-vine-and-puddle-clause-complete-implementation-review.
+
+## Individual-bounded-progression-and-accepted-result-implementation-closures
+
+- Parent checkpoint: f1ea5d33e4a04dd4359eca79c84bb85971f3d6be.
+- Source-order requirements: [358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift, Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift, development_workflow/GAME_PROGRESSION_RESULT_INDIVIDUAL_CLOSURES.json.
+- Reconcile11 original progression/result/instruction clauses individually against current actual production controller/store/policy/ledger execution and live display wiring; human/Apple acceptance remains pending.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioTests/Prompt1BGameRulesCatalogTests.swift, FruitfolioTests/Prompt1BProgressionPolicyTests.swift, FruitfolioTests/Prompt1BRoundLedgerTests.swift, FruitfolioTests/Prompt28FruitBasketTests.swift.
+- Verification: {"current_focused_controller_engine_physics_XCTest": 119, "progression_policy_XCTest": 5, "immutable_result_ledger_XCTest": 7, "rule_catalog_XCTest_at_parent_closure": 3, "failures": 0, "logs": ["/tmp/fruitfolio_storm_resume_ticket_tests.log", "/tmp/fruitfolio_progression_clause_closures.log", "/tmp/fruitfolio_result_clause_closures.log", "/tmp/fruitfolio_star_rule_catalog_closure.log"], "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."}.
+- Next action: Continue shared username and remaining FAQ/Contact/Account/data/localization requirements; no rebuild/push/merge.
+- Commit: containing commit for batch Individual-bounded-progression-and-accepted-result-implementation-closures.
