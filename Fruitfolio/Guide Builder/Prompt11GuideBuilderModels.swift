@@ -99,3 +99,19 @@ nonisolated struct Prompt11GuideTileCopy: Equatable, Sendable {
         accessibilityProtectedLiterals = [literalName, counts.pageCountLiteral].filter { !$0.isEmpty }
     }
 }
+
+nonisolated struct Prompt11GuideContentsCopy: Equatable, Sendable {
+    let ordinalLiteral: String
+    let pageLiteral: String
+    let accessibilitySource: String
+    let protectedLiterals: [String]
+
+    init(ordinal: Int, sectionName: String, firstPage: Int, language: FruitfolioLanguage) {
+        let style: IntegerFormatStyle<Int> = .number.locale(Locale(identifier: language.localeIdentifier)).grouping(.never)
+        ordinalLiteral = ordinal.formatted(style.precision(.integerLength(2...)))
+        pageLiteral = firstPage.formatted(style)
+        let literalName = FruitfolioSemanticMarkup.markdown([.init(text: sectionName)])
+        accessibilitySource = "section \(ordinalLiteral), \(literalName), page \(pageLiteral)"
+        protectedLiterals = [ordinalLiteral, literalName, pageLiteral].filter { !$0.isEmpty }
+    }
+}

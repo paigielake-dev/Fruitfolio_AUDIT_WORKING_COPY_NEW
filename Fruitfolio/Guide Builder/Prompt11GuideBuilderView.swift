@@ -543,6 +543,7 @@ struct Prompt11GuideBuilderView: View {
                     DesignTokens.ColorToken.primaryBurgundy
                 )
                 .textFieldStyle(.plain)
+                .accessibilityIdentifier("guide.search")
                 .padding(.horizontal, 12)
                 .frame(minHeight: 44)
                 .background(
@@ -557,11 +558,9 @@ struct Prompt11GuideBuilderView: View {
                 let matches = searchMatches(in: guide)
 
                 if matches.isEmpty {
-                    Text("nothing matched this little search.")
-                        .font(.custom("Chalkboard SE", size: 10.5))
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.secondaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "nothing matched this little search.",
+                        font: .custom("Chalkboard SE", size: 10.5), color: DesignTokens.ColorToken.secondaryBurgundy)
+                        .accessibilityIdentifier("guide.search.empty")
                 } else {
                     VStack(spacing: 4) {
                         ForEach(Array(matches.prefix(6))) { match in
@@ -571,20 +570,27 @@ struct Prompt11GuideBuilderView: View {
                                 }
                             } label: {
                                 HStack {
-                                    Text(match.page.question.isEmpty ? "saved page" : match.page.question)
-                                        .lineLimit(1)
+                                    Group {
+                                        if match.page.question.isEmpty {
+                                            FruitfolioFixedText(source: "saved page",
+                                                font: .custom("Chalkboard SE", size: 10.5),
+                                                color: DesignTokens.ColorToken.primaryBurgundy)
+                                        } else { Text(verbatim: match.page.question) }
+                                    }
+                                    .fixedSize(horizontal: false, vertical: true)
 
                                     Spacer()
 
-                                    Text(match.section)
+                                    Text(verbatim: match.section)
                                         .font(.custom("Chalkboard SE", size: 9.5))
                                 }
                                 .font(.custom("Chalkboard SE", size: 10.5))
                                 .foregroundStyle(
                                     DesignTokens.ColorToken.primaryBurgundy
                                 )
-                                .frame(minHeight: 38)
+                                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                             }
+                            .accessibilityIdentifier("guide.search.result." + match.page.id.uuidString)
                             .buttonStyle(
                                 CutePopButtonStyle(
                                     reduceMotion: motionPreferences.reduceMotionActive
@@ -604,22 +610,18 @@ struct Prompt11GuideBuilderView: View {
         let entries = store.prompt11TableOfContents(for: guide.id)
 
         return VStack(alignment: .leading, spacing: 7) {
-            Text("contents")
-                .font(.custom("Chalkboard SE", size: 15))
-                .fontWeight(.bold)
-                .foregroundStyle(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
+            FruitfolioFixedText(source: "contents", font: .custom("Chalkboard SE", size: 15).bold(),
+                color: DesignTokens.ColorToken.primaryBurgundy)
+                .accessibilityIdentifier("guide.contents.heading")
 
             if entries.isEmpty {
-                Text("your sections will gather here as you build.")
-                    .font(.custom("Chalkboard SE", size: 11))
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
+                FruitfolioFixedText(source: "your sections will gather here as you build.",
+                    font: .custom("Chalkboard SE", size: 11), color: DesignTokens.ColorToken.secondaryBurgundy)
 
             } else {
                 ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
+                    let copy = Prompt11GuideContentsCopy(ordinal: index + 1, sectionName: entry.sectionName,
+                        firstPage: entry.firstPageNumber, language: settings.language)
                     Button {
                         audioManager.play(.pageTurn)
 
@@ -628,22 +630,25 @@ struct Prompt11GuideBuilderView: View {
                         }
                     } label: {
                         HStack(spacing: 6) {
-                            Text(String(format: "%02d", index + 1))
+                            Text(verbatim: copy.ordinalLiteral)
                                 .fontWeight(.bold)
 
-                            Text(entry.sectionName)
-                                .lineLimit(1)
+                            Text(verbatim: entry.sectionName)
+                                .fixedSize(horizontal: false, vertical: true)
 
                             Spacer()
 
-                            Text("\(entry.firstPageNumber)")
+                            Text(verbatim: copy.pageLiteral)
                         }
                         .font(.custom("Chalkboard SE", size: 11))
                         .foregroundStyle(
                             DesignTokens.ColorToken.primaryBurgundy
                         )
-                        .frame(minHeight: 38)
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                     }
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: copy.accessibilitySource,
+                        protectedLiterals: copy.protectedLiterals))
+                    .accessibilityIdentifier("guide.contents.entry." + entry.id.uuidString)
                     .buttonStyle(
                         CutePopButtonStyle(
                             reduceMotion: motionPreferences.reduceMotionActive

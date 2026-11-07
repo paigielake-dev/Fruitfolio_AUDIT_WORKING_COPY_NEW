@@ -158,3 +158,23 @@ extension Prompt10SavedLibraryStore {
             }
     }
 }
+
+#if DEBUG
+/// Real private-fixture pages make the production eight-page search gate
+/// reachable. Never repopulates a target that already contains saved content.
+@MainActor
+enum Prompt11GuideSearchRegressionFixture {
+    static func seed(in store: Prompt10SavedLibraryStore, guideID: UUID) throws {
+        guard let guide = store.encyclopedia(id: guideID) else { throw Prompt10LibraryError.encyclopediaNotFound }
+        guard guide.savedPageCount == 0 else { throw Prompt10LibraryError.contentChanged }
+        guard let chapter = guide.chapters.sorted(by: { $0.order < $1.order }).first else {
+            throw Prompt10LibraryError.chapterNotFound
+        }
+        let pages = (1...8).map { index in
+            Prompt10SavedPage(chapterID: chapter.id, question: "QA searchable page \(index)",
+                answer: "Nonclinical private search fixture \(index).", saveType: .fullAnswer)
+        }
+        _ = try store.savePages(pages, to: guideID, chapterID: chapter.id)
+    }
+}
+#endif

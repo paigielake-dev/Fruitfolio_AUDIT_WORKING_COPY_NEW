@@ -40,7 +40,7 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
                     subtitle: "QA original description", style: .sage).id
             } catch { preconditionFailure("Could not create the private Guide Builder fixture") }
         }
-        if ["pages", "batch-pages", "dropped-batch-pages", "reorder", "dropped-reorder"].contains(scenario), let guideID = initialGuideID {
+        if ["pages", "batch-pages", "dropped-batch-pages", "reorder", "dropped-reorder", "search"].contains(scenario), let guideID = initialGuideID {
             do {
                 _ = try store.createChapter(in: guideID, name: "QA first section")
                 _ = try store.createChapter(in: guideID, name: "QA second section")
@@ -55,6 +55,10 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
                     _ = try store.savePage(second, to: source.id, chapterID: section.id)
                 }
             } catch { preconditionFailure("Could not create the private saved-page fixture") }
+        }
+        if scenario == "search", let guideID = initialGuideID {
+            do { try Prompt11GuideSearchRegressionFixture.seed(in: store, guideID: guideID) }
+            catch { preconditionFailure("Could not create the private searchable Guide fixture") }
         }
         if scenario == "stale-description" {
             // A real external byte replacement after the store loaded: the

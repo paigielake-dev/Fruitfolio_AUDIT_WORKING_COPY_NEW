@@ -547,6 +547,34 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGuideContentsNativeOrdinalsAndSearchKeepAuthoredNamesAndQuery() {
+        for language in ["fr", "ar"] {
+            for reduced in [false, true] {
+                let app = launchGuideSave("search", reduced: reduced, rtl: language == "ar", language: language)
+                let workspace = app.scrollViews.firstMatch
+                let entry = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+                    "guide.contents.entry.", "QA first section")).firstMatch
+                for _ in 0..<24 { if entry.isHittable { break }; workspace.swipeUp() }
+                XCTAssertTrue(entry.isHittable)
+                XCTAssertGreaterThanOrEqual(entry.frame.height, 44)
+                XCTAssertTrue(entry.label.contains(language == "ar" ? "٠١" : "01"))
+                XCTAssertTrue(entry.label.contains("QA first section"))
+                let field = app.textFields["guide.search"]
+                for _ in 0..<24 { if field.isHittable { break }; workspace.swipeDown() }
+                XCTAssertTrue(field.isHittable)
+                field.tap(); field.typeText("QA unmatched 987654321")
+                let query = field.value as? String
+                XCTAssertTrue(query?.contains("987654321") == true)
+                XCTAssertTrue(app.descendants(matching: .any)["guide.search.empty"].waitForExistence(timeout: 5))
+                XCTAssertEqual(field.value as? String, query)
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 0")
+                captureGame(app, name: "guide-contents-search-\(language)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testGuideTypedValidationPreservesPrivateDraftAndCoverUntilCancel() {
         for language in ["fr", "ar"] {
             for reduced in [false, true] {

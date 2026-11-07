@@ -16,6 +16,28 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         )
     }
 
+    #if DEBUG
+    func testPrivateSearchFixtureReachesActualEightPageGateAndRefusesReseeding() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
+        let guide = try store.createGuideEncyclopedia(name: "QA searchable guide", subtitle: "original", style: .sage)
+        _ = try store.createChapter(in: guide.id, name: "QA first section")
+        _ = try store.createChapter(in: guide.id, name: "QA second section")
+        try Prompt11GuideSearchRegressionFixture.seed(in: store, guideID: guide.id)
+        let saved = try XCTUnwrap(store.encyclopedia(id: guide.id))
+        XCTAssertEqual(saved.savedPageCount, 8)
+        XCTAssertEqual(saved.chapters[0].pages.count, 8)
+        XCTAssertEqual(store.prompt11TableOfContents(for: guide.id).map(\.firstPageNumber), [1, 9])
+        XCTAssertTrue(saved.chapters[0].pages.allSatisfy { $0.question.hasPrefix("QA searchable page") && $0.sourceIDs.isEmpty })
+        let bytes = defaults.data(forKey: "prompt11.tests"), snapshot = store.encyclopedias
+        XCTAssertThrowsError(try Prompt11GuideSearchRegressionFixture.seed(in: store, guideID: guide.id)) {
+            XCTAssertEqual($0 as? Prompt10LibraryError, .contentChanged)
+        }
+        XCTAssertEqual(defaults.data(forKey: "prompt11.tests"), bytes)
+        XCTAssertEqual(store.encyclopedias, snapshot)
+    }
+    #endif
+
     private func removeGuideFixture() {
         if let suiteName {
             UserDefaults.standard.removePersistentDomain(forName: suiteName)
@@ -346,5 +368,25 @@ final class Prompt1BGuideLocalizedCopyTests: XCTestCase {
         XCTAssertFalse(envelope.prepared.contains(copy.counts.pageCountLiteral))
         XCTAssertEqual(Data(try envelope.restore(envelope.prepared).utf8), Data(copy.accessibilitySource.utf8))
         XCTAssertThrowsError(try envelope.validateCatalogCandidate(copy.accessibilitySource.replacingOccurrences(of: literalName, with: "rewritten name")))
+    }
+}
+
+final class Prompt1BGuideContentsCopyTests: XCTestCase {
+    func testNativePaddedOrdinalsNeverTruncateAndProtectOriginalSectionNamesAndPages() throws {
+        let name = "original [cafe\u{301}] 12,50 µg/L"
+        for language in [FruitfolioLanguage.english, .french, .arabic, .hindi] {
+            for ordinal in [1, 1234] {
+                let copy = Prompt11GuideContentsCopy(ordinal: ordinal, sectionName: name, firstPage: 5678, language: language)
+                if ordinal == 1 && language == .english { XCTAssertEqual(copy.ordinalLiteral, "01") }
+                if ordinal == 1 && language == .arabic { XCTAssertEqual(copy.ordinalLiteral, "٠١") }
+                if ordinal == 1234 && language == .english { XCTAssertEqual(copy.ordinalLiteral, "1234") }
+                let envelope = try FruitfolioScientificTranslationEnvelope(copy.accessibilitySource, protectedLiterals: copy.protectedLiterals)
+                XCTAssertFalse(envelope.prepared.contains("cafe\u{301}"))
+                XCTAssertEqual(Data(try envelope.restore(envelope.prepared).utf8), Data(copy.accessibilitySource.utf8))
+                for literal in copy.protectedLiterals {
+                    XCTAssertThrowsError(try envelope.validateCatalogCandidate(copy.accessibilitySource.replacingOccurrences(of: literal, with: "changed")))
+                }
+            }
+        }
     }
 }
