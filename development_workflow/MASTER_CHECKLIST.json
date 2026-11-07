@@ -9180,7 +9180,8 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9191,14 +9192,53 @@
         "Prompt1BAskScrollTests",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "FruitfolioTests/Prompt1BAskScrollTests.swift",
+        "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "The actual paper emits content height and viewport-relative bottom from one GeometryReader frame instead of separate stale viewport/sentinel measurements.",
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-07T16:08:45.120184+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+        "executed": {
+          "focused_actual_follow_paper_ownership_XCTest": 15,
+          "failures": 0,
+          "syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "logs": [
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+        },
+        "not_run": [
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
+        ],
+        "remaining": [
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+      ]
     },
     {
       "sequence": 104,
@@ -9304,10 +9344,11 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -9315,14 +9356,54 @@
         "Prompt1BAskScrollTests",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "FruitfolioTests/Prompt1BAskScrollTests.swift",
+        "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "Complete condition review: growth at unchanged offset retains existing near-bottom intent and requests current laid-out bottom; user return near tail resumes, inactive/covered growth cannot replay.",
+        "Individual complete clause review: development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json#107; Complete condition review: growth at unchanged offset retains existing near-bottom intent and requests current laid-out bottom; user return near tail resumes, inactive/covered growth cannot replay.",
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-07T16:08:45.120184+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+        "executed": {
+          "focused_actual_follow_paper_ownership_XCTest": 15,
+          "failures": 0,
+          "syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "logs": [
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+        },
+        "not_run": [
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
+        ],
+        "remaining": [
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+      ]
     },
     {
       "sequence": 108,
@@ -9336,10 +9417,11 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -9347,14 +9429,54 @@
         "Prompt1BAskScrollTests",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "FruitfolioTests/Prompt1BAskScrollTests.swift",
+        "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "Complete condition review: actual reader offset change away from tail disables follow; later content growth at same reader offset cannot reenable it. No unconditional text/message scroll callbacks remain.",
+        "Individual complete clause review: development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json#108; Complete condition review: actual reader offset change away from tail disables follow; later content growth at same reader offset cannot reenable it. No unconditional text/message scroll callbacks remain.",
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-07T16:08:45.120184+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+        "executed": {
+          "focused_actual_follow_paper_ownership_XCTest": 15,
+          "failures": 0,
+          "syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "logs": [
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+        },
+        "not_run": [
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
+        ],
+        "remaining": [
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+      ]
     },
     {
       "sequence": 109,
@@ -43073,7 +43195,8 @@
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
         "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
-        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json",
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -43249,9 +43372,10 @@
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
         "development_workflow/tests/test_founder_source_coverage.py",
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
-        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "FruitfolioTests/Prompt1BAskScrollTests.swift"
       ],
-      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -43389,38 +43513,45 @@
         "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
         "326 Swift syntax parses and static sound audit passed; Apple UI regression updated but NOT_RUN.",
         "15 actual production wheel/layout tests pass,327 syntax parses pass; Apple UI tests remain NOT_RUN.",
-        "17 actual Foundation tests pass; new native rendered five-region regression is written and NOT_RUN."
+        "17 actual Foundation tests pass; new native rendered five-region regression is written and NOT_RUN.",
+        "15 focused actual production policy/layout/ownership tests pass; priorfull1062+21 is explicitly scoped to9c7c4ed before this Ask change.",
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
       ],
-      "last_updated": "2026-11-07T16:01:41.066548+00:00",
+      "last_updated": "2026-11-07T16:08:45.120184+00:00",
       "latest_batch_verification": {
-        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
         "executed": {
-          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "focused_actual_follow_paper_ownership_XCTest": 15,
           "failures": 0,
-          "swift_syntax_files": 327,
+          "syntax_files": 327,
           "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
           "logs": [
-            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
-            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
-            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
-          ]
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
         },
         "not_run": [
-          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
-          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
-          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
         ],
         "remaining": [
-          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
-          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
-          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
-        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
-        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
       ],
       "prior_batch_verifications": [
         {
@@ -44160,6 +44291,31 @@
             "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
             "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
             "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+          "executed": {
+            "focused_actual_wheel_and_geometry_XCTest": 17,
+            "failures": 0,
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+              "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+              "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+            "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+            "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+          ],
+          "remaining": [
+            "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+            "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+            "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -44393,7 +44549,8 @@
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
         "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
-        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json",
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -44564,9 +44721,10 @@
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
         "development_workflow/tests/test_founder_source_coverage.py",
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
-        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "FruitfolioTests/Prompt1BAskScrollTests.swift"
       ],
-      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -44687,38 +44845,45 @@
         "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
         "Append exact source change/evidence and unexecuted native acceptance without replacing prior checklist history.",
         "Retain exact executed behavioral evidence and unfinished founder annotation instruction separately; no status promotion.",
-        "Append exact original/source-unit evidence and distinguish source implementation from native visual verification."
+        "Append exact original/source-unit evidence and distinguish source implementation from native visual verification.",
+        "Append executed versus native-unrun evidence and two individual implementation closures; no VERIFIED promotion.",
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
       ],
-      "last_updated": "2026-11-07T16:01:41.066548+00:00",
+      "last_updated": "2026-11-07T16:08:45.120184+00:00",
       "latest_batch_verification": {
-        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
         "executed": {
-          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "focused_actual_follow_paper_ownership_XCTest": 15,
           "failures": 0,
-          "swift_syntax_files": 327,
+          "syntax_files": 327,
           "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
           "logs": [
-            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
-            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
-            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
-          ]
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
         },
         "not_run": [
-          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
-          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
-          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
         ],
         "remaining": [
-          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
-          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
-          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
-        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
-        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
       ],
       "prior_batch_verifications": [
         {
@@ -45458,6 +45623,31 @@
             "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
             "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
             "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+          "executed": {
+            "focused_actual_wheel_and_geometry_XCTest": 17,
+            "failures": 0,
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+              "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+              "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+            "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+            "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+          ],
+          "remaining": [
+            "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+            "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+            "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

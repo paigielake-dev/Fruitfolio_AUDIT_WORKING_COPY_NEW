@@ -1,0 +1,56 @@
+{
+  "requirements": [
+    103,
+    107,
+    108,
+    443,
+    444
+  ],
+  "founder": "SPEC-BINDING-ASK-PAPER",
+  "implementation": "Fix large streamed batches being mistaken for reader movement. Measure content height and viewport-relative bottom atomically; retain follow intent when offset stays fixed, stop when reader moves away, resume near bottom, and request scrolling only after real growth with an active uncovered owner. Reset numeric state with conversation identity.",
+  "original_bug": "With viewport600 and content600 at offset0, content growth to1500 makes old bottom-only policy false, even though reader offset remains0. New real session emits follow for that event; moving reader offset back while content is stable suppresses subsequent growth.",
+  "individual_implementation_closures": {
+    "107": "Complete condition review: growth at unchanged offset retains existing near-bottom intent and requests current laid-out bottom; user return near tail resumes, inactive/covered growth cannot replay.",
+    "108": "Complete condition review: actual reader offset change away from tail disables follow; later content growth at same reader offset cannot reenable it. No unconditional text/message scroll callbacks remain."
+  },
+  "verification": {
+    "executed": {
+      "focused_actual_follow_paper_ownership_XCTest": 15,
+      "failures": 0,
+      "syntax_files": 327,
+      "static_sound_diagnostics": 0,
+      "prior_checkpoint_full_portable_XCTest": 1062,
+      "prior_checkpoint_Swift_Testing": 21,
+      "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+      "logs": [
+        "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+        "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+        "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+        "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+      ],
+      "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+    },
+    "not_run": [
+      "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+      "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+      "Actual official MADLAD and physical-device runtime."
+    ],
+    "remaining": [
+      "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+      "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+      "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+    ]
+  },
+  "status": "107/108 IMPLEMENTED with MANUAL_VERIFICATION_REQUIRED; no full founder/global closure",
+  "final_fractional_reader_verification": {
+    "focused_actual_XCTest": 15,
+    "failures": 0,
+    "log": "/tmp/fruitfolio_ask_content_growth_fractional_final_tests.log",
+    "case": "Existing reading-older test now moves0.25pt per observation across600pt;1pt per-observation threshold was corrected to0.01pt to admit actual subpoint scrolling. No new test infrastructure.",
+    "source_sha256": {
+      "Fruitfolio/Ask/Prompt09AskView.swift": "edd55b22db4fa390ec7d23ba62c25e068e0a11c08921ae5af02a7b366110c407",
+      "Fruitfolio/Ask/Prompt09ConversationPolicies.swift": "54b93c8ea79ab67ceb8992c4202d3c942c2062c6a8cefad17be487c4ecbb327b",
+      "FruitfolioTests/Prompt1BAskScrollTests.swift": "450a2aa13519049736148193fa3c183177f7d60fba1f187fb82d8203521c6486"
+    }
+  }
+}

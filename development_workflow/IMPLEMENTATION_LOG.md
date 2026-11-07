@@ -4184,3 +4184,17 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_actual_wheel_and_geometry_XCTest": 17, "failures": 0, "swift_syntax_files": 327, "static_sound_diagnostics": 0, "logs": ["/tmp/fruitfolio_wheel_phase_annotations_final_tests.log", "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log", "/tmp/fruitfolio_wheel_phase_annotations_sound.log"]}.
 - Next action: Continue remaining source-grounded cross-part requirements and unnumbered applicability reconciliation; wheel annotations await Apple visual acceptance, not more optional polishing.
 - Commit: containing commit for batch Closed-cycle-wheel-measured-phase-arrows-and-descriptions.
+
+## Ask-measured-content-growth-and-reader-follow-intent
+
+- Parent checkpoint: 9c7c4ed810f91e3848e13c08485ba3886be2c2a6.
+- Source-order requirements: [103, 107, 108, 443, 444].
+- Separate founder additions: ['SPEC-BINDING-ASK-PAPER'].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09ConversationPolicies.swift, development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json.
+- Fix large streamed batches being mistaken for reader movement. Measure content height and viewport-relative bottom atomically; retain follow intent when offset stays fixed, stop when reader moves away, resume near bottom, and request scrolling only after real growth with an active uncovered owner. Reset numeric state with conversation identity.
+- Tests added/updated: FruitfolioTests/Prompt1BAskScrollTests.swift, FruitfolioTests/Prompt1BAskPaperLayoutTests.swift.
+- Verification: {"focused_actual_follow_paper_ownership_XCTest": 15, "failures": 0, "syntax_files": 327, "static_sound_diagnostics": 0, "prior_checkpoint_full_portable_XCTest": 1062, "prior_checkpoint_Swift_Testing": 21, "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6", "logs": ["/tmp/fruitfolio_ask_content_growth_follow_tests.log", "/tmp/fruitfolio_ask_content_growth_follow_syntax.log", "/tmp/fruitfolio_ask_content_growth_follow_sound.log", "/tmp/fruitfolio_phase_checkpoint_full_portable.log"], "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."}.
+- Next action: Continue Account/shared username requirements and remaining independent cross-part/source-founder functionality; preserve Apple acceptance pending.
+- Commit: containing commit for batch Ask-measured-content-growth-and-reader-follow-intent.
+
+Final Ask batch addendum:15 focused tests rerun successfully after correcting subpoint reader movement; source hashes and fresh log in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Original run record retained.

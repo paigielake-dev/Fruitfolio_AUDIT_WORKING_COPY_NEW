@@ -44,8 +44,7 @@ struct Prompt09AskView: View {
     @State private var savedExcerptIdentities: Set<Prompt09ExcerptIdentity> = []
     @State private var sessionIllustrations: [UUID: [FruitfolioAssetID]] = [:]
     @State private var includeIllustrationsInSave: Set<UUID> = []
-    @State private var isNearConversationBottom = true
-    @State private var conversationViewportHeight: CGFloat = 0
+    @State private var conversationScrollFollow = Prompt09ScrollFollowSession()
 
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.locale) private var appLocale
@@ -131,14 +130,7 @@ struct Prompt09AskView: View {
                                 Color.clear
                                     .frame(height: 1)
                                     .id("prompt09-conversation-bottom")
-                                    .background {
-                                        GeometryReader { geometry in
-                                            Color.clear.preference(
-                                                key: Prompt09ConversationBottomKey.self,
-                                                value: geometry.frame(in: .named("prompt09-conversation-viewport")).maxY
-                                            )
-                                        }
-                                    }
+
                             }
                             .frame(width: paperMetrics.textColumnWidth)
                             .frame(maxWidth: .infinity)
@@ -146,30 +138,26 @@ struct Prompt09AskView: View {
                             .padding(.bottom, 28)
                             .frame(minHeight: paperViewport.size.height, alignment: .top)
                             .background { Prompt09ContinuousPaper() }
+                            .background {
+                                GeometryReader { geometry in
+                                    let frame = geometry.frame(in: .named("prompt09-conversation-viewport"))
+                                    Color.clear.preference(key: Prompt09ConversationBottomKey.self,
+                                        value: Prompt09ConversationScrollMetrics(bottom: frame.maxY, contentHeight: frame.height))
+                                }
+                            }
                         }
                         .scrollDismissesKeyboard(
                             .interactively
                         )
                         .accessibilityIdentifier("ask.conversation")
                         .coordinateSpace(name: "prompt09-conversation-viewport")
-                        .background {
-                            GeometryReader { geometry in
-                                Color.clear
-                                    .onAppear { conversationViewportHeight = geometry.size.height }
-                                    .onChange(of: geometry.size.height) { _, height in conversationViewportHeight = height }
+                        .onPreferenceChange(Prompt09ConversationBottomKey.self) { metrics in
+                            guard let metrics else { return }
+                            if conversationScrollFollow.observe(metrics, viewportHeight: paperViewport.size.height,
+                                permitted: canInteractWithComposer && !viewModel.messages.isEmpty) {
+                                // Follow only after the new content has actual layout geometry.
+                                proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
                             }
-                        }
-                        .onPreferenceChange(Prompt09ConversationBottomKey.self) { bottom in
-                            isNearConversationBottom = Prompt09ScrollFollowPolicy.isNearBottom(
-                                bottom: bottom, viewportHeight: conversationViewportHeight)
-                        }
-                        .onChange(of: viewModel.messages.count) {
-                            guard isNearConversationBottom else { return }
-                            proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
-                        }
-                        .onChange(of: viewModel.displayedAnswerText) {
-                            guard isNearConversationBottom else { return }
-                            proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
                         }
 
                     }
@@ -340,6 +328,7 @@ struct Prompt09AskView: View {
             }
         }
         .onChange(of: viewModel.conversationID) { _, _ in
+            conversationScrollFollow = Prompt09ScrollFollowSession()
             hasInvalidSaveMetadata = false
             sessionIllustrations = [:]
             includeIllustrationsInSave = []
@@ -1862,6 +1851,9 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
 
 
 private struct Prompt09ConversationBottomKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
+    static var defaultValue: Prompt09ConversationScrollMetrics? { nil }
+    static func reduce(value: inout Prompt09ConversationScrollMetrics?,
+                       nextValue: () -> Prompt09ConversationScrollMetrics?) {
+        if let next = nextValue() { value = next }
+    }
 }

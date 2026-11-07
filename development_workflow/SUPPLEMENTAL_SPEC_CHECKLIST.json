@@ -6464,18 +6464,23 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
-        "development_workflow/ASK_TYPEWRITER_WEAK_LIFETIME.md"
+        "development_workflow/ASK_TYPEWRITER_WEAK_LIFETIME.md",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
       ],
       "related_tests": [
         "Prompt1BAskPaperLayoutTests",
         "Prompt1BPendingSavePrivacyTests",
         "Prompt1BModalAccessibilityTests",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "FruitfolioTests/Prompt1BAskScrollTests.swift",
+        "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
       "blockers": [],
       "evidence": [
         "Continuous paper, session-owned history, selected save payloads and explicit scientific-image saves implemented; native runtime verification and legacy excerpt-data recovery remain open.",
-        "Reconciled batch:Ask-typewriter-weak-lifetime-between-publications; local commit 8d050dbbbde9c9dfd26c4ce57e6ef2173b861e1a; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged."
+        "Reconciled batch:Ask-typewriter-weak-lifetime-between-publications; local commit 8d050dbbbde9c9dfd26c4ce57e6ef2173b861e1a; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
+        "Fix large streamed batches being mistaken for reader movement. Measure content height and viewport-relative bottom atomically; retain follow intent when offset stays fixed, stop when reader moves away, resume near bottom, and request scrolling only after real growth with an active uncovered owner. Reset numeric state with conversation identity. Full continuous-paper founder acceptance remains IN_PROGRESS; native layout not executed."
       ],
       "batch_evidence": [
         {
@@ -6537,8 +6542,87 @@
           "run_log": "development_workflow/RUN_LOGS/Ask-typewriter-weak-lifetime-between-publications.json",
           "run_log_sha256": "e95ab09e14b4c948f3ace99f39315ac5af420b28bd93a038ac1b0d11807ab715",
           "scope": "Reconciled component evidence from committed local records; no whole founder/Apple/official-model acceptance is promoted."
+        },
+        {
+          "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+          "implementation_evidence": "Fix large streamed batches being mistaken for reader movement. Measure content height and viewport-relative bottom atomically; retain follow intent when offset stays fixed, stop when reader moves away, resume near bottom, and request scrolling only after real growth with an active uncovered owner. Reset numeric state with conversation identity. Full continuous-paper founder acceptance remains IN_PROGRESS; native layout not executed.",
+          "files": [
+            "Fruitfolio/Ask/Prompt09AskView.swift",
+            "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+            "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BAskScrollTests.swift",
+            "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "focused_actual_follow_paper_ownership_XCTest": 15,
+              "failures": 0,
+              "syntax_files": 327,
+              "static_sound_diagnostics": 0,
+              "prior_checkpoint_full_portable_XCTest": 1062,
+              "prior_checkpoint_Swift_Testing": 21,
+              "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+              "logs": [
+                "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+                "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+                "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+                "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+              ],
+              "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+            },
+            "not_run": [
+              "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+              "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+              "Actual official MADLAD and physical-device runtime."
+            ],
+            "remaining": [
+              "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+              "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+              "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+            ]
+          },
+          "parent_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6"
         }
-      ]
+      ],
+      "latest_batch_verification": {
+        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+        "executed": {
+          "focused_actual_follow_paper_ownership_XCTest": 15,
+          "failures": 0,
+          "syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "logs": [
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+        },
+        "not_run": [
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
+        ],
+        "remaining": [
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        ],
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
+      },
+      "remaining_verification_requirements": [
+        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+      ],
+      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T16:08:45.120184+00:00"
     },
     {
       "id": "SPEC-BINDING-ASK-ART-ANCHOR",

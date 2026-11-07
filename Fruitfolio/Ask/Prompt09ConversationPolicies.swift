@@ -7,6 +7,38 @@ enum Prompt09ScrollFollowPolicy {
     }
 }
 
+/// Measured content and viewport-relative bottom belong to one layout pass.
+struct Prompt09ConversationScrollMetrics: Equatable {
+    let bottom: CGFloat
+    let contentHeight: CGFloat
+}
+
+/// Content growth is not a user scrolling away. Retain follow intent while
+/// the content offset is unchanged, even when one large streamed batch moves
+/// the new bottom beyond the proximity tolerance.
+struct Prompt09ScrollFollowSession {
+    private(set) var shouldFollow = true
+    private var previousOffset: CGFloat?
+    private var previousContentHeight: CGFloat?
+
+    mutating func observe(_ metrics: Prompt09ConversationScrollMetrics,
+                          viewportHeight: CGFloat, permitted: Bool) -> Bool {
+        guard metrics.bottom.isFinite, metrics.contentHeight.isFinite,
+              metrics.contentHeight > 0, viewportHeight.isFinite, viewportHeight > 0 else { return false }
+        let offset = metrics.contentHeight - metrics.bottom
+        let near = Prompt09ScrollFollowPolicy.isNearBottom(bottom: metrics.bottom, viewportHeight: viewportHeight)
+        if let previousOffset {
+            // UIScrollView offsets can advance by fractions of a point.
+            if abs(offset - previousOffset) > 0.01 { shouldFollow = near }
+            else if near { shouldFollow = true }
+        } else { shouldFollow = near }
+        let grew = previousContentHeight.map { metrics.contentHeight > $0 + 0.5 } ?? false
+        previousOffset = offset
+        previousContentHeight = metrics.contentHeight
+        return permitted && shouldFollow && grew
+    }
+}
+
 /// Session-only save badge identity. Equal text at two positions or in two
 /// answers is not the same selection. Ranges are UTF-16, matching UITextView.
 struct Prompt09ExcerptIdentity: Hashable, Sendable {

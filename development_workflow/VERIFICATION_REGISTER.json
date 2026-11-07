@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T16:01:41.066548+00:00",
+  "updated_at": "2026-11-07T16:08:45.120184+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -13356,6 +13356,72 @@
         ]
       },
       "timestamp": "2026-11-07T16:01:41.066548+00:00"
+    },
+    {
+      "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+      "requirements": [
+        103,
+        107,
+        108,
+        443,
+        444
+      ],
+      "supplemental_requirements": [
+        "SPEC-BINDING-ASK-PAPER"
+      ],
+      "commands": [
+        "15 focused actual follow/paper/ownership tests",
+        "327 Swift syntax parses",
+        "Static SwiftSyntax sound audit",
+        "Earlier checkpoint1062 XCTest+21 Swift Testing at9c7c4ed",
+        "Workflow/source-integrity checks",
+        "git diff --check"
+      ],
+      "results": {
+        "focused_actual_follow_paper_ownership_XCTest": 15,
+        "failures": 0,
+        "syntax_files": 327,
+        "static_sound_diagnostics": 0,
+        "prior_checkpoint_full_portable_XCTest": 1062,
+        "prior_checkpoint_Swift_Testing": 21,
+        "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+        "logs": [
+          "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+          "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+          "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+          "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+        ],
+        "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+      },
+      "verification": {
+        "executed": {
+          "focused_actual_follow_paper_ownership_XCTest": 15,
+          "failures": 0,
+          "syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "prior_checkpoint_full_portable_XCTest": 1062,
+          "prior_checkpoint_Swift_Testing": 21,
+          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "logs": [
+            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          ],
+          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+        },
+        "not_run": [
+          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+          "Actual official MADLAD and physical-device runtime."
+        ],
+        "remaining": [
+          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        ]
+      },
+      "timestamp": "2026-11-07T16:08:45.120184+00:00"
     }
   ]
 }
