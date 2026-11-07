@@ -150,17 +150,98 @@
       "verification_status": "FOUNDATION_TESTS_PASSED_APP_UI_NOT_RUN",
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
-        "Fruitfolio/Hormone Information/HormoneLibraryView.swift"
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "related_tests": [
-        "Prompt1BHormoneLibraryTests"
+        "Prompt1BHormoneLibraryTests",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
       "blockers": [
         "Approved, cited hormone-library coverage is not yet connected; no clinical content is fabricated.",
         "Apple UI and comprehensive clinical educational completeness remain unverified."
       ],
       "evidence": [
-        "Batch Hormone-Library-real-approved-paragraphs-and-source-trails connects seven hormones to complete eligible corpus paragraphs and own citation metadata. Coverage is partial retrieved excerpts; source/clinical completeness review remains open."
+        "Batch Hormone-Library-real-approved-paragraphs-and-source-trails connects seven hormones to complete eligible corpus paragraphs and own citation metadata. Coverage is partial retrieved excerpts; source/clinical completeness review remains open.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
+      ],
+      "latest_batch_verification": {
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
+        "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
+        },
+        "not_run": [
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
+        ],
+        "remaining": [
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+        ],
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
+      },
+      "remaining_verification_requirements": [
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ],
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
+      "batch_evidence": [
+        {
+          "batch": "Hormone-library-complete-scoped-source-retrieval",
+          "implementation_evidence": "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed.",
+          "files": [
+            "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+            "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+            "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_focused_XCTest": 13,
+              "native_CPU_focused_XCTest": 14,
+              "failures": 0,
+              "workflow_checks": 71,
+              "changed_Swift_syntax_only": 315,
+              "actual_hormone_articles_checked": 7,
+              "original_full_paragraph_and_citation_identity_checks": "passed",
+              "source_buckets_before": 21,
+              "source_buckets_after": 28,
+              "source_buckets_missing": 7,
+              "official_MADLAD_verified": false
+            },
+            "not_run": [
+              "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+              "Clinical completeness/review of all7founder aspects for each hormone",
+              "Official MADLAD model/tokenizer/inference"
+            ],
+            "remaining": [
+              "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+              "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+              "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+              "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+            ]
+          },
+          "parent_checkpoint": "2e02e1f2b99dc6b5059c720c19e48a74fbec8088"
+        }
       ]
     },
     {

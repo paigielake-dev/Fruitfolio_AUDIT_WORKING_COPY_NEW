@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "7ecc2487367cb8987014d332297d9fd1edd21648",
+  "current_HEAD": "2e02e1f2b99dc6b5059c720c19e48a74fbec8088",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 13,
-  "current_implementation_batch": "Canonical-modal-backdrop-across-feature-overlays",
+  "current_checklist_part": 5,
+  "current_requirement": 257,
+  "current_implementation_batch": "Hormone-library-complete-scoped-source-retrieval",
   "completed_requirements": [
     206,
     210
@@ -494,19 +494,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-    "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-    "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12DataManagementRegressionHarness.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
-    "FruitfolioTests/FounderOverrideIntegrationTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+    "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+    "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -519,39 +511,62 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
+    "13portable focused XCTest passed",
+    "14native CPU focused XCTest passed including actual existing non-MADLAD evidence selection test",
     "71workflow checks passed",
     "315changed Swift syntax-only parses0errors",
-    "Compared existing dim layers against actual sharedRoot spec; source inventory shows all dimOpacity uses centralized",
+    "Actual before/after provider coverage over original bundled corpus",
     "git diff --check"
   ],
   "last_test_results": {
+    "portable_focused_XCTest": 13,
+    "native_CPU_focused_XCTest": 14,
+    "failures": 0,
     "workflow_checks": 71,
     "changed_Swift_syntax_only": 315,
-    "syntax_errors": 0,
-    "Apple_raster_test_written": 1,
-    "Apple_tests_executed": 0,
-    "unnumbered_founder_instruction": {
-      "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
-      "source_start_line": 377,
-      "source_end_line": 377,
-      "paragraph_sha256": "af49e205bede90e4c717184866a90e0eaa3158eb613159f67001fc910a495522",
-      "scope": "MAIN CHANGE universal blur; Hub tour remains exempt",
-      "implementation_evidence": "Shared black14percent visual backdrop replaces cream/black and72percent variants; common blur spec/radius retained; no Hub-tour changes",
-      "remaining": "Apple rendering/lifecycle and full remaining modal source acceptance; source alone is not verified runtime"
-    },
+    "actual_hormone_articles_checked": 7,
+    "original_full_paragraph_and_citation_identity_checks": "passed",
+    "source_buckets_before": 21,
+    "source_buckets_after": 28,
+    "source_buckets_missing": 7,
+    "official_MADLAD_verified": false,
+    "portable_exit_code": 0,
+    "native_exit_code": 0,
+    "SwiftTesting_selected": 0,
+    "initial_compiler_failure": "Swift type-checking complexity in chained ranking expression; corrected to explicit existing RankedNote steps; final modes compiled/passed",
     "log_receipts": {
-      "/tmp/fruitfolio_modal_backdrop_workflow.log": {
-        "bytes": 171,
-        "sha256": "4d47f20ab9088d77410675e6069e975d517a4869b38085ce0463b9a8a4f33184"
+      "/tmp/fruitfolio_hormone_library_coverage.log": {
+        "bytes": 32191,
+        "sha256": "5f067627bb96df881490993b79bdd354f5c26d3cb1c504d83ba16972abc757c8"
       },
-      "/tmp/fruitfolio_modal_backdrop_syntax.log": {
+      "/tmp/fruitfolio_hormone_library_scoped.log": {
+        "bytes": 6515,
+        "sha256": "5f1f41e43dd7e0013f56b5a8d79cf45e75c9b72e4864971c8e029e0bd7b1530d"
+      },
+      "/tmp/fruitfolio_hormone_library_scoped_fixed.log": {
+        "bytes": 34594,
+        "sha256": "c3208819e7124777365995efc7e724fa55cfc5f7adc7c2fa66833f475faf4d7d"
+      },
+      "/tmp/fruitfolio_hormone_library_final_portable.log": {
+        "bytes": 34596,
+        "sha256": "312f33f850a0be91eab3d6bc9c65665de60354d43c8916ce0d957a28cfe7eda8"
+      },
+      "/tmp/fruitfolio_hormone_library_final_native.log": {
+        "bytes": 86412,
+        "sha256": "0f70b69c44fd1431f3a81ea720bacdfa5f359fda741c074dfdf659645aa9e18a"
+      },
+      "/tmp/fruitfolio_hormone_library_syntax.log": {
         "bytes": 106,
         "sha256": "164012ba6ce6839f505801332a5ee14cfae9ae698468ae87dcbd13348ae9d3cc"
+      },
+      "/tmp/fruitfolio_hormone_library_workflow.log": {
+        "bytes": 171,
+        "sha256": "7f9560e4bb73d52e0b7a3abbd8e1f28937125c696e81025774ef9b7ec02ef9b2"
       }
     }
   },
-  "next_exact_implementation_action": "Continue individual original/founder functionality reconciliation, especially popup composition, complete feature contracts, and unmet unnumbered instructions. Preserve source/runtime distinction; no further optional styling or repeated full Foundation suites without changed concern.",
-  "updated_at": "2026-11-07T08:11:22.867526+00:00",
+  "next_exact_implementation_action": "Continue source-grounded HormoneLibrary aspect completeness:review actual AMH limitations paragraph and other remaining buckets; select appropriate complete approved original evidence without counting lexical coverage as clinical verification. Then continue original/founder functional requirements across all parts.",
+  "updated_at": "2026-11-07T08:30:17.833515+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -561,23 +576,35 @@
   ],
   "last_batch_verification": {
     "executed": {
+      "portable_focused_XCTest": 13,
+      "native_CPU_focused_XCTest": 14,
+      "failures": 0,
       "workflow_checks": 71,
       "changed_Swift_syntax_only": 315,
-      "syntax_errors": 0
+      "actual_hormone_articles_checked": 7,
+      "original_full_paragraph_and_citation_identity_checks": "passed",
+      "source_buckets_before": 21,
+      "source_buckets_after": 28,
+      "source_buckets_missing": 7,
+      "official_MADLAD_verified": false
     },
     "not_run": [
-      "New actual ImageRenderer neutral-backdrop compositing regression",
-      "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+      "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+      "Clinical completeness/review of all7founder aspects for each hormone",
+      "Official MADLAD model/tokenizer/inference"
     ],
     "remaining": [
-      "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-      "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-      "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+      "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+      "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+      "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+      "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
     ]
   },
-  "current_checklist_section": "Part 1 \u2014 Universal app-wide systems",
-  "last_recorded_batch_part": 1,
-  "last_supplemental_requirements": [],
+  "current_checklist_section": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
+  "last_recorded_batch_part": 5,
+  "last_supplemental_requirements": [
+    "SPEC-4.9.7"
+  ],
   "implemented_requirements": [
     170,
     171,

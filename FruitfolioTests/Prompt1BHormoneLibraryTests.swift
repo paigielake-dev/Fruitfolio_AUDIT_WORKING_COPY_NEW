@@ -14,6 +14,13 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             let article = try await provider.article(for: hormone)
             XCTAssertEqual(article.hormone, hormone)
             XCTAssertEqual(article.contentVersion, package.contentVersion)
+            // Retain exact actual-corpus coverage for requirement257 / SPEC4.9.7.
+            // A matched excerpt is retrieval evidence, never clinical completeness.
+            let coverage = article.excerpts.map { $0.section.rawValue + "=" + $0.noteID }.joined(separator: ";")
+            let missing = FruitfolioHormoneLibrarySection.allCases.filter { section in
+                !article.excerpts.contains(where: { $0.section == section })
+            }.map(\.rawValue).joined(separator: ",")
+            print("HORMONE_LIBRARY_SOURCE_COVERAGE|\(hormone.rawValue)|\(coverage)|missing=\(missing)")
             XCTAssertFalse(article.excerpts.isEmpty, "Actual approved corpus should supply at least one \(hormone) excerpt")
             XCTAssertEqual(Set(article.excerpts.map(\.originalText)).count, article.excerpts.count)
             for excerpt in article.excerpts {
@@ -38,6 +45,40 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
         XCTAssertTrue(FruitfolioHormoneResearchMatch.contains(.lh, in: "LH testing"))
         XCTAssertTrue(FruitfolioHormoneResearchMatch.contains(.amh, in: "anti-Müllerian hormone"))
     }
+    func testUnrelatedHighRankedNotesCannotHideEligibleHormoneSectionBelowGlobalCutoff() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let source = FruitfolioResearchSource(sourceID: "ranking-fixture", title: "Nonclinical retrieval fixture",
+            authors: nil, organization: nil, publicationDate: nil, publicationType: nil, canonicalURL: nil, doi: nil,
+            apa7Reference: "Fixture citation, not medical evidence", verificationStatus: "verified", retrievalEligibility: true,
+            sourceVersion: "fixture-v1", verifiedAt: nil, contentVersion: "fixture-v1")
+        let target = FruitfolioResearchNoteChunk(chunkID: "target-prolactin-testing", researchTopicID: "fixture", heading: "Desired label",
+            subheading: nil, text: "Prolactin testing fixture label. No medical assertion.", sourceIDs: [source.sourceID],
+            semanticTags: [], domainTags: [], retrievalEligibility: true)
+        let distractions = (0..<32).map { index in
+            FruitfolioResearchNoteChunk(chunkID: "distractor-\(index)", researchTopicID: "fixture",
+                heading: "prolactin testing test sample blood laboratory timing reference", subheading: nil,
+                text: "Unrelated testing test sample blood laboratory timing reference fixture. No medical assertion.",
+                sourceIDs: [source.sourceID], semanticTags: [], domainTags: [], retrievalEligibility: true)
+        }
+        let package = FruitfolioResearchPackage(schemaVersion: 1, contentVersion: "fixture-v1", generatedFrom: "test",
+            generationNote: "Nonclinical ranking only", researchNoteChunks: distractions + [target], sources: [source], sourceChunks: [])
+        let url = directory.appendingPathComponent("research.json")
+        try JSONEncoder().encode(package).write(to: url)
+        let store = FruitfolioResearchPackageStore(resourceURL: url)
+        let retriever = try await store.retriever()
+        let oldPool = retriever.searchNotes(question: "prolactin " + FruitfolioHormoneLibrarySection.testingContext.retrievalTerms, limit: 24)
+        XCTAssertFalse(oldPool.contains(where: { $0.chunk.chunkID == target.chunkID }), "Demonstrate the former global cutoff loses the real candidate")
+        let article = try await FruitfolioHormoneLibraryProvider(packageStore: store).article(for: .prolactin)
+        let excerpt = try XCTUnwrap(article.excerpts.first(where: { $0.section == .testingContext }))
+        XCTAssertEqual(excerpt.noteID, target.chunkID)
+        XCTAssertEqual(excerpt.originalText, target.text)
+        XCTAssertEqual(excerpt.sources.map(\.id), [source.sourceID])
+        XCTAssertEqual(excerpt.sources.first?.title, source.apa7Reference)
+        XCTAssertEqual(article.excerpts.count, 1)
+    }
+
     func testMissingEvidenceStaysEmptyAndOtherHormoneCannotInventACard() async throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)

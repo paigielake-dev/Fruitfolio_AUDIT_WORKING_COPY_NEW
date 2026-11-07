@@ -5889,7 +5889,9 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogStore.swift",
         "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
-        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift"
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5912,9 +5914,11 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt20CoreTests6newactualconcurrency/cancellation/revisionregressions"
+        "Prompt20CoreTests6newactualconcurrency/cancellation/revisionregressions",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Daily-log-nonsuspending-save-transactions-and-revision-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
@@ -5924,9 +5928,44 @@
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
-        "New regressions first executed against the actual prior production store and reproduced the actor reentrancy bug:64 distinct same-day writes produced only revisions1/2 with final2, and32 copies of one idempotency request produced32 record identities. Two tests/four assertions failed before the fix; exact bounded evidence/source hashes are in RUN_LOGS/Daily-log-actual-concurrency-before-after.json. Pure daily-log rules and the stateless temperature formatter are now explicitly nonisolated. Both existing persistent and in-memory repository actors perform future-date validation/candidate construction synchronously within the actor transaction, with no MainActor suspension after reading saved/idempotency state. The async public interface and existing schema/clinical logic remain. Cancellation before entry or mutation rejects without writing; revision overflow/negative counters throw corruptPersistence instead of trapping, and tombstones reuse the checked candidate revision. Six new actual regressions exercise64 sequential revisions under concurrency,32 identical request identities committing once,16 independent real-file days/retry state across reload with byte-identical retries, the existing in-memory repository contract, cancellation/no file creation and Int.max rejection preserving original bytes. Final591 portable XCTest+21 SwiftTesting and597 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and280 syntax parses passed. Apple app/typechecking/UI, device performance and clinical acceptance remain NOT_RUN. No assertion is made that serial transactions alone solve stale editors or outside-file changes; those remain separate independent work."
+        "New regressions first executed against the actual prior production store and reproduced the actor reentrancy bug:64 distinct same-day writes produced only revisions1/2 with final2, and32 copies of one idempotency request produced32 record identities. Two tests/four assertions failed before the fix; exact bounded evidence/source hashes are in RUN_LOGS/Daily-log-actual-concurrency-before-after.json. Pure daily-log rules and the stateless temperature formatter are now explicitly nonisolated. Both existing persistent and in-memory repository actors perform future-date validation/candidate construction synchronously within the actor transaction, with no MainActor suspension after reading saved/idempotency state. The async public interface and existing schema/clinical logic remain. Cancellation before entry or mutation rejects without writing; revision overflow/negative counters throw corruptPersistence instead of trapping, and tombstones reuse the checked candidate revision. Six new actual regressions exercise64 sequential revisions under concurrency,32 identical request identities committing once,16 independent real-file days/retry state across reload with byte-identical retries, the existing in-memory repository contract, cancellation/no file creation and Int.max rejection preserving original bytes. Final591 portable XCTest+21 SwiftTesting and597 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and280 syntax parses passed. Apple app/typechecking/UI, device performance and clinical acceptance remain NOT_RUN. No assertion is made that serial transactions alone solve stale editors or outside-file changes; those remain separate independent work.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-06T06:43:15.460789+00:00"
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
+      "latest_batch_verification": {
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
+        "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
+        },
+        "not_run": [
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
+        ],
+        "remaining": [
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ]
     },
     {
       "sequence": 68,
@@ -18610,7 +18649,8 @@
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18621,45 +18661,77 @@
         "Prompt1BModalAccessibilityTests.testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift"
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Literal-Unicode-hormone-research-name-matching (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Connected an educational Hormone Library for all seven named hormones to the actual indexed local research package. Five topic sections retrieve complete eligible paragraphs, require an actual hormone name/abbreviation and section terms, retain original topic headings, and show only each paragraph's own exact approved citation metadata. Repeated paragraphs deduplicate; missing sections stay explicitly unavailable; no unspecified Other hormone card or model-memory facts. Reuses only existing relevant estrogen/progesterone/testosterone art, shared semantic translation display and citation controls. Cached static articles contain no measurement/profile input. Actual corpus regressions verify original text/source association for all seven; empty package yields gaps. These are partial retrieved excerpts, not comprehensive clinically reviewed educational synthesis. Apple UI/VoiceOver/localized translation quality remain unrun.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
-        "Only full AMH/FSH name separator matching expands to Unicode dash punctuation/space separators; existing word bounds, folding and short symbols remain. No original evidence/citation data rewritten. Six focused cases move from17 failed assertions to0; three new cases include actual provider byte preservation and approval/eligibility controls using explicit nonclinical fixtures. Actual corpus test still verifies complete eligible paragraphs/own sources across seven hormones. Full Linux suites pass; no Apple/clinical/official-model acceptance implied."
+        "Only full AMH/FSH name separator matching expands to Unicode dash punctuation/space separators; existing word bounds, folding and short symbols remain. No original evidence/citation data rewritten. Six focused cases move from17 failed assertions to0; three new cases include actual provider byte preservation and approval/eligibility controls using explicit nonclinical fixtures. Actual corpus test still verifies complete eligible paragraphs/own sources across seven hormones. Full Linux suites pass; no Apple/clinical/official-model acceptance implied.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-06T20:37:51.278259+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Literal-Unicode-hormone-research-name-matching",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
-          "hormone_library": "6 passed after real17-assertion reproduction; actual provider Unicode byte/eligibility/approval controls and separate actual-corpus provenance checks",
-          "portable_XCTest": "793 passed",
-          "native_CPU_XCTest": "815 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed",
-          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean"
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "20 measurement/56 Guide Apple UI launches, real library picker/article/resource rendering and device behavior",
-          "Apple SDK build/link and full integrated UI/runtime suite",
-          "Primary full-source/clinical citation and meaning review; synthetic fixture approval flags are not clinical validation",
-          "Official MADLAD offline/tokenizer/each-language inference and scientific translation acceptance"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute actual hormone-library selection and source rendering on Apple; guard pre-task stale presentation next",
-          "Complete primary-source expansion, quarantine/citation and qualified clinical review; exact provenance does not prove factual/clinical correctness",
-          "Run official-model/tokenizer/language and full Apple/device integrated acceptance; retain all unavailable results as NOT_RUN/BLOCKED",
-          "Continue all remaining original478/founder requirements without treating these six retrieval tests as feature completion"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual hormone-library selection and source rendering on Apple; guard pre-task stale presentation next",
-        "Complete primary-source expansion, quarantine/citation and qualified clinical review; exact provenance does not prove factual/clinical correctness",
-        "Run official-model/tokenizer/language and full Apple/device integrated acceptance; retain all unavailable results as NOT_RUN/BLOCKED",
-        "Continue all remaining original478/founder requirements without treating these six retrieval tests as feature completion"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Literal-Unicode-hormone-research-name-matching",
+          "executed": {
+            "hormone_library": "6 passed after real17-assertion reproduction; actual provider Unicode byte/eligibility/approval controls and separate actual-corpus provenance checks",
+            "portable_XCTest": "793 passed",
+            "native_CPU_XCTest": "815 passed; synthetic T5 is not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "60 passed",
+            "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean"
+          },
+          "not_run": [
+            "20 measurement/56 Guide Apple UI launches, real library picker/article/resource rendering and device behavior",
+            "Apple SDK build/link and full integrated UI/runtime suite",
+            "Primary full-source/clinical citation and meaning review; synthetic fixture approval flags are not clinical validation",
+            "Official MADLAD offline/tokenizer/each-language inference and scientific translation acceptance"
+          ],
+          "remaining": [
+            "Execute actual hormone-library selection and source rendering on Apple; guard pre-task stale presentation next",
+            "Complete primary-source expansion, quarantine/citation and qualified clinical review; exact provenance does not prove factual/clinical correctness",
+            "Run official-model/tokenizer/language and full Apple/device integrated acceptance; retain all unavailable results as NOT_RUN/BLOCKED",
+            "Continue all remaining original478/founder requirements without treating these six retrieval tests as feature completion"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -18673,7 +18745,8 @@
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift"
+        "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18683,41 +18756,74 @@
         "Prompt1BHormoneLibraryTests",
         "Prompt1BModalAccessibilityTests.testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift"
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Hormone-library-request-scoped-presentation-and-retry (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Connected an educational Hormone Library for all seven named hormones to the actual indexed local research package. Five topic sections retrieve complete eligible paragraphs, require an actual hormone name/abbreviation and section terms, retain original topic headings, and show only each paragraph's own exact approved citation metadata. Repeated paragraphs deduplicate; missing sections stay explicitly unavailable; no unspecified Other hormone card or model-memory facts. Reuses only existing relevant estrogen/progesterone/testosterone art, shared semantic translation display and citation controls. Cached static articles contain no measurement/profile input. Actual corpus regressions verify original text/source association for all seven; empty package yields gaps. These are partial retrieved excerpts, not comprehensive clinically reviewed educational synthesis. Apple UI/VoiceOver/localized translation quality remain unrun.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
         "Only full AMH/FSH name separator matching expands to Unicode dash punctuation/space separators; existing word bounds, folding and short symbols remain. No original evidence/citation data rewritten. Six focused cases move from17 failed assertions to0; three new cases include actual provider byte preservation and approval/eligibility controls using explicit nonclinical fixtures. Actual corpus test still verifies complete eligible paragraphs/own sources across seven hormones. Full Linux suites pass; no Apple/clinical/official-model acceptance implied.",
-        "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed."
+        "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-06T20:54:30.404446+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Hormone-library-request-scoped-presentation-and-retry",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
-          "workflow": "60 passed this batch",
-          "syntax": "311 Swift files parsed; no Apple typecheck",
-          "references": "Xcode references resolved, not built",
-          "sound_ownership": "Actual SwiftSyntax check returned no findings",
-          "source_preservation": "Prior catalog entries and canonical provider bytes unchanged; receipt recorded"
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "22 measurement and 56 Guide planned Apple UI launches, including selection and injected first-read retry",
-          "Apple SDK build/link, VoiceOver, Reduce Motion and device behavior",
-          "Official MADLAD inference and clinical translated meaning review"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute actual library rapid selection, stale completion/error, retry, dismissal/background and approved source rendering on Apple",
-          "Complete qualified clinical/source coverage and citation review; retry fixture is a synthetic I/O failure only",
-          "Official MADLAD model/tokenizer, language/offline and physical-device acceptance remain blocked; no requirement certified complete"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual library rapid selection, stale completion/error, retry, dismissal/background and approved source rendering on Apple",
-        "Complete qualified clinical/source coverage and citation review; retry fixture is a synthetic I/O failure only",
-        "Official MADLAD model/tokenizer, language/offline and physical-device acceptance remain blocked; no requirement certified complete"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Hormone-library-request-scoped-presentation-and-retry",
+          "executed": {
+            "workflow": "60 passed this batch",
+            "syntax": "311 Swift files parsed; no Apple typecheck",
+            "references": "Xcode references resolved, not built",
+            "sound_ownership": "Actual SwiftSyntax check returned no findings",
+            "source_preservation": "Prior catalog entries and canonical provider bytes unchanged; receipt recorded"
+          },
+          "not_run": [
+            "22 measurement and 56 Guide planned Apple UI launches, including selection and injected first-read retry",
+            "Apple SDK build/link, VoiceOver, Reduce Motion and device behavior",
+            "Official MADLAD inference and clinical translated meaning review"
+          ],
+          "remaining": [
+            "Execute actual library rapid selection, stale completion/error, retry, dismissal/background and approved source rendering on Apple",
+            "Complete qualified clinical/source coverage and citation review; retry fixture is a synthetic I/O failure only",
+            "Official MADLAD model/tokenizer, language/offline and physical-device acceptance remain blocked; no requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -18731,7 +18837,8 @@
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18741,40 +18848,73 @@
         "Prompt1BHormoneLibraryTests",
         "Prompt1BModalAccessibilityTests.testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize",
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Hormone-library-request-scoped-presentation-and-retry (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Connected an educational Hormone Library for all seven named hormones to the actual indexed local research package. Five topic sections retrieve complete eligible paragraphs, require an actual hormone name/abbreviation and section terms, retain original topic headings, and show only each paragraph's own exact approved citation metadata. Repeated paragraphs deduplicate; missing sections stay explicitly unavailable; no unspecified Other hormone card or model-memory facts. Reuses only existing relevant estrogen/progesterone/testosterone art, shared semantic translation display and citation controls. Cached static articles contain no measurement/profile input. Actual corpus regressions verify original text/source association for all seven; empty package yields gaps. These are partial retrieved excerpts, not comprehensive clinically reviewed educational synthesis. Apple UI/VoiceOver/localized translation quality remain unrun.",
         "Only full AMH/FSH name separator matching expands to Unicode dash punctuation/space separators; existing word bounds, folding and short symbols remain. No original evidence/citation data rewritten. Six focused cases move from17 failed assertions to0; three new cases include actual provider byte preservation and approval/eligibility controls using explicit nonclinical fixtures. Actual corpus test still verifies complete eligible paragraphs/own sources across seven hormones. Full Linux suites pass; no Apple/clinical/official-model acceptance implied.",
-        "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed."
+        "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-06T20:54:30.404446+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Hormone-library-request-scoped-presentation-and-retry",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
-          "workflow": "60 passed this batch",
-          "syntax": "311 Swift files parsed; no Apple typecheck",
-          "references": "Xcode references resolved, not built",
-          "sound_ownership": "Actual SwiftSyntax check returned no findings",
-          "source_preservation": "Prior catalog entries and canonical provider bytes unchanged; receipt recorded"
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "22 measurement and 56 Guide planned Apple UI launches, including selection and injected first-read retry",
-          "Apple SDK build/link, VoiceOver, Reduce Motion and device behavior",
-          "Official MADLAD inference and clinical translated meaning review"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute actual library rapid selection, stale completion/error, retry, dismissal/background and approved source rendering on Apple",
-          "Complete qualified clinical/source coverage and citation review; retry fixture is a synthetic I/O failure only",
-          "Official MADLAD model/tokenizer, language/offline and physical-device acceptance remain blocked; no requirement certified complete"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual library rapid selection, stale completion/error, retry, dismissal/background and approved source rendering on Apple",
-        "Complete qualified clinical/source coverage and citation review; retry fixture is a synthetic I/O failure only",
-        "Official MADLAD model/tokenizer, language/offline and physical-device acceptance remain blocked; no requirement certified complete"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Hormone-library-request-scoped-presentation-and-retry",
+          "executed": {
+            "workflow": "60 passed this batch",
+            "syntax": "311 Swift files parsed; no Apple typecheck",
+            "references": "Xcode references resolved, not built",
+            "sound_ownership": "Actual SwiftSyntax check returned no findings",
+            "source_preservation": "Prior catalog entries and canonical provider bytes unchanged; receipt recorded"
+          },
+          "not_run": [
+            "22 measurement and 56 Guide planned Apple UI launches, including selection and injected first-read retry",
+            "Apple SDK build/link, VoiceOver, Reduce Motion and device behavior",
+            "Official MADLAD inference and clinical translated meaning review"
+          ],
+          "remaining": [
+            "Execute actual library rapid selection, stale completion/error, retry, dismissal/background and approved source rendering on Apple",
+            "Complete qualified clinical/source coverage and citation review; retry fixture is a synthetic I/O failure only",
+            "Official MADLAD model/tokenizer, language/offline and physical-device acceptance remain blocked; no requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -18967,7 +19107,8 @@
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
-        "Fruitfolio/Hormone Information/HormoneLibraryView.swift"
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18978,15 +19119,52 @@
         "Prompt1BHormonePersistenceTests",
         "Prompt1BHormoneValidationTests",
         "Prompt1BHormoneLibraryTests",
-        "Prompt1BModalAccessibilityTests.testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests.testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Hormone-Library-real-approved-paragraphs-and-source-trails (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
-        "Connected an educational Hormone Library for all seven named hormones to the actual indexed local research package. Five topic sections retrieve complete eligible paragraphs, require an actual hormone name/abbreviation and section terms, retain original topic headings, and show only each paragraph's own exact approved citation metadata. Repeated paragraphs deduplicate; missing sections stay explicitly unavailable; no unspecified Other hormone card or model-memory facts. Reuses only existing relevant estrogen/progesterone/testosterone art, shared semantic translation display and citation controls. Cached static articles contain no measurement/profile input. Actual corpus regressions verify original text/source association for all seven; empty package yields gaps. These are partial retrieved excerpts, not comprehensive clinically reviewed educational synthesis. Apple UI/VoiceOver/localized translation quality remain unrun."
+        "Connected an educational Hormone Library for all seven named hormones to the actual indexed local research package. Five topic sections retrieve complete eligible paragraphs, require an actual hormone name/abbreviation and section terms, retain original topic headings, and show only each paragraph's own exact approved citation metadata. Repeated paragraphs deduplicate; missing sections stay explicitly unavailable; no unspecified Other hormone card or model-memory facts. Reuses only existing relevant estrogen/progesterone/testosterone art, shared semantic translation display and citation controls. Cached static articles contain no measurement/profile input. Actual corpus regressions verify original text/source association for all seven; empty package yields gaps. These are partial retrieved excerpts, not comprehensive clinically reviewed educational synthesis. Apple UI/VoiceOver/localized translation quality remain unrun.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-05T22:11:53.784500+00:00"
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
+      "latest_batch_verification": {
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
+        "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
+        },
+        "not_run": [
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
+        ],
+        "remaining": [
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ]
     },
     {
       "sequence": 263,
@@ -32621,7 +32799,9 @@
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32681,9 +32861,11 @@
         "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
-        "FruitfolioTests/Prompt1BCitationTranslationTests.swift"
+        "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Scientific-education-and-citation-interface-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -32727,32 +32909,64 @@
         "Actual Guide reorder callbacks capture ordered IDs/language/visit and use real canonical gateways before writes/cues/status. Hidden/inactive/stale/wrong-guide/scope/language/order and ambiguous identities reject with zero setter calls. Independent authored updates survive; old order cannot replay. Capture shared once per list. Root rotates real epochs across context changes; three section labels localize at44pt. Three real-store ownership tests pass; four Apple lifecycle/live-move vectors written NOT_RUN. Final973/998 XCTest+21 SwiftTesting each;69 workflow;313 parse-only checks;zero source sound findings. Environment reconnected with exact WIP preserved, ancestor/bundle verified; native final process handle unavailable but completed suite logs retained.",
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
-        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted."
+        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T07:48:42.867847+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Scientific-education-and-citation-interface-localization",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
-          "focused_XCTest": 31,
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
           "failures": 0,
-          "SwiftTesting_selected": 0,
-          "syntax_parsed_Swift_files": 314
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
-          "Official MADLAD, clinical and per-language acceptance"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-          "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-          "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-        "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-        "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Scientific-education-and-citation-interface-localization",
+          "executed": {
+            "focused_XCTest": 31,
+            "failures": 0,
+            "SwiftTesting_selected": 0,
+            "syntax_parsed_Swift_files": 314
+          },
+          "not_run": [
+            "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
+            "Official MADLAD, clinical and per-language acceptance"
+          ],
+          "remaining": [
+            "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
+            "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
+            "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -32863,7 +33077,8 @@
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32928,9 +33143,10 @@
         "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
-        "FruitfolioTests/Prompt1BCitationTranslationTests.swift"
+        "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Scientific-education-and-citation-interface-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -32986,32 +33202,64 @@
         "Actual Guide reorder callbacks capture ordered IDs/language/visit and use real canonical gateways before writes/cues/status. Hidden/inactive/stale/wrong-guide/scope/language/order and ambiguous identities reject with zero setter calls. Independent authored updates survive; old order cannot replay. Capture shared once per list. Root rotates real epochs across context changes; three section labels localize at44pt. Three real-store ownership tests pass; four Apple lifecycle/live-move vectors written NOT_RUN. Final973/998 XCTest+21 SwiftTesting each;69 workflow;313 parse-only checks;zero source sound findings. Environment reconnected with exact WIP preserved, ancestor/bundle verified; native final process handle unavailable but completed suite logs retained.",
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
-        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted."
+        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T07:48:42.867847+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Scientific-education-and-citation-interface-localization",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
-          "focused_XCTest": 31,
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
           "failures": 0,
-          "SwiftTesting_selected": 0,
-          "syntax_parsed_Swift_files": 314
+          "workflow_checks": 71,
+          "changed_Swift_syntax_only": 315,
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
-          "Official MADLAD, clinical and per-language acceptance"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-          "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-          "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-        "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-        "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Scientific-education-and-citation-interface-localization",
+          "executed": {
+            "focused_XCTest": 31,
+            "failures": 0,
+            "SwiftTesting_selected": 0,
+            "syntax_parsed_Swift_files": 314
+          },
+          "not_run": [
+            "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
+            "Official MADLAD, clinical and per-language acceptance"
+          ],
+          "remaining": [
+            "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
+            "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
+            "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -34097,7 +34345,9 @@
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -34237,9 +34487,11 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
-        "FruitfolioTests/FounderOverrideIntegrationTests.swift"
+        "FruitfolioTests/FounderOverrideIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Canonical-modal-backdrop-across-feature-overlays (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -34348,31 +34600,43 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Corrected demonstrated Part1 functionality gaps:11 legacy feature ButtonStyle adapters now use the single existing canonical press geometry/timing effect; Root supplies that default for unstyled app Buttons, all actual production plain overrides removed while developer galleries retained. Original watercolor paper chrome, actions and cue owners retained. Shared effect honors explicit/system/app Reduce Motion without requiring a new settings authority. Fixed missing soft-pop owners on onboarding native skip, BBT-time skip, history/edit/remove, info toggles, month/day selection and add-history controls; no action delays added. Existing cycle fixture gains real sound diagnostics;4mute\u00d7motion UI vectors writtenNOT_RUN plus1actual hosted-geometry regression writtenNOT_RUN. Linux regressions973portable/998nativeCPU XCTest+21SwiftTesting each,71workflow,315syntax-only,zero sound-ownership source findings; none proves SwiftUI animation or physical audibility. Recorder archives prior per-requirement execution/gap evidence instead of losing it when latest view advances;one required preservation regression. No whole-requirement status promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion."
+        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T08:11:22.867526+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Canonical-modal-backdrop-across-feature-overlays",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
           "workflow_checks": 71,
           "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "New actual ImageRenderer neutral-backdrop compositing regression",
-          "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-          "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-          "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-        "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-        "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
       ],
       "prior_batch_verifications": [
         {
@@ -34433,6 +34697,24 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Canonical-modal-backdrop-across-feature-overlays",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual ImageRenderer neutral-backdrop compositing regression",
+            "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          ],
+          "remaining": [
+            "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
+            "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
+            "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -34609,7 +34891,9 @@
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -34744,9 +35028,11 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
-        "FruitfolioTests/FounderOverrideIntegrationTests.swift"
+        "FruitfolioTests/FounderOverrideIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Canonical-modal-backdrop-across-feature-overlays (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -34838,31 +35124,43 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Corrected demonstrated Part1 functionality gaps:11 legacy feature ButtonStyle adapters now use the single existing canonical press geometry/timing effect; Root supplies that default for unstyled app Buttons, all actual production plain overrides removed while developer galleries retained. Original watercolor paper chrome, actions and cue owners retained. Shared effect honors explicit/system/app Reduce Motion without requiring a new settings authority. Fixed missing soft-pop owners on onboarding native skip, BBT-time skip, history/edit/remove, info toggles, month/day selection and add-history controls; no action delays added. Existing cycle fixture gains real sound diagnostics;4mute\u00d7motion UI vectors writtenNOT_RUN plus1actual hosted-geometry regression writtenNOT_RUN. Linux regressions973portable/998nativeCPU XCTest+21SwiftTesting each,71workflow,315syntax-only,zero sound-ownership source findings; none proves SwiftUI animation or physical audibility. Recorder archives prior per-requirement execution/gap evidence instead of losing it when latest view advances;one required preservation regression. No whole-requirement status promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion."
+        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T08:11:22.867526+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Canonical-modal-backdrop-across-feature-overlays",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
           "workflow_checks": 71,
           "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "New actual ImageRenderer neutral-backdrop compositing regression",
-          "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-          "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-          "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-        "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-        "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
       ],
       "prior_batch_verifications": [
         {
@@ -34923,6 +35221,24 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Canonical-modal-backdrop-across-feature-overlays",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual ImageRenderer neutral-backdrop compositing regression",
+            "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          ],
+          "remaining": [
+            "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
+            "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
+            "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37082,7 +37398,8 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Cycle Tracker/Symptoms/Prompt23SymptomsView.swift",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
-        "Tools/record_prompt1b_batch.py"
+        "Tools/record_prompt1b_batch.py",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37218,9 +37535,10 @@
         "FruitfolioTests/Prompt1BScientificArtSizingTests.swift (unchanged; pure parent suite coverage only)",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift (five genuine parent-tested cases; unchanged/not rerun UI batch)",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Canonical-button-interaction-and-onboarding-cue-owners (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -37299,37 +37617,43 @@
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
         "Actual LifeBridge missing-content/privacy/relationship explanations use serious source translation; fixed heading/link/date metadata labels use compact owner. Approved title/URL/version remain verbatim; dates native-formatted separately from translated labels. Brand literals protected in relevant labels/text. Back requires active visible owner; native Links disabled when inactive/shared-popup covered. Reviewed destinations and validator byte-preserved, no company facts/private context supplied. Seven English additions preserve949 entries,956 total; actual approved snapshots/Apple link behavior remain unverified.",
         "Existing inventory home/topic literals now use shared semantic fixed translation; raw topic binding/axis/identifier unchanged via native helper. Home uses bounded viewport ScrollView/minHeight, preserving normal spacing and scrolling large text. Actual private game harness adds home mode; four English/paused-French \u00d7 Reduce Motion launches written with portrait/landscape controls and native exact topic input. Two English additions preserve956 entries,958 total. Exact revised-copy320\u2013322 ambiguity documented and asynchronous clarification pending; no revised-copy certification. Game model/controller/research byte-preserved.",
-        "Corrected demonstrated Part1 functionality gaps:11 legacy feature ButtonStyle adapters now use the single existing canonical press geometry/timing effect; Root supplies that default for unstyled app Buttons, all actual production plain overrides removed while developer galleries retained. Original watercolor paper chrome, actions and cue owners retained. Shared effect honors explicit/system/app Reduce Motion without requiring a new settings authority. Fixed missing soft-pop owners on onboarding native skip, BBT-time skip, history/edit/remove, info toggles, month/day selection and add-history controls; no action delays added. Existing cycle fixture gains real sound diagnostics;4mute\u00d7motion UI vectors writtenNOT_RUN plus1actual hosted-geometry regression writtenNOT_RUN. Linux regressions973portable/998nativeCPU XCTest+21SwiftTesting each,71workflow,315syntax-only,zero sound-ownership source findings; none proves SwiftUI animation or physical audibility. Recorder archives prior per-requirement execution/gap evidence instead of losing it when latest view advances;one required preservation regression. No whole-requirement status promoted."
+        "Corrected demonstrated Part1 functionality gaps:11 legacy feature ButtonStyle adapters now use the single existing canonical press geometry/timing effect; Root supplies that default for unstyled app Buttons, all actual production plain overrides removed while developer galleries retained. Original watercolor paper chrome, actions and cue owners retained. Shared effect honors explicit/system/app Reduce Motion without requiring a new settings authority. Fixed missing soft-pop owners on onboarding native skip, BBT-time skip, history/edit/remove, info toggles, month/day selection and add-history controls; no action delays added. Existing cycle fixture gains real sound diagnostics;4mute\u00d7motion UI vectors writtenNOT_RUN plus1actual hosted-geometry regression writtenNOT_RUN. Linux regressions973portable/998nativeCPU XCTest+21SwiftTesting each,71workflow,315syntax-only,zero sound-ownership source findings; none proves SwiftUI animation or physical audibility. Recorder archives prior per-requirement execution/gap evidence instead of losing it when latest view advances;one required preservation regression. No whole-requirement status promoted.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T07:58:34.453670+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Canonical-button-interaction-and-onboarding-cue-owners",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
           "workflow_checks": 71,
           "changed_Swift_syntax_only": 315,
-          "sound_ownership_source_findings": 0,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple-hosted shared effect geometry regression covering explicit/system/app Reduce Motion",
-          "Four actual onboarding calendar mute/reduce-motion audio UI vectors",
-          "Apple SDK build/typecheck, press animation/touch latency and physical-device audio"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Run actual root default and legacy adapters on Apple, including calendar/popup/native menu controls and press cancellation; test visual geometry and input latency",
-          "Run existing actual AudioManager diagnostics UI vectors and verify acoustic playback/mute on device",
-          "Whole-requirement acceptance requires every applicable control/subcondition; source delegation and Linux suites alone do not close9/10/11/12/70/294/296/297/303/389/446/471/472/475"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual root default and legacy adapters on Apple, including calendar/popup/native menu controls and press cancellation; test visual geometry and input latency",
-        "Run existing actual AudioManager diagnostics UI vectors and verify acoustic playback/mute on device",
-        "Whole-requirement acceptance requires every applicable control/subcondition; source delegation and Linux suites alone do not close9/10/11/12/70/294/296/297/303/389/446/471/472/475"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
       ],
       "prior_batch_verifications": [
         {
@@ -37349,6 +37673,30 @@
             "Resolve exact revised home/How It Works/topic copy; current inventory wording preserved, broad old evidence not completion proof",
             "Run all4actual Apple home/viewport/native topic tests and verify no private input enters translation",
             "Official model/native-language/clinical and whole interaction/device acceptance remain open"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Canonical-button-interaction-and-onboarding-cue-owners",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "sound_ownership_source_findings": 0,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple-hosted shared effect geometry regression covering explicit/system/app Reduce Motion",
+            "Four actual onboarding calendar mute/reduce-motion audio UI vectors",
+            "Apple SDK build/typecheck, press animation/touch latency and physical-device audio"
+          ],
+          "remaining": [
+            "Run actual root default and legacy adapters on Apple, including calendar/popup/native menu controls and press cancellation; test visual geometry and input latency",
+            "Run existing actual AudioManager diagnostics UI vectors and verify acoustic playback/mute on device",
+            "Whole-requirement acceptance requires every applicable control/subcondition; source delegation and Linux suites alone do not close9/10/11/12/70/294/296/297/303/389/446/471/472/475"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -39470,7 +39818,8 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -39627,9 +39976,10 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
-        "FruitfolioTests/FounderOverrideIntegrationTests.swift"
+        "FruitfolioTests/FounderOverrideIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Canonical-modal-backdrop-across-feature-overlays (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -39813,31 +40163,43 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Corrected demonstrated Part1 functionality gaps:11 legacy feature ButtonStyle adapters now use the single existing canonical press geometry/timing effect; Root supplies that default for unstyled app Buttons, all actual production plain overrides removed while developer galleries retained. Original watercolor paper chrome, actions and cue owners retained. Shared effect honors explicit/system/app Reduce Motion without requiring a new settings authority. Fixed missing soft-pop owners on onboarding native skip, BBT-time skip, history/edit/remove, info toggles, month/day selection and add-history controls; no action delays added. Existing cycle fixture gains real sound diagnostics;4mute\u00d7motion UI vectors writtenNOT_RUN plus1actual hosted-geometry regression writtenNOT_RUN. Linux regressions973portable/998nativeCPU XCTest+21SwiftTesting each,71workflow,315syntax-only,zero sound-ownership source findings; none proves SwiftUI animation or physical audibility. Recorder archives prior per-requirement execution/gap evidence instead of losing it when latest view advances;one required preservation regression. No whole-requirement status promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion."
+        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T08:11:22.867526+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Canonical-modal-backdrop-across-feature-overlays",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
           "workflow_checks": 71,
           "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "New actual ImageRenderer neutral-backdrop compositing regression",
-          "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-          "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-          "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-        "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-        "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
       ],
       "prior_batch_verifications": [
         {
@@ -39898,6 +40260,24 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Canonical-modal-backdrop-across-feature-overlays",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual ImageRenderer neutral-backdrop compositing regression",
+            "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          ],
+          "remaining": [
+            "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
+            "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
+            "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -40149,7 +40529,8 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -40351,9 +40732,10 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
-        "FruitfolioTests/FounderOverrideIntegrationTests.swift"
+        "FruitfolioTests/FounderOverrideIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
       ],
-      "commit_reference": "batch:Canonical-modal-backdrop-across-feature-overlays (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-library-complete-scoped-source-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -40571,31 +40953,43 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Corrected demonstrated Part1 functionality gaps:11 legacy feature ButtonStyle adapters now use the single existing canonical press geometry/timing effect; Root supplies that default for unstyled app Buttons, all actual production plain overrides removed while developer galleries retained. Original watercolor paper chrome, actions and cue owners retained. Shared effect honors explicit/system/app Reduce Motion without requiring a new settings authority. Fixed missing soft-pop owners on onboarding native skip, BBT-time skip, history/edit/remove, info toggles, month/day selection and add-history controls; no action delays added. Existing cycle fixture gains real sound diagnostics;4mute\u00d7motion UI vectors writtenNOT_RUN plus1actual hosted-geometry regression writtenNOT_RUN. Linux regressions973portable/998nativeCPU XCTest+21SwiftTesting each,71workflow,315syntax-only,zero sound-ownership source findings; none proves SwiftUI animation or physical audibility. Recorder archives prior per-requirement execution/gap evidence instead of losing it when latest view advances;one required preservation regression. No whole-requirement status promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion."
+        "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
+        "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed."
       ],
-      "last_updated": "2026-11-07T08:11:22.867526+00:00",
+      "last_updated": "2026-11-07T08:30:17.833515+00:00",
       "latest_batch_verification": {
-        "batch": "Canonical-modal-backdrop-across-feature-overlays",
+        "batch": "Hormone-library-complete-scoped-source-retrieval",
         "executed": {
+          "portable_focused_XCTest": 13,
+          "native_CPU_focused_XCTest": 14,
+          "failures": 0,
           "workflow_checks": 71,
           "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "actual_hormone_articles_checked": 7,
+          "original_full_paragraph_and_citation_identity_checks": "passed",
+          "source_buckets_before": 21,
+          "source_buckets_after": 28,
+          "source_buckets_missing": 7,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "New actual ImageRenderer neutral-backdrop compositing regression",
-          "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          "Apple Hormone Library interface/native Picker/VoiceOver and device memory/timing",
+          "Clinical completeness/review of all7founder aspects for each hormone",
+          "Official MADLAD model/tokenizer/inference"
         ],
         "remaining": [
-          "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-          "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-          "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+          "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+          "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+          "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+          "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
-        "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
-        "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+        "Curate or improve section relevance using actual approved passages; do not call7empty retrieval buckets a genuine external-resource blocker before source review",
+        "Map each of7founder educational aspects individually for each hormone;5retrieval buckets and28excerpts are not complete clinical coverage",
+        "AMH note_5252619bd571aff2f8c82363 already states explicit limitations but remains unselected: address this source-grounded gap next",
+        "Run Apple/source/clinical acceptance; no whole original requirement or founder addition is promoted"
       ],
       "prior_batch_verifications": [
         {
@@ -40656,6 +41050,24 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Canonical-modal-backdrop-across-feature-overlays",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual ImageRenderer neutral-backdrop compositing regression",
+            "Apple build/typecheck and actual modal visuals/transitions/focus/outside taps"
+          ],
+          "remaining": [
+            "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
+            "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
+            "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
