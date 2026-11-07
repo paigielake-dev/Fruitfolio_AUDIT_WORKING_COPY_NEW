@@ -665,6 +665,27 @@ final class Prompt27AContextResearchTests: XCTestCase {
         }
     }
 
+    func testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy() throws {
+        var context = Prompt27AUserReproductiveContext.unspecified
+        context.setReproductiveStage(.pregnant)
+        context.setLactationContext(.breastfeedingOrLactating)
+        let report = Prompt27AContextResearchReport(context: context, observedFacts: .unknown, items: [])
+        XCTAssertEqual(report.presentationDecisions.count, 4)
+        XCTAssertTrue(report.presentationDecisions.allSatisfy { $0.effect == .suppress })
+        let clarification = try XCTUnwrap(report.presentationClarification)
+        XCTAssertTrue(clarification.contains("you told Fruitfolio you’re pregnant"))
+        XCTAssertTrue(clarification.contains("lactation"), "Independent reported limitations must remain visible")
+        XCTAssertNil(report.observedFacts.enteredPeriodStartCount)
+        XCTAssertFalse(report.presentationPolicy.modifiesPredictionMathematics)
+        context.clear()
+        let removed = Prompt27AContextResearchReport(context: context, observedFacts: .unknown, items: [])
+        XCTAssertTrue(removed.presentationDecisions.allSatisfy { $0.effect == .unchanged })
+        XCTAssertTrue(removed.presentationDecisions.allSatisfy { $0.explanation.contains("eligibility requirements still apply") })
+        XCTAssertNil(removed.presentationClarification)
+        XCTAssertNil(removed.observedFacts.enteredPeriodStartCount, "An unrestricted display decision is not adequate prediction evidence")
+        XCTAssertFalse(removed.presentationPolicy.modifiesPredictionMathematics)
+    }
+
     func testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions() async throws {
         var context = Prompt27AUserReproductiveContext(sexualActivityContext: .notCurrentlySexuallyActive,
             lactationContext: .notCurrentlyBreastfeedingOrLactating, infertilityContext: .notReported,

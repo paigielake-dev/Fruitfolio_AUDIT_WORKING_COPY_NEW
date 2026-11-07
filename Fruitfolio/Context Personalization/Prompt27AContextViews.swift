@@ -523,6 +523,18 @@ struct Prompt27AContextResearchPanel: View {
                         }
                     }
                 }
+                FruitfolioFixedText(source: "how context affects what can be shown", font: .subheadline.bold(), serious: true)
+                    .accessibilityAddTraits(.isHeader)
+                FruitfolioFixedText(source: "these describe Fruitfolio’s display rules, not medical conclusions. research does not override them, and permission to show an estimate does not establish enough history to calculate it.", serious: true)
+                if let clarification = report.presentationClarification {
+                    FruitfolioFixedText(source: clarification, serious: true)
+                }
+                ForEach(report.presentationDecisions) { decision in
+                    VStack(alignment: .leading, spacing: 3) {
+                        FruitfolioFixedText(source: decision.title, font: .subheadline.bold(), serious: true)
+                        FruitfolioFixedText(source: decision.explanation, serious: true)
+                    }
+                }
                 section("what remains unknown")
                 FruitfolioFixedText(source: "context and logs alone do not establish a diagnosis, genotype, ovulation event, pregnancy, fertility status, hormone level or a causal relationship. no effect of an unspecified medication is assumed. unsupported details stay unknown; a skipped or removed field is not a negative medical finding.", serious: true)
             }

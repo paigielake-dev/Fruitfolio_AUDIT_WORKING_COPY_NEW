@@ -4402,3 +4402,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.", "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"}.
 - Next action: Continue cross-part source reconciliation and missing scientific illustration/explanation requirements310–314, preserving executed evidence and separating Apple acceptance. Narrative clinical/translation limitations remain documented.
 - Commit: containing commit for batch Selected-personal-narrative-approved-library-relevance.
+
+## Context-deterministic-display-rule-explanation
+
+- Parent checkpoint: 23e01fc98bdad8e05afe40e5031c087e5a8ebd80.
+- Source-order requirements: [281, 283, 284, 286, 289, 302, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift, Fruitfolio/Context Personalization/Prompt27AContextViews.swift, FruitfolioTests/Prompt27AContextPersonalizationTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, development_workflow/CONTEXT_DETERMINISTIC_DISPLAY_EXPLANATION.json.
+- Report derives decisions from canonical existing context policy. Panel labels these as app display rules and shows existing human context clarification; permissive decisions retain independent history requirements. Four source/report/log/unknown categories and approved citations retained. Existing native test waits for actual asynchronous citations rather than assuming skeleton availability means completion.
+- Tests added/updated: Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy, Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN).
+- Verification: {"focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests", "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"}.
+- Next action: Resume independent cross-part source reconciliation at310–314; identify actual missing illustration/content mappings and implement supported gaps without inventing artwork coordinates or scientific approvals. Context narrative clinical relevance and Apple acceptance remain open.
+- Commit: containing commit for batch Context-deterministic-display-rule-explanation.

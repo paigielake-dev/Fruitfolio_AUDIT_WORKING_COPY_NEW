@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T19:47:56.868599+00:00",
+  "updated_at": "2026-11-07T19:50:51.574734+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14255,6 +14255,45 @@
         ]
       },
       "timestamp": "2026-11-07T19:47:56.868599+00:00"
+    },
+    {
+      "batch": "Context-deterministic-display-rule-explanation",
+      "requirements": [
+        281,
+        283,
+        284,
+        286,
+        289,
+        302,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt27AContextResearchTests|Prompt27AContextPersonalizationTests",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+      ],
+      "results": {
+        "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
+        "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+      },
+      "verification": {
+        "executed": {
+          "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
+          "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+        },
+        "not_run": [
+          "Apple build and updated context-research UI test (source present; no execution)",
+          "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
+          "Official MADLAD and clinical/source relevance acceptance"
+        ],
+        "remaining": [
+          "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
+          "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
+          "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+        ]
+      },
+      "timestamp": "2026-11-07T19:50:51.574734+00:00"
     }
   ]
 }

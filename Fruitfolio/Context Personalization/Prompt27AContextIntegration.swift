@@ -466,10 +466,48 @@ nonisolated struct Prompt27AContextResearchReport: Sendable {
     let observedFacts: Prompt27AObservedCycleFacts
     let items: [Prompt27AContextResearchItem]
     let isComplete: Bool
+
+    /// App presentation decisions, distinct from research-supported biological
+    /// associations. Computed from this report's exact context snapshot only.
+    var presentationPolicy: Prompt27AContextPolicyResult {
+        Prompt27AContextPolicyEngine().policy(for: context)
+    }
+    var presentationClarification: String? {
+        Prompt27AContextPresentationCopy.todayClarification(context: context, policy: presentationPolicy)
+    }
+    var presentationDecisions: [Prompt27AContextDisplayDecision] {
+        let policy = presentationPolicy
+        return [Prompt27AContextFeature.nextPeriodPrediction, .fertileWindowPrediction, .ovulationPrediction,
+                .hormoneRhythmContextMarker].map { feature in
+            .init(feature: feature, effect: policy[feature].effect)
+        }
+    }
     init(context: Prompt27AUserReproductiveContext, observedFacts: Prompt27AObservedCycleFacts,
          items: [Prompt27AContextResearchItem], isComplete: Bool = true) {
         self.context = context; self.observedFacts = observedFacts
         self.items = items; self.isComplete = isComplete
+    }
+}
+
+nonisolated struct Prompt27AContextDisplayDecision: Identifiable, Sendable {
+    let feature: Prompt27AContextFeature
+    let effect: Prompt27AContextPolicyEffect
+    var id: String { feature.rawValue }
+    var title: String {
+        switch feature {
+        case .nextPeriodPrediction: return "period estimates"
+        case .fertileWindowPrediction: return "fertile-window estimates"
+        case .ovulationPrediction: return "ovulation estimates"
+        case .hormoneRhythmContextMarker: return "natural-cycle position marker"
+        default: return "context-dependent presentation"
+        }
+    }
+    var explanation: String {
+        switch effect {
+        case .suppress: return "hidden for your reported context. your saved observations are kept."
+        case .clarify: return "context-specific caution applies. this is not confirmation of a biological event."
+        case .surface, .unchanged: return "not hidden by context. recorded-history and other eligibility requirements still apply."
+        }
     }
 }
 

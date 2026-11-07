@@ -11,10 +11,10 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(open.isHittable); open.tap()
         let unknown = app.staticTexts["what remains unknown"]
         XCTAssertTrue(unknown.waitForExistence(timeout: 20))
-        for title in ["what you reported", "what your logs show", "what approved research supports"] {
+        for title in ["what you reported", "what your logs show", "what approved research supports", "how context affects what can be shown"] {
             XCTAssertTrue(app.staticTexts[title].exists)
         }
-        XCTAssertTrue(app.staticTexts["sources ˚ ☆ ‧ ₊"].firstMatch.exists, "An explanation must offer actual approved-library citations")
+        XCTAssertTrue(app.staticTexts["sources ˚ ☆ ‧ ₊"].firstMatch.waitForExistence(timeout: 60), "An explanation must offer actual approved-library citations after local research finishes")
         let remove = app.buttons["cycleModalQA.removeResearchContext"]
         XCTAssertTrue(remove.isHittable); remove.tap()
         XCTAssertFalse(open.exists)
