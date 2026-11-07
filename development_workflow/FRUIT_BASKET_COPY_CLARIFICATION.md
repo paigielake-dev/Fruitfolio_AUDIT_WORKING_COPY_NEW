@@ -5,3 +5,5 @@ Original source-order320–322 ask for revised home, How It Works and topic-sele
 A focused asynchronous clarification asks whether to retain the inventory wording or use exact replacements. No permission to continue is requested. Pending that answer, existing text is localized through shared control state and home layout can scroll; independent mechanics/source/accessibility work continues. Original320–322 remain IN_PROGRESS and exact-copy acceptance is pending.
 
 Source controls:home “ready to collect some fruit / and learn a little? ♡”; How It Works “type a topic + choose how deep you wanna go.”; setup “what do you want to learn about? ♡”. The slash here denotes the existing line break. These are evidence of current/inventory copy, not newly approved founder replacements.
+
+Current classification correction: original320–322 are BLOCKED on authoritative replacement copy, rather than merely IN_PROGRESS. Earlier evidence and the preserved inventory are retained. See REVISED_COPY_AND_TULIP_INPUT_BLOCKERS.json for exact founder-line hashes and unblock criteria. This is missing implementation input, separate from pending Apple acceptance.

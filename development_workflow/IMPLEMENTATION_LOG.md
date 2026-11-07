@@ -3704,3 +3704,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest_passed": 6, "swift_syntax_files": 319, "syntax_errors": 0}.
 - Next action: Continue remaining independent requirements, inspecting safe concurrency opportunities against existing actor ownership and avoiding duplicated model operations or weakened grounding.
 - Commit: containing commit for batch Ask-transient-claim-evidence-token-reuse.
+
+## Individual-missing-copy-and-tulip-input-classification
+
+- Parent checkpoint: 63b351a0c6d5d78cbb53d969418ac69ad05bbb2e.
+- Source-order requirements: [320, 321, 322, 374].
+- Separate founder additions: [].
+- Source files: development_workflow/REVISED_COPY_AND_TULIP_INPUT_BLOCKERS.json, development_workflow/FRUIT_BASKET_COPY_CLARIFICATION.md, development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md, development_workflow/BLOCKERS.md.
+- Correct stale IN_PROGRESS classifications for four individually documented missing implementation inputs. Exact founder 19A/19C/19D line receipts prove replacement wording was referenced without being supplied; existing clarification remains unanswered. Canonical approved tulip absence already documented in asset-review handoff. Preserve current game wording/artwork and all prior evidence. No claim these blockers are complete; no optional cloud or Apple verification misclassified as unfinished input.
+- Tests added/updated: .
+- Verification: {"individually_documented_input_blockers": 4}.
+- Next action: Continue independent actionable requirements. Missing copy/tulip remains genuinely input-blocked; do not repeat clarification or substitute invented copy/art.
+- Commit: containing commit for batch Individual-missing-copy-and-tulip-input-classification.
