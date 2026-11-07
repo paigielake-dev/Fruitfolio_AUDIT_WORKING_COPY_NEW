@@ -356,7 +356,8 @@ struct Prompt16TodayView: View {
                 onInteraction: {
                     guard canInteract else { return }
                     audioManager.play(.buttonSoftPop)
-                }
+                },
+                interactionAllowed: { canInteract }
             )
             .frame(maxWidth: 430)
             .frame(

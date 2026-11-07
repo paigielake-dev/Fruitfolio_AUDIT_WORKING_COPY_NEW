@@ -7,10 +7,15 @@ struct Prompt18DynamicCycleWheel: View {
     let showCurrentMarker: Bool
     var onLearnWhy: (Prompt18WheelRegionKind) -> Void = { _ in }
     var onInteraction: () -> Void = {}
+    var interactionAllowed: () -> Bool = { true }
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @State private var selectedRegion: Prompt18WheelRegionKind?
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var viewIsVisible = false
+    @State private var noteSession = Prompt18WheelNoteSession()
+    private var selectedRegion: Prompt18WheelRegionKind? { noteSession.selectedRegion }
+    private var canInteract: Bool { viewIsVisible && scenePhase == .active && interactionAllowed() }
 
     var body: some View {
         VStack(spacing: 12) {
@@ -21,18 +26,26 @@ struct Prompt18DynamicCycleWheel: View {
                     Button(accessibilityLabel(for: segment)) { select(segment.kind) }
                         .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
                         .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                    if selectedRegion == segment.kind {
+                    if selectedRegion == segment.kind, let presentationID = noteSession.presentationID {
                         Prompt18TapedNote(kind: segment.kind,
-                            onLearnWhy: { onInteraction(); onLearnWhy(segment.kind) },
-                            onClose: { onInteraction(); selectedRegion = nil })
+                            onLearnWhy: { learnWhy(segment.kind, expectedID: presentationID) },
+                            onClose: { dismissNote(expectedID: presentationID) })
                             .frame(maxWidth: 340).frame(height: 340)
                     }
                 }
             }
         }
+        .disabled(!canInteract)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(accessibilitySummary)
-        .onChange(of: model) { _, _ in selectedRegion = nil }
+        .onAppear { viewIsVisible = true }
+        .onChange(of: model) { _, _ in noteSession.reset() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { noteSession.invalidateActions() }
+        }
+        .onChange(of: interactionAllowed()) { _, allowed in
+            if !allowed { noteSession.invalidateActions() }
+        }
     }
 
     private var accessibleSegments: [Prompt18WheelSegment] {
@@ -44,8 +57,27 @@ struct Prompt18DynamicCycleWheel: View {
         return day + "; " + length
     }
     private func select(_ kind: Prompt18WheelRegionKind) {
+        guard canInteract, accessibleSegments.contains(where: { $0.kind == kind }) else { return }
         onInteraction()
-        withAnimation(.easeOut(duration: motionPreferences.reduceMotionActive ? 0.1 : 0.18)) { selectedRegion = kind }
+        withAnimation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.18)) {
+            noteSession.select(kind, permitted: canInteract, available: Set(accessibleSegments.map(\.kind)))
+        }
+    }
+
+    private func dismissNote(expectedID: UUID) {
+        guard noteSession.admits(expectedID, permitted: canInteract) else { return }
+        onInteraction()
+        withAnimation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.18)) {
+            noteSession.dismiss(expectedID, permitted: canInteract)
+        }
+    }
+
+    private func learnWhy(_ kind: Prompt18WheelRegionKind, expectedID: UUID) {
+        guard noteSession.admits(expectedID, permitted: canInteract), selectedRegion == kind else { return }
+        // Consume before routing so a double invocation cannot open twice.
+        guard noteSession.dismiss(expectedID, permitted: canInteract) else { return }
+        onInteraction()
+        onLearnWhy(kind)
     }
 
     private var drawing: some View {
@@ -58,10 +90,8 @@ struct Prompt18DynamicCycleWheel: View {
                 Color.clear
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        guard selectedRegion != nil else { return }
-                        withAnimation(.easeOut(duration: 0.18)) {
-                            selectedRegion = nil
-                        }
+                        guard let presentationID = noteSession.presentationID else { return }
+                        dismissNote(expectedID: presentationID)
                     }
 
                 unresolvedLayer(side: ringSide)
@@ -95,12 +125,13 @@ struct Prompt18DynamicCycleWheel: View {
                 }
 
                 if !dynamicTypeSize.isAccessibilitySize, let selectedRegion,
+                   let presentationID = noteSession.presentationID,
                    let selectedSegment = segment(for: selectedRegion) {
                     let noteFrame = Prompt18WheelNoteLayout.frame(in: proxy.size,
                         fraction: selectedSegment.midFraction, idealWidth: dynamicTypeSize.isAccessibilitySize ? 340 : 205)
                     Prompt18TapedNote(kind: selectedRegion,
-                        onLearnWhy: { onInteraction(); onLearnWhy(selectedRegion) },
-                        onClose: { onInteraction(); self.selectedRegion = nil })
+                        onLearnWhy: { learnWhy(selectedRegion, expectedID: presentationID) },
+                        onClose: { dismissNote(expectedID: presentationID) })
                     .frame(width: noteFrame.width, height: noteFrame.height)
                     .position(x: noteFrame.midX, y: noteFrame.midY)
                     .transition(.opacity)
@@ -111,7 +142,8 @@ struct Prompt18DynamicCycleWheel: View {
         }
         .aspectRatio(1, contentMode: .fit)
         .onDisappear {
-            selectedRegion = nil
+            viewIsVisible = false
+            noteSession.reset()
         }
     }
 

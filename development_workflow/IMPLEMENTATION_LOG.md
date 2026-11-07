@@ -4148,3 +4148,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"swift_syntax_files": 326, "syntax_errors": 0, "static_sound_diagnostics": 0, "logs": ["/tmp/fruitfolio_settings_action_admission_syntax.log", "/tmp/fruitfolio_settings_action_admission_sound.log"]}.
 - Next action: Continue source-grounded incomplete functionality across original parts and founder additions, preserving unexecuted Apple acceptance separately.
 - Commit: containing commit for batch Settings-active-owned-preference-and-navigation-actions.
+
+## Cycle-wheel-owned-note-selection-and-stale-actions
+
+- Parent checkpoint: 774918310aad80dc5ef964d50ac2e47159644192.
+- Source-order requirements: [11, 12, 26, 390, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift, Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift, Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift, development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json.
+- Move actual wheel note selection into an owned presentation session. Reject inactive/unrepresented selection and stale close/learn callbacks; consume learn action before routing; retain selected educational region across suspension while rotating action identity. Apply immediate Reduce Motion selection/dismissal.
+- Tests added/updated: FruitfolioTests/Prompt18CycleWheelTests.swift, FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"focused_actual_wheel_and_layout_XCTest": 15, "swift_syntax_files": 327, "syntax_errors": 0, "static_sound_diagnostics": 0, "logs": ["/tmp/fruitfolio_wheel_owned_note_tests.log", "/tmp/fruitfolio_wheel_owned_note_syntax.log", "/tmp/fruitfolio_wheel_owned_note_sound.log"]}.
+- Next action: Continue independent missing original and founder functionality; wheel external annotations remain implementation work, not an external blocker.
+- Commit: containing commit for batch Cycle-wheel-owned-note-selection-and-stale-actions.

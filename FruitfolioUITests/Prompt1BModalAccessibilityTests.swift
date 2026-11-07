@@ -3313,6 +3313,20 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<15 { if region.exists && region.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(region.isHittable)
         region.tap()
+        let note = app.otherElements["wheel.note"]
+        XCTAssertTrue(note.waitForExistence(timeout: 3))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(note.waitForExistence(timeout: 5), "Suspension preserves the educational selection")
+        XCTAssertFalse(app.staticTexts["wheelQA.biology"].exists)
+        let close = app.buttons["close note"]
+        for _ in 0..<25 { if close.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(close.isHittable)
+        close.tap()
+        XCTAssertFalse(note.exists)
+        for _ in 0..<20 { if region.isHittable { break }; app.swipeDown() }
+        XCTAssertTrue(region.isHittable)
+        region.tap()
         let learn = app.buttons["learn why →"]
         for _ in 0..<25 { if learn.exists && learn.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(learn.isHittable)

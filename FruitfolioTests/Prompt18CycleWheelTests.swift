@@ -362,3 +362,41 @@ final class Prompt18CycleWheelTests: XCTestCase {
         XCTAssertEqual(intervals.estimatedFertileWindow?.endDay, 15)
     }
 }
+
+extension Prompt18CycleWheelTests {
+    func testActualNoteSessionRejectsInactiveAndUnrepresentedRegionsWithoutChangingSelection() throws {
+        var session = Prompt18WheelNoteSession()
+        let available: Set<Prompt18WheelRegionKind> = [.menstruation, .follicular]
+        XCTAssertFalse(session.select(.menstruation, permitted: false, available: available))
+        XCTAssertNil(session.presentationID)
+        XCTAssertFalse(session.select(.estimatedOvulation, permitted: true, available: available))
+        XCTAssertTrue(session.select(.follicular, permitted: true, available: available))
+        let identity = try XCTUnwrap(session.presentationID)
+        XCTAssertFalse(session.select(.menstruation, permitted: false, available: available))
+        XCTAssertEqual(session.selectedRegion, .follicular)
+        XCTAssertEqual(session.presentationID, identity)
+        XCTAssertFalse(session.dismiss(identity, permitted: false))
+        XCTAssertEqual(session.presentationID, identity)
+    }
+
+    func testReopenedSameRegionAndSuspendedNoteRejectTheirOldCallbacks() throws {
+        var session = Prompt18WheelNoteSession()
+        let available: Set<Prompt18WheelRegionKind> = [.menstruation]
+        XCTAssertTrue(session.select(.menstruation, permitted: true, available: available))
+        let first = try XCTUnwrap(session.presentationID)
+        XCTAssertTrue(session.dismiss(first, permitted: true))
+        XCTAssertFalse(session.dismiss(first, permitted: true))
+        XCTAssertTrue(session.select(.menstruation, permitted: true, available: available))
+        let reopened = try XCTUnwrap(session.presentationID)
+        XCTAssertNotEqual(first, reopened)
+        XCTAssertFalse(session.dismiss(first, permitted: true))
+        session.invalidateActions()
+        XCTAssertEqual(session.selectedRegion, .menstruation)
+        XCTAssertFalse(session.admits(reopened, permitted: true))
+        let resumed = try XCTUnwrap(session.presentationID)
+        XCTAssertTrue(session.admits(resumed, permitted: true))
+        session.reset()
+        XCTAssertNil(session.selectedRegion)
+        XCTAssertFalse(session.admits(resumed, permitted: true))
+    }
+}

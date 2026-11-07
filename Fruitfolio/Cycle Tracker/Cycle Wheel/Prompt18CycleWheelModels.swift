@@ -166,3 +166,39 @@ public struct Prompt18WheelModel: Equatable, Sendable {
     }
 }
 
+
+/// Owns one educational note presentation. No biology or patient data changes.
+/// A retained callback cannot act on a newer note, even for the same region.
+struct Prompt18WheelNoteSession: Equatable, Sendable {
+    private(set) var selectedRegion: Prompt18WheelRegionKind?
+    private(set) var presentationID: UUID?
+
+    @discardableResult
+    mutating func select(_ region: Prompt18WheelRegionKind, permitted: Bool,
+                         available: Set<Prompt18WheelRegionKind>) -> Bool {
+        guard permitted, available.contains(region) else { return false }
+        selectedRegion = region
+        presentationID = UUID()
+        return true
+    }
+
+    func admits(_ expectedID: UUID, permitted: Bool) -> Bool {
+        permitted && selectedRegion != nil && presentationID == expectedID
+    }
+
+    @discardableResult
+    mutating func dismiss(_ expectedID: UUID, permitted: Bool) -> Bool {
+        guard admits(expectedID, permitted: permitted) else { return false }
+        reset()
+        return true
+    }
+
+    mutating func invalidateActions() {
+        if selectedRegion != nil { presentationID = UUID() }
+    }
+
+    mutating func reset() {
+        selectedRegion = nil
+        presentationID = nil
+    }
+}

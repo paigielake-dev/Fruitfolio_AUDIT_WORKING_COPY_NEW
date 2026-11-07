@@ -4232,11 +4232,34 @@
       "source_line": 1285,
       "original_text": "9F \u2014 Wheel region selected. Tapping a wheel region stores selectedRegion and reveals region-specific information/visual emphasis. - GOOD",
       "original_bytes_sha256": "6dde79183e0bd95498b2798910744a54b3add9d33f206d5b1882fa1b6df8ce7f",
-      "applicability": "UNREVIEWED",
-      "implementation_status": "NOT_ASSESSED",
-      "verification_status": "NOT_RUN",
-      "evidence": [],
-      "remaining_verification_requirements": []
+      "applicability": "APPLICABLE",
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "evidence": [
+        {
+          "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+          "implementation": "Move actual wheel note selection into an owned presentation session. Reject inactive/unrepresented selection and stale close/learn callbacks; consume learn action before routing; retain selected educational region across suspension while rotating action identity. Apply immediate Reduce Motion selection/dismissal.",
+          "files": [
+            "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+            "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+            "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+            "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
+          ],
+          "executed_scope": [
+            "15 actual wheel/layout tests; native SwiftUI not executed."
+          ],
+          "not_run": [
+            "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+            "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual native selection, note reachability, background/reopen/learn acceptance."
+          ]
+        }
+      ],
+      "remaining_verification_requirements": [
+        "Run actual native selection, note reachability, background/reopen/learn acceptance."
+      ]
     },
     {
       "id": "FOUNDER-SOURCE-L01288",

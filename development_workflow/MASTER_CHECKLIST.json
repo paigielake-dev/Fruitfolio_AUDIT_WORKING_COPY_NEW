@@ -1578,7 +1578,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1636,9 +1639,11 @@
         "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
         "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
-        "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift"
+        "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1673,33 +1678,38 @@
         "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure.",
         "Actual Contact failure defers while inactive/foreign modal; exact error request identity rejects stale/duplicate close and scene callbacks preserve current feedback without duplicate cue. Three new actual Foundation regressions pass; actual Apple focus/audio/UI test remains NOT_RUN. No whole global requirement closure.",
         "Opening cue is admitted once per About presentation identity; close/escape share one guard and close cue. No delayed navigation or hidden background audio callback.",
-        "Preference bindings now reject inactive/covered writes before audio resume. Language selection admits only its current captured session."
+        "Preference bindings now reject inactive/covered writes before audio resume. Language selection admits only its current captured session.",
+        "Production wheel guards selection itself using parent admission; note actions consume current presentation before navigation/audio."
       ],
-      "last_updated": "2026-11-07T15:48:16.689954+00:00",
+      "last_updated": "2026-11-07T15:52:05.101803+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-active-owned-preference-and-navigation-actions",
+        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
         "executed": {
-          "swift_syntax_files": 326,
+          "focused_actual_wheel_and_layout_XCTest": 15,
+          "swift_syntax_files": 327,
           "syntax_errors": 0,
           "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_action_admission_syntax.log",
-            "/tmp/fruitfolio_settings_action_admission_sound.log"
+            "/tmp/fruitfolio_wheel_owned_note_tests.log",
+            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+            "/tmp/fruitfolio_wheel_owned_note_sound.log"
           ]
         },
         "not_run": [
-          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
-          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-          "Source guards are implementation evidence only; no full-requirement status promotion."
+          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-        "Source guards are implementation evidence only; no full-requirement status promotion."
+        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
       ],
       "prior_batch_verifications": [
         {
@@ -1850,6 +1860,27 @@
             "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-active-owned-preference-and-navigation-actions",
+          "executed": {
+            "swift_syntax_files": 326,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_action_admission_syntax.log",
+              "/tmp/fruitfolio_settings_action_admission_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+            "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+            "Source guards are implementation evidence only; no full-requirement status promotion."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -1919,7 +1950,10 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "development_workflow/CANONICAL_BUTTON_REQUIREMENT_REVIEW.json",
-        "development_workflow/RESUME_INTEGRATION_VERIFICATION.json"
+        "development_workflow/RESUME_INTEGRATION_VERIFICATION.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1950,9 +1984,11 @@
         "Existing interaction audio UI regressions (NOT_RUN)",
         "Existing full portable/native/workflow regressions",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Single-press-owner-for-gesture-wrapped-controls (resolve containing commit with git log)",
+      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1965,34 +2001,38 @@
         "Contact failure close now uses the actual canonical watercolor pill, shared pop feedback/motion and localized wrapping label. The feature helper no longer plays an additional press cue; it retains the distinct popup-close cue, and accessibility Escape calls that helper without synthesizing a button press. The existing Contact UI regression additionally checks minimum action height and horizontal writing-area bounds; it remains NOT_RUN without Apple SDK. Retained historical Prompt03TextButton and Prompt03BackControl now delegate to existing canonical controls instead of keeping coded gray/burgundy outlines and plain behavior. These placeholder declarations are not routed by the current production route switch; this is source consistency, not a claim of a newly visible feature. The existing navigation shell/route architecture is preserved and its stale header comment corrected. Full available Foundation/real native regressions571/576 XCTest+21 SwiftTesting pass,39 workflow tests pass,278 Swift files parse, and the actual SwiftSyntax sound-owner all-app scan passes without duplicate direct press cues. Source/UI tests do not establish device sound playback, Apple typechecking, visual layout or VoiceOver/Reduce Motion behavior.",
         "Removed direct star-chime request from canonical correct-answer catch navigation; canonical pop remains and actual star-bank observer unchanged. Real opt-in AudioManager counters now include star requests. Eight Apple UI launches distinguish navigation from earned-star cues with mute/reduce-motion; unrun. Original audio payloads unchanged; Linux checks cannot verify AVFoundation/SwiftUI or physical audibility.",
         "Press effect is immediate view-state feedback; existing action closures remain synchronous and no navigation delay/queue was introduced. This is an implementation property only, not measured input latency.",
-        "Correct demonstrated gap in earlier ButtonStyle-only inventory: six Ask wrappers, one Guide icon wrapper and three Settings row wrappers added independent drag gestures/transforms around already animated controls. Compatibility containers now set the existing ButtonStyle without a second gesture/effect; icon action surface delegates its pressed visual to the same canonical effect and retains exclusive tap/hold, disabled, identification, action and sound ownership. Preserve earlier review with explicit correction rather than treating inventory as whole-app proof. Extend actual four-vector Ask UI regression to hold help without activation or draft mutation, then tap to open. Apple test NOT_RUN; no VERIFIED promotion."
+        "Correct demonstrated gap in earlier ButtonStyle-only inventory: six Ask wrappers, one Guide icon wrapper and three Settings row wrappers added independent drag gestures/transforms around already animated controls. Compatibility containers now set the existing ButtonStyle without a second gesture/effect; icon action surface delegates its pressed visual to the same canonical effect and retains exclusive tap/hold, disabled, identification, action and sound ownership. Preserve earlier review with explicit correction rather than treating inventory as whole-app proof. Extend actual four-vector Ask UI regression to hold help without activation or draft mutation, then tap to open. Apple test NOT_RUN; no VERIFIED promotion.",
+        "Selection and dismissal update synchronously; Reduce Motion uses nil animation without queued artificial delay."
       ],
-      "last_updated": "2026-11-07T09:39:34.396168+00:00",
+      "last_updated": "2026-11-07T15:52:05.101803+00:00",
       "latest_batch_verification": {
-        "batch": "Single-press-owner-for-gesture-wrapped-controls",
+        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
         "executed": {
-          "portable_XCTest_passed": 982,
-          "native_CPU_XCTest_passed": 1007,
-          "SwiftTesting_passed_each": 21,
-          "workflow_checks_passed": 71,
-          "swift_syntax_files": 319,
-          "sound_ownership_findings": 0,
-          "scope": "Full suites execute curated actual Foundation/native CPU sources, unchanged by view-only wrapper follow-up. They do not compile or run those SwiftUI wrappers. See persisted receipt hashes."
+          "focused_actual_wheel_and_layout_XCTest": 15,
+          "swift_syntax_files": 327,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_wheel_owned_note_tests.log",
+            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+            "/tmp/fruitfolio_wheel_owned_note_sound.log"
+          ]
         },
         "not_run": [
-          "Extended actual Ask hold-then-tap UI regression across LTR/RTL and Reduce Motion combinations",
-          "Apple button/icon geometry, exclusive hold, disabled controls, native menus and device latency",
-          "Official MADLAD model and native-language/clinical acceptance; synthetic T5 and separate Ask model do not establish MADLAD verification"
+          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Execute extended Apple UI vectors and canonical geometry test; confirm one 0.88-scale press instead of compounded transforms, one audio cue/action, and no spatial feedback with OS/app Reduce Motion.",
-          "Complete remaining original478, founder36 and unnumbered instructions individually; no global completion percentage inferred from passing test counts."
+          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute extended Apple UI vectors and canonical geometry test; confirm one 0.88-scale press instead of compounded transforms, one audio cue/action, and no spatial feedback with OS/app Reduce Motion.",
-        "Complete remaining original478, founder36 and unnumbered instructions individually; no global completion percentage inferred from passing test counts."
+        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
       ],
       "prior_batch_verifications": [
         {
@@ -2014,6 +2054,28 @@
           ],
           "remaining": [
             "Measure actual Apple input latency, frame timing and other application performance paths"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Single-press-owner-for-gesture-wrapped-controls",
+          "executed": {
+            "portable_XCTest_passed": 982,
+            "native_CPU_XCTest_passed": 1007,
+            "SwiftTesting_passed_each": 21,
+            "workflow_checks_passed": 71,
+            "swift_syntax_files": 319,
+            "sound_ownership_findings": 0,
+            "scope": "Full suites execute curated actual Foundation/native CPU sources, unchanged by view-only wrapper follow-up. They do not compile or run those SwiftUI wrappers. See persisted receipt hashes."
+          },
+          "not_run": [
+            "Extended actual Ask hold-then-tap UI regression across LTR/RTL and Reduce Motion combinations",
+            "Apple button/icon geometry, exclusive hold, disabled controls, native menus and device latency",
+            "Official MADLAD model and native-language/clinical acceptance; synthetic T5 and separate Ask model do not establish MADLAD verification"
+          ],
+          "remaining": [
+            "Execute extended Apple UI vectors and canonical geometry test; confirm one 0.88-scale press instead of compounded transforms, one audio cue/action, and no spatial feedback with OS/app Reduce Motion.",
+            "Complete remaining original478, founder36 and unnumbered instructions individually; no global completion percentage inferred from passing test counts."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -3790,7 +3852,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3832,9 +3897,11 @@
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing whole shared-host class; LifeBridge-specific runtime NOT_RUN)",
-        "FruitfolioTests/FounderOverrideIntegrationTests.swift"
+        "FruitfolioTests/FounderOverrideIntegrationTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
@@ -3859,43 +3926,38 @@
         "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
         "Both actual Ask and FAQ LifeBridge native-sheet entrypoints use existing FruitfolioPresentedPopupHost. This gives presented surface its own canonical popup coordinator instead of inheriting unrelated root overlay state. Existing boolean dismissal/content/links unchanged; no new popup framework, blur constants, assets, company facts or model source. Source surface isolation only; Apple layering/focus/blur behavior unverified.",
         "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
-        "One affected feature-specific About overlay now has explicit contained modal semantics/escape/owned focus with shared popup/backdrop. This is not proof all overlays are complete."
+        "One affected feature-specific About overlay now has explicit contained modal semantics/escape/owned focus with shared popup/backdrop. This is not proof all overlays are complete.",
+        "Existing shared taped-white educational note remains in its original wheel layout; actions are now bound to current note identity."
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T15:52:05.101803+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
         "executed": {
-          "workflow_checks": 75,
-          "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
+          "focused_actual_wheel_and_layout_XCTest": 15,
+          "swift_syntax_files": 327,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
-          ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+            "/tmp/fruitfolio_wheel_owned_note_tests.log",
+            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+            "/tmp/fruitfolio_wheel_owned_note_sound.log"
+          ]
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
       ],
       "prior_batch_verifications": [
         {
@@ -3931,6 +3993,35 @@
             "Execute shared backdrop rendering and Library/Guide/Ask/Account/Settings/Contact/FruitBasket modal states on Apple",
             "Verify actual blur/dim matches across lifecycle, backgrounding, keyboard, nested presentations and accessibility; Hub tour comparison remains an explicit exception",
             "Other original popup/decorative systems still require individual subcondition reconciliation; this correction does not certify all appearance or all478requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -34330,7 +34421,11 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -34356,9 +34451,11 @@
         "FruitfolioTests/Prompt10SavedLibraryTests.swift",
         "FruitfolioTests/FounderOverrideIntegrationTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
-        "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift"
+        "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -34373,33 +34470,38 @@
         "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
         "Actual Contact failure defers while inactive/foreign modal; exact error request identity rejects stale/duplicate close and scene callbacks preserve current feedback without duplicate cue. Three new actual Foundation regressions pass; actual Apple focus/audio/UI test remains NOT_RUN. No whole global requirement closure.",
         "Implement missing affected Settings/About accessibility semantics and owned modal focus. New real native regression is written, NOT_RUN.",
-        "Background root controls are disabled during inactivity/owned overlays; existing modal focus/return behavior retained; actual Apple accessibility remains pending."
+        "Background root controls are disabled during inactivity/owned overlays; existing modal focus/return behavior retained; actual Apple accessibility remains pending.",
+        "Existing accessible large-text note actions reject suspended/stale actions; native UI background/close/reopen test updated but NOT_RUN."
       ],
-      "last_updated": "2026-11-07T15:48:16.689954+00:00",
+      "last_updated": "2026-11-07T15:52:05.101803+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-active-owned-preference-and-navigation-actions",
+        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
         "executed": {
-          "swift_syntax_files": 326,
+          "focused_actual_wheel_and_layout_XCTest": 15,
+          "swift_syntax_files": 327,
           "syntax_errors": 0,
           "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_action_admission_syntax.log",
-            "/tmp/fruitfolio_settings_action_admission_sound.log"
+            "/tmp/fruitfolio_wheel_owned_note_tests.log",
+            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+            "/tmp/fruitfolio_wheel_owned_note_sound.log"
           ]
         },
         "not_run": [
-          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
-          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-          "Source guards are implementation evidence only; no full-requirement status promotion."
+          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-        "Source guards are implementation evidence only; no full-requirement status promotion."
+        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
       ],
       "prior_batch_verifications": [
         {
@@ -34497,6 +34599,27 @@
             "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
             "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
             "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-active-owned-preference-and-navigation-actions",
+          "executed": {
+            "swift_syntax_files": 326,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_action_admission_syntax.log",
+              "/tmp/fruitfolio_settings_action_admission_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+            "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+            "Source guards are implementation evidence only; no full-requirement status promotion."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -42669,7 +42792,10 @@
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
         "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json",
         "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json",
-        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -42843,9 +42969,11 @@
         "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
-        "development_workflow/tests/test_founder_source_coverage.py"
+        "development_workflow/tests/test_founder_source_coverage.py",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -42981,33 +43109,38 @@
         "Actual testing scope/shared role source lookup and byte-exact citation provenance corrected; wrong Pap/STI mapping removed, source/citation gates unchanged. Complete seven-aspect Library and native/clinical acceptance remain unfinished.",
         "Full1058 portable XCTest and21 Swift Testing passed; Apple and clinical acceptance remain unexecuted.",
         "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
-        "326 Swift syntax parses and static sound audit passed; Apple UI regression updated but NOT_RUN."
+        "326 Swift syntax parses and static sound audit passed; Apple UI regression updated but NOT_RUN.",
+        "15 actual production wheel/layout tests pass,327 syntax parses pass; Apple UI tests remain NOT_RUN."
       ],
-      "last_updated": "2026-11-07T15:48:16.689954+00:00",
+      "last_updated": "2026-11-07T15:52:05.101803+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-active-owned-preference-and-navigation-actions",
+        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
         "executed": {
-          "swift_syntax_files": 326,
+          "focused_actual_wheel_and_layout_XCTest": 15,
+          "swift_syntax_files": 327,
           "syntax_errors": 0,
           "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_action_admission_syntax.log",
-            "/tmp/fruitfolio_settings_action_admission_sound.log"
+            "/tmp/fruitfolio_wheel_owned_note_tests.log",
+            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+            "/tmp/fruitfolio_wheel_owned_note_sound.log"
           ]
         },
         "not_run": [
-          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
-          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-          "Source guards are implementation evidence only; no full-requirement status promotion."
+          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-        "Source guards are implementation evidence only; no full-requirement status promotion."
+        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
       ],
       "prior_batch_verifications": [
         {
@@ -43702,6 +43835,27 @@
             "Missing bucket matches require source-specific review before identifying external content blockers.",
             "Other four lexical-role selectors still need clinical suitability review.",
             "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-active-owned-preference-and-navigation-actions",
+          "executed": {
+            "swift_syntax_files": 326,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_action_admission_syntax.log",
+              "/tmp/fruitfolio_settings_action_admission_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+            "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+            "Source guards are implementation evidence only; no full-requirement status promotion."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -43930,7 +44084,10 @@
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
         "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json",
         "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json",
-        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -44099,9 +44256,11 @@
         "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
-        "development_workflow/tests/test_founder_source_coverage.py"
+        "development_workflow/tests/test_founder_source_coverage.py",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -44220,33 +44379,38 @@
         "Actual testing scope/shared role source lookup and byte-exact citation provenance corrected; wrong Pap/STI mapping removed, source/citation gates unchanged. Complete seven-aspect Library and native/clinical acceptance remain unfinished.",
         "Record per-aspect source coverage and precise remaining verification; preserve prior evidence and recoverable local checkpoint.",
         "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
-        "Append exact source change/evidence and unexecuted native acceptance without replacing prior checklist history."
+        "Append exact source change/evidence and unexecuted native acceptance without replacing prior checklist history.",
+        "Retain exact executed behavioral evidence and unfinished founder annotation instruction separately; no status promotion."
       ],
-      "last_updated": "2026-11-07T15:48:16.689954+00:00",
+      "last_updated": "2026-11-07T15:52:05.101803+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-active-owned-preference-and-navigation-actions",
+        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
         "executed": {
-          "swift_syntax_files": 326,
+          "focused_actual_wheel_and_layout_XCTest": 15,
+          "swift_syntax_files": 327,
           "syntax_errors": 0,
           "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_action_admission_syntax.log",
-            "/tmp/fruitfolio_settings_action_admission_sound.log"
+            "/tmp/fruitfolio_wheel_owned_note_tests.log",
+            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+            "/tmp/fruitfolio_wheel_owned_note_sound.log"
           ]
         },
         "not_run": [
-          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
-          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-          "Source guards are implementation evidence only; no full-requirement status promotion."
+          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-        "Source guards are implementation evidence only; no full-requirement status promotion."
+        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
       ],
       "prior_batch_verifications": [
         {
@@ -44941,6 +45105,27 @@
             "Missing bucket matches require source-specific review before identifying external content blockers.",
             "Other four lexical-role selectors still need clinical suitability review.",
             "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-active-owned-preference-and-navigation-actions",
+          "executed": {
+            "swift_syntax_files": 326,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_action_admission_syntax.log",
+              "/tmp/fruitfolio_settings_action_admission_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+            "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+            "Source guards are implementation evidence only; no full-requirement status promotion."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

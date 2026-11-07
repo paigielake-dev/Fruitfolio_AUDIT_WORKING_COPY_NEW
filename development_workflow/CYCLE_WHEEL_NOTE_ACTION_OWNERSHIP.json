@@ -1,0 +1,40 @@
+{
+  "requirements": [
+    11,
+    12,
+    26,
+    390,
+    443,
+    444
+  ],
+  "founder_source_units": [
+    "FOUNDER-SOURCE-L01285"
+  ],
+  "implementation": "Move actual wheel note selection into an owned presentation session. Reject inactive/unrepresented selection and stale close/learn callbacks; consume learn action before routing; retain selected educational region across suspension while rotating action identity. Apply immediate Reduce Motion selection/dismissal.",
+  "evidence": {
+    "focused_actual_wheel_and_layout_XCTest": 15,
+    "swift_syntax_files": 327,
+    "syntax_errors": 0,
+    "static_sound_diagnostics": 0,
+    "logs": [
+      "/tmp/fruitfolio_wheel_owned_note_tests.log",
+      "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+      "/tmp/fruitfolio_wheel_owned_note_sound.log"
+    ]
+  },
+  "new_executed_tests": [
+    "testActualNoteSessionRejectsInactiveAndUnrepresentedRegionsWithoutChangingSelection",
+    "testReopenedSameRegionAndSuspendedNoteRejectTheirOldCallbacks"
+  ],
+  "native_test_NOT_RUN": "testWheelNoteActionsStayReachableAtAccessibilitySize",
+  "remaining": [
+    "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+    "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+    "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+  ],
+  "not_run": [
+    "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+    "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+  ],
+  "status": "IN_PROGRESS; no complete requirement promotion"
+}
