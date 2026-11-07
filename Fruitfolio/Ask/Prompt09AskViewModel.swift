@@ -325,19 +325,23 @@ final class Prompt09AskViewModel: ObservableObject {
         let step = total > 480 ? 3 : 1
         let delay: UInt64 = total > 480 ? 21_000_000 : 22_000_000
         typingTask = Task { @MainActor [weak self] in
-            guard let self else { return }
             for count in stride(from: step, through: total + step - 1, by: step) {
                 guard !Task.isCancelled else { return }
-                displayedSemanticSpans = FruitfolioSemanticSlices.prefix(spans, characterCount: min(count, total))
-                displayedAnswerText = displayedSemanticSpans.map(\.text).joined()
+                // End strong ownership before suspending between publications.
+                do {
+                    guard let self else { return }
+                    self.displayedSemanticSpans = FruitfolioSemanticSlices.prefix(spans, characterCount: min(count, total))
+                    self.displayedAnswerText = self.displayedSemanticSpans.map(\.text).joined()
+                }
                 do { try await Task.sleep(nanoseconds: delay) }
                 catch { return }
             }
-            guard !Task.isCancelled else { return }
+            guard let self, !Task.isCancelled else { return }
             // Completed native selection surfaces parse the original full markup.
-            displayedAnswerText = text
-            displayedSemanticSpans = spans
-            phase = .ready
+            self.displayedAnswerText = text
+            self.displayedSemanticSpans = spans
+            self.phase = .ready
+            self.typingTask = nil
         }
     }
 }

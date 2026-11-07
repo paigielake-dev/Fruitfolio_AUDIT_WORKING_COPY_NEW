@@ -218,3 +218,33 @@ extension Prompt1BAskLifecycleTests {
         XCTAssertFalse(model.messages.contains { $0.text.contains("private context fixture") })
     }
 }
+
+private actor Prompt1BLongTypewriterAskEngine: AskKnowledgeServing {
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        AskAnswer(originalQuestion: question,
+            answerText: String(repeating: "**Anchor** with semantic text. ", count: 200),
+            support: .supported, knowledgeBaseVersion: "synthetic-typewriter-lifetime")
+    }
+}
+
+extension Prompt1BAskLifecycleTests {
+    func testTypewriterDoesNotRetainReleasedViewModelAcrossItsSleep() async throws {
+        var model: Prompt09AskViewModel? = Prompt09AskViewModel(engine: Prompt1BLongTypewriterAskEngine())
+        weak var observed = model
+        model?.inputText = "fixture"
+        await model?.submitCurrentQuestion(reduceMotion: false)
+        let deadline = ContinuousClock.now.advanced(by: .seconds(1))
+        while model?.displayedSemanticSpans.isEmpty == true, ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(1))
+        }
+        XCTAssertFalse(model?.displayedSemanticSpans.isEmpty ?? true)
+        XCTAssertEqual(model?.phase, .answering)
+        model = nil
+        for _ in 0..<20 {
+            if observed == nil { break }
+            await Task.yield()
+        }
+        XCTAssertNil(observed, "The sleeping typewriter must not own the released view model")
+        observed?.cancelOutstandingWork() // Clean up a failing implementation's long fixture.
+    }
+}
