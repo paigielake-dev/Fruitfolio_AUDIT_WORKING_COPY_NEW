@@ -18,8 +18,63 @@ private actor Prompt1BSuspendedAskEngine: AskKnowledgeServing {
     }
 }
 
+/// Actual view-model request contract; no clinical/model inference claim.
+private actor Prompt1BLanguageCaptureAskEngine: AskLocalizedResearchServing {
+    private(set) var languages: [FruitfolioLanguage] = []
+    let fail: Bool
+    init(fail: Bool = false) { self.fail = fail }
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        .init(originalQuestion: question, answerText: "nonclinical request fixture", support: .genuinelyNovel,
+              knowledgeBaseVersion: "language-contract-fixture")
+    }
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        try await answer(question: question, conversation: conversation)
+    }
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        try await answer(question: question, conversation: conversation)
+    }
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, inputLanguage: FruitfolioLanguage, translationInferenceAllowed: Bool,
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        languages.append(inputLanguage)
+        if fail { throw FruitfolioTranslationError.resourcesMissing }
+        return try await answer(question: question, conversation: conversation)
+    }
+}
+
 @MainActor
 final class Prompt1BAskLifecycleTests: XCTestCase {
+    func testKnownEnglishSuggestionDoesNotAcquireTheInterfaceLanguageAndEditedTextDoes() async {
+        let engine = Prompt1BLanguageCaptureAskEngine()
+        let model = Prompt09AskViewModel(engine: engine)
+        model.useSuggestion("source English question")
+        await model.submitCurrentQuestion(reduceMotion: true, inputLanguage: .french)
+        var languages = await engine.languages
+        XCTAssertEqual(languages, [.english])
+        XCTAssertEqual(model.answer?.originalQuestion, "source English question")
+        model.resetConversation()
+        model.useSuggestion("source English question")
+        model.inputText += " modifiée"
+        await model.submitCurrentQuestion(reduceMotion: true, inputLanguage: .french)
+        languages = await engine.languages
+        XCTAssertEqual(languages, [.english, .french])
+        XCTAssertEqual(model.answer?.originalQuestion, "source English question modifiée")
+    }
+
+    func testQuestionTranslationFailureKeepsOriginalAuthoredQuestionForRetry() async {
+        let model = Prompt09AskViewModel(engine: Prompt1BLanguageCaptureAskEngine(fail: true))
+        let original = "question française 12.50 pg/mL"
+        model.inputText = original
+        await model.submitCurrentQuestion(reduceMotion: true, inputLanguage: .french)
+        XCTAssertEqual(model.inputText, original)
+        XCTAssertEqual(model.messages.last?.text, original)
+        XCTAssertNil(model.answer)
+        XCTAssertTrue(model.answerHistory.isEmpty)
+        guard case .failed = model.phase else { return XCTFail("Actual translation failure must remain a failure") }
+    }
+
     func testCancellingSubmitOwnerRejectsLateProviderAnswer() async {
         let started = expectation(description: "provider started for cancelled owner")
         let engine = Prompt1BSuspendedAskEngine(started: started)

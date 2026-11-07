@@ -8746,7 +8746,8 @@
         "Fruitfolio/Privacy Settings/Prompt12DataManagementView.swift",
         "Fruitfolio/Privacy Settings/Prompt12DataManagementRegressionHarness.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8760,16 +8761,51 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BLocalDataExportTests",
         "Prompt12AccountPrivacyStoreTests.testRealLocalArchiveDoesNotCreateAnAccountReadinessRecord",
-        "Prompt1BModalAccessibilityTests.testLocalDataExportOpensRealSavePickerAndCancellationDoesNotClaimSaved (Apple NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testLocalDataExportOpensRealSavePickerAndCancellationDoesNotClaimSaved (Apple NOT_RUN)",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Actual-scoped-local-data-and-referenced-image-ZIP-export (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Implemented actual combined local saved-data export, replacing the unused metadata-only account export API. Data Management captures an explicit allowlist of saved preference records and streams only the three existing cycle files and image UUIDs referenced by readable saved pages. Saved library/guide/original-answer references, notes, source IDs/versions, account state, My Context, measurements, username, game progress and settings retain their stored bytes/values. JSON/bin files preserve raw Data; other preference values use readable XML plist wrappers. Unsaved Ask text, unrelated preferences, orphan images, caches, model weights and research/artwork resources are excluded. Missing/invalid image IDs and unreadable records are reported in manifest.json rather than swept or repaired. No source file/default is changed. It is a sequential local export, not a cross-domain atomic snapshot, cloud export or restore/import feature.\n\nThe Foundation ZIP32 writer emits standard stored entries, CRC32/data descriptors and a central directory. Payloads stream in1MiB chunks. Output is exclusively created with0600 permissions; existing destinations are not overwritten. Relative ASCII paths, duplicates and ZIP32 bounds are checked; source links are rejected and opened with O_NOFOLLOW, expected size/inode/modification metadata are checked. Cancellation/error removes the owned partial archive, never the original. This is CRC integrity, not encryption/authentication or protection against every concurrent filesystem race.\n\nThe existing Data Management UI now prepares the archive off the main actor, supports cancellation and presents the actual iOS UIDocumentPicker for a URL copy. It reports saved only after the picker reports a destination, cleans its private temporary directory on completion/dismissal and distinguishes warnings/cancellation. Private-data scope is stated before export. The real measurement-only JSON path remains available. The DEBUG regression route injects private preferences and a private file root; its new UI case opens/cancels the real save picker without exporting actual user data. Apple API typechecking, provider save/cancel callbacks, screenshots, accessibility and device memory/performance remain NOT_RUN.\n\nIndependent Python zipfile tests validate CRCs, empty/UTF8 payloads, >1MiB file boundaries, exact raw scientific/provenance/notes records and image bytes, deduplication, wrong paths/duplicates/existing destinations, orphan/unsaved-Ask exclusion, unreadable-library warnings, and original preservation. Both pre-start and mid-stream cancellation plus missing/linked-source cleanup are exercised. The initial Foundation Process subprocess helper stalled after its Python child exited in this sandbox; those incomplete runs were stopped and are not counted. The corrected desktop-only test helper uses POSIX spawn/wait and actual Python zipfile; no archive reader clone or model fixture is substituted. The account regression now invokes a real archive and verifies that it does not fabricate a persisted readiness record. Historical lastExport metadata remains decodable without creating new summary-only success."
+        "Implemented actual combined local saved-data export, replacing the unused metadata-only account export API. Data Management captures an explicit allowlist of saved preference records and streams only the three existing cycle files and image UUIDs referenced by readable saved pages. Saved library/guide/original-answer references, notes, source IDs/versions, account state, My Context, measurements, username, game progress and settings retain their stored bytes/values. JSON/bin files preserve raw Data; other preference values use readable XML plist wrappers. Unsaved Ask text, unrelated preferences, orphan images, caches, model weights and research/artwork resources are excluded. Missing/invalid image IDs and unreadable records are reported in manifest.json rather than swept or repaired. No source file/default is changed. It is a sequential local export, not a cross-domain atomic snapshot, cloud export or restore/import feature.\n\nThe Foundation ZIP32 writer emits standard stored entries, CRC32/data descriptors and a central directory. Payloads stream in1MiB chunks. Output is exclusively created with0600 permissions; existing destinations are not overwritten. Relative ASCII paths, duplicates and ZIP32 bounds are checked; source links are rejected and opened with O_NOFOLLOW, expected size/inode/modification metadata are checked. Cancellation/error removes the owned partial archive, never the original. This is CRC integrity, not encryption/authentication or protection against every concurrent filesystem race.\n\nThe existing Data Management UI now prepares the archive off the main actor, supports cancellation and presents the actual iOS UIDocumentPicker for a URL copy. It reports saved only after the picker reports a destination, cleans its private temporary directory on completion/dismissal and distinguishes warnings/cancellation. Private-data scope is stated before export. The real measurement-only JSON path remains available. The DEBUG regression route injects private preferences and a private file root; its new UI case opens/cancels the real save picker without exporting actual user data. Apple API typechecking, provider save/cancel callbacks, screenshots, accessibility and device memory/performance remain NOT_RUN.\n\nIndependent Python zipfile tests validate CRCs, empty/UTF8 payloads, >1MiB file boundaries, exact raw scientific/provenance/notes records and image bytes, deduplication, wrong paths/duplicates/existing destinations, orphan/unsaved-Ask exclusion, unreadable-library warnings, and original preservation. Both pre-start and mid-stream cancellation plus missing/linked-source cleanup are exercised. The initial Foundation Process subprocess helper stalled after its Python child exited in this sandbox; those incomplete runs were stopped and are not counted. The corrected desktop-only test helper uses POSIX spawn/wait and actual Python zipfile; no archive reader clone or model fixture is substituted. The account regression now invokes a real archive and verifies that it does not fabricate a persisted readiness record. Historical lastExport metadata remains decodable without creating new summary-only success.",
+        "Reset actual canonical-engine query-derived diagnostics and suggestion provenance on Ask session reset; test clearing diagnostics releases claims while static research remains reusable. Actual view-model reset hook source-reviewed, Apple runtime pending."
       ],
-      "last_updated": "2026-11-06T03:47:32.091672+00:00"
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
+        "executed": {
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
+        },
+        "not_run": [
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
+        ],
+        "remaining": [
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ]
     },
     {
       "sequence": 124,
@@ -9648,7 +9684,8 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9680,9 +9717,10 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt1BFruitBasketResearchTests",
         "Prompt1BHealthSafetyBoundaryTests",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-transient-claim-evidence-token-reuse (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -9696,29 +9734,60 @@
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
-        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion."
+        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion.",
+        "Existing research retrieval, claim mapping, source approval and generated/fallback validation remain authoritative after local English query preparation. Actual French-contract query retrieves identical source citations/text to English baseline; real native Ask generated/reload test also passes."
       ],
-      "last_updated": "2026-11-07T09:34:01.484434+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-transient-claim-evidence-token-reuse",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "focused_XCTest_passed": 6,
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
           "swift_syntax_files": 319,
-          "syntax_errors": 0
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple device responsiveness/latency profiling",
-          "Native model generation and official MADLAD not exercised by this focused regression"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
-          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
-        "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Ask-transient-claim-evidence-token-reuse",
+          "executed": {
+            "focused_XCTest_passed": 6,
+            "swift_syntax_files": 319,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "Apple device responsiveness/latency profiling",
+            "Native model generation and official MADLAD not exercised by this focused regression"
+          ],
+          "remaining": [
+            "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+            "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -32573,7 +32642,8 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
-        "development_workflow/ASK_CAPTURED_ACTION_AND_ILLUSTRATION_CONTROLS.md"
+        "development_workflow/ASK_CAPTURED_ACTION_AND_ILLUSTRATION_CONTROLS.md",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32589,9 +32659,11 @@
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BAskUserContextTests.swift"
+        "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-captured-action-and-illustration-control-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -32599,67 +32671,97 @@
         "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
         "ActualAsk nativeprompt forwards originalbinding throughfixedpromptowner. Heading/help/subtitle/search/save-status nowshared selected-language fixedcopy; headingwraps, fonts/colorspreserved andFruitsofLife.xo protected. DEBUGopt-in paused French/Arabic/ReduceMotion fixture and4nativeUIvectors typeoriginalquestion/opencloseactualHelp/checkbounds+identity/capture,NOT_RUN. FiveEnglishfallbackkeys,noinventedforeigntranslations. Foundation/native runs do not typecheck SwiftUI or execute new UI.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged."
+        "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
+        "Actual Send snapshots the existing global app language and inference admission; canonical localized research request prepares the question through existing local translation service. Untouched app-authored English suggestions keep known source-language provenance; edited text follows submitted preference. Apple two-contract regressions written NOT_RUN."
       ],
-      "last_updated": "2026-11-07T04:38:14.989149+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-captured-action-and-illustration-control-ownership",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "portable_XCTest": 947,
-          "native_CPU_XCTest": 972,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "control_sound_ownership_findings": 0,
-          "new_Foundation_action_owner_tests": 3,
-          "focused_XCTest": 3,
-          "focused_SwiftTesting_selected": 0,
-          "extended_Apple_illustration_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "official_MADLAD_inference_verified": false,
-          "log_receipts": {
-            "/tmp/fruitfolio_ask_action_focused.log": {
-              "bytes": 28204,
-              "sha256": "50eda76003789bbf1b92796db56b934a1da1f2d45a672a4179f0a7c99660e2c1"
-            },
-            "/tmp/fruitfolio_ask_action_portable.log": {
-              "bytes": 300924,
-              "sha256": "8c1139a044031ca0bae3f4c4f998e4f5edcb8b89db53420f6167573ce98564e0"
-            },
-            "/tmp/fruitfolio_ask_action_native.log": {
-              "bytes": 1276072,
-              "sha256": "d8d2b24db2f13fb218f9c516dbfc03fffedad6116132b501bcb883fc9d47a6d7"
-            },
-            "/tmp/fruitfolio_ask_action_workflow.log": {
-              "bytes": 160,
-              "sha256": "d51b942c85c074092b9d8696da38c86c1f814fc27919db09c167d14aad08c995"
-            },
-            "/tmp/fruitfolio_ask_action_syntax_final.log": {
-              "bytes": 106,
-              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-            },
-            "/tmp/fruitfolio_ask_action_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "FouractualAppleFrench/Arabicpaused/ReduceMotionXXXlillustration/control UIvectors",
-          "AppleSDKtypecheck/current+historical staleSave/selection/reset/language/modalcallbacks/VoiceOver andRTLartlayout",
-          "OfficialMADLAD/native-languageclinical/device acceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
-          "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
-          "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
-        "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
-        "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Ask-captured-action-and-illustration-control-ownership",
+          "executed": {
+            "portable_XCTest": 947,
+            "native_CPU_XCTest": 972,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "control_sound_ownership_findings": 0,
+            "new_Foundation_action_owner_tests": 3,
+            "focused_XCTest": 3,
+            "focused_SwiftTesting_selected": 0,
+            "extended_Apple_illustration_UI_vectors": 4,
+            "extended_Apple_UI_vectors_executed": 0,
+            "official_MADLAD_inference_verified": false,
+            "log_receipts": {
+              "/tmp/fruitfolio_ask_action_focused.log": {
+                "bytes": 28204,
+                "sha256": "50eda76003789bbf1b92796db56b934a1da1f2d45a672a4179f0a7c99660e2c1"
+              },
+              "/tmp/fruitfolio_ask_action_portable.log": {
+                "bytes": 300924,
+                "sha256": "8c1139a044031ca0bae3f4c4f998e4f5edcb8b89db53420f6167573ce98564e0"
+              },
+              "/tmp/fruitfolio_ask_action_native.log": {
+                "bytes": 1276072,
+                "sha256": "d8d2b24db2f13fb218f9c516dbfc03fffedad6116132b501bcb883fc9d47a6d7"
+              },
+              "/tmp/fruitfolio_ask_action_workflow.log": {
+                "bytes": 160,
+                "sha256": "d51b942c85c074092b9d8696da38c86c1f814fc27919db09c167d14aad08c995"
+              },
+              "/tmp/fruitfolio_ask_action_syntax_final.log": {
+                "bytes": 106,
+                "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+              },
+              "/tmp/fruitfolio_ask_action_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "FouractualAppleFrench/Arabicpaused/ReduceMotionXXXlillustration/control UIvectors",
+            "AppleSDKtypecheck/current+historical staleSave/selection/reset/language/modalcallbacks/VoiceOver andRTLartlayout",
+            "OfficialMADLAD/native-languageclinical/device acceptance"
+          ],
+          "remaining": [
+            "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
+            "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
+            "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -32776,7 +32878,8 @@
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "development_workflow/ASK_SOURCE_VERSION_SAVE_BOUNDARY.md"
+        "development_workflow/ASK_SOURCE_VERSION_SAVE_BOUNDARY.md",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32818,9 +32921,11 @@
         "FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
-        "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift"
+        "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-unambiguous-source-version-save-boundary (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -32846,67 +32951,97 @@
         "ActualRhythm controlledloading/header/context/section/key/adjustment copy andAX summaries nowselected-language withexistingfonts/colors/art/qualifiers. Canonicalcontrols +existingverticalgrowth. Optionalmeasurementstore injectionpropagatesactualsheet; productionshareddefaultunchanged. PrivateQAfile-backedcycle/onboarding +actualmeasurementstore;4newAppleUIvectors explicitlyresample backingbytes aftertoggle/restore/sheet,NOT_RUN. Fiveengine/models/policy/store/persistence filesSHAunchanged. Full918/942+21pass; notApple/officialmodel/clinicaladjustment acceptance.",
         "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "Actual4savepaths replace trapping/first-wins sourceversiondictionary with sharedbyte-exact validator; consistentduplicatescoalesce onlymap, rawSourceRecords preserved, legacy staysunversioned. Rejectconflicting/blank/mixed/Unicodecollidingmetadata visibly throughseriousfixederror andactivecomposer gate. ThreeactualFoundationtests+realcanonicalfull/excerpt persistence preservebody/quantity/DOI/records/IDs/version/time; sixinvalidvectorsreject. AppleUIflowsNOT_RUN; no authenticity/clinical/model/wholecitationcertification."
+        "Actual4savepaths replace trapping/first-wins sourceversiondictionary with sharedbyte-exact validator; consistentduplicatescoalesce onlymap, rawSourceRecords preserved, legacy staysunversioned. Rejectconflicting/blank/mixed/Unicodecollidingmetadata visibly throughseriousfixederror andactivecomposer gate. ThreeactualFoundationtests+realcanonicalfull/excerpt persistence preservebody/quantity/DOI/records/IDs/version/time; sixinvalidvectorsreject. AppleUIflowsNOT_RUN; no authenticity/clinical/model/wholecitationcertification.",
+        "Actual translation envelope rejects changed question laboratory quantities before retrieval; original and English query safety classifications merge at the stronger level, with original urgent guidance bypassing all models and translated urgency rechecked before research. Citation equality proven for actual corpus; official semantic fidelity not verified."
       ],
-      "last_updated": "2026-11-07T04:06:46.253774+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-unambiguous-source-version-save-boundary",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "portable_XCTest": 940,
-          "native_CPU_XCTest": 965,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "control_sound_ownership_findings": 0,
-          "new_Foundation_source_version_tests": 3,
-          "focused_XCTest": 3,
-          "focused_SwiftTesting_selected": 0,
-          "Ask_save_paths_using_validation": 4,
-          "Apple_UI_tests_executed": 0,
-          "official_MADLAD_inference_verified": false,
-          "log_receipts": {
-            "/tmp/fruitfolio_ask_versions_focused.log": {
-              "bytes": 28296,
-              "sha256": "bf8def1c0fef941d45a76f9b8e1264dbb9118143a7f792132ced1c363edcda3c"
-            },
-            "/tmp/fruitfolio_ask_versions_portable.log": {
-              "bytes": 298457,
-              "sha256": "310d37cbada184f1e36de35ccc9ddd70e15cce217ac5456a841382cc7a503b47"
-            },
-            "/tmp/fruitfolio_ask_versions_native.log": {
-              "bytes": 1273629,
-              "sha256": "43d4c2337bc5d133cf8e2aad82533d29df9aed71721c81872d620c51cb7a8454"
-            },
-            "/tmp/fruitfolio_ask_versions_workflow.log": {
-              "bytes": 160,
-              "sha256": "665e4a92f2dda64bdea404e357c29390c5ef12b7d5312e3384397b20467522a5"
-            },
-            "/tmp/fruitfolio_ask_versions_syntax.log": {
-              "bytes": 106,
-              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-            },
-            "/tmp/fruitfolio_ask_versions_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "ActualApplefourAsk full/excerpt/historical/image-only save-dialog andmetadataerrorUI/VoiceOver/focus/zero-write flows",
-          "AppleSDKtypecheck/rendering andphysicaldeviceperformance",
-          "Clinical/sourceauthenticity/APA review andofficialMADLAD/native-language scientificmeaningacceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Execute realApplecurrent/historical/image/text save paths withconsistent/conflictingduplicate andUnicodecollision source records",
-          "Confirmerrorannounces/preservesactiveoriginalcontentandneveropens/writesinvalidsave; Foundationhelper testsdo notcertifySwiftUIroute",
-          "Preserve typedAsk uncertainty/support provenance throughsaved pages next; do notinvent absentversions/relations orclaimwholecitation/scientificvalidation"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute realApplecurrent/historical/image/text save paths withconsistent/conflictingduplicate andUnicodecollision source records",
-        "Confirmerrorannounces/preservesactiveoriginalcontentandneveropens/writesinvalidsave; Foundationhelper testsdo notcertifySwiftUIroute",
-        "Preserve typedAsk uncertainty/support provenance throughsaved pages next; do notinvent absentversions/relations orclaimwholecitation/scientificvalidation"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Ask-unambiguous-source-version-save-boundary",
+          "executed": {
+            "portable_XCTest": 940,
+            "native_CPU_XCTest": 965,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "control_sound_ownership_findings": 0,
+            "new_Foundation_source_version_tests": 3,
+            "focused_XCTest": 3,
+            "focused_SwiftTesting_selected": 0,
+            "Ask_save_paths_using_validation": 4,
+            "Apple_UI_tests_executed": 0,
+            "official_MADLAD_inference_verified": false,
+            "log_receipts": {
+              "/tmp/fruitfolio_ask_versions_focused.log": {
+                "bytes": 28296,
+                "sha256": "bf8def1c0fef941d45a76f9b8e1264dbb9118143a7f792132ced1c363edcda3c"
+              },
+              "/tmp/fruitfolio_ask_versions_portable.log": {
+                "bytes": 298457,
+                "sha256": "310d37cbada184f1e36de35ccc9ddd70e15cce217ac5456a841382cc7a503b47"
+              },
+              "/tmp/fruitfolio_ask_versions_native.log": {
+                "bytes": 1273629,
+                "sha256": "43d4c2337bc5d133cf8e2aad82533d29df9aed71721c81872d620c51cb7a8454"
+              },
+              "/tmp/fruitfolio_ask_versions_workflow.log": {
+                "bytes": 160,
+                "sha256": "665e4a92f2dda64bdea404e357c29390c5ef12b7d5312e3384397b20467522a5"
+              },
+              "/tmp/fruitfolio_ask_versions_syntax.log": {
+                "bytes": 106,
+                "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+              },
+              "/tmp/fruitfolio_ask_versions_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "ActualApplefourAsk full/excerpt/historical/image-only save-dialog andmetadataerrorUI/VoiceOver/focus/zero-write flows",
+            "AppleSDKtypecheck/rendering andphysicaldeviceperformance",
+            "Clinical/sourceauthenticity/APA review andofficialMADLAD/native-language scientificmeaningacceptance"
+          ],
+          "remaining": [
+            "Execute realApplecurrent/historical/image/text save paths withconsistent/conflictingduplicate andUnicodecollision source records",
+            "Confirmerrorannounces/preservesactiveoriginalcontentandneveropens/writesinvalidsave; Foundationhelper testsdo notcertifySwiftUIroute",
+            "Preserve typedAsk uncertainty/support provenance throughsaved pages next; do notinvent absentversions/relations orclaimwholecitation/scientificvalidation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -32944,7 +33079,9 @@
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-        "development_workflow/SAVED_ANSWER_SUPPORT_PROVENANCE.md"
+        "development_workflow/SAVED_ANSWER_SUPPORT_PROVENANCE.md",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32961,86 +33098,118 @@
         "Actual native-linked missing-resource runner execution",
         "Prompt1BCitationTranslationTests",
         "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
-        "FruitfolioTests/Prompt1BAskUserContextTests.swift"
+        "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Saved-answer-support-provenance-and-selection-privacy (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Fixed a clinical translation-protection gap: leading signs/comparators and units outside the old limited numeric regex could remain unprotected. Complete signed/comparison quantities, ratios/ranges/uncertainties, scientific powers, broader laboratory units and invariant labels are now protected atomically without interpreting/converting values. Post-restoration signatures also reject added unit/numeric claims and introduced structured references/URLs. Tests preserve escaped Markdown operators and avoid misclassifying ordinary translated contractions/words as bare units. All feasible protection/native regressions pass. These checks cannot prove non-numerical medical meaning or real language quality; official MADLAD weights/T5 inference and clinical review remain blocked/unrun.",
         "# Offline MADLAD catalog draft workflow\n\nThe legacy `translate_catalog_with_llama.py` entry point now forwards to the MADLAD workflow. Its old Qwen `--model`, `--llama-cli` and auto-approval `--overwrite` behavior is removed. No existing translations are overwritten or reclassified.\n\n`Tools/MADLADCatalogRunner.swift` compiles the exact application MADLAD runtime, scientific protection, language mapping and translation service against actual native llama archives. One process retains its local model across sequential catalog jobs. It uses no remote inference, network client, Ollama, Ask model or test implementation. Each guarded result is written only to a separate unreviewed draft with source/catalog/manifest/runner hashes. Protected printf specifiers are passed intact into the application's protection envelope. Unsupported target tags, invalid resources, changed scientific information and truncated output remain errors. Raw Swift interpolation/plural variation entries require genuine Xcode extraction and are not translated as literal code.\n\nBuild on a host with the Swift compiler and a CPU native CMake build of the vendored llama source (disable optional BLAS/Accelerate/OpenMP backends unless their additional link flags are supplied):\n\n```bash\npython3 Tools/translate_catalog_with_madlad.py --build-only \\\n  --swift /path/to/swiftc --native-llama-build /path/to/llama-build \\\n  --runner /path/to/MADLADCatalogRunner\n```\n\nWith the official converted/checksummed model and generated manifest in a local resource directory:\n\n```bash\npython3 Tools/translate_catalog_with_madlad.py \\\n  --runner /path/to/MADLADCatalogRunner \\\n  --catalog Fruitfolio/Localizable.xcstrings --resources /path/to/resources \\\n  --draft-output /path/to/catalog-es-drafts.json --locales es --limit 10\n```\n\nThe output resumes completed entries only when the exact catalog, manifest and runner hashes match. Changed inputs require a separate draft path. It checkpoints every accepted result and records interrupted/failed processing. Source catalogs stay immutable. A successful exit is not linguistic/clinical acceptance; `runtimeVerified` deliberately remains false because this command does not attest installed-resource provenance, device performance or translation quality. Human/clinical review and a separate explicit reviewed merge remain required. No automatic import/approval tool is provided.\n\nVerification here: the real C/Swift runner compiled/linked successfully against the native CPU archives; its actual missing-resource path returned the original-preserving error with no translated value. The actual repository catalog preflight recorded missing `MADLAD400.manifest.json` without starting inference or altering the catalog. Twenty-four workflow tests pass, including six new orchestration tests using an explicitly named fixture executable; those tests do not execute a translation model. The compiler parsed 237 changed Swift files without syntax errors.\n\nReal T5 inference remains **NOT_RUN**: official weights/tokenizer acquisition is denied by the immutable cloud network policy for huggingface.co. In addition, the application manifest verifier currently requires CryptoKit; this Linux toolchain compiles its explicit rejection branch, while actual verified-model execution requires an Apple host with CryptoKit. No Linux CPU compatibility, actual model output, clinical language equivalence or iPhone memory/thermal claim is made. The previous real Qwen research inference is unrelated to MADLAD acceptance. See MADLAD_VERIFICATION.md and BLOCKERS.md for the exact open gates.\n",
         "# Full bibliographic literals and immutable translation requests\n\nDisplay translation now derives protection from actual source records as well as citation IDs: exact original APA/source text, its semantic-escaped representation, bare DOI identifiers and source URLs remain verbatim. Ordinary source-title words/concepts are deliberately not frozen everywhere in prose. Duplicate/empty literals are removed without altering attribution spelling, case or metadata. Existing numeric/unit/reference/order checks remain.\n\nAsk's current and historical answers, saved Library pages, Guide pages/original-source viewers, Fruit Basket explanations and Hormone Library excerpts pass their actual source records into the common display wrapper. The wrapper's task key includes the resulting literals, and the service receives the captured request's source/literals/language rather than separate live property lookups. No original source record, answer, user note or measurement is rewritten.\n\nThree new portable regressions use an explicitly named text-changing fixture to verify that ordinary prose may change while complete APA author/title text and a bare DOI remain exact, escaped citation variants round-trip, duplicates stay stable, ordinary concept titles stay eligible for translation, and legacy records do not acquire invented attribution. These are protection-pipeline tests, not model/clinical equivalence tests.\n\nVerification:465 portable XCTest +21 Swift Testing passed;470 actual native-linked XCTest +21 Swift Testing passed. Compiler parsed242 changed Swift files without syntax errors. Apple display/source-record propagation and actual selected-language UI remain NOT_RUN. Official MADLAD T5 output, linguistic/clinical equivalence and offline device behavior remain blocked by missing official resources and the Apple/device gate. Literal preservation cannot prove absence of semantic/negation errors; those review gates remain open.\n",
-        "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified."
+        "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified.",
+        "Missing/paused input translation raises its actual typed error before retrieval instead of labeling the topic unsupported. Existing insufficient/supported-evidence distinctions remain after a successfully prepared query."
       ],
-      "last_updated": "2026-11-07T04:26:48.401662+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Saved-answer-support-provenance-and-selection-privacy",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "portable_XCTest": 944,
-          "native_CPU_XCTest": 969,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "control_sound_ownership_findings": 0,
-          "new_Foundation_support_tests": 4,
-          "focused_XCTest": 4,
-          "focused_SwiftTesting_selected": 0,
-          "late_real_engine_privacy_test_portable": 1,
-          "late_real_engine_privacy_test_native": 1,
-          "late_privacy_assertions_added_after_full_runs": true,
-          "Apple_UI_tests_executed": 0,
-          "official_MADLAD_inference_verified": false,
-          "log_receipts": {
-            "/tmp/fruitfolio_saved_support_focused.log": {
-              "bytes": 28540,
-              "sha256": "617d991dfbadc863c11bbdf954b193a23dc5e113a169d9e3b63b93f58785ed24"
-            },
-            "/tmp/fruitfolio_saved_support_portable.log": {
-              "bytes": 299880,
-              "sha256": "02c191cb14618c28a2c58a21256f0539d6a671c74794d6f4eb4c6d6e825ae1b9"
-            },
-            "/tmp/fruitfolio_saved_support_native.log": {
-              "bytes": 1275056,
-              "sha256": "d25f105b2c5200520b4dffb87bd47ec677df5e3e2d32875cf49f526af8ce3978"
-            },
-            "/tmp/fruitfolio_saved_support_context.log": {
-              "bytes": 27672,
-              "sha256": "c52443e24985f247724ebeacaa6c7b092338c41e0b61dd04e00163e364306f28"
-            },
-            "/tmp/fruitfolio_saved_support_context_native.log": {
-              "bytes": 31098,
-              "sha256": "953a9fb0162cc58376a69ca15701a34a05cdb9d282214d1b84735bb2c844a5a6"
-            },
-            "/tmp/fruitfolio_saved_support_workflow.log": {
-              "bytes": 160,
-              "sha256": "c298a0049f3dc44c722f0526f062babad49d712c74db9b075d5e5efbfbf30e13"
-            },
-            "/tmp/fruitfolio_saved_support_syntax.log": {
-              "bytes": 106,
-              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-            },
-            "/tmp/fruitfolio_saved_support_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple actualAskfour-save-path/dialog/reading/guide/source supportnotice wiring andtranslatedmeaning/VoiceOver/RTL/XXXL/focus",
-          "OfficialMADLAD weights/tokenizer and native-language scientific/safety/uncertainty review",
-          "Physicaldeviceframeworkbuild/performance/ARC andfull-source/APA validation"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Execute actualApple supportmetadata saves/guidecopies/readingnotices withpreview/safety/unavailable/partial/unsupported andselection scopes",
-          "Verify translated clinicalmeaning/uncertainty withofficialmodel andnative reviewers; typedenumroundtripsarenotscientifictruth",
-          "Preserve onlyexposedconceptsupportmap; fullclaim/evidencegraphnotinventedandrawcontextpacketnotpersisted; retainlegacyunknown/futureprotection andoverallopenacceptance"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actualApple supportmetadata saves/guidecopies/readingnotices withpreview/safety/unavailable/partial/unsupported andselection scopes",
-        "Verify translated clinicalmeaning/uncertainty withofficialmodel andnative reviewers; typedenumroundtripsarenotscientifictruth",
-        "Preserve onlyexposedconceptsupportmap; fullclaim/evidencegraphnotinventedandrawcontextpacketnotpersisted; retainlegacyunknown/futureprotection andoverallopenacceptance"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Saved-answer-support-provenance-and-selection-privacy",
+          "executed": {
+            "portable_XCTest": 944,
+            "native_CPU_XCTest": 969,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "control_sound_ownership_findings": 0,
+            "new_Foundation_support_tests": 4,
+            "focused_XCTest": 4,
+            "focused_SwiftTesting_selected": 0,
+            "late_real_engine_privacy_test_portable": 1,
+            "late_real_engine_privacy_test_native": 1,
+            "late_privacy_assertions_added_after_full_runs": true,
+            "Apple_UI_tests_executed": 0,
+            "official_MADLAD_inference_verified": false,
+            "log_receipts": {
+              "/tmp/fruitfolio_saved_support_focused.log": {
+                "bytes": 28540,
+                "sha256": "617d991dfbadc863c11bbdf954b193a23dc5e113a169d9e3b63b93f58785ed24"
+              },
+              "/tmp/fruitfolio_saved_support_portable.log": {
+                "bytes": 299880,
+                "sha256": "02c191cb14618c28a2c58a21256f0539d6a671c74794d6f4eb4c6d6e825ae1b9"
+              },
+              "/tmp/fruitfolio_saved_support_native.log": {
+                "bytes": 1275056,
+                "sha256": "d25f105b2c5200520b4dffb87bd47ec677df5e3e2d32875cf49f526af8ce3978"
+              },
+              "/tmp/fruitfolio_saved_support_context.log": {
+                "bytes": 27672,
+                "sha256": "c52443e24985f247724ebeacaa6c7b092338c41e0b61dd04e00163e364306f28"
+              },
+              "/tmp/fruitfolio_saved_support_context_native.log": {
+                "bytes": 31098,
+                "sha256": "953a9fb0162cc58376a69ca15701a34a05cdb9d282214d1b84735bb2c844a5a6"
+              },
+              "/tmp/fruitfolio_saved_support_workflow.log": {
+                "bytes": 160,
+                "sha256": "c298a0049f3dc44c722f0526f062babad49d712c74db9b075d5e5efbfbf30e13"
+              },
+              "/tmp/fruitfolio_saved_support_syntax.log": {
+                "bytes": 106,
+                "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+              },
+              "/tmp/fruitfolio_saved_support_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Apple actualAskfour-save-path/dialog/reading/guide/source supportnotice wiring andtranslatedmeaning/VoiceOver/RTL/XXXL/focus",
+            "OfficialMADLAD weights/tokenizer and native-language scientific/safety/uncertainty review",
+            "Physicaldeviceframeworkbuild/performance/ARC andfull-source/APA validation"
+          ],
+          "remaining": [
+            "Execute actualApple supportmetadata saves/guidecopies/readingnotices withpreview/safety/unavailable/partial/unsupported andselection scopes",
+            "Verify translated clinicalmeaning/uncertainty withofficialmodel andnative reviewers; typedenumroundtripsarenotscientifictruth",
+            "Preserve onlyexposedconceptsupportmap; fullclaim/evidencegraphnotinventedandrawcontextpacketnotpersisted; retainlegacyunknown/futureprotection andoverallopenacceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -33265,7 +33434,8 @@
         "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md",
         "development_workflow/NATIVE_LIFECYCLE_RELEASE_CONTRACT.md",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
-        "development_workflow/ASK_CAPTURED_ACTION_AND_ILLUSTRATION_CONTROLS.md"
+        "development_workflow/ASK_CAPTURED_ACTION_AND_ILLUSTRATION_CONTROLS.md",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -33294,9 +33464,11 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
-        "FruitfolioTests/Prompt1BAskUserContextTests.swift"
+        "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-captured-action-and-illustration-control-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -33325,67 +33497,97 @@
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
         "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof.",
         "NewactualnativeCtest executes lifecyclemodel/contextunload, wrong-token/paused-noCwork, acknowledgedlazyreload acrossbothT5graphvariants. Existingseparate-loadedAsk/T5concurrencytest now4direct+4lifecyclecycles, thenindependentAsk/T5reloadchecks. Focused2nativecasespass. Productionappsourceunchanged; syntheticUNTRAINEDT5tensors and separateAskmodel areNOT officialMADLAD/translation/clinicalacceptance orRSSprofiling.",
-        "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged."
+        "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
+        "Actual missing/paused query-translation tests pass and never produce unsupported-research answers. View-model preserves original question for retry unless a newer draft exists; Apple failure-draft test written NOT_RUN. No fake-model fallback."
       ],
-      "last_updated": "2026-11-07T04:38:14.989149+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-captured-action-and-illustration-control-ownership",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "portable_XCTest": 947,
-          "native_CPU_XCTest": 972,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "control_sound_ownership_findings": 0,
-          "new_Foundation_action_owner_tests": 3,
-          "focused_XCTest": 3,
-          "focused_SwiftTesting_selected": 0,
-          "extended_Apple_illustration_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "official_MADLAD_inference_verified": false,
-          "log_receipts": {
-            "/tmp/fruitfolio_ask_action_focused.log": {
-              "bytes": 28204,
-              "sha256": "50eda76003789bbf1b92796db56b934a1da1f2d45a672a4179f0a7c99660e2c1"
-            },
-            "/tmp/fruitfolio_ask_action_portable.log": {
-              "bytes": 300924,
-              "sha256": "8c1139a044031ca0bae3f4c4f998e4f5edcb8b89db53420f6167573ce98564e0"
-            },
-            "/tmp/fruitfolio_ask_action_native.log": {
-              "bytes": 1276072,
-              "sha256": "d8d2b24db2f13fb218f9c516dbfc03fffedad6116132b501bcb883fc9d47a6d7"
-            },
-            "/tmp/fruitfolio_ask_action_workflow.log": {
-              "bytes": 160,
-              "sha256": "d51b942c85c074092b9d8696da38c86c1f814fc27919db09c167d14aad08c995"
-            },
-            "/tmp/fruitfolio_ask_action_syntax_final.log": {
-              "bytes": 106,
-              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-            },
-            "/tmp/fruitfolio_ask_action_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "FouractualAppleFrench/Arabicpaused/ReduceMotionXXXlillustration/control UIvectors",
-          "AppleSDKtypecheck/current+historical staleSave/selection/reset/language/modalcallbacks/VoiceOver andRTLartlayout",
-          "OfficialMADLAD/native-languageclinical/device acceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
-          "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
-          "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
-        "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
-        "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Ask-captured-action-and-illustration-control-ownership",
+          "executed": {
+            "portable_XCTest": 947,
+            "native_CPU_XCTest": 972,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "control_sound_ownership_findings": 0,
+            "new_Foundation_action_owner_tests": 3,
+            "focused_XCTest": 3,
+            "focused_SwiftTesting_selected": 0,
+            "extended_Apple_illustration_UI_vectors": 4,
+            "extended_Apple_UI_vectors_executed": 0,
+            "official_MADLAD_inference_verified": false,
+            "log_receipts": {
+              "/tmp/fruitfolio_ask_action_focused.log": {
+                "bytes": 28204,
+                "sha256": "50eda76003789bbf1b92796db56b934a1da1f2d45a672a4179f0a7c99660e2c1"
+              },
+              "/tmp/fruitfolio_ask_action_portable.log": {
+                "bytes": 300924,
+                "sha256": "8c1139a044031ca0bae3f4c4f998e4f5edcb8b89db53420f6167573ce98564e0"
+              },
+              "/tmp/fruitfolio_ask_action_native.log": {
+                "bytes": 1276072,
+                "sha256": "d8d2b24db2f13fb218f9c516dbfc03fffedad6116132b501bcb883fc9d47a6d7"
+              },
+              "/tmp/fruitfolio_ask_action_workflow.log": {
+                "bytes": 160,
+                "sha256": "d51b942c85c074092b9d8696da38c86c1f814fc27919db09c167d14aad08c995"
+              },
+              "/tmp/fruitfolio_ask_action_syntax_final.log": {
+                "bytes": 106,
+                "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+              },
+              "/tmp/fruitfolio_ask_action_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "FouractualAppleFrench/Arabicpaused/ReduceMotionXXXlillustration/control UIvectors",
+            "AppleSDKtypecheck/current+historical staleSave/selection/reset/language/modalcallbacks/VoiceOver andRTLartlayout",
+            "OfficialMADLAD/native-languageclinical/device acceptance"
+          ],
+          "remaining": [
+            "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
+            "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
+            "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -33642,7 +33844,8 @@
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
         "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md",
         "development_workflow/NATIVE_LIFECYCLE_RELEASE_CONTRACT.md",
-        "development_workflow/ASK_TYPEWRITER_WEAK_LIFETIME.md"
+        "development_workflow/ASK_TYPEWRITER_WEAK_LIFETIME.md",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -33676,9 +33879,10 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Ask-typewriter-weak-lifetime-between-publications (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -33708,60 +33912,90 @@
         "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
         "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof.",
         "NewactualnativeCtest executes lifecyclemodel/contextunload, wrong-token/paused-noCwork, acknowledgedlazyreload acrossbothT5graphvariants. Existingseparate-loadedAsk/T5concurrencytest now4direct+4lifecyclecycles, thenindependentAsk/T5reloadchecks. Focused2nativecasespass. Productionappsourceunchanged; syntheticUNTRAINEDT5tensors and separateAskmodel areNOT officialMADLAD/translation/clinicalacceptance orRSSprofiling.",
-        "Actualtypewriter weakreceiver promotesonlywithin synchronouspublication scope, endingbeforeSleep, clearscompletedhandle. Existingparser/prefix/timing/finalanswer preserved. OnegenuineAppleARCweakdeallocationtestwrittenNOT_RUN. FullLinuxFoundation/native suitesguardsharedregressions, doNOTexecute/verifyVMARC/parser/Combine. No fakeSDK, officialmodel orwholememory/performancecertification."
+        "Actualtypewriter weakreceiver promotesonlywithin synchronouspublication scope, endingbeforeSleep, clearscompletedhandle. Existingparser/prefix/timing/finalanswer preserved. OnegenuineAppleARCweakdeallocationtestwrittenNOT_RUN. FullLinuxFoundation/native suitesguardsharedregressions, doNOTexecute/verifyVMARC/parser/Combine. No fakeSDK, officialmodel orwholememory/performancecertification.",
+        "Question preparation invokes the existing actor-owned local service/runtime; no main-actor native decode is added. Linux engine tests execute, Apple responsiveness/latency not measured."
       ],
-      "last_updated": "2026-11-07T03:50:37.043772+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-typewriter-weak-lifetime-between-publications",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "portable_XCTest": 933,
-          "native_CPU_XCTest": 958,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "control_sound_ownership_findings": 0,
-          "new_Apple_ARC_tests_written": 1,
-          "new_Apple_ARC_tests_executed": 0,
-          "official_MADLAD_inference_verified": false,
-          "log_receipts": {
-            "/tmp/fruitfolio_typewriter_lifetime_portable.log": {
-              "bytes": 296047,
-              "sha256": "f5adb1ccace094fc28b1be2e54739a947f561b9d72f56c527685e9c220e48663"
-            },
-            "/tmp/fruitfolio_typewriter_lifetime_native.log": {
-              "bytes": 1271186,
-              "sha256": "2d24e46721d6ced2658fc2bf21720e5ef845e27c5984a2bc6149a7005c54a5e0"
-            },
-            "/tmp/fruitfolio_typewriter_lifetime_workflow.log": {
-              "bytes": 160,
-              "sha256": "4fe23599e62dc5c30b987d9cc205e131c8e76754d6edf44a60872363a84fc438"
-            },
-            "/tmp/fruitfolio_typewriter_lifetime_syntax.log": {
-              "bytes": 106,
-              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-            },
-            "/tmp/fruitfolio_typewriter_lifetime_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "New actualApple typewriter ARC weakdeallocation regression",
-          "AppleSDKtypecheck/Combine/semanticMarkdown/rendertypewriter/cancellation/background/focus/performance",
-          "OfficialMADLAD/device/native-languageclinicalacceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Execute genuineApple ARC/regression and confirm releasedmodeldoesnotremainalivebetweenticks",
-          "Verify actualApple styledprefix/finalpublication/timing/cancellation andprofiledeviceallocations; LinuxpassesdonotverifyARCfix",
-          "Preserve officialmodel/clinical/runtimeUI blockers andno wholeperformanceorbackgroundingcertification"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute genuineApple ARC/regression and confirm releasedmodeldoesnotremainalivebetweenticks",
-        "Verify actualApple styledprefix/finalpublication/timing/cancellation andprofiledeviceallocations; LinuxpassesdonotverifyARCfix",
-        "Preserve officialmodel/clinical/runtimeUI blockers andno wholeperformanceorbackgroundingcertification"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Ask-typewriter-weak-lifetime-between-publications",
+          "executed": {
+            "portable_XCTest": 933,
+            "native_CPU_XCTest": 958,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "control_sound_ownership_findings": 0,
+            "new_Apple_ARC_tests_written": 1,
+            "new_Apple_ARC_tests_executed": 0,
+            "official_MADLAD_inference_verified": false,
+            "log_receipts": {
+              "/tmp/fruitfolio_typewriter_lifetime_portable.log": {
+                "bytes": 296047,
+                "sha256": "f5adb1ccace094fc28b1be2e54739a947f561b9d72f56c527685e9c220e48663"
+              },
+              "/tmp/fruitfolio_typewriter_lifetime_native.log": {
+                "bytes": 1271186,
+                "sha256": "2d24e46721d6ced2658fc2bf21720e5ef845e27c5984a2bc6149a7005c54a5e0"
+              },
+              "/tmp/fruitfolio_typewriter_lifetime_workflow.log": {
+                "bytes": 160,
+                "sha256": "4fe23599e62dc5c30b987d9cc205e131c8e76754d6edf44a60872363a84fc438"
+              },
+              "/tmp/fruitfolio_typewriter_lifetime_syntax.log": {
+                "bytes": 106,
+                "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+              },
+              "/tmp/fruitfolio_typewriter_lifetime_ownership.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "New actualApple typewriter ARC weakdeallocation regression",
+            "AppleSDKtypecheck/Combine/semanticMarkdown/rendertypewriter/cancellation/background/focus/performance",
+            "OfficialMADLAD/device/native-languageclinicalacceptance"
+          ],
+          "remaining": [
+            "Execute genuineApple ARC/regression and confirm releasedmodeldoesnotremainalivebetweenticks",
+            "Verify actualApple styledprefix/finalpublication/timing/cancellation andprofiledeviceallocations; LinuxpassesdonotverifyARCfix",
+            "Preserve officialmodel/clinical/runtimeUI blockers andno wholeperformanceorbackgroundingcertification"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -35128,7 +35362,8 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -35193,7 +35428,7 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -35242,40 +35477,41 @@
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Original submitted text remains in AskAnswer.originalQuestion and user messages; the English query is transient retrieval input and never overwrites authored/saved content. Controlled French-contract test checks exact UTF8 original text; actual view-model editing contract pending Apple."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -35294,6 +35530,32 @@
             "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
             "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
             "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -36143,7 +36405,8 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -36289,7 +36552,7 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -36401,40 +36664,41 @@
         "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
         "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed.",
         "Addressed actual approved-source relevance failures for original257 andSPEC4.9.7:AMH limitation wording now finds the existing full paragraph containing both no-IVF-guarantee and no-ovulation-confirmation cautions; LH function query recognizes the actual surge/follicular-rupture evidence. Specific estradiol/E2 evidence outranks general estrogen class material while class context remains available. Source review caught a further problem: hormone-name preference still chose an ovarian-testing list as functions; a stronger actual biological-role assertion failed, then the query was corrected to the approved follicular-development role and all7focused tests passed. Full original text/citation checks remain. Historical coverage artifact retained; followup32of35lexical buckets/3empty recorded without treating them as clinical completeness or478-item progress.71workflow/315syntax-only passed. No research/data/artwork rewritten and no whole requirement promoted.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Add seven executed actual production engine/service/corpus regressions and two genuine Apple view-model regressions, explicitly unexecuted on Linux. No predetermined whole-requirement VERIFIED assignment."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -36567,6 +36831,32 @@
             "Testosterone measurement limitations/medical guidance and prolactin measurement limitations remain empty in lexical retrieval; review specific approved source adequacy before assigning a genuine external-resource blocker",
             "Review every founder aspect individually;32matched buckets are not complete or clinically verified content",
             "Complete Apple and independent clinical/source acceptance; source/quoted-statement tests do not certify all medical content"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -36750,7 +37040,9 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -36891,7 +37183,7 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -36986,40 +37278,41 @@
         "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
         "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed.",
         "Addressed actual approved-source relevance failures for original257 andSPEC4.9.7:AMH limitation wording now finds the existing full paragraph containing both no-IVF-guarantee and no-ovulation-confirmation cautions; LH function query recognizes the actual surge/follicular-rupture evidence. Specific estradiol/E2 evidence outranks general estrogen class material while class context remains available. Source review caught a further problem: hormone-name preference still chose an ovarian-testing list as functions; a stronger actual biological-role assertion failed, then the query was corrected to the approved follicular-development role and all7focused tests passed. Full original text/citation checks remain. Historical coverage artifact retained; followup32of35lexical buckets/3empty recorded without treating them as clinical completeness or478-item progress.71workflow/315syntax-only passed. No research/data/artwork rewritten and no whole requirement promoted.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Regression code lives in existing FruitfolioTests source files and the actual portable/native runner consumes the production Foundation sources. Apple view-model source remains in its real Apple test target; no substitute Combine or renderer."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T10:00:32.848040+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Ask-local-incoming-question-language-and-session-privacy",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -37152,6 +37445,32 @@
             "Testosterone measurement limitations/medical guidance and prolactin measurement limitations remain empty in lexical retrieval; review specific approved source adequacy before assigning a genuine external-resource blocker",
             "Review every founder aspect individually;32matched buckets are not complete or clinically verified content",
             "Complete Apple and independent clinical/source acceptance; source/quoted-statement tests do not certify all medical content"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

@@ -179,6 +179,14 @@ protocol AskContextualResearchServing: AskResearchProgressServing {
         userContext: FruitfolioAskUserContext?, progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer
 }
 
+/// Request language is a snapshot of the existing app preference, not a
+/// second preference. Original authored text remains the answer/session key.
+protocol AskLocalizedResearchServing: AskContextualResearchServing {
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, inputLanguage: FruitfolioLanguage, translationInferenceAllowed: Bool,
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer
+}
+
 protocol AskSaving: Sendable {
     func save(_ request: AskSaveRequest) async throws
 }

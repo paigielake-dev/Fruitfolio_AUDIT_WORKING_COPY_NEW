@@ -1541,6 +1541,8 @@ struct Prompt09AskView: View {
 
         sendTask?.cancel()
         let generation = UUID()
+        let inputLanguage = settings.language
+        let inferenceAllowed = settings.translationInferenceAllowed
         sendTaskGeneration = generation
         pendingContextSend = userContext != nil
         sendTask = Task { @MainActor in
@@ -1558,7 +1560,8 @@ struct Prompt09AskView: View {
                     return
                 }
             } catch { contextSharingMessage = .init(error: error); return }
-            await viewModel.submitCurrentQuestion(reduceMotion: motionPreferences.reduceMotionActive, userContext: userContext)
+            await viewModel.submitCurrentQuestion(reduceMotion: motionPreferences.reduceMotionActive,
+                inputLanguage: inputLanguage, translationInferenceAllowed: inferenceAllowed, userContext: userContext)
         }
     }
 

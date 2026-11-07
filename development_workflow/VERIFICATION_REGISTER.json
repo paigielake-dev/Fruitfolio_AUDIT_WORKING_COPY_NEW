@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T09:51:29.871119+00:00",
+  "updated_at": "2026-11-07T10:00:32.848040+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11543,6 +11543,68 @@
         ]
       },
       "timestamp": "2026-11-07T09:51:29.871119+00:00"
+    },
+    {
+      "batch": "Ask-local-incoming-question-language-and-session-privacy",
+      "requirements": [
+        123,
+        136,
+        420,
+        422,
+        423,
+        425,
+        427,
+        434,
+        443,
+        444
+      ],
+      "supplemental_requirements": [
+        "SPEC-7.9.4",
+        "SPEC-7.9.5",
+        "SPEC-7.9.8",
+        "SPEC-7.9.9"
+      ],
+      "commands": [
+        "13 focused portable actual research-engine tests",
+        "Full990 portable XCTest +21 Swift Testing",
+        "14 focused native CPU XCTest including actual Qwen generated/reload path",
+        "71 workflow checks",
+        "319 Swift syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_focused_XCTest_passed": 13,
+        "portable_full_XCTest_passed": 990,
+        "SwiftTesting_portable_passed": 21,
+        "native_CPU_focused_XCTest_passed": 14,
+        "workflow_passed": 71,
+        "swift_syntax_files": 319,
+        "official_MADLAD_verified": false
+      },
+      "verification": {
+        "executed": {
+          "portable_focused_XCTest_passed": 13,
+          "portable_full_XCTest_passed": 990,
+          "SwiftTesting_portable_passed": 21,
+          "native_CPU_focused_XCTest_passed": 14,
+          "workflow_passed": 71,
+          "swift_syntax_files": 319,
+          "official_MADLAD_verified": false
+        },
+        "not_run": [
+          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+          "Apple request/background/locale lifecycle and UI responsiveness",
+          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
+        ],
+        "remaining": [
+          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+        ]
+      },
+      "timestamp": "2026-11-07T10:00:32.848040+00:00"
     }
   ]
 }

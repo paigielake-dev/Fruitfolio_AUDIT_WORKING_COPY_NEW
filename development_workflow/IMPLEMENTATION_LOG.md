@@ -3776,3 +3776,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest_passed": 6, "swift_syntax_files": 319}.
 - Next action: Address the actual non-English incoming-question retrieval gap without rewriting original questions/session history, bypassing safety/citations or claiming official MADLAD inference. Continue independent full-checklist work.
 - Commit: containing commit for batch Founder-exact-Instagram-destination-and-source-scope.
+
+## Ask-local-incoming-question-language-and-session-privacy
+
+- Parent checkpoint: 596661d6442cfa69e550719631e9b387d32e1b67.
+- Source-order requirements: [123, 136, 420, 422, 423, 425, 427, 434, 443, 444].
+- Separate founder additions: ['SPEC-7.9.4', 'SPEC-7.9.5', 'SPEC-7.9.8', 'SPEC-7.9.9'].
+- Source files: Fruitfolio/Ask/Prompt09AskModels.swift, Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json.
+- Implement missing incoming-question local translation before the English index, preserving original question/session/history, scientific tokens, source validation and strongest pre/post-translation safety. Keep known English app suggestions separate from typed request language without another preference. Fail missing/paused/bad translations explicitly, restore untouched failed draft, and clear query-derived diagnostics at session reset. Actual production engine/service/corpus tests pass; real Qwen Ask generation/reload also passes. Official MADLAD and Apple view-model/runtime acceptance remain NOT_RUN; no whole requirement promotion.
+- Tests added/updated: FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift, FruitfolioTests/Prompt1BAskLifecycleTests.swift.
+- Verification: {"portable_focused_XCTest_passed": 13, "portable_full_XCTest_passed": 990, "SwiftTesting_portable_passed": 21, "native_CPU_focused_XCTest_passed": 14, "workflow_passed": 71, "swift_syntax_files": 319, "official_MADLAD_verified": false}.
+- Next action: Continue unresolved Hormone Library scientific content and source-specific first-party Ask retrieval, then remaining independent original/founder clauses. Preserve mixed-language detection, actual Apple UI, official MADLAD and clinical acceptance limitations; do not count infrastructure or fixtures as completed user behavior.
+- Commit: containing commit for batch Ask-local-incoming-question-language-and-session-privacy.

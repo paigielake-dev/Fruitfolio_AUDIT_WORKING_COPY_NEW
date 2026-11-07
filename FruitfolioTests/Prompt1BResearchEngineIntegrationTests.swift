@@ -28,6 +28,19 @@ private actor Prompt1BClaimMapCapture: FruitfolioLanguageModel {
     }
 }
 
+/// Controlled runtime contract only, never official MADLAD quality evidence.
+private actor Prompt1BQueryTranslationRuntime: FruitfolioLocalTranslationRuntime {
+    let result: String?
+    private(set) var targetTags: [String] = []
+    init(result: String? = nil) { self.result = result }
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        targetTags.append(targetTag)
+        guard let result else { throw FruitfolioTranslationError.resourcesMissing }
+        return result
+    }
+    func releaseResources() async {}
+}
+
 @MainActor
 final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
     private func store() throws -> FruitfolioResearchPackageStore {
@@ -35,6 +48,103 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json"))
         return FruitfolioResearchPackageStore(resourceURL: url)
     }
+    func testLocalizedQuestionRetrievesActualEnglishEvidenceWithoutChangingOriginalQuestion() async throws {
+        let question = "comment la progestérone affecte-t-elle la température ?"
+        let english = "how does progesterone affect temperature?"
+        let runtime = Prompt1BQueryTranslationRuntime(result: english)
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(),
+            languageModel: Prompt1BUnavailableSynthesis(), translationService: service)
+        let localized = try await engine.answer(question: question, conversation: [], trackerContext: nil,
+            userContext: nil, inputLanguage: .french, translationInferenceAllowed: true, progress: nil)
+        let baseline = try await engine.answer(question: english, conversation: [])
+        XCTAssertEqual(Data(localized.originalQuestion.utf8), Data(question.utf8))
+        XCTAssertEqual(localized.sourceIDs, baseline.sourceIDs)
+        XCTAssertEqual(localized.answerText, baseline.answerText)
+        XCTAssertFalse(localized.sourceIDs.isEmpty)
+        XCTAssertEqual(localized.answerPath, .retrievalFallback)
+        let tags = await runtime.targetTags
+        XCTAssertEqual(tags, ["en"])
+        let flights = await service.debugInFlightStatistics()
+        XCTAssertEqual(flights.requests, 0)
+        XCTAssertEqual(flights.waiters, 0)
+        XCTAssertEqual(flights.unshared, 0)
+    }
+
+    func testEnglishQuestionDoesNotRequireTranslationEvenWhenInferenceIsPaused() async throws {
+        let runtime = Prompt1BQueryTranslationRuntime()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(),
+            languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
+        let answer = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [],
+            trackerContext: nil, userContext: nil, inputLanguage: .english, translationInferenceAllowed: false, progress: nil)
+        XCTAssertFalse(answer.sourceIDs.isEmpty)
+        let tags = await runtime.targetTags
+        XCTAssertTrue(tags.isEmpty)
+    }
+
+    func testOriginalUrgentQuestionBypassesTranslationAndMissingResearchResources() async throws {
+        let runtime = Prompt1BQueryTranslationRuntime()
+        let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"))
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: missing,
+            languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
+        let answer = try await engine.answer(question: "severe bleeding", conversation: [], trackerContext: nil,
+            userContext: nil, inputLanguage: .french, translationInferenceAllowed: false, progress: nil)
+        XCTAssertEqual(answer.answerPath, .localSafety)
+        let tags = await runtime.targetTags
+        XCTAssertTrue(tags.isEmpty)
+    }
+
+    func testTranslatedUrgentQuestionRechecksSafetyBeforeResearchOrGeneration() async throws {
+        let runtime = Prompt1BQueryTranslationRuntime(result: "severe bleeding")
+        let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"))
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: missing,
+            languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
+        let original = "j’ai besoin d’aide maintenant"
+        let answer = try await engine.answer(question: original, conversation: [], trackerContext: nil,
+            userContext: nil, inputLanguage: .french, translationInferenceAllowed: true, progress: nil)
+        XCTAssertEqual(answer.answerPath, .localSafety)
+        XCTAssertEqual(answer.originalQuestion, original)
+        XCTAssertNil(engine.lastDiagnostics)
+    }
+
+    func testUnavailableQuestionTranslationDoesNotClaimTheResearchHasNoAnswer() async throws {
+        for allowed in [false, true] {
+            let runtime = Prompt1BQueryTranslationRuntime()
+            let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(),
+                languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
+            do {
+                _ = try await engine.answer(question: "question française", conversation: [], trackerContext: nil,
+                    userContext: nil, inputLanguage: .french, translationInferenceAllowed: allowed, progress: nil)
+                XCTFail("Missing/paused translation must not masquerade as an unsupported research answer")
+            } catch {
+                XCTAssertEqual(error as? FruitfolioTranslationError, allowed ? .resourcesMissing : .pausedForMemoryPressure)
+            }
+            XCTAssertNil(engine.lastDiagnostics)
+        }
+    }
+
+    func testChangedScientificQuantityInQuestionTranslationIsRejectedBeforeResearch() async throws {
+        let runtime = Prompt1BQueryTranslationRuntime(result: "progesterone 99 pg/mL")
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(),
+            languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
+        do {
+            _ = try await engine.answer(question: "progestérone 12.50 pg/mL", conversation: [], trackerContext: nil,
+                userContext: nil, inputLanguage: .french, translationInferenceAllowed: true, progress: nil)
+            XCTFail("Changed laboratory result must not become a retrieval question")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+        XCTAssertNil(engine.lastDiagnostics)
+    }
+
+    func testClearingSessionDiagnosticsReleasesQuestionClaimsWhileStaticResearchRemainsUsable() async throws {
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: Prompt1BUnavailableSynthesis())
+        let first = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [])
+        XCTAssertNotNil(engine.lastDiagnostics)
+        engine.clearSessionDiagnostics()
+        XCTAssertNil(engine.lastDiagnostics)
+        let second = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [])
+        XCTAssertEqual(first.sourceIDs, second.sourceIDs)
+    }
+
     func testMultiClaimOptimizationPreservesActualCorpusEvidenceLinksAndCitations() async throws {
         let capture = Prompt1BClaimMapCapture()
         let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: capture)

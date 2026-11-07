@@ -47,6 +47,7 @@ final class Prompt09AskViewModel: ObservableObject {
     private var typingTask: Task<Void, Never>?
     private var requestTask: Task<Void, Never>?
     private var requestGeneration = UUID()
+    private var sourceSuggestion: String?
 
     init(
         conversationID: UUID = UUID(),
@@ -138,10 +139,13 @@ final class Prompt09AskViewModel: ObservableObject {
         _ suggestion: String
     ) {
         inputText = suggestion
+        sourceSuggestion = suggestion
     }
 
     func submitCurrentQuestion(
         reduceMotion: Bool,
+        inputLanguage: FruitfolioLanguage = .english,
+        translationInferenceAllowed: Bool = true,
         userContext: FruitfolioAskUserContext? = nil
     ) async {
         requestTask?.cancel()
@@ -150,7 +154,8 @@ final class Prompt09AskViewModel: ObservableObject {
         hasUserContextInFlight = userContext != nil
         let task = Task { [weak self] in
             guard let self else { return }
-            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation, userContext: userContext)
+            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation, userContext: userContext,
+                inputLanguage: inputLanguage, translationInferenceAllowed: translationInferenceAllowed)
         }
         requestTask = task
         await withTaskCancellationHandler {
@@ -167,8 +172,15 @@ final class Prompt09AskViewModel: ObservableObject {
     private func performSubmitCurrentQuestion(
         reduceMotion: Bool,
         generation: UUID,
-        userContext: FruitfolioAskUserContext?
+        userContext: FruitfolioAskUserContext?,
+        inputLanguage: FruitfolioLanguage,
+        translationInferenceAllowed: Bool
     ) async {
+        // Suggestions are known English authored copy even when the interface
+        // language differs. Any edited text follows the submitted app language.
+        let questionLanguage: FruitfolioLanguage = sourceSuggestion.map {
+            inputText.utf8.elementsEqual($0.utf8)
+        } == true ? .english : inputLanguage
         let question = inputText
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
@@ -221,7 +233,13 @@ final class Prompt09AskViewModel: ObservableObject {
                 case .validating: self.searchStatusText = "checking the answer…"
                 }
             }
-            if let contextual = engine as? any AskContextualResearchServing {
+            if let localized = engine as? any AskLocalizedResearchServing {
+                response = try await localized.answer(question: question, conversation: messages,
+                    trackerContext: nil, userContext: userContext, inputLanguage: questionLanguage,
+                    translationInferenceAllowed: translationInferenceAllowed, progress: progressHandler)
+            } else if questionLanguage != .english {
+                throw AskEngineError.knowledgeProviderUnavailable
+            } else if let contextual = engine as? any AskContextualResearchServing {
                 response = try await contextual.answer(question: question, conversation: messages,
                     trackerContext: nil, userContext: userContext, progress: progressHandler)
             } else if userContext != nil {
@@ -264,6 +282,7 @@ final class Prompt09AskViewModel: ObservableObject {
                 phase = .ready
                 return
             }
+            if inputText.isEmpty { inputText = question }
             phase = .failed(
                 error.localizedDescription
             )
@@ -293,6 +312,8 @@ final class Prompt09AskViewModel: ObservableObject {
 
     func resetConversation() {
         cancelOutstandingWork()
+        sourceSuggestion = nil
+        (engine as? FruitfolioResearchIntelligenceEngine)?.clearSessionDiagnostics()
         conversationID = UUID()
         answerHistory = []
 

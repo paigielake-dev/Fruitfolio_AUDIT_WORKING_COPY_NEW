@@ -630,7 +630,7 @@ nonisolated enum FruitfolioResearchIntelligenceError:
 
 @MainActor
 final class FruitfolioResearchIntelligenceEngine:
-    AskContextualResearchServing
+    AskLocalizedResearchServing
 {
     static let shared =
         FruitfolioResearchIntelligenceEngine()
@@ -643,6 +643,9 @@ final class FruitfolioResearchIntelligenceEngine:
 
     private(set) var lastDiagnostics:
         FruitfolioRetrievalDiagnostics?
+    private let translationService: FruitfolioTranslationService
+
+    func clearSessionDiagnostics() { lastDiagnostics = nil }
 
     init(
         packageStore:
@@ -650,7 +653,8 @@ final class FruitfolioResearchIntelligenceEngine:
             = nil,
         languageModel:
             (any FruitfolioLanguageModel)?
-            = nil
+            = nil,
+        translationService: FruitfolioTranslationService? = nil
     ) {
         self.packageStore =
             packageStore
@@ -659,6 +663,7 @@ final class FruitfolioResearchIntelligenceEngine:
         self.languageModel =
             languageModel
             ?? LlamaFruitfolioLanguageModel.shared
+        self.translationService = translationService ?? .shared
     }
 
     func answer(
@@ -701,6 +706,39 @@ final class FruitfolioResearchIntelligenceEngine:
 
     func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
         userContext: FruitfolioAskUserContext?, progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        try await answerGrounded(question: question, retrievalQuestion: question, conversation: conversation,
+            trackerContext: trackerContext, userContext: userContext, progress: progress)
+    }
+
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, inputLanguage: FruitfolioLanguage, translationInferenceAllowed: Bool,
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        try Task.checkCancellation()
+        guard !question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw FruitfolioResearchIntelligenceError.emptyQuestion
+        }
+        // Already recognizable urgent guidance must never wait for any model.
+        if inputLanguage == .english || Prompt34LocalSafetyRouter.classify(question).requiresUrgentGuidance {
+            return try await answerGrounded(question: question, retrievalQuestion: question, conversation: conversation,
+                trackerContext: trackerContext, userContext: userContext, progress: progress)
+        }
+        // No catalog lookup of patient-authored questions, no network, no
+        // result cache. The existing service drops source sharing keys after
+        // the last waiter; its envelope protects scientific values/references.
+        let query = try await translationService.translateForDisplay(question, language: .english,
+            sourceLanguage: inputLanguage.rawValue, preferCatalog: false,
+            inferenceAllowed: translationInferenceAllowed).text
+        try Task.checkCancellation()
+        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw FruitfolioTranslationError.inferenceFailed
+        }
+        return try await answerGrounded(question: question, retrievalQuestion: query, conversation: conversation,
+            trackerContext: trackerContext, userContext: userContext, progress: progress)
+    }
+
+    private func answerGrounded(question: String, retrievalQuestion: String, conversation: [AskMessage],
+        trackerContext: FruitfolioBoundedTrackerContext?, userContext: FruitfolioAskUserContext?,
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
         if let userContext { _ = try userContext.promptJSON() }
         let trimmed =
             question.trimmingCharacters(
@@ -712,7 +750,11 @@ final class FruitfolioResearchIntelligenceEngine:
                 .emptyQuestion
         }
 
-        let classified = Prompt34LocalSafetyRouter.classify(trimmed)
+        let searchQuestion = retrievalQuestion.trimmingCharacters(in: .whitespacesAndNewlines)
+        let originalSafety = Prompt34LocalSafetyRouter.classify(trimmed)
+        let querySafety = Prompt34LocalSafetyRouter.classify(searchQuestion)
+        let classified = Prompt34SafetyClassification(level: max(originalSafety.level, querySafety.level),
+            matchedPatterns: Array(Set(originalSafety.matchedPatterns + querySafety.matchedPatterns)).sorted())
         let safety = userContext != nil && classified.level == .normal
             ? Prompt34SafetyClassification(level: .sensitive, matchedPatterns: ["explicit_user_provided_context"])
             : classified
@@ -726,7 +768,7 @@ final class FruitfolioResearchIntelligenceEngine:
         }
 
         if safety.level == .normal,
-           FruitfolioLifeBridgeInformation.isOrganizationQuestion(trimmed),
+           (FruitfolioLifeBridgeInformation.isOrganizationQuestion(trimmed) || FruitfolioLifeBridgeInformation.isOrganizationQuestion(searchQuestion)),
            FruitfolioLifeBridgeInformation.load() == nil {
             return AskAnswer(
                 originalQuestion: trimmed,
@@ -736,7 +778,7 @@ final class FruitfolioResearchIntelligenceEngine:
 
         let normalized =
             FruitfolioQueryNormalizer.normalize(
-                trimmed + " " + (userContext?.topicHints.joined(separator: " ") ?? "")
+                searchQuestion + " " + (userContext?.topicHints.joined(separator: " ") ?? "")
             )
 
         let claims =
@@ -888,7 +930,7 @@ final class FruitfolioResearchIntelligenceEngine:
 
             let draft =
                 try await languageModel.generateDraft(
-                    question: trimmed,
+                    question: searchQuestion,
                     evidence: packet
                 )
 
@@ -899,7 +941,7 @@ final class FruitfolioResearchIntelligenceEngine:
                 usedEvidenceIDs = validated.usedEvidenceIDs
                 answerPath = .generated
             } else {
-                answerText = retrievalOnlyAnswer(question: trimmed, coverage: coverage,
+                answerText = retrievalOnlyAnswer(question: searchQuestion, coverage: coverage,
                     notes: packet.researchNoteChunks, safety: safety)
                 answerPath = .retrievalFallback
                 usedEvidenceIDs = Set(packet.researchNoteChunks.prefix(3).map(\.chunkID))
@@ -911,7 +953,7 @@ final class FruitfolioResearchIntelligenceEngine:
             usedEvidenceIDs = Set(packet.researchNoteChunks.prefix(3).map(\.chunkID))
             answerText =
                 retrievalOnlyAnswer(
-                    question: trimmed,
+                    question: searchQuestion,
                     coverage: coverage,
                     notes:
                         packet.researchNoteChunks,
