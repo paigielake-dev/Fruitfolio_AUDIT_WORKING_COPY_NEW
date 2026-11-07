@@ -298,6 +298,7 @@ final class Prompt1BSavedPageNoticeTests: XCTestCase {
         let messages = [Prompt10SavedPageNotice.notesSaved.source,
             Prompt10SavedPageNotice.imageImportFailed.source,
             Prompt10LibraryError.contentChanged.localizedDescription,
+            Prompt10UserMaterialDraft.Failure.invalidSourceURL.localizedDescription,
             "[authored patient note](file:///private) **cafe\u{301}** 12,50 µg/L\n  keep spacing  "]
         for original in messages {
             let notice = Prompt10SavedPageNotice(error: External(errorDescription: original))

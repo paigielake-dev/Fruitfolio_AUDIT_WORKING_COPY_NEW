@@ -9,7 +9,7 @@ struct Prompt10UserMaterialEditor: View {
     let onCancel: () -> Void
     @State private var draft: Prompt10UserMaterialDraft
     @State private var chapterID: UUID?
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
     @State private var viewIsVisible = false
@@ -49,47 +49,52 @@ struct Prompt10UserMaterialEditor: View {
         Prompt10WatercolorPopup {
             VStack(alignment: .leading, spacing: 12) {
                 Prompt10LibraryStorageNotice(store: store)
-                Text(editingPageID == nil ? "add my own page" : "edit my page")
-                    .font(.headline).accessibilityAddTraits(.isHeader)
-                Text("your own material stays separate from Fruitfolio’s approved research. a source address here is user supplied, not verified.")
-                    .font(.caption)
-                TextField("page title", text: $draft.title)
+                FruitfolioFixedText(source: editingPageID == nil ? "add my own page" : "edit my page", font: .headline)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("userPage.editor.heading")
+                FruitfolioFixedText(source: "your own material stays separate from Fruitfolio’s approved research. a source address here is user supplied, not verified.",
+                    protectedLiterals: ["Fruitfolio"], font: .caption, serious: true)
+                    .accessibilityIdentifier("userPage.editor.qualifier")
+                FruitfolioFixedTextField("page title", text: $draft.title)
                     .focused($focusedField, equals: .title)
                     .accessibilityIdentifier("userPage.editor.title")
                     .textFieldStyle(.roundedBorder)
                     .bookLabelGuidance(text: draft.title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
-                Picker("chapter", selection: $chapterID) {
-                    Text("choose a chapter").tag(Optional<UUID>.none)
+                Picker(selection: $chapterID) {
+                    FruitfolioFixedText(source: "choose a chapter").tag(Optional<UUID>.none)
                     ForEach(store.encyclopedia(id: encyclopediaID)?.chapters.sorted { $0.order < $1.order } ?? []) { chapter in
-                        Text(chapter.name).tag(Optional(chapter.id))
+                        Text(verbatim: chapter.name).tag(Optional(chapter.id))
                     }
-                }
+                } label: { FruitfolioFixedText(source: "chapter") }
+                .accessibilityIdentifier("userPage.editor.chapter")
                 .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                Text("my text").font(.headline)
+                FruitfolioFixedText(source: "my text", font: .headline)
                 TextEditor(text: $draft.body)
                     .frame(minHeight: 150)
-                    .accessibilityLabel("my page text")
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "my page text"))
                     .accessibilityIdentifier("userPage.editor.body")
                     .focused($focusedField, equals: .body)
-                TextField("optional source address", text: $draft.sourceURL)
+                FruitfolioFixedTextField("optional source address", text: $draft.sourceURL)
                     .focused($focusedField, equals: .source)
                     .textInputAutocapitalization(.never).autocorrectionDisabled()
                     .keyboardType(.URL).textFieldStyle(.roundedBorder)
-                Text("my notes").font(.headline)
+                    .accessibilityIdentifier("userPage.editor.source")
+                FruitfolioFixedText(source: "my notes", font: .headline)
                 TextEditor(text: $draft.notes)
-                    .frame(minHeight: 90).accessibilityLabel("my page notes")
+                    .frame(minHeight: 90)
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "my page notes"))
+                    .accessibilityIdentifier("userPage.editor.notes")
                     .focused($focusedField, equals: .notes)
                 if let errorMessage {
-                    FruitfolioTranslatedContent(source: errorMessage) { display, _ in
-                        FruitfolioSemanticText(markdown: display,
-                            baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
-                            .accessibilityFocused($errorFocused)
-                    }
-                    .task(id: errorFocusRequest) {
-                        await Task.yield()
-                        guard !Task.isCancelled, viewIsVisible else { return }
-                        errorFocused = true
-                    }
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                        font: .custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .accessibilityIdentifier("userPage.editor.error")
+                        .accessibilityFocused($errorFocused)
+                        .task(id: errorFocusRequest) {
+                            await Task.yield()
+                            guard !Task.isCancelled, viewIsVisible else { return }
+                            errorFocused = true
+                        }
                 }
                 WatercolorPrimaryButton(label: "save my page") { save() }
                     .disabled(chapterID == nil || store.storageProtectionReason != nil)
@@ -154,14 +159,14 @@ struct Prompt10UserMaterialEditor: View {
 
     private func save() {
         guard let chapterID else {
-            errorMessage = "choose a chapter before saving your page."
+            errorMessage = .chooseChapter
             errorFocusRequest = UUID()
             return
         }
         do {
             let saved = try store.saveUserMaterial(draft, to: encyclopediaID, chapterID: chapterID, existingPageID: editingPageID, expectedBaseline: editingBaseline)
             onSaved(saved)
-        } catch { errorMessage = error.localizedDescription; errorFocusRequest = UUID() }
+        } catch { errorMessage = Prompt10SavedPageNotice(error: error); errorFocusRequest = UUID() }
     }
 }
 

@@ -15,7 +15,7 @@ nonisolated struct Prompt10UserMaterialDraft: Equatable, Sendable {
     static let maximumBodyLength = 100_000
     static let maximumNotesLength = 50_000
 
-    enum Failure: LocalizedError {
+    enum Failure: LocalizedError, Equatable {
         case emptyBody, tooLong, invalidSourceURL, immutableEvidence
         var errorDescription: String? {
             switch self {

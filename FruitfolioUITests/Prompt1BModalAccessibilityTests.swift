@@ -1783,8 +1783,10 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
-    private func openDraftFixturePage(_ app: XCUIApplication) {
-        app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookDraftFixture", "-fruitfolioBookReduceMotion"]
+    private func openDraftFixturePage(_ app: XCUIApplication, reduced: Bool = true, rtl: Bool = false) {
+        app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookDraftFixture", "-fruitfolioBookQAPauseInference"]
+        if reduced { app.launchArguments += ["-fruitfolioBookReduceMotion"] }
+        if rtl { app.launchArguments += ["-fruitfolioBookQAArabic"] }
         app.launch()
         let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage,")).firstMatch
         for _ in 0..<16 { if book.isHittable { break }; app.swipeUp() }
@@ -1967,6 +1969,53 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue((notes.value as? String)?.contains("QA saved note") == true)
         XCTAssertTrue(app.staticTexts["QA original own page text"].exists)
         app.terminate()
+    }
+
+    func testLocalizedUserPageValidationKeepsExactAuthoredFieldsAndDiscardedOriginal() {
+        for rtl in [false, true] {
+            for reduced in [false, true] {
+                let app = XCUIApplication()
+                app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+                openDraftFixturePage(app, reduced: reduced, rtl: rtl)
+                let reading = app.scrollViews["savedPage.scroll"]
+                let edit = app.buttons["savedPage.editOwnPage"]
+                for _ in 0..<20 { if edit.isHittable { break }; reading.swipeUp() }
+                edit.tap()
+                let paper = app.scrollViews["tapedWhitePopup.scroll"]
+                let body = app.textViews["userPage.editor.body"]
+                XCTAssertTrue(body.waitForExistence(timeout: 5))
+                XCTAssertTrue(app.descendants(matching: .any)["userPage.editor.qualifier"].exists)
+                XCTAssertEqual(app.textFields["userPage.editor.title"].value as? String, "QA editable page")
+                for _ in 0..<20 { if body.isHittable { break }; paper.swipeUp() }
+                body.tap(); body.typeText(" QA retained 12.50 pg/mL")
+                let authored = body.value as? String
+                let address = app.textFields["userPage.editor.source"]
+                for _ in 0..<20 { if address.isHittable { break }; paper.swipeUp() }
+                let invalidAddress = "https://user:password@example.org/author-input"
+                address.tap(); address.typeText(invalidAddress)
+                let save = app.buttons["userPage.editor.save"]
+                for _ in 0..<20 { if save.isHittable { break }; paper.swipeUp() }
+                save.tap()
+                XCTAssertTrue(app.descendants(matching: .any)["userPage.editor.error"].waitForExistence(timeout: 5))
+                XCTAssertEqual(body.value as? String, authored)
+                XCTAssertEqual(address.value as? String, invalidAddress)
+                let cancel = app.buttons["userPage.editor.cancel"]
+                for _ in 0..<20 { if cancel.isHittable { break }; paper.swipeUp() }
+                cancel.tap(); tapSharedPaperAction("primary", in: app)
+                XCTAssertTrue(body.waitForExistence(timeout: 5))
+                XCTAssertEqual(body.value as? String, authored)
+                for _ in 0..<20 { if cancel.isHittable { break }; paper.swipeUp() }
+                cancel.tap(); tapSharedPaperAction("tertiary", in: app)
+                XCTAssertTrue(edit.waitForExistence(timeout: 5))
+                for _ in 0..<20 { if edit.isHittable { break }; reading.swipeUp() }
+                edit.tap()
+                XCTAssertTrue(body.waitForExistence(timeout: 5))
+                XCTAssertEqual(body.value as? String, "QA original own page text")
+                XCTAssertFalse(app.descendants(matching: .any)["userPage.editor.error"].exists)
+                captureGame(app, name: "user-page-validation-rtl-\(rtl)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
     }
 
     func testUserPageOverlayKeepDiscardAndSaveRetainOriginalUntilExplicitSave() {
@@ -2749,20 +2798,20 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage,")).firstMatch
         for _ in 0..<8 { if book.isHittable { break }; app.swipeUp() }
         book.tap()
-        let add = app.buttons["add my own page"]
+        let add = app.buttons["savedBook.addOwnPage"]
         XCTAssertTrue(add.waitForExistence(timeout: 5))
         add.tap()
-        let title = app.textFields["page title"]
+        let title = app.textFields["userPage.editor.title"]
         XCTAssertTrue(title.waitForExistence(timeout: 3))
         title.tap(); title.typeText("my reminder")
-        let body = app.textViews["my page text"]
+        let body = app.textViews["userPage.editor.body"]
         body.tap(); body.typeText("my independently collected material")
         app.swipeUp()
-        let save = app.buttons["save my page"]
+        let save = app.buttons["userPage.editor.save"]
         for _ in 0..<10 { if save.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(save.isHittable)
         save.tap()
-        XCTAssertTrue(app.staticTexts["your own material · not verified research"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.descendants(matching: .any)["savedPage.userMaterialQualifier"].waitForExistence(timeout: 3))
     }
 
     func testLibraryCreateKeepsAuthoredNameNativeCountAndOneSoftPopPerAction() {

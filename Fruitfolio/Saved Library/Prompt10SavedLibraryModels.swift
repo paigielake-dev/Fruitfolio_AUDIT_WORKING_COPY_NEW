@@ -314,11 +314,19 @@ enum Prompt10SavedPageNotice: Equatable {
     case notesSaved, imageAdded, imageReplaced, imageRemoved
     case imageImportFailed, imageRemovalFailed, saveDraftBeforeEditing
     case library(Prompt10LibraryError)
+    case userMaterial(Prompt10UserMaterialDraft.Failure)
+    case chooseChapter
     case external(String)
 
     init(error: Error) {
         if let known = error as? Prompt10LibraryError { self = .library(known) }
+        else if let known = error as? Prompt10UserMaterialDraft.Failure { self = .userMaterial(known) }
         else { self = .external(error.localizedDescription) }
+    }
+
+    var protectedLiterals: [String] {
+        if case .userMaterial(.tooLong) = self { return ["100,000", "50,000"] }
+        return []
     }
 
     var controlledSource: String? {
@@ -336,6 +344,8 @@ enum Prompt10SavedPageNotice: Equatable {
         case .imageRemovalFailed: return "that image could not be removed."
         case .saveDraftBeforeEditing: return "save or discard your note changes before editing this page."
         case .library(let error): return error.errorDescription ?? "that saved page could not be updated."
+        case .userMaterial(let error): return error.errorDescription ?? "that saved page could not be updated."
+        case .chooseChapter: return "choose a chapter before saving your page."
         case .external(let original): return original
         }
     }

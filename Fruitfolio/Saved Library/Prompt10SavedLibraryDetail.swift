@@ -438,6 +438,7 @@ struct Prompt10SavedPageView: View {
                 FruitfolioSavedScientificIllustrations(assetIDs: page.educationalAssetIDs ?? [])
                 if let provenance = page.userMaterial {
                     FruitfolioFixedText(source: "your own material · not verified research", font: .caption.bold(), serious: true)
+                        .accessibilityIdentifier("savedPage.userMaterialQualifier")
                     if let address = provenance.sourceURL {
                         Text(verbatim: address).font(.caption).textSelection(.enabled)
                     }
@@ -813,13 +814,13 @@ struct Prompt10SavedPageView: View {
 }
 
 /// Only typed app copy enters translation. External messages remain exact text.
-private struct Prompt10SavedPageNoticeText: View {
+struct Prompt10SavedPageNoticeText: View {
     let notice: Prompt10SavedPageNotice
     let font: Font
     var body: some View {
         Group {
             if let source = notice.controlledSource {
-                FruitfolioFixedText(source: source, font: font, serious: true)
+                FruitfolioFixedText(source: source, protectedLiterals: notice.protectedLiterals, font: font, serious: true)
             } else {
                 Text(verbatim: notice.source).font(font)
             }

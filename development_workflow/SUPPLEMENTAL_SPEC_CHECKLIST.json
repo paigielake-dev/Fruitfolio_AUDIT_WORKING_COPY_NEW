@@ -642,7 +642,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
         "development_workflow/SAVED_PAGE_TYPED_LOCALIZED_NOTICES.md",
-        "development_workflow/BOOK_CONTENTS_FIXED_COPY.md"
+        "development_workflow/BOOK_CONTENTS_FIXED_COPY.md",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "development_workflow/USER_MATERIAL_EDITOR_LOCALIZED_PROVENANCE.md"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -651,7 +653,8 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
-        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift"
       ],
       "blockers": [
         "Official weights/tokenizer unavailable: huggingface.co CONNECT denied 403 and domain draft immutable.",
@@ -664,7 +667,8 @@
         "Reconciled batch:Ask-typed-context-notices-and-protected-counts; local commit d31ceffde41efb7c6590cee21735d086a634ca8b; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
         "Reconciled batch:Ask-captured-action-and-illustration-control-ownership; local commit 8c73f5f8de6bbfd3b5409a46c7ccc16dd950a1ac; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
         "Actual saved-page fixed labels, native note accessibility label, image picker/action copy and typed operation/library-error notices use existing control translation ownership. Foreign errors remain exact verbatim even with spoofed app wording; no Markdown or inference. Header separates Back artwork without shrinking font. Ten English fallbacks added; user binding, original payload/citations unchanged. Two provenance regressions pass; four Apple UI vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings.",
-        "Existing split-book contents fixed controls/empty/type copy now use control translation; physical left/right accessibility labels follow environment direction, chapter counts use selected native locale and chapter state has translated accessibility value. Authored names/nonempty questions remain verbatim; only empty questions get controlled fallback. Fonts/artwork/stores/two-page architecture preserved. Four Apple vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse checks andzero source sound findings. Seven new plus three formerly empty English entries populated."
+        "Existing split-book contents fixed controls/empty/type copy now use control translation; physical left/right accessibility labels follow environment direction, chapter counts use selected native locale and chapter state has translated accessibility value. Authored names/nonempty questions remain verbatim; only empty questions get controlled fallback. Fonts/artwork/stores/two-page architecture preserved. Four Apple vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse checks andzero source sound findings. Seven new plus three formerly empty English entries populated.",
+        "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim."
       ],
       "batch_evidence": [
         {
@@ -1031,64 +1035,139 @@
             ]
           },
           "parent_checkpoint": "bb425e1ff2bd0d5feace35bd6fa2a64eea4ff5c0"
+        },
+        {
+          "batch": "User-material-editor-fixed-prompts-and-typed-validation",
+          "implementation_evidence": "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim.",
+          "files": [
+            "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+            "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+            "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+            "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/USER_MATERIAL_EDITOR_LOCALIZED_PROVENANCE.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+            "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 964,
+              "native_CPU_XCTest": 989,
+              "SwiftTesting_each": 21,
+              "initial_focused_XCTest": 9,
+              "new_validation_envelope_XCTest": 2,
+              "workflow_checks": 69,
+              "syntax_files": 311,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 13,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_editor_copy_portable.log": {
+                  "bytes": 306465,
+                  "sha256": "440d785e22bd211e410b80800424be156b224569b4530a36637cd6e5fd211bcb"
+                },
+                "/tmp/fruitfolio_editor_copy_native.log": {
+                  "bytes": 1281679,
+                  "sha256": "1d6030a89036322068c9935c417582559a37fa867219222793c431fc82bd50c7"
+                },
+                "/tmp/fruitfolio_editor_copy_focused.log": {
+                  "bytes": 30023,
+                  "sha256": "87b512f708257a5e87af66c7d014981c97e742e12ac71fc8b238debd7f097e50"
+                },
+                "/tmp/fruitfolio_editor_copy_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "2fac5642b0108f45f4f9263818977cf0e0fc81beb00bc848d9aee2965f7fe723"
+                },
+                "/tmp/fruitfolio_editor_copy_syntax_final.log": {
+                  "bytes": 106,
+                  "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+                },
+                "/tmp/fruitfolio_editor_copy_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four Apple editor fixed-prompt/validation/exact-draft/keep/discard/reopen vectors",
+              "Apple SDK typecheck/build, keyboard/focus/picker/VoiceOver/RTL/XXXL/Reduce Motion and device acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical safety acceptance"
+            ],
+            "remaining": [
+              "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+              "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+              "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
+            ]
+          },
+          "parent_checkpoint": "27aa411a788cee3ed63289f748488784289b4294"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Book-contents-controlled-copy-native-counts-and-RTL-labels",
+        "batch": "User-material-editor-fixed-prompts-and-typed-validation",
         "executed": {
-          "portable_XCTest": 962,
-          "native_CPU_XCTest": 987,
+          "portable_XCTest": 964,
+          "native_CPU_XCTest": 989,
           "SwiftTesting_each": 21,
+          "initial_focused_XCTest": 9,
+          "new_validation_envelope_XCTest": 2,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
           "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
-          "English_fallback_records_added": 7,
-          "existing_empty_English_records_populated": 3,
+          "English_fallbacks_added": 13,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_book_contents_portable.log": {
-              "bytes": 305922,
-              "sha256": "1a45c74a162ee5cd47d17301d2be43a46d1f950b5fc8bedb49caa91a3b5fc3d8"
+            "/tmp/fruitfolio_editor_copy_portable.log": {
+              "bytes": 306465,
+              "sha256": "440d785e22bd211e410b80800424be156b224569b4530a36637cd6e5fd211bcb"
             },
-            "/tmp/fruitfolio_book_contents_native.log": {
-              "bytes": 1281083,
-              "sha256": "a8cb998c62cec7eee3dbf3db9a59b10e37ec723b96be1fbbf61c78c15b2345a3"
+            "/tmp/fruitfolio_editor_copy_native.log": {
+              "bytes": 1281679,
+              "sha256": "1d6030a89036322068c9935c417582559a37fa867219222793c431fc82bd50c7"
             },
-            "/tmp/fruitfolio_book_contents_workflow_final.log": {
+            "/tmp/fruitfolio_editor_copy_focused.log": {
+              "bytes": 30023,
+              "sha256": "87b512f708257a5e87af66c7d014981c97e742e12ac71fc8b238debd7f097e50"
+            },
+            "/tmp/fruitfolio_editor_copy_workflow.log": {
               "bytes": 169,
-              "sha256": "12c89bf1907850e6db1529e577fa6b7cb91d6f5336caf4b87af57afb82ea9fcd"
+              "sha256": "2fac5642b0108f45f4f9263818977cf0e0fc81beb00bc848d9aee2965f7fe723"
             },
-            "/tmp/fruitfolio_book_contents_syntax_final.log": {
+            "/tmp/fruitfolio_editor_copy_syntax_final.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_book_contents_ownership.log": {
+            "/tmp/fruitfolio_editor_copy_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Four Apple contents/control/RTL/count/expansion/selection vectors at XXXL and both motion modes",
-          "Apple SDK typecheck/build, VoiceOver/focus and physical-device acceptance",
-          "Official MADLAD inference and translated-layout/linguistic/clinical quality acceptance"
+          "Four Apple editor fixed-prompt/validation/exact-draft/keep/discard/reopen vectors",
+          "Apple SDK typecheck/build, keyboard/focus/picker/VoiceOver/RTL/XXXL/Reduce Motion and device acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical safety acceptance"
         ],
         "remaining": [
-          "Execute written real Apple book vectors, including physical page order and header artwork separation",
-          "Verify actual translated labels in supported languages; paused English fallback is not language acceptance",
-          "Legacy chapter names remain verbatim because default/authored provenance cannot be inferred"
+          "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+          "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+          "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute written real Apple book vectors, including physical page order and header artwork separation",
-        "Verify actual translated labels in supported languages; paused English fallback is not language acceptance",
-        "Legacy chapter names remain verbatim because default/authored provenance cannot be inferred"
+        "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+        "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+        "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
       ],
-      "commit_reference": "batch:Book-contents-controlled-copy-native-counts-and-RTL-labels (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:30:37.912062+00:00"
+      "commit_reference": "batch:User-material-editor-fixed-prompts-and-typed-validation (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T05:36:04.528261+00:00"
     },
     {
       "id": "SPEC-7.9.3",
@@ -1217,7 +1296,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
         "development_workflow/SAVED_PAGE_TYPED_LOCALIZED_NOTICES.md",
-        "development_workflow/BOOK_CONTENTS_FIXED_COPY.md"
+        "development_workflow/BOOK_CONTENTS_FIXED_COPY.md",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "development_workflow/USER_MATERIAL_EDITOR_LOCALIZED_PROVENANCE.md"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -1226,7 +1307,8 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
-        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
+        "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift"
       ],
       "blockers": [
         "Official weights/tokenizer unavailable: huggingface.co CONNECT denied 403 and domain draft immutable.",
@@ -1239,7 +1321,8 @@
         "Reconciled batch:Ask-typed-context-notices-and-protected-counts; local commit d31ceffde41efb7c6590cee21735d086a634ca8b; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
         "Reconciled batch:Ask-captured-action-and-illustration-control-ownership; local commit 8c73f5f8de6bbfd3b5409a46c7ccc16dd950a1ac; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
         "Actual saved-page fixed labels, native note accessibility label, image picker/action copy and typed operation/library-error notices use existing control translation ownership. Foreign errors remain exact verbatim even with spoofed app wording; no Markdown or inference. Header separates Back artwork without shrinking font. Ten English fallbacks added; user binding, original payload/citations unchanged. Two provenance regressions pass; four Apple UI vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings.",
-        "Existing split-book contents fixed controls/empty/type copy now use control translation; physical left/right accessibility labels follow environment direction, chapter counts use selected native locale and chapter state has translated accessibility value. Authored names/nonempty questions remain verbatim; only empty questions get controlled fallback. Fonts/artwork/stores/two-page architecture preserved. Four Apple vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse checks andzero source sound findings. Seven new plus three formerly empty English entries populated."
+        "Existing split-book contents fixed controls/empty/type copy now use control translation; physical left/right accessibility labels follow environment direction, chapter counts use selected native locale and chapter state has translated accessibility value. Authored names/nonempty questions remain verbatim; only empty questions get controlled fallback. Fonts/artwork/stores/two-page architecture preserved. Four Apple vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse checks andzero source sound findings. Seven new plus three formerly empty English entries populated.",
+        "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim."
       ],
       "batch_evidence": [
         {
@@ -1606,64 +1689,139 @@
             ]
           },
           "parent_checkpoint": "bb425e1ff2bd0d5feace35bd6fa2a64eea4ff5c0"
+        },
+        {
+          "batch": "User-material-editor-fixed-prompts-and-typed-validation",
+          "implementation_evidence": "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim.",
+          "files": [
+            "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+            "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+            "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+            "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/USER_MATERIAL_EDITOR_LOCALIZED_PROVENANCE.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+            "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 964,
+              "native_CPU_XCTest": 989,
+              "SwiftTesting_each": 21,
+              "initial_focused_XCTest": 9,
+              "new_validation_envelope_XCTest": 2,
+              "workflow_checks": 69,
+              "syntax_files": 311,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 13,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_editor_copy_portable.log": {
+                  "bytes": 306465,
+                  "sha256": "440d785e22bd211e410b80800424be156b224569b4530a36637cd6e5fd211bcb"
+                },
+                "/tmp/fruitfolio_editor_copy_native.log": {
+                  "bytes": 1281679,
+                  "sha256": "1d6030a89036322068c9935c417582559a37fa867219222793c431fc82bd50c7"
+                },
+                "/tmp/fruitfolio_editor_copy_focused.log": {
+                  "bytes": 30023,
+                  "sha256": "87b512f708257a5e87af66c7d014981c97e742e12ac71fc8b238debd7f097e50"
+                },
+                "/tmp/fruitfolio_editor_copy_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "2fac5642b0108f45f4f9263818977cf0e0fc81beb00bc848d9aee2965f7fe723"
+                },
+                "/tmp/fruitfolio_editor_copy_syntax_final.log": {
+                  "bytes": 106,
+                  "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+                },
+                "/tmp/fruitfolio_editor_copy_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four Apple editor fixed-prompt/validation/exact-draft/keep/discard/reopen vectors",
+              "Apple SDK typecheck/build, keyboard/focus/picker/VoiceOver/RTL/XXXL/Reduce Motion and device acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical safety acceptance"
+            ],
+            "remaining": [
+              "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+              "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+              "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
+            ]
+          },
+          "parent_checkpoint": "27aa411a788cee3ed63289f748488784289b4294"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Book-contents-controlled-copy-native-counts-and-RTL-labels",
+        "batch": "User-material-editor-fixed-prompts-and-typed-validation",
         "executed": {
-          "portable_XCTest": 962,
-          "native_CPU_XCTest": 987,
+          "portable_XCTest": 964,
+          "native_CPU_XCTest": 989,
           "SwiftTesting_each": 21,
+          "initial_focused_XCTest": 9,
+          "new_validation_envelope_XCTest": 2,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
           "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
-          "English_fallback_records_added": 7,
-          "existing_empty_English_records_populated": 3,
+          "English_fallbacks_added": 13,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_book_contents_portable.log": {
-              "bytes": 305922,
-              "sha256": "1a45c74a162ee5cd47d17301d2be43a46d1f950b5fc8bedb49caa91a3b5fc3d8"
+            "/tmp/fruitfolio_editor_copy_portable.log": {
+              "bytes": 306465,
+              "sha256": "440d785e22bd211e410b80800424be156b224569b4530a36637cd6e5fd211bcb"
             },
-            "/tmp/fruitfolio_book_contents_native.log": {
-              "bytes": 1281083,
-              "sha256": "a8cb998c62cec7eee3dbf3db9a59b10e37ec723b96be1fbbf61c78c15b2345a3"
+            "/tmp/fruitfolio_editor_copy_native.log": {
+              "bytes": 1281679,
+              "sha256": "1d6030a89036322068c9935c417582559a37fa867219222793c431fc82bd50c7"
             },
-            "/tmp/fruitfolio_book_contents_workflow_final.log": {
+            "/tmp/fruitfolio_editor_copy_focused.log": {
+              "bytes": 30023,
+              "sha256": "87b512f708257a5e87af66c7d014981c97e742e12ac71fc8b238debd7f097e50"
+            },
+            "/tmp/fruitfolio_editor_copy_workflow.log": {
               "bytes": 169,
-              "sha256": "12c89bf1907850e6db1529e577fa6b7cb91d6f5336caf4b87af57afb82ea9fcd"
+              "sha256": "2fac5642b0108f45f4f9263818977cf0e0fc81beb00bc848d9aee2965f7fe723"
             },
-            "/tmp/fruitfolio_book_contents_syntax_final.log": {
+            "/tmp/fruitfolio_editor_copy_syntax_final.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_book_contents_ownership.log": {
+            "/tmp/fruitfolio_editor_copy_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Four Apple contents/control/RTL/count/expansion/selection vectors at XXXL and both motion modes",
-          "Apple SDK typecheck/build, VoiceOver/focus and physical-device acceptance",
-          "Official MADLAD inference and translated-layout/linguistic/clinical quality acceptance"
+          "Four Apple editor fixed-prompt/validation/exact-draft/keep/discard/reopen vectors",
+          "Apple SDK typecheck/build, keyboard/focus/picker/VoiceOver/RTL/XXXL/Reduce Motion and device acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical safety acceptance"
         ],
         "remaining": [
-          "Execute written real Apple book vectors, including physical page order and header artwork separation",
-          "Verify actual translated labels in supported languages; paused English fallback is not language acceptance",
-          "Legacy chapter names remain verbatim because default/authored provenance cannot be inferred"
+          "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+          "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+          "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute written real Apple book vectors, including physical page order and header artwork separation",
-        "Verify actual translated labels in supported languages; paused English fallback is not language acceptance",
-        "Legacy chapter names remain verbatim because default/authored provenance cannot be inferred"
+        "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+        "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+        "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
       ],
-      "commit_reference": "batch:Book-contents-controlled-copy-native-counts-and-RTL-labels (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:30:37.912062+00:00"
+      "commit_reference": "batch:User-material-editor-fixed-prompts-and-typed-validation (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T05:36:04.528261+00:00"
     },
     {
       "id": "SPEC-7.9.5",
@@ -1922,7 +2080,9 @@
         "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md",
         "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
         "development_workflow/SAVED_PAGE_TYPED_LOCALIZED_NOTICES.md",
-        "development_workflow/BOOK_CONTENTS_FIXED_COPY.md"
+        "development_workflow/BOOK_CONTENTS_FIXED_COPY.md",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "development_workflow/USER_MATERIAL_EDITOR_LOCALIZED_PROVENANCE.md"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -1933,7 +2093,8 @@
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt1BUserMaterialTests.swift"
       ],
       "blockers": [
         "Official weights/tokenizer unavailable: huggingface.co CONNECT denied 403 and domain draft immutable.",
@@ -1951,7 +2112,8 @@
         "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
         "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass.",
         "Actual saved-page fixed labels, native note accessibility label, image picker/action copy and typed operation/library-error notices use existing control translation ownership. Foreign errors remain exact verbatim even with spoofed app wording; no Markdown or inference. Header separates Back artwork without shrinking font. Ten English fallbacks added; user binding, original payload/citations unchanged. Two provenance regressions pass; four Apple UI vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings.",
-        "Existing split-book contents fixed controls/empty/type copy now use control translation; physical left/right accessibility labels follow environment direction, chapter counts use selected native locale and chapter state has translated accessibility value. Authored names/nonempty questions remain verbatim; only empty questions get controlled fallback. Fonts/artwork/stores/two-page architecture preserved. Four Apple vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse checks andzero source sound findings. Seven new plus three formerly empty English entries populated."
+        "Existing split-book contents fixed controls/empty/type copy now use control translation; physical left/right accessibility labels follow environment direction, chapter counts use selected native locale and chapter state has translated accessibility value. Authored names/nonempty questions remain verbatim; only empty questions get controlled fallback. Fonts/artwork/stores/two-page architecture preserved. Four Apple vectors written NOT_RUN. Full962/987 XCTest+21 SwiftTesting each;69 workflow;311 parse checks andzero source sound findings. Seven new plus three formerly empty English entries populated.",
+        "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim."
       ],
       "batch_evidence": [
         {
@@ -2593,64 +2755,139 @@
             ]
           },
           "parent_checkpoint": "bb425e1ff2bd0d5feace35bd6fa2a64eea4ff5c0"
+        },
+        {
+          "batch": "User-material-editor-fixed-prompts-and-typed-validation",
+          "implementation_evidence": "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim.",
+          "files": [
+            "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+            "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+            "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+            "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/USER_MATERIAL_EDITOR_LOCALIZED_PROVENANCE.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BUserMaterialTests.swift",
+            "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 964,
+              "native_CPU_XCTest": 989,
+              "SwiftTesting_each": 21,
+              "initial_focused_XCTest": 9,
+              "new_validation_envelope_XCTest": 2,
+              "workflow_checks": 69,
+              "syntax_files": 311,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 13,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_editor_copy_portable.log": {
+                  "bytes": 306465,
+                  "sha256": "440d785e22bd211e410b80800424be156b224569b4530a36637cd6e5fd211bcb"
+                },
+                "/tmp/fruitfolio_editor_copy_native.log": {
+                  "bytes": 1281679,
+                  "sha256": "1d6030a89036322068c9935c417582559a37fa867219222793c431fc82bd50c7"
+                },
+                "/tmp/fruitfolio_editor_copy_focused.log": {
+                  "bytes": 30023,
+                  "sha256": "87b512f708257a5e87af66c7d014981c97e742e12ac71fc8b238debd7f097e50"
+                },
+                "/tmp/fruitfolio_editor_copy_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "2fac5642b0108f45f4f9263818977cf0e0fc81beb00bc848d9aee2965f7fe723"
+                },
+                "/tmp/fruitfolio_editor_copy_syntax_final.log": {
+                  "bytes": 106,
+                  "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+                },
+                "/tmp/fruitfolio_editor_copy_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four Apple editor fixed-prompt/validation/exact-draft/keep/discard/reopen vectors",
+              "Apple SDK typecheck/build, keyboard/focus/picker/VoiceOver/RTL/XXXL/Reduce Motion and device acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical safety acceptance"
+            ],
+            "remaining": [
+              "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+              "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+              "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
+            ]
+          },
+          "parent_checkpoint": "27aa411a788cee3ed63289f748488784289b4294"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Book-contents-controlled-copy-native-counts-and-RTL-labels",
+        "batch": "User-material-editor-fixed-prompts-and-typed-validation",
         "executed": {
-          "portable_XCTest": 962,
-          "native_CPU_XCTest": 987,
+          "portable_XCTest": 964,
+          "native_CPU_XCTest": 989,
           "SwiftTesting_each": 21,
+          "initial_focused_XCTest": 9,
+          "new_validation_envelope_XCTest": 2,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
           "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
-          "English_fallback_records_added": 7,
-          "existing_empty_English_records_populated": 3,
+          "English_fallbacks_added": 13,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_book_contents_portable.log": {
-              "bytes": 305922,
-              "sha256": "1a45c74a162ee5cd47d17301d2be43a46d1f950b5fc8bedb49caa91a3b5fc3d8"
+            "/tmp/fruitfolio_editor_copy_portable.log": {
+              "bytes": 306465,
+              "sha256": "440d785e22bd211e410b80800424be156b224569b4530a36637cd6e5fd211bcb"
             },
-            "/tmp/fruitfolio_book_contents_native.log": {
-              "bytes": 1281083,
-              "sha256": "a8cb998c62cec7eee3dbf3db9a59b10e37ec723b96be1fbbf61c78c15b2345a3"
+            "/tmp/fruitfolio_editor_copy_native.log": {
+              "bytes": 1281679,
+              "sha256": "1d6030a89036322068c9935c417582559a37fa867219222793c431fc82bd50c7"
             },
-            "/tmp/fruitfolio_book_contents_workflow_final.log": {
+            "/tmp/fruitfolio_editor_copy_focused.log": {
+              "bytes": 30023,
+              "sha256": "87b512f708257a5e87af66c7d014981c97e742e12ac71fc8b238debd7f097e50"
+            },
+            "/tmp/fruitfolio_editor_copy_workflow.log": {
               "bytes": 169,
-              "sha256": "12c89bf1907850e6db1529e577fa6b7cb91d6f5336caf4b87af57afb82ea9fcd"
+              "sha256": "2fac5642b0108f45f4f9263818977cf0e0fc81beb00bc848d9aee2965f7fe723"
             },
-            "/tmp/fruitfolio_book_contents_syntax_final.log": {
+            "/tmp/fruitfolio_editor_copy_syntax_final.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_book_contents_ownership.log": {
+            "/tmp/fruitfolio_editor_copy_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Four Apple contents/control/RTL/count/expansion/selection vectors at XXXL and both motion modes",
-          "Apple SDK typecheck/build, VoiceOver/focus and physical-device acceptance",
-          "Official MADLAD inference and translated-layout/linguistic/clinical quality acceptance"
+          "Four Apple editor fixed-prompt/validation/exact-draft/keep/discard/reopen vectors",
+          "Apple SDK typecheck/build, keyboard/focus/picker/VoiceOver/RTL/XXXL/Reduce Motion and device acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical safety acceptance"
         ],
         "remaining": [
-          "Execute written real Apple book vectors, including physical page order and header artwork separation",
-          "Verify actual translated labels in supported languages; paused English fallback is not language acceptance",
-          "Legacy chapter names remain verbatim because default/authored provenance cannot be inferred"
+          "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+          "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+          "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute written real Apple book vectors, including physical page order and header artwork separation",
-        "Verify actual translated labels in supported languages; paused English fallback is not language acceptance",
-        "Legacy chapter names remain verbatim because default/authored provenance cannot be inferred"
+        "Execute written Apple vectors with genuine SwiftUI and verify original native bindings",
+        "Initial focused nine tests precede added numeric-envelope case; both final full suites include that case",
+        "Continue Guide fixed copy and error provenance without translating authored labels or unsafe unknown errors"
       ],
-      "commit_reference": "batch:Book-contents-controlled-copy-native-counts-and-RTL-labels (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:30:37.912062+00:00"
+      "commit_reference": "batch:User-material-editor-fixed-prompts-and-typed-validation (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T05:36:04.528261+00:00"
     },
     {
       "id": "SPEC-7.9.7",
