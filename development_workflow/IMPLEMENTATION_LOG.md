@@ -3920,3 +3920,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"current_focused_XCTest": 3, "log": "/tmp/fruitfolio_rhythm_isolation_focused.log", "syntax_files": 320, "syntax_log": "/tmp/fruitfolio_rhythm_isolation_syntax.log", "prior_storage_XCTest": 39, "prior_storage_log": "/tmp/fruitfolio_hormone_history_order_final.log"}.
 - Next action: Continue required shared semantic coverage for actual app-generated/character copy across Part1 and other parts, using exact full-source contextual roles rather than global keyword emphasis; do not retry the unavailable clinical-method dependency.
 - Commit: containing commit for batch Adjusted-rhythm-specific-dependency-and-independent-guards.
+
+## Authored-account-and-game-dialogue-contextual-roles
+
+- Parent checkpoint: 3fa72d425c2dca53d69f01b18fad114dc36f9101.
+- Source-order requirements: [47, 48, 50, 51, 55, 58, 59, 388, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift, Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift, FruitfolioTests/Prompt1BAccountDraftExitTests.swift, FruitfolioTests/Prompt1BLevelResetSessionTests.swift.
+- Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted.
+- Tests added/updated: Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction, Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise.
+- Verification: {"focused_portable_XCTest_passed": 21, "full_portable_XCTest_passed": 1013, "SwiftTesting_passed": 21, "workflow_passed": 71, "syntax_files": 320}.
+- Next action: Fix demonstrated Fertilization stage/content ownership race: old provider can publish after stage changes before next load begins, and transition completion is unowned. Invalidate stage loads synchronously, cancel/settle owned transitions on lifecycle/Reduce Motion, add real Apple VM regression (NOT_RUN on Linux), and preserve original six stages/art/research.
+- Commit: containing commit for batch Authored-account-and-game-dialogue-contextual-roles.

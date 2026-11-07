@@ -4,6 +4,24 @@ import XCTest
 
 @MainActor
 final class Prompt1BLevelResetSessionTests: XCTestCase {
+    func testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise() async throws {
+        let spans = Prompt28LevelResetSession.messageSpans
+        let original = "start this topic’s game level over?\n\nthe catching will go back to the gentlest level. your learning topic, question difficulty, saved encyclopedia entries, and scores won’t disappear."
+        XCTAssertEqual(Data(spans.map(\.text).joined().utf8), Data(original.utf8))
+        XCTAssertEqual(spans.filter { $0.emphasis == .anchorBold }.map(\.text),
+            ["start this topic’s game level over?", "gentlest level"])
+        XCTAssertEqual(spans.filter { $0.emphasis == .symptomOrPracticalUnderline }.map(\.text), ["won’t disappear"])
+        let coordinator = PopupCoordinator()
+        let session = Prompt28LevelResetSession(coordinator: coordinator)
+        session.present(context: context())
+        let request = try XCTUnwrap(coordinator.currentPopup)
+        XCTAssertTrue(request.message.contains("**gentlest level**"))
+        XCTAssertTrue(request.message.contains("<u>won’t disappear</u>"))
+        XCTAssertEqual(request.tone, .cautionary)
+        XCTAssertEqual(request.surface, .tapedWhite)
+        session.cancel()
+    }
+
     private func context(_ topic: String = "fixture", id: UUID? = UUID(), origin: Prompt28ScreenState = .paused) -> Prompt28LevelResetContext {
         .init(normalizedTopic: topic, sessionID: id, origin: origin)
     }

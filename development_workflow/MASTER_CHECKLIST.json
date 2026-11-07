@@ -4691,7 +4691,11 @@
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Tools/run_portable_swift_tests.py",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4715,9 +4719,11 @@
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
@@ -4733,40 +4739,31 @@
         "Classification progress separates fixed translated labels from immutable locale-formatted counts; real fruit/marker descriptions and question/star/settling copy use the shared truthful translation path. Serious contexts use neutral catch/pass labels, retaining original ordinary labels and callbacks. Twenty-four English keys preserve 739 earlier entries. Eight Apple actual catch/pass ledger presentation cases added but NOT_RUN; no physics, scoring, assets or research edits.",
         "Actual moving fruit and standalone stars use one shared-state image accessibility translation owner with complete descriptions/plain semantic labels/truthful status hints. Classification supplies its existing full marker description to that owner instead of nested translation states. Keys exclude frame coordinates and counts. Twenty English keys preserve 765 prior entries. Four Apple layout-only object cases added but NOT_RUN; no art, science, geometry or physics edits.",
         "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
       ],
       "prior_batch_verifications": [
         {
@@ -4788,6 +4785,32 @@
             "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
             "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
             "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -4852,7 +4875,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Tools/run_portable_swift_tests.py",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4887,9 +4914,11 @@
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt1BCatalogTranslationTests.swift",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
@@ -4911,40 +4940,31 @@
         "Existing setup loading/level/welcome words/fonts now shared semantic translation with native protected level numerals. Private typed topic stays local for existing safety-tone decision; only controlled message translates with brand protection. Serious message suppresses playful art; neutral retains decorative/nonhit art. One actual-provider/controller test covers3contexts. Eight Apple English/Arabicpaused\u00d7ReduceMotion\u00d7urgent/neutral launchvectors written, NOT_RUN; actual conditional branch debugprobe includes positivecontrol, notpixelproof. Existing duplicate-source guards alreadyprotectsaved metadata; no unnecessaryschema/citation change. Full880/902XCTest+21SwiftTesting each pass. Friendly unsupported/exhausted wording stillnext, no official/Applecertification.",
         "Serious unsupported/exhausted research responses use2controlled neutral strings; neutralcopy/otherdescriptions/canonicalurgenttext preserved. Typed context onlylocalBoolean, neverincopyAPI.10case baseline3fail; firstfull still1opaqueurgenttone failure, fixed byexplicit canonical-source recognition, not keyword-only inference. Final882/904XCTest+21SwiftTesting each pass. Catalog965old+2English=967/0foreign preserved; safetySourceSHA unchanged. StatusUI expands20launchvectors inclopaqueurgent/expectedbody/assertionpositiveartcontrol, ALL_NOT_RUN. No clinical/officialmodel/wholeitemcertification.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
       ],
       "prior_batch_verifications": [
         {
@@ -4963,6 +4983,32 @@
             "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
             "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
             "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -5062,7 +5108,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Tools/run_portable_swift_tests.py",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5080,49 +5130,70 @@
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
         "Fixed statistic labels use shared control translation, integers/fractions/signed scores use display-only Foundation locale formatting and never enter inference. Failure copy preserves serious/story choice; serious retry omits heart. Ending fruit is an explicit whole-name semantic anchor within a full sentence. Two Foundation formatting regressions across all locales and integer limits pass; eight Apple UI ledger/readback/retry scenarios added but unrun. Real QA model/store are observed. Twenty-seven English-only keys preserve 681 prior entries.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -5143,7 +5214,11 @@
         "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Tools/run_portable_swift_tests.py",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5154,46 +5229,67 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -5413,7 +5509,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Tools/run_portable_swift_tests.py",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5427,46 +5527,67 @@
         "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
         "ResearchCompilationTests",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -5573,7 +5694,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Tools/run_portable_swift_tests.py",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5587,46 +5712,67 @@
         "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
         "ResearchCompilationTests",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -5661,7 +5807,10 @@
         "Tools/record_prompt1b_batch.py",
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5680,9 +5829,11 @@
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
@@ -5694,40 +5845,31 @@
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
       ],
       "prior_batch_verifications": [
         {
@@ -5751,6 +5893,32 @@
             "Inspect actual screenshots and VoiceOver completion/personal-best label plus immutable fraction; verify physical audio separately from request counters",
             "Reconcile all other affected app-wide paths against each original requirement; these batch results do not close the entire requirement",
             "Run official MADLAD translation and clinical/language acceptance after genuine resources and Apple/device tooling are available"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -29877,7 +30045,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioCitationRegressionHarness.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md"
+        "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29887,30 +30059,54 @@
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
         "Prompt1BFruitBasketResearchTests",
         "Prompt06FruitPopupTests (7 actual core cases portable; Combine publisher case Apple NOT_RUN)",
-        "Prompt1BModalAccessibilityTests (nested host/citation root+native scope UI NOT_RUN)"
+        "Prompt1BModalAccessibilityTests (nested host/citation root+native scope UI NOT_RUN)",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Language-write-acknowledgement-and-art-verification-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Real root/native-surface popup scope and original citations\n\nTargeted citation failure work exposed an actual gap: FruitPopupHost existed in Hub/gallery but did not apply the shared blur itself, and other root routes had no host. The real root now wraps the existing NavigationStack with that same host. A scoped environment flag suppresses nested Hub/gallery hosts, preserving the existing character artwork, placement, queue and timing instead of rebuilding them or rendering duplicate dialogs. The host now owns shared blur/dim, no spatial scale under Reduce Motion, whole-content hit/VoiceOver exclusion, and modal accessibility traits.\n\nNative Guide read-mode covers and Hormone Library sheets receive a presentation-surface host with its own coordinator. This prevents dialogs from rendering behind UIKit presentations or replaying sounds in root and modal hosts. The same host implementation handles both scopes. A new taped-white request surface uses the existing measured artwork/writing aperture, scroll, explicit actions, shared style/sounds and safe Escape dismissal. It renders no fruit character for the source-link error. Existing character speech remains the default. Root and native presentation/VoiceOver geometry remain Apple-runtime gates.\n\nThe last citation-link system alert is replaced by the owned white-paper request. Original citation titles, full APA/source text (when distinct from the title), publication data, DOI and URL remain verbatim/selectable. A late/superseded/disappeared source component cannot intentionally issue an obsolete request; owner disappearance/source changes cancel its current/queued request. Focus is requested back to a still-existing source button after dismissal. No clinical meaning, reference spelling or user data is rewritten.\n\nThe new queue-cancellation regression initially exposed a real defect: removing a queued request failed to remove its deduplication key, preventing retry. Cancellation now uses the existing key cleanup routine. Seven actual production coordinator tests execute on Linux after removing unnecessary SwiftUI imports and conditionally enabling only the real Combine observation layer on Apple. No fake ObservableObject/Published implementation or mirrored coordinator is used. Four pre-existing synchronous MainActor methods were made async for Linux XCTest discovery; assertions remain. A real Combine publisher regression is Apple-only and NOT_RUN.\n\nAdded actual UI source covers one nested root character popup, one measured citation popup, background exclusion/restoration, source controls and screenshots at accessibility XXXL in both motion settings and native-sheet/root scope. Corrected four invalid/redundant element firstMatch query forms in UI source. All added UIKit/SwiftUI tests and screenshots remain NOT_RUN. No visual, focus, sound or native-sheet layering success is inferred from source parsing.\n\nFinal available verification:475 portable XCTest +21 Swift Testing passed;480 actual native-linked XCTest +21 Swift Testing passed. Twenty-nine workflow tests pass;248 changed Swift files compiler-parse without syntax errors; Xcode project build-file references resolve. The configured XCFramework/Xcode and actual MADLAD resources/clinical/device acceptance remain external gates. Metadata/algorithm tests do not establish app typechecking or UI runtime behavior.\n",
-        "Verification carry-forward only; existing implementation evidence remains open, without a repeated broad audit or whole-item certification. Review actual dialogue semantic styling and clinical/source protection."
+        "Verification carry-forward only; existing implementation evidence remains open, without a repeated broad audit or whole-item certification. Review actual dialogue semantic styling and clinical/source protection.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T01:31:35.009739+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Language-write-acknowledgement-and-art-verification-handoff",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "carry_forward": "Existing evidence retained; current Linux checks do not execute this original Apple appearance/interaction acceptance."
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Review actual dialogue semantic styling and clinical/source protection."
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Review actual dialogue semantic styling and clinical/source protection."
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Review actual dialogue semantic styling and clinical/source protection."
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Language-write-acknowledgement-and-art-verification-handoff",
+          "executed": {
+            "carry_forward": "Existing evidence retained; current Linux checks do not execute this original Apple appearance/interaction acceptance."
+          },
+          "not_run": [
+            "Review actual dialogue semantic styling and clinical/source protection."
+          ],
+          "remaining": [
+            "Review actual dialogue semantic styling and clinical/source protection."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -38120,7 +38316,9 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
+        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38278,9 +38476,11 @@
         "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
         "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts",
         "Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
-        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
+        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -38402,37 +38602,31 @@
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
         "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
         "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.",
-        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted."
+        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T12:02:04.917307+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_actual_domain_XCTest": 17,
-          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
-          "workflow": 71,
-          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
-          "syntax_files": 320,
-          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
-          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
-        "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
       ],
       "prior_batch_verifications": [
         {
@@ -38771,6 +38965,29 @@
             "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
             "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
             "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+          "executed": {
+            "focused_actual_domain_XCTest": 17,
+            "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+            "workflow": 71,
+            "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+            "syntax_files": 320,
+            "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+          },
+          "not_run": [
+            "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+            "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+            "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+          ],
+          "remaining": [
+            "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+            "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+            "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+            "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -38973,7 +39190,10 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
+        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json",
+        "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/Prompt1BLevelResetSessionTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -39126,9 +39346,11 @@
         "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
         "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts",
         "Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
-        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
+        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords",
+        "Prompt1BAccountDraftExitTests.testContextualDraftEmphasisRetainsEveryOriginalVisibleByteAndAction",
+        "Prompt1BLevelResetSessionTests.testResetDialogueEmphasizesActualLevelScopeWithoutChangingSavedDataPromise"
       ],
-      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
+      "commit_reference": "batch:Authored-account-and-game-dialogue-contextual-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -39233,37 +39455,31 @@
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
         "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
         "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.",
-        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted."
+        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted.",
+        "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted."
       ],
-      "last_updated": "2026-11-07T12:02:04.917307+00:00",
+      "last_updated": "2026-11-07T12:15:55.007933+00:00",
       "latest_batch_verification": {
-        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+        "batch": "Authored-account-and-game-dialogue-contextual-roles",
         "executed": {
-          "focused_actual_domain_XCTest": 17,
-          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
-          "workflow": 71,
-          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
-          "syntax_files": 320,
-          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+          "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
+          "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
+          "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
         },
         "not_run": [
-          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+          "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
+          "Official MADLAD semantic-tag translation and native-language review."
         ],
         "remaining": [
-          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
-          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+          "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+          "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
-        "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+        "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
+        "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
       ],
       "prior_batch_verifications": [
         {
@@ -39602,6 +39818,29 @@
             "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
             "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
             "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+          "executed": {
+            "focused_actual_domain_XCTest": 17,
+            "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+            "workflow": 71,
+            "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+            "syntax_files": 320,
+            "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+          },
+          "not_run": [
+            "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+            "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+            "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+          ],
+          "remaining": [
+            "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+            "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+            "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+            "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

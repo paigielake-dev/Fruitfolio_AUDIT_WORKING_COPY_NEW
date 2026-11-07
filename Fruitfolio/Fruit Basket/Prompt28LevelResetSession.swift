@@ -16,6 +16,16 @@ nonisolated struct Prompt28LevelResetContext: Equatable, Sendable {
 @MainActor
 final class Prompt28LevelResetSession {
     enum Choice { case cancel, reset(Prompt28LevelResetContext) }
+    /// A level/speed reset has a narrower scope than deleting learning or
+    /// scores. These roles annotate this full authored explanation only.
+    static let messageSpans: [FruitfolioSemanticSpan] = [
+        .init(text: "start this topic’s game level over?", emphasis: .anchorBold),
+        .init(text: "\n\nthe catching will go back to the "),
+        .init(text: "gentlest level", emphasis: .anchorBold),
+        .init(text: ". your learning topic, question difficulty, saved encyclopedia entries, and scores "),
+        .init(text: "won’t disappear", emphasis: .symptomOrPracticalUnderline),
+        .init(text: ".")
+    ]
     private let coordinator: PopupCoordinator
     private let owner: FruitfolioOwnedPopupSession
     private let scope = UUID()
@@ -30,7 +40,8 @@ final class Prompt28LevelResetSession {
         if let id = owner.requestID, coordinator.containsRequest(id: id) { return }
         owner.present { id in
             FruitPopupRequest(id: id, character: .peach,
-                message: "**start this topic’s game level over?**\n\nthe catching will go back to the gentlest level. your learning topic, question difficulty, saved encyclopedia entries, and scores won’t disappear.",
+                message: FruitfolioSemanticMarkup.markdown(
+                    FruitfolioSemanticPolicy.normalized(Self.messageSpans, serious: true)),
                 primaryAction: .init(label: "never mind") { self.choose(.cancel, id: id) },
                 secondaryAction: .init(label: "yes, reset level") { self.choose(.reset(context), id: id) },
                 dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
