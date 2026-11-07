@@ -9474,7 +9474,9 @@
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9488,37 +9490,58 @@
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
         "Prompt1BEvidenceBoundaryTests",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BAskLifecycleTests.testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes"
       ],
-      "commit_reference": "batch:Ask-transient-claim-evidence-token-reuse (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-full-source-display-translation-overlap (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
         "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
-        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion."
+        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion.",
+        "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation."
       ],
-      "last_updated": "2026-11-07T09:34:01.484434+00:00",
+      "last_updated": "2026-11-07T11:39:30.195080+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-transient-claim-evidence-token-reuse",
+        "batch": "Ask-full-source-display-translation-overlap",
         "executed": {
-          "focused_XCTest_passed": 6,
-          "swift_syntax_files": 319,
-          "syntax_errors": 0
+          "workflow": "/tmp/fruitfolio_answer_overlap_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_answer_overlap_syntax.log: 320 parsed, 0 errors",
+          "scope": "View-only changes; portable/native suites do not compile these UI owners and were not redundantly rerun."
         },
         "not_run": [
-          "Apple device responsiveness/latency profiling",
-          "Native model generation and official MADLAD not exercised by this focused regression"
+          "New actual UIKit UIHostingController + temporary real French catalog test; Apple build/typechecking, UI, selection, VoiceOver, RTL, typewriter-ASMR acceptance.",
+          "Official MADLAD answer translation and real-device performance."
         ],
         "remaining": [
-          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
-          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+          "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+          "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
-        "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+        "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Ask-transient-claim-evidence-token-reuse",
+          "executed": {
+            "focused_XCTest_passed": 6,
+            "swift_syntax_files": 319,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "Apple device responsiveness/latency profiling",
+            "Native model generation and official MADLAD not exercised by this focused regression"
+          ],
+          "remaining": [
+            "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+            "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -9531,7 +9554,9 @@
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9541,14 +9566,37 @@
         "Prompt1BResearchRetrievalTests",
         "Prompt1BEvidenceBoundaryTests",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests"
+        "Prompt1BResearchEngineIntegrationTests",
+        "Prompt1BAskLifecycleTests.testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-full-source-display-translation-overlap (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-07T11:39:30.195080+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-full-source-display-translation-overlap",
+        "executed": {
+          "workflow": "/tmp/fruitfolio_answer_overlap_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_answer_overlap_syntax.log: 320 parsed, 0 errors",
+          "scope": "View-only changes; portable/native suites do not compile these UI owners and were not redundantly rerun."
+        },
+        "not_run": [
+          "New actual UIKit UIHostingController + temporary real French catalog test; Apple build/typechecking, UI, selection, VoiceOver, RTL, typewriter-ASMR acceptance.",
+          "Official MADLAD answer translation and real-device performance."
+        ],
+        "remaining": [
+          "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+          "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+        "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
+      ]
     },
     {
       "sequence": 133,
@@ -9629,17 +9677,40 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt1BEvidenceBoundaryTests"
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BAskLifecycleTests.testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-full-source-display-translation-overlap (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-07T11:39:30.195080+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-full-source-display-translation-overlap",
+        "executed": {
+          "workflow": "/tmp/fruitfolio_answer_overlap_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_answer_overlap_syntax.log: 320 parsed, 0 errors",
+          "scope": "View-only changes; portable/native suites do not compile these UI owners and were not redundantly rerun."
+        },
+        "not_run": [
+          "New actual UIKit UIHostingController + temporary real French catalog test; Apple build/typechecking, UI, selection, VoiceOver, RTL, typewriter-ASMR acceptance.",
+          "Official MADLAD answer translation and real-device performance."
+        ],
+        "remaining": [
+          "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+          "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+        "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
+      ]
     },
     {
       "sequence": 135,
@@ -36941,7 +37012,8 @@
         "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
         "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
         "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
-        "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json"
+        "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37087,9 +37159,10 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
-        "FruitfolioTests/Prompt1BLifeBridgeTests.swift"
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "Prompt1BAskLifecycleTests.testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes"
       ],
-      "commit_reference": "batch:LifeBridge-approved-publisher-Ask-consumer-and-shared-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-full-source-display-translation-overlap (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -37206,40 +37279,30 @@
         "Fix actual queued-send race: snapshot authorized input bytes and known-suggestion language before view-model publications/child-task scheduling; never reread a newer composer draft as the submitted question. Clear only the matching original draft; a local composer revision prevents failure restoration over a deliberately changed-then-empty draft. Real view also cancels a queued send if text changed before dispatch, with typed fixed-copy notice; optional context still requires exact consent. Two actual Apple Combine regression cases added, NOT_RUN. Seven context boundary tests and319 syntax checks pass; no source-presence-based completion promotion.",
         "Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified.",
         "Repair actual audio lifecycle gaps: initial/current foreground gate, immediate synchronous main-queue notification handling, willResign physical stop, all-category owned-loop restoration, and shouldResume-dependent per-channel automatic-resume holds. A one-shot cannot unlock held music. Existing explicit Settings controls grant appropriate fresh intent without changing stored keys/preferences/artwork or replaying one-shots. Seventeen real Foundation settings/policy tests and71 workflow checks pass;320 syntax parses/zero sound-ownership findings. Three genuine Apple AVAudioPlayer cases written NOT_RUN; no runtime or whole audio completion promotion.",
-        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion."
+        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
+        "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation."
       ],
-      "last_updated": "2026-11-07T11:31:51.408532+00:00",
+      "last_updated": "2026-11-07T11:39:30.195080+00:00",
       "latest_batch_verification": {
-        "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+        "batch": "Ask-full-source-display-translation-overlap",
         "executed": {
-          "focused_portable_XCTest_passed": 29,
-          "latest_publisher_only_XCTest_passed": 14,
-          "full_portable_XCTest_passed": 1002,
-          "SwiftTesting_full_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 30,
-          "workflow_passed": 71,
-          "swift_syntax_files": 320,
-          "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          "workflow": "/tmp/fruitfolio_answer_overlap_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_answer_overlap_syntax.log: 320 parsed, 0 errors",
+          "scope": "View-only changes; portable/native suites do not compile these UI owners and were not redundantly rerun."
         },
         "not_run": [
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "New actual UIKit UIHostingController + temporary real French catalog test; Apple build/typechecking, UI, selection, VoiceOver, RTL, typewriter-ASMR acceptance.",
+          "Official MADLAD answer translation and real-device performance."
         ],
         "remaining": [
-          "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-          "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-          "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+          "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-        "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-        "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-        "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-        "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+        "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+        "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
       ],
       "prior_batch_verifications": [
         {
@@ -37478,6 +37541,31 @@
           "remaining": [
             "Apple SDK typecheck and all10 real AudioSettings unit tests, including3 new cases, remain NOT_RUN on Linux.",
             "Real-device hearing, audio route/call/headphone interruption, first-launch/foreground timing and latency require Apple execution. Foundation policy tests do not verify AVAudioPlayer behavior."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+          "executed": {
+            "focused_portable_XCTest_passed": 29,
+            "latest_publisher_only_XCTest_passed": 14,
+            "full_portable_XCTest_passed": 1002,
+            "SwiftTesting_full_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 30,
+            "workflow_passed": 71,
+            "swift_syntax_files": 320,
+            "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          },
+          "not_run": [
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "remaining": [
+            "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
+            "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
+            "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37671,7 +37759,8 @@
         "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
         "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
         "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
-        "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json"
+        "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37812,9 +37901,10 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
-        "FruitfolioTests/Prompt1BLifeBridgeTests.swift"
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "Prompt1BAskLifecycleTests.testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes"
       ],
-      "commit_reference": "batch:LifeBridge-approved-publisher-Ask-consumer-and-shared-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-full-source-display-translation-overlap (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -37914,40 +38004,30 @@
         "Fix actual queued-send race: snapshot authorized input bytes and known-suggestion language before view-model publications/child-task scheduling; never reread a newer composer draft as the submitted question. Clear only the matching original draft; a local composer revision prevents failure restoration over a deliberately changed-then-empty draft. Real view also cancels a queued send if text changed before dispatch, with typed fixed-copy notice; optional context still requires exact consent. Two actual Apple Combine regression cases added, NOT_RUN. Seven context boundary tests and319 syntax checks pass; no source-presence-based completion promotion.",
         "Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified.",
         "Repair actual audio lifecycle gaps: initial/current foreground gate, immediate synchronous main-queue notification handling, willResign physical stop, all-category owned-loop restoration, and shouldResume-dependent per-channel automatic-resume holds. A one-shot cannot unlock held music. Existing explicit Settings controls grant appropriate fresh intent without changing stored keys/preferences/artwork or replaying one-shots. Seventeen real Foundation settings/policy tests and71 workflow checks pass;320 syntax parses/zero sound-ownership findings. Three genuine Apple AVAudioPlayer cases written NOT_RUN; no runtime or whole audio completion promotion.",
-        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion."
+        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
+        "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation."
       ],
-      "last_updated": "2026-11-07T11:31:51.408532+00:00",
+      "last_updated": "2026-11-07T11:39:30.195080+00:00",
       "latest_batch_verification": {
-        "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+        "batch": "Ask-full-source-display-translation-overlap",
         "executed": {
-          "focused_portable_XCTest_passed": 29,
-          "latest_publisher_only_XCTest_passed": 14,
-          "full_portable_XCTest_passed": 1002,
-          "SwiftTesting_full_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 30,
-          "workflow_passed": 71,
-          "swift_syntax_files": 320,
-          "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          "workflow": "/tmp/fruitfolio_answer_overlap_workflow.log: 71 passed",
+          "syntax": "/tmp/fruitfolio_answer_overlap_syntax.log: 320 parsed, 0 errors",
+          "scope": "View-only changes; portable/native suites do not compile these UI owners and were not redundantly rerun."
         },
         "not_run": [
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "New actual UIKit UIHostingController + temporary real French catalog test; Apple build/typechecking, UI, selection, VoiceOver, RTL, typewriter-ASMR acceptance.",
+          "Official MADLAD answer translation and real-device performance."
         ],
         "remaining": [
-          "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-          "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-          "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+          "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-        "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-        "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-        "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-        "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+        "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+        "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
       ],
       "prior_batch_verifications": [
         {
@@ -38186,6 +38266,31 @@
           "remaining": [
             "Apple SDK typecheck and all10 real AudioSettings unit tests, including3 new cases, remain NOT_RUN on Linux.",
             "Real-device hearing, audio route/call/headphone interruption, first-launch/foreground timing and latency require Apple execution. Foundation policy tests do not verify AVAudioPlayer behavior."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+          "executed": {
+            "focused_portable_XCTest_passed": 29,
+            "latest_publisher_only_XCTest_passed": 14,
+            "full_portable_XCTest_passed": 1002,
+            "SwiftTesting_full_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 30,
+            "workflow_passed": 71,
+            "swift_syntax_files": 320,
+            "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          },
+          "not_run": [
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "remaining": [
+            "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
+            "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
+            "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

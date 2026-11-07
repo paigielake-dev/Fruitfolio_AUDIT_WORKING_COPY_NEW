@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-11-07T11:39:30.195080+00:00",
+  "requirements": [
+    131,
+    132,
+    134,
+    443,
+    444
+  ],
+  "supplemental_requirements": [],
+  "commands": [
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "PYTHONDONTWRITEBYTECODE=1 FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+    "git diff --check"
+  ],
+  "results": {
+    "workflow_passed": 71,
+    "changed_Swift_files_syntax_parsed": 320,
+    "syntax_errors": 0
+  },
+  "verification": {
+    "executed": {
+      "workflow": "/tmp/fruitfolio_answer_overlap_workflow.log: 71 passed",
+      "syntax": "/tmp/fruitfolio_answer_overlap_syntax.log: 320 parsed, 0 errors",
+      "scope": "View-only changes; portable/native suites do not compile these UI owners and were not redundantly rerun."
+    },
+    "not_run": [
+      "New actual UIKit UIHostingController + temporary real French catalog test; Apple build/typechecking, UI, selection, VoiceOver, RTL, typewriter-ASMR acceptance.",
+      "Official MADLAD answer translation and real-device performance."
+    ],
+    "remaining": [
+      "Apple execution must establish prompt target display before the >10-second source stream, unchanged original, target selection language and cancellation ownership.",
+      "No whole-requirement IMPLEMENTED/VERIFIED promotion; broader performance, complete pipeline and localization acceptance remain."
+    ]
+  }
+}

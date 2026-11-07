@@ -1,5 +1,7 @@
 import XCTest
 import Combine
+import SwiftUI
+import UIKit
 @testable import Fruitfolio
 
 private actor Prompt1BSuspendedAskEngine: AskKnowledgeServing {
@@ -47,8 +49,70 @@ private actor Prompt1BLanguageCaptureAskEngine: AskLocalizedResearchServing {
     }
 }
 
+private actor Prompt1BLongAnswerFixture: AskKnowledgeServing {
+    static let source = String(repeating: "nonclinical source fixture. ", count: 100)
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        .init(originalQuestion: question, answerText: Self.source,
+              support: .genuinelyNovel, knowledgeBaseVersion: "display-overlap-fixture")
+    }
+}
+
 @MainActor
 final class Prompt1BAskLifecycleTests: XCTestCase {
+    func testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".bundle")
+        let folder = root.appendingPathComponent("fr.lproj")
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        try PropertyListSerialization.data(fromPropertyList: [
+            "CFBundleIdentifier": "fixture." + UUID().uuidString, "CFBundleDevelopmentRegion": "en"
+        ], format: .xml, options: 0).write(to: root.appendingPathComponent("Info.plist"))
+        let target = "texte de démonstration non clinique"
+        try PropertyListSerialization.data(fromPropertyList: [Prompt1BLongAnswerFixture.source: target],
+            format: .binary, options: 0).write(to: folder.appendingPathComponent("Localizable.strings"))
+        let bundle = try XCTUnwrap(Bundle(url: root))
+        let suite = "display-overlap." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.language = .french
+        let model = Prompt09AskViewModel(engine: Prompt1BLongAnswerFixture())
+        model.inputText = "original nonclinical question"
+        await model.submitCurrentQuestion(reduceMotion: false)
+        let answer = try XCTUnwrap(model.answer)
+        XCTAssertEqual(model.phase, .answering)
+        XCTAssertLessThan(model.displayedAnswerText.count, answer.answerText.count)
+        let host = UIHostingController(rootView:
+            Prompt09LocalizedAnswerText(answer: answer, viewModel: model, bundle: bundle)
+                .environmentObject(settings))
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow)
+        let window = UIWindow(windowScene: scene)
+        window.rootViewController = host
+        window.makeKeyAndVisible()
+        defer {
+            window.isHidden = true
+            window.rootViewController = nil
+            previous?.makeKey()
+            model.resetConversation()
+        }
+        func containsTarget(_ view: UIView) -> Bool {
+            if let editor = view as? UITextView, editor.text == target { return true }
+            return view.subviews.contains(where: containsTarget)
+        }
+        // The source takes many seconds to animate; the complete catalog result
+        // must appear promptly through the real SwiftUI translation owner.
+        for _ in 0..<100 {
+            if model.phase == .ready, containsTarget(host.view) { break }
+            try await Task.sleep(nanoseconds: 20_000_000)
+        }
+        XCTAssertEqual(model.phase, .ready)
+        XCTAssertTrue(containsTarget(host.view))
+        XCTAssertEqual(model.answer?.answerText, Prompt1BLongAnswerFixture.source)
+        XCTAssertEqual(model.answer?.originalQuestion, "original nonclinical question")
+        XCTAssertEqual(model.displayedAnswerText, Prompt1BLongAnswerFixture.source)
+    }
+
     func testSubmissionFreezesOriginalBytesBeforePublishedStateCanChangeTheDraft() async {
         let engine = Prompt1BLanguageCaptureAskEngine()
         let model = Prompt09AskViewModel(engine: engine)

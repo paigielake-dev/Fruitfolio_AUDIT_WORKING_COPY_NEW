@@ -3836,3 +3836,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_portable_XCTest_passed": 29, "latest_publisher_only_XCTest_passed": 14, "full_portable_XCTest_passed": 1002, "SwiftTesting_full_portable_passed": 21, "native_CPU_focused_XCTest_passed": 30, "workflow_passed": 71, "swift_syntax_files": 320, "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."}.
 - Next action: Remove confirmed unnecessary sequencing of answer display translation behind the entire English-source typewriter. Keep one translation owner, full validated source, original toggles/citations and source selection; add genuine Apple catalog/streaming regression without fake SDK. Then continue remaining first-party brand/Hormone Library/original-founder work.
 - Commit: containing commit for batch LifeBridge-approved-publisher-Ask-consumer-and-shared-owner.
+
+## Ask-full-source-display-translation-overlap
+
+- Parent checkpoint: 4d356e55dcdcc01c86bc25b1a94e6268b35d95c7.
+- Source-order requirements: [131, 132, 134, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, FruitfolioTests/Prompt1BAskLifecycleTests.swift.
+- Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation.
+- Tests added/updated: Prompt1BAskLifecycleTests.testCompleteCatalogAnswerAppearsBeforeEnglishTypewriterFinishes.
+- Verification: {"workflow_passed": 71, "changed_Swift_files_syntax_parsed": 320, "syntax_errors": 0}.
+- Next action: Correct byte-exact display translation identity so canonically equivalent but byte-different original text/protected citations cannot reuse an accepted result; then continue missing functionality across remaining parts.
+- Commit: containing commit for batch Ask-full-source-display-translation-overlap.

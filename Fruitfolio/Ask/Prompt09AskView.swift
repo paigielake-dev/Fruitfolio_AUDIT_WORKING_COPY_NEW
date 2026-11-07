@@ -839,50 +839,10 @@ struct Prompt09AskView: View {
                         #endif
                     }
 
-                    if viewModel.phase ==
-                        .answering {
+                    Prompt09LocalizedAnswerText(answer: answer, viewModel: viewModel)
+                        .frame(maxWidth: .infinity)
 
-                        FruitfolioSemanticText(
-                            spans: viewModel.displayedSemanticSpans,
-                            baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body)
-                        )
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 16,
-                                relativeTo:
-                                    .body
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .primaryBurgundy
-                        )
-                        .lineSpacing(4)
-                        .frame(
-                            maxWidth:
-                                .infinity,
-                            alignment:
-                                .leading
-                        )
-
-                    } else {
-                        FruitfolioTranslatedContent(source: viewModel.displayedAnswerText,
-                                                     protectedLiterals: answer.sourceIDs + (answer.answerPath == .publisherInformation ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []), sourceRecords: answer.sources) { display, displayLanguage in
-                            Prompt09MaroonSelectableAnswerText(
-                                text: display,
-                                selectedText: $viewModel.selectedExcerptText,
-                                selectedRange: $viewModel.selectedExcerptRange,
-                                selectedSemanticSpans: $viewModel.selectedExcerptSemanticSpans,
-                                selectedLanguage: $viewModel.selectedExcerptLanguage, renderedLanguage: displayLanguage
-                            )
-                        }
-                        .frame(
-                            maxWidth:
-                                .infinity
-                        )
-
+                    if viewModel.phase != .answering {
                         if viewModel
                             .selectedExcerptText !=
                             nil {
@@ -1634,6 +1594,48 @@ private struct FruitfolioPressBounce<Content: View>: View {
 /// Fruitfolio-owned selectable answer text.
 /// The selection controls use the exact founder-approved maroon #800000,
 /// so selection never falls back to the previous pink accent.
+/// Starts display translation from the complete validated answer while the
+/// original English animation runs. The source never changes with each prefix.
+struct Prompt09LocalizedAnswerText: View {
+    let answer: AskAnswer
+    @ObservedObject var viewModel: Prompt09AskViewModel
+    var bundle: Bundle = .main
+
+    var body: some View {
+        FruitfolioTranslatedContent(source: answer.answerText,
+            protectedLiterals: answer.sourceIDs + (answer.answerPath == .publisherInformation
+                ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []),
+            sourceRecords: answer.sources, bundle: bundle) { display, displayLanguage in
+            Group {
+                if viewModel.answer?.id == answer.id,
+                   viewModel.phase == .answering, displayLanguage == "en" {
+                    FruitfolioSemanticText(spans: viewModel.displayedSemanticSpans,
+                        baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
+                        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .lineSpacing(4)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    Prompt09MaroonSelectableAnswerText(text: display,
+                        selectedText: $viewModel.selectedExcerptText,
+                        selectedRange: $viewModel.selectedExcerptRange,
+                        selectedSemanticSpans: $viewModel.selectedExcerptSemanticSpans,
+                        selectedLanguage: $viewModel.selectedExcerptLanguage,
+                        renderedLanguage: displayLanguage)
+                }
+            }
+            .onChange(of: displayLanguage, initial: true) { _, language in
+                // A completed target has no remaining English animation to show.
+                // Do not let an obsolete answer end a newer request's stream.
+                if language != "en", viewModel.answer?.id == answer.id,
+                   viewModel.phase == .answering {
+                    viewModel.showAll()
+                }
+            }
+        }
+    }
+}
+
 struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     let text: String
     @Binding var selectedText: String?
