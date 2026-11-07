@@ -233,7 +233,7 @@ struct Prompt09AskView: View {
                 FruitfolioTapedWhitePopup {
                     VStack(spacing: 10) {
                         FruitPopupCharacterArtwork(character: .blueberry, width: 58)
-                        Text("Ask help").font(.headline).accessibilityAddTraits(.isHeader)
+                        FruitfolioFixedText(source: "Ask help", font: .headline).accessibilityAddTraits(.isHeader)
                         FruitfolioTranslatedText(source: "ask naturally. Fruitfolio searches approved FruitsofLife.xo research, explains what the evidence supports, and shows the sources it used. answers are educational, not medical advice. your unsaved conversation stays only in this Ask session. select an answer or passage to save it to your encyclopedia.",
                                                  font: .custom("Chalkboard SE", size: 13, relativeTo: .body))
                         WatercolorPrimaryButton(label: "got it") {
@@ -384,25 +384,13 @@ struct Prompt09AskView: View {
                     }
                 }
 
-                Text(
-                    "ask the encyclopedia"
+                FruitfolioFixedText(
+                    source: "ask the encyclopedia",
+                    font: .custom("Chalkboard SE", size: 24, relativeTo: .title2).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy
                 )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 24,
-                        relativeTo:
-                            .title2
-                    )
-                )
-                .fontWeight(.bold)
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .primaryBurgundy
-                )
-                .lineLimit(1)
-                .minimumScaleFactor(0.72)
+                .multilineTextAlignment(.center)
+                .accessibilityIdentifier("ask.heading")
                 .padding(
                     .horizontal,
                     58
@@ -412,21 +400,10 @@ struct Prompt09AskView: View {
                 )
             }
 
-            Text(
-                "ask what you need, save what matters ♡"
-            )
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 13,
-                    relativeTo:
-                        .subheadline
-                )
-            )
-            .foregroundStyle(
-                DesignTokens
-                    .ColorToken
-                    .secondaryBurgundy
+            FruitfolioFixedText(
+                source: "ask what you need, save what matters ♡",
+                font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline),
+                color: DesignTokens.ColorToken.secondaryBurgundy
             )
             .multilineTextAlignment(
                 .center
@@ -755,18 +732,11 @@ struct Prompt09AskView: View {
             )
             .accessibilityHidden(true)
 
-            Text(viewModel.searchStatusText)
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 14.5,
-                    relativeTo: .body
-                )
-            )
-            .foregroundStyle(
-                DesignTokens
-                    .ColorToken
-                    .secondaryBurgundy
+            FruitfolioFixedText(
+                source: viewModel.searchStatusText,
+                protectedLiterals: ["FruitsofLife.xo"],
+                font: .custom("Chalkboard SE", size: 14.5, relativeTo: .body),
+                color: DesignTokens.ColorToken.secondaryBurgundy
             )
             .frame(
                 maxWidth: .infinity,
@@ -1022,24 +992,10 @@ struct Prompt09AskView: View {
                                 )
                             }
 
-                            Text(
-                                viewModel
-                                    .isSaved
-                                    ? "saved to my encyclopedia"
-                                    : "save to my encyclopedia"
-                            )
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 13.5,
-                                    relativeTo:
-                                        .body
-                                )
-                            )
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
+                            FruitfolioFixedText(
+                                source: viewModel.isSaved ? "saved to my encyclopedia" : "save to my encyclopedia",
+                                font: .custom("Chalkboard SE", size: 13.5, relativeTo: .body),
+                                color: DesignTokens.ColorToken.primaryBurgundy
                             )
 
                             Spacer()
@@ -1360,7 +1316,7 @@ struct Prompt09AskView: View {
             alignment: .bottom,
             spacing: 10
         ) {
-            TextField(
+            FruitfolioFixedTextField(
                 "ask Fruitfolio something…",
                 text:
                     $viewModel
@@ -1380,6 +1336,7 @@ struct Prompt09AskView: View {
                     .primaryBurgundy
             )
             .lineLimit(1...6)
+            .accessibilityIdentifier("ask.question.input")
             .focused($inputFocused)
             .submitLabel(.send)
             .onSubmit {

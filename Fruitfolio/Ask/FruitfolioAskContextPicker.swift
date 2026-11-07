@@ -100,6 +100,7 @@ struct FruitfolioAskContextPicker: View {
 
 #if DEBUG
 struct FruitfolioAskContextRegressionHarness: View {
+    @EnvironmentObject private var settings: SettingsStore
     @StateObject private var measurements: FruitfolioHormoneMeasurementStore
     @StateObject private var model: Prompt09AskViewModel
     private let suite: String
@@ -116,6 +117,13 @@ struct FruitfolioAskContextRegressionHarness: View {
     }
     var body: some View {
         Prompt09AskView(viewModel: model, measurements: measurements)
+            .onAppear {
+                let args = ProcessInfo.processInfo.arguments
+                guard args.contains("-fruitfolioAskControlsQA") else { return }
+                settings.language = args.contains("-fruitfolioAskControlsQAArabic") ? .arabic : .french
+                settings.translationPausedForMemoryPressure = true
+                settings.reduceAnimationOverride = args.contains("-fruitfolioAskControlsQAReduceMotion")
+            }
             .onDisappear {
                 UserDefaults.standard.removeObject(forKey: suite)
                 UserDefaults.standard.removePersistentDomain(forName: suite)

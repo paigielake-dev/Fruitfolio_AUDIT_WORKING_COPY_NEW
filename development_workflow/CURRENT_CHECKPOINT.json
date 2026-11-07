@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1201197d0bee04df3ef15c51328a848c917947c4",
+  "current_HEAD": "d92a5f84b01d1152f4af42087dd57f43898051be",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
   "current_requirement": 435,
-  "current_implementation_batch": "Translation-source-and-protection-byte-budgets",
+  "current_implementation_batch": "Ask-fixed-control-selected-language-coverage",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,10 +493,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-    "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md"
+    "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+    "Fruitfolio/Ask/Prompt09AskView.swift",
+    "Fruitfolio/Localizable.xcstrings",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/ASK_FIXED_CONTROL_COVERAGE.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -509,10 +511,11 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Fullportable/native CPU Swift suites /tmp/fruitfolio_bytebudget_{portable,native}.log",
+    "Fullportable/native CPU Swift suites /tmp/fruitfolio_ask_controls_{portable,native}.log",
     "60workflowchecks",
-    "311Swift syntaxparses (notApple typecheck)",
+    "311Swift syntaxparses (notAppletypecheck)",
     "SwiftSyntaxsource control-sound ownership0findings",
+    "FournewAppleUIvectorswritten,noneexecuted",
     "git diff --check"
   ],
   "last_test_results": {
@@ -522,10 +525,33 @@
     "workflow_checks": 60,
     "syntax_files": 311,
     "control_sound_ownership_findings": 0,
-    "new_byte_budget_regressions": 2
+    "new_Apple_UI_vectors_written": 4,
+    "new_Apple_UI_vectors_executed": 0,
+    "log_receipts": {
+      "/tmp/fruitfolio_ask_controls_portable.log": {
+        "bytes": 292970,
+        "sha256": "ee6e44c8e03992537d99edc77d58ac7a51f1d9e4f33cd8944f64c70f5e5975d1"
+      },
+      "/tmp/fruitfolio_ask_controls_native.log": {
+        "bytes": 1209006,
+        "sha256": "0831403a4ae3a9d4203593ba61285106b7320b1992a260a4e3f033e88b14b63c"
+      },
+      "/tmp/fruitfolio_ask_controls_workflow.log": {
+        "bytes": 160,
+        "sha256": "63fa4fb215e57a9108d931000094ffa4ec08742456601435f613e90648ff9e59"
+      },
+      "/tmp/fruitfolio_ask_controls_syntax_final.log": {
+        "bytes": 106,
+        "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+      },
+      "/tmp/fruitfolio_ask_controls_ownership.log": {
+        "bytes": 5,
+        "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+      }
+    }
   },
-  "next_exact_implementation_action": "Continue Ask fixed-control selected-language coverage: native question prompt, headings/search status/save label while preserving user input and evidence/saved records. Then remaining per-feature/writing-system verification without repeating existing audits.",
-  "updated_at": "2026-11-07T03:12:39.369105+00:00",
+  "next_exact_implementation_action": "Separate controlled Ask health-context notices from unknown error strings, localize fixed privacy/cancellation disclosures and protected native selection count while preserving patient snapshots and raw errors; test actual typed routing and unchanged source bytes.",
+  "updated_at": "2026-11-07T03:16:25.830598+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -541,16 +567,40 @@
       "workflow_checks": 60,
       "syntax_files": 311,
       "control_sound_ownership_findings": 0,
-      "new_byte_budget_regressions": 2
+      "new_Apple_UI_vectors_written": 4,
+      "new_Apple_UI_vectors_executed": 0,
+      "log_receipts": {
+        "/tmp/fruitfolio_ask_controls_portable.log": {
+          "bytes": 292970,
+          "sha256": "ee6e44c8e03992537d99edc77d58ac7a51f1d9e4f33cd8944f64c70f5e5975d1"
+        },
+        "/tmp/fruitfolio_ask_controls_native.log": {
+          "bytes": 1209006,
+          "sha256": "0831403a4ae3a9d4203593ba61285106b7320b1992a260a4e3f033e88b14b63c"
+        },
+        "/tmp/fruitfolio_ask_controls_workflow.log": {
+          "bytes": 160,
+          "sha256": "63fa4fb215e57a9108d931000094ffa4ec08742456601435f613e90648ff9e59"
+        },
+        "/tmp/fruitfolio_ask_controls_syntax_final.log": {
+          "bytes": 106,
+          "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+        },
+        "/tmp/fruitfolio_ask_controls_ownership.log": {
+          "bytes": 5,
+          "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+        }
+      }
     },
     "not_run": [
-      "Apple genuine typecheck and actual too-long fallback/retry/accessibility across locales",
-      "OfficialMADLAD weights/tokenizer, device memory/thermal/latency and scientific native-language review"
+      "FourFrench/Arabic paused-inference/ReduceMotion XXXL Ask input/help/header UI vectors",
+      "AppleSDK typecheck/nativeFocusState/keyboard/Unicodeinput/VoiceOver/RTL/font+layout acceptance",
+      "OfficialMADLAD weights/tokenizer and native-language scientific/clinical review"
     ],
     "remaining": [
-      "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-      "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-      "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+      "Execute4actualAppleUIvectors and inspect screenshots, nativefieldfocus/keyboard, completeoriginput and selectedlanguage",
+      "Verify controlledsearch/status and allwriting systems with officialmodel and native-language reviewers",
+      "Keep allwhole Ask/localization/accessibility requirements open pending full acceptance; source syntax and fixtures are not runtime proof"
     ]
   },
   "current_checklist_section": "Part 9 \u2014 Localization and MADLAD",

@@ -2865,6 +2865,41 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["tourQA.finished"].waitForExistence(timeout: 3))
     }
 
+    func testAskFixedControlsKeepAuthoredQuestionAcrossHelpUnderPausedTranslation() {
+        for arabic in [false, true] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioAskPaperQA", "-fruitfolioAskControlsQA",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if arabic { app.launchArguments += ["-fruitfolioAskControlsQAArabic"] }
+            if reduced { app.launchArguments += ["-fruitfolioAskControlsQAReduceMotion"] }
+            app.launch()
+            let heading = app.descendants(matching: .any).matching(identifier: "ask.heading").firstMatch
+            XCTAssertTrue(heading.waitForExistence(timeout: 10))
+            XCTAssertTrue(heading.label.contains("ask the encyclopedia"))
+            XCTAssertGreaterThanOrEqual(heading.frame.minX, app.frame.minX)
+            XCTAssertLessThanOrEqual(heading.frame.maxX, app.frame.maxX)
+            let input = app.descendants(matching: .any).matching(identifier: "ask.question.input").firstMatch
+            XCTAssertTrue(input.waitForExistence(timeout: 5))
+            input.tap()
+            let authored = "My original question 12.50"
+            input.typeText(authored)
+            XCTAssertEqual(input.value as? String, authored)
+            app.buttons["Ask help"].tap()
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            XCTAssertTrue(scroll.waitForExistence(timeout: 3))
+            let close = app.buttons["ask.help.close"]
+            for _ in 0..<30 { if close.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(close.isHittable)
+            close.tap()
+            XCTAssertTrue(input.waitForExistence(timeout: 3))
+            XCTAssertEqual(input.value as? String, authored)
+            captureGame(app, name: "ask-controls-paused-arabic-\(arabic)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioAskPaperQA"]
