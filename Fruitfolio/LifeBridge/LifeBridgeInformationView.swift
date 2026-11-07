@@ -52,6 +52,16 @@ struct FruitfolioLifeBridgeInformationView: View {
                     Link(destination: founder) { FruitfolioFixedText(source: "FruitsofLife.xo founder website", protectedLiterals: ["FruitsofLife.xo"], serious: true) }
                         .disabled(!canInteract)
                 }
+                if let instagram = FruitfolioLifeBridgeInformation.founderInstagramURL {
+                    Link(destination: instagram) {
+                        FruitfolioFixedText(source: "FruitsofLife.xo on Instagram — opens an external website",
+                            protectedLiterals: ["FruitsofLife.xo", "Instagram"], serious: true)
+                    }
+                    .disabled(!canInteract)
+                    .accessibilityIdentifier("lifebridge.founderInstagram")
+                    FruitfolioFixedText(source: "FruitsofLife.xo’s account is a first-party source about the brand. medical or scientific claims still require approved scientific sources.",
+                        protectedLiterals: ["FruitsofLife.xo"], serious: true)
+                }
             }
             .padding(20)
             .frame(maxWidth: 620, alignment: .leading)

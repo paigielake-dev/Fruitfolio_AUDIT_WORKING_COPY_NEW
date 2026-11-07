@@ -46,6 +46,7 @@ enum FruitfolioLifeBridgeInformation {
     static let missingContent = "details not available in the approved library yet"
     static let officialURL = URL(string: "https://lifebridgesurrogacy.com/")
     static let founderURL = URL(string: "https://fruitsoflifexo.carrd.co/")
+    static let founderInstagramURL = URL(string: "https://www.instagram.com/fruitsoflife.xo/")
 
     static func isOrganizationQuestion(_ question: String) -> Bool {
         let text = question.lowercased()

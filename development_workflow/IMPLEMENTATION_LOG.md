@@ -3764,3 +3764,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest_passed": 7, "swift_syntax_files": 319, "lexical_section_buckets": 32}.
 - Next action: Continue resolving actual Hormone Library content completeness and scientific source-quality gaps, plus independent requirements across all parts; do not promote available testosterone definition without scientific review.
 - Commit: containing commit for batch Progesterone-primary-function-source-selection.
+
+## Founder-exact-Instagram-destination-and-source-scope
+
+- Parent checkpoint: 5944b80d5a62fc1104837886f2392fd196421e11.
+- Source-order requirements: [315, 316, 317, 318, 319].
+- Separate founder additions: ['SPEC-BINDING-LIFEBRIDGE-SOURCES'].
+- Source files: Fruitfolio/LifeBridge/LifeBridgeInformation.swift, Fruitfolio/LifeBridge/LifeBridgeInformationView.swift, development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json.
+- Integrate exact first-party Instagram destination explicitly specified in founder line995 and correction1477, retaining user-initiated external navigation/active guards, original two required LifeBridge/Carrd snapshot gate and scientific-source separation. Actual six Foundation tests pass, including Instagram not replacing either mandatory source. Preserve complete instruction hashes and explicitly identify missing approved social snapshots, first-party brand retrieval and source-specific Ask integration. Link/source presence is not counted as full requirement completion.
+- Tests added/updated: FruitfolioTests/Prompt1BLifeBridgeTests.swift.
+- Verification: {"focused_XCTest_passed": 6, "swift_syntax_files": 319}.
+- Next action: Address the actual non-English incoming-question retrieval gap without rewriting original questions/session history, bypassing safety/citations or claiming official MADLAD inference. Continue independent full-checklist work.
+- Commit: containing commit for batch Founder-exact-Instagram-destination-and-source-scope.

@@ -48,7 +48,17 @@ final class Prompt1BLifeBridgeTests: XCTestCase {
         XCTAssertFalse(FruitfolioLifeBridgeInformation.isOrganizationQuestion("what is progesterone?"))
         XCTAssertEqual(FruitfolioLifeBridgeInformation.officialURL?.absoluteString, "https://lifebridgesurrogacy.com/")
         XCTAssertEqual(FruitfolioLifeBridgeInformation.founderURL?.absoluteString, "https://fruitsoflifexo.carrd.co/")
+        XCTAssertEqual(FruitfolioLifeBridgeInformation.founderInstagramURL?.absoluteString, "https://www.instagram.com/fruitsoflife.xo/")
     }
+    func testInstagramCannotReplaceRequiredLifeBridgeAndCarrdSnapshots() throws {
+        let instagram = try snapshot(id: "instagram", url: FruitfolioLifeBridgeInformation.founderInstagramURL)
+        for missing in [FruitfolioLifeBridgeContent(snapshots: [instagram], officialApplicationURL: nil, relationshipDisclosure: nil),
+                        FruitfolioLifeBridgeContent(snapshots: [try snapshot(), instagram], officialApplicationURL: nil, relationshipDisclosure: nil),
+                        FruitfolioLifeBridgeContent(snapshots: [try snapshot(id: "founder", url: FruitfolioLifeBridgeInformation.founderURL), instagram], officialApplicationURL: nil, relationshipDisclosure: nil)] {
+            XCTAssertFalse(missing.validate(), "A first-party brand account is not either mandatory organization/source snapshot")
+        }
+    }
+
     func testOneWebsiteCannotStandInForBothRequiredSources() throws {
         let date = Date(timeIntervalSince1970: 1_000)
         let source = FruitfolioLifeBridgeSnapshot(id: "official", title: "fixture", sourceURL: try XCTUnwrap(FruitfolioLifeBridgeInformation.officialURL),
