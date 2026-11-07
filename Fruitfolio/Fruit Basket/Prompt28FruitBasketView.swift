@@ -890,65 +890,54 @@ struct Prompt28FruitBasketView: View {
                         .frame(maxWidth: 286)
 
                         if let progress = viewModel.progress {
+                            let level = Prompt28GameStatisticFormatting.integer(progress.currentGameLevel, language: settings.language)
                             VStack(spacing: 4) {
-                                Text(
-                                    "game level  ·  \(progress.currentGameLevel)"
-                                )
-                                .prompt28Text(.body)
-
+                                FruitfolioFixedText(source: "game level  ·  \(level)", protectedLiterals: [level], font: Prompt28TextRole.body.font)
+                                    .accessibilityIdentifier("fruitBasket.setup.gameLevel")
                                 if progress.totalRoundsCompleted > 0 {
-                                    Text(
-                                        "welcome back ♡ you made it to game level \(progress.currentGameLevel) here."
-                                    )
-                                    .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
-                                    .multilineTextAlignment(.center)
+                                    FruitfolioFixedText(source: "welcome back ♡ you made it to game level \(level) here.",
+                                        protectedLiterals: [level, "♡"], font: Prompt28TextRole.secondary.font)
+                                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                                        .multilineTextAlignment(.center)
                                 }
                             }
                             .frame(maxWidth: 280)
-
                         } else if !viewModel.normalizedTopic.isEmpty {
-                            Text("starting at game level 1")
-                                .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                            let level = Prompt28GameStatisticFormatting.integer(1, language: settings.language)
+                            FruitfolioFixedText(source: "starting at game level \(level)", protectedLiterals: [level], font: Prompt28TextRole.secondary.font)
+                                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                                .accessibilityIdentifier("fruitBasket.setup.startingLevel")
                         }
 
                         controlModePicker
 
                         if let message = viewModel.message {
-                            HStack(
-                                alignment: .center,
-                                spacing: 8
-                            ) {
-                                FruitfolioImage(
-                                    id: .fruit_strawberry_silly
-                                )
-                                .frame(
-                                    width: 48,
-                                    height: 48
-                                )
-                                .accessibilityLabel("Strawberry")
-
-                                FruitfolioSemanticText(markdown: message, baseFont: Prompt28TextRole.body.font)
-                                    .prompt28Text(.body)
-                                    .fixedSize(
-                                        horizontal: false,
-                                        vertical: true
-                                    )
+                            HStack(alignment: .center, spacing: 8) {
+                                if !viewModel.setupMessageRequiresSeriousTone {
+                                    FruitfolioImage(id: .fruit_strawberry_silly)
+                                        .frame(width: 48, height: 48)
+                                        .allowsHitTesting(false)
+                                        .accessibilityHidden(true)
+                                        #if DEBUG
+                                        .preference(key: Prompt28SetupFeedbackArtVisibilityKey.self, value: true)
+                                        #endif
+                                }
+                                FruitfolioTranslatedText(source: message,
+                                    protectedLiterals: ["Fruitfolio", "FruitsofLife.xo", "Fruit Basket"],
+                                    font: Prompt28TextRole.body.font, serious: viewModel.setupMessageRequiresSeriousTone)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                             .frame(maxWidth: 280)
+                            .accessibilityElement(children: .contain)
+                            .accessibilityIdentifier("fruitBasket.setup.message")
                         }
 
                         switch viewModel.screen {
                         case .loading:
-                            ProgressView(
-                                "looking through the little library…"
-                            )
-                            .tint(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
-                            )
+                            ProgressView {
+                                FruitfolioFixedText(source: "looking through the little library…", font: Prompt28TextRole.body.font)
+                            }
+                            .tint(DesignTokens.ColorToken.primaryBurgundy)
 
                         case .topicProgressChoice:
                             VStack(spacing: 4) {

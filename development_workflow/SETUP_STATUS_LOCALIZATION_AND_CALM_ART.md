@@ -1,0 +1,11 @@
+# Setup status localization and calm art
+
+Existing loading/level/welcome copy uses shared semantic translation while retaining original words/fonts. Level integers use the existing native locale formatter and are protected literals in display-only translation; no clinical measurements or private typed input are translated by these labels. Catalog remains unchanged (965 English entries, zero nonempty foreign units). Pending exact founder replacements320–322 are not inferred or changed.
+
+The actual controller exposes the existing safety router’s setup-message tone decision. Typed topic is used locally for that Boolean; the UI translates only the controlled error text, protecting app/company names. Sensitive/urgent feedback suppresses the existing playful strawberry; other feedback retains it as noninteractive decorative art hidden from accessibility. Error text uses canonical serious/long-form semantics. Existing urgent-care wording and safety policy are unchanged. This does not yet replace friendly unsupported/exhausted error wording; calm source variants are the next follow-up.
+
+One executed actual unavailable-provider/controller regression covers urgent, sensitive and neutral contexts, checking unchanged controlled error wording, raw topic, no question/history, and the tone decision. Eight new Apple UI launch vectors (English/Arabic paused inference × Reduce Motion × urgent/neutral, accessibility XXXL) are written but NOT RUN. A DEBUG preference reports the actual conditional art branch, with a positive neutral control, rather than inferring absence from an accessibility-hidden image. It is not pixel/asset rendering proof. The UI cases also check native starting-level numerals and capture screenshots when executed.
+
+Saved-reference construction was inspected narrowly: existing question validation already rejects duplicate source IDs and mismatched/duplicate source records before dictionary construction. No unnecessary change was made; model/schema/engine/safety/citation/catalog preservation SHA evidence is recorded.
+
+Final supported results are recorded with the batch/checklist. Foundation tone/formatter behavior does not establish Apple UI/art/focus/RTL/layout, actual Arabic translation, human clinical translation review or official MADLAD inference. Apple/device and official-weight verification remain open.

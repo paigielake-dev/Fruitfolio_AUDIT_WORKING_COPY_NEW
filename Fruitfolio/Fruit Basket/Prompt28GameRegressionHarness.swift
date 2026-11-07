@@ -61,6 +61,7 @@ struct Prompt28GameRegressionHarness: View {
     @State private var backRequests = 0
     @State private var modalActive = false
     @State private var celebrationArtActive = false
+    @State private var setupFeedbackArtActive = false
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     private var model: Prompt28FruitBasketViewModel { fixture.model }
@@ -78,6 +79,7 @@ struct Prompt28GameRegressionHarness: View {
                 modalActive = visible
             }
             .onPreferenceChange(Prompt28CelebrationArtVisibilityKey.self) { active in celebrationArtActive = active }
+            .onPreferenceChange(Prompt28SetupFeedbackArtVisibilityKey.self) { setupFeedbackArtActive = $0 }
             .overlay(alignment: .bottomLeading) {
                 if !modalActive {
                     VStack(alignment: .leading) {
@@ -85,6 +87,8 @@ struct Prompt28GameRegressionHarness: View {
                         Prompt28SavedQuestionReadback(library: fixture.library, model: model)
                         Text("celebration art active: \(celebrationArtActive)")
                             .accessibilityIdentifier("gameQA.celebrationArtActive")
+                        Text(verbatim: "setup feedback art active: \(setupFeedbackArtActive)")
+                            .accessibilityIdentifier("gameQA.setupFeedbackArtActive")
                         if let original = fixture.protectedOriginal {
                             Prompt28ProtectedGameBlobReadback(store: model.store, defaults: fixture.defaults,
                                 expected: original, token: fixture.recoveryToken)
@@ -115,6 +119,13 @@ struct Prompt28GameRegressionHarness: View {
     private func configure() {
         if scenario.hasPrefix("protected-progress-") { return }
         if scenario == "tour" { return } // Exercise the existing first-run overlay.
+        if scenario == "setup-urgent" || scenario == "setup-unavailable" {
+            let urgent = scenario == "setup-urgent"
+            model.rawTopic = urgent ? "severe bleeding" : "watercolor"
+            model.message = (urgent ? Prompt28ResearchError.urgentTopic : .providerUnavailable).localizedDescription
+            model.screen = .topicUnsupported
+            return
+        }
         if scenario == "setup" {
             model.rawTopic = "QA control layout fixture"
             model.openSetup()
@@ -287,6 +298,12 @@ struct Prompt28GameProgressReadback: View {
                 .accessibilityIdentifier("gameQA.conservedTotals")
         }.font(.caption2).allowsHitTesting(false)
     }
+}
+
+/// Emitted only by the actual optional setup art branch, not a fixture guess.
+nonisolated struct Prompt28SetupFeedbackArtVisibilityKey: PreferenceKey {
+    static let defaultValue = false
+    static func reduce(value: inout Bool, nextValue: () -> Bool) { value = value || nextValue() }
 }
 
 /// Emitted by the actual conditional confetti branch, not a fixture guess.

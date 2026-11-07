@@ -150,6 +150,32 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         add(attachment)
     }
 
+    func testSetupFeedbackKeepsUrgentMessageCalmAndNativeLevelLocalized() {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+        for urgent in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", urgent ? "setup-urgent" : "setup-unavailable",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let message = app.descendants(matching: .any).matching(identifier: "fruitBasket.setup.message").firstMatch
+            XCTAssertTrue(message.waitForExistence(timeout: 8))
+            let level = app.descendants(matching: .any).matching(identifier: "fruitBasket.setup.startingLevel").firstMatch
+            XCTAssertTrue(level.exists)
+            XCTAssertTrue(level.label.contains(language == "ar" ? "١" : "1"))
+            let probe = app.staticTexts["gameQA.setupFeedbackArtActive"]
+            let expected = "setup feedback art active: \(!urgent)"
+            let art = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: probe)
+            XCTAssertEqual(XCTWaiter.wait(for: [art], timeout: 5), .completed)
+            captureGame(app, name: "setup-feedback-\(language)-reduced-\(reduced)-urgent-\(urgent)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGameHomeAndNativeTopicInputRemainReachableAtAccessibilitySize() {
         for language in ["en", "fr"] {
             for reduced in [false, true] {

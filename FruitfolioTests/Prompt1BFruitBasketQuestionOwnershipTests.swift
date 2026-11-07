@@ -39,6 +39,25 @@ private actor Prompt1BDelayedGameResearch: Prompt28ResearchProviding {
 
 @MainActor
 final class Prompt1BFruitBasketQuestionOwnershipTests: XCTestCase {
+    func testActualUnavailableProviderSetupToneUsesLocalContextWithoutChangingMessage() async throws {
+        for (topic, serious) in [("severe bleeding", true), ("pregnancy loss", true), ("watercolor", false)] {
+            let suite = "Fruitfolio.setup-tone." + UUID().uuidString
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let store = Prompt28FruitBasketStore(defaults: defaults)
+            let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+            defer { model.leaveScreen() }
+            model.rawTopic = topic
+            await model.loadQuestion()
+            XCTAssertEqual(model.screen, .topicUnsupported)
+            XCTAssertEqual(model.message, Prompt28ResearchError.providerUnavailable.localizedDescription)
+            XCTAssertEqual(model.setupMessageRequiresSeriousTone, serious)
+            XCTAssertEqual(model.rawTopic, topic)
+            XCTAssertNil(model.currentQuestion)
+            XCTAssertTrue(store.questionHistory.isEmpty)
+        }
+    }
+
     func testProtectedStoreRejectsLateQuestionAfterExternalDeletion() async throws {
         let suite = "Fruitfolio.question-protected." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

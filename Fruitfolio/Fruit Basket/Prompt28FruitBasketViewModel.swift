@@ -99,6 +99,11 @@ final class Prompt28FruitBasketViewModel {
     private let researchProvider: any Prompt28ResearchProviding
     private var questionGeneration = UUID()
     var questionInteractionID: UUID { questionGeneration }
+    var setupMessageRequiresSeriousTone: Bool {
+        guard let message else { return false }
+        // Typed context stays local; only the controlled message is translated.
+        return Prompt34LocalSafetyRouter.classify(rawTopic + " " + message).requiresSeriousTone
+    }
     var allowsTopicEditing: Bool {
         switch screen {
         case .learningSetup, .topicProgressChoice, .loading, .topicUnsupported, .topicExhausted, .error: return true
