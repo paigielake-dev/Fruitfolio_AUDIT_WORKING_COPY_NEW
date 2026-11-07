@@ -17950,7 +17950,9 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -17963,41 +17965,48 @@
         "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
         "Prompt1BFruitBasketRulesTests",
         "FruitfolioTests/Prompt1BFruitBasketRulesTests.swift",
-        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift"
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Shared-game-star-bank-mechanics-copy-and-large-bank-regression (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
-        "Shared protection/FAQ copy explicitly explains rare standalone stars add to existing pass bank without fixed game cap. Existing no-score/no-fruit, one-pass protection, unprotected failure/retry/session wording retained. New actual engine test banks1000, consumes one per bad catch through zero, requires next bad catch fail, and preserves zero score/fruit. Engine/controller/planner SHA unchanged. One English addition preserves958 entries,959total. This mechanic clarification does not resolve exact founder replacement-copy320\u2013322; Apple physical catch/rareness/translation remain unverified."
+        "Shared protection/FAQ copy explicitly explains rare standalone stars add to existing pass bank without fixed game cap. Existing no-score/no-fruit, one-pass protection, unprotected failure/retry/session wording retained. New actual engine test banks1000, consumes one per bad catch through zero, requires next bad catch fail, and preserves zero score/fruit. Engine/controller/planner SHA unchanged. One English addition preserves958 entries,959total. This mechanic clarification does not resolve exact founder replacement-copy320\u2013322; Apple physical catch/rareness/translation remain unverified.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-06T22:06:54.892044+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-game-star-bank-mechanics-copy-and-large-bank-regression",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": "801 passed",
-          "native_CPU_XCTest": "823 passed; syntheticT5/independent Qwen, not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "mechanics": "1000 genuine engine star-pass additions and one-at-a-time protective uses with no fruit/score; source implementation unchanged"
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
+          "Apple_SDK": "NOT_RUN",
+          "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple physical star/full-entry/settling, actual rare-drop visual/distribution and game/FAQ copy rendering",
-          "Four written home and four symptom graph launches; full integrated Apple suite",
-          "Official MADLAD/native-language rule meaning and exact revised screen-copy confirmation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Execute Apple rule/game/FAQ/catch/settle and target-language meaning acceptance; primitive bank test is not physical catch proof",
-          "Resolve exact revised home/How It Works/topic wording320\u2013322 independently; not certified by mechanical wording change",
-          "Whole game/clinical/official-model/device verification remains open; no percentage inferred from tests"
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
+          "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute Apple rule/game/FAQ/catch/settle and target-language meaning acceptance; primitive bank test is not physical catch proof",
-        "Resolve exact revised home/How It Works/topic wording320\u2013322 independently; not certified by mechanical wording change",
-        "Whole game/clinical/official-model/device verification remains open; no percentage inferred from tests"
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
+        "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
     {
@@ -18017,7 +18026,9 @@
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/GAME_OBJECT_DISTINCTION.md"
+        "development_workflow/GAME_OBJECT_DISTINCTION.md",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18042,45 +18053,45 @@
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Explicit-game-object-markers-and-separate-ledger-events (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Shared protection/FAQ copy explicitly explains rare standalone stars add to existing pass bank without fixed game cap. Existing no-score/no-fruit, one-pass protection, unprotected failure/retry/session wording retained. New actual engine test banks1000, consumes one per bad catch through zero, requires next bad catch fail, and preserves zero score/fruit. Engine/controller/planner SHA unchanged. One English addition preserves958 entries,959total. This mechanic clarification does not resolve exact founder replacement-copy320\u2013322; Apple physical catch/rareness/translation remain unverified.",
-        "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification."
+        "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-07T00:33:18.386874+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-game-object-markers-and-separate-ledger-events",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": 887,
-          "native_CPU_XCTest": 909,
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "earlier_invalid_fixture_executed_tests": 0,
-          "written_Apple_object_launch_vectors_extended": 4,
-          "executed_Apple_object_launch_vectors": 0,
-          "English_catalog_entries": 967,
-          "nonempty_foreign_units": 0,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
           "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Four actual-root object label UI launchvectors; Apple VoiceOver/art pixels/marker geometry/RTL/gestures and device behavior",
-          "Actual native-language translation/official MADLAD and clinical validation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Continue328 actual rare-spawner integration/spacing/probability-boundary coverage; visible rarity/device behavior remains separate",
-          "Execute Apple good/bad/standalone marker/label and collection integration checks; Core labels are not painted visual proof",
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
           "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Continue328 actual rare-spawner integration/spacing/probability-boundary coverage; visible rarity/device behavior remains separate",
-        "Execute Apple good/bad/standalone marker/label and collection integration checks; Core labels are not painted visual proof",
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
         "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
@@ -18101,7 +18112,9 @@
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/GAME_OBJECT_DISTINCTION.md"
+        "development_workflow/GAME_OBJECT_DISTINCTION.md",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18126,45 +18139,45 @@
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Explicit-game-object-markers-and-separate-ledger-events (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Shared protection/FAQ copy explicitly explains rare standalone stars add to existing pass bank without fixed game cap. Existing no-score/no-fruit, one-pass protection, unprotected failure/retry/session wording retained. New actual engine test banks1000, consumes one per bad catch through zero, requires next bad catch fail, and preserves zero score/fruit. Engine/controller/planner SHA unchanged. One English addition preserves958 entries,959total. This mechanic clarification does not resolve exact founder replacement-copy320\u2013322; Apple physical catch/rareness/translation remain unverified.",
-        "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification."
+        "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-07T00:33:18.386874+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-game-object-markers-and-separate-ledger-events",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": 887,
-          "native_CPU_XCTest": 909,
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "earlier_invalid_fixture_executed_tests": 0,
-          "written_Apple_object_launch_vectors_extended": 4,
-          "executed_Apple_object_launch_vectors": 0,
-          "English_catalog_entries": 967,
-          "nonempty_foreign_units": 0,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
           "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Four actual-root object label UI launchvectors; Apple VoiceOver/art pixels/marker geometry/RTL/gestures and device behavior",
-          "Actual native-language translation/official MADLAD and clinical validation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Continue328 actual rare-spawner integration/spacing/probability-boundary coverage; visible rarity/device behavior remains separate",
-          "Execute Apple good/bad/standalone marker/label and collection integration checks; Core labels are not painted visual proof",
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
           "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Continue328 actual rare-spawner integration/spacing/probability-boundary coverage; visible rarity/device behavior remains separate",
-        "Execute Apple good/bad/standalone marker/label and collection integration checks; Core labels are not painted visual proof",
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
         "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
@@ -18181,7 +18194,9 @@
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/GAME_OBJECT_DISTINCTION.md",
-        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md"
+        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md",
+        "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -18198,42 +18213,46 @@
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Actual-rare-star-spawners-spacing-boundary-and-physical-catch (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified.",
         "Accessible classification controls now expose rare standalone stars through explicit untimed catch/skip actions. Accepting fruit or stars enters the shared delayed settlement path, preserving exactly-once awards/pass use and actual collected fruit; skipping a star has no consequence and never fills fruit target. Shared local pose renders settlement in classification basket. Clock runs only while settlement is pending, stops on idle, resumes pending entries after pause and does not advance falling objects while in classification mode. Control changes retain earned counters/captured transits and discard unselected invisible presentations. One additional production local-pose test plus two actual Combine view-model classification tests added; latter unrun. Visual/VoiceOver acceptance still requires Apple runtime.",
         "Shared protection/FAQ copy explicitly explains rare standalone stars add to existing pass bank without fixed game cap. Existing no-score/no-fruit, one-pass protection, unprotected failure/retry/session wording retained. New actual engine test banks1000, consumes one per bad catch through zero, requires next bad catch fail, and preserves zero score/fruit. Engine/controller/planner SHA unchanged. One English addition preserves958 entries,959total. This mechanic clarification does not resolve exact founder replacement-copy320\u2013322; Apple physical catch/rareness/translation remain unverified.",
         "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.",
-        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified."
+        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-07T00:40:48.388488+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-rare-star-spawners-spacing-boundary-and-physical-catch",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": 890,
-          "native_CPU_XCTest": 912,
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
           "SwiftTesting_each": 21,
-          "focused_actual_controller_XCTest": 33,
           "workflow_checks": 60,
           "syntax_files": 311,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
           "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Actual device rarity distribution/balance/performance, painted objects/markers, gestures/VoiceOver/audio and physical-device SDK integration",
-          "Official MADLAD/native-language/device/clinical validation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-          "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
           "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-        "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
         "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
@@ -28760,7 +28779,8 @@
         "development_workflow/QUESTION_SCALAR_METADATA_VALIDATION.md",
         "development_workflow/SOURCE_VERSION_PRESENCE_VALIDATION.md",
         "development_workflow/GAME_OBJECT_DISTINCTION.md",
-        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md"
+        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28897,7 +28917,7 @@
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift",
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift"
       ],
-      "commit_reference": "batch:Actual-rare-star-spawners-spacing-boundary-and-physical-catch (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -29032,35 +29052,39 @@
         "Production question gate requires nonblank explanation/source identifiers/package-version/review label and finite creation date. Malformed values rejected before gameplay/saved builder; valid bytes notnormalized. Six-case saved-source baseline12assertions for6invalidscalarcases; full883/905XCTest+21SwiftTesting each pass incl UTF8/citation/version/legacy tests. Nonblank label is NOT clinicalapproval. Savedbuilder/schema/catalogSHA unchanged; source-record-specific versions separate next; Apple/officialmodel unverified.",
         "Present blank/whitespace per-source version rejected by production question gate before saved provenance. Nil retains existing known-package fallback; no citation/DOI/record/identifier normalization or invented records. Two actual saved-source regressions;8case baseline4assertions; final885/907XCTest+21SwiftTesting each pass incl originalcitation/UTF8/sourceversion/legacy tests. Savedbuilder/schema/citation/catalog SHA unchanged. Structural labels notauthenticity/clinicalapproval; Apple/officialmodel unverified.",
         "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.",
-        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified."
+        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-07T00:40:48.388488+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-rare-star-spawners-spacing-boundary-and-physical-catch",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": 890,
-          "native_CPU_XCTest": 912,
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
           "SwiftTesting_each": 21,
-          "focused_actual_controller_XCTest": 33,
           "workflow_checks": 60,
           "syntax_files": 311,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
           "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Actual device rarity distribution/balance/performance, painted objects/markers, gestures/VoiceOver/audio and physical-device SDK integration",
-          "Official MADLAD/native-language/device/clinical validation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-          "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
           "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-        "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
         "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
@@ -29244,7 +29268,8 @@
         "development_workflow/QUESTION_SCALAR_METADATA_VALIDATION.md",
         "development_workflow/SOURCE_VERSION_PRESENCE_VALIDATION.md",
         "development_workflow/GAME_OBJECT_DISTINCTION.md",
-        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md"
+        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29426,7 +29451,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Actual-rare-star-spawners-spacing-boundary-and-physical-catch (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -29595,35 +29620,39 @@
         "Production question gate requires nonblank explanation/source identifiers/package-version/review label and finite creation date. Malformed values rejected before gameplay/saved builder; valid bytes notnormalized. Six-case saved-source baseline12assertions for6invalidscalarcases; full883/905XCTest+21SwiftTesting each pass incl UTF8/citation/version/legacy tests. Nonblank label is NOT clinicalapproval. Savedbuilder/schema/catalogSHA unchanged; source-record-specific versions separate next; Apple/officialmodel unverified.",
         "Present blank/whitespace per-source version rejected by production question gate before saved provenance. Nil retains existing known-package fallback; no citation/DOI/record/identifier normalization or invented records. Two actual saved-source regressions;8case baseline4assertions; final885/907XCTest+21SwiftTesting each pass incl originalcitation/UTF8/sourceversion/legacy tests. Savedbuilder/schema/citation/catalog SHA unchanged. Structural labels notauthenticity/clinicalapproval; Apple/officialmodel unverified.",
         "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.",
-        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified."
+        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-07T00:40:48.388488+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-rare-star-spawners-spacing-boundary-and-physical-catch",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": 890,
-          "native_CPU_XCTest": 912,
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
           "SwiftTesting_each": 21,
-          "focused_actual_controller_XCTest": 33,
           "workflow_checks": 60,
           "syntax_files": 311,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
           "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Actual device rarity distribution/balance/performance, painted objects/markers, gestures/VoiceOver/audio and physical-device SDK integration",
-          "Official MADLAD/native-language/device/clinical validation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-          "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
           "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-        "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
         "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     },
@@ -29780,7 +29809,8 @@
         "development_workflow/QUESTION_SCALAR_METADATA_VALIDATION.md",
         "development_workflow/SOURCE_VERSION_PRESENCE_VALIDATION.md",
         "development_workflow/GAME_OBJECT_DISTINCTION.md",
-        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md"
+        "development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md",
+        "development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29917,7 +29947,7 @@
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift",
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift"
       ],
-      "commit_reference": "batch:Actual-rare-star-spawners-spacing-boundary-and-physical-catch (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-controller-bank-over-thousand-and-next-round-carry (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -30032,35 +30062,39 @@
         "Production question gate requires nonblank explanation/source identifiers/package-version/review label and finite creation date. Malformed values rejected before gameplay/saved builder; valid bytes notnormalized. Six-case saved-source baseline12assertions for6invalidscalarcases; full883/905XCTest+21SwiftTesting each pass incl UTF8/citation/version/legacy tests. Nonblank label is NOT clinicalapproval. Savedbuilder/schema/catalogSHA unchanged; source-record-specific versions separate next; Apple/officialmodel unverified.",
         "Present blank/whitespace per-source version rejected by production question gate before saved provenance. Nil retains existing known-package fallback; no citation/DOI/record/identifier normalization or invented records. Two actual saved-source regressions;8case baseline4assertions; final885/907XCTest+21SwiftTesting each pass incl originalcitation/UTF8/sourceversion/legacy tests. Savedbuilder/schema/citation/catalog SHA unchanged. Structural labels notauthenticity/clinicalapproval; Apple/officialmodel unverified.",
         "Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit\u2192star\u2192protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused\u00d7ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.",
-        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified."
+        "Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified.",
+        "Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused\u00d7ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged."
       ],
-      "last_updated": "2026-11-07T00:40:48.388488+00:00",
+      "last_updated": "2026-11-07T00:46:48.685697+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-rare-star-spawners-spacing-boundary-and-physical-catch",
+        "batch": "Actual-controller-bank-over-thousand-and-next-round-carry",
         "executed": {
-          "portable_XCTest": 890,
-          "native_CPU_XCTest": 912,
+          "portable_XCTest": 891,
+          "native_CPU_XCTest": 913,
           "SwiftTesting_each": 21,
-          "focused_actual_controller_XCTest": 33,
           "workflow_checks": 60,
           "syntax_files": 311,
+          "actual_star_captures_in_large_bank_case": 1001,
+          "new_native_UI_launch_vectors_written": 4,
+          "new_native_UI_launch_vectors_executed": 0,
           "Apple_SDK": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Actual device rarity distribution/balance/performance, painted objects/markers, gestures/VoiceOver/audio and physical-device SDK integration",
-          "Official MADLAD/native-language/device/clinical validation"
+          "Four new native large-bank English/Arabicpaused\u00d7ReduceMotion/XXXL vectors; actual wrapping/native AX value/VoiceOver/device rendering",
+          "Natural rarity/device performance and Apple session UI continuity",
+          "Official MADLAD/native-language/clinical validation"
         ],
         "remaining": [
-          "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-          "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+          "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+          "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
           "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Continue331 actual large-bank/controller/persistence preservation and native localized-bank presentation",
-        "Execute Apple natural-drop/collectible/marker/physics/balance and integrated UI checks; controlled-unit simulation is not device statistics",
+        "Continue335\u2013336 actual pre-settlement zero-credit and shared flattened-pose contracts; no visual/pixel certification from Core tests",
+        "Execute Apple largebank/naturalcapture/protection/next-round/nativevalue UI checks; sessionbanknotclaimedrestartpersistent",
         "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
       ]
     }

@@ -874,6 +874,25 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testLargeStarBankRemainsNativeLocalizedAndAccessible() {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "bank-large",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let bank = app.descendants(matching: .any).matching(identifier: "fruitBasket.classification.passes").firstMatch
+            XCTAssertTrue(bank.waitForExistence(timeout: 8))
+            XCTAssertEqual(bank.value as? String, language == "ar" ? "١٬٠٠١" : "1,001")
+            XCTAssertFalse(bank.label.isEmpty)
+            captureGame(app, name: "large-star-bank-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testBasketArtworkUsesSeparateLocalizedLabelAndNumericValue() {
         for catchMode in [false, true] {
         for language in ["en", "ar"] {

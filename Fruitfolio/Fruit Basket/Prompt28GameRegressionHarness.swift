@@ -182,6 +182,7 @@ struct Prompt28GameRegressionHarness: View {
             model.sceneBecameInactive()
             return
         }
+        if scenario == "bank-large" { model.session?.availableStarPasses = 1001 } // Display-only private fixture.
         if scenario == "star" {
             model.classificationFruit = nil
             model.classificationStarAvailable = true

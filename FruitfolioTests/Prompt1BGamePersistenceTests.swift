@@ -391,6 +391,55 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         }
     }
 
+    func testActualControllerBankBeyondThousandAcknowledgesEveryStarAndCarriesNextRound() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        let sessionID = model.session?.id
+        for _ in 0..<1001 {
+            model.classificationFruit = nil; model.classificationStarAvailable = true
+            model.classificationStarDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        XCTAssertFalse(store.isReadOnly)
+        XCTAssertEqual(model.session?.availableStarPasses, 1001)
+        XCTAssertEqual(model.roundLedger.starsCollected, 1001)
+        XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1001)
+        let accepted = defaults.data(forKey: "game")
+        let reopened = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
+        XCTAssertEqual(reopened.progress(for: "fixture")?.totalStarsEarned, 1001)
+        XCTAssertEqual(defaults.data(forKey: "game"), accepted)
+        model.classificationStarAvailable = false
+        model.classificationFruit = .init(fruitID: .lemon, classification: .bad,
+            x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        XCTAssertEqual(model.session?.availableStarPasses, 1000)
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+        for _ in 0..<model.engine.rules.goodFruitTarget {
+            model.classificationStarAvailable = false
+            model.classificationFruit = .init(fruitID: .pear, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        model.sceneBecameInactive()
+        let result = try XCTUnwrap(model.roundResult)
+        XCTAssertTrue(result.succeeded)
+        XCTAssertEqual(result.starsCollected, 1001)
+        XCTAssertEqual(result.starPassesSpent, 1)
+        XCTAssertEqual(result.starPassesRemaining, 1000)
+        await model.continueAfterReveal(expectedRoundID: result.roundID,
+            expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(model.session?.id, sessionID)
+        XCTAssertEqual(model.session?.currentRound, 2)
+        XCTAssertEqual(model.session?.availableStarPasses, 1000)
+        XCTAssertEqual(model.session?.score, 100)
+        XCTAssertEqual(model.screen, .topicUnsupported, "Existing unavailable provider prevents fabricating the next question")
+        XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1001)
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))

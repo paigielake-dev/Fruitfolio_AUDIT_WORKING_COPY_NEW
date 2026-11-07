@@ -3038,3 +3038,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 890, "native_CPU_XCTest": 912, "SwiftTesting_each": 21, "focused_actual_controller_XCTest": 33, "workflow_checks": 60, "syntax_files": 311, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify accumulated pass bank through actual controller and persistence beyond1000captures with no application cap, then one-pass consumption/round continuation and same-session retry carry. Add explicit large-bank native UI fixture/locale checks only as written NOT_RUN, preserve existing counters/rules/art and source privacy, run supported checks and checkpoint.
 - Commit: containing commit for batch Actual-rare-star-spawners-spacing-boundary-and-physical-catch.
+
+## Actual-controller-bank-over-thousand-and-next-round-carry
+
+- Parent checkpoint: 2d398035f702f9d1d5cd031fa91c4e505324e498.
+- Source-order requirements: [331, 332, 333, 334, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, development_workflow/ACTUAL_LARGE_STAR_PASS_BANK.md.
+- Existing no-app-cap controller path verified1001actual settled stars withper-eventack,1001pass/ledger/earnedcumulative,0fruit/score. Readonlyreopen retains earnedtotals; protectedbad consumes1pass/continues;10goodcaptures finish with1000passes; actualnext-roundadvance preservesbank/sessionid/score whileunavailableprovider reportedhonestly. Finiteexample notinfinitecapacityproof; banknotclaimedapp-restartpersistent. FournewEnglish/Arabicpaused×ReduceMotion largebankdisplay UI vectors NOT_RUN;privateUIseednotcountedearnedevidence. Full891/913XCTest+21SwiftTesting each pass; model/engine/store/models/catalogSHA unchanged.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 891, "native_CPU_XCTest": 913, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "actual_star_captures_in_large_bank_case": 1001, "new_native_UI_launch_vectors_written": 4, "new_native_UI_launch_vectors_executed": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify actual controller credit stays zero throughout entry/full-entry/settlement for star and fruit, matching shared flattened pose below rim in physical and local/reduced-motion geometry. Reuse existing correct implementation; add only missing runtime contract coverage, execute supported suites and preserve explicit Apple visual blockers.
+- Commit: containing commit for batch Actual-controller-bank-over-thousand-and-next-round-carry.
