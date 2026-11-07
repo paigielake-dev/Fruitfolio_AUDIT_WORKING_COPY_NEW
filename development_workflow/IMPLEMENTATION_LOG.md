@@ -3258,3 +3258,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 920, "native_CPU_XCTest": 944, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_service_saturation_regressions": 1}.
 - Next action: Bound source/protection allocation budgets before scientific-envelope construction, preserve original on excessive inputs, and test exact byte boundaries and no runtime work on rejection; continue original independent requirements.
 - Commit: containing commit for batch Bounded-independent-translation-admission.
+
+## Translation-source-and-protection-byte-budgets
+
+- Parent checkpoint: 1201197d0bee04df3ef15c51328a848c917947c4.
+- Source-order requirements: [419, 425, 426, 428, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift, development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md.
+- Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.
+- Tests added/updated: FruitfolioTests/Prompt1BScientificTranslationTests.swift.
+- Verification: {"portable_XCTest": 922, "native_CPU_XCTest": 946, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_byte_budget_regressions": 2}.
+- Next action: Continue Ask fixed-control selected-language coverage: native question prompt, headings/search status/save label while preserving user input and evidence/saved records. Then remaining per-feature/writing-system verification without repeating existing audits.
+- Commit: containing commit for batch Translation-source-and-protection-byte-budgets.

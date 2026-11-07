@@ -158,8 +158,26 @@ actor FruitfolioTranslationService {
                              sourceLanguage: String = "en", preferCatalog: Bool = true,
                              inferenceAllowed: Bool = true, bundle: Bundle = .main) async throws -> FruitfolioDisplayTranslation {
         try Task.checkCancellation()
-        guard language.rawValue != sourceLanguage,
-              !source.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        guard language.rawValue != sourceLanguage else {
+            return .init(text: source, origin: .source)
+        }
+        // Reject excessive work before trimming, catalog lookup, paragraph copies
+        // or regex/envelope construction. These are UTF-8 bytes, not Characters.
+        // Same-language display never needs inference and retains its original.
+        guard source.utf8.count <= 1024 * 1024,
+              sourceLanguage.utf8.count <= 64,
+              protectedLiterals.count <= 1024 else {
+            throw FruitfolioTranslationError.inputTooLong
+        }
+        var protectedBytes = 0
+        for literal in protectedLiterals {
+            let count = literal.utf8.count
+            guard count <= 64 * 1024 - protectedBytes else {
+                throw FruitfolioTranslationError.inputTooLong
+            }
+            protectedBytes += count
+        }
+        guard !source.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return .init(text: source, origin: .source)
         }
         // Catalog keys describe English source text. Never reinterpret a saved

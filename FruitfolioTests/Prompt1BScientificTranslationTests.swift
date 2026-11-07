@@ -230,6 +230,50 @@ final class Prompt1BSharedTranslationTests: XCTestCase {
         await runtime.unblockAll()
     }
 
+    func testExcessiveSourceAndProtectionBudgetsRejectBeforeCallingRuntime() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let cases: [(String, [String], String)] = [
+            (String(repeating: "a", count: 1024 * 1024 + 1), [], "en"),
+            (String(repeating: "é", count: 512 * 1024 + 1), [], "en"),
+            ("original", Array(repeating: "", count: 1025), "en"),
+            ("original", [String(repeating: "b", count: 64 * 1024 + 1)], "en"),
+            ("original", Array(repeating: String(repeating: "b", count: 32769), count: 2), "en"),
+            ("original", [], String(repeating: "x", count: 65))
+        ]
+        for (source, protection, sourceLanguage) in cases {
+            do {
+                _ = try await service.translate(source, language: .german,
+                    protectedLiterals: protection, sourceLanguage: sourceLanguage, preferCatalog: false)
+                XCTFail("Excessive work must retain original rather than enqueue inference")
+            } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inputTooLong) }
+        }
+        let calls = await runtime.counts()
+        XCTAssertEqual(calls.calls, 0)
+        let active = await service.debugInFlightStatistics()
+        XCTAssertEqual(active.requests, 0)
+        XCTAssertEqual(active.unshared, 0)
+    }
+
+    func testExactInputBudgetsAndSameLanguageOriginalRemainIntact() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        await runtime.unblockAll()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let source = String(repeating: "é", count: 512 * 1024)
+        let translated = try await service.translate(source, language: .german,
+            protectedLiterals: Array(repeating: "", count: 1024), preferCatalog: false)
+        XCTAssertEqual(Data(translated.utf8), Data(source.utf8))
+        let metadataBoundary = try await service.translate("original", language: .german,
+            protectedLiterals: [String(repeating: "b", count: 64 * 1024)], preferCatalog: false)
+        XCTAssertEqual(metadataBoundary, "original")
+        let oversizedOriginal = source + "extra"
+        let display = try await service.translateForDisplay(oversizedOriginal, language: .english)
+        XCTAssertEqual(display.origin, .source)
+        XCTAssertEqual(Data(display.text.utf8), Data(oversizedOriginal.utf8))
+        let calls = await runtime.counts()
+        XCTAssertEqual(calls.calls, 2, "Same-language display must bypass inference")
+    }
+
     func testIndependentAdmissionIsBoundedWithoutBlockingSharedOwnersAndRecoversAfterRelease() async throws {
         let runtime = Prompt1BSharedTranslationGate()
         let service = FruitfolioTranslationService(runtime: runtime)
