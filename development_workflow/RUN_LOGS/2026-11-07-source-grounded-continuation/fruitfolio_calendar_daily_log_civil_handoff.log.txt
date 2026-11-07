@@ -1,0 +1,281 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[2/4] Write swift-version-6019DD6B20EC49BF.txt
+[4/6] Emitting module Fruitfolio
+[5/6] Compiling Fruitfolio Prompt20CalendarIntegration.swift
+[6/8] Compiling Fruitfolio Prompt19CalendarModels.swift
+[7/8] Compiling Fruitfolio Prompt20DailyLogModels.swift
+[8/10] Wrapping AST for Fruitfolio for debugging
+[10/18] Compiling FruitfolioTests Prompt06FruitPopupTests.swift
+[11/19] Compiling FruitfolioTests Prompt10SavedLibraryTests.swift
+[12/20] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[13/21] Compiling FruitfolioTests Prompt11GuideBuilderTests.swift
+[14/22] Compiling FruitfolioTests Prompt12AccountPrivacyStoreTests.swift
+[15/23] Compiling FruitfolioTests Prompt13CycleEngineTests.swift
+[16/24] Compiling FruitfolioTests Prompt14CycleOnboardingTests.swift
+[17/25] Compiling FruitfolioTests Prompt16TodayStateBuilderTests.swift
+[18/26] Compiling FruitfolioTests Prompt18CycleWheelTests.swift
+[19/27] Compiling FruitfolioTests Prompt19CalendarEngineTests.swift
+[20/28] Compiling FruitfolioTests Prompt1BAccountActionTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+[21/29] Compiling FruitfolioTests Prompt1BAccountDraftExitTests.swift
+[22/30] Compiling FruitfolioTests Prompt1BAccountPersistenceTests.swift
+[23/31] Compiling FruitfolioTests Prompt1BAccountRestorationPolicyTests.swift
+[24/32] Compiling FruitfolioTests Prompt17CyclePredictionEngineTests.swift
+[25/33] Compiling FruitfolioTests Prompt1BAskScrollTests.swift
+[26/34] Compiling FruitfolioTests Prompt1BAskPaperLayoutTests.swift
+[27/35] Compiling FruitfolioTests Prompt1BBookLabelTests.swift
+[28/36] Compiling FruitfolioTests Prompt1BBookMotionTests.swift
+[29/37] Compiling FruitfolioTests Prompt1BAskUserContextTests.swift
+[30/38] Compiling FruitfolioTests Prompt1BCalendarPresentationPolicyTests.swift
+[31/39] Compiling FruitfolioTests Prompt1BCanonicalCalendarTests.swift
+[32/40] Compiling FruitfolioTests Prompt1BCatalogTranslationTests.swift
+[33/41] Compiling FruitfolioTests Prompt1BCatchPresentationTests.swift
+[34/42] Compiling FruitfolioTests Prompt1BCitationDestinationTests.swift
+[35/43] Compiling FruitfolioTests Prompt1BCitationTranslationTests.swift
+[36/44] Compiling FruitfolioTests Prompt1BContactDestinationTests.swift
+[37/45] Compiling FruitfolioTests Prompt1BContextConfirmationRevisionTests.swift
+[38/46] Compiling FruitfolioTests Prompt1BContextPersistenceTests.swift
+[39/47] Compiling FruitfolioTests Prompt1BContextSnapshotProtectionTests.swift
+[40/48] Compiling FruitfolioTests Prompt1BControlTranslationStateTests.swift
+[41/49] Compiling FruitfolioTests Prompt1BCycleFileProtectionTests.swift
+[42/50] Compiling FruitfolioTests Prompt1BCycleTransactionTests.swift
+[43/51] Compiling FruitfolioTests Prompt1BDailyLogWriteTests.swift
+[44/52] Compiling FruitfolioTests Prompt1BDecorativeLayoutTests.swift
+[45/53] Compiling FruitfolioTests Prompt1BEducationResearchTests.swift
+[46/54] Compiling FruitfolioTests Prompt1BEducationalArtworkTests.swift
+[47/55] Compiling FruitfolioTests Prompt1BDailyLogViewModelTests.swift
+[48/56] Compiling FruitfolioTests Prompt1BEvidenceBoundaryTests.swift
+[49/57] Compiling FruitfolioTests Prompt1BEvidenceBudgetTests.swift
+[50/58] Compiling FruitfolioTests Prompt1BExcerptIdentityTests.swift
+[51/59] Compiling FruitfolioTests Prompt1BExplicitLocalizationTests.swift
+[52/60] Compiling FruitfolioTests Prompt1BFruitBasketQuestionOwnershipTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+[53/61] Compiling FruitfolioTests Prompt1BFruitBasketResearchTests.swift
+[54/62] Compiling FruitfolioTests Prompt1BFruitBasketRulesTests.swift
+[55/63] Compiling FruitfolioTests Prompt1BGGUFResourceTests.swift
+[56/64] Compiling FruitfolioTests Prompt1BGameRulesCatalogTests.swift
+[57/65] Compiling FruitfolioTests Prompt1BGameSavedSourceTests.swift
+[58/66] Compiling FruitfolioTests Prompt1BGuideFormOwnershipTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+[59/67] Compiling FruitfolioTests Prompt1BHealthSafetyBoundaryTests.swift
+[60/68] Compiling FruitfolioTests Prompt1BGamePersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+[61/69] Compiling FruitfolioTests Prompt1BHormoneAdjustmentTests.swift
+[62/70] Compiling FruitfolioTests Prompt1BHormoneCivilDateTests.swift
+[63/71] Compiling FruitfolioTests Prompt1BHormoneLibraryTests.swift
+[64/72] Compiling FruitfolioTests Prompt1BHormoneMeasurementTests.swift
+[65/73] Compiling FruitfolioTests Prompt1BHormonePersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+[66/74] Compiling FruitfolioTests Prompt1BHormoneSnapshotProtectionTests.swift
+[67/75] Compiling FruitfolioTests Prompt1BIntroCheckpointTests.swift
+[68/76] Compiling FruitfolioTests Prompt1BHormoneValidationTests.swift
+[69/77] Compiling FruitfolioTests Prompt1BLanguagePreferencesTests.swift
+[70/78] Compiling FruitfolioTests Prompt1BLevelResetSessionTests.swift
+[71/79] Compiling FruitfolioTests Prompt1BLibrarySnapshotProtectionTests.swift
+[72/80] Compiling FruitfolioTests Prompt1BLibraryPersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+[73/81] Compiling FruitfolioTests Prompt1BLifeBridgeTests.swift
+[74/82] Compiling FruitfolioTests Prompt1BLocalDataExportTests.swift
+[75/83] Compiling FruitfolioTests Prompt1BLogoRevealTests.swift
+[76/84] Compiling FruitfolioTests Prompt1BObstacleGeometryTests.swift
+[77/85] Compiling FruitfolioTests Prompt1BObstaclePhysicsTests.swift
+[78/86] Compiling FruitfolioTests Prompt1BMADLADManifestTests.swift
+[79/87] Compiling FruitfolioTests Prompt1BOnboardingViewModelTests.swift
+[80/88] Compiling FruitfolioTests Prompt1BOnboardingTransactionTests.swift
+[81/89] Compiling FruitfolioTests Prompt1BOwnershipRecordPolicyTests.swift
+[82/90] Compiling FruitfolioTests Prompt1BOwnedConfirmationTests.swift
+[83/91] Compiling FruitfolioTests Prompt1BOwnershipValidationTests.swift
+[84/92] Compiling FruitfolioTests Prompt1BPendingSavePrivacyTests.swift
+[85/93] Compiling FruitfolioTests Prompt1BPersonalHealthContextTests.swift
+[86/94] Compiling FruitfolioTests Prompt1BPredictionPopupTests.swift
+[87/95] Compiling FruitfolioTests Prompt1BPopupLayoutTests.swift
+[88/96] Compiling FruitfolioTests Prompt1BProgressionPolicyTests.swift
+[89/97] Compiling FruitfolioTests Prompt1BPseudonymPolicyTests.swift
+[90/98] Compiling FruitfolioTests Prompt1BRecoveredCycleLoaderTests.swift
+[91/99] Compiling FruitfolioTests Prompt1BResearchEngineIntegrationTests.swift
+[92/100] Compiling FruitfolioTests Prompt1BResearchPackageTests.swift
+[93/101] Compiling FruitfolioTests Prompt1BResearchRetrievalTests.swift
+[94/102] Compiling FruitfolioTests Prompt1BRoundLedgerTests.swift
+[95/103] Compiling FruitfolioTests Prompt1BSavedDraftConflictTests.swift
+[96/104] Compiling FruitfolioTests Prompt1BSavedTranslationBoundaryTests.swift
+[97/105] Compiling FruitfolioTests Prompt1BSavedExcerptPersistenceTests.swift
+[98/106] Compiling FruitfolioTests Prompt1BScientificArtSizingTests.swift
+[99/107] Compiling FruitfolioTests Prompt1BScientificTranslationTests.swift
+[100/108] Compiling FruitfolioTests Prompt1BSemanticSliceTests.swift
+[101/109] Compiling FruitfolioTests Prompt1BSharedLibraryCatalogTests.swift
+[102/110] Compiling FruitfolioTests Prompt1BSpotlightGeometryTests.swift
+[103/111] Compiling FruitfolioTests Prompt1BSettingsLanguageTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[104/112] Compiling FruitfolioTests Prompt1BTodaySnapshotTests.swift
+[105/113] Compiling FruitfolioTests Prompt1BSymptomTimelineTests.swift
+[106/114] Compiling FruitfolioTests Prompt1BUsernameExitSessionTests.swift
+[107/115] Compiling FruitfolioTests Prompt1BUserMaterialTests.swift
+[108/116] Compiling FruitfolioTests Prompt1BWheelNoteLayoutTests.swift
+[109/117] Compiling FruitfolioTests Prompt1BUsernamePersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BUsernamePersistenceTests.swift:45:25: warning: 'currentIdentity' mutated after capture by sendable closure
+ 32 |         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+ 33 |         defer { defaults.removePersistentDomain(forName: suite) }
+ 34 |         var currentIdentity = ["alice.garden@example.invalid"]
+    |             `- note: variable defined here
+ 35 |         let store = FruitfolioUsernameStore(defaults: defaults, key: "username",
+ 36 |             identifyingTextProvider: { currentIdentity })
+    |                                      | `- note: capturing use
+    |                                      `- note: variable captured by sendable closure
+ 37 |         XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+ 38 |         let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+    :
+ 43 |             identifyingText: ["draftname@example.invalid"]))
+ 44 |         XCTAssertEqual(defaults.data(forKey: key), original)
+ 45 |         currentIdentity = ["marina@example.invalid"]
+    |                         `- warning: 'currentIdentity' mutated after capture by sendable closure
+ 46 |         XCTAssertNotNil(store.setUsername("marina_77", confirmedNonIdentifying: true))
+ 47 |         XCTAssertEqual(store.username, "old_berry")
+[110/118] Compiling FruitfolioTests Prompt21BodyBiologyCoreTests.swift
+[111/119] Compiling FruitfolioTests Prompt22HormoneRhythmCoreTests.swift
+[112/120] Compiling FruitfolioTests Prompt20DailyLogCoreTests.swift
+[113/121] Compiling FruitfolioTests Prompt24TrendsCoreTests.swift
+[114/122] Compiling FruitfolioTests Prompt25FertilizationCoreTests.swift
+[115/123] Compiling FruitfolioTests Prompt26PregnancyEducationTests.swift
+[116/124] Compiling FruitfolioTests Prompt27ScienceContentTests.swift
+[117/125] Compiling FruitfolioTests Prompt27AContextPersonalizationTests.swift
+[118/126] Compiling FruitfolioTests Prompt56ResearchIntelligenceTests.swift
+[119/126] Compiling FruitfolioTests Prompt28FruitBasketTests.swift
+[120/127] Wrapping AST for FruitfolioTests for debugging
+[121/127] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[122/128] Write sources
+[124/130] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[125/130] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[126/131] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[127/132] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageTests.derived/runner.swift
+[128/133] Write sources
+[129/133] Wrapping AST for FruitfolioPortableChecksPackageDiscoveredTests for debugging
+[131/135] Emitting module FruitfolioPortableChecksPackageTests
+[132/135] Compiling FruitfolioPortableChecksPackageTests runner.swift
+[133/135] Write Objects.LinkFileList
+[134/135] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (25.65s)
+Test Suite 'Selected tests' started at 2026-11-07 20:00:27.155
+Test Suite 'Prompt1BDailyLogViewModelTests' started at 2026-11-07 20:00:27.158
+Test Case 'Prompt1BDailyLogViewModelTests.testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord' started at 2026-11-07 20:00:27.158
+Test Case 'Prompt1BDailyLogViewModelTests.testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord' passed (0.011 seconds)
+Test Suite 'Prompt1BDailyLogViewModelTests' passed at 2026-11-07 20:00:27.168
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.011 (0.011) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 20:00:27.168
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.011 (0.011) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

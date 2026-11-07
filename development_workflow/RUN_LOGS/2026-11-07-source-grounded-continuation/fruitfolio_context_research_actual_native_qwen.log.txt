@@ -1,0 +1,1347 @@
+Building for debugging...
+[0/13] Write sources
+[2/13] Write swift-version-6019DD6B20EC49BF.txt
+[4/15] Emitting module Fruitfolio
+/tmp/fruitfolio-portable-qm177ggv/Sources/Fruitfolio/HormoneMeasurementStore.swift:25:60: warning: main actor-isolated static property 'persistenceKey' can not be referenced from a nonisolated context; this is an error in the Swift 6 language mode
+ 8 | final class FruitfolioHormoneMeasurementStore {
+ 9 |     static let shared = FruitfolioHormoneMeasurementStore()
+10 |     static let persistenceKey = "fruitfolio.hormoneMeasurements.v1"
+   |                `- note: static property declared here
+11 |     #if canImport(Combine)
+12 |     @Published
+   :
+23 |     private let persistence: FruitfolioHormoneMeasurementPersistence
+24 | 
+25 |     init(defaults: UserDefaults = .standard, key: String = persistenceKey) {
+   |                                                            `- warning: main actor-isolated static property 'persistenceKey' can not be referenced from a nonisolated context; this is an error in the Swift 6 language mode
+26 |         let persistence = FruitfolioHormoneMeasurementPersistence(defaults: defaults, key: key)
+27 |         self.persistence = persistence
+
+/tmp/fruitfolio-portable-qm177ggv/Sources/Fruitfolio/Prompt20DailyLogViewModel.swift:80:60: warning: converting non-Sendable function value to '@Sendable () -> Date' may introduce data races
+ 78 |         preferredTemperatureUnit: Prompt20TemperatureUnit = .fahrenheit,
+ 79 |         initialExpandedSection: Prompt20DailyLogSection? = nil,
+ 80 |         nowProvider: @escaping @Sendable () -> Date = Date.init
+    |                                                            `- warning: converting non-Sendable function value to '@Sendable () -> Date' may introduce data races
+ 81 |     ) {
+ 82 |         self.ownerID = ownerID
+[5/15] Compiling Fruitfolio AssetRegistry.swift
+[6/17] Compiling Fruitfolio FruitPopupModels.swift
+[7/17] Compiling Fruitfolio AssetUsageLedger.swift
+[8/19] Compiling Fruitfolio FruitfolioAskUserContext.swift
+[9/19] Compiling Fruitfolio FruitfolioAccountDraftExitRequest.swift
+[10/21] Compiling Fruitfolio FruitfolioAssetID.swift
+[11/21] Compiling Fruitfolio FruitfolioAsset.swift
+[12/23] Compiling Fruitfolio FruitfolioCanonicalCalendar.swift
+[13/23] Compiling Fruitfolio FruitfolioAudioDesign.swift
+[14/25] Compiling Fruitfolio FruitfolioCanonicalVoice.swift
+[15/25] Compiling Fruitfolio FruitfolioCitationProtection.swift
+[16/27] Compiling Fruitfolio FruitfolioDecorativeArtLayout.swift
+[17/28] Compiling Fruitfolio FruitfolioControlTranslationState.swift
+[18/29] Compiling Fruitfolio FruitfolioEvidenceBudget.swift
+[19/30] Compiling Fruitfolio FruitfolioEvidenceModels.swift
+[20/31] Compiling Fruitfolio FruitfolioEducationResearch.swift
+[21/32] Compiling Fruitfolio FruitfolioGGUFResource.swift
+[22/33] Compiling Fruitfolio FruitfolioEvidenceSynthesis.swift
+[23/34] Compiling Fruitfolio FruitfolioJSONFieldCoverage.swift
+[24/35] Compiling Fruitfolio FruitfolioHealthSafety.swift
+[25/36] Compiling Fruitfolio FruitfolioLlamaBackend.swift
+[26/37] Compiling Fruitfolio FruitfolioLanguage.swift
+[27/38] Compiling Fruitfolio FruitfolioLocalization.swift
+[28/39] Compiling Fruitfolio FruitfolioLocalDataExport.swift
+[29/40] Compiling Fruitfolio FruitfolioMADLADModels.swift
+[30/41] Compiling Fruitfolio FruitfolioMADLADRuntime.swift
+[31/42] Compiling Fruitfolio FruitfolioModelChecksum.swift
+[32/43] Compiling Fruitfolio FruitfolioOwnedPopupSession.swift
+[33/44] Compiling Fruitfolio FruitfolioOwnershipVerification.swift
+[34/45] Compiling Fruitfolio FruitfolioPopupLayout.swift
+[35/46] Compiling Fruitfolio FruitfolioPersonalHealthContext.swift
+[36/47] Compiling Fruitfolio FruitfolioPseudonymPolicy.swift
+[37/48] Compiling Fruitfolio FruitfolioResearchRetrieval.swift
+[38/49] Compiling Fruitfolio FruitfolioReviewedSemanticContexts.swift
+[39/50] Compiling Fruitfolio FruitfolioResearchIntelligence.swift
+[40/51] Compiling Fruitfolio FruitfolioScientificArtSizing.swift
+[41/52] Compiling Fruitfolio FruitfolioScientificQuantities.swift
+[42/53] Compiling Fruitfolio FruitfolioSemanticModel.swift
+[43/54] Compiling Fruitfolio FruitfolioSettingsPercentage.swift
+[44/55] Compiling Fruitfolio FruitfolioScientificTranslation.swift
+[45/56] Compiling Fruitfolio FruitfolioUsernameExitSession.swift
+[46/57] Compiling Fruitfolio FruitfolioUsernameStore.swift
+[47/58] Compiling Fruitfolio FruitfolioUsernamePersistence.swift
+[48/59] Compiling Fruitfolio HormoneAdjustmentPolicy.swift
+[49/60] Compiling Fruitfolio FruitfolioZIPArchive.swift
+[50/61] Compiling Fruitfolio HormoneLibraryProvider.swift
+[51/62] Compiling Fruitfolio HormoneMeasurement.swift
+[52/63] Compiling Fruitfolio HormoneMeasurementDeletionIntent.swift
+[53/64] Compiling Fruitfolio HormoneMeasurementStore.swift
+/tmp/fruitfolio-portable-qm177ggv/Sources/Fruitfolio/HormoneMeasurementStore.swift:25:60: warning: main actor-isolated static property 'persistenceKey' can not be referenced from a nonisolated context; this is an error in the Swift 6 language mode
+ 8 | final class FruitfolioHormoneMeasurementStore {
+ 9 |     static let shared = FruitfolioHormoneMeasurementStore()
+10 |     static let persistenceKey = "fruitfolio.hormoneMeasurements.v1"
+   |                `- note: static property declared here
+11 |     #if canImport(Combine)
+12 |     @Published
+   :
+23 |     private let persistence: FruitfolioHormoneMeasurementPersistence
+24 | 
+25 |     init(defaults: UserDefaults = .standard, key: String = persistenceKey) {
+   |                                                            `- warning: main actor-isolated static property 'persistenceKey' can not be referenced from a nonisolated context; this is an error in the Swift 6 language mode
+26 |         let persistence = FruitfolioHormoneMeasurementPersistence(defaults: defaults, key: key)
+27 |         self.persistence = persistence
+[54/65] Compiling Fruitfolio HormoneMeasurementPersistence.swift
+[55/66] Compiling Fruitfolio PopupCoordinator.swift
+[56/67] Compiling Fruitfolio Prompt04IntroCheckpoint.swift
+[57/68] Compiling Fruitfolio LifeBridgeInformation.swift
+[58/69] Compiling Fruitfolio Prompt04LogoRevealGeometry.swift
+[59/70] Compiling Fruitfolio Prompt07SpotlightGeometry.swift
+[60/71] Compiling Fruitfolio Prompt07TourCopy.swift
+[61/72] Compiling Fruitfolio Prompt09AnswerSupport.swift
+[62/73] Compiling Fruitfolio Prompt09ConversationPolicies.swift
+[63/74] Compiling Fruitfolio Prompt09AskModels.swift
+[64/75] Compiling Fruitfolio Prompt10BookMotion.swift
+[65/76] Compiling Fruitfolio Prompt09EducationalAssetRouter.swift
+[66/77] Compiling Fruitfolio Prompt10SavedLibraryAssets.swift
+[67/78] Compiling Fruitfolio Prompt10PendingSavedContent.swift
+[68/79] Compiling Fruitfolio Prompt10SavedLibraryPersistence.swift
+[69/80] Compiling Fruitfolio Prompt10SavedLibraryStore.swift
+[70/81] Compiling Fruitfolio Prompt10SavedLibraryModels.swift
+[71/82] Compiling Fruitfolio Prompt10SharedLibraryCatalog.swift
+[72/83] Compiling Fruitfolio Prompt10UserMaterial.swift
+[73/84] Compiling Fruitfolio Prompt11GuideBuilderModels.swift
+[74/85] Compiling Fruitfolio Prompt11GuideBuilderStoreBridge.swift
+[75/86] Compiling Fruitfolio Prompt11GuideFormSession.swift
+[76/87] Compiling Fruitfolio Prompt12AccountActionRegressionHarness.swift
+[77/88] Compiling Fruitfolio Prompt12AccountPrivacyModels.swift
+[78/89] Compiling Fruitfolio Prompt12AccountPrivacyStore.swift
+[79/90] Compiling Fruitfolio Prompt13CycleLogicEngine.swift
+[80/91] Compiling Fruitfolio Prompt13CyclePersistence.swift
+[81/92] Compiling Fruitfolio Prompt13CycleStore.swift
+[82/93] Compiling Fruitfolio Prompt13CycleSync.swift
+[83/94] Compiling Fruitfolio Prompt13CycleModels.swift
+[84/95] Compiling Fruitfolio Prompt14CycleOnboardingPersistence.swift
+[85/96] Compiling Fruitfolio Prompt14CycleOnboardingModels.swift
+[86/97] Compiling Fruitfolio Prompt14CycleOnboardingStore.swift
+[87/98] Compiling Fruitfolio Prompt16PredictionPopupRequest.swift
+[88/99] Compiling Fruitfolio Prompt14CycleOnboardingViewModel.swift
+[89/100] Compiling Fruitfolio Prompt17CyclePredictionAIContext.swift
+[90/101] Compiling Fruitfolio Prompt16TodayModels.swift
+[91/102] Compiling Fruitfolio Prompt17CyclePredictionModels.swift
+[92/103] Compiling Fruitfolio Prompt17CyclePredictionEngine.swift
+[93/104] Compiling Fruitfolio Prompt18CycleWheelBuilder.swift
+[94/105] Compiling Fruitfolio Prompt18EstimatedIntervalAdapter.swift
+[95/106] Compiling Fruitfolio Prompt18CycleWheelModels.swift
+[96/107] Compiling Fruitfolio Prompt18WheelNoteLayout.swift
+[97/108] Compiling Fruitfolio Prompt19CalendarEngine.swift
+[98/109] Compiling Fruitfolio Prompt19CalendarLoader.swift
+[99/110] Compiling Fruitfolio Prompt19CalendarPresentationPolicy.swift
+[100/111] Compiling Fruitfolio Prompt19CalendarModels.swift
+[101/112] Compiling Fruitfolio Prompt20CalendarIntegration.swift
+[102/113] Compiling Fruitfolio Prompt20CalendarProjection.swift
+[103/114] Compiling Fruitfolio Prompt1BCycleModalRegressionHarness.swift
+[104/115] Compiling Fruitfolio Prompt20DailyLogRules.swift
+[105/116] Compiling Fruitfolio Prompt20DailyLogStore.swift
+[106/117] Compiling Fruitfolio Prompt20DailyLogModels.swift
+[107/118] Compiling Fruitfolio Prompt21BodyBiologyEngine.swift
+[108/119] Compiling Fruitfolio Prompt20DailyLogViewModel.swift
+/tmp/fruitfolio-portable-qm177ggv/Sources/Fruitfolio/Prompt20DailyLogViewModel.swift:80:60: warning: converting non-Sendable function value to '@Sendable () -> Date' may introduce data races
+ 78 |         preferredTemperatureUnit: Prompt20TemperatureUnit = .fahrenheit,
+ 79 |         initialExpandedSection: Prompt20DailyLogSection? = nil,
+ 80 |         nowProvider: @escaping @Sendable () -> Date = Date.init
+    |                                                            `- warning: converting non-Sendable function value to '@Sendable () -> Date' may introduce data races
+ 81 |     ) {
+ 82 |         self.ownerID = ownerID
+[109/120] Compiling Fruitfolio Prompt21BodyBiologyLoader.swift
+[110/121] Compiling Fruitfolio Prompt21BodyBiologyModels.swift
+[111/122] Compiling Fruitfolio Prompt22HormoneRhythmEngine.swift
+[112/123] Compiling Fruitfolio Prompt22HormoneRhythmLoader.swift
+[113/124] Compiling Fruitfolio Prompt22HormoneRhythmModels.swift
+[114/125] Compiling Fruitfolio Prompt23SymptomsModels.swift
+[115/126] Compiling Fruitfolio Prompt24TrendsEngine.swift
+[116/127] Compiling Fruitfolio Prompt24TrendsLoader.swift
+[117/128] Compiling Fruitfolio Prompt25FertilizationContent.swift
+[118/129] Compiling Fruitfolio Prompt24TrendsModels.swift
+[119/130] Compiling Fruitfolio Prompt25FertilizationModels.swift
+[120/131] Compiling Fruitfolio Prompt26PregnancyAssetAudit.swift
+[121/132] Compiling Fruitfolio Prompt26PregnancyEducationCatalog.swift
+[122/133] Compiling Fruitfolio Prompt26PregnancyEducationSafety.swift
+[123/134] Compiling Fruitfolio Prompt26PregnancyEducationModels.swift
+[124/135] Compiling Fruitfolio Prompt26PregnancyEducationViewModel.swift
+[125/136] Compiling Fruitfolio Prompt26PregnancyResearchBridge.swift
+[126/137] Compiling Fruitfolio Prompt27AContextModels.swift
+[127/138] Compiling Fruitfolio Prompt27AContextIntegration.swift
+[128/139] Compiling Fruitfolio Prompt27AContextPersistence.swift
+[129/140] Compiling Fruitfolio Prompt27AContextPolicyEngine.swift
+[130/141] Compiling Fruitfolio Prompt27AContextSafety.swift
+[131/142] Compiling Fruitfolio Prompt27AContextStore.swift
+[132/143] Compiling Fruitfolio Prompt27ALocalContextPersistence.swift
+[133/144] Compiling Fruitfolio Prompt27ContextRouter.swift
+[134/145] Compiling Fruitfolio Prompt27ResearchBridge.swift
+[135/146] Compiling Fruitfolio Prompt27ScienceAssetAudit.swift
+[136/147] Compiling Fruitfolio Prompt27ScienceSafety.swift
+[137/148] Compiling Fruitfolio Prompt27ScienceViewModel.swift
+[138/149] Compiling Fruitfolio Prompt27ScienceModels.swift
+[139/150] Compiling Fruitfolio Prompt27ScientificAssetCatalog.swift
+[140/151] Compiling Fruitfolio Prompt28FruitBasketAssetUsage.swift
+[141/152] Compiling Fruitfolio Prompt28CatchPresentation.swift
+[142/153] Compiling Fruitfolio Prompt28FruitBasketEngine.swift
+[143/154] Compiling Fruitfolio Prompt28FruitBasketResearchBridge.swift
+[144/155] Compiling Fruitfolio Prompt28FruitBasketStore.swift
+[145/156] Compiling Fruitfolio Prompt28FruitBasketModels.swift
+[146/157] Compiling Fruitfolio Prompt28GamePersistence.swift
+[147/158] Compiling Fruitfolio Prompt28LevelResetSession.swift
+[148/159] Compiling Fruitfolio Prompt28FruitBasketViewModel.swift
+[149/160] Compiling Fruitfolio Prompt28ObstaclePhysics.swift
+[150/161] Compiling Fruitfolio Prompt28ObstacleGeometry.swift
+[151/162] Compiling Fruitfolio Prompt28ProgressionPolicy.swift
+[152/163] Compiling Fruitfolio Prompt28RulesCopy.swift
+[153/164] Compiling Fruitfolio Prompt28RoundLedger.swift
+[154/165] Compiling Fruitfolio Prompt29FAQCatalog.swift
+[155/166] Compiling Fruitfolio Prompt28SavedResearchCopy.swift
+[156/167] Compiling Fruitfolio Prompt30ContactDestination.swift
+[157/167] Compiling Fruitfolio SettingsStore.swift
+[158/168] Wrapping AST for Fruitfolio for debugging
+[160/170] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[161/171] Compiling FruitfolioTests Prompt06FruitPopupTests.swift
+[162/172] Compiling FruitfolioTests Prompt10SavedLibraryTests.swift
+[163/173] Compiling FruitfolioTests Prompt12AccountPrivacyStoreTests.swift
+[164/174] Compiling FruitfolioTests Prompt11GuideBuilderTests.swift
+[165/175] Compiling FruitfolioTests Prompt14CycleOnboardingTests.swift
+[166/176] Compiling FruitfolioTests Prompt16TodayStateBuilderTests.swift
+[167/177] Compiling FruitfolioTests Prompt13CycleEngineTests.swift
+[168/178] Compiling FruitfolioTests Prompt18CycleWheelTests.swift
+[169/179] Compiling FruitfolioTests Prompt19CalendarEngineTests.swift
+[170/180] Compiling FruitfolioTests Prompt1BAccountActionTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+[171/181] Compiling FruitfolioTests Prompt1BAccountDraftExitTests.swift
+[172/182] Compiling FruitfolioTests Prompt1BAccountPersistenceTests.swift
+[173/183] Compiling FruitfolioTests Prompt17CyclePredictionEngineTests.swift
+[174/184] Compiling FruitfolioTests Prompt1BAccountRestorationPolicyTests.swift
+[175/185] Compiling FruitfolioTests Prompt1BAskScrollTests.swift
+[176/186] Compiling FruitfolioTests Prompt1BAskPaperLayoutTests.swift
+[177/187] Compiling FruitfolioTests Prompt1BBookLabelTests.swift
+[178/188] Compiling FruitfolioTests Prompt1BBookMotionTests.swift
+[179/189] Compiling FruitfolioTests Prompt1BAskUserContextTests.swift
+[180/190] Compiling FruitfolioTests Prompt1BCalendarPresentationPolicyTests.swift
+[181/191] Compiling FruitfolioTests Prompt1BCanonicalCalendarTests.swift
+[182/192] Compiling FruitfolioTests Prompt1BCatalogTranslationTests.swift
+[183/193] Compiling FruitfolioTests Prompt1BCatchPresentationTests.swift
+[184/194] Compiling FruitfolioTests Prompt1BCitationDestinationTests.swift
+[185/195] Compiling FruitfolioTests Prompt1BCitationTranslationTests.swift
+[186/196] Compiling FruitfolioTests Prompt1BContactDestinationTests.swift
+[187/197] Compiling FruitfolioTests Prompt1BContextConfirmationRevisionTests.swift
+[188/198] Compiling FruitfolioTests Prompt1BContextPersistenceTests.swift
+[189/199] Compiling FruitfolioTests Prompt1BContextSnapshotProtectionTests.swift
+[190/200] Compiling FruitfolioTests Prompt1BControlTranslationStateTests.swift
+[191/201] Compiling FruitfolioTests Prompt1BCycleFileProtectionTests.swift
+[192/202] Compiling FruitfolioTests Prompt1BCycleTransactionTests.swift
+[193/203] Compiling FruitfolioTests Prompt1BDailyLogWriteTests.swift
+[194/204] Compiling FruitfolioTests Prompt1BDecorativeLayoutTests.swift
+[195/205] Compiling FruitfolioTests Prompt1BDailyLogViewModelTests.swift
+[196/206] Compiling FruitfolioTests Prompt1BEducationalArtworkTests.swift
+[197/207] Compiling FruitfolioTests Prompt1BEvidenceBoundaryTests.swift
+[198/208] Compiling FruitfolioTests Prompt1BEvidenceBudgetTests.swift
+[199/209] Compiling FruitfolioTests Prompt1BExcerptIdentityTests.swift
+[200/210] Compiling FruitfolioTests Prompt1BEducationResearchTests.swift
+[201/211] Compiling FruitfolioTests Prompt1BExplicitLocalizationTests.swift
+[202/212] Compiling FruitfolioTests Prompt1BFruitBasketResearchTests.swift
+[203/213] Compiling FruitfolioTests Prompt1BFruitBasketQuestionOwnershipTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+[204/214] Compiling FruitfolioTests Prompt1BFruitBasketRulesTests.swift
+[205/215] Compiling FruitfolioTests Prompt1BGGUFResourceTests.swift
+[206/216] Compiling FruitfolioTests Prompt1BGameRulesCatalogTests.swift
+[207/217] Compiling FruitfolioTests Prompt1BGameSavedSourceTests.swift
+[208/218] Compiling FruitfolioTests Prompt1BGuideFormOwnershipTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+[209/219] Compiling FruitfolioTests Prompt1BHealthSafetyBoundaryTests.swift
+[210/220] Compiling FruitfolioTests Prompt1BHormoneAdjustmentTests.swift
+[211/221] Compiling FruitfolioTests Prompt1BGamePersistenceTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+[212/222] Compiling FruitfolioTests Prompt1BHormoneCivilDateTests.swift
+[213/223] Compiling FruitfolioTests Prompt1BHormoneMeasurementTests.swift
+[214/224] Compiling FruitfolioTests Prompt1BHormoneLibraryTests.swift
+[215/225] Compiling FruitfolioTests Prompt1BHormoneSnapshotProtectionTests.swift
+[216/226] Compiling FruitfolioTests Prompt1BHormoneValidationTests.swift
+[217/227] Compiling FruitfolioTests Prompt1BHormonePersistenceTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+[218/228] Compiling FruitfolioTests Prompt1BIntroCheckpointTests.swift
+[219/229] Compiling FruitfolioTests Prompt1BLanguagePreferencesTests.swift
+[220/230] Compiling FruitfolioTests Prompt1BLevelResetSessionTests.swift
+[221/231] Compiling FruitfolioTests Prompt1BLibrarySnapshotProtectionTests.swift
+[222/232] Compiling FruitfolioTests Prompt1BLibraryPersistenceTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+[223/233] Compiling FruitfolioTests Prompt1BLifeBridgeTests.swift
+[224/234] Compiling FruitfolioTests Prompt1BLocalDataExportTests.swift
+[225/235] Compiling FruitfolioTests Prompt1BLogoRevealTests.swift
+[226/236] Compiling FruitfolioTests Prompt1BObstacleGeometryTests.swift
+[227/237] Compiling FruitfolioTests Prompt1BObstaclePhysicsTests.swift
+[228/238] Compiling FruitfolioTests Prompt1BMADLADManifestTests.swift
+[229/239] Compiling FruitfolioTests Prompt1BOnboardingViewModelTests.swift
+[230/240] Compiling FruitfolioTests Prompt1BOnboardingTransactionTests.swift
+[231/241] Compiling FruitfolioTests Prompt1BOwnershipRecordPolicyTests.swift
+[232/242] Compiling FruitfolioTests Prompt1BOwnedConfirmationTests.swift
+[233/243] Compiling FruitfolioTests Prompt1BOwnershipValidationTests.swift
+[234/244] Compiling FruitfolioTests Prompt1BPersonalHealthContextTests.swift
+[235/245] Compiling FruitfolioTests Prompt1BPendingSavePrivacyTests.swift
+[236/246] Compiling FruitfolioTests Prompt1BPredictionPopupTests.swift
+[237/247] Compiling FruitfolioTests Prompt1BPopupLayoutTests.swift
+[238/248] Compiling FruitfolioTests Prompt1BProgressionPolicyTests.swift
+[239/249] Compiling FruitfolioTests Prompt1BPseudonymPolicyTests.swift
+[240/250] Compiling FruitfolioTests Prompt1BRecoveredCycleLoaderTests.swift
+[241/251] Compiling FruitfolioTests Prompt1BResearchPackageTests.swift
+[242/252] Compiling FruitfolioTests Prompt1BResearchEngineIntegrationTests.swift
+[243/253] Compiling FruitfolioTests Prompt1BResearchRetrievalTests.swift
+[244/254] Compiling FruitfolioTests Prompt1BRoundLedgerTests.swift
+[245/255] Compiling FruitfolioTests Prompt1BSavedDraftConflictTests.swift
+[246/256] Compiling FruitfolioTests Prompt1BSavedTranslationBoundaryTests.swift
+[247/257] Compiling FruitfolioTests Prompt1BScientificArtSizingTests.swift
+[248/258] Compiling FruitfolioTests Prompt1BSavedExcerptPersistenceTests.swift
+[249/259] Compiling FruitfolioTests Prompt1BSemanticSliceTests.swift
+[250/260] Compiling FruitfolioTests Prompt1BScientificTranslationTests.swift
+[251/261] Compiling FruitfolioTests Prompt1BSettingsLanguageTests.swift
+/tmp/fruitfolio-portable-qm177ggv/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[252/262] Compiling FruitfolioTests Prompt1BSharedLibraryCatalogTests.swift
+[253/263] Compiling FruitfolioTests Prompt1BSpotlightGeometryTests.swift
+[254/264] Compiling FruitfolioTests Prompt1BSymptomTimelineTests.swift
+[255/265] Compiling FruitfolioTests Prompt1BTodaySnapshotTests.swift
+[256/266] Compiling FruitfolioTests Prompt1BUserMaterialTests.swift
+[257/267] Compiling FruitfolioTests Prompt1BUsernameExitSessionTests.swift
+[258/268] Compiling FruitfolioTests Prompt1BUsernamePersistenceTests.swift
+[259/269] Compiling FruitfolioTests Prompt1BT5ExecutionContractTests.swift
+[260/270] Compiling FruitfolioTests Prompt1BWheelNoteLayoutTests.swift
+[261/271] Compiling FruitfolioTests Prompt21BodyBiologyCoreTests.swift
+[262/272] Compiling FruitfolioTests Prompt22HormoneRhythmCoreTests.swift
+[263/273] Compiling FruitfolioTests Prompt24TrendsCoreTests.swift
+[264/274] Compiling FruitfolioTests Prompt25FertilizationCoreTests.swift
+[265/275] Compiling FruitfolioTests Prompt26PregnancyEducationTests.swift
+[266/276] Compiling FruitfolioTests Prompt20DailyLogCoreTests.swift
+[267/277] Compiling FruitfolioTests Prompt27ScienceContentTests.swift
+[268/278] Compiling FruitfolioTests Prompt27AContextPersonalizationTests.swift
+[269/279] Compiling FruitfolioTests Prompt56ResearchIntelligenceTests.swift
+[270/279] Compiling FruitfolioTests Prompt28FruitBasketTests.swift
+[271/280] Wrapping AST for FruitfolioTests for debugging
+[272/280] /tmp/fruitfolio-portable-qm177ggv/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[273/280] Write sources
+[275/282] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[276/282] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[277/283] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[278/284] /tmp/fruitfolio-portable-qm177ggv/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageTests.derived/runner.swift
+[279/284] Write sources
+[280/286] Wrapping AST for FruitfolioPortableChecksPackageDiscoveredTests for debugging
+[282/286] Emitting module FruitfolioPortableChecksPackageTests
+[283/286] Compiling FruitfolioPortableChecksPackageTests runner.swift
+[284/287] Wrapping AST for FruitfolioPortableChecksPackageTests for debugging
+[285/287] Write Objects.LinkFileList
+[286/287] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (57.43s)
+Test Suite 'Selected tests' started at 2026-11-07 19:28:33.671
+Test Suite 'Prompt27AContextResearchTests' started at 2026-11-07 19:28:33.672
+Test Case 'Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity' started at 2026-11-07 19:28:33.672
+llama_model_loader: loaded meta data with 26 key-value pairs and 291 tensors from /workspace/Fruitfolio_AUDIT_WORKING_COPY_NEW/FruitfolioAI.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = qwen2
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                               general.name str              = qwen2.5-0.5b-instruct
+llama_model_loader: - kv   3:                            general.version str              = v0.1
+llama_model_loader: - kv   4:                           general.finetune str              = qwen2.5-0.5b-instruct
+llama_model_loader: - kv   5:                         general.size_label str              = 630M
+llama_model_loader: - kv   6:                          qwen2.block_count u32              = 24
+llama_model_loader: - kv   7:                       qwen2.context_length u32              = 32768
+llama_model_loader: - kv   8:                     qwen2.embedding_length u32              = 896
+llama_model_loader: - kv   9:                  qwen2.feed_forward_length u32              = 4864
+llama_model_loader: - kv  10:                 qwen2.attention.head_count u32              = 14
+llama_model_loader: - kv  11:              qwen2.attention.head_count_kv u32              = 2
+llama_model_loader: - kv  12:                       qwen2.rope.freq_base f32              = 1000000.000000
+llama_model_loader: - kv  13:     qwen2.attention.layer_norm_rms_epsilon f32              = 0.000001
+llama_model_loader: - kv  14:                          general.file_type u32              = 15
+llama_model_loader: - kv  15:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  16:                         tokenizer.ggml.pre str              = qwen2
+llama_model_loader: - kv  17:                      tokenizer.ggml.tokens arr[str,151936]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  18:                  tokenizer.ggml.token_type arr[i32,151936]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  19:                      tokenizer.ggml.merges arr[str,151387]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+llama_model_loader: - kv  20:                tokenizer.ggml.eos_token_id u32              = 151645
+llama_model_loader: - kv  21:            tokenizer.ggml.padding_token_id u32              = 151643
+llama_model_loader: - kv  22:                tokenizer.ggml.bos_token_id u32              = 151643
+llama_model_loader: - kv  23:               tokenizer.ggml.add_bos_token bool             = false
+llama_model_loader: - kv  24:                    tokenizer.chat_template str              = {%- if tools %}\n    {{- '<|im_start|>...
+llama_model_loader: - kv  25:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:  121 tensors
+llama_model_loader: - type q5_0:  133 tensors
+llama_model_loader: - type q8_0:   13 tensors
+llama_model_loader: - type q4_K:   12 tensors
+llama_model_loader: - type q6_K:   12 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 462.96 MiB (6.16 BPW) 
+init_tokenizer: initializing tokenizer for type 2
+load: 0 unused tokens
+load: control token: 151660 '<|fim_middle|>' is not marked as EOG
+load: control token: 151659 '<|fim_prefix|>' is not marked as EOG
+load: control token: 151653 '<|vision_end|>' is not marked as EOG
+load: control token: 151648 '<|box_start|>' is not marked as EOG
+load: control token: 151646 '<|object_ref_start|>' is not marked as EOG
+load: control token: 151649 '<|box_end|>' is not marked as EOG
+load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+load: control token: 151655 '<|image_pad|>' is not marked as EOG
+load: control token: 151651 '<|quad_end|>' is not marked as EOG
+load: control token: 151647 '<|object_ref_end|>' is not marked as EOG
+load: control token: 151652 '<|vision_start|>' is not marked as EOG
+load: control token: 151654 '<|vision_pad|>' is not marked as EOG
+load: control token: 151656 '<|video_pad|>' is not marked as EOG
+load: control token: 151644 '<|im_start|>' is not marked as EOG
+load: control token: 151661 '<|fim_suffix|>' is not marked as EOG
+load: control token: 151650 '<|quad_start|>' is not marked as EOG
+load: printing all EOG tokens:
+load:   - 128247 ('</s>')
+load:   - 151643 ('<|endoftext|>')
+load:   - 151645 ('<|im_end|>')
+load:   - 151662 ('<|fim_pad|>')
+load:   - 151663 ('<|repo_name|>')
+load:   - 151664 ('<|file_sep|>')
+load: special tokens cache size = 23
+load: token to piece cache size = 0.9310 MB
+print_info: arch                  = qwen2
+print_info: vocab_only            = 0
+print_info: no_alloc              = 0
+print_info: n_ctx_train           = 32768
+print_info: n_embd_inp            = 896
+print_info: n_embd                = 896
+print_info: n_embd_out            = 896
+print_info: n_layer               = 24
+print_info: n_layer_all           = 24
+print_info: n_head                = 14
+print_info: n_head_kv             = 2
+print_info: n_rot                 = 64
+print_info: n_swa                 = 0
+print_info: is_swa_any            = 0
+print_info: non_causal_type       = 0
+print_info: n_embd_head_k         = 64
+print_info: n_embd_head_v         = 64
+print_info: n_gqa                 = 7
+print_info: n_embd_k_gqa          = 128
+print_info: n_embd_v_gqa          = 128
+print_info: f_norm_eps            = 0.0e+00
+print_info: f_norm_rms_eps        = 1.0e-06
+print_info: f_clamp_kqv           = 0.0e+00
+print_info: f_max_alibi_bias      = 0.0e+00
+print_info: f_logit_scale         = 0.0e+00
+print_info: f_attn_scale          = 0.0e+00
+print_info: f_attn_value_scale    = 0.0000
+print_info: n_ff                  = 4864
+print_info: n_expert              = 0
+print_info: n_expert_used         = 0
+print_info: n_expert_groups       = 0
+print_info: n_group_used          = 0
+print_info: causal attn           = 1
+print_info: pooling type          = -1
+print_info: rope type             = 2
+print_info: rope scaling          = linear
+print_info: freq_base_train       = 1000000.0
+print_info: freq_scale_train      = 1
+print_info: n_ctx_orig_yarn       = 32768
+print_info: rope_yarn_log_mul     = 0.0000
+print_info: rope_finetuned        = unknown
+print_info: model type            = 1B
+print_info: model params          = 630.17 M
+print_info: general.name          = qwen2.5-0.5b-instruct
+print_info: vocab type            = BPE
+print_info: n_vocab               = 151936
+print_info: n_merges              = 151387
+print_info: BOS token             = 151643 '<|endoftext|>'
+print_info: EOS token             = 151645 '<|im_end|>'
+print_info: EOT token             = 151645 '<|im_end|>'
+print_info: PAD token             = 151643 '<|endoftext|>'
+print_info: LF token              = 198 'Ċ'
+print_info: FIM PRE token         = 151659 '<|fim_prefix|>'
+print_info: FIM SUF token         = 151661 '<|fim_suffix|>'
+print_info: FIM MID token         = 151660 '<|fim_middle|>'
+print_info: FIM PAD token         = 151662 '<|fim_pad|>'
+print_info: FIM REP token         = 151663 '<|repo_name|>'
+print_info: FIM SEP token         = 151664 '<|file_sep|>'
+print_info: EOG token             = 128247 '</s>'
+print_info: EOG token             = 151643 '<|endoftext|>'
+print_info: EOG token             = 151645 '<|im_end|>'
+print_info: EOG token             = 151662 '<|fim_pad|>'
+print_info: EOG token             = 151663 '<|repo_name|>'
+print_info: EOG token             = 151664 '<|file_sep|>'
+print_info: max token length      = 256
+load_tensors: loading model tensors, this can take a while... (load_mode = mmap)
+load_tensors: layer   0 assigned to device CPU, is_swa = 0
+load_tensors: layer   1 assigned to device CPU, is_swa = 0
+load_tensors: layer   2 assigned to device CPU, is_swa = 0
+load_tensors: layer   3 assigned to device CPU, is_swa = 0
+load_tensors: layer   4 assigned to device CPU, is_swa = 0
+load_tensors: layer   5 assigned to device CPU, is_swa = 0
+load_tensors: layer   6 assigned to device CPU, is_swa = 0
+load_tensors: layer   7 assigned to device CPU, is_swa = 0
+load_tensors: layer   8 assigned to device CPU, is_swa = 0
+load_tensors: layer   9 assigned to device CPU, is_swa = 0
+load_tensors: layer  10 assigned to device CPU, is_swa = 0
+load_tensors: layer  11 assigned to device CPU, is_swa = 0
+load_tensors: layer  12 assigned to device CPU, is_swa = 0
+load_tensors: layer  13 assigned to device CPU, is_swa = 0
+load_tensors: layer  14 assigned to device CPU, is_swa = 0
+load_tensors: layer  15 assigned to device CPU, is_swa = 0
+load_tensors: layer  16 assigned to device CPU, is_swa = 0
+load_tensors: layer  17 assigned to device CPU, is_swa = 0
+load_tensors: layer  18 assigned to device CPU, is_swa = 0
+load_tensors: layer  19 assigned to device CPU, is_swa = 0
+load_tensors: layer  20 assigned to device CPU, is_swa = 0
+load_tensors: layer  21 assigned to device CPU, is_swa = 0
+load_tensors: layer  22 assigned to device CPU, is_swa = 0
+load_tensors: layer  23 assigned to device CPU, is_swa = 0
+load_tensors: layer  24 assigned to device CPU, is_swa = 0
+create_tensor: loading tensor token_embd.weight
+create_tensor: loading tensor output_norm.weight
+create_tensor: loading tensor output.weight
+create_tensor: loading tensor output.bias
+create_tensor: loading tensor blk.0.attn_norm.weight
+create_tensor: loading tensor blk.0.attn_qkv.weight
+create_tensor: loading tensor blk.0.attn_q.weight
+create_tensor: loading tensor blk.0.attn_k.weight
+create_tensor: loading tensor blk.0.attn_v.weight
+create_tensor: loading tensor blk.0.attn_q.bias
+create_tensor: loading tensor blk.0.attn_k.bias
+create_tensor: loading tensor blk.0.attn_v.bias
+create_tensor: loading tensor blk.0.attn_output.weight
+create_tensor: loading tensor blk.0.ffn_norm.weight
+create_tensor: loading tensor blk.0.ffn_gate.weight
+create_tensor: loading tensor blk.0.ffn_down.weight
+create_tensor: loading tensor blk.0.ffn_up.weight
+create_tensor: loading tensor blk.1.attn_norm.weight
+create_tensor: loading tensor blk.1.attn_qkv.weight
+create_tensor: loading tensor blk.1.attn_q.weight
+create_tensor: loading tensor blk.1.attn_k.weight
+create_tensor: loading tensor blk.1.attn_v.weight
+create_tensor: loading tensor blk.1.attn_q.bias
+create_tensor: loading tensor blk.1.attn_k.bias
+create_tensor: loading tensor blk.1.attn_v.bias
+create_tensor: loading tensor blk.1.attn_output.weight
+create_tensor: loading tensor blk.1.ffn_norm.weight
+create_tensor: loading tensor blk.1.ffn_gate.weight
+create_tensor: loading tensor blk.1.ffn_down.weight
+create_tensor: loading tensor blk.1.ffn_up.weight
+create_tensor: loading tensor blk.2.attn_norm.weight
+create_tensor: loading tensor blk.2.attn_qkv.weight
+create_tensor: loading tensor blk.2.attn_q.weight
+create_tensor: loading tensor blk.2.attn_k.weight
+create_tensor: loading tensor blk.2.attn_v.weight
+create_tensor: loading tensor blk.2.attn_q.bias
+create_tensor: loading tensor blk.2.attn_k.bias
+create_tensor: loading tensor blk.2.attn_v.bias
+create_tensor: loading tensor blk.2.attn_output.weight
+create_tensor: loading tensor blk.2.ffn_norm.weight
+create_tensor: loading tensor blk.2.ffn_gate.weight
+create_tensor: loading tensor blk.2.ffn_down.weight
+create_tensor: loading tensor blk.2.ffn_up.weight
+create_tensor: loading tensor blk.3.attn_norm.weight
+create_tensor: loading tensor blk.3.attn_qkv.weight
+create_tensor: loading tensor blk.3.attn_q.weight
+create_tensor: loading tensor blk.3.attn_k.weight
+create_tensor: loading tensor blk.3.attn_v.weight
+create_tensor: loading tensor blk.3.attn_q.bias
+create_tensor: loading tensor blk.3.attn_k.bias
+create_tensor: loading tensor blk.3.attn_v.bias
+create_tensor: loading tensor blk.3.attn_output.weight
+create_tensor: loading tensor blk.3.ffn_norm.weight
+create_tensor: loading tensor blk.3.ffn_gate.weight
+create_tensor: loading tensor blk.3.ffn_down.weight
+create_tensor: loading tensor blk.3.ffn_up.weight
+create_tensor: loading tensor blk.4.attn_norm.weight
+create_tensor: loading tensor blk.4.attn_qkv.weight
+create_tensor: loading tensor blk.4.attn_q.weight
+create_tensor: loading tensor blk.4.attn_k.weight
+create_tensor: loading tensor blk.4.attn_v.weight
+create_tensor: loading tensor blk.4.attn_q.bias
+create_tensor: loading tensor blk.4.attn_k.bias
+create_tensor: loading tensor blk.4.attn_v.bias
+create_tensor: loading tensor blk.4.attn_output.weight
+create_tensor: loading tensor blk.4.ffn_norm.weight
+create_tensor: loading tensor blk.4.ffn_gate.weight
+create_tensor: loading tensor blk.4.ffn_down.weight
+create_tensor: loading tensor blk.4.ffn_up.weight
+create_tensor: loading tensor blk.5.attn_norm.weight
+create_tensor: loading tensor blk.5.attn_qkv.weight
+create_tensor: loading tensor blk.5.attn_q.weight
+create_tensor: loading tensor blk.5.attn_k.weight
+create_tensor: loading tensor blk.5.attn_v.weight
+create_tensor: loading tensor blk.5.attn_q.bias
+create_tensor: loading tensor blk.5.attn_k.bias
+create_tensor: loading tensor blk.5.attn_v.bias
+create_tensor: loading tensor blk.5.attn_output.weight
+create_tensor: loading tensor blk.5.ffn_norm.weight
+create_tensor: loading tensor blk.5.ffn_gate.weight
+create_tensor: loading tensor blk.5.ffn_down.weight
+create_tensor: loading tensor blk.5.ffn_up.weight
+create_tensor: loading tensor blk.6.attn_norm.weight
+create_tensor: loading tensor blk.6.attn_qkv.weight
+create_tensor: loading tensor blk.6.attn_q.weight
+create_tensor: loading tensor blk.6.attn_k.weight
+create_tensor: loading tensor blk.6.attn_v.weight
+create_tensor: loading tensor blk.6.attn_q.bias
+create_tensor: loading tensor blk.6.attn_k.bias
+create_tensor: loading tensor blk.6.attn_v.bias
+create_tensor: loading tensor blk.6.attn_output.weight
+create_tensor: loading tensor blk.6.ffn_norm.weight
+create_tensor: loading tensor blk.6.ffn_gate.weight
+create_tensor: loading tensor blk.6.ffn_down.weight
+create_tensor: loading tensor blk.6.ffn_up.weight
+create_tensor: loading tensor blk.7.attn_norm.weight
+create_tensor: loading tensor blk.7.attn_qkv.weight
+create_tensor: loading tensor blk.7.attn_q.weight
+create_tensor: loading tensor blk.7.attn_k.weight
+create_tensor: loading tensor blk.7.attn_v.weight
+create_tensor: loading tensor blk.7.attn_q.bias
+create_tensor: loading tensor blk.7.attn_k.bias
+create_tensor: loading tensor blk.7.attn_v.bias
+create_tensor: loading tensor blk.7.attn_output.weight
+create_tensor: loading tensor blk.7.ffn_norm.weight
+create_tensor: loading tensor blk.7.ffn_gate.weight
+create_tensor: loading tensor blk.7.ffn_down.weight
+create_tensor: loading tensor blk.7.ffn_up.weight
+create_tensor: loading tensor blk.8.attn_norm.weight
+create_tensor: loading tensor blk.8.attn_qkv.weight
+create_tensor: loading tensor blk.8.attn_q.weight
+create_tensor: loading tensor blk.8.attn_k.weight
+create_tensor: loading tensor blk.8.attn_v.weight
+create_tensor: loading tensor blk.8.attn_q.bias
+create_tensor: loading tensor blk.8.attn_k.bias
+create_tensor: loading tensor blk.8.attn_v.bias
+create_tensor: loading tensor blk.8.attn_output.weight
+create_tensor: loading tensor blk.8.ffn_norm.weight
+create_tensor: loading tensor blk.8.ffn_gate.weight
+create_tensor: loading tensor blk.8.ffn_down.weight
+create_tensor: loading tensor blk.8.ffn_up.weight
+create_tensor: loading tensor blk.9.attn_norm.weight
+create_tensor: loading tensor blk.9.attn_qkv.weight
+create_tensor: loading tensor blk.9.attn_q.weight
+create_tensor: loading tensor blk.9.attn_k.weight
+create_tensor: loading tensor blk.9.attn_v.weight
+create_tensor: loading tensor blk.9.attn_q.bias
+create_tensor: loading tensor blk.9.attn_k.bias
+create_tensor: loading tensor blk.9.attn_v.bias
+create_tensor: loading tensor blk.9.attn_output.weight
+create_tensor: loading tensor blk.9.ffn_norm.weight
+create_tensor: loading tensor blk.9.ffn_gate.weight
+create_tensor: loading tensor blk.9.ffn_down.weight
+create_tensor: loading tensor blk.9.ffn_up.weight
+create_tensor: loading tensor blk.10.attn_norm.weight
+create_tensor: loading tensor blk.10.attn_qkv.weight
+create_tensor: loading tensor blk.10.attn_q.weight
+create_tensor: loading tensor blk.10.attn_k.weight
+create_tensor: loading tensor blk.10.attn_v.weight
+create_tensor: loading tensor blk.10.attn_q.bias
+create_tensor: loading tensor blk.10.attn_k.bias
+create_tensor: loading tensor blk.10.attn_v.bias
+create_tensor: loading tensor blk.10.attn_output.weight
+create_tensor: loading tensor blk.10.ffn_norm.weight
+create_tensor: loading tensor blk.10.ffn_gate.weight
+create_tensor: loading tensor blk.10.ffn_down.weight
+create_tensor: loading tensor blk.10.ffn_up.weight
+create_tensor: loading tensor blk.11.attn_norm.weight
+create_tensor: loading tensor blk.11.attn_qkv.weight
+create_tensor: loading tensor blk.11.attn_q.weight
+create_tensor: loading tensor blk.11.attn_k.weight
+create_tensor: loading tensor blk.11.attn_v.weight
+create_tensor: loading tensor blk.11.attn_q.bias
+create_tensor: loading tensor blk.11.attn_k.bias
+create_tensor: loading tensor blk.11.attn_v.bias
+create_tensor: loading tensor blk.11.attn_output.weight
+create_tensor: loading tensor blk.11.ffn_norm.weight
+create_tensor: loading tensor blk.11.ffn_gate.weight
+create_tensor: loading tensor blk.11.ffn_down.weight
+create_tensor: loading tensor blk.11.ffn_up.weight
+create_tensor: loading tensor blk.12.attn_norm.weight
+create_tensor: loading tensor blk.12.attn_qkv.weight
+create_tensor: loading tensor blk.12.attn_q.weight
+create_tensor: loading tensor blk.12.attn_k.weight
+create_tensor: loading tensor blk.12.attn_v.weight
+create_tensor: loading tensor blk.12.attn_q.bias
+create_tensor: loading tensor blk.12.attn_k.bias
+create_tensor: loading tensor blk.12.attn_v.bias
+create_tensor: loading tensor blk.12.attn_output.weight
+create_tensor: loading tensor blk.12.ffn_norm.weight
+create_tensor: loading tensor blk.12.ffn_gate.weight
+create_tensor: loading tensor blk.12.ffn_down.weight
+create_tensor: loading tensor blk.12.ffn_up.weight
+create_tensor: loading tensor blk.13.attn_norm.weight
+create_tensor: loading tensor blk.13.attn_qkv.weight
+create_tensor: loading tensor blk.13.attn_q.weight
+create_tensor: loading tensor blk.13.attn_k.weight
+create_tensor: loading tensor blk.13.attn_v.weight
+create_tensor: loading tensor blk.13.attn_q.bias
+create_tensor: loading tensor blk.13.attn_k.bias
+create_tensor: loading tensor blk.13.attn_v.bias
+create_tensor: loading tensor blk.13.attn_output.weight
+create_tensor: loading tensor blk.13.ffn_norm.weight
+create_tensor: loading tensor blk.13.ffn_gate.weight
+create_tensor: loading tensor blk.13.ffn_down.weight
+create_tensor: loading tensor blk.13.ffn_up.weight
+create_tensor: loading tensor blk.14.attn_norm.weight
+create_tensor: loading tensor blk.14.attn_qkv.weight
+create_tensor: loading tensor blk.14.attn_q.weight
+create_tensor: loading tensor blk.14.attn_k.weight
+create_tensor: loading tensor blk.14.attn_v.weight
+create_tensor: loading tensor blk.14.attn_q.bias
+create_tensor: loading tensor blk.14.attn_k.bias
+create_tensor: loading tensor blk.14.attn_v.bias
+create_tensor: loading tensor blk.14.attn_output.weight
+create_tensor: loading tensor blk.14.ffn_norm.weight
+create_tensor: loading tensor blk.14.ffn_gate.weight
+create_tensor: loading tensor blk.14.ffn_down.weight
+create_tensor: loading tensor blk.14.ffn_up.weight
+create_tensor: loading tensor blk.15.attn_norm.weight
+create_tensor: loading tensor blk.15.attn_qkv.weight
+create_tensor: loading tensor blk.15.attn_q.weight
+create_tensor: loading tensor blk.15.attn_k.weight
+create_tensor: loading tensor blk.15.attn_v.weight
+create_tensor: loading tensor blk.15.attn_q.bias
+create_tensor: loading tensor blk.15.attn_k.bias
+create_tensor: loading tensor blk.15.attn_v.bias
+create_tensor: loading tensor blk.15.attn_output.weight
+create_tensor: loading tensor blk.15.ffn_norm.weight
+create_tensor: loading tensor blk.15.ffn_gate.weight
+create_tensor: loading tensor blk.15.ffn_down.weight
+create_tensor: loading tensor blk.15.ffn_up.weight
+create_tensor: loading tensor blk.16.attn_norm.weight
+create_tensor: loading tensor blk.16.attn_qkv.weight
+create_tensor: loading tensor blk.16.attn_q.weight
+create_tensor: loading tensor blk.16.attn_k.weight
+create_tensor: loading tensor blk.16.attn_v.weight
+create_tensor: loading tensor blk.16.attn_q.bias
+create_tensor: loading tensor blk.16.attn_k.bias
+create_tensor: loading tensor blk.16.attn_v.bias
+create_tensor: loading tensor blk.16.attn_output.weight
+create_tensor: loading tensor blk.16.ffn_norm.weight
+create_tensor: loading tensor blk.16.ffn_gate.weight
+create_tensor: loading tensor blk.16.ffn_down.weight
+create_tensor: loading tensor blk.16.ffn_up.weight
+create_tensor: loading tensor blk.17.attn_norm.weight
+create_tensor: loading tensor blk.17.attn_qkv.weight
+create_tensor: loading tensor blk.17.attn_q.weight
+create_tensor: loading tensor blk.17.attn_k.weight
+create_tensor: loading tensor blk.17.attn_v.weight
+create_tensor: loading tensor blk.17.attn_q.bias
+create_tensor: loading tensor blk.17.attn_k.bias
+create_tensor: loading tensor blk.17.attn_v.bias
+create_tensor: loading tensor blk.17.attn_output.weight
+create_tensor: loading tensor blk.17.ffn_norm.weight
+create_tensor: loading tensor blk.17.ffn_gate.weight
+create_tensor: loading tensor blk.17.ffn_down.weight
+create_tensor: loading tensor blk.17.ffn_up.weight
+create_tensor: loading tensor blk.18.attn_norm.weight
+create_tensor: loading tensor blk.18.attn_qkv.weight
+create_tensor: loading tensor blk.18.attn_q.weight
+create_tensor: loading tensor blk.18.attn_k.weight
+create_tensor: loading tensor blk.18.attn_v.weight
+create_tensor: loading tensor blk.18.attn_q.bias
+create_tensor: loading tensor blk.18.attn_k.bias
+create_tensor: loading tensor blk.18.attn_v.bias
+create_tensor: loading tensor blk.18.attn_output.weight
+create_tensor: loading tensor blk.18.ffn_norm.weight
+create_tensor: loading tensor blk.18.ffn_gate.weight
+create_tensor: loading tensor blk.18.ffn_down.weight
+create_tensor: loading tensor blk.18.ffn_up.weight
+create_tensor: loading tensor blk.19.attn_norm.weight
+create_tensor: loading tensor blk.19.attn_qkv.weight
+create_tensor: loading tensor blk.19.attn_q.weight
+create_tensor: loading tensor blk.19.attn_k.weight
+create_tensor: loading tensor blk.19.attn_v.weight
+create_tensor: loading tensor blk.19.attn_q.bias
+create_tensor: loading tensor blk.19.attn_k.bias
+create_tensor: loading tensor blk.19.attn_v.bias
+create_tensor: loading tensor blk.19.attn_output.weight
+create_tensor: loading tensor blk.19.ffn_norm.weight
+create_tensor: loading tensor blk.19.ffn_gate.weight
+create_tensor: loading tensor blk.19.ffn_down.weight
+create_tensor: loading tensor blk.19.ffn_up.weight
+create_tensor: loading tensor blk.20.attn_norm.weight
+create_tensor: loading tensor blk.20.attn_qkv.weight
+create_tensor: loading tensor blk.20.attn_q.weight
+create_tensor: loading tensor blk.20.attn_k.weight
+create_tensor: loading tensor blk.20.attn_v.weight
+create_tensor: loading tensor blk.20.attn_q.bias
+create_tensor: loading tensor blk.20.attn_k.bias
+create_tensor: loading tensor blk.20.attn_v.bias
+create_tensor: loading tensor blk.20.attn_output.weight
+create_tensor: loading tensor blk.20.ffn_norm.weight
+create_tensor: loading tensor blk.20.ffn_gate.weight
+create_tensor: loading tensor blk.20.ffn_down.weight
+create_tensor: loading tensor blk.20.ffn_up.weight
+create_tensor: loading tensor blk.21.attn_norm.weight
+create_tensor: loading tensor blk.21.attn_qkv.weight
+create_tensor: loading tensor blk.21.attn_q.weight
+create_tensor: loading tensor blk.21.attn_k.weight
+create_tensor: loading tensor blk.21.attn_v.weight
+create_tensor: loading tensor blk.21.attn_q.bias
+create_tensor: loading tensor blk.21.attn_k.bias
+create_tensor: loading tensor blk.21.attn_v.bias
+create_tensor: loading tensor blk.21.attn_output.weight
+create_tensor: loading tensor blk.21.ffn_norm.weight
+create_tensor: loading tensor blk.21.ffn_gate.weight
+create_tensor: loading tensor blk.21.ffn_down.weight
+create_tensor: loading tensor blk.21.ffn_up.weight
+create_tensor: loading tensor blk.22.attn_norm.weight
+create_tensor: loading tensor blk.22.attn_qkv.weight
+create_tensor: loading tensor blk.22.attn_q.weight
+create_tensor: loading tensor blk.22.attn_k.weight
+create_tensor: loading tensor blk.22.attn_v.weight
+create_tensor: loading tensor blk.22.attn_q.bias
+create_tensor: loading tensor blk.22.attn_k.bias
+create_tensor: loading tensor blk.22.attn_v.bias
+create_tensor: loading tensor blk.22.attn_output.weight
+create_tensor: loading tensor blk.22.ffn_norm.weight
+create_tensor: loading tensor blk.22.ffn_gate.weight
+create_tensor: loading tensor blk.22.ffn_down.weight
+create_tensor: loading tensor blk.22.ffn_up.weight
+create_tensor: loading tensor blk.23.attn_norm.weight
+create_tensor: loading tensor blk.23.attn_qkv.weight
+create_tensor: loading tensor blk.23.attn_q.weight
+create_tensor: loading tensor blk.23.attn_k.weight
+create_tensor: loading tensor blk.23.attn_v.weight
+create_tensor: loading tensor blk.23.attn_q.bias
+create_tensor: loading tensor blk.23.attn_k.bias
+create_tensor: loading tensor blk.23.attn_v.bias
+create_tensor: loading tensor blk.23.attn_output.weight
+create_tensor: loading tensor blk.23.ffn_norm.weight
+create_tensor: loading tensor blk.23.ffn_gate.weight
+create_tensor: loading tensor blk.23.ffn_down.weight
+create_tensor: loading tensor blk.23.ffn_up.weight
+create_tensor: loading tensor blk.0.attn_q.scale
+create_tensor: loading tensor blk.0.attn_k.scale
+create_tensor: loading tensor blk.0.attn_v.scale
+create_tensor: loading tensor blk.0.attn_output.scale
+create_tensor: loading tensor blk.0.ffn_gate.scale
+create_tensor: loading tensor blk.0.ffn_down.scale
+create_tensor: loading tensor blk.0.ffn_up.scale
+create_tensor: loading tensor blk.0.attn_q.input_scale
+create_tensor: loading tensor blk.0.attn_k.input_scale
+create_tensor: loading tensor blk.0.attn_v.input_scale
+create_tensor: loading tensor blk.0.attn_output.input_scale
+create_tensor: loading tensor blk.0.ffn_gate.input_scale
+create_tensor: loading tensor blk.0.ffn_down.input_scale
+create_tensor: loading tensor blk.0.ffn_up.input_scale
+create_tensor: loading tensor blk.1.attn_q.scale
+create_tensor: loading tensor blk.1.attn_k.scale
+create_tensor: loading tensor blk.1.attn_v.scale
+create_tensor: loading tensor blk.1.attn_output.scale
+create_tensor: loading tensor blk.1.ffn_gate.scale
+create_tensor: loading tensor blk.1.ffn_down.scale
+create_tensor: loading tensor blk.1.ffn_up.scale
+create_tensor: loading tensor blk.1.attn_q.input_scale
+create_tensor: loading tensor blk.1.attn_k.input_scale
+create_tensor: loading tensor blk.1.attn_v.input_scale
+create_tensor: loading tensor blk.1.attn_output.input_scale
+create_tensor: loading tensor blk.1.ffn_gate.input_scale
+create_tensor: loading tensor blk.1.ffn_down.input_scale
+create_tensor: loading tensor blk.1.ffn_up.input_scale
+create_tensor: loading tensor blk.2.attn_q.scale
+create_tensor: loading tensor blk.2.attn_k.scale
+create_tensor: loading tensor blk.2.attn_v.scale
+create_tensor: loading tensor blk.2.attn_output.scale
+create_tensor: loading tensor blk.2.ffn_gate.scale
+create_tensor: loading tensor blk.2.ffn_down.scale
+create_tensor: loading tensor blk.2.ffn_up.scale
+create_tensor: loading tensor blk.2.attn_q.input_scale
+create_tensor: loading tensor blk.2.attn_k.input_scale
+create_tensor: loading tensor blk.2.attn_v.input_scale
+create_tensor: loading tensor blk.2.attn_output.input_scale
+create_tensor: loading tensor blk.2.ffn_gate.input_scale
+create_tensor: loading tensor blk.2.ffn_down.input_scale
+create_tensor: loading tensor blk.2.ffn_up.input_scale
+create_tensor: loading tensor blk.3.attn_q.scale
+create_tensor: loading tensor blk.3.attn_k.scale
+create_tensor: loading tensor blk.3.attn_v.scale
+create_tensor: loading tensor blk.3.attn_output.scale
+create_tensor: loading tensor blk.3.ffn_gate.scale
+create_tensor: loading tensor blk.3.ffn_down.scale
+create_tensor: loading tensor blk.3.ffn_up.scale
+create_tensor: loading tensor blk.3.attn_q.input_scale
+create_tensor: loading tensor blk.3.attn_k.input_scale
+create_tensor: loading tensor blk.3.attn_v.input_scale
+create_tensor: loading tensor blk.3.attn_output.input_scale
+create_tensor: loading tensor blk.3.ffn_gate.input_scale
+create_tensor: loading tensor blk.3.ffn_down.input_scale
+create_tensor: loading tensor blk.3.ffn_up.input_scale
+create_tensor: loading tensor blk.4.attn_q.scale
+create_tensor: loading tensor blk.4.attn_k.scale
+create_tensor: loading tensor blk.4.attn_v.scale
+create_tensor: loading tensor blk.4.attn_output.scale
+create_tensor: loading tensor blk.4.ffn_gate.scale
+create_tensor: loading tensor blk.4.ffn_down.scale
+create_tensor: loading tensor blk.4.ffn_up.scale
+create_tensor: loading tensor blk.4.attn_q.input_scale
+create_tensor: loading tensor blk.4.attn_k.input_scale
+create_tensor: loading tensor blk.4.attn_v.input_scale
+create_tensor: loading tensor blk.4.attn_output.input_scale
+create_tensor: loading tensor blk.4.ffn_gate.input_scale
+create_tensor: loading tensor blk.4.ffn_down.input_scale
+create_tensor: loading tensor blk.4.ffn_up.input_scale
+create_tensor: loading tensor blk.5.attn_q.scale
+create_tensor: loading tensor blk.5.attn_k.scale
+create_tensor: loading tensor blk.5.attn_v.scale
+create_tensor: loading tensor blk.5.attn_output.scale
+create_tensor: loading tensor blk.5.ffn_gate.scale
+create_tensor: loading tensor blk.5.ffn_down.scale
+create_tensor: loading tensor blk.5.ffn_up.scale
+create_tensor: loading tensor blk.5.attn_q.input_scale
+create_tensor: loading tensor blk.5.attn_k.input_scale
+create_tensor: loading tensor blk.5.attn_v.input_scale
+create_tensor: loading tensor blk.5.attn_output.input_scale
+create_tensor: loading tensor blk.5.ffn_gate.input_scale
+create_tensor: loading tensor blk.5.ffn_down.input_scale
+create_tensor: loading tensor blk.5.ffn_up.input_scale
+create_tensor: loading tensor blk.6.attn_q.scale
+create_tensor: loading tensor blk.6.attn_k.scale
+create_tensor: loading tensor blk.6.attn_v.scale
+create_tensor: loading tensor blk.6.attn_output.scale
+create_tensor: loading tensor blk.6.ffn_gate.scale
+create_tensor: loading tensor blk.6.ffn_down.scale
+create_tensor: loading tensor blk.6.ffn_up.scale
+create_tensor: loading tensor blk.6.attn_q.input_scale
+create_tensor: loading tensor blk.6.attn_k.input_scale
+create_tensor: loading tensor blk.6.attn_v.input_scale
+create_tensor: loading tensor blk.6.attn_output.input_scale
+create_tensor: loading tensor blk.6.ffn_gate.input_scale
+create_tensor: loading tensor blk.6.ffn_down.input_scale
+create_tensor: loading tensor blk.6.ffn_up.input_scale
+create_tensor: loading tensor blk.7.attn_q.scale
+create_tensor: loading tensor blk.7.attn_k.scale
+create_tensor: loading tensor blk.7.attn_v.scale
+create_tensor: loading tensor blk.7.attn_output.scale
+create_tensor: loading tensor blk.7.ffn_gate.scale
+create_tensor: loading tensor blk.7.ffn_down.scale
+create_tensor: loading tensor blk.7.ffn_up.scale
+create_tensor: loading tensor blk.7.attn_q.input_scale
+create_tensor: loading tensor blk.7.attn_k.input_scale
+create_tensor: loading tensor blk.7.attn_v.input_scale
+create_tensor: loading tensor blk.7.attn_output.input_scale
+create_tensor: loading tensor blk.7.ffn_gate.input_scale
+create_tensor: loading tensor blk.7.ffn_down.input_scale
+create_tensor: loading tensor blk.7.ffn_up.input_scale
+create_tensor: loading tensor blk.8.attn_q.scale
+create_tensor: loading tensor blk.8.attn_k.scale
+create_tensor: loading tensor blk.8.attn_v.scale
+create_tensor: loading tensor blk.8.attn_output.scale
+create_tensor: loading tensor blk.8.ffn_gate.scale
+create_tensor: loading tensor blk.8.ffn_down.scale
+create_tensor: loading tensor blk.8.ffn_up.scale
+create_tensor: loading tensor blk.8.attn_q.input_scale
+create_tensor: loading tensor blk.8.attn_k.input_scale
+create_tensor: loading tensor blk.8.attn_v.input_scale
+create_tensor: loading tensor blk.8.attn_output.input_scale
+create_tensor: loading tensor blk.8.ffn_gate.input_scale
+create_tensor: loading tensor blk.8.ffn_down.input_scale
+create_tensor: loading tensor blk.8.ffn_up.input_scale
+create_tensor: loading tensor blk.9.attn_q.scale
+create_tensor: loading tensor blk.9.attn_k.scale
+create_tensor: loading tensor blk.9.attn_v.scale
+create_tensor: loading tensor blk.9.attn_output.scale
+create_tensor: loading tensor blk.9.ffn_gate.scale
+create_tensor: loading tensor blk.9.ffn_down.scale
+create_tensor: loading tensor blk.9.ffn_up.scale
+create_tensor: loading tensor blk.9.attn_q.input_scale
+create_tensor: loading tensor blk.9.attn_k.input_scale
+create_tensor: loading tensor blk.9.attn_v.input_scale
+create_tensor: loading tensor blk.9.attn_output.input_scale
+create_tensor: loading tensor blk.9.ffn_gate.input_scale
+create_tensor: loading tensor blk.9.ffn_down.input_scale
+create_tensor: loading tensor blk.9.ffn_up.input_scale
+create_tensor: loading tensor blk.10.attn_q.scale
+create_tensor: loading tensor blk.10.attn_k.scale
+create_tensor: loading tensor blk.10.attn_v.scale
+create_tensor: loading tensor blk.10.attn_output.scale
+create_tensor: loading tensor blk.10.ffn_gate.scale
+create_tensor: loading tensor blk.10.ffn_down.scale
+create_tensor: loading tensor blk.10.ffn_up.scale
+create_tensor: loading tensor blk.10.attn_q.input_scale
+create_tensor: loading tensor blk.10.attn_k.input_scale
+create_tensor: loading tensor blk.10.attn_v.input_scale
+create_tensor: loading tensor blk.10.attn_output.input_scale
+create_tensor: loading tensor blk.10.ffn_gate.input_scale
+create_tensor: loading tensor blk.10.ffn_down.input_scale
+create_tensor: loading tensor blk.10.ffn_up.input_scale
+create_tensor: loading tensor blk.11.attn_q.scale
+create_tensor: loading tensor blk.11.attn_k.scale
+create_tensor: loading tensor blk.11.attn_v.scale
+create_tensor: loading tensor blk.11.attn_output.scale
+create_tensor: loading tensor blk.11.ffn_gate.scale
+create_tensor: loading tensor blk.11.ffn_down.scale
+create_tensor: loading tensor blk.11.ffn_up.scale
+create_tensor: loading tensor blk.11.attn_q.input_scale
+create_tensor: loading tensor blk.11.attn_k.input_scale
+create_tensor: loading tensor blk.11.attn_v.input_scale
+create_tensor: loading tensor blk.11.attn_output.input_scale
+create_tensor: loading tensor blk.11.ffn_gate.input_scale
+create_tensor: loading tensor blk.11.ffn_down.input_scale
+create_tensor: loading tensor blk.11.ffn_up.input_scale
+create_tensor: loading tensor blk.12.attn_q.scale
+create_tensor: loading tensor blk.12.attn_k.scale
+create_tensor: loading tensor blk.12.attn_v.scale
+create_tensor: loading tensor blk.12.attn_output.scale
+create_tensor: loading tensor blk.12.ffn_gate.scale
+create_tensor: loading tensor blk.12.ffn_down.scale
+create_tensor: loading tensor blk.12.ffn_up.scale
+create_tensor: loading tensor blk.12.attn_q.input_scale
+create_tensor: loading tensor blk.12.attn_k.input_scale
+create_tensor: loading tensor blk.12.attn_v.input_scale
+create_tensor: loading tensor blk.12.attn_output.input_scale
+create_tensor: loading tensor blk.12.ffn_gate.input_scale
+create_tensor: loading tensor blk.12.ffn_down.input_scale
+create_tensor: loading tensor blk.12.ffn_up.input_scale
+create_tensor: loading tensor blk.13.attn_q.scale
+create_tensor: loading tensor blk.13.attn_k.scale
+create_tensor: loading tensor blk.13.attn_v.scale
+create_tensor: loading tensor blk.13.attn_output.scale
+create_tensor: loading tensor blk.13.ffn_gate.scale
+create_tensor: loading tensor blk.13.ffn_down.scale
+create_tensor: loading tensor blk.13.ffn_up.scale
+create_tensor: loading tensor blk.13.attn_q.input_scale
+create_tensor: loading tensor blk.13.attn_k.input_scale
+create_tensor: loading tensor blk.13.attn_v.input_scale
+create_tensor: loading tensor blk.13.attn_output.input_scale
+create_tensor: loading tensor blk.13.ffn_gate.input_scale
+create_tensor: loading tensor blk.13.ffn_down.input_scale
+create_tensor: loading tensor blk.13.ffn_up.input_scale
+create_tensor: loading tensor blk.14.attn_q.scale
+create_tensor: loading tensor blk.14.attn_k.scale
+create_tensor: loading tensor blk.14.attn_v.scale
+create_tensor: loading tensor blk.14.attn_output.scale
+create_tensor: loading tensor blk.14.ffn_gate.scale
+create_tensor: loading tensor blk.14.ffn_down.scale
+create_tensor: loading tensor blk.14.ffn_up.scale
+create_tensor: loading tensor blk.14.attn_q.input_scale
+create_tensor: loading tensor blk.14.attn_k.input_scale
+create_tensor: loading tensor blk.14.attn_v.input_scale
+create_tensor: loading tensor blk.14.attn_output.input_scale
+create_tensor: loading tensor blk.14.ffn_gate.input_scale
+create_tensor: loading tensor blk.14.ffn_down.input_scale
+create_tensor: loading tensor blk.14.ffn_up.input_scale
+create_tensor: loading tensor blk.15.attn_q.scale
+create_tensor: loading tensor blk.15.attn_k.scale
+create_tensor: loading tensor blk.15.attn_v.scale
+create_tensor: loading tensor blk.15.attn_output.scale
+create_tensor: loading tensor blk.15.ffn_gate.scale
+create_tensor: loading tensor blk.15.ffn_down.scale
+create_tensor: loading tensor blk.15.ffn_up.scale
+create_tensor: loading tensor blk.15.attn_q.input_scale
+create_tensor: loading tensor blk.15.attn_k.input_scale
+create_tensor: loading tensor blk.15.attn_v.input_scale
+create_tensor: loading tensor blk.15.attn_output.input_scale
+create_tensor: loading tensor blk.15.ffn_gate.input_scale
+create_tensor: loading tensor blk.15.ffn_down.input_scale
+create_tensor: loading tensor blk.15.ffn_up.input_scale
+create_tensor: loading tensor blk.16.attn_q.scale
+create_tensor: loading tensor blk.16.attn_k.scale
+create_tensor: loading tensor blk.16.attn_v.scale
+create_tensor: loading tensor blk.16.attn_output.scale
+create_tensor: loading tensor blk.16.ffn_gate.scale
+create_tensor: loading tensor blk.16.ffn_down.scale
+create_tensor: loading tensor blk.16.ffn_up.scale
+create_tensor: loading tensor blk.16.attn_q.input_scale
+create_tensor: loading tensor blk.16.attn_k.input_scale
+create_tensor: loading tensor blk.16.attn_v.input_scale
+create_tensor: loading tensor blk.16.attn_output.input_scale
+create_tensor: loading tensor blk.16.ffn_gate.input_scale
+create_tensor: loading tensor blk.16.ffn_down.input_scale
+create_tensor: loading tensor blk.16.ffn_up.input_scale
+create_tensor: loading tensor blk.17.attn_q.scale
+create_tensor: loading tensor blk.17.attn_k.scale
+create_tensor: loading tensor blk.17.attn_v.scale
+create_tensor: loading tensor blk.17.attn_output.scale
+create_tensor: loading tensor blk.17.ffn_gate.scale
+create_tensor: loading tensor blk.17.ffn_down.scale
+create_tensor: loading tensor blk.17.ffn_up.scale
+create_tensor: loading tensor blk.17.attn_q.input_scale
+create_tensor: loading tensor blk.17.attn_k.input_scale
+create_tensor: loading tensor blk.17.attn_v.input_scale
+create_tensor: loading tensor blk.17.attn_output.input_scale
+create_tensor: loading tensor blk.17.ffn_gate.input_scale
+create_tensor: loading tensor blk.17.ffn_down.input_scale
+create_tensor: loading tensor blk.17.ffn_up.input_scale
+create_tensor: loading tensor blk.18.attn_q.scale
+create_tensor: loading tensor blk.18.attn_k.scale
+create_tensor: loading tensor blk.18.attn_v.scale
+create_tensor: loading tensor blk.18.attn_output.scale
+create_tensor: loading tensor blk.18.ffn_gate.scale
+create_tensor: loading tensor blk.18.ffn_down.scale
+create_tensor: loading tensor blk.18.ffn_up.scale
+create_tensor: loading tensor blk.18.attn_q.input_scale
+create_tensor: loading tensor blk.18.attn_k.input_scale
+create_tensor: loading tensor blk.18.attn_v.input_scale
+create_tensor: loading tensor blk.18.attn_output.input_scale
+create_tensor: loading tensor blk.18.ffn_gate.input_scale
+create_tensor: loading tensor blk.18.ffn_down.input_scale
+create_tensor: loading tensor blk.18.ffn_up.input_scale
+create_tensor: loading tensor blk.19.attn_q.scale
+create_tensor: loading tensor blk.19.attn_k.scale
+create_tensor: loading tensor blk.19.attn_v.scale
+create_tensor: loading tensor blk.19.attn_output.scale
+create_tensor: loading tensor blk.19.ffn_gate.scale
+create_tensor: loading tensor blk.19.ffn_down.scale
+create_tensor: loading tensor blk.19.ffn_up.scale
+create_tensor: loading tensor blk.19.attn_q.input_scale
+create_tensor: loading tensor blk.19.attn_k.input_scale
+create_tensor: loading tensor blk.19.attn_v.input_scale
+create_tensor: loading tensor blk.19.attn_output.input_scale
+create_tensor: loading tensor blk.19.ffn_gate.input_scale
+create_tensor: loading tensor blk.19.ffn_down.input_scale
+create_tensor: loading tensor blk.19.ffn_up.input_scale
+create_tensor: loading tensor blk.20.attn_q.scale
+create_tensor: loading tensor blk.20.attn_k.scale
+create_tensor: loading tensor blk.20.attn_v.scale
+create_tensor: loading tensor blk.20.attn_output.scale
+create_tensor: loading tensor blk.20.ffn_gate.scale
+create_tensor: loading tensor blk.20.ffn_down.scale
+create_tensor: loading tensor blk.20.ffn_up.scale
+create_tensor: loading tensor blk.20.attn_q.input_scale
+create_tensor: loading tensor blk.20.attn_k.input_scale
+create_tensor: loading tensor blk.20.attn_v.input_scale
+create_tensor: loading tensor blk.20.attn_output.input_scale
+create_tensor: loading tensor blk.20.ffn_gate.input_scale
+create_tensor: loading tensor blk.20.ffn_down.input_scale
+create_tensor: loading tensor blk.20.ffn_up.input_scale
+create_tensor: loading tensor blk.21.attn_q.scale
+create_tensor: loading tensor blk.21.attn_k.scale
+create_tensor: loading tensor blk.21.attn_v.scale
+create_tensor: loading tensor blk.21.attn_output.scale
+create_tensor: loading tensor blk.21.ffn_gate.scale
+create_tensor: loading tensor blk.21.ffn_down.scale
+create_tensor: loading tensor blk.21.ffn_up.scale
+create_tensor: loading tensor blk.21.attn_q.input_scale
+create_tensor: loading tensor blk.21.attn_k.input_scale
+create_tensor: loading tensor blk.21.attn_v.input_scale
+create_tensor: loading tensor blk.21.attn_output.input_scale
+create_tensor: loading tensor blk.21.ffn_gate.input_scale
+create_tensor: loading tensor blk.21.ffn_down.input_scale
+create_tensor: loading tensor blk.21.ffn_up.input_scale
+create_tensor: loading tensor blk.22.attn_q.scale
+create_tensor: loading tensor blk.22.attn_k.scale
+create_tensor: loading tensor blk.22.attn_v.scale
+create_tensor: loading tensor blk.22.attn_output.scale
+create_tensor: loading tensor blk.22.ffn_gate.scale
+create_tensor: loading tensor blk.22.ffn_down.scale
+create_tensor: loading tensor blk.22.ffn_up.scale
+create_tensor: loading tensor blk.22.attn_q.input_scale
+create_tensor: loading tensor blk.22.attn_k.input_scale
+create_tensor: loading tensor blk.22.attn_v.input_scale
+create_tensor: loading tensor blk.22.attn_output.input_scale
+create_tensor: loading tensor blk.22.ffn_gate.input_scale
+create_tensor: loading tensor blk.22.ffn_down.input_scale
+create_tensor: loading tensor blk.22.ffn_up.input_scale
+create_tensor: loading tensor blk.23.attn_q.scale
+create_tensor: loading tensor blk.23.attn_k.scale
+create_tensor: loading tensor blk.23.attn_v.scale
+create_tensor: loading tensor blk.23.attn_output.scale
+create_tensor: loading tensor blk.23.ffn_gate.scale
+create_tensor: loading tensor blk.23.ffn_down.scale
+create_tensor: loading tensor blk.23.ffn_up.scale
+create_tensor: loading tensor blk.23.attn_q.input_scale
+create_tensor: loading tensor blk.23.attn_k.input_scale
+create_tensor: loading tensor blk.23.attn_v.input_scale
+create_tensor: loading tensor blk.23.attn_output.input_scale
+create_tensor: loading tensor blk.23.ffn_gate.input_scale
+create_tensor: loading tensor blk.23.ffn_down.input_scale
+create_tensor: loading tensor blk.23.ffn_up.input_scale
+done_getting_tensors: tensor 'token_embd.weight' (q5_0) (and 278 others) cannot be used with preferred buffer type CPU_REPACK, using CPU instead
+load_tensors:   CPU_Mapped model buffer size =   462.96 MiB
+load_tensors:   CPU_REPACK model buffer size =    28.05 MiB
+..............................................repack: repack tensor blk.2.ffn_down.weight with q4_K_8x8
+.repack: repack tensor blk.4.ffn_down.weight with q4_K_8x8
+repack: repack tensor blk.5.ffn_down.weight with q4_K_8x8
+.repack: repack tensor blk.11.ffn_down.weight with q4_K_8x8
+repack: repack tensor blk.12.ffn_down.weight with q4_K_8x8
+.repack: repack tensor blk.14.ffn_down.weight with q4_K_8x8
+repack: repack tensor blk.15.ffn_down.weight with q4_K_8x8
+.repack: repack tensor blk.17.ffn_down.weight with q4_K_8x8
+repack: repack tensor blk.18.ffn_down.weight with q4_K_8x8
+.repack: repack tensor blk.20.ffn_down.weight with q4_K_8x8
+repack: repack tensor blk.22.ffn_down.weight with q4_K_8x8
+.repack: repack tensor blk.23.ffn_down.weight with q4_K_8x8
+.
+llama_context: constructing llama_context
+llama_context: n_seq_max             = 1
+llama_context: n_ctx                 = 4096
+llama_context: n_ctx_seq             = 4096
+llama_context: n_batch               = 4096
+llama_context: n_ubatch              = 512
+llama_context: causal_attn           = 1
+llama_context: flash_attn            = auto
+llama_context: kv_unified            = false
+llama_context: freq_base             = 1000000.0
+llama_context: freq_scale            = 1
+llama_context: n_rs_seq              = 0
+llama_context: n_outputs_max         = 4096
+llama_context: n_outputs_max_per_seq = 1
+llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+set_abort_callback: call
+llama_context:        CPU  output buffer size =     0.58 MiB
+llama_kv_cache: layer   0: dev = CPU
+llama_kv_cache: layer   1: dev = CPU
+llama_kv_cache: layer   2: dev = CPU
+llama_kv_cache: layer   3: dev = CPU
+llama_kv_cache: layer   4: dev = CPU
+llama_kv_cache: layer   5: dev = CPU
+llama_kv_cache: layer   6: dev = CPU
+llama_kv_cache: layer   7: dev = CPU
+llama_kv_cache: layer   8: dev = CPU
+llama_kv_cache: layer   9: dev = CPU
+llama_kv_cache: layer  10: dev = CPU
+llama_kv_cache: layer  11: dev = CPU
+llama_kv_cache: layer  12: dev = CPU
+llama_kv_cache: layer  13: dev = CPU
+llama_kv_cache: layer  14: dev = CPU
+llama_kv_cache: layer  15: dev = CPU
+llama_kv_cache: layer  16: dev = CPU
+llama_kv_cache: layer  17: dev = CPU
+llama_kv_cache: layer  18: dev = CPU
+llama_kv_cache: layer  19: dev = CPU
+llama_kv_cache: layer  20: dev = CPU
+llama_kv_cache: layer  21: dev = CPU
+llama_kv_cache: layer  22: dev = CPU
+llama_kv_cache: layer  23: dev = CPU
+llama_kv_cache:        CPU KV buffer size =    48.00 MiB
+llama_kv_cache: size =   48.00 MiB (  4096 cells,  24 layers,  1/1 seqs), K (f16):   24.00 MiB, V (f16):   24.00 MiB
+llama_kv_cache: attn_rot_k = 0, n_embd_head_k_all = 64
+llama_kv_cache: attn_rot_v = 0, n_embd_head_k_all = 64
+llama_context: enumerating backends
+llama_context: backend_ptrs.size() = 1
+sched_reserve: reserving ...
+sched_reserve: max_nodes = 2328
+sched_reserve: reserving full memory module
+sched_reserve: worst-case: n_tokens = 512, n_seqs = 1, n_outputs = 1
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: Flash Attention enabled
+resolve_fused_ops: resolving fused DeepSeek V4 HC support:
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: fused DeepSeek V4 HC pre enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: fused DeepSeek V4 HC comb enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: fused DeepSeek V4 HC post enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =  512, n_seqs =  1, n_outputs =  512
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+graph_reserve: reserving a graph for ubatch with n_tokens =  512, n_seqs =  1, n_outputs =  512
+sched_reserve:        CPU compute buffer size =   300.25 MiB
+sched_reserve: graph nodes  = 822
+sched_reserve: graph splits = 1
+sched_reserve: reserve took 1.78 ms, sched copies = 1
+~llama_context:        CPU compute buffer size is 300.2520 MiB, matches expectation of 300.2520 MiB
+Test Case 'Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity' passed (10.787 seconds)
+Test Suite 'Prompt27AContextResearchTests' passed at 2026-11-07 19:28:44.459
+	 Executed 1 test, with 0 failures (0 unexpected) in 10.787 (10.787) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 19:28:44.459
+	 Executed 1 test, with 0 failures (0 unexpected) in 10.787 (10.787) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

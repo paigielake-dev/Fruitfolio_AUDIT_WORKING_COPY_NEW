@@ -1,0 +1,118 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version-6019DD6B20EC49BF.txt
+[3/5] Compiling FruitfolioTests Prompt1BAskUserContextTests.swift
+[4/5] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[5/6] Compiling FruitfolioTests Prompt27AContextPersonalizationTests.swift
+[6/13] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[7/14] Write sources
+[8/14] Wrapping AST for FruitfolioTests for debugging
+[10/16] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[11/16] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[12/17] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[13/18] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageTests.derived/runner.swift
+[14/19] Write sources
+[15/19] Wrapping AST for FruitfolioPortableChecksPackageDiscoveredTests for debugging
+[17/21] Compiling FruitfolioPortableChecksPackageTests runner.swift
+[18/21] Emitting module FruitfolioPortableChecksPackageTests
+[19/21] Write Objects.LinkFileList
+[20/21] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (8.32s)
+Test Suite 'Selected tests' started at 2026-11-07 19:46:33.699
+Test Suite 'Prompt1BAskUserContextTests' started at 2026-11-07 19:46:33.700
+Test Case 'Prompt1BAskUserContextTests.testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion' started at 2026-11-07 19:46:33.700
+Test Case 'Prompt1BAskUserContextTests.testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion' passed (1.576 seconds)
+Test Case 'Prompt1BAskUserContextTests.testExactEncodedContextBoundaryAndEscapedExpansionRemainEnforced' started at 2026-11-07 19:46:35.276
+Test Case 'Prompt1BAskUserContextTests.testExactEncodedContextBoundaryAndEscapedExpansionRemainEnforced' passed (0.021 seconds)
+Test Case 'Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails' started at 2026-11-07 19:46:35.298
+Test Case 'Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails' passed (0.001 seconds)
+Test Case 'Prompt1BAskUserContextTests.testNativeSelectionCountIsProtectedAndCannotRewritePatientSnapshot' started at 2026-11-07 19:46:35.299
+Test Case 'Prompt1BAskUserContextTests.testNativeSelectionCountIsProtectedAndCannotRewritePatientSnapshot' passed (0.028 seconds)
+Test Case 'Prompt1BAskUserContextTests.testNothingIsSharedWithoutExplicitSelectionAndDeletedItemsCannotBeResolved' started at 2026-11-07 19:46:35.327
+Test Case 'Prompt1BAskUserContextTests.testNothingIsSharedWithoutExplicitSelectionAndDeletedItemsCannotBeResolved' passed (0.0 seconds)
+Test Case 'Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance' started at 2026-11-07 19:46:35.327
+Test Case 'Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance' passed (0.001 seconds)
+Test Case 'Prompt1BAskUserContextTests.testOnlyTypedContextFailuresQualifyAsFixedTranslationCopy' started at 2026-11-07 19:46:35.327
+Test Case 'Prompt1BAskUserContextTests.testOnlyTypedContextFailuresQualifyAsFixedTranslationCopy' passed (0.0 seconds)
+Test Case 'Prompt1BAskUserContextTests.testUnknownErrorRetainsExactOriginalBytesAndIsNeverFixedCopy' started at 2026-11-07 19:46:35.328
+Test Case 'Prompt1BAskUserContextTests.testUnknownErrorRetainsExactOriginalBytesAndIsNeverFixedCopy' passed (0.0 seconds)
+Test Suite 'Prompt1BAskUserContextTests' passed at 2026-11-07 19:46:35.328
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.627 (1.627) seconds
+Test Suite 'Prompt27AContextResearchTests' started at 2026-11-07 19:46:35.328
+Test Case 'Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims' started at 2026-11-07 19:46:35.328
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt27AContextPersonalizationTests.swift:651: error: Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims : XCTAssertTrue failed - Explicit narrative subject should reach the actual supplied approved library
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt27AContextPersonalizationTests.swift:659: error: Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims : XCTAssertTrue failed - 
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt27AContextPersonalizationTests.swift:651: error: Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims : XCTAssertTrue failed - Explicit narrative subject should reach the actual supplied approved library
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt27AContextPersonalizationTests.swift:659: error: Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims : XCTAssertTrue failed - 
+Test Case 'Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims' failed (1.837 seconds)
+Test Suite 'Prompt27AContextResearchTests' failed at 2026-11-07 19:46:37.165
+	 Executed 1 test, with 4 failures (0 unexpected) in 1.837 (1.837) seconds
+Test Suite 'Selected tests' failed at 2026-11-07 19:46:37.165
+	 Executed 9 tests, with 4 failures (0 unexpected) in 3.464 (3.464) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

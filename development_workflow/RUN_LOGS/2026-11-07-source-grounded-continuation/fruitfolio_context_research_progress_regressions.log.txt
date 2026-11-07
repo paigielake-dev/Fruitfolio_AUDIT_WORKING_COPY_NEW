@@ -1,0 +1,22 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version-6019DD6B20EC49BF.txt
+[3/5] Compiling Fruitfolio Prompt1BCycleModalRegressionHarness.swift
+/tmp/fruitfolio-portable-hlsld4kd/Sources/Fruitfolio/Prompt1BCycleModalRegressionHarness.swift:85:46: error: extraneous argument label 'date:' in call
+ 83 |             if scenario == "context-research" {
+ 84 |                 try await Prompt14FileOnboardingPersistence(fileURL: onboardingURL).save(Prompt14OnboardingDraft())
+ 85 |                 let today = Prompt13LocalDate(date: Date(), calendar: calendar)
+    |                                              `- error: extraneous argument label 'date:' in call
+ 86 |                 for days in [-35, -7] {
+ 87 |                     let day = Prompt13LocalDate(date: calendar.date(byAdding: .day, value: days, to: Date())!, calendar: calendar)
+
+/tmp/fruitfolio-portable-hlsld4kd/Sources/Fruitfolio/Prompt1BCycleModalRegressionHarness.swift:87:48: error: extraneous argument label 'date:' in call
+ 85 |                 let today = Prompt13LocalDate(date: Date(), calendar: calendar)
+ 86 |                 for days in [-35, -7] {
+ 87 |                     let day = Prompt13LocalDate(date: calendar.date(byAdding: .day, value: days, to: Date())!, calendar: calendar)
+    |                                                `- error: extraneous argument label 'date:' in call
+ 88 |                     _ = try await cycle.recordCycleStart(on: day, today: today)
+ 89 |                 }
+[4/5] Emitting module Fruitfolio
+error: fatalError

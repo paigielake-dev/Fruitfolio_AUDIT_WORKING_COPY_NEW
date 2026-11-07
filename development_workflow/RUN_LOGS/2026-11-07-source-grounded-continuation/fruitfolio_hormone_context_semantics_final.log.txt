@@ -1,0 +1,181 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version-6019DD6B20EC49BF.txt
+[3/6] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[4/6] Compiling FruitfolioTests Prompt1BHormoneLibraryTests.swift
+[5/11] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[6/12] Write sources
+[8/14] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[9/14] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[10/15] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[11/13] Write Objects.LinkFileList
+[12/13] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (5.48s)
+Test Suite 'Selected tests' started at 2026-11-07 20:07:47.869
+Test Suite 'Prompt1BHormoneLibraryTests' started at 2026-11-07 20:07:47.870
+Test Case 'Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords' started at 2026-11-07 20:07:47.870
+HORMONE_LIBRARY_SOURCE_COVERAGE|estradiol|functions=note_2e7c8247dbc9b52b4fabc7d8;reproductiveRelevance=note_d68e09bef0f4a55f0cb428c8;testingContext=note_05ff86df4781a3d9cdabe6db;measurementLimitations=note_80acd464a5bcd5b84a1d1991;medicalGuidance=note_f05d6f6698aac76e7bfe3d95|missing=overview,measurementInfluences
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormoneLibraryTests.swift:44: error: Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords : XCTAssertTrue failed - 
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormoneLibraryTests.swift:45: error: Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords : XCTAssertTrue failed - 
+HORMONE_LIBRARY_SOURCE_COVERAGE|progesterone|overview=note_43032f00ed0f2f979217e33f;functions=note_43032f00ed0f2f979217e33f;reproductiveRelevance=note_8f22518bfa1cd5335c26e30f;measurementInfluences=note_e1915a7c1a2ca25a3d301fff;testingContext=note_73c5ac82bff4d8de8a3b2f76;measurementLimitations=note_305d76f9cade6e2123966b58;medicalGuidance=note_948118c3406431561d470116|missing=
+HORMONE_LIBRARY_SOURCE_COVERAGE|lh|functions=note_a920c0ef910e05ec5208a9d7;reproductiveRelevance=note_d3a2de3e08c875691ca94cc7;measurementInfluences=note_e1915a7c1a2ca25a3d301fff;testingContext=note_babe95d81626614c0af89743;measurementLimitations=note_092bfb88d3a93641d607a9a3;medicalGuidance=note_4d33ed32ed9ac89258b194b6|missing=overview
+HORMONE_LIBRARY_SOURCE_COVERAGE|fsh|functions=note_1f73218d8981cba25895f895;reproductiveRelevance=note_d68e09bef0f4a55f0cb428c8;testingContext=note_05ff86df4781a3d9cdabe6db;measurementLimitations=note_ecc140919a23f5ccef3e5394;medicalGuidance=note_f05d6f6698aac76e7bfe3d95|missing=overview,measurementInfluences
+HORMONE_LIBRARY_SOURCE_COVERAGE|testosterone|functions=note_20aa09506f796a120c223e79;reproductiveRelevance=note_e1915a7c1a2ca25a3d301fff;measurementInfluences=note_e1915a7c1a2ca25a3d301fff|missing=overview,testingContext,measurementLimitations,medicalGuidance
+HORMONE_LIBRARY_SOURCE_COVERAGE|prolactin|functions=note_b91236b2dfdb6db3dc3809fb;reproductiveRelevance=note_d68e09bef0f4a55f0cb428c8;testingContext=note_f05d6f6698aac76e7bfe3d95;medicalGuidance=note_f31cfbe3c261464bf0bf9601|missing=overview,measurementInfluences,measurementLimitations
+HORMONE_LIBRARY_SOURCE_COVERAGE|amh|overview=note_638477e8908b98b245971d44;functions=note_13449b088bb25ec918cada3d;reproductiveRelevance=note_05ff86df4781a3d9cdabe6db;measurementInfluences=note_638477e8908b98b245971d44;testingContext=note_638477e8908b98b245971d44;measurementLimitations=note_5252619bd571aff2f8c82363;medicalGuidance=note_1e9cf3e155ccdde6f961aa1e|missing=
+Test Case 'Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords' failed (2.234 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testActualProviderPreservesUnicodeParagraphBytesAndCannotBypassEligibilityOrApproval' started at 2026-11-07 20:07:50.104
+Test Case 'Prompt1BHormoneLibraryTests.testActualProviderPreservesUnicodeParagraphBytesAndCannotBypassEligibilityOrApproval' passed (0.022 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testActualProviderRejectsHighRankedPapSTITestingAndRetainsRealHormoneTestingScope' started at 2026-11-07 20:07:50.127
+Test Case 'Prompt1BHormoneLibraryTests.testActualProviderRejectsHighRankedPapSTITestingAndRetainsRealHormoneTestingScope' passed (0.006 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testCanonicallyEquivalentDistinctSourceBytesKeepTheirOwnParagraphsAndCitations' started at 2026-11-07 20:07:50.133
+Test Case 'Prompt1BHormoneLibraryTests.testCanonicallyEquivalentDistinctSourceBytesKeepTheirOwnParagraphsAndCitations' passed (0.006 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testFullHormoneNamesAcceptUnicodeMedicalHyphensAndSpacing' started at 2026-11-07 20:07:50.139
+Test Case 'Prompt1BHormoneLibraryTests.testFullHormoneNamesAcceptUnicodeMedicalHyphensAndSpacing' passed (0.004 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testHormoneMatchRequiresActualNameOrAbbreviationRatherThanLooseAliasWords' started at 2026-11-07 20:07:50.143
+Test Case 'Prompt1BHormoneLibraryTests.testHormoneMatchRequiresActualNameOrAbbreviationRatherThanLooseAliasWords' passed (0.001 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testMissingEvidenceStaysEmptyAndOtherHormoneCannotInventACard' started at 2026-11-07 20:07:50.144
+Test Case 'Prompt1BHormoneLibraryTests.testMissingEvidenceStaysEmptyAndOtherHormoneCannotInventACard' passed (0.005 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testOneCompleteSourceCanCoverTwoSectionsWithoutFalseUnavailableOrDuplicateBody' started at 2026-11-07 20:07:50.148
+Test Case 'Prompt1BHormoneLibraryTests.testOneCompleteSourceCanCoverTwoSectionsWithoutFalseUnavailableOrDuplicateBody' passed (0.005 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testOtherHormoneDefinitionAndStressStatementCannotFillSelectedHormoneAspects' started at 2026-11-07 20:07:50.154
+Test Case 'Prompt1BHormoneLibraryTests.testOtherHormoneDefinitionAndStressStatementCannotFillSelectedHormoneAspects' passed (0.005 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testQualifiedFactorRelationIsNotHiddenByLiteralRankingVocabulary' started at 2026-11-07 20:07:50.159
+Test Case 'Prompt1BHormoneLibraryTests.testQualifiedFactorRelationIsNotHiddenByLiteralRankingVocabulary' passed (0.006 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testSevenFounderAspectsRetainSourceOrderAndReuseQualifiedOriginalParagraphs' started at 2026-11-07 20:07:50.165
+Test Case 'Prompt1BHormoneLibraryTests.testSevenFounderAspectsRetainSourceOrderAndReuseQualifiedOriginalParagraphs' passed (0.006 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testUnicodeFullMedicalNameWithParentheticalAbbreviationRetainsQualifiedFactorSource' started at 2026-11-07 20:07:50.170
+Test Case 'Prompt1BHormoneLibraryTests.testUnicodeFullMedicalNameWithParentheticalAbbreviationRetainsQualifiedFactorSource' passed (0.006 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testUnicodeNameSeparatorsDoNotRelaxClinicalWordBoundariesOrInventAliases' started at 2026-11-07 20:07:50.176
+Test Case 'Prompt1BHormoneLibraryTests.testUnicodeNameSeparatorsDoNotRelaxClinicalWordBoundariesOrInventAliases' passed (0.002 seconds)
+Test Case 'Prompt1BHormoneLibraryTests.testUnrelatedHighRankedNotesCannotHideEligibleHormoneSectionBelowGlobalCutoff' started at 2026-11-07 20:07:50.178
+Test Case 'Prompt1BHormoneLibraryTests.testUnrelatedHighRankedNotesCannotHideEligibleHormoneSectionBelowGlobalCutoff' passed (0.013 seconds)
+Test Suite 'Prompt1BHormoneLibraryTests' failed at 2026-11-07 20:07:50.192
+	 Executed 14 tests, with 2 failures (0 unexpected) in 2.322 (2.322) seconds
+Test Suite 'Prompt1BResearchEngineIntegrationTests' started at 2026-11-07 20:07:50.192
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualFallbackAndGameExplanationUseReviewedSourceRolesWithOriginalCitations' started at 2026-11-07 20:07:50.192
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualFallbackAndGameExplanationUseReviewedSourceRolesWithOriginalCitations' passed (0.112 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineProvidesCitedFallbackWhenLocalGenerationIsUnavailable' started at 2026-11-07 20:07:50.303
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineProvidesCitedFallbackWhenLocalGenerationIsUnavailable' passed (1.237 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineUsesExplicitCueInBothValidatedAndRetrievalFallbackPaths' started at 2026-11-07 20:07:51.540
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineUsesExplicitCueInBothValidatedAndRetrievalFallbackPaths' passed (1.309 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testChangedScientificQuantityInQuestionTranslationIsRejectedBeforeResearch' started at 2026-11-07 20:07:52.849
+Test Case 'Prompt1BResearchEngineIntegrationTests.testChangedScientificQuantityInQuestionTranslationIsRejectedBeforeResearch' passed (0.007 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testClearingSessionDiagnosticsReleasesQuestionClaimsWhileStaticResearchRemainsUsable' started at 2026-11-07 20:07:52.856
+Test Case 'Prompt1BResearchEngineIntegrationTests.testClearingSessionDiagnosticsReleasesQuestionClaimsWhileStaticResearchRemainsUsable' passed (1.274 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testEnglishQuestionDoesNotRequireTranslationEvenWhenInferenceIsPaused' started at 2026-11-07 20:07:54.130
+Test Case 'Prompt1BResearchEngineIntegrationTests.testEnglishQuestionDoesNotRequireTranslationEvenWhenInferenceIsPaused' passed (1.228 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testLocalizedQuestionRetrievesActualEnglishEvidenceWithoutChangingOriginalQuestion' started at 2026-11-07 20:07:55.359
+Test Case 'Prompt1BResearchEngineIntegrationTests.testLocalizedQuestionRetrievesActualEnglishEvidenceWithoutChangingOriginalQuestion' passed (1.259 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testMultiClaimOptimizationPreservesActualCorpusEvidenceLinksAndCitations' started at 2026-11-07 20:07:56.618
+Test Case 'Prompt1BResearchEngineIntegrationTests.testMultiClaimOptimizationPreservesActualCorpusEvidenceLinksAndCitations' passed (1.221 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testNonurgentOversizedContextStillFailsBeforeMissingResearchCanLoad' started at 2026-11-07 20:07:57.840
+Test Case 'Prompt1BResearchEngineIntegrationTests.testNonurgentOversizedContextStillFailsBeforeMissingResearchCanLoad' passed (0.013 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOriginalUrgentQuestionBypassesTranslationAndMissingResearchResources' started at 2026-11-07 20:07:57.852
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOriginalUrgentQuestionBypassesTranslationAndMissingResearchResources' passed (0.01 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOversizedOptionalContextCannotPreemptOriginalOrTranslatedUrgentGuidance' started at 2026-11-07 20:07:57.862
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOversizedOptionalContextCannotPreemptOriginalOrTranslatedUrgentGuidance' passed (0.023 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testSourcesContainOnlyEvidenceActuallyPresented' started at 2026-11-07 20:07:57.885
+Test Case 'Prompt1BResearchEngineIntegrationTests.testSourcesContainOnlyEvidenceActuallyPresented' passed (1.235 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testTranslatedUrgentQuestionRechecksSafetyBeforeResearchOrGeneration' started at 2026-11-07 20:07:59.121
+Test Case 'Prompt1BResearchEngineIntegrationTests.testTranslatedUrgentQuestionRechecksSafetyBeforeResearchOrGeneration' passed (0.017 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnavailableQuestionTranslationDoesNotClaimTheResearchHasNoAnswer' started at 2026-11-07 20:07:59.138
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnavailableQuestionTranslationDoesNotClaimTheResearchHasNoAnswer' passed (0.012 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnsupportedQuestionIsReportedAfterTheActualLibrarySearch' started at 2026-11-07 20:07:59.150
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnsupportedQuestionIsReportedAfterTheActualLibrarySearch' passed (1.225 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUrgentGuidanceDoesNotDependOnPackageOrModelAvailability' started at 2026-11-07 20:08:00.375
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUrgentGuidanceDoesNotDependOnPackageOrModelAvailability' passed (0.006 seconds)
+Test Suite 'Prompt1BResearchEngineIntegrationTests' passed at 2026-11-07 20:08:00.381
+	 Executed 16 tests, with 0 failures (0 unexpected) in 10.189 (10.189) seconds
+Test Suite 'Prompt1BSemanticSliceTests' started at 2026-11-07 20:08:00.381
+Test Case 'Prompt1BSemanticSliceTests.testBodyBiologyMeaningRolesKeepCompleteOriginalFounderPassagesAndUncertainty' started at 2026-11-07 20:08:00.381
+Test Case 'Prompt1BSemanticSliceTests.testBodyBiologyMeaningRolesKeepCompleteOriginalFounderPassagesAndUncertainty' passed (0.025 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress' started at 2026-11-07 20:08:00.406
+Test Case 'Prompt1BSemanticSliceTests.testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress' passed (0.1 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testFoodNamesAreCompleteAndUnreviewedContextsCannotAcquireKeywordEmphasis' started at 2026-11-07 20:08:00.507
+Test Case 'Prompt1BSemanticSliceTests.testFoodNamesAreCompleteAndUnreviewedContextsCannotAcquireKeywordEmphasis' passed (0.001 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testInvalidSelectionAndZeroPrefixAreSafe' started at 2026-11-07 20:08:00.508
+Test Case 'Prompt1BSemanticSliceTests.testInvalidSelectionAndZeroPrefixAreSafe' passed (0.0 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testLiteralMarkdownIsEscapedAndExplicitUnderlineIsSerializable' started at 2026-11-07 20:08:00.508
+Test Case 'Prompt1BSemanticSliceTests.testLiteralMarkdownIsEscapedAndExplicitUnderlineIsSerializable' passed (0.004 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testProgressiveTextKeepsExplicitEmphasisAndGraphemeBoundaries' started at 2026-11-07 20:08:00.513
+Test Case 'Prompt1BSemanticSliceTests.testProgressiveTextKeepsExplicitEmphasisAndGraphemeBoundaries' passed (0.0 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords' started at 2026-11-07 20:08:00.513
+Test Case 'Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords' passed (0.07 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testReviewedSourceRolesSurviveActualPrefixAndSelectionOperations' started at 2026-11-07 20:08:00.583
+Test Case 'Prompt1BSemanticSliceTests.testReviewedSourceRolesSurviveActualPrefixAndSelectionOperations' passed (0.0 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testSelectionAcrossStyledSpansRetainsEachEmphasis' started at 2026-11-07 20:08:00.583
+Test Case 'Prompt1BSemanticSliceTests.testSelectionAcrossStyledSpansRetainsEachEmphasis' passed (0.0 seconds)
+Test Case 'Prompt1BSemanticSliceTests.testTourFeatureRolesPreserveEveryOriginalDialogueByte' started at 2026-11-07 20:08:00.584
+Test Case 'Prompt1BSemanticSliceTests.testTourFeatureRolesPreserveEveryOriginalDialogueByte' passed (0.002 seconds)
+Test Suite 'Prompt1BSemanticSliceTests' passed at 2026-11-07 20:08:00.586
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.204 (0.204) seconds
+Test Suite 'Selected tests' failed at 2026-11-07 20:08:00.586
+	 Executed 40 tests, with 2 failures (0 unexpected) in 12.715 (12.715) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

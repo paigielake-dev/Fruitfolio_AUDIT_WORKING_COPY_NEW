@@ -25797,9 +25797,11 @@
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
         "Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Context-observed-symptom-selection-counts (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
@@ -25819,28 +25821,33 @@
         "Connect current voluntary context and actual bounded cycle/log facts to Today approved-evidence education through the existing canonical engine; category-specific narrative retrieval remains incomplete.",
         "Personal narratives now influence relevant evidence ranking beyond category titles, only for explicitly selected current provided entries.",
         "Report exposes exact existing context-policy decisions for period, fertile-window and ovulation estimates and the natural-cycle position marker.",
-        "Expose actual typed symptom-selection counts already supplied to research in the user-facing observed-log explanation."
+        "Expose actual typed symptom-selection counts already supplied to research in the user-facing observed-log explanation.",
+        "Canonical research service now adds requests driven by actual supplied cycle history and typed saved observations, alongside voluntary context, rather than passing counts only after retrieval."
       ],
-      "last_updated": "2026-11-07T19:57:55.866554+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Context-observed-symptom-selection-counts",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
           "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple context explanation rendering/accessibility and live removal refresh",
-          "Official MADLAD controlled-copy translation and clinical acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-          "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-        "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -25978,6 +25985,22 @@
             "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-observed-symptom-selection-counts",
+          "executed": {
+            "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple context explanation rendering/accessibility and live removal refresh",
+            "Official MADLAD controlled-copy translation and clinical acceptance"
+          ],
+          "remaining": [
+            "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
+            "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -26028,40 +26051,43 @@
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
         "Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims",
         "Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance",
-        "Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails"
+        "Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Selected-personal-narrative-approved-library-relevance (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Use actual approved library source records and canonical evidence map; explicit missing-research outcome; no unapproved or invented citations. Full context-specific relevance remains open.",
-        "Intersect selected narrative words with eligible local library heading vocabulary; match possessive condition-name forms; keep canonical approval and citation validation unchanged."
+        "Intersect selected narrative words with eligible local library heading vocabulary; match possessive condition-name forms; keep canonical approval and citation validation unchanged.",
+        "Use existing approved evidence engine for observed cycle-length differences, basal-temperature readings, cervical-fluid selections and each typed saved symptom selection; unsupported topics retain explicit missing support."
       ],
-      "last_updated": "2026-11-07T19:47:56.868599+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Selected-personal-narrative-approved-library-relevance",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
-          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
-          "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple SDK build/UI/device tests",
-          "Native CPU synthesis after retrieval change; earlier actual Qwen result belongs to prior batch",
-          "Official MADLAD inference and clinical interpretation acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
-          "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
-          "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
-        "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
-        "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -26083,6 +26109,25 @@
             "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
             "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
             "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Selected-personal-narrative-approved-library-relevance",
+          "executed": {
+            "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+            "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"
+          },
+          "not_run": [
+            "Apple SDK build/UI/device tests",
+            "Native CPU synthesis after retrieval change; earlier actual Qwen result belongs to prior batch",
+            "Official MADLAD inference and clinical interpretation acceptance"
+          ],
+          "remaining": [
+            "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
+            "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
+            "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26160,9 +26205,11 @@
         "Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity (actual native CPU Qwen)",
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
-        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Context-deterministic-display-rule-explanation (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
@@ -26173,31 +26220,33 @@
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Only already-authored limitations selected; no numerical adjustment, causal inference, or certainty increase. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Separate educational evidence from deterministic predictions; service writes neither prediction policy nor stored observations; individual context relevance acceptance remains open.",
-        "UI distinguishes app display rules from biological research and preserves all existing prediction mathematics; research never overrides eligibility."
+        "UI distinguishes app display rules from biological research and preserves all existing prediction mathematics; research never overrides eligibility.",
+        "Observed-pattern education does not alter any stored observations, deterministic policy, prediction confidence or mathematical algorithm."
       ],
-      "last_updated": "2026-11-07T19:50:51.574734+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Context-deterministic-display-rule-explanation",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
-          "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple build and updated context-research UI test (source present; no execution)",
-          "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
-          "Official MADLAD and clinical/source relevance acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-          "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-          "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-        "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-        "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -26236,6 +26285,24 @@
             "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
             "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
             "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-deterministic-display-rule-explanation",
+          "executed": {
+            "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
+            "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          },
+          "not_run": [
+            "Apple build and updated context-research UI test (source present; no execution)",
+            "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
+            "Official MADLAD and clinical/source relevance acceptance"
+          ],
+          "remaining": [
+            "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
+            "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
+            "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26463,9 +26530,11 @@
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
         "Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims",
         "Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance",
-        "Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails"
+        "Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Selected-personal-narrative-approved-library-relevance (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
@@ -26475,32 +26544,33 @@
         "Actual My Context headings, fixed optional/reporting explanations, section titles and controlled choice rows use existing compact translation state with original font sizes. Existing English source and catalog unchanged. Selection buttons inherit translated child text and use native selected trait instead of English-only label/value/hint overrides. No policy, persistence, prediction math, assets or patient notes changed.",
         "Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.",
         "Explicitly constrain synthesis to user-reported context rather than diagnostic proof; negative and removed entries cannot become diagnoses or model requests.",
-        "Narrative relevance terms never become model instructions, normalized question, asserted claims or claim/evidence-map requirements. Exact narrative qualifiers remain separate untrusted context."
+        "Narrative relevance terms never become model instructions, normalized question, asserted claims or claim/evidence-map requirements. Exact narrative qualifiers remain separate untrusted context.",
+        "One-day recorded cycle-length differences trigger general evidence education without an irregular-cycle diagnosis; log selections are not user-specific causal or biological confirmation."
       ],
-      "last_updated": "2026-11-07T19:47:56.868599+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Selected-personal-narrative-approved-library-relevance",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
-          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
-          "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple SDK build/UI/device tests",
-          "Native CPU synthesis after retrieval change; earlier actual Qwen result belongs to prior batch",
-          "Official MADLAD inference and clinical interpretation acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
-          "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
-          "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
-        "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
-        "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -26541,6 +26611,25 @@
             "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
             "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
             "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Selected-personal-narrative-approved-library-relevance",
+          "executed": {
+            "focused_XCTest": "37 passed, zero failures, final source including seven context-research tests and research/consent integration",
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+            "actual_library_test": "1 passed: selected Hashimoto/Graves narratives reach actual supplied corpus and canonical evidence packets; no condition or private sentinel becomes a question/claim"
+          },
+          "not_run": [
+            "Apple SDK build/UI/device tests",
+            "Native CPU synthesis after retrieval change; earlier actual Qwen result belongs to prior batch",
+            "Official MADLAD inference and clinical interpretation acceptance"
+          ],
+          "remaining": [
+            "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
+            "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
+            "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26602,9 +26691,11 @@
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
         "Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Context-observed-symptom-selection-counts (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
@@ -26616,28 +26707,33 @@
         "Preserve unknown log counts and unsupported/oversized/no-inference outcomes without silent truncation or invented confidence.",
         "Whole snapshot byte limit enforced before relevance extraction; no truncation, missing data invention or diagnostic conclusion from lexical matches.",
         "Explicitly retain recorded-history/other eligibility requirements when context imposes no additional restriction; unknown counts remain unknown.",
-        "Separate unavailable daily-log history from available empty selections; absence of selection is not absence of symptoms."
+        "Separate unavailable daily-log history from available empty selections; absence of selection is not absence of symptoms.",
+        "Unknown history yields no observed-data topics; known insufficient start history gets a bounded evidence request without inventing missing dates or observations."
       ],
-      "last_updated": "2026-11-07T19:57:55.866554+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Context-observed-symptom-selection-counts",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
           "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple context explanation rendering/accessibility and live removal refresh",
-          "Official MADLAD controlled-copy translation and clinical acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-          "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-        "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -26732,6 +26828,22 @@
             "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
             "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
             "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-observed-symptom-selection-counts",
+          "executed": {
+            "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple context explanation rendering/accessibility and live removal refresh",
+            "Official MADLAD controlled-copy translation and clinical acceptance"
+          ],
+          "remaining": [
+            "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
+            "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26976,9 +27088,11 @@
         "Prompt16TodayStateBuilderTests",
         "Prompt27AContextResearchTests (six portable tests; streaming/resume assertions included)",
         "Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity (actual native CPU Qwen)",
-        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Today-context-approved-research-and-observed-facts (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -26987,36 +27101,57 @@
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
-        "Do not send current prediction confidence for general context education; logged history counts and recorded symptoms remain distinct."
+        "Do not send current prediction confidence for general context education; logged history counts and recorded symptoms remain distinct.",
+        "All observed-data research packets retain predictionConfidence=nil rather than transplanting current forecast confidence into general education."
       ],
-      "last_updated": "2026-11-07T19:43:35.453304+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Today-context-approved-research-and-observed-facts",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer",
-          "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included",
-          "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD",
-          "syntax": "337 parsed, zero syntax errors; not Apple typechecking",
-          "sound_ownership": "zero diagnostics",
-          "Swift_Testing": "21 passed, zero failures"
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple SDK build and native UI test; real-device lifecycle/accessibility/memory acceptance",
-          "Official MADLAD inference and translation; clinical and native-language acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
-          "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
-          "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
-          "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
-        "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
-        "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
-        "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Today-context-approved-research-and-observed-facts",
+          "executed": {
+            "focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer",
+            "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included",
+            "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD",
+            "syntax": "337 parsed, zero syntax errors; not Apple typechecking",
+            "sound_ownership": "zero diagnostics",
+            "Swift_Testing": "21 passed, zero failures"
+          },
+          "not_run": [
+            "Apple SDK build and native UI test; real-device lifecycle/accessibility/memory acceptance",
+            "Official MADLAD inference and translation; clinical and native-language acceptance"
+          ],
+          "remaining": [
+            "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
+            "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
+            "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
+            "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -27078,9 +27213,12 @@
         "Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity (actual native CPU Qwen)",
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
-        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests",
+        "Prompt1BAskUserContextTests"
       ],
-      "commit_reference": "batch:Context-deterministic-display-rule-explanation (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
@@ -27091,31 +27229,33 @@
         "Loaded Today now shows current context clarification; failure and restricted paths reuse existing human-facing authority. Actual Apple display acceptance pending. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
         "Actual Today helper now returns all independently applicable limitations; Apple rendering remains unrun. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Integrate explanation in loaded, unavailable and context-restricted Today presentations with current snapshot guards and citation-popup ownership; Apple runtime acceptance pending.",
-        "Live report now renders policy decisions from the same exact context snapshot used for context/log research, before asynchronous research finishes."
+        "Live report now renders policy decisions from the same exact context snapshot used for context/log research, before asynchronous research finishes.",
+        "Existing current-snapshot Today panel receives these observed-topic items through its same serial progress/cancellation pipeline; native rendering remains unrun."
       ],
-      "last_updated": "2026-11-07T19:50:51.574734+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Context-deterministic-display-rule-explanation",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
-          "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple build and updated context-research UI test (source present; no execution)",
-          "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
-          "Official MADLAD and clinical/source relevance acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-          "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-          "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-        "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-        "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -27192,6 +27332,24 @@
             "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
             "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
             "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-deterministic-display-rule-explanation",
+          "executed": {
+            "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
+            "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          },
+          "not_run": [
+            "Apple build and updated context-research UI test (source present; no execution)",
+            "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
+            "Official MADLAD and clinical/source relevance acceptance"
+          ],
+          "remaining": [
+            "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
+            "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
+            "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -27275,9 +27433,11 @@
         "Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity (actual native CPU Qwen)",
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
         "Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Context-observed-symptom-selection-counts (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
@@ -27290,28 +27450,33 @@
         "Lactation limitation not-a-confirmation retained even alongside postpartum/other context. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "A recorded bleeding input no longer forces natural-cycle interpretation under restricted explicit context; original observation remains distinct. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Separate reported context, actual logged facts, approved research and unknown biological events in the shared panel; no logged marker confirms ovulation or pregnancy.",
-        "Explicitly describe saved selections rather than biological findings, severity, unlogged time or causal inference."
+        "Explicitly describe saved selections rather than biological findings, severity, unlogged time or causal inference.",
+        "Controlled questions explicitly separate actual saved selections and calculated length differences from ovulation/fertility/diagnosis confirmation."
       ],
-      "last_updated": "2026-11-07T19:57:55.866554+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Context-observed-symptom-selection-counts",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
           "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple context explanation rendering/accessibility and live removal refresh",
-          "Official MADLAD controlled-copy translation and clinical acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-          "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-        "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -27392,6 +27557,22 @@
             "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-observed-symptom-selection-counts",
+          "executed": {
+            "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple context explanation rendering/accessibility and live removal refresh",
+            "Official MADLAD controlled-copy translation and clinical acceptance"
+          ],
+          "remaining": [
+            "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
+            "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -27463,9 +27644,11 @@
         "Prompt21BodyBiologyCoreTests",
         "Prompt27AContextResearchTests (six portable tests; streaming/resume assertions included)",
         "Prompt27AContextResearchTests.testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity (actual native CPU Qwen)",
-        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (NOT_RUN)",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests"
       ],
-      "commit_reference": "batch:Today-context-approved-research-and-observed-facts (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
@@ -27475,36 +27658,33 @@
         "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.",
         "Avoiding-pregnancy not-a-safe-day/contraceptive-guarantee warning no longer hidden by earlier context match. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Restricted input cannot show ovulation drift or personalized-cycle/day-one interpretation; neutral general education used. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
-        "Explicitly prohibit unsupported user-specific ovulation, fertility, pregnancy or hormone certainty from reported entries; clinical review and full policy reconciliation pending."
+        "Explicitly prohibit unsupported user-specific ovulation, fertility, pregnancy or hormone certainty from reported entries; clinical review and full policy reconciliation pending.",
+        "Basal/cervical-fluid evidence requests do not treat a recorded entry as confirmed ovulation or fertility; actual report keeps generic source education separate."
       ],
-      "last_updated": "2026-11-07T19:43:35.453304+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Today-context-approved-research-and-observed-facts",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer",
-          "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included",
-          "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD",
-          "syntax": "337 parsed, zero syntax errors; not Apple typechecking",
-          "sound_ownership": "zero diagnostics",
-          "Swift_Testing": "21 passed, zero failures"
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple SDK build and native UI test; real-device lifecycle/accessibility/memory acceptance",
-          "Official MADLAD inference and translation; clinical and native-language acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
-          "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
-          "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
-          "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
-        "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
-        "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
-        "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -27561,6 +27741,28 @@
             "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
             "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
             "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Today-context-approved-research-and-observed-facts",
+          "executed": {
+            "focused_XCTest": "30 passed, zero failures after fixing disposable QA fixture initializer",
+            "full_portable_XCTest": "1117 passed, zero failures; final streaming/resume and fixture correction included",
+            "native_CPU_XCTest": "1 passed: actual repository Qwen synthesis with approved corpus; predates streaming callback, does not verify UI or official MADLAD",
+            "syntax": "337 parsed, zero syntax errors; not Apple typechecking",
+            "sound_ownership": "zero diagnostics",
+            "Swift_Testing": "21 passed, zero failures"
+          },
+          "not_run": [
+            "Apple SDK build and native UI test; real-device lifecycle/accessibility/memory acceptance",
+            "Official MADLAD inference and translation; clinical and native-language acceptance"
+          ],
+          "remaining": [
+            "Complete field-specific narrative retrieval and validated interpretation beyond generic category queries",
+            "Reconcile every context-policy subcondition against founder source1221/1224/1227; deterministic prediction mathematics remain unchanged",
+            "Execute Apple citation-popup, foreground/cancellation, removal, Dynamic Type and VoiceOver acceptance",
+            "Review approved source relevance and clinical context-specific interpretation; no clinical completeness claim"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -28689,9 +28891,12 @@
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
         "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
         "Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords",
-        "Prompt20CoreTests"
+        "Prompt20CoreTests",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests",
+        "Prompt1BAskUserContextTests"
       ],
-      "commit_reference": "batch:Context-observed-symptom-selection-counts (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
@@ -28700,28 +28905,33 @@
         "Body Biology header reuses existing human-facing context limitations; no new scientific claim added. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Show precise missing research, no biological inference, oversize and unavailable narrative interpretation limitations; original entries retained.",
         "Reuse established human-facing independent limitations, preserving simultaneous pregnancy/lactation and clearing them when context is removed.",
-        "Show the unavailable-history limitation and precise observed-selection count scope beside actual facts."
+        "Show the unavailable-history limitation and precise observed-selection count scope beside actual facts.",
+        "Changed/removed observed history invalidates prior research items; unavailable history is not treated as zero observations."
       ],
-      "last_updated": "2026-11-07T19:57:55.866554+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Context-observed-symptom-selection-counts",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
           "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple context explanation rendering/accessibility and live removal refresh",
-          "Official MADLAD controlled-copy translation and clinical acceptance"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-          "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-        "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -28839,6 +29049,22 @@
             "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
             "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
             "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-observed-symptom-selection-counts",
+          "executed": {
+            "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple context explanation rendering/accessibility and live removal refresh",
+            "Official MADLAD controlled-copy translation and clinical acceptance"
+          ],
+          "remaining": [
+            "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
+            "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -47737,9 +47963,12 @@
         "Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords",
         "Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords",
         "Prompt1BResearchEngineIntegrationTests",
-        "Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover"
+        "Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests",
+        "Prompt1BAskUserContextTests"
       ],
-      "commit_reference": "batch:Static-education-unavailable-lookup-reuse (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -47903,35 +48132,33 @@
         "Extend actual owner/deleted/private-note projection test with typed counts, selection removal invalidation, unknown and available-empty states.",
         "Add actual production Calendar-action bridge\u2192daily-log model\u2192file repository regression for selected-day identity, all entry sections, source calendars and no wrong-day duplicate.",
         "Actual provider assertions caught duplicate-context masking, fixed by extending the original authority; existing integrity test now verifies unique source IDs and exact source contexts.",
-        "Actual original-corpus regression verifies repeated absent RNA content remains unavailable and a missing file for a supported placenta topic can recover after the real package becomes readable."
+        "Actual original-corpus regression verifies repeated absent RNA content remains unavailable and a missing file for a supported placenta topic can recover after the real package becomes readable.",
+        "New actual supplied-corpus test exercises one-day length differences,basal reading,unsure fluid,typed cramps,private note exclusion,source citations,no confidence uplift,history removal,unknown and limited history."
       ],
-      "last_updated": "2026-11-07T20:14:46.478790+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Static-education-unavailable-lookup-reuse",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test",
-          "warm_fixed_missing_lookups": {
-            "before_25_seconds": 1.252994418144226,
-            "after_25_seconds": 0.004760146141052246,
-            "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"
-          },
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
           "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple repeated unavailable-page navigation/retry and native cancellation/foreground acceptance",
-          "Real-device memory, latency and Apple Instruments measurements"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
-          "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
-          "Missing approved content stays unavailable and is not implemented by caching its absence"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
-        "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
-        "Missing approved content stays unavailable and is not implemented by caching its absence"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -49191,6 +49418,28 @@
             "Only seven complete exact source contexts are reviewed; universal generated/source educational semantic coverage remains incomplete",
             "Full scientific educational content, source-to-image/hotspot mapping and missing approved paragraphs remain distinct gaps",
             "Preserved original source statements are not newly clinically validated; complete all relevant external acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Static-education-unavailable-lookup-reuse",
+          "executed": {
+            "focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test",
+            "warm_fixed_missing_lookups": {
+              "before_25_seconds": 1.252994418144226,
+              "after_25_seconds": 0.004760146141052246,
+              "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"
+            },
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple repeated unavailable-page navigation/retry and native cancellation/foreground acceptance",
+            "Real-device memory, latency and Apple Instruments measurements"
+          ],
+          "remaining": [
+            "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
+            "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
+            "Missing approved content stays unavailable and is not implemented by caching its absence"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -49677,9 +49926,12 @@
         "Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords",
         "Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords",
         "Prompt1BResearchEngineIntegrationTests",
-        "Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover"
+        "Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover",
+        "Prompt27AContextResearchTests.testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation",
+        "Prompt27AContextResearchTests",
+        "Prompt1BAskUserContextTests"
       ],
-      "commit_reference": "batch:Static-education-unavailable-lookup-reuse (resolve containing commit with git log)",
+      "commit_reference": "batch:Observed-pattern-driven-approved-research (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -49826,35 +50078,33 @@
         "Assertions live in project XCTest source and executed on Linux.",
         "Regression lives in project XCTest source and executes actual file-backed store/model; original Foundation reproduction retained as evidence.",
         "Executed assertions live in existing project hormone-library and semantic-slice XCTest files.",
-        "New regression resides in existing project education XCTest file; source/benchmark logs identify actual executed test names."
+        "New regression resides in existing project education XCTest file; source/benchmark logs identify actual executed test names.",
+        "Regression lives in existing project context XCTest source and was executed with the real approved corpus."
       ],
-      "last_updated": "2026-11-07T20:14:46.478790+00:00",
+      "last_updated": "2026-11-07T20:20:59.787049+00:00",
       "latest_batch_verification": {
-        "batch": "Static-education-unavailable-lookup-reuse",
+        "batch": "Observed-pattern-driven-approved-research",
         "executed": {
-          "focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test",
-          "warm_fixed_missing_lookups": {
-            "before_25_seconds": 1.252994418144226,
-            "after_25_seconds": 0.004760146141052246,
-            "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"
-          },
+          "focused_XCTest": "90 passed, zero failures: nine actual context-research tests,73 canonical context-policy tests,eight consent/context tests",
+          "actual_library_observed_topic": "Actual supplied approved corpus returns cited basal-temperature education via canonical engine retrievalFallback; private journal text excluded from query; not native model inference",
           "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple repeated unavailable-page navigation/retry and native cancellation/foreground acceptance",
-          "Real-device memory, latency and Apple Instruments measurements"
+          "Apple Today display/progressive source controls/history removal and real-device source ownership",
+          "Native Qwen synthesis for the new observed-topic queries; earlier native result belongs to previous implementation checkpoint",
+          "Official MADLAD, multilingual personal narrative understanding and clinical/source relevance acceptance"
         ],
         "remaining": [
-          "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
-          "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
-          "Missing approved content stays unavailable and is not implemented by caching its absence"
+          "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+          "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+          "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
-        "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
-        "Missing approved content stays unavailable and is not implemented by caching its absence"
+        "Full clinical interpretation of combinations/timeline/co-occurrence is not implemented by counts and controlled educational topics",
+        "Lexical personal-subject relevance and data-driven topics are not proof of medical entailment; preserve unknowns and unchanged deterministic policy",
+        "Complete all context source/edit/remove/contradiction and cross-feature Apple acceptance; no whole source1221/1227 completion claim"
       ],
       "prior_batch_verifications": [
         {
@@ -51114,6 +51364,28 @@
             "Only seven complete exact source contexts are reviewed; universal generated/source educational semantic coverage remains incomplete",
             "Full scientific educational content, source-to-image/hotspot mapping and missing approved paragraphs remain distinct gaps",
             "Preserved original source statements are not newly clinically validated; complete all relevant external acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Static-education-unavailable-lookup-reuse",
+          "executed": {
+            "focused_XCTest": "56 passed, zero failures; actual education corpus/module models and new unavailable/recovery test",
+            "warm_fixed_missing_lookups": {
+              "before_25_seconds": 1.252994418144226,
+              "after_25_seconds": 0.004760146141052246,
+              "scope": "One Linux before/after measurement, warm fixed RNA-topic lookups only; not UI/device latency or general app speed"
+            },
+            "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+          },
+          "not_run": [
+            "Apple repeated unavailable-page navigation/retry and native cancellation/foreground acceptance",
+            "Real-device memory, latency and Apple Instruments measurements"
+          ],
+          "remaining": [
+            "This addresses repeated static education scans only; complete app-wide loading/redundancy acceptance remains open",
+            "Negative results apply to the already loaded immutable approved package; updated source content requires a new package/actor lifecycle just like existing positive caches",
+            "Missing approved content stays unavailable and is not implemented by caching its absence"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

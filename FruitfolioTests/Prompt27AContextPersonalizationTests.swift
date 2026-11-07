@@ -686,6 +686,46 @@ final class Prompt27AContextResearchTests: XCTestCase {
         XCTAssertFalse(removed.presentationPolicy.modifiesPredictionMathematics)
     }
 
+    func testActualLoggedObservationsDriveCitedResearchWithoutBecomingBiologicalConfirmation() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: 0))
+        let now = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 11, day: 7, hour: 12)))
+        let starts = try [60, 30, 1].map { try XCTUnwrap(calendar.date(byAdding: .day, value: -$0, to: now)) }
+        let prediction = Prompt17CyclePredictionEngine(calendar: calendar).calculate(from: .init(cycleStartDates: starts, asOfDate: now))
+        var draft = Prompt20DailyLogDraft()
+        draft.temperatureText = "36.50"; draft.temperatureUnit = .celsius
+        draft.temperatureReadingType = .basalWaking; draft.cervicalFluidCategory = .unsure
+        draft.selectedSymptoms = [.cramps]; draft.generalNote = "private-log-subject-not-a-query"
+        let log = try XCTUnwrap(Prompt20DailyLogRules.makeLog(ownerID: .localDevice,
+            date: .init(date: now, calendar: calendar), draft: draft, existing: nil, now: now))
+        let facts = Prompt27AObservedCycleFacts(prediction: prediction, dailyLogs: [log])
+        let topics = Prompt27AContextResearchPlan.topics(forObservedFacts: facts)
+        XCTAssertEqual(Set(topics.map(\.id)), ["logs.cycleLengthDifferences", "logs.basalTemperature", "logs.cervicalFluid", "logs.selection.cramps"])
+        XCTAssertTrue(topics.allSatisfy { $0.personalCategory == nil })
+        XCTAssertFalse(topics.contains { $0.question?.contains("private-log-subject") == true })
+        XCTAssertFalse(topics.contains { $0.question?.contains("irregular") == true }, "One-day differences must not become a clinical irregularity label")
+        let model = Prompt27AContextResearchCaptureModel()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try researchStore(), languageModel: model)
+        let service = Prompt27AContextResearchService(engine: engine)
+        let report = try await service.explain(context: .init(cycleHealthContexts: [.pcos]), observedFacts: facts)
+        let basal = try XCTUnwrap(report.items.first { $0.id == "logs.basalTemperature" })
+        let answer = try XCTUnwrap(basal.answer, "Actual approved library should provide basal-temperature education")
+        XCTAssertTrue(answer.answerText.localizedCaseInsensitiveContains("temperature"))
+        XCTAssertEqual(answer.answerPath, .retrievalFallback)
+        XCTAssertFalse(answer.sources.isEmpty)
+        XCTAssertFalse(answer.sourceIDs.contains { $0.hasPrefix("logs.") })
+        let packets = await model.packets
+        XCTAssertTrue(packets.contains { $0.normalizedQuestion.contains("basal") && $0.permittedContext?.observedCycleFacts == facts })
+        XCTAssertTrue(packets.allSatisfy { $0.permittedContext?.predictionConfidence == nil })
+        XCTAssertFalse(packets.contains { $0.normalizedQuestion.contains("private-log-subject") })
+        let removedFacts = Prompt27AObservedCycleFacts(prediction: nil, dailyLogs: [])
+        let removed = try await service.explain(context: report.context, observedFacts: removedFacts, previous: report)
+        XCTAssertFalse(removed.items.contains { $0.id.hasPrefix("logs.") }, "Changed history must revoke old observed-pattern research")
+        XCTAssertTrue(Prompt27AContextResearchPlan.topics(forObservedFacts: .unknown).isEmpty)
+        let limited = Prompt27AObservedCycleFacts(prediction: Prompt17CyclePredictionEngine(calendar: calendar)
+            .calculate(from: .init(cycleStartDates: [now], asOfDate: now)), dailyLogs: [])
+        XCTAssertEqual(Prompt27AContextResearchPlan.topics(forObservedFacts: limited).map(\.id), ["logs.limitedStarts"])
+    }
+
     func testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions() async throws {
         var context = Prompt27AUserReproductiveContext(sexualActivityContext: .notCurrentlySexuallyActive,
             lactationContext: .notCurrentlyBreastfeedingOrLactating, infertilityContext: .notReported,

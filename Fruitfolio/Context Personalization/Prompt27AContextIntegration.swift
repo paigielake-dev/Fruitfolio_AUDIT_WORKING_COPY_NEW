@@ -466,6 +466,41 @@ nonisolated enum Prompt27AContextResearchPlan {
     }
 }
 
+extension Prompt27AContextResearchPlan {
+    /// Education requests follow actual recorded evidence, never a diagnosed
+    /// pattern or a fabricated biological event. Unknown history adds no topic.
+    static func topics(forObservedFacts facts: Prompt27AObservedCycleFacts) -> [Prompt27AContextResearchTopic] {
+        var result: [Prompt27AContextResearchTopic] = []
+        func include(_ id: String, _ title: String, _ question: String) {
+            result.append(.init(id: "logs." + id, reportedTitle: title,
+                reportedValue: "recorded history on this device", question: question))
+        }
+        if let starts = facts.enteredPeriodStartCount, starts < 2 {
+            include("limitedStarts", "limited supplied period-start history",
+                "what can a menstrual period estimate establish with insufficient recorded cycle history, and what remains unknown?")
+        }
+        if Set(facts.recentCompletedCycleLengths).count > 1 {
+            include("cycleLengthDifferences", "differences between calculated cycle lengths",
+                "what approved research explains differences between menstrual cycle lengths, without diagnosing a condition from differences alone?")
+        }
+        if (facts.recordedBasalTemperatureCount ?? 0) > 0 {
+            include("basalTemperature", "recorded basal-temperature selections",
+                "what can recorded basal body temperature observations show, and why must an isolated reading not be treated as confirmed ovulation?")
+        }
+        if (facts.recordedCervicalFluidCount ?? 0) > 0 {
+            include("cervicalFluid", "recorded cervical-fluid selections",
+                "how should recorded cervical fluid selections be understood without treating a log entry as confirmed ovulation or fertility?")
+        }
+        for selection in facts.reportedSymptoms {
+            include("selection." + selection.symptom.rawValue,
+                "recorded " + selection.symptom.displayName + " selections",
+                "what approved research relates " + selection.symptom.displayName +
+                    " to menstrual cycles, without inferring a cause or biological event from a saved selection?")
+        }
+        return result
+    }
+}
+
 nonisolated struct Prompt27AContextResearchItem: Identifiable, Sendable {
     enum Unavailable: Sendable { case contextTooLarge, missingResearch, requestFailed, noBiologicalInference, narrativeNeedsValidatedModel }
     let topic: Prompt27AContextResearchTopic
@@ -539,6 +574,7 @@ final class Prompt27AContextResearchService {
                  progress: (@MainActor (Prompt27AContextResearchReport) -> Void)? = nil) async throws -> Prompt27AContextResearchReport {
         try Task.checkCancellation()
         let topics = Prompt27AContextResearchPlan.topics(for: context)
+            + Prompt27AContextResearchPlan.topics(forObservedFacts: observedFacts)
         var items = previous.flatMap { $0.context == context && $0.observedFacts == observedFacts ? $0.items : nil } ?? []
         let completed = Set(items.map(\.id))
         func publish() {

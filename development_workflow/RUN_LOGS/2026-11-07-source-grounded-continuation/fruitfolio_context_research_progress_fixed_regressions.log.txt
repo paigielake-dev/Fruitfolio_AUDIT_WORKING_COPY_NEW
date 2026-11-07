@@ -1,0 +1,155 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version-6019DD6B20EC49BF.txt
+[3/5] Compiling Fruitfolio Prompt1BCycleModalRegressionHarness.swift
+[4/5] Emitting module Fruitfolio
+[5/7] Wrapping AST for Fruitfolio for debugging
+[7/15] Compiling FruitfolioTests Prompt27AContextPersonalizationTests.swift
+[8/15] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[9/15] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[10/16] Write sources
+[12/18] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[13/18] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[14/19] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[15/17] Write Objects.LinkFileList
+[16/17] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (7.09s)
+Test Suite 'Selected tests' started at 2026-11-07 19:42:02.980
+Test Suite 'Prompt1BAskUserContextTests' started at 2026-11-07 19:42:02.981
+Test Case 'Prompt1BAskUserContextTests.testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion' started at 2026-11-07 19:42:02.981
+Test Case 'Prompt1BAskUserContextTests.testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion' passed (1.582 seconds)
+Test Case 'Prompt1BAskUserContextTests.testExactEncodedContextBoundaryAndEscapedExpansionRemainEnforced' started at 2026-11-07 19:42:04.563
+Test Case 'Prompt1BAskUserContextTests.testExactEncodedContextBoundaryAndEscapedExpansionRemainEnforced' passed (0.02 seconds)
+Test Case 'Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails' started at 2026-11-07 19:42:04.582
+Test Case 'Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails' passed (0.0 seconds)
+Test Case 'Prompt1BAskUserContextTests.testNativeSelectionCountIsProtectedAndCannotRewritePatientSnapshot' started at 2026-11-07 19:42:04.583
+Test Case 'Prompt1BAskUserContextTests.testNativeSelectionCountIsProtectedAndCannotRewritePatientSnapshot' passed (0.027 seconds)
+Test Case 'Prompt1BAskUserContextTests.testNothingIsSharedWithoutExplicitSelectionAndDeletedItemsCannotBeResolved' started at 2026-11-07 19:42:04.610
+Test Case 'Prompt1BAskUserContextTests.testNothingIsSharedWithoutExplicitSelectionAndDeletedItemsCannotBeResolved' passed (0.0 seconds)
+Test Case 'Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance' started at 2026-11-07 19:42:04.610
+Test Case 'Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance' passed (0.0 seconds)
+Test Case 'Prompt1BAskUserContextTests.testOnlyTypedContextFailuresQualifyAsFixedTranslationCopy' started at 2026-11-07 19:42:04.611
+Test Case 'Prompt1BAskUserContextTests.testOnlyTypedContextFailuresQualifyAsFixedTranslationCopy' passed (0.0 seconds)
+Test Case 'Prompt1BAskUserContextTests.testUnknownErrorRetainsExactOriginalBytesAndIsNeverFixedCopy' started at 2026-11-07 19:42:04.611
+Test Case 'Prompt1BAskUserContextTests.testUnknownErrorRetainsExactOriginalBytesAndIsNeverFixedCopy' passed (0.0 seconds)
+Test Suite 'Prompt1BAskUserContextTests' passed at 2026-11-07 19:42:04.611
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.63 (1.63) seconds
+Test Suite 'Prompt1BResearchEngineIntegrationTests' started at 2026-11-07 19:42:04.611
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualFallbackAndGameExplanationUseReviewedSourceRolesWithOriginalCitations' started at 2026-11-07 19:42:04.611
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualFallbackAndGameExplanationUseReviewedSourceRolesWithOriginalCitations' passed (0.101 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineProvidesCitedFallbackWhenLocalGenerationIsUnavailable' started at 2026-11-07 19:42:04.712
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineProvidesCitedFallbackWhenLocalGenerationIsUnavailable' passed (1.523 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineUsesExplicitCueInBothValidatedAndRetrievalFallbackPaths' started at 2026-11-07 19:42:06.236
+Test Case 'Prompt1BResearchEngineIntegrationTests.testActualResearchEngineUsesExplicitCueInBothValidatedAndRetrievalFallbackPaths' passed (1.621 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testChangedScientificQuantityInQuestionTranslationIsRejectedBeforeResearch' started at 2026-11-07 19:42:07.857
+Test Case 'Prompt1BResearchEngineIntegrationTests.testChangedScientificQuantityInQuestionTranslationIsRejectedBeforeResearch' passed (0.006 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testClearingSessionDiagnosticsReleasesQuestionClaimsWhileStaticResearchRemainsUsable' started at 2026-11-07 19:42:07.863
+Test Case 'Prompt1BResearchEngineIntegrationTests.testClearingSessionDiagnosticsReleasesQuestionClaimsWhileStaticResearchRemainsUsable' passed (1.594 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testEnglishQuestionDoesNotRequireTranslationEvenWhenInferenceIsPaused' started at 2026-11-07 19:42:09.456
+Test Case 'Prompt1BResearchEngineIntegrationTests.testEnglishQuestionDoesNotRequireTranslationEvenWhenInferenceIsPaused' passed (1.554 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testLocalizedQuestionRetrievesActualEnglishEvidenceWithoutChangingOriginalQuestion' started at 2026-11-07 19:42:11.011
+Test Case 'Prompt1BResearchEngineIntegrationTests.testLocalizedQuestionRetrievesActualEnglishEvidenceWithoutChangingOriginalQuestion' passed (1.659 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testMultiClaimOptimizationPreservesActualCorpusEvidenceLinksAndCitations' started at 2026-11-07 19:42:12.669
+Test Case 'Prompt1BResearchEngineIntegrationTests.testMultiClaimOptimizationPreservesActualCorpusEvidenceLinksAndCitations' passed (1.621 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testNonurgentOversizedContextStillFailsBeforeMissingResearchCanLoad' started at 2026-11-07 19:42:14.290
+Test Case 'Prompt1BResearchEngineIntegrationTests.testNonurgentOversizedContextStillFailsBeforeMissingResearchCanLoad' passed (0.01 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOriginalUrgentQuestionBypassesTranslationAndMissingResearchResources' started at 2026-11-07 19:42:14.300
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOriginalUrgentQuestionBypassesTranslationAndMissingResearchResources' passed (0.009 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOversizedOptionalContextCannotPreemptOriginalOrTranslatedUrgentGuidance' started at 2026-11-07 19:42:14.309
+Test Case 'Prompt1BResearchEngineIntegrationTests.testOversizedOptionalContextCannotPreemptOriginalOrTranslatedUrgentGuidance' passed (0.017 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testSourcesContainOnlyEvidenceActuallyPresented' started at 2026-11-07 19:42:14.326
+Test Case 'Prompt1BResearchEngineIntegrationTests.testSourcesContainOnlyEvidenceActuallyPresented' passed (1.51 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testTranslatedUrgentQuestionRechecksSafetyBeforeResearchOrGeneration' started at 2026-11-07 19:42:15.837
+Test Case 'Prompt1BResearchEngineIntegrationTests.testTranslatedUrgentQuestionRechecksSafetyBeforeResearchOrGeneration' passed (0.013 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnavailableQuestionTranslationDoesNotClaimTheResearchHasNoAnswer' started at 2026-11-07 19:42:15.849
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnavailableQuestionTranslationDoesNotClaimTheResearchHasNoAnswer' passed (0.009 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnsupportedQuestionIsReportedAfterTheActualLibrarySearch' started at 2026-11-07 19:42:15.858
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUnsupportedQuestionIsReportedAfterTheActualLibrarySearch' passed (1.504 seconds)
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUrgentGuidanceDoesNotDependOnPackageOrModelAvailability' started at 2026-11-07 19:42:17.363
+Test Case 'Prompt1BResearchEngineIntegrationTests.testUrgentGuidanceDoesNotDependOnPackageOrModelAvailability' passed (0.004 seconds)
+Test Suite 'Prompt1BResearchEngineIntegrationTests' passed at 2026-11-07 19:42:17.367
+	 Executed 16 tests, with 0 failures (0 unexpected) in 12.756 (12.756) seconds
+Test Suite 'Prompt27AContextResearchTests' started at 2026-11-07 19:42:17.367
+Test Case 'Prompt27AContextResearchTests.testActualApprovedResearchKeepsReportedContextLogsSourcesAndUnknownsSeparate' started at 2026-11-07 19:42:17.367
+Test Case 'Prompt27AContextResearchTests.testActualApprovedResearchKeepsReportedContextLogsSourcesAndUnknownsSeparate' passed (1.661 seconds)
+Test Case 'Prompt27AContextResearchTests.testCanceledNoncooperativeResearchDoesNotReturnOldInterpretation' started at 2026-11-07 19:42:19.028
+Test Case 'Prompt27AContextResearchTests.testCanceledNoncooperativeResearchDoesNotReturnOldInterpretation' passed (1.558 seconds)
+Test Case 'Prompt27AContextResearchTests.testEveryPersonalCategoryUsesOnlyCurrentProvidedEntryAndPreservesContradictoryReports' started at 2026-11-07 19:42:20.586
+Test Case 'Prompt27AContextResearchTests.testEveryPersonalCategoryUsesOnlyCurrentProvidedEntryAndPreservesContradictoryReports' passed (0.001 seconds)
+Test Case 'Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords' started at 2026-11-07 19:42:20.587
+Test Case 'Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords' passed (0.001 seconds)
+Test Case 'Prompt27AContextResearchTests.testOversizedNarrativeAndMissingResearchFailWithoutTruncationOrInventedSupport' started at 2026-11-07 19:42:20.588
+Test Case 'Prompt27AContextResearchTests.testOversizedNarrativeAndMissingResearchFailWithoutTruncationOrInventedSupport' passed (0.008 seconds)
+Test Case 'Prompt27AContextResearchTests.testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions' started at 2026-11-07 19:42:20.596
+Test Case 'Prompt27AContextResearchTests.testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions' passed (0.101 seconds)
+Test Suite 'Prompt27AContextResearchTests' passed at 2026-11-07 19:42:20.696
+	 Executed 6 tests, with 0 failures (0 unexpected) in 3.329 (3.329) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 19:42:20.696
+	 Executed 30 tests, with 0 failures (0 unexpected) in 17.715 (17.715) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,401 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[2/4] Write swift-version-6019DD6B20EC49BF.txt
+[4/6] Emitting module Fruitfolio
+[5/6] Compiling Fruitfolio Prompt27AContextIntegration.swift
+[6/8] Compiling Fruitfolio Prompt19CalendarPresentationPolicy.swift
+[7/8] Compiling Fruitfolio FruitfolioEvidenceSynthesis.swift
+[8/10] Compiling Fruitfolio Prompt19CalendarLoader.swift
+[9/10] Compiling Fruitfolio FruitfolioResearchIntelligence.swift
+[10/12] Compiling Fruitfolio FruitfolioEvidenceBudget.swift
+[11/12] Compiling Fruitfolio FruitfolioEvidenceModels.swift
+[12/13] Compiling Fruitfolio Prompt21BodyBiologyEngine.swift
+[13/15] Wrapping AST for Fruitfolio for debugging
+[15/23] Compiling FruitfolioTests Prompt06FruitPopupTests.swift
+[16/24] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[17/25] Compiling FruitfolioTests Prompt10SavedLibraryTests.swift
+[18/26] Compiling FruitfolioTests Prompt12AccountPrivacyStoreTests.swift
+[19/27] Compiling FruitfolioTests Prompt11GuideBuilderTests.swift
+[20/28] Compiling FruitfolioTests Prompt14CycleOnboardingTests.swift
+[21/29] Compiling FruitfolioTests Prompt16TodayStateBuilderTests.swift
+[22/30] Compiling FruitfolioTests Prompt13CycleEngineTests.swift
+[23/31] Compiling FruitfolioTests Prompt18CycleWheelTests.swift
+[24/32] Compiling FruitfolioTests Prompt19CalendarEngineTests.swift
+[25/33] Compiling FruitfolioTests Prompt1BAccountActionTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+[26/34] Compiling FruitfolioTests Prompt1BAccountDraftExitTests.swift
+[27/35] Compiling FruitfolioTests Prompt1BAccountPersistenceTests.swift
+[28/36] Compiling FruitfolioTests Prompt1BAccountRestorationPolicyTests.swift
+[29/37] Compiling FruitfolioTests Prompt17CyclePredictionEngineTests.swift
+[30/38] Compiling FruitfolioTests Prompt1BAskPaperLayoutTests.swift
+[31/39] Compiling FruitfolioTests Prompt1BAskScrollTests.swift
+[32/40] Compiling FruitfolioTests Prompt1BBookLabelTests.swift
+[33/41] Compiling FruitfolioTests Prompt1BBookMotionTests.swift
+[34/42] Compiling FruitfolioTests Prompt1BAskUserContextTests.swift
+[35/43] Compiling FruitfolioTests Prompt1BCalendarPresentationPolicyTests.swift
+[36/44] Compiling FruitfolioTests Prompt1BCanonicalCalendarTests.swift
+[37/45] Compiling FruitfolioTests Prompt1BCatalogTranslationTests.swift
+[38/46] Compiling FruitfolioTests Prompt1BCatchPresentationTests.swift
+[39/47] Compiling FruitfolioTests Prompt1BCitationDestinationTests.swift
+[40/48] Compiling FruitfolioTests Prompt1BCitationTranslationTests.swift
+[41/49] Compiling FruitfolioTests Prompt1BContactDestinationTests.swift
+[42/50] Compiling FruitfolioTests Prompt1BContextConfirmationRevisionTests.swift
+[43/51] Compiling FruitfolioTests Prompt1BContextPersistenceTests.swift
+[44/52] Compiling FruitfolioTests Prompt1BContextSnapshotProtectionTests.swift
+[45/53] Compiling FruitfolioTests Prompt1BControlTranslationStateTests.swift
+[46/54] Compiling FruitfolioTests Prompt1BCycleFileProtectionTests.swift
+[47/55] Compiling FruitfolioTests Prompt1BCycleTransactionTests.swift
+[48/56] Compiling FruitfolioTests Prompt1BDailyLogWriteTests.swift
+[49/57] Compiling FruitfolioTests Prompt1BDailyLogViewModelTests.swift
+[50/58] Compiling FruitfolioTests Prompt1BDecorativeLayoutTests.swift
+[51/59] Compiling FruitfolioTests Prompt1BEducationalArtworkTests.swift
+[52/60] Compiling FruitfolioTests Prompt1BEvidenceBoundaryTests.swift
+[53/61] Compiling FruitfolioTests Prompt1BEducationResearchTests.swift
+[54/62] Compiling FruitfolioTests Prompt1BEvidenceBudgetTests.swift
+[55/63] Compiling FruitfolioTests Prompt1BExcerptIdentityTests.swift
+[56/64] Compiling FruitfolioTests Prompt1BExplicitLocalizationTests.swift
+[57/65] Compiling FruitfolioTests Prompt1BFruitBasketQuestionOwnershipTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+[58/66] Compiling FruitfolioTests Prompt1BFruitBasketRulesTests.swift
+[59/67] Compiling FruitfolioTests Prompt1BFruitBasketResearchTests.swift
+[60/68] Compiling FruitfolioTests Prompt1BGGUFResourceTests.swift
+[61/69] Compiling FruitfolioTests Prompt1BGameRulesCatalogTests.swift
+[62/70] Compiling FruitfolioTests Prompt1BGameSavedSourceTests.swift
+[63/71] Compiling FruitfolioTests Prompt1BGuideFormOwnershipTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+[64/72] Compiling FruitfolioTests Prompt1BHealthSafetyBoundaryTests.swift
+[65/73] Compiling FruitfolioTests Prompt1BGamePersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+[66/74] Compiling FruitfolioTests Prompt1BHormoneAdjustmentTests.swift
+[67/75] Compiling FruitfolioTests Prompt1BHormoneCivilDateTests.swift
+[68/76] Compiling FruitfolioTests Prompt1BHormoneLibraryTests.swift
+[69/77] Compiling FruitfolioTests Prompt1BHormoneMeasurementTests.swift
+[70/78] Compiling FruitfolioTests Prompt1BHormoneSnapshotProtectionTests.swift
+[71/79] Compiling FruitfolioTests Prompt1BHormonePersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+[72/80] Compiling FruitfolioTests Prompt1BHormoneValidationTests.swift
+[73/81] Compiling FruitfolioTests Prompt1BIntroCheckpointTests.swift
+[74/82] Compiling FruitfolioTests Prompt1BLanguagePreferencesTests.swift
+[75/83] Compiling FruitfolioTests Prompt1BLevelResetSessionTests.swift
+[76/84] Compiling FruitfolioTests Prompt1BLibrarySnapshotProtectionTests.swift
+[77/85] Compiling FruitfolioTests Prompt1BLibraryPersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+[78/86] Compiling FruitfolioTests Prompt1BLifeBridgeTests.swift
+[79/87] Compiling FruitfolioTests Prompt1BLocalDataExportTests.swift
+[80/88] Compiling FruitfolioTests Prompt1BLogoRevealTests.swift
+[81/89] Compiling FruitfolioTests Prompt1BObstacleGeometryTests.swift
+[82/90] Compiling FruitfolioTests Prompt1BMADLADManifestTests.swift
+[83/91] Compiling FruitfolioTests Prompt1BObstaclePhysicsTests.swift
+[84/92] Compiling FruitfolioTests Prompt1BOnboardingViewModelTests.swift
+[85/93] Compiling FruitfolioTests Prompt1BOnboardingTransactionTests.swift
+[86/94] Compiling FruitfolioTests Prompt1BOwnedConfirmationTests.swift
+[87/95] Compiling FruitfolioTests Prompt1BOwnershipRecordPolicyTests.swift
+[88/96] Compiling FruitfolioTests Prompt1BOwnershipValidationTests.swift
+[89/97] Compiling FruitfolioTests Prompt1BPendingSavePrivacyTests.swift
+[90/98] Compiling FruitfolioTests Prompt1BPersonalHealthContextTests.swift
+[91/99] Compiling FruitfolioTests Prompt1BPredictionPopupTests.swift
+[92/100] Compiling FruitfolioTests Prompt1BPopupLayoutTests.swift
+[93/101] Compiling FruitfolioTests Prompt1BProgressionPolicyTests.swift
+[94/102] Compiling FruitfolioTests Prompt1BPseudonymPolicyTests.swift
+[95/103] Compiling FruitfolioTests Prompt1BRecoveredCycleLoaderTests.swift
+[96/104] Compiling FruitfolioTests Prompt1BResearchPackageTests.swift
+[97/105] Compiling FruitfolioTests Prompt1BResearchEngineIntegrationTests.swift
+[98/106] Compiling FruitfolioTests Prompt1BResearchRetrievalTests.swift
+[99/107] Compiling FruitfolioTests Prompt1BRoundLedgerTests.swift
+[100/108] Compiling FruitfolioTests Prompt1BSavedDraftConflictTests.swift
+[101/109] Compiling FruitfolioTests Prompt1BSavedTranslationBoundaryTests.swift
+[102/110] Compiling FruitfolioTests Prompt1BSavedExcerptPersistenceTests.swift
+[103/111] Compiling FruitfolioTests Prompt1BScientificArtSizingTests.swift
+[104/112] Compiling FruitfolioTests Prompt1BScientificTranslationTests.swift
+[105/113] Compiling FruitfolioTests Prompt1BSemanticSliceTests.swift
+[106/114] Compiling FruitfolioTests Prompt1BSharedLibraryCatalogTests.swift
+[107/115] Compiling FruitfolioTests Prompt1BSettingsLanguageTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[108/116] Compiling FruitfolioTests Prompt1BSpotlightGeometryTests.swift
+[109/117] Compiling FruitfolioTests Prompt1BTodaySnapshotTests.swift
+[110/118] Compiling FruitfolioTests Prompt1BSymptomTimelineTests.swift
+[111/119] Compiling FruitfolioTests Prompt1BUsernameExitSessionTests.swift
+[112/120] Compiling FruitfolioTests Prompt1BUserMaterialTests.swift
+[113/121] Compiling FruitfolioTests Prompt1BWheelNoteLayoutTests.swift
+[114/122] Compiling FruitfolioTests Prompt1BUsernamePersistenceTests.swift
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BUsernamePersistenceTests.swift:45:25: warning: 'currentIdentity' mutated after capture by sendable closure
+ 32 |         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+ 33 |         defer { defaults.removePersistentDomain(forName: suite) }
+ 34 |         var currentIdentity = ["alice.garden@example.invalid"]
+    |             `- note: variable defined here
+ 35 |         let store = FruitfolioUsernameStore(defaults: defaults, key: "username",
+ 36 |             identifyingTextProvider: { currentIdentity })
+    |                                      | `- note: capturing use
+    |                                      `- note: variable captured by sendable closure
+ 37 |         XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+ 38 |         let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+    :
+ 43 |             identifyingText: ["draftname@example.invalid"]))
+ 44 |         XCTAssertEqual(defaults.data(forKey: key), original)
+ 45 |         currentIdentity = ["marina@example.invalid"]
+    |                         `- warning: 'currentIdentity' mutated after capture by sendable closure
+ 46 |         XCTAssertNotNil(store.setUsername("marina_77", confirmedNonIdentifying: true))
+ 47 |         XCTAssertEqual(store.username, "old_berry")
+[115/123] Compiling FruitfolioTests Prompt21BodyBiologyCoreTests.swift
+[116/124] Compiling FruitfolioTests Prompt22HormoneRhythmCoreTests.swift
+[117/125] Compiling FruitfolioTests Prompt20DailyLogCoreTests.swift
+[118/126] Compiling FruitfolioTests Prompt24TrendsCoreTests.swift
+[119/127] Compiling FruitfolioTests Prompt25FertilizationCoreTests.swift
+[120/128] Compiling FruitfolioTests Prompt26PregnancyEducationTests.swift
+[121/129] Compiling FruitfolioTests Prompt27ScienceContentTests.swift
+[122/130] Compiling FruitfolioTests Prompt28FruitBasketTests.swift
+[123/131] Compiling FruitfolioTests Prompt56ResearchIntelligenceTests.swift
+[124/131] Compiling FruitfolioTests Prompt27AContextPersonalizationTests.swift
+[125/131] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[126/132] Write sources
+[128/134] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[129/134] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[130/135] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[131/133] Write Objects.LinkFileList
+[132/133] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (21.72s)
+Test Suite 'Selected tests' started at 2026-11-07 19:56:32.067
+Test Suite 'Prompt20CoreTests' started at 2026-11-07 19:56:32.069
+Test Case 'Prompt20CoreTests.testAmbiguousOrFutureDailyLogEnvelopesAreNotSilentlyNormalized' started at 2026-11-07 19:56:32.069
+Test Case 'Prompt20CoreTests.testAmbiguousOrFutureDailyLogEnvelopesAreNotSilentlyNormalized' passed (0.013 seconds)
+Test Case 'Prompt20CoreTests.testBasalTemperatureBecomesBBTCalendarMarker' started at 2026-11-07 19:56:32.082
+Test Case 'Prompt20CoreTests.testBasalTemperatureBecomesBBTCalendarMarker' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testBleedingNoteWithoutLevelIsRejectedRatherThanSilentlyDropped' started at 2026-11-07 19:56:32.083
+Test Case 'Prompt20CoreTests.testBleedingNoteWithoutLevelIsRejectedRatherThanSilentlyDropped' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testBleedingObservationDoesNotDeclarePeriodInCalendarBridge' started at 2026-11-07 19:56:32.083
+Test Case 'Prompt20CoreTests.testBleedingObservationDoesNotDeclarePeriodInCalendarBridge' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testCalendarBridgeFiltersToDisplayedMonth' started at 2026-11-07 19:56:32.083
+Test Case 'Prompt20CoreTests.testCalendarBridgeFiltersToDisplayedMonth' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testCalendarMetadataRespectsPrompt19TwoIndicatorPriority' started at 2026-11-07 19:56:32.084
+Test Case 'Prompt20CoreTests.testCalendarMetadataRespectsPrompt19TwoIndicatorPriority' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testCancellationBeforeStoreEntryCannotWriteARecord' started at 2026-11-07 19:56:32.084
+Test Case 'Prompt20CoreTests.testCancellationBeforeStoreEntryCannotWriteARecord' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testCelsiusConvertsToFahrenheit' started at 2026-11-07 19:56:32.084
+Test Case 'Prompt20CoreTests.testCelsiusConvertsToFahrenheit' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testCervicalFluidStaysObservationOnly' started at 2026-11-07 19:56:32.084
+Test Case 'Prompt20CoreTests.testCervicalFluidStaysObservationOnly' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testCervicalNoteWithoutCategoryIsRejectedRatherThanSilentlyDropped' started at 2026-11-07 19:56:32.085
+Test Case 'Prompt20CoreTests.testCervicalNoteWithoutCategoryIsRejectedRatherThanSilentlyDropped' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testConcurrentIdenticalRequestIDsCommitOneStableRecordIdentity' started at 2026-11-07 19:56:32.085
+Test Case 'Prompt20CoreTests.testConcurrentIdenticalRequestIDsCommitOneStableRecordIdentity' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testConcurrentIndependentDaysPersistAllRecordsAndRetryIdentities' started at 2026-11-07 19:56:32.086
+Test Case 'Prompt20CoreTests.testConcurrentIndependentDaysPersistAllRecordsAndRetryIdentities' passed (0.014 seconds)
+Test Case 'Prompt20CoreTests.testConcurrentWritesToOneDayReceiveDistinctSequentialRevisions' started at 2026-11-07 19:56:32.100
+Test Case 'Prompt20CoreTests.testConcurrentWritesToOneDayReceiveDistinctSequentialRevisions' passed (0.003 seconds)
+Test Case 'Prompt20CoreTests.testCorruptPersistenceNeverSilentlyTurnsIntoEmptyStore' started at 2026-11-07 19:56:32.102
+Test Case 'Prompt20CoreTests.testCorruptPersistenceNeverSilentlyTurnsIntoEmptyStore' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testDeletedDailyLogFileCannotBeResurrectedFromLoadedCache' started at 2026-11-07 19:56:32.103
+Test Case 'Prompt20CoreTests.testDeletedDailyLogFileCannotBeResurrectedFromLoadedCache' passed (0.002 seconds)
+Test Case 'Prompt20CoreTests.testEditPreservesStableIDAndCreatedAtAndIncrementsRevision' started at 2026-11-07 19:56:32.106
+Test Case 'Prompt20CoreTests.testEditPreservesStableIDAndCreatedAtAndIncrementsRevision' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testEmptyDraftProducesNoRecordedObservations' started at 2026-11-07 19:56:32.106
+Test Case 'Prompt20CoreTests.testEmptyDraftProducesNoRecordedObservations' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testExactSnapshotChangeRequiresReloadEvenWhenDecodedRecordsMatch' started at 2026-11-07 19:56:32.106
+Test Case 'Prompt20CoreTests.testExactSnapshotChangeRequiresReloadEvenWhenDecodedRecordsMatch' passed (0.002 seconds)
+Test Case 'Prompt20CoreTests.testFahrenheitConvertsToCanonicalCelsius' started at 2026-11-07 19:56:32.108
+Test Case 'Prompt20CoreTests.testFahrenheitConvertsToCanonicalCelsius' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testFailedFileWriteRollsBackInMemoryMutation' started at 2026-11-07 19:56:32.108
+Test Case 'Prompt20CoreTests.testFailedFileWriteRollsBackInMemoryMutation' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testFileStorePersistsAndReloadsCanonicalLog' started at 2026-11-07 19:56:32.109
+Test Case 'Prompt20CoreTests.testFileStorePersistsAndReloadsCanonicalLog' passed (0.002 seconds)
+Test Case 'Prompt20CoreTests.testFileStorePersistsDeletionTombstoneAsInactive' started at 2026-11-07 19:56:32.111
+Test Case 'Prompt20CoreTests.testFileStorePersistsDeletionTombstoneAsInactive' passed (0.003 seconds)
+Test Case 'Prompt20CoreTests.testFutureDateRuleUsesLocalCalendarDayNotElapsedHours' started at 2026-11-07 19:56:32.114
+Test Case 'Prompt20CoreTests.testFutureDateRuleUsesLocalCalendarDayNotElapsedHours' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testGeneralNoteIsSensitiveDataFieldNotCalendarPrimaryState' started at 2026-11-07 19:56:32.114
+Test Case 'Prompt20CoreTests.testGeneralNoteIsSensitiveDataFieldNotCalendarPrimaryState' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testGeneralTemperatureDoesNotBecomeBBTCalendarMarker' started at 2026-11-07 19:56:32.114
+Test Case 'Prompt20CoreTests.testGeneralTemperatureDoesNotBecomeBBTCalendarMarker' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testInMemoryRepositoryChecksActiveSnapshotAfterIdempotentRetryLookup' started at 2026-11-07 19:56:32.114
+Test Case 'Prompt20CoreTests.testInMemoryRepositoryChecksActiveSnapshotAfterIdempotentRetryLookup' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testInMemoryRepositoryEnforcesOneCanonicalLogPerOwnerAndDate' started at 2026-11-07 19:56:32.115
+Test Case 'Prompt20CoreTests.testInMemoryRepositoryEnforcesOneCanonicalLogPerOwnerAndDate' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testInMemoryRepositoryRetainsConcurrentRevisionAndRetryContract' started at 2026-11-07 19:56:32.115
+Test Case 'Prompt20CoreTests.testInMemoryRepositoryRetainsConcurrentRevisionAndRetryContract' passed (0.003 seconds)
+Test Case 'Prompt20CoreTests.testIntentionallyClearingExistingLogRemovesActiveLog' started at 2026-11-07 19:56:32.118
+Test Case 'Prompt20CoreTests.testIntentionallyClearingExistingLogRemovesActiveLog' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testLocalDayRoundTripUsesCalendarDay' started at 2026-11-07 19:56:32.118
+Test Case 'Prompt20CoreTests.testLocalDayRoundTripUsesCalendarDay' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testLocalDaySurvivesDSTBoundary' started at 2026-11-07 19:56:32.118
+Test Case 'Prompt20CoreTests.testLocalDaySurvivesDSTBoundary' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testLocalizedDayLabelsUseSelectedLanguageAndGregorianYearAcrossCalendars' started at 2026-11-07 19:56:32.119
+Test Case 'Prompt20CoreTests.testLocalizedDayLabelsUseSelectedLanguageAndGregorianYearAcrossCalendars' passed (0.005 seconds)
+Test Case 'Prompt20CoreTests.testMedicationRequiresNameWhenOtherFieldsContainContent' started at 2026-11-07 19:56:32.124
+Test Case 'Prompt20CoreTests.testMedicationRequiresNameWhenOtherFieldsContainContent' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testMultipleMedicationsRemainSeparateRows' started at 2026-11-07 19:56:32.124
+Test Case 'Prompt20CoreTests.testMultipleMedicationsRemainSeparateRows' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testOutsideDailyLogWriterCannotBeOverwrittenAndReloadIsReadOnly' started at 2026-11-07 19:56:32.124
+Test Case 'Prompt20CoreTests.testOutsideDailyLogWriterCannotBeOverwrittenAndReloadIsReadOnly' passed (0.003 seconds)
+Test Case 'Prompt20CoreTests.testOutsideFutureFieldsStayProtectedAfterExplicitReloadAttempt' started at 2026-11-07 19:56:32.127
+Test Case 'Prompt20CoreTests.testOutsideFutureFieldsStayProtectedAfterExplicitReloadAttempt' passed (0.002 seconds)
+Test Case 'Prompt20CoreTests.testPartialBleedingOnlyLogIsValid' started at 2026-11-07 19:56:32.130
+Test Case 'Prompt20CoreTests.testPartialBleedingOnlyLogIsValid' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testPersistedRequestIDRemainsIdempotentAfterStoreReload' started at 2026-11-07 19:56:32.130
+Test Case 'Prompt20CoreTests.testPersistedRequestIDRemainsIdempotentAfterStoreReload' passed (0.002 seconds)
+Test Case 'Prompt20CoreTests.testPersistencePreservesSubsecondRevisionTimestamps' started at 2026-11-07 19:56:32.132
+Test Case 'Prompt20CoreTests.testPersistencePreservesSubsecondRevisionTimestamps' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testRepeatedRequestIDIsIdempotent' started at 2026-11-07 19:56:32.133
+Test Case 'Prompt20CoreTests.testRepeatedRequestIDIsIdempotent' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testRepositoryRejectsFutureObservationSaveEvenIfUICheckIsBypassed' started at 2026-11-07 19:56:32.133
+Test Case 'Prompt20CoreTests.testRepositoryRejectsFutureObservationSaveEvenIfUICheckIsBypassed' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testRevisionOverflowRejectsWithoutChangingOriginalPersistence' started at 2026-11-07 19:56:32.134
+Test Case 'Prompt20CoreTests.testRevisionOverflowRejectsWithoutChangingOriginalPersistence' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testSkippedCivilDayKeepsExactLabelInsteadOfInventingAnotherDate' started at 2026-11-07 19:56:32.135
+Test Case 'Prompt20CoreTests.testSkippedCivilDayKeepsExactLabelInsteadOfInventingAnotherDate' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testSymptomSummaryDoesNotInventSeverity' started at 2026-11-07 19:56:32.135
+Test Case 'Prompt20CoreTests.testSymptomSummaryDoesNotInventSeverity' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testSymptomsRemainStructuredAndNoteSeparate' started at 2026-11-07 19:56:32.135
+Test Case 'Prompt20CoreTests.testSymptomsRemainStructuredAndNoteSeparate' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testTemperatureContextWithoutValueIsRejectedRatherThanSilentlyDropped' started at 2026-11-07 19:56:32.135
+Test Case 'Prompt20CoreTests.testTemperatureContextWithoutValueIsRejectedRatherThanSilentlyDropped' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testTemperatureNoteWithoutValueIsRejectedRatherThanSilentlyDropped' started at 2026-11-07 19:56:32.136
+Test Case 'Prompt20CoreTests.testTemperatureNoteWithoutValueIsRejectedRatherThanSilentlyDropped' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testTemperatureValidationAcceptsReasonableGeneralInput' started at 2026-11-07 19:56:32.136
+Test Case 'Prompt20CoreTests.testTemperatureValidationAcceptsReasonableGeneralInput' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testTemperatureValidationRejectsNonnumericInputWithoutDiscardingDraft' started at 2026-11-07 19:56:32.136
+Test Case 'Prompt20CoreTests.testTemperatureValidationRejectsNonnumericInputWithoutDiscardingDraft' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testTemperatureValidationRejectsObviousUnitTypo' started at 2026-11-07 19:56:32.136
+Test Case 'Prompt20CoreTests.testTemperatureValidationRejectsObviousUnitTypo' passed (0.0 seconds)
+Test Case 'Prompt20CoreTests.testUnicodeTemperatureDigitsShareValidationAndRecordedConstructionWithoutTextChanges' started at 2026-11-07 19:56:32.136
+Test Case 'Prompt20CoreTests.testUnicodeTemperatureDigitsShareValidationAndRecordedConstructionWithoutTextChanges' passed (0.001 seconds)
+Test Case 'Prompt20CoreTests.testUnknownDailyLogFieldsAndExplicitNullsPreserveOriginalBytes' started at 2026-11-07 19:56:32.137
+Test Case 'Prompt20CoreTests.testUnknownDailyLogFieldsAndExplicitNullsPreserveOriginalBytes' passed (0.006 seconds)
+Test Suite 'Prompt20CoreTests' passed at 2026-11-07 19:56:32.143
+	 Executed 52 tests, with 0 failures (0 unexpected) in 0.074 (0.074) seconds
+Test Suite 'Prompt27AContextResearchTests' started at 2026-11-07 19:56:32.143
+Test Case 'Prompt27AContextResearchTests.testActualApprovedResearchKeepsReportedContextLogsSourcesAndUnknownsSeparate' started at 2026-11-07 19:56:32.143
+Test Case 'Prompt27AContextResearchTests.testActualApprovedResearchKeepsReportedContextLogsSourcesAndUnknownsSeparate' passed (1.582 seconds)
+Test Case 'Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims' started at 2026-11-07 19:56:33.725
+Test Case 'Prompt27AContextResearchTests.testActualNarrativeTermsRetrieveRelevantApprovedEducationWithoutBecomingClaims' passed (1.753 seconds)
+Test Case 'Prompt27AContextResearchTests.testCanceledNoncooperativeResearchDoesNotReturnOldInterpretation' started at 2026-11-07 19:56:35.478
+Test Case 'Prompt27AContextResearchTests.testCanceledNoncooperativeResearchDoesNotReturnOldInterpretation' passed (1.625 seconds)
+Test Case 'Prompt27AContextResearchTests.testEveryPersonalCategoryUsesOnlyCurrentProvidedEntryAndPreservesContradictoryReports' started at 2026-11-07 19:56:37.103
+Test Case 'Prompt27AContextResearchTests.testEveryPersonalCategoryUsesOnlyCurrentProvidedEntryAndPreservesContradictoryReports' passed (0.001 seconds)
+Test Case 'Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords' started at 2026-11-07 19:56:37.105
+Test Case 'Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords' passed (0.001 seconds)
+Test Case 'Prompt27AContextResearchTests.testOversizedNarrativeAndMissingResearchFailWithoutTruncationOrInventedSupport' started at 2026-11-07 19:56:37.106
+Test Case 'Prompt27AContextResearchTests.testOversizedNarrativeAndMissingResearchFailWithoutTruncationOrInventedSupport' passed (0.009 seconds)
+Test Case 'Prompt27AContextResearchTests.testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions' started at 2026-11-07 19:56:37.115
+Test Case 'Prompt27AContextResearchTests.testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions' passed (0.001 seconds)
+Test Case 'Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy' started at 2026-11-07 19:56:37.115
+Test Case 'Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy' passed (0.001 seconds)
+Test Suite 'Prompt27AContextResearchTests' passed at 2026-11-07 19:56:37.116
+	 Executed 8 tests, with 0 failures (0 unexpected) in 4.973 (4.973) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 19:56:37.116
+	 Executed 60 tests, with 0 failures (0 unexpected) in 5.046 (5.046) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

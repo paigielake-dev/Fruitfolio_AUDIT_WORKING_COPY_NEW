@@ -1,0 +1,219 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[2/4] Write swift-version-6019DD6B20EC49BF.txt
+[4/6] Emitting module Fruitfolio
+[5/6] Compiling Fruitfolio FruitfolioEducationResearch.swift
+[6/8] Wrapping AST for Fruitfolio for debugging
+[8/16] Emitting module FruitfolioTests
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BAccountActionTests.swift:7:80: warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+  5 | /// Only rejects the selected write; reads/normal writes retain real UserDefaults
+  6 | /// suite persistence. This is an acknowledgment fault, not replacement storage.
+  7 | private final class Prompt1BRejectingAccountDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                          `- warning: conformance of 'Prompt1BRejectingAccountDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BRejectingAccountDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  8 |     var rejectSnapshotWrites = false
+  9 |     private(set) var snapshotWriteAttempts = 0
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift:5:82: warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  3 | @testable import Fruitfolio
+  4 | 
+  5 | private final class Prompt1BQuestionWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BQuestionWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BQuestionWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  6 |     var dropWrites = false
+  7 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGamePersistenceTests.swift:6:78: warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+   4 | 
+   5 | /// Faults affect only this test suite's game key; production uses real defaults.
+   6 | private final class Prompt1BGameWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+     |                     |                                                        `- warning: conformance of 'Prompt1BGameWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+     |                     `- note: 'Prompt1BGameWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+   7 |     enum Fault { case accept, drop, replace(Data), wrongType }
+   8 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift:84:84: warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+ 82 | }
+ 83 | 
+ 84 | private final class Prompt1BGuideReorderTrackingDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                              `- warning: conformance of 'Prompt1BGuideReorderTrackingDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BGuideReorderTrackingDefaults' inherits conformance to protocol 'Sendable' from superclass here
+ 85 |     private(set) var libraryWrites = 0
+ 86 |     override func set(_ value: Any?, forKey key: String) {
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BHormonePersistenceTests.swift:4:68: warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                              `- warning: conformance of 'HormoneFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'HormoneFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var writeFault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BLibraryPersistenceTests.swift:4:81: warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  2 | @testable import Fruitfolio
+  3 | 
+  4 | private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                           `- warning: conformance of 'Prompt1BLibraryWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLibraryWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  5 |     enum Fault { case accept, drop, replace(Data), wrongType }
+  6 |     var fault: Fault = .accept
+
+/tmp/fruitfolio-portable-hlsld4kd/Tests/FruitfolioTests/Prompt1BSettingsLanguageTests.swift:8:82: warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+  6 | @testable import Fruitfolio
+  7 | 
+  8 | private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    |                     |                                                            `- warning: conformance of 'Prompt1BLanguageWriteFaultDefaults' to protocol 'Sendable' is already unavailable
+    |                     `- note: 'Prompt1BLanguageWriteFaultDefaults' inherits conformance to protocol 'Sendable' from superclass here
+  9 |     enum Fault { case accept, drop, replace(String) }
+ 10 |     var fault: Fault = .accept
+[9/16] Compiling FruitfolioTests Prompt1BEducationResearchTests.swift
+[10/17] Wrapping AST for FruitfolioTests for debugging
+[11/17] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageDiscoveredTests.derived/all-discovered-tests.swift
+[12/18] Write sources
+[14/20] Emitting module FruitfolioPortableChecksPackageDiscoveredTests
+[15/21] Compiling FruitfolioPortableChecksPackageDiscoveredTests FruitfolioTests.swift
+[16/21] Compiling FruitfolioPortableChecksPackageDiscoveredTests all-discovered-tests.swift
+[17/22] /tmp/fruitfolio-portable-hlsld4kd/.build/x86_64-unknown-linux-gnu/debug/FruitfolioPortableChecksPackageTests.derived/runner.swift
+[18/23] Write sources
+[19/23] Wrapping AST for FruitfolioPortableChecksPackageDiscoveredTests for debugging
+[21/25] Compiling FruitfolioPortableChecksPackageTests runner.swift
+[22/25] Emitting module FruitfolioPortableChecksPackageTests
+[23/25] Write Objects.LinkFileList
+[24/25] Linking FruitfolioPortableChecksPackageTests.xctest
+Build complete! (12.06s)
+Test Suite 'Selected tests' started at 2026-11-07 20:13:36.803
+Test Suite 'Prompt1BEducationResearchTests' started at 2026-11-07 20:13:36.805
+Test Case 'Prompt1BEducationResearchTests.testActualCorpusPreservesCompleteParagraphsTheirOwnCitationsAndRecordsMissingTopicsHonestly' started at 2026-11-07 20:13:36.805
+Education actual-corpus coverage {"limit":"Topic-match\/source-integrity coverage only; not complete chapter, clinical or Apple verification.","missing_content_ids":["education.science.centrifugation","education.science.liquid_transfer","education.science.mitochondrion","education.science.nucleus","education.science.pcr_reaction_setup","education.science.rna","education.science.specimen_collection","education.science.test_tube","fertilization.four_cell.expanded","fertilization.four_cell.short","fertilization.morula.expanded","fertilization.morula.short","fertilization.two_cell.expanded","fertilization.two_cell.short"],"selected_original_note_ids":{"education.science.bone":"note_52baaed496807372e0ae851f","education.science.cell":"note_9fda72b909171874e29eec93","education.science.cells":"note_9fda72b909171874e29eec93","education.science.chromosome":"note_04da18e68c81d3018dd47118","education.science.culture":"note_b68eb72847ac39ac456d718a","education.science.dna":"note_04da18e68c81d3018dd47118","education.science.gut_microbiome":"note_89d42dcf38a4f99e94703dee","education.science.heart":"note_838db850a2b183aec2dd6501","education.science.kidneys":"note_b6d23a67504ba35895a57a5b","education.science.liver":"note_5e3d5a737bd617ea91c1d788","education.science.microscopy":"note_40aceddb03d1b996362d4049","education.science.muscle":"note_8379ffd3cdd4ec542dbe5fa6","education.science.protein":"note_e26eb127ddfbbf6efcf44f79","education.science.receptor":"note_1f73218d8981cba25895f895","education.science.sample_collection":"note_db5a15672c71e62254df42be","education.science.skin":"note_08b282ca0410b5396c663046","education.science.stomach":"note_a2079f35b5cd7c6a4ffd7038","education.science.thyroid":"note_722f3d8647d3132f56f6bbbc","fertilization.blastocyst.expanded":"note_bf1e1d8bc97e7d936e8f55d4","fertilization.blastocyst.short":"note_bf1e1d8bc97e7d936e8f55d4","fertilization.fertilization.expanded":"note_a920c0ef910e05ec5208a9d7","fertilization.fertilization.short":"note_71bbe941dba56588335ca1e0","fertilization.oocyte.expanded":"note_9fda72b909171874e29eec93","fertilization.oocyte.short":"note_71bbe941dba56588335ca1e0","pregnancy.early_development.core":"note_aa06a9578a80e234a1c4fb3f","pregnancy.early_development.implantation":"note_bf1e1d8bc97e7d936e8f55d4","pregnancy.early_development.terminology":"note_aa06a9578a80e234a1c4fb3f","pregnancy.early_development.transitions":"note_aa06a9578a80e234a1c4fb3f","pregnancy.fetal_development.core":"note_78b160e8ceda05d6baa5f7a7","pregnancy.fetal_development.scale":"note_b9c0d9fd2ec937293a0be2b1","pregnancy.fetal_development.terminology":"note_b9c0d9fd2ec937293a0be2b1","pregnancy.fetal_development.variability":"note_b9c0d9fd2ec937293a0be2b1","pregnancy.placenta.anatomy":"note_2672d65f24dbcac7059d5a12","pregnancy.placenta.circulation":"note_2672d65f24dbcac7059d5a12","pregnancy.placenta.core":"note_9070dd54f69993847087710f","pregnancy.placenta.development":"note_f786f7630538fd69d326826d","pregnancy.placenta.exchange":"note_b9c0d9fd2ec937293a0be2b1","pregnancy.placenta.hormones":"note_43032f00ed0f2f979217e33f","pregnancy.prenatal_vitamins.core":"note_2a88506d48797dc14025161c","pregnancy.prenatal_vitamins.dosing":"note_2a88506d48797dc14025161c","pregnancy.prenatal_vitamins.folate":"note_2a88506d48797dc14025161c","pregnancy.prenatal_vitamins.nutrients":"note_2a88506d48797dc14025161c","pregnancy.prenatal_vitamins.preconception":"note_2a88506d48797dc14025161c","pregnancy.prenatal_vitamins.safety":"note_2a88506d48797dc14025161c","pregnancy.testing.core":"note_b213aef650e214910e77b363","pregnancy.testing.hcg":"note_b213aef650e214910e77b363","pregnancy.testing.limitations":"note_60dbca1c765f05f88e61bf8b","pregnancy.testing.results":"note_60dbca1c765f05f88e61bf8b","pregnancy.testing.timing":"note_b213aef650e214910e77b363","pregnancy.ultrasound.approaches":"note_20c0e24823093718c0f62d69","pregnancy.ultrasound.core":"note_20c0e24823093718c0f62d69","pregnancy.ultrasound.limitations":"note_00b1add0536ba333ac564263","pregnancy.ultrasound.professional_role":"note_5d4a580be331c39545160bbb","pregnancy.ultrasound.sound_waves":"note_1cd7f03534c36d438111c892","pregnancy.umbilical_cord.anatomy":"note_2672d65f24dbcac7059d5a12","pregnancy.umbilical_cord.circulation":"note_2672d65f24dbcac7059d5a12","pregnancy.umbilical_cord.core":"note_2672d65f24dbcac7059d5a12","pregnancy.umbilical_cord.vessels":"note_2672d65f24dbcac7059d5a12","pregnancy.umbilical_cord.whartons_jelly":"note_2672d65f24dbcac7059d5a12"}}
+Test Case 'Prompt1BEducationResearchTests.testActualCorpusPreservesCompleteParagraphsTheirOwnCitationsAndRecordsMissingTopicsHonestly' passed (5.504 seconds)
+Test Case 'Prompt1BEducationResearchTests.testAllThreeRealProtocolAdaptersConsumeTheSameGroundedArticleAndSourceReaderRejectsForeignIDs' started at 2026-11-07 20:13:42.308
+Test Case 'Prompt1BEducationResearchTests.testAllThreeRealProtocolAdaptersConsumeTheSameGroundedArticleAndSourceReaderRejectsForeignIDs' passed (1.609 seconds)
+Test Case 'Prompt1BEducationResearchTests.testDetailedChaptersDeduplicateOriginalParagraphsAndPersistAllAttributionThroughTheActualLibrary' started at 2026-11-07 20:13:43.917
+Education chapter readback: 28 real chapters; 7 with distinct additional original paragraphs
+Test Case 'Prompt1BEducationResearchTests.testDetailedChaptersDeduplicateOriginalParagraphsAndPersistAllAttributionThroughTheActualLibrary' passed (6.145 seconds)
+Test Case 'Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover' started at 2026-11-07 20:13:50.062
+ACTUAL_FIXED_UNAVAILABLE_LOOKUP warm_25_seconds=0.004760146141052246
+Test Case 'Prompt1BEducationResearchTests.testFixedUnavailableLookupsStayUnavailableAndTransientPackageFailuresCanRecover' passed (2.484 seconds)
+Test Case 'Prompt1BEducationResearchTests.testRegistryUsesTheExistingModuleCatalogsAndRejectsUnsupportedContentBeforeLoading' started at 2026-11-07 20:13:52.546
+Test Case 'Prompt1BEducationResearchTests.testRegistryUsesTheExistingModuleCatalogsAndRejectsUnsupportedContentBeforeLoading' passed (0.002 seconds)
+Test Case 'Prompt1BEducationResearchTests.testScientificScopeRejectsIncidentalSocialAndDiseaseNameMatchesAndAcceptsRealAliases' started at 2026-11-07 20:13:52.548
+Test Case 'Prompt1BEducationResearchTests.testScientificScopeRejectsIncidentalSocialAndDiseaseNameMatchesAndAcceptsRealAliases' passed (0.103 seconds)
+Test Case 'Prompt1BEducationResearchTests.testStageScopeDoesNotMisrepresentEightOrTwelveCellSourcesAsTwoCellEducation' started at 2026-11-07 20:13:52.651
+Test Case 'Prompt1BEducationResearchTests.testStageScopeDoesNotMisrepresentEightOrTwelveCellSourcesAsTwoCellEducation' passed (0.001 seconds)
+Test Suite 'Prompt1BEducationResearchTests' passed at 2026-11-07 20:13:52.652
+	 Executed 7 tests, with 0 failures (0 unexpected) in 15.847 (15.847) seconds
+Test Suite 'Prompt25FertilizationCoreTests' started at 2026-11-07 20:13:52.652
+Test Case 'Prompt25FertilizationCoreTests.testAllAssetNamesAreLowercaseSnakeCase' started at 2026-11-07 20:13:52.652
+Test Case 'Prompt25FertilizationCoreTests.testAllAssetNamesAreLowercaseSnakeCase' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testAllNineFertilizationFolderAssetsHaveReachableModuleUse' started at 2026-11-07 20:13:52.652
+Test Case 'Prompt25FertilizationCoreTests.testAllNineFertilizationFolderAssetsHaveReachableModuleUse' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testCanonicalSequenceHasExactlySixPrimaryStages' started at 2026-11-07 20:13:52.652
+Test Case 'Prompt25FertilizationCoreTests.testCanonicalSequenceHasExactlySixPrimaryStages' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testEveryStageHasStableContentAndSourceIDs' started at 2026-11-07 20:13:52.652
+Test Case 'Prompt25FertilizationCoreTests.testEveryStageHasStableContentAndSourceIDs' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testEveryStageIsEducationalOnly' started at 2026-11-07 20:13:52.652
+Test Case 'Prompt25FertilizationCoreTests.testEveryStageIsEducationalOnly' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testNoExtraPrimaryEightCellZygoteOrImplantationStageExists' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt25FertilizationCoreTests.testNoExtraPrimaryEightCellZygoteOrImplantationStageExists' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testOocytePrimaryArtIsNotMisrepresentedByFertilizationFolderArt' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt25FertilizationCoreTests.testOocytePrimaryArtIsNotMisrepresentedByFertilizationFolderArt' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testPreviousAndNextNeverSkipStages' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt25FertilizationCoreTests.testPreviousAndNextNeverSkipStages' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testStageIndicatorsAreStable' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt25FertilizationCoreTests.testStageIndicatorsAreStable' passed (0.0 seconds)
+Test Case 'Prompt25FertilizationCoreTests.testUnavailableContentProviderNeverInventsScience' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt25FertilizationCoreTests.testUnavailableContentProviderNeverInventsScience' passed (0.0 seconds)
+Test Suite 'Prompt25FertilizationCoreTests' passed at 2026-11-07 20:13:52.653
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'Prompt26PregnancyEducationTests' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt26PregnancyEducationTests.testAllTenPregnancyAssetsHaveReachableProductionUse' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt26PregnancyEducationTests.testAllTenPregnancyAssetsHaveReachableProductionUse' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testAskIndexRequiresResearchSupportForEveryTopic' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt26PregnancyEducationTests.testAskIndexRequiresResearchSupportForEveryTopic' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testCanonicalTopicHeroAssetMapping' started at 2026-11-07 20:13:52.653
+Test Case 'Prompt26PregnancyEducationTests.testCanonicalTopicHeroAssetMapping' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testClosureProviderReturnsOnlyInjectedApprovedContent' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testClosureProviderReturnsOnlyInjectedApprovedContent' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testEveryTopicIsEducationalOnly' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testEveryTopicIsEducationalOnly' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testExactlySevenCanonicalTopicsExistInRequiredOrder' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testExactlySevenCanonicalTopicsExistInRequiredOrder' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testExactlyTenCanonicalPregnancyAssetsAreRegistered' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testExactlyTenCanonicalPregnancyAssetsAreRegistered' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testFetalDevelopmentUsesReferencePeriodsNotUserPregnancyWeeks' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testFetalDevelopmentUsesReferencePeriodsNotUserPregnancyWeeks' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testImageInterpretationRequestsAreRejectedByBoundary' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testImageInterpretationRequestsAreRejectedByBoundary' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testOrdinaryEducationalQuestionsRemainAllowed' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testOrdinaryEducationalQuestionsRemainAllowed' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testPersonalizedPregnancyQuestionNeverBecomesProbabilityAnswer' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testPersonalizedPregnancyQuestionNeverBecomesProbabilityAnswer' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testPredictedPeriodPassingNeverInfersPregnancy' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testPredictedPeriodPassingNeverInfersPregnancy' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testPregnancySpecificArtworkRequiresIntentionalEducationalContext' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testPregnancySpecificArtworkRequiresIntentionalEducationalContext' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testSavedEntriesRemainEducational' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testSavedEntriesRemainEducational' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testSymptomCombinationsNeverInferPregnancy' started at 2026-11-07 20:13:52.654
+Test Case 'Prompt26PregnancyEducationTests.testSymptomCombinationsNeverInferPregnancy' passed (0.0 seconds)
+Test Case 'Prompt26PregnancyEducationTests.testUnavailableProviderFailsClosedInsteadOfFabricatingContent' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt26PregnancyEducationTests.testUnavailableProviderFailsClosedInsteadOfFabricatingContent' passed (0.0 seconds)
+Test Suite 'Prompt26PregnancyEducationTests' passed at 2026-11-07 20:13:52.655
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'Prompt27ScienceContentTests' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testAllCanonicalAssetsAreProductionEligible' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testAllCanonicalAssetsAreProductionEligible' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testBodySectionRoutesToOneExplicitBodyAsset' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testBodySectionRoutesToOneExplicitBodyAsset' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testBrowsingDoesNotBecomeMedicalState' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testBrowsingDoesNotBecomeMedicalState' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testCanonicalAssetFamilyCountsAreExact' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testCanonicalAssetFamilyCountsAreExact' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testCanonicalCatalogContainsExactlyTwentySixPrompt27Assets' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testCanonicalCatalogContainsExactlyTwentySixPrompt27Assets' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testCanonicalFilenamesMatchPhysicalManifestExactly' started at 2026-11-07 20:13:52.655
+Test Case 'Prompt27ScienceContentTests.testCanonicalFilenamesMatchPhysicalManifestExactly' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testClosureResearchProviderAcceptsApprovedSourcedContent' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testClosureResearchProviderAcceptsApprovedSourcedContent' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testClosureResearchProviderRejectsUnsourcedContent' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testClosureResearchProviderRejectsUnsourcedContent' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testEducationalQuestionsRemainAllowed' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testEducationalQuestionsRemainAllowed' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testForbiddenInferencesRemainForbidden' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testForbiddenInferencesRemainForbidden' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testGeneticsSectionRoutesToOneExplicitGeneticsAsset' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testGeneticsSectionRoutesToOneExplicitGeneticsAsset' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testHotspotCoordinatesAreClampedAndAccessibleByLabel' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testHotspotCoordinatesAreClampedAndAccessibleByLabel' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testLabSectionRoutesToOneExplicitLabAsset' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testLabSectionRoutesToOneExplicitLabAsset' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testNoneContextRendersNoMajorIllustration' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testNoneContextRendersNoMajorIllustration' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testPCRContextUsesExistingCanonicalArtWithoutInventingFilename' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testPCRContextUsesExistingCanonicalArtWithoutInventingFilename' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testPersonalizedRiskAndLabResultInterpretationRequireSeparateValidatedSystem' started at 2026-11-07 20:13:52.656
+Test Case 'Prompt27ScienceContentTests.testPersonalizedRiskAndLabResultInterpretationRequireSeparateValidatedSystem' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testRouterRejectsAssetInNoneContext' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testRouterRejectsAssetInNoneContext' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testRouterRejectsFamilyMismatch' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testRouterRejectsFamilyMismatch' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testRouterUsesCuratedMetadataRatherThanArticleKeywords' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testRouterUsesCuratedMetadataRatherThanArticleKeywords' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testRuntimeGenerativeScienceArtAndKeywordRoutingAreForbidden' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testRuntimeGenerativeScienceArtAndKeywordRoutingAreForbidden' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testUnapprovedScientificAssetFailsClosed' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testUnapprovedScientificAssetFailsClosed' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testUnavailableResearchProviderFailsClosed' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testUnavailableResearchProviderFailsClosed' passed (0.0 seconds)
+Test Case 'Prompt27ScienceContentTests.testVisualFamilyRequiresExplicitCuratedAsset' started at 2026-11-07 20:13:52.657
+Test Case 'Prompt27ScienceContentTests.testVisualFamilyRequiresExplicitCuratedAsset' passed (0.0 seconds)
+Test Suite 'Prompt27ScienceContentTests' passed at 2026-11-07 20:13:52.657
+	 Executed 23 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 20:13:52.657
+	 Executed 56 tests, with 0 failures (0 unexpected) in 15.852 (15.852) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.2.1 (c9d57c83568b06d)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
