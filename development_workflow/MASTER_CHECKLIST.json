@@ -23498,10 +23498,14 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsEngine.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioTests/Prompt24TrendsCoreTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -23513,44 +23517,73 @@
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; actual filter UI NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters",
+        "testSelectionFiltersOnlyExplicitlyHiddenSymptoms",
+        "testEmptySelectionDoesNotInventDomainOrPoints"
       ],
-      "commit_reference": "batch:Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
         "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
         "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged.",
         "Actual all-hidden symptom selection now shows explicit filter explanation and canonical Show All action instead of no-history empty graph. Show All restores only current accepted available set after active/snapshot guard; no records generated/modified. Genuine absent history retains original empty presentation. Stable filter/graph/recovery IDs added for real UI regression. Two English entries preserve945 old entries,947 total.",
-        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification."
+        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification.",
+        "Individual full-clause implementation review with executed17 actual timeline/trends tests: development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json entry 305. Apple/external acceptance remains NOT_RUN.",
+        "Only one live symptom graph is rendered in symptomsTab; per-symptom navigation/plots are replaced by rowed occurrences on one actual-date domain. Actual selectedSymptoms toggles filter that same timeline and have a hidden-selection/show-all recovery state; summary text remains separate. Individual implementation closure; Apple acceptance pending."
       ],
-      "last_updated": "2026-11-06T21:40:13.468869+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "portable_XCTest": "797 passed",
-          "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
-          "syntax": "311 parsed",
-          "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
-          "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
-          "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-          "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-          "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-        "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-        "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+          "executed": {
+            "portable_XCTest": "797 passed",
+            "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
+            "syntax": "311 parsed",
+            "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          },
+          "not_run": [
+            "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
+            "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
+            "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          ],
+          "remaining": [
+            "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
+            "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
+            "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -23564,10 +23597,14 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsEngine.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioTests/Prompt24TrendsCoreTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -23579,44 +23616,75 @@
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; actual filter UI NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters",
+        "testObservationWithoutCycleAssignmentIsRetained",
+        "testUnloggedDaysAreNeverSynthesizedAsAbsentSymptoms",
+        "testInvalidDateIsCountedWithoutBeingReplaced",
+        "testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations"
       ],
-      "commit_reference": "batch:Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
         "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
         "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged.",
         "Actual all-hidden symptom selection now shows explicit filter explanation and canonical Show All action instead of no-history empty graph. Show All restores only current accepted available set after active/snapshot guard; no records generated/modified. Genuine absent history retains original empty presentation. Stable filter/graph/recovery IDs added for real UI regression. Two English entries preserve945 old entries,947 total.",
-        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification."
+        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification.",
+        "Individual full-clause implementation review with executed17 actual timeline/trends tests: development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json entry 306. Apple/external acceptance remains NOT_RUN.",
+        "The engine uses selected symptom IDs from real, nondeleted daily logs; actual calendar dates become timeline points without inventing intensities or unlogged-day values. Unknown cycle assignment does not delete a recorded observation; invalid dates are retained in the accessible list and counted as unplottable, never replaced. Canvas receives the actual timeline point/day offset, with full first/last dots inside drawing bounds and real civil-day spacing. Individual implementation closure; Apple acceptance pending."
       ],
-      "last_updated": "2026-11-06T21:40:13.468869+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "portable_XCTest": "797 passed",
-          "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
-          "syntax": "311 parsed",
-          "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
-          "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
-          "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-          "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-          "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-        "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-        "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+          "executed": {
+            "portable_XCTest": "797 passed",
+            "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
+            "syntax": "311 parsed",
+            "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          },
+          "not_run": [
+            "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
+            "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
+            "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          ],
+          "remaining": [
+            "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
+            "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
+            "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -23630,10 +23698,14 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsEngine.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioTests/Prompt24TrendsCoreTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -23643,42 +23715,72 @@
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "testObservationWithoutCycleAssignmentIsRetained",
+        "testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters",
+        "testSupportedPatternRequiresThreeCyclesAndTwoThirds",
+        "testCurrentIncompleteCycleDoesNotEnterPatternEligibility"
       ],
-      "commit_reference": "batch:Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
         "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged.",
-        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification."
+        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification.",
+        "Individual full-clause implementation review with executed17 actual timeline/trends tests: development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json entry 307. Apple/external acceptance remains NOT_RUN.",
+        "The source explicitly identifies dots as recorded observations and calculated timing summaries as descriptions rather than diagnoses/predictions. Corrected occurrence detail to identify cycle day as calculated from recorded cycle starts, matching actual cycleAssignment production provenance. Missing cycle day remains explicitly unavailable; supported/developing/unsupported/insufficient summaries are separate from the underlying observation list. Individual implementation closure; Apple acceptance pending."
       ],
-      "last_updated": "2026-11-06T21:40:13.468869+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "portable_XCTest": "797 passed",
-          "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
-          "syntax": "311 parsed",
-          "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
-          "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
-          "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-          "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-          "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-        "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-        "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+          "executed": {
+            "portable_XCTest": "797 passed",
+            "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
+            "syntax": "311 parsed",
+            "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          },
+          "not_run": [
+            "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
+            "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
+            "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          ],
+          "remaining": [
+            "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
+            "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
+            "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -23692,10 +23794,14 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsEngine.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioTests/Prompt24TrendsCoreTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -23705,42 +23811,72 @@
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; actual filter UI NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "testUnloggedDaysAreNeverSynthesizedAsAbsentSymptoms",
+        "testTwoCyclesCannotBecomeSupportedPattern",
+        "testCurrentIncompleteCycleDoesNotEnterPatternEligibility",
+        "testSupportedPatternRequiresThreeCyclesAndTwoThirds"
       ],
-      "commit_reference": "batch:Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged.",
         "Actual all-hidden symptom selection now shows explicit filter explanation and canonical Show All action instead of no-history empty graph. Show All restores only current accepted available set after active/snapshot guard; no records generated/modified. Genuine absent history retains original empty presentation. Stable filter/graph/recovery IDs added for real UI regression. Two English entries preserve945 old entries,947 total.",
-        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification."
+        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification.",
+        "Individual full-clause implementation review with executed17 actual timeline/trends tests: development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json entry 308. Apple/external acceptance remains NOT_RUN.",
+        "Unlogged days are never synthesized as absent symptom observations; only stored selections become points. Pattern summary eligibility excludes incomplete cycles, requires three completed cycles and repeated supported timing, and has distinct insufficient/developing/unsupported copy. Limited data still displays recorded observations; no diagnosis, fertility/ovulation prediction or reliable pattern is invented. Individual implementation closure; Apple acceptance pending."
       ],
-      "last_updated": "2026-11-06T21:40:13.468869+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "portable_XCTest": "797 passed",
-          "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
-          "syntax": "311 parsed",
-          "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
-          "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
-          "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-          "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-          "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-        "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-        "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+          "executed": {
+            "portable_XCTest": "797 passed",
+            "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
+            "syntax": "311 parsed",
+            "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          },
+          "not_run": [
+            "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
+            "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
+            "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          ],
+          "remaining": [
+            "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
+            "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
+            "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -23754,10 +23890,14 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsEngine.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioTests/Prompt24TrendsCoreTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -23769,44 +23909,74 @@
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; actual filter UI NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
+        "testDSTUsesCivilDaySpacingRatherThanElapsedHours",
+        "testSameCycleDayInDifferentMonthsIsNotOverlaid",
+        "testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
       ],
-      "commit_reference": "batch:Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
         "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
         "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged.",
         "Actual all-hidden symptom selection now shows explicit filter explanation and canonical Show All action instead of no-history empty graph. Show All restores only current accepted available set after active/snapshot guard; no records generated/modified. Genuine absent history retains original empty presentation. Stable filter/graph/recovery IDs added for real UI regression. Two English entries preserve945 old entries,947 total.",
-        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification."
+        "Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French \u00d7 Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository\u2192loader\u2192timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification.",
+        "Individual full-clause implementation review with executed17 actual timeline/trends tests: development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json entry 309. Apple/external acceptance remains NOT_RUN.",
+        "Chart viewport remains bounded with horizontal/vertical scrolling for long histories and many rows; original paper art/type roles retained. Each actual HStack row expands to its wrapped label's height; label width and minimum row height scale with Dynamic Type. Dots remain centered in the same row and no fixed-height label positioning survives. Axis and point direction agree in RTL. Actual Gregorian civil-day projection is tested across DST, both directions and single-date centering. A combined graph summary reports real counts/invalid dates; the separate observations disclosure exposes each symptom/date and calculated/unavailable cycle day without color-only interpretation. Individual implementation closure; Apple acceptance pending."
       ],
-      "last_updated": "2026-11-06T21:40:13.468869+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "portable_XCTest": "797 passed",
-          "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
-          "syntax": "311 parsed",
-          "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
-          "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
-          "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-          "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-          "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
-        "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
-        "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression",
+          "executed": {
+            "portable_XCTest": "797 passed",
+            "native_CPU_XCTest": "819 passed; syntheticT5/independent real Qwen, not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "60 passed after actual private-route invariant caught and corrected one failure",
+            "syntax": "311 parsed",
+            "dataflow": "Actual repository/loader/timeline retained four observations over DST and full records unchanged with filter projection"
+          },
+          "not_run": [
+            "Four new actual SwiftUI graph launches; Apple SDK build/typecheck and full integrated suite",
+            "Actual cross-zone date/footer/list consistency, VoiceOver, rapid queued-event/refresh races and device performance",
+            "Official MADLAD, target-language scientific semantics and clinical review; paused French source fallback is not French translation"
+          ],
+          "remaining": [
+            "Run Apple SDK build and all4actual graph filter/background/restore/fresh repository readback launches",
+            "Verify source-calendar native rendering, AX labels/selected state, every observation reachability and queued/refresh races on Apple",
+            "Clinical/native-language/official-model/device acceptance remains external; no whole original requirement certified complete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -31799,7 +31969,12 @@
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
         "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
-        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift"
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -31836,9 +32011,11 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BUserMaterialTests.swift",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
+        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
       ],
-      "commit_reference": "batch:Cycle-section-navigation-responsive-accessibility (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -31877,31 +32054,38 @@
         "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance.",
         "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
-        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted."
+        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
+        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted."
       ],
-      "last_updated": "2026-11-07T08:06:22.608047+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-section-navigation-responsive-accessibility",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "New actual UIHosting navigation sizing regression in both directions",
-          "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-          "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-          "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-        "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-        "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+        "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
       ],
       "prior_batch_verifications": [
         {
@@ -31968,6 +32152,24 @@
             "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
             "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
             "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-section-navigation-responsive-accessibility",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual UIHosting navigation sizing regression in both directions",
+            "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          ],
+          "remaining": [
+            "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
+            "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
+            "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37440,7 +37642,11 @@
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
-        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37596,9 +37802,11 @@
         "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
         "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
         "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
-        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts",
+        "Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
+        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
       ],
-      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -37719,40 +37927,38 @@
         "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation.",
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
         "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
-        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.",
+        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted."
       ],
-      "last_updated": "2026-11-07T11:51:44.089393+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "full_portable_XCTest": 1009,
-          "Swift_Testing": 21,
-          "native_CPU_focused_XCTest": 34,
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
           "workflow": 71,
-          "swift_syntax_files": 320,
-          "logs": [
-            "/tmp/fruitfolio_brand_consumer_full_portable.log",
-            "/tmp/fruitfolio_brand_consumer_native.log",
-            "/tmp/fruitfolio_brand_consumer_workflow.log",
-            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
-          ],
-          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
-          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
-          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
-          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
-        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
-        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+        "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
       ],
       "prior_batch_verifications": [
         {
@@ -38064,6 +38270,33 @@
           "remaining": [
             "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
             "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
+          "executed": {
+            "full_portable_XCTest": 1009,
+            "Swift_Testing": 21,
+            "native_CPU_focused_XCTest": 34,
+            "workflow": 71,
+            "swift_syntax_files": 320,
+            "logs": [
+              "/tmp/fruitfolio_brand_consumer_full_portable.log",
+              "/tmp/fruitfolio_brand_consumer_native.log",
+              "/tmp/fruitfolio_brand_consumer_workflow.log",
+              "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+            ],
+            "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
+          },
+          "not_run": [
+            "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+            "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
+          ],
+          "remaining": [
+            "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+            "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+            "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -38262,7 +38495,11 @@
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
-        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38413,9 +38650,11 @@
         "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
         "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
         "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
-        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts",
+        "Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
+        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
       ],
-      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -38519,40 +38758,38 @@
         "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation.",
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
         "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
-        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.",
+        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted."
       ],
-      "last_updated": "2026-11-07T11:51:44.089393+00:00",
+      "last_updated": "2026-11-07T12:02:04.917307+00:00",
       "latest_batch_verification": {
-        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
+        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
         "executed": {
-          "full_portable_XCTest": 1009,
-          "Swift_Testing": 21,
-          "native_CPU_focused_XCTest": 34,
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
           "workflow": 71,
-          "swift_syntax_files": 320,
-          "logs": [
-            "/tmp/fruitfolio_brand_consumer_full_portable.log",
-            "/tmp/fruitfolio_brand_consumer_native.log",
-            "/tmp/fruitfolio_brand_consumer_workflow.log",
-            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
-          ],
-          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
         },
         "not_run": [
-          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
-          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
         ],
         "remaining": [
-          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
-          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
-          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
-        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
-        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+        "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
       ],
       "prior_batch_verifications": [
         {
@@ -38864,6 +39101,33 @@
           "remaining": [
             "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
             "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
+          "executed": {
+            "full_portable_XCTest": 1009,
+            "Swift_Testing": 21,
+            "native_CPU_focused_XCTest": 34,
+            "workflow": 71,
+            "swift_syntax_files": 320,
+            "logs": [
+              "/tmp/fruitfolio_brand_consumer_full_portable.log",
+              "/tmp/fruitfolio_brand_consumer_native.log",
+              "/tmp/fruitfolio_brand_consumer_workflow.log",
+              "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+            ],
+            "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
+          },
+          "not_run": [
+            "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+            "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
+          ],
+          "remaining": [
+            "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+            "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+            "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

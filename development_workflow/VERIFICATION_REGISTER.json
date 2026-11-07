@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T11:54:30.883521+00:00",
+  "updated_at": "2026-11-07T12:02:04.917307+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11999,6 +11999,56 @@
         ]
       },
       "timestamp": "2026-11-07T11:54:30.883521+00:00"
+    },
+    {
+      "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+      "requirements": [
+        305,
+        306,
+        307,
+        308,
+        309,
+        410,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BSymptomTimelineTests|Prompt24TrendsCoreTests'",
+        "71 workflow unittest checks",
+        "320 Swift syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "focused_actual_domain_XCTest": 17,
+        "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+        "workflow": 71,
+        "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+        "syntax_files": 320,
+        "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+      },
+      "verification": {
+        "executed": {
+          "focused_actual_domain_XCTest": 17,
+          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+          "workflow": 71,
+          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+        },
+        "not_run": [
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+        ],
+        "remaining": [
+          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+        ]
+      },
+      "timestamp": "2026-11-07T12:02:04.917307+00:00"
     }
   ]
 }

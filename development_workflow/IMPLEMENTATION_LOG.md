@@ -3896,3 +3896,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_hormone_XCTest_previously_passed": 39, "integrated_portable_XCTest_previously_passed": 1009, "newly_verified_requirement_count": 0, "implementation_closures": 8}.
 - Next action: Continue the remaining unified symptom observation/interpretation requirements and other functional gaps using actual production sources and existing executed evidence. Do not repeat full-suite execution for this metadata-only closure.
 - Commit: containing commit for batch Hormone-input-and-local-persistence-individual-closure.
+
+## Unified-symptom-intrinsic-rows-and-calculated-provenance
+
+- Parent checkpoint: 2ef1d1030dd6be8dd7d1fc504504d20723a8ce9f.
+- Source-order requirements: [305, 306, 307, 308, 309, 410, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift, Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift, FruitfolioTests/Prompt1BSymptomTimelineTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json.
+- Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305–309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted.
+- Tests added/updated: Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations, Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords.
+- Verification: {"focused_actual_domain_XCTest": 17, "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log", "workflow": 71, "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log", "syntax_files": 320, "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"}.
+- Next action: Reconcile the exact reviewed-method blocker for remaining Adjusted Rhythm requirements without treating absent external methodology as implemented; proceed immediately to independent unfinished requirements after recording source-specific dependencies.
+- Commit: containing commit for batch Unified-symptom-intrinsic-rows-and-calculated-provenance.

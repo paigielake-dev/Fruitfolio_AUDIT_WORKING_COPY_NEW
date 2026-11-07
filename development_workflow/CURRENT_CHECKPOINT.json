@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "22292319e6fe7d8a24b6d4292a7223645e61d448",
+  "current_HEAD": "2ef1d1030dd6be8dd7d1fc504504d20723a8ce9f",
   "latest_verified_commit": null,
-  "current_checklist_part": 6,
-  "current_requirement": 305,
-  "current_implementation_batch": "Hormone-input-and-local-persistence-individual-closure",
+  "current_checklist_part": 5,
+  "current_requirement": 267,
+  "current_implementation_batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
   "completed_requirements": [
     206,
     210
@@ -494,8 +494,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+    "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+    "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -508,18 +512,21 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Reuse already executed39 focused hormone XCTest and full1009 portable XCTest; no redundant rerun",
-    "Validate original478 and exact36 supplemental source identity",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BSymptomTimelineTests|Prompt24TrendsCoreTests'",
+    "71 workflow unittest checks",
+    "320 Swift syntax parses",
     "git diff --check"
   ],
   "last_test_results": {
-    "focused_hormone_XCTest_previously_passed": 39,
-    "integrated_portable_XCTest_previously_passed": 1009,
-    "newly_verified_requirement_count": 0,
-    "implementation_closures": 8
+    "focused_actual_domain_XCTest": 17,
+    "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+    "workflow": 71,
+    "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+    "syntax_files": 320,
+    "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
   },
-  "next_exact_implementation_action": "Continue the remaining unified symptom observation/interpretation requirements and other functional gaps using actual production sources and existing executed evidence. Do not repeat full-suite execution for this metadata-only closure.",
-  "updated_at": "2026-11-07T11:54:30.883521+00:00",
+  "next_exact_implementation_action": "Reconcile the exact reviewed-method blocker for remaining Adjusted Rhythm requirements without treating absent external methodology as implemented; proceed immediately to independent unfinished requirements after recording source-specific dependencies.",
+  "updated_at": "2026-11-07T12:02:04.917307+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -529,17 +536,27 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "evidence": "Per-entry mappings to actual previously passed production-domain tests; no new test execution claimed"
+      "focused_actual_domain_XCTest": 17,
+      "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+      "workflow": 71,
+      "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+      "syntax_files": 320,
+      "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
     },
     "not_run": [
-      "Apple implementation acceptance remains individually listed for every closure"
+      "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+      "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+      "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
     ],
     "remaining": [
-      "Complete each per-entry Apple acceptance; broader clinical/library/rhythm/source dependencies are not closed by storage/validation implementation."
+      "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+      "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+      "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+      "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
     ]
   },
-  "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",
-  "last_recorded_batch_part": 5,
+  "current_checklist_section": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
+  "last_recorded_batch_part": 6,
   "last_supplemental_requirements": [],
   "implemented_requirements": [
     9,
@@ -605,7 +622,12 @@
     249,
     250,
     251,
-    253
+    253,
+    305,
+    306,
+    307,
+    308,
+    309
   ],
   "implementation_awaiting_external": [
     9,
@@ -669,7 +691,12 @@
     249,
     250,
     251,
-    253
+    253,
+    305,
+    306,
+    307,
+    308,
+    309
   ],
   "controlling_execution_directive": {
     "path": "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",

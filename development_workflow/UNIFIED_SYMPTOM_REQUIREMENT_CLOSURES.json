@@ -1,0 +1,129 @@
+{
+  "source_receipt": {
+    "file": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+    "line": 1402,
+    "raw_line_sha256": "2f9addf06d5181b6e951887737891574ba6e1e0c278d527ea5f83d92a7f2f5b8",
+    "instruction": "15C \u2014 Symptom tab. Symptom trend content is shown for the selected symptom. - CHANGE TO : Use one unified symptom-pattern graph rather than a separate graph for each symptom. Plot the user\u2019s logged symptoms together across their cycle timeline so they can see when each symptom tends to occur and identify recurring patterns across cycles. Only include symptoms the user has actually logged, clearly distinguish recorded observations from any calculated pattern or estimate, and never fabricate missing symptom data. Allow individual symptoms to be toggled on/off within the same graph when the user wants a less crowded view, rather than navigating to separate symptom-specific graphs. The visualization must remain readable when many symptoms have been logged and should summarize patterns only when sufficient repeated data exists; with limited data, show the observations without implying that a reliable pattern has been established."
+  },
+  "entries": [
+    {
+      "conditions": [
+        "Only one live symptom graph is rendered in symptomsTab; per-symptom navigation/plots are replaced by rowed occurrences on one actual-date domain.",
+        "Actual selectedSymptoms toggles filter that same timeline and have a hidden-selection/show-all recovery state; summary text remains separate."
+      ],
+      "tests": [
+        "testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters",
+        "testSelectionFiltersOnlyExplicitlyHiddenSymptoms",
+        "testEmptySelectionDoesNotInventDomainOrPoints"
+      ],
+      "requirement": 305,
+      "original_description": "Replace separate symptom-specific trend presentations with the requested unified symptom-pattern graph.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining": [
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ]
+    },
+    {
+      "conditions": [
+        "The engine uses selected symptom IDs from real, nondeleted daily logs; actual calendar dates become timeline points without inventing intensities or unlogged-day values.",
+        "Unknown cycle assignment does not delete a recorded observation; invalid dates are retained in the accessible list and counted as unplottable, never replaced.",
+        "Canvas receives the actual timeline point/day offset, with full first/last dots inside drawing bounds and real civil-day spacing."
+      ],
+      "tests": [
+        "testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters",
+        "testObservationWithoutCycleAssignmentIsRetained",
+        "testUnloggedDaysAreNeverSynthesizedAsAbsentSymptoms",
+        "testInvalidDateIsCountedWithoutBeingReplaced",
+        "testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations"
+      ],
+      "requirement": 306,
+      "original_description": "Ensure the graph presents recorded symptom information accurately.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining": [
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ]
+    },
+    {
+      "conditions": [
+        "The source explicitly identifies dots as recorded observations and calculated timing summaries as descriptions rather than diagnoses/predictions.",
+        "Corrected occurrence detail to identify cycle day as calculated from recorded cycle starts, matching actual cycleAssignment production provenance.",
+        "Missing cycle day remains explicitly unavailable; supported/developing/unsupported/insufficient summaries are separate from the underlying observation list."
+      ],
+      "tests": [
+        "testObservationWithoutCycleAssignmentIsRetained",
+        "testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters",
+        "testSupportedPatternRequiresThreeCyclesAndTwoThirds",
+        "testCurrentIncompleteCycleDoesNotEnterPatternEligibility"
+      ],
+      "requirement": 307,
+      "original_description": "Preserve distinctions between actual observations and interpretations.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining": [
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ]
+    },
+    {
+      "conditions": [
+        "Unlogged days are never synthesized as absent symptom observations; only stored selections become points.",
+        "Pattern summary eligibility excludes incomplete cycles, requires three completed cycles and repeated supported timing, and has distinct insufficient/developing/unsupported copy.",
+        "Limited data still displays recorded observations; no diagnosis, fertility/ovulation prediction or reliable pattern is invented."
+      ],
+      "tests": [
+        "testUnloggedDaysAreNeverSynthesizedAsAbsentSymptoms",
+        "testTwoCyclesCannotBecomeSupportedPattern",
+        "testCurrentIncompleteCycleDoesNotEnterPatternEligibility",
+        "testSupportedPatternRequiresThreeCyclesAndTwoThirds"
+      ],
+      "requirement": 308,
+      "original_description": "Do not manufacture trends when insufficient data exists.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining": [
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ]
+    },
+    {
+      "conditions": [
+        "Chart viewport remains bounded with horizontal/vertical scrolling for long histories and many rows; original paper art/type roles retained.",
+        "Each actual HStack row expands to its wrapped label's height; label width and minimum row height scale with Dynamic Type. Dots remain centered in the same row and no fixed-height label positioning survives.",
+        "Axis and point direction agree in RTL. Actual Gregorian civil-day projection is tested across DST, both directions and single-date centering.",
+        "A combined graph summary reports real counts/invalid dates; the separate observations disclosure exposes each symptom/date and calculated/unavailable cycle day without color-only interpretation."
+      ],
+      "tests": [
+        "testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
+        "testDSTUsesCivilDaySpacingRatherThanElapsedHours",
+        "testSameCycleDayInDifferentMonthsIsNotOverlaid",
+        "testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
+      ],
+      "requirement": 309,
+      "original_description": "Make the graph responsive and accessible.",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining": [
+        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+      ]
+    }
+  ],
+  "executed": {
+    "focused_actual_domain_XCTest": 17,
+    "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+    "workflow": 71,
+    "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+    "syntax_files": 320,
+    "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+  },
+  "limits": "Individual implementation closures with Apple/external acceptance pending. No ID receives VERIFIED/TEST_PASSED and no whole478 reconciliation is inferred."
+}

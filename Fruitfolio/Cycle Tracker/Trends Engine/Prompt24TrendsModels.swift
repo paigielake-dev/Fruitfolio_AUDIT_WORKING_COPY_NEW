@@ -180,6 +180,14 @@ nonisolated struct Prompt24SymptomTimeline: Equatable, Sendable {
     let spanDays: Int
     let omittedInvalidDateCount: Int
 
+    /// Match the timeline's chronological axis, including mirrored RTL labels.
+    /// This changes display position only, never dates or symptom observations.
+    func horizontalFraction(for point: Point, rightToLeft: Bool) -> Double {
+        guard spanDays > 0 else { return 0.5 }
+        let fraction = Double(point.dayOffset) / Double(spanDays)
+        return rightToLeft ? 1 - fraction : fraction
+    }
+
     init(occurrences: [Prompt24SymptomOccurrence], selected: Set<Prompt20SymptomID>, calendar: Calendar = .current) {
         let calendar = FruitfolioCanonicalCalendar.gregorian(timeZone: calendar.timeZone)
         symptoms = selected.sorted { $0.displayName < $1.displayName }

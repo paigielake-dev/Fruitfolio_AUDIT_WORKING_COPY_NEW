@@ -327,7 +327,7 @@ struct Prompt24TrendsView: View {
                             FruitfolioFixedText(source: "date unavailable; this observation cannot be plotted", serious: true)
                         }
                         if let day = occurrence.cycleDay {
-                            FruitfolioFixedText(source: "recorded cycle day \(day)", protectedLiterals: [String(day)], serious: true)
+                            FruitfolioFixedText(source: "calculated cycle day \(day), based on recorded cycle starts", protectedLiterals: [String(day)], serious: true)
                         } else {
                             FruitfolioFixedText(source: "cycle day unavailable; observation retained", serious: true)
                         }
@@ -980,50 +980,74 @@ private struct Prompt24UnifiedSymptomChart: View {
     let occurrences: [Prompt24SymptomOccurrence]
     let selectedSymptoms: Set<Prompt20SymptomID>
     let calendar: Calendar
+    @Environment(\.layoutDirection) private var layoutDirection
     @ScaledMetric(relativeTo: .body) private var rowHeight: CGFloat = 44
+    @ScaledMetric(relativeTo: .body) private var labelWidth: CGFloat = 130
 
     var body: some View {
         let timeline = Prompt24SymptomTimeline(occurrences: occurrences, selected: selectedSymptoms, calendar: calendar)
+        let pointsByRow = Dictionary(grouping: timeline.points, by: \.row)
         GeometryReader { viewport in
-            // Keep the viewport bounded while allowing large text and long histories to scroll.
+            let leadingInset = labelWidth + 20
+            let dotRadius: CGFloat = 4.2
+            // Large labels retain their type size and expand the scrollable
+            // content. At standard size these are the original 150/24 insets.
             let plotWidth = max(viewport.size.width, Prompt24LongTermLayout.minimumPlotWidth,
-                                CGFloat(min(timeline.spanDays, 730)) * 18 + 180)
-            let plotHeight = max(viewport.size.height, CGFloat(max(timeline.symptoms.count, 1)) * rowHeight + 80)
+                                CGFloat(min(timeline.spanDays, 730)) * 18 + leadingInset + 30)
+            let minimumRowHeight = max(rowHeight,
+                max(viewport.size.height - 80, 0) / CGFloat(max(timeline.symptoms.count, 1)))
             ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                ZStack {
-                    Prompt24GraphPaper()
-                    Canvas { context, size in
-                        let frame = CGRect(x: 150, y: 24, width: max(size.width - 174, 1), height: max(size.height - 80, 1))
-                        for point in timeline.points {
-                            let fraction = timeline.spanDays > 0 ? CGFloat(point.dayOffset) / CGFloat(timeline.spanDays) : 0.5
-                            let x = frame.minX + fraction * frame.width
-                            let y = frame.minY + (CGFloat(point.row) + 0.5) / CGFloat(max(timeline.symptoms.count, 1)) * frame.height
-                            context.fill(Path(ellipseIn: CGRect(x: x - 4.2, y: y - 4.2, width: 8.4, height: 8.4)),
-                                         with: .color(Prompt24Palette.burgundy.opacity(0.80)))
-                        }
-                    }
+                VStack(spacing: 0) {
                     ForEach(Array(timeline.symptoms.enumerated()), id: \.element) { row, symptom in
-                        FruitfolioFixedText(source: symptom.displayName, font: .body, color: Prompt24Palette.burgundy, serious: true)
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 130, alignment: .trailing)
-                            .position(x: 73, y: 24 + (CGFloat(row) + 0.5) / CGFloat(max(timeline.symptoms.count, 1)) * max(plotHeight - 80, 1))
+                        HStack(alignment: .center, spacing: 12 - dotRadius) {
+                            FruitfolioFixedText(source: symptom.displayName, font: .body,
+                                color: Prompt24Palette.burgundy, serious: true)
+                                .multilineTextAlignment(.trailing)
+                                .frame(width: labelWidth, alignment: .trailing)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.leading, 8)
+                            Canvas { context, size in
+                                for point in pointsByRow[row] ?? [] {
+                                    let fraction = CGFloat(timeline.horizontalFraction(for: point,
+                                        rightToLeft: layoutDirection == .rightToLeft))
+                                    // Include the complete first/last dot inside
+                                    // this row's drawing bounds. Insets preserve
+                                    // the original global 150/24 point centers.
+                                    let x = dotRadius + fraction * max(size.width - 2 * dotRadius, 0)
+                                    context.fill(Path(ellipseIn: CGRect(x: x - dotRadius,
+                                        y: size.height / 2 - dotRadius,
+                                        width: 2 * dotRadius, height: 2 * dotRadius)),
+                                        with: .color(Prompt24Palette.burgundy.opacity(0.80)))
+                                }
+                            }
+                            .frame(height: minimumRowHeight)
+                            .padding(.trailing, 24 - dotRadius)
+                        }
+                        // A translated label can grow beyond this minimum;
+                        // its dots stay centered in that same actual row.
+                        .frame(minHeight: minimumRowHeight)
                     }
-                    VStack {
-                        Spacer()
+                    VStack(spacing: 4) {
                         HStack {
                             if let first = timeline.firstDate { Text(first, format: .dateTime.year().month().day()) }
                             Spacer()
-                            if timeline.spanDays > 0, let last = timeline.lastDate { Text(last, format: .dateTime.year().month().day()) }
+                            if timeline.spanDays > 0, let last = timeline.lastDate {
+                                Text(last, format: .dateTime.year().month().day())
+                            }
                         }
                         .font(.caption)
-                        .padding(.leading, 150)
+                        .padding(.leading, leadingInset)
                         .padding(.trailing, 24)
-                        FruitfolioFixedText(source: "recorded dates →", protectedLiterals: ["→"], font: .caption, color: Prompt24Palette.burgundy)
+                        FruitfolioFixedText(source: layoutDirection == .rightToLeft ? "recorded dates ←" : "recorded dates →",
+                            protectedLiterals: ["←", "→"], font: .caption, color: Prompt24Palette.burgundy)
                     }
                     .foregroundStyle(Prompt24Palette.burgundy)
                     .padding(.bottom, 4)
+                    .frame(minHeight: 56)
                 }
-                .frame(width: plotWidth, height: plotHeight)
+                .padding(.top, 24)
+                .frame(width: plotWidth)
+                .background { Prompt24GraphPaper() }
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel("Symptom timeline. \(timeline.points.count) recorded observations. Review the recorded observations list below for every date and symptom. Missing cycle days are retained.")
                 .accessibilityValue(timeline.omittedInvalidDateCount > 0 ? "\(timeline.omittedInvalidDateCount) observations have invalid dates and cannot be plotted." : "")
@@ -1280,7 +1304,7 @@ private final class Prompt24SymptomGraphFixture: ObservableObject {
             for day in [7, 9] {
                 let date = calendar.date(from: DateComponents(year: 2026, month: 3, day: day, hour: 12))!
                 var draft = Prompt20DailyLogDraft()
-                draft.selectedSymptoms = [.cramps, .fatigue]
+                draft.selectedSymptoms = [.cramps, .fatigue, .breastTenderness]
                 _ = try await repository.save(ownerID: owner, date: .init(date: date, calendar: calendar), draft: draft, now: date, requestID: UUID())
             }
             baseline = try await repository.allActiveLogs(ownerID: owner).sorted { $0.id.uuidString < $1.id.uuidString }
@@ -1318,7 +1342,7 @@ struct Prompt24SymptomGraphRegressionHarness: View {
         .environmentObject(fixture.settings)
         .environmentObject(fixture.motion)
         .environment(\.locale, Locale(identifier: fixture.settings.language.rawValue))
-        .environment(\.layoutDirection, .leftToRight)
+        .environment(\.layoutDirection, fixture.settings.language.isRightToLeft ? .rightToLeft : .leftToRight)
         .task { await fixture.prepare() }
     }
 }

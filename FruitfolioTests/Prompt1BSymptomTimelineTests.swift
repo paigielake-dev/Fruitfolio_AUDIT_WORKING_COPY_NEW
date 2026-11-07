@@ -3,6 +3,18 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BSymptomTimelineTests: XCTestCase {
+    func testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations() {
+        let originals = [occurrence(date(3, 7)), occurrence(date(3, 9)), occurrence(date(3, 11))]
+        let timeline = Prompt24SymptomTimeline(occurrences: originals, selected: [.cramps], calendar: calendar())
+        XCTAssertEqual(timeline.points.map(\.dayOffset), [0, 2, 4], "Use civil days across DST")
+        XCTAssertEqual(timeline.points.map { timeline.horizontalFraction(for: $0, rightToLeft: false) }, [0, 0.5, 1])
+        XCTAssertEqual(timeline.points.map { timeline.horizontalFraction(for: $0, rightToLeft: true) }, [1, 0.5, 0])
+        XCTAssertEqual(timeline.points.map(\.occurrence), originals)
+        let one = Prompt24SymptomTimeline(occurrences: [originals[0]], selected: [.cramps], calendar: calendar())
+        XCTAssertEqual(one.horizontalFraction(for: one.points[0], rightToLeft: false), 0.5)
+        XCTAssertEqual(one.horizontalFraction(for: one.points[0], rightToLeft: true), 0.5)
+    }
+
     @MainActor
     func testActualRepositoryAndTrendsLoaderPreserveObservationsAcrossTimelineFilters() async throws {
         let calendar = calendar()
