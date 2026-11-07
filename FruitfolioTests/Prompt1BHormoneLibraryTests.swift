@@ -14,6 +14,13 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             let article = try await provider.article(for: hormone)
             XCTAssertEqual(article.hormone, hormone)
             XCTAssertEqual(article.contentVersion, package.contentVersion)
+            if hormone == .progesterone {
+                let functions = try XCTUnwrap(article.excerpts.first { $0.section == .functions })
+                XCTAssertTrue(functions.originalText.contains("progesterone is made after ovulation by the corpus luteum"))
+                XCTAssertTrue(functions.originalText.contains("helps prepare and support the uterine lining"))
+                XCTAssertTrue(functions.originalText.contains("progesterone is not a pregnancy guarantee"))
+            }
+
             // Retain exact actual-corpus coverage for requirement257 / SPEC4.9.7.
             // A matched excerpt is retrieval evidence, never clinical completeness.
             let coverage = article.excerpts.map { $0.section.rawValue + "=" + $0.noteID }.joined(separator: ";")

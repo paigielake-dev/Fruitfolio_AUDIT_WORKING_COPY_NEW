@@ -130,6 +130,7 @@ actor FruitfolioHormoneLibraryProvider {
             if section == .functions {
                 if hormone == .lh { sectionTerms += " surge" }
                 if hormone == .estradiol { sectionTerms += " support follicular development" }
+                if hormone == .progesterone { sectionTerms += " corpus luteum endometrium uterine lining" }
             }
             let terms = FruitfolioQueryNormalizer.tokens(sectionTerms)
             let question = aliases + " " + sectionTerms

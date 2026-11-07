@@ -3752,3 +3752,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"individually_reconciled_implementation": 95, "verification_promotion": false}.
 - Next action: Continue independent remaining source requirements, with full478+36+unnumbered reconciliation still unfinished and acceptance constraints explicit.
 - Commit: containing commit for batch Individual-tour-95-implementation-reconciliation.
+
+## Progesterone-primary-function-source-selection
+
+- Parent checkpoint: b5ba4f2d535d8c2694712d06e70bbbc9a3d24d95.
+- Source-order requirements: [256, 257, 258].
+- Separate founder additions: ['SPEC-4.9.7'].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryProvider.swift, development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json.
+- Fix demonstrated progesterone biological-functions mismatch by including actual corpus role terms corpus luteum/endometrium/uterine lining in existing scoped retrieval. Actual selected complete paragraph now explains hormone production and lining/early-pregnancy role, retaining original no-pregnancy-guarantee qualification and all citations. Extend actual corpus regression with all three literal assertions, plus unchanged eligibility/approval/full paragraph/citation checks across seven hormones. Document unresolved testosterone/prolactin content quality instead of treating lexical coverage as full educational content. No facts, resources or measurement records rewritten; no whole requirement promotion.
+- Tests added/updated: FruitfolioTests/Prompt1BHormoneLibraryTests.swift.
+- Verification: {"focused_XCTest_passed": 7, "swift_syntax_files": 319, "lexical_section_buckets": 32}.
+- Next action: Continue resolving actual Hormone Library content completeness and scientific source-quality gaps, plus independent requirements across all parts; do not promote available testosterone definition without scientific review.
+- Commit: containing commit for batch Progesterone-primary-function-source-selection.

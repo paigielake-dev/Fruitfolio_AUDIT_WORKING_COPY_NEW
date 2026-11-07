@@ -151,7 +151,8 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
-        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json"
+        "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json",
+        "development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json"
       ],
       "related_tests": [
         "Prompt1BHormoneLibraryTests",
@@ -165,41 +166,35 @@
       "evidence": [
         "Batch Hormone-Library-real-approved-paragraphs-and-source-trails connects seven hormones to complete eligible corpus paragraphs and own citation metadata. Coverage is partial retrieved excerpts; source/clinical completeness review remains open.",
         "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed.",
-        "Addressed actual approved-source relevance failures for original257 andSPEC4.9.7:AMH limitation wording now finds the existing full paragraph containing both no-IVF-guarantee and no-ovulation-confirmation cautions; LH function query recognizes the actual surge/follicular-rupture evidence. Specific estradiol/E2 evidence outranks general estrogen class material while class context remains available. Source review caught a further problem: hormone-name preference still chose an ovarian-testing list as functions; a stronger actual biological-role assertion failed, then the query was corrected to the approved follicular-development role and all7focused tests passed. Full original text/citation checks remain. Historical coverage artifact retained; followup32of35lexical buckets/3empty recorded without treating them as clinical completeness or478-item progress.71workflow/315syntax-only passed. No research/data/artwork rewritten and no whole requirement promoted."
+        "Addressed actual approved-source relevance failures for original257 andSPEC4.9.7:AMH limitation wording now finds the existing full paragraph containing both no-IVF-guarantee and no-ovulation-confirmation cautions; LH function query recognizes the actual surge/follicular-rupture evidence. Specific estradiol/E2 evidence outranks general estrogen class material while class context remains available. Source review caught a further problem: hormone-name preference still chose an ovarian-testing list as functions; a stronger actual biological-role assertion failed, then the query was corrected to the approved follicular-development role and all7focused tests passed. Full original text/citation checks remain. Historical coverage artifact retained; followup32of35lexical buckets/3empty recorded without treating them as clinical completeness or478-item progress.71workflow/315syntax-only passed. No research/data/artwork rewritten and no whole requirement promoted.",
+        "Fix demonstrated progesterone biological-functions mismatch by including actual corpus role terms corpus luteum/endometrium/uterine lining in existing scoped retrieval. Actual selected complete paragraph now explains hormone production and lining/early-pregnancy role, retaining original no-pregnancy-guarantee qualification and all citations. Extend actual corpus regression with all three literal assertions, plus unchanged eligibility/approval/full paragraph/citation checks across seven hormones. Document unresolved testosterone/prolactin content quality instead of treating lexical coverage as full educational content. No facts, resources or measurement records rewritten; no whole requirement promotion."
       ],
       "latest_batch_verification": {
-        "batch": "Hormone-library-source-grounded-role-and-limitations",
+        "batch": "Progesterone-primary-function-source-selection",
         "executed": {
-          "portable_focused_XCTest": 7,
-          "failures": 0,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "source_reviewed_examples": [
-            "AMH measurement limitations",
-            "LH surge biological function",
-            "Specific estradiol/E2 follicular-development role"
-          ]
+          "focused_XCTest_passed": 7,
+          "swift_syntax_files": 319,
+          "scope": "Actual selected original paragraphs and owned citations, not seven-aspect clinical acceptance"
         },
         "not_run": [
-          "Native followup rerun;14focused native tests passed at parent ea93b24",
-          "Apple SDK build/UI/VoiceOver/native hormone selection",
-          "Clinical completeness of7founder aspects for each hormone",
-          "Official MADLAD inference and translation-quality acceptance"
+          "Apple educational rendering, native speaker/clinical review and official MADLAD inference"
         ],
         "remaining": [
-          "Testosterone measurement limitations/medical guidance and prolactin measurement limitations remain empty in lexical retrieval; review specific approved source adequacy before assigning a genuine external-resource blocker",
-          "Review every founder aspect individually;32matched buckets are not complete or clinically verified content",
-          "Complete Apple and independent clinical/source acceptance; source/quoted-statement tests do not certify all medical content"
+          "Complete individual seven-hormone/seven-aspect content review; lexical coverage counts do not establish clinical completeness.",
+          "Testosterone functions currently supplies only a mood/cognition sentence; another available definition claims testosterone is the primary sex steroid in both men and women and needs scientific review rather than promotion into general educational guidance. Original source preserved; this change does not select that alternative.",
+          "Prolactin function appears in a broad hormonal-imbalance paragraph; standalone fuller definition and timing/measurement limitations remain incomplete.",
+          "Apple UI, source/clinical review and official MADLAD translation acceptance remain pending."
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Testosterone measurement limitations/medical guidance and prolactin measurement limitations remain empty in lexical retrieval; review specific approved source adequacy before assigning a genuine external-resource blocker",
-        "Review every founder aspect individually;32matched buckets are not complete or clinically verified content",
-        "Complete Apple and independent clinical/source acceptance; source/quoted-statement tests do not certify all medical content"
+        "Complete individual seven-hormone/seven-aspect content review; lexical coverage counts do not establish clinical completeness.",
+        "Testosterone functions currently supplies only a mood/cognition sentence; another available definition claims testosterone is the primary sex steroid in both men and women and needs scientific review rather than promotion into general educational guidance. Original source preserved; this change does not select that alternative.",
+        "Prolactin function appears in a broad hormonal-imbalance paragraph; standalone fuller definition and timing/measurement limitations remain incomplete.",
+        "Apple UI, source/clinical review and official MADLAD translation acceptance remain pending."
       ],
-      "commit_reference": "batch:Hormone-library-source-grounded-role-and-limitations (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T08:53:41.822851+00:00",
+      "commit_reference": "batch:Progesterone-primary-function-source-selection (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T09:46:53.009196+00:00",
       "batch_evidence": [
         {
           "batch": "Hormone-library-complete-scoped-source-retrieval",
@@ -275,6 +270,34 @@
             ]
           },
           "parent_checkpoint": "ea93b243366fe1a59e73e8a53e2b4cf67e3c4f35"
+        },
+        {
+          "batch": "Progesterone-primary-function-source-selection",
+          "implementation_evidence": "Fix demonstrated progesterone biological-functions mismatch by including actual corpus role terms corpus luteum/endometrium/uterine lining in existing scoped retrieval. Actual selected complete paragraph now explains hormone production and lining/early-pregnancy role, retaining original no-pregnancy-guarantee qualification and all citations. Extend actual corpus regression with all three literal assertions, plus unchanged eligibility/approval/full paragraph/citation checks across seven hormones. Document unresolved testosterone/prolactin content quality instead of treating lexical coverage as full educational content. No facts, resources or measurement records rewritten; no whole requirement promotion.",
+          "files": [
+            "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+            "development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BHormoneLibraryTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "focused_XCTest_passed": 7,
+              "swift_syntax_files": 319,
+              "scope": "Actual selected original paragraphs and owned citations, not seven-aspect clinical acceptance"
+            },
+            "not_run": [
+              "Apple educational rendering, native speaker/clinical review and official MADLAD inference"
+            ],
+            "remaining": [
+              "Complete individual seven-hormone/seven-aspect content review; lexical coverage counts do not establish clinical completeness.",
+              "Testosterone functions currently supplies only a mood/cognition sentence; another available definition claims testosterone is the primary sex steroid in both men and women and needs scientific review rather than promotion into general educational guidance. Original source preserved; this change does not select that alternative.",
+              "Prolactin function appears in a broad hormonal-imbalance paragraph; standalone fuller definition and timing/measurement limitations remain incomplete.",
+              "Apple UI, source/clinical review and official MADLAD translation acceptance remain pending."
+            ]
+          },
+          "parent_checkpoint": "b5ba4f2d535d8c2694712d06e70bbbc9a3d24d95"
         }
       ]
     },
