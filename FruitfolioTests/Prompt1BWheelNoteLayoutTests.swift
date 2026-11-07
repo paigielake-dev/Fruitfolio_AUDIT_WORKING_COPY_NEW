@@ -22,3 +22,38 @@ final class Prompt1BWheelNoteLayoutTests: XCTestCase {
         }
     }
 }
+
+extension Prompt1BWheelNoteLayoutTests {
+    func testMeasuredAnnotationLeadersReachActualIntervalBoundaryWithoutCrossingWheelInterior() throws {
+        for side in [90.0, 320, 430] {
+            let wheel = CGRect(x: 23, y: 180, width: side, height: side)
+            let radius = min(side * 0.66, 286) / 2
+            for above in [false, true] {
+                let callout = CGRect(x: 25, y: above ? 5 : wheel.maxY + 12, width: side / 3, height: 160)
+                for fraction in stride(from: 0.0, through: 1, by: 0.025) {
+                    let arrow = try XCTUnwrap(Prompt18WheelAnnotationGeometry.arrow(callout: callout,
+                        wheel: wheel, fraction: fraction, above: above))
+                    XCTAssertEqual(hypot(arrow.tip.x - wheel.midX, arrow.tip.y - wheel.midY), radius, accuracy: 0.000001)
+                    XCTAssertEqual(arrow.secondBend.y, arrow.tip.y)
+                    XCTAssertGreaterThan(abs(arrow.secondBend.x - wheel.midX), radius)
+                    XCTAssertEqual(arrow.firstBend.x, arrow.secondBend.x)
+                    XCTAssertEqual(arrow.tail.x, callout.midX)
+                    XCTAssertTrue(above ? arrow.tail.y > callout.maxY : arrow.tail.y < callout.minY)
+                    for point in [arrow.tail, arrow.firstBend, arrow.secondBend, arrow.tip, arrow.left, arrow.right] {
+                        XCTAssertTrue(point.x.isFinite && point.y.isFinite)
+                    }
+                }
+            }
+        }
+    }
+
+    func testUnavailableAnnotationGeometryCannotInventAnArrow() {
+        let valid = CGRect(x: 0, y: 0, width: 320, height: 320)
+        for fraction in [Double.nan, .infinity, -0.1, 1.1] {
+            XCTAssertNil(Prompt18WheelAnnotationGeometry.arrow(callout: valid, wheel: valid,
+                fraction: fraction, above: true))
+        }
+        XCTAssertNil(Prompt18WheelAnnotationGeometry.arrow(callout: .zero, wheel: valid, fraction: 0.5, above: true))
+        XCTAssertNil(Prompt18WheelAnnotationGeometry.arrow(callout: valid, wheel: .zero, fraction: 0.5, above: true))
+    }
+}

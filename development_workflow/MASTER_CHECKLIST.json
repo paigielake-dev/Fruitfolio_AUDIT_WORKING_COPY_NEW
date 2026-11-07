@@ -4315,7 +4315,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Tools/report_header_artwork_metrics.swift"
+        "Tools/report_header_artwork_metrics.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4325,15 +4328,49 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "HeaderArtworkMetricsTests actual compiled metadata/PNG comparison",
-        "WorkflowIntegrityTests.test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests.test_header_art_dimensions_match_all_bundled_assets",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Measured-header-artwork-painted-footprints-and-production-palette-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Measured all six unchanged header PNGs with Pillow13.0.0 at alpha>12/255 and recorded exact dimensions, painted bounds and SHA256 in RUN_LOGS/Header-artwork-alpha-measurements.json. Existing approved contact/settings/FAQ asset selections, anchor sides, role size ranges and original image proportions are preserved; missing canonical FAQ art is not substituted. The actual production palette data/composition moved into the existing Foundation decorative geometry file so it can be executed by portable regressions. Header placement now passes each measured visibleAlphaBounds and reserves painted rectangles rather than transparent PNG canvases for subsequent decorations. Shared geometry exposes both canvas and painted frames; real headers render the resulting production placements. Three Swift regressions cover approved selections/prominent nominal art, actual all-palette compositions across constrained sizes, preserved canvas/painted ratios/safe bounds/role minima/noncollision, and overlapping transparent canvases with separated painted artwork. A new independently compiled production metadata report is compared with all seven palette references/six actual PNGs, alpha boxes and preserved hashes by a40th workflow test; the existing PNG-dimensions check follows the moved real model. Initial report execution exposed Linux JSONSerialization not accepting CGFloat directly; output now uses Double. An existing static dimension test initially referenced the old file and now references the real moved production model. Final578 portable XCTest+21 SwiftTesting and584 actual native-linked XCTest+21 SwiftTesting passed;40 workflow tests including9 SwiftSyntax cases and the new real Swift/PNG comparison,279 syntax parses and target build-file validation pass. No PNGs were edited. Device artwork appearance, faint-alpha edges, header pixels/DT/keyboard behavior and screenshots remain NOT_RUN; these measurements are not visual acceptance."
+        "Measured all six unchanged header PNGs with Pillow13.0.0 at alpha>12/255 and recorded exact dimensions, painted bounds and SHA256 in RUN_LOGS/Header-artwork-alpha-measurements.json. Existing approved contact/settings/FAQ asset selections, anchor sides, role size ranges and original image proportions are preserved; missing canonical FAQ art is not substituted. The actual production palette data/composition moved into the existing Foundation decorative geometry file so it can be executed by portable regressions. Header placement now passes each measured visibleAlphaBounds and reserves painted rectangles rather than transparent PNG canvases for subsequent decorations. Shared geometry exposes both canvas and painted frames; real headers render the resulting production placements. Three Swift regressions cover approved selections/prominent nominal art, actual all-palette compositions across constrained sizes, preserved canvas/painted ratios/safe bounds/role minima/noncollision, and overlapping transparent canvases with separated painted artwork. A new independently compiled production metadata report is compared with all seven palette references/six actual PNGs, alpha boxes and preserved hashes by a40th workflow test; the existing PNG-dimensions check follows the moved real model. Initial report execution exposed Linux JSONSerialization not accepting CGFloat directly; output now uses Double. An existing static dimension test initially referenced the old file and now references the real moved production model. Final578 portable XCTest+21 SwiftTesting and584 actual native-linked XCTest+21 SwiftTesting passed;40 workflow tests including9 SwiftSyntax cases and the new real Swift/PNG comparison,279 syntax parses and target build-file validation pass. No PNGs were edited. Device artwork appearance, faint-alpha edges, header pixels/DT/keyboard behavior and screenshots remain NOT_RUN; these measurements are not visual acceptance.",
+        "Remove wheel fixed name-only label positions; descriptions use intrinsic HStack rows and measured anchor bounds."
       ],
-      "last_updated": "2026-11-06T06:12:14.251034+00:00"
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
+      "latest_batch_verification": {
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+        "executed": {
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+          ]
+        },
+        "not_run": [
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+        ],
+        "remaining": [
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+      ]
     },
     {
       "sequence": 32,
@@ -4347,7 +4384,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Tools/report_header_artwork_metrics.swift"
+        "Tools/report_header_artwork_metrics.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4357,14 +4397,48 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "HeaderArtworkMetricsTests actual compiled metadata/PNG comparison",
-        "WorkflowIntegrityTests.test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests.test_header_art_dimensions_match_all_bundled_assets",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Measured-header-artwork-painted-footprints-and-production-palette-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Measured all six unchanged header PNGs with Pillow13.0.0 at alpha>12/255 and recorded exact dimensions, painted bounds and SHA256 in RUN_LOGS/Header-artwork-alpha-measurements.json. Existing approved contact/settings/FAQ asset selections, anchor sides, role size ranges and original image proportions are preserved; missing canonical FAQ art is not substituted. The actual production palette data/composition moved into the existing Foundation decorative geometry file so it can be executed by portable regressions. Header placement now passes each measured visibleAlphaBounds and reserves painted rectangles rather than transparent PNG canvases for subsequent decorations. Shared geometry exposes both canvas and painted frames; real headers render the resulting production placements. Three Swift regressions cover approved selections/prominent nominal art, actual all-palette compositions across constrained sizes, preserved canvas/painted ratios/safe bounds/role minima/noncollision, and overlapping transparent canvases with separated painted artwork. A new independently compiled production metadata report is compared with all seven palette references/six actual PNGs, alpha boxes and preserved hashes by a40th workflow test; the existing PNG-dimensions check follows the moved real model. Initial report execution exposed Linux JSONSerialization not accepting CGFloat directly; output now uses Double. An existing static dimension test initially referenced the old file and now references the real moved production model. Final578 portable XCTest+21 SwiftTesting and584 actual native-linked XCTest+21 SwiftTesting passed;40 workflow tests including9 SwiftSyntax cases and the new real Swift/PNG comparison,279 syntax parses and target build-file validation pass. No PNGs were edited. Device artwork appearance, faint-alpha edges, header pixels/DT/keyboard behavior and screenshots remain NOT_RUN; these measurements are not visual acceptance."
+        "Measured all six unchanged header PNGs with Pillow13.0.0 at alpha>12/255 and recorded exact dimensions, painted bounds and SHA256 in RUN_LOGS/Header-artwork-alpha-measurements.json. Existing approved contact/settings/FAQ asset selections, anchor sides, role size ranges and original image proportions are preserved; missing canonical FAQ art is not substituted. The actual production palette data/composition moved into the existing Foundation decorative geometry file so it can be executed by portable regressions. Header placement now passes each measured visibleAlphaBounds and reserves painted rectangles rather than transparent PNG canvases for subsequent decorations. Shared geometry exposes both canvas and painted frames; real headers render the resulting production placements. Three Swift regressions cover approved selections/prominent nominal art, actual all-palette compositions across constrained sizes, preserved canvas/painted ratios/safe bounds/role minima/noncollision, and overlapping transparent canvases with separated painted artwork. A new independently compiled production metadata report is compared with all seven palette references/six actual PNGs, alpha boxes and preserved hashes by a40th workflow test; the existing PNG-dimensions check follows the moved real model. Initial report execution exposed Linux JSONSerialization not accepting CGFloat directly; output now uses Double. An existing static dimension test initially referenced the old file and now references the real moved production model. Final578 portable XCTest+21 SwiftTesting and584 actual native-linked XCTest+21 SwiftTesting passed;40 workflow tests including9 SwiftSyntax cases and the new real Swift/PNG comparison,279 syntax parses and target build-file validation pass. No PNGs were edited. Device artwork appearance, faint-alpha edges, header pixels/DT/keyboard behavior and screenshots remain NOT_RUN; these measurements are not visual acceptance.",
+        "Arrow tips reference actual drawing and description anchors in one parent coordinate system, with unchanged ring geometry shared by drawing and leaders."
       ],
-      "last_updated": "2026-11-06T06:12:14.251034+00:00"
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
+      "latest_batch_verification": {
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+        "executed": {
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+          ]
+        },
+        "not_run": [
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+        ],
+        "remaining": [
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+      ]
     },
     {
       "sequence": 33,
@@ -4656,7 +4730,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Tools/report_header_artwork_metrics.swift"
+        "Tools/report_header_artwork_metrics.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4666,14 +4743,48 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "HeaderArtworkMetricsTests actual compiled metadata/PNG comparison",
-        "WorkflowIntegrityTests.test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests.test_header_art_dimensions_match_all_bundled_assets",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Measured-header-artwork-painted-footprints-and-production-palette-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Measured all six unchanged header PNGs with Pillow13.0.0 at alpha>12/255 and recorded exact dimensions, painted bounds and SHA256 in RUN_LOGS/Header-artwork-alpha-measurements.json. Existing approved contact/settings/FAQ asset selections, anchor sides, role size ranges and original image proportions are preserved; missing canonical FAQ art is not substituted. The actual production palette data/composition moved into the existing Foundation decorative geometry file so it can be executed by portable regressions. Header placement now passes each measured visibleAlphaBounds and reserves painted rectangles rather than transparent PNG canvases for subsequent decorations. Shared geometry exposes both canvas and painted frames; real headers render the resulting production placements. Three Swift regressions cover approved selections/prominent nominal art, actual all-palette compositions across constrained sizes, preserved canvas/painted ratios/safe bounds/role minima/noncollision, and overlapping transparent canvases with separated painted artwork. A new independently compiled production metadata report is compared with all seven palette references/six actual PNGs, alpha boxes and preserved hashes by a40th workflow test; the existing PNG-dimensions check follows the moved real model. Initial report execution exposed Linux JSONSerialization not accepting CGFloat directly; output now uses Double. An existing static dimension test initially referenced the old file and now references the real moved production model. Final578 portable XCTest+21 SwiftTesting and584 actual native-linked XCTest+21 SwiftTesting passed;40 workflow tests including9 SwiftSyntax cases and the new real Swift/PNG comparison,279 syntax parses and target build-file validation pass. No PNGs were edited. Device artwork appearance, faint-alpha edges, header pixels/DT/keyboard behavior and screenshots remain NOT_RUN; these measurements are not visual acceptance."
+        "Measured all six unchanged header PNGs with Pillow13.0.0 at alpha>12/255 and recorded exact dimensions, painted bounds and SHA256 in RUN_LOGS/Header-artwork-alpha-measurements.json. Existing approved contact/settings/FAQ asset selections, anchor sides, role size ranges and original image proportions are preserved; missing canonical FAQ art is not substituted. The actual production palette data/composition moved into the existing Foundation decorative geometry file so it can be executed by portable regressions. Header placement now passes each measured visibleAlphaBounds and reserves painted rectangles rather than transparent PNG canvases for subsequent decorations. Shared geometry exposes both canvas and painted frames; real headers render the resulting production placements. Three Swift regressions cover approved selections/prominent nominal art, actual all-palette compositions across constrained sizes, preserved canvas/painted ratios/safe bounds/role minima/noncollision, and overlapping transparent canvases with separated painted artwork. A new independently compiled production metadata report is compared with all seven palette references/six actual PNGs, alpha boxes and preserved hashes by a40th workflow test; the existing PNG-dimensions check follows the moved real model. Initial report execution exposed Linux JSONSerialization not accepting CGFloat directly; output now uses Double. An existing static dimension test initially referenced the old file and now references the real moved production model. Final578 portable XCTest+21 SwiftTesting and584 actual native-linked XCTest+21 SwiftTesting passed;40 workflow tests including9 SwiftSyntax cases and the new real Swift/PNG comparison,279 syntax parses and target build-file validation pass. No PNGs were edited. Device artwork appearance, faint-alpha edges, header pixels/DT/keyboard behavior and screenshots remain NOT_RUN; these measurements are not visual acceptance.",
+        "Descriptions grow intrinsically, and anchors automatically resolve again after text/translation changes without font shrinking."
       ],
-      "last_updated": "2026-11-06T06:12:14.251034+00:00"
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
+      "latest_batch_verification": {
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+        "executed": {
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+          ]
+        },
+        "not_run": [
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+        ],
+        "remaining": [
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+      ]
     },
     {
       "sequence": 40,
@@ -37345,7 +37456,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37386,9 +37500,11 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Cycle-section-navigation-responsive-accessibility (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -37421,31 +37537,39 @@
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
-        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted."
+        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
+        "Wrapping shared text containers support variable-length selected-language display; actual native language/RTL acceptance remains pending."
       ],
-      "last_updated": "2026-11-07T08:06:22.608047+00:00",
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-section-navigation-responsive-accessibility",
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
         "executed": {
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+          ]
         },
         "not_run": [
-          "New actual UIHosting navigation sizing regression in both directions",
-          "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
         ],
         "remaining": [
-          "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-          "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-          "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-        "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-        "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
       ],
       "prior_batch_verifications": [
         {
@@ -37464,6 +37588,24 @@
             "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
             "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
             "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-section-navigation-responsive-accessibility",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual UIHosting navigation sizing regression in both directions",
+            "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          ],
+          "remaining": [
+            "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
+            "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
+            "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37821,7 +37963,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37848,9 +37993,11 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Cycle-section-navigation-responsive-accessibility (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -37865,31 +38012,39 @@
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
-        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted."
+        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
+        "Use intrinsic height and existing Today scroll parent; retain allocated annotation space while a note opens to avoid collapse."
       ],
-      "last_updated": "2026-11-07T08:06:22.608047+00:00",
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-section-navigation-responsive-accessibility",
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
         "executed": {
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+          ]
         },
         "not_run": [
-          "New actual UIHosting navigation sizing regression in both directions",
-          "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
         ],
         "remaining": [
-          "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-          "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-          "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-        "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-        "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
       ],
       "prior_batch_verifications": [
         {
@@ -37908,6 +38063,24 @@
             "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
             "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
             "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-section-navigation-responsive-accessibility",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual UIHosting navigation sizing regression in both directions",
+            "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          ],
+          "remaining": [
+            "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
+            "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
+            "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -38135,7 +38308,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38162,9 +38338,11 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "FruitfolioTests/Prompt18CycleWheelTests.swift",
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -38180,43 +38358,39 @@
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Preserve shared measured/scrolling popup text and relative font roles; large translated text/native layout acceptance remains pending."
+        "Preserve shared measured/scrolling popup text and relative font roles; large translated text/native layout acceptance remains pending.",
+        "Relative Chalkboard SE fonts grow with Dynamic Type; accessibility sizes use full-width description-bearing region controls."
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
         "executed": {
-          "workflow_checks": 75,
-          "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
-          ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
+          ]
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
       ],
       "prior_batch_verifications": [
         {
@@ -38253,6 +38427,35 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -42868,7 +43071,9 @@
         "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
-        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -43046,7 +43251,7 @@
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
         "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -43183,37 +43388,39 @@
         "Full1058 portable XCTest and21 Swift Testing passed; Apple and clinical acceptance remain unexecuted.",
         "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
         "326 Swift syntax parses and static sound audit passed; Apple UI regression updated but NOT_RUN.",
-        "15 actual production wheel/layout tests pass,327 syntax parses pass; Apple UI tests remain NOT_RUN."
+        "15 actual production wheel/layout tests pass,327 syntax parses pass; Apple UI tests remain NOT_RUN.",
+        "17 actual Foundation tests pass; new native rendered five-region regression is written and NOT_RUN."
       ],
-      "last_updated": "2026-11-07T15:52:05.101803+00:00",
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
         "executed": {
-          "focused_actual_wheel_and_layout_XCTest": 15,
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
           "swift_syntax_files": 327,
-          "syntax_errors": 0,
           "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_wheel_owned_note_tests.log",
-            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
-            "/tmp/fruitfolio_wheel_owned_note_sound.log"
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
           ]
         },
         "not_run": [
-          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
-          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
         ],
         "remaining": [
-          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
       ],
       "prior_batch_verifications": [
         {
@@ -43929,6 +44136,30 @@
           "remaining": [
             "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
             "Source guards are implementation evidence only; no full-requirement status promotion."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+          "executed": {
+            "focused_actual_wheel_and_layout_XCTest": 15,
+            "swift_syntax_files": 327,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_wheel_owned_note_tests.log",
+              "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+              "/tmp/fruitfolio_wheel_owned_note_sound.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+            "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+            "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+            "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -44160,7 +44391,9 @@
         "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
-        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+        "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -44333,7 +44566,7 @@
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
         "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
       ],
-      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Closed-cycle-wheel-measured-phase-arrows-and-descriptions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -44453,37 +44686,39 @@
         "Record per-aspect source coverage and precise remaining verification; preserve prior evidence and recoverable local checkpoint.",
         "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
         "Append exact source change/evidence and unexecuted native acceptance without replacing prior checklist history.",
-        "Retain exact executed behavioral evidence and unfinished founder annotation instruction separately; no status promotion."
+        "Retain exact executed behavioral evidence and unfinished founder annotation instruction separately; no status promotion.",
+        "Append exact original/source-unit evidence and distinguish source implementation from native visual verification."
       ],
-      "last_updated": "2026-11-07T15:52:05.101803+00:00",
+      "last_updated": "2026-11-07T16:01:41.066548+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+        "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
         "executed": {
-          "focused_actual_wheel_and_layout_XCTest": 15,
+          "focused_actual_wheel_and_geometry_XCTest": 17,
+          "failures": 0,
           "swift_syntax_files": 327,
-          "syntax_errors": 0,
           "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_wheel_owned_note_tests.log",
-            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
-            "/tmp/fruitfolio_wheel_owned_note_sound.log"
+            "/tmp/fruitfolio_wheel_phase_annotations_final_tests.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log",
+            "/tmp/fruitfolio_wheel_phase_annotations_sound.log"
           ]
         },
         "not_run": [
-          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
-          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+          "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+          "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
         ],
         "remaining": [
-          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+          "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+          "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
       ],
       "prior_batch_verifications": [
         {
@@ -45199,6 +45434,30 @@
           "remaining": [
             "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
             "Source guards are implementation evidence only; no full-requirement status promotion."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+          "executed": {
+            "focused_actual_wheel_and_layout_XCTest": 15,
+            "swift_syntax_files": 327,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_wheel_owned_note_tests.log",
+              "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+              "/tmp/fruitfolio_wheel_owned_note_sound.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+            "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+            "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+            "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

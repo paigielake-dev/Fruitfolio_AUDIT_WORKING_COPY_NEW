@@ -3305,6 +3305,25 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["12.50 ng/mL"].exists, "Original laboratory fields remain verbatim")
     }
 
+    func testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioWheelQA", "-fruitfolioWheelAnnotationsQA",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryXXXL"]
+        app.launch()
+        for kind in ["menstruation", "follicular", "estimatedOvulation", "luteal", "estimatedFertileWindow"] {
+            let description = app.descendants(matching: .any).matching(identifier: "wheel.phaseDescription." + kind).firstMatch
+            XCTAssertTrue(description.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if app.frame.contains(description.frame) { break }; app.swipeUp() }
+            XCTAssertTrue(app.frame.contains(description.frame), "The complete noninteractive description must be visible")
+            XCTAssertGreaterThan(description.frame.height, 20)
+            XCTAssertGreaterThanOrEqual(description.frame.minX, 0)
+            XCTAssertLessThanOrEqual(description.frame.maxX, app.frame.width)
+            for _ in 0..<16 { app.swipeDown(); if description.frame.minY > 0 { break } }
+        }
+        XCTAssertFalse(app.otherElements["wheel.note"].exists)
+        captureGame(app, name: "closed-wheel-measured-phase-descriptions")
+    }
+
     func testWheelNoteActionsStayReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioWheelQA", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]

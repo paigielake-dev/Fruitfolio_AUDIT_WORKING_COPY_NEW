@@ -19,11 +19,27 @@ struct Prompt18DynamicCycleWheel: View {
 
     var body: some View {
         VStack(spacing: 12) {
+            if !dynamicTypeSize.isAccessibilitySize {
+                annotationRow(annotationGroups.above, above: true)
+            }
             drawing
+                .anchorPreference(key: Prompt18PhaseAnchorKey.self, value: .bounds) { ["wheel": $0] }
+            if !dynamicTypeSize.isAccessibilitySize {
+                annotationRow(annotationGroups.below, above: false)
+            }
             if dynamicTypeSize.isAccessibilitySize {
                 Text(centerSummary).font(.body).multilineTextAlignment(.center)
                 ForEach(accessibleSegments) { segment in
-                    Button(accessibilityLabel(for: segment)) { select(segment.kind) }
+                    Button { select(segment.kind) } label: {
+                        VStack(alignment: .leading, spacing: 5) {
+                            FruitfolioFixedText(source: segment.kind.title, font: .body, serious: true)
+                                .fontWeight(.bold)
+                            FruitfolioFixedText(source: segment.kind.noteBody, font: .body, serious: true)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                        .accessibilityLabel(accessibilityLabel(for: segment))
                         .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
                         .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                     if selectedRegion == segment.kind, let presentationID = noteSession.presentationID {
@@ -33,6 +49,27 @@ struct Prompt18DynamicCycleWheel: View {
                             .frame(maxWidth: 340).frame(height: 340)
                     }
                 }
+            }
+        }
+        .backgroundPreferenceValue(Prompt18PhaseAnchorKey.self) { anchors in
+            if !dynamicTypeSize.isAccessibilitySize, selectedRegion == nil, let wheelAnchor = anchors["wheel"] {
+                GeometryReader { proxy in
+                    Path { path in
+                        for segment in accessibleSegments {
+                            guard let anchor = anchors["phase-" + segment.kind.rawValue],
+                                  let arrow = Prompt18WheelAnnotationGeometry.arrow(callout: proxy[anchor],
+                                    wheel: proxy[wheelAnchor], fraction: segment.midFraction,
+                                    above: annotationGroups.above.contains(where: { $0.kind == segment.kind })) else { continue }
+                            path.move(to: arrow.tail); path.addLine(to: arrow.firstBend)
+                            path.addLine(to: arrow.secondBend); path.addLine(to: arrow.tip)
+                            path.move(to: arrow.left); path.addLine(to: arrow.tip); path.addLine(to: arrow.right)
+                        }
+                    }
+                    .stroke(Prompt18Palette.burgundy.opacity(0.72), lineWidth: 1)
+                    .opacity(labelOpacity)
+                }
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
             }
         }
         .disabled(!canInteract)
@@ -46,6 +83,48 @@ struct Prompt18DynamicCycleWheel: View {
         .onChange(of: interactionAllowed()) { _, allowed in
             if !allowed { noteSession.invalidateActions() }
         }
+    }
+
+    private var annotationGroups: (above: [Prompt18WheelSegment], below: [Prompt18WheelSegment]) {
+        let vertical = accessibleSegments.sorted {
+            sin(-.pi / 2 + 2 * .pi * $0.midFraction) < sin(-.pi / 2 + 2 * .pi * $1.midFraction)
+        }
+        func leftToRight(_ segments: ArraySlice<Prompt18WheelSegment>) -> [Prompt18WheelSegment] {
+            segments.sorted { cos(-.pi / 2 + 2 * .pi * $0.midFraction) < cos(-.pi / 2 + 2 * .pi * $1.midFraction) }
+        }
+        let split = (vertical.count + 1) / 2
+        return (leftToRight(vertical.prefix(split)), leftToRight(vertical.dropFirst(split)))
+    }
+
+    private func annotationRow(_ segments: [Prompt18WheelSegment], above: Bool) -> some View {
+        HStack(alignment: above ? .bottom : .top, spacing: 12) {
+            ForEach(segments) { segment in
+                VStack(spacing: 5) {
+                    FruitfolioFixedText(source: segment.kind.title,
+                        font: .custom("Chalkboard SE", size: 12, relativeTo: .caption).bold(),
+                        color: Prompt18Palette.burgundy, serious: true)
+                    if segment.interval.provenance == .estimated && !segment.kind.isEstimate {
+                        FruitfolioFixedText(source: "estimated", font: .caption2,
+                            color: Prompt18Palette.burgundy, serious: true)
+                    }
+                    FruitfolioFixedText(source: segment.kind.noteBody,
+                        font: .custom("Chalkboard SE", size: 12, relativeTo: .caption),
+                        color: Prompt18Palette.burgundy, serious: true)
+                }
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity)
+                .anchorPreference(key: Prompt18PhaseAnchorKey.self, value: .bounds) {
+                    ["phase-" + segment.kind.rawValue: $0]
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("wheel.phaseDescription." + segment.kind.rawValue)
+            }
+        }
+        // Keep intrinsic space while a note is open, avoiding a scroll jump.
+        .opacity(selectedRegion == nil ? labelOpacity : 0)
+        .accessibilityHidden(selectedRegion != nil)
+        .allowsHitTesting(false)
     }
 
     private var accessibleSegments: [Prompt18WheelSegment] {
@@ -82,9 +161,8 @@ struct Prompt18DynamicCycleWheel: View {
 
     private var drawing: some View {
         GeometryReader { proxy in
-            let side = min(proxy.size.width, proxy.size.height)
             let center = CGPoint(x: proxy.size.width / 2, y: proxy.size.height / 2)
-            let ringSide = min(side * 0.66, 286)
+            let ringSide = Prompt18WheelAnnotationGeometry.ringSide(in: proxy.size)
 
             ZStack {
                 Color.clear
@@ -102,11 +180,6 @@ struct Prompt18DynamicCycleWheel: View {
                     }
                     .allowsHitTesting(revealProgress >= 0.98)
                     .accessibilityHidden(dynamicTypeSize.isAccessibilitySize)
-
-                labelLayer(center: center, side: ringSide)
-                    .opacity(dynamicTypeSize.isAccessibilitySize ? 0 : labelOpacity)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
 
                 centerContent.opacity(dynamicTypeSize.isAccessibilitySize ? 0 : 1)
 
@@ -226,42 +299,6 @@ struct Prompt18DynamicCycleWheel: View {
     }
 
     @ViewBuilder
-    private func labelLayer(
-        center: CGPoint,
-        side: CGFloat
-    ) -> some View {
-        ForEach(model.baseSegments) { segment in
-            Prompt18WheelLabel(
-                text: segment.kind.title,
-                estimated: segment.kind == .estimatedOvulation
-            )
-            .position(
-                labelPosition(
-                    for: segment,
-                    center: center,
-                    side: side,
-                    isOverlay: false
-                )
-            )
-        }
-
-        if let fertile = model.fertileOverlay {
-            Prompt18WheelLabel(
-                text: "fertile window",
-                estimated: true
-            )
-            .position(
-                labelPosition(
-                    for: fertile,
-                    center: center,
-                    side: side,
-                    isOverlay: true
-                )
-            )
-        }
-    }
-
-    @ViewBuilder
     private var centerContent: some View {
         VStack(spacing: 4) {
             if let day = model.currentCycleDay {
@@ -362,21 +399,6 @@ struct Prompt18DynamicCycleWheel: View {
     ) -> CGPoint {
         let radians = Angle.degrees(angle(for: fraction)).radians
         let radius = side * 0.405
-
-        return CGPoint(
-            x: center.x + CGFloat(Foundation.cos(radians)) * radius,
-            y: center.y + CGFloat(Foundation.sin(radians)) * radius
-        )
-    }
-
-    private func labelPosition(
-        for segment: Prompt18WheelSegment,
-        center: CGPoint,
-        side: CGFloat,
-        isOverlay: Bool
-    ) -> CGPoint {
-        let radians = Angle.degrees(angle(for: segment.midFraction)).radians
-        let radius = side * (isOverlay ? 0.76 : 0.66)
 
         return CGPoint(
             x: center.x + CGFloat(Foundation.cos(radians)) * radius,
@@ -649,7 +671,12 @@ struct Prompt18WheelRegressionHarness: View {
         let end = calendar.date(byAdding: .day, value: 4, to: starts.last!)!
         let prediction = Prompt17CyclePredictionEngine(calendar: calendar).calculate(from: .init(cycleStartDates: starts,
             periodRecords: [.init(startDate: starts.last!, endDate: end)], asOfDate: now))
-        model = Prompt18CycleWheelBuilder().build(prediction: prediction)
+        // Explicit nonclinical presentation fixture; never a production prediction.
+        let allPhases = ProcessInfo.processInfo.arguments.contains("-fruitfolioWheelAnnotationsQA")
+        let intervals = allPhases ? Prompt18EstimatedIntervals(
+            estimatedOvulation: .init(startDay: 13, endDay: 15, provenance: .estimated),
+            estimatedFertileWindow: .init(startDay: 9, endDay: 15, provenance: .estimated)) : .none
+        model = Prompt18CycleWheelBuilder().build(prediction: prediction, estimatedIntervals: intervals)
     }
     var body: some View {
         ScrollView {
@@ -663,3 +690,10 @@ struct Prompt18WheelRegressionHarness: View {
     }
 }
 #endif
+
+private struct Prompt18PhaseAnchorKey: PreferenceKey {
+    static var defaultValue: [String: Anchor<CGRect>] { [:] }
+    static func reduce(value: inout [String: Anchor<CGRect>], nextValue: () -> [String: Anchor<CGRect>]) {
+        value.merge(nextValue(), uniquingKeysWith: { _, newer in newer })
+    }
+}

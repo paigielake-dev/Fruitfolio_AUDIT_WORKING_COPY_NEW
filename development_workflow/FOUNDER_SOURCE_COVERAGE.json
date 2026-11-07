@@ -4166,11 +4166,38 @@
       "source_line": 1267,
       "original_text": "When the wheel is there without being opened, it should have arrows (in chalkboard SE #800000) pointing to each phase with a mini description underneath) not crowded and perfectly sized to be aesthetic.",
       "original_bytes_sha256": "b9eb421721b3e640a705799d12faa1181a477d9cbfb8c557a4a107042a622cee",
-      "applicability": "UNREVIEWED",
-      "implementation_status": "NOT_ASSESSED",
-      "verification_status": "NOT_RUN",
-      "evidence": [],
-      "remaining_verification_requirements": []
+      "applicability": "APPLICABLE",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "evidence": [
+        {
+          "batch": "Closed-cycle-wheel-measured-phase-arrows-and-descriptions",
+          "implementation": "Replace wheel name-only fixed labels with intrinsic Chalkboard SE burgundy phase descriptions and measured leader arrows to actual represented interval boundaries. Route leaders outside the wheel interior; retain existing source copy, ring proportions, estimate labels and unknown-phase gaps. Large Dynamic Type uses full-width description-bearing region controls.",
+          "files": [
+            "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+            "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+            "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json"
+          ],
+          "executed_scope": [
+            "17 actual Foundation wheel/geometry tests; syntax and static sound checks."
+          ],
+          "not_run": [
+            "Actual Apple SDK build/typecheck, SwiftUI measured-anchor rendering, device layout, VoiceOver, native language/RTL and visual acceptance.",
+            "New testClosedWheelShowsMeasuredDescriptionsForEveryRepresentedPhase planned1 native launch with explicit nonclinical five-region fixture, NOT_RUN.",
+            "Existing actual wheel accessible note lifecycle UI test remains NOT_RUN."
+          ],
+          "remaining": [
+            "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+            "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+            "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+          ]
+        }
+      ],
+      "remaining_verification_requirements": [
+        "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
+        "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
+        "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+      ]
     },
     {
       "id": "FOUNDER-SOURCE-L01270",

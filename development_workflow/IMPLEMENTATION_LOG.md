@@ -4172,3 +4172,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_approval_and_explicit_context_XCTest": 22, "failures": 0, "log": "/tmp/fruitfolio_hormone_approval_explicit_share_clauses.log", "scope": "14 actual library tests and8 actual Foundation/context engine tests; native llama conditional test not included."}.
 - Next action: Continue missing founder wheel phase annotations and other independent incomplete functionality; do not count approved paragraph retrieval as complete clinical chapters.
 - Commit: containing commit for batch Hormone-grounding-and-explicit-sharing-individual-clauses.
+
+## Closed-cycle-wheel-measured-phase-arrows-and-descriptions
+
+- Parent checkpoint: 1f3306b9f235046f5b94ace7feb20594eac110ac.
+- Source-order requirements: [31, 32, 39, 411, 414, 416, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift, Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift, development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json.
+- Replace wheel name-only fixed labels with intrinsic Chalkboard SE burgundy phase descriptions and measured leader arrows to actual represented interval boundaries. Route leaders outside the wheel interior; retain existing source copy, ring proportions, estimate labels and unknown-phase gaps. Large Dynamic Type uses full-width description-bearing region controls.
+- Tests added/updated: FruitfolioTests/Prompt18CycleWheelTests.swift, FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"focused_actual_wheel_and_geometry_XCTest": 17, "failures": 0, "swift_syntax_files": 327, "static_sound_diagnostics": 0, "logs": ["/tmp/fruitfolio_wheel_phase_annotations_final_tests.log", "/tmp/fruitfolio_wheel_phase_annotations_final_syntax.log", "/tmp/fruitfolio_wheel_phase_annotations_sound.log"]}.
+- Next action: Continue remaining source-grounded cross-part requirements and unnumbered applicability reconciliation; wheel annotations await Apple visual acceptance, not more optional polishing.
+- Commit: containing commit for batch Closed-cycle-wheel-measured-phase-arrows-and-descriptions.

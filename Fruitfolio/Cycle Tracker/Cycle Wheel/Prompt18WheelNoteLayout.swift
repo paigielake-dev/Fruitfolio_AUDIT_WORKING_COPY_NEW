@@ -20,3 +20,46 @@ nonisolated enum Prompt18WheelNoteLayout {
         return CGRect(x: x, y: y, width: noteWidth, height: noteHeight)
     }
 }
+
+/// Connects measured, intrinsically sized phase descriptions to their actual
+/// represented wheel interval. No assumed fixed phase durations or text sizes.
+nonisolated enum Prompt18WheelAnnotationGeometry {
+    struct Arrow: Equatable {
+        let tail: CGPoint
+        let firstBend: CGPoint
+        let secondBend: CGPoint
+        let tip: CGPoint
+        let left: CGPoint
+        let right: CGPoint
+    }
+
+    static func ringSide(in size: CGSize) -> CGFloat {
+        guard size.width.isFinite, size.height.isFinite, size.width > 0, size.height > 0 else { return 0 }
+        return min(min(size.width, size.height) * 0.66, 286)
+    }
+
+    static func arrow(callout: CGRect, wheel: CGRect, fraction: Double, above: Bool) -> Arrow? {
+        let values = [callout.minX, callout.minY, callout.width, callout.height,
+                      wheel.minX, wheel.minY, wheel.width, wheel.height]
+        guard values.allSatisfy(\.isFinite), callout.width > 0, callout.height > 0,
+              wheel.width > 0, wheel.height > 0, fraction.isFinite, (0...1).contains(fraction) else { return nil }
+        let radius = ringSide(in: wheel.size) / 2
+        let angle = -Double.pi / 2 + 2 * Double.pi * fraction
+        let tip = CGPoint(x: wheel.midX + radius * cos(angle), y: wheel.midY + radius * sin(angle))
+        let tail = CGPoint(x: callout.midX, y: above ? callout.maxY + 4 : callout.minY - 4)
+        let inset = min(4, wheel.width / 4)
+        let routingX = tip.x >= wheel.midX ? wheel.maxX - inset : wheel.minX + inset
+        let firstBend = CGPoint(x: routingX, y: tail.y)
+        let secondBend = CGPoint(x: routingX, y: tip.y)
+        let dx = tip.x - secondBend.x, dy = tip.y - secondBend.y
+        let distance = hypot(dx, dy)
+        guard distance > 0 else { return nil }
+        let head = min(6, distance / 3)
+        let ux = dx / distance, uy = dy / distance
+        return Arrow(tail: tail, firstBend: firstBend, secondBend: secondBend, tip: tip,
+            left: CGPoint(x: tip.x - head * ux - head * 0.55 * uy,
+                          y: tip.y - head * uy + head * 0.55 * ux),
+            right: CGPoint(x: tip.x - head * ux + head * 0.55 * uy,
+                           y: tip.y - head * uy - head * 0.55 * ux))
+    }
+}
