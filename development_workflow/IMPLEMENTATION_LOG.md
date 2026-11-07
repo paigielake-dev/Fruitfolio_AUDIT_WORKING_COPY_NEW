@@ -3968,3 +3968,27 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest": 6, "failures": 0, "actual_chapters_saved_and_reopened": 28, "chapters_with_distinct_additional_paragraphs": 7, "registered_original_catalog_ids": 73, "eligible_original_paragraph_scope_matches": 59, "swift_syntax_files": 326, "logs": ["/tmp/fruitfolio_education_details_focused.log", "/tmp/fruitfolio_education_details_syntax.log"]}.
 - Next action: Continue missing actionable functionality across other parts; review current Fruit Basket required behavior against existing implementation without repeating broad audits.
 - Commit: containing commit for batch Education-original-detail-sections-and-canonical-chapter-save.
+
+## Individual-star-mechanics-and-catch-order-implementation-closures
+
+- Parent checkpoint: cc5e35f22d2bd09c39cf7f42d777775e2b6b354e.
+- Source-order requirements: [323, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift, Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift, development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json.
+- Individually reconcile14 original game requirements against actual controller/engine/store execution, geometry and live UI wiring. Classify implementation complete with external acceptance pending; do not claim rendered verification.
+- Tests added/updated: FruitfolioTests/Prompt1BCatchPresentationTests.swift, FruitfolioTests/Prompt1BFruitBasketRulesTests.swift, FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioTests/Prompt1BGameRulesCatalogTests.swift, FruitfolioTests/Prompt28FruitBasketTests.swift.
+- Verification: {"focused_controller_engine_geometry_and_physics_XCTest": 118, "separate_shared_rule_catalog_XCTest": 3, "failures": 0, "logs": ["/tmp/fruitfolio_star_individual_closures.log", "/tmp/fruitfolio_star_rule_catalog_closure.log"], "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."}.
+- Next action: Continue next independent unmet requirement; wind/rain/obstacle and other original sections remain in scope.
+- Commit: containing commit for batch Individual-star-mechanics-and-catch-order-implementation-closures.
+
+## Founder-star-clause-complete-implementation-review
+
+- Parent checkpoint: cc5e35f22d2bd09c39cf7f42d777775e2b6b354e.
+- Source-order requirements: [328, 329, 330, 331, 332, 333, 334, 335, 336, 337].
+- Separate founder additions: ['SPEC-BINDING-GAME-STAR', 'SPEC-BINDING-GAME-STAR-PASSES'].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift, Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift, development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json.
+- Reconcile exact two founder star additions clause by clause, including actual vine physics/display wiring, against individually reviewed original mechanics and current executed tests; Apple acceptance pending.
+- Tests added/updated: FruitfolioTests/Prompt1BCatchPresentationTests.swift, FruitfolioTests/Prompt1BFruitBasketRulesTests.swift, FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioTests/Prompt1BGameRulesCatalogTests.swift, FruitfolioTests/Prompt28FruitBasketTests.swift.
+- Verification: {"focused_controller_engine_geometry_and_physics_XCTest": 118, "separate_shared_rule_catalog_XCTest": 3, "failures": 0, "logs": ["/tmp/fruitfolio_star_individual_closures.log", "/tmp/fruitfolio_star_rule_catalog_closure.log"], "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."}.
+- Next action: Continue next independent unmet requirement; wind/rain/obstacle and other original sections remain in scope.
+- Commit: containing commit for batch Founder-star-clause-complete-implementation-review.

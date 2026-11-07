@@ -7511,17 +7511,108 @@
       "source_end_line": 1487,
       "description": "        FRUIT BASKET \u2014 STAR / BAD-FRUIT MECHANIC: A standalone star functions as a single-use pass against the round-ending consequence of catching one BAD fruit. When the player successfully catches a star, store one available star pass. If the player subsequently catches a BAD fruit while a star pass is available, consume one star pass and allow the catch round to continue instead of ending it. If the player catches a BAD fruit without an available star pass, the catch round ends. A star therefore does not count as GOOD fruit toward filling the basket and does not independently complete the round; its gameplay purpose is specifically to protect the player from the next otherwise round-ending BAD-fruit catch. Stars must still be caught normally by fully entering the basket and receiving the same convincing flattened/settled catch treatment used for fruit.",
       "description_sha256": "f815142554329c36479b72d27182fe1c3fd9e2a233b46331bddbda515f86abc2",
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
+        "development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift"
       ],
       "related_tests": [
-        "Prompt1BFruitBasketRulesTests"
+        "Prompt1BFruitBasketRulesTests",
+        "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketRulesTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift",
+        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
       ],
       "blockers": [],
       "evidence": [
-        "Stackable pass consumption/final-state logic checked; catch penetration, flattened rendering, rarity, vines and full game UI still need acceptance."
+        "Stackable pass consumption/final-state logic checked; catch penetration, flattened rendering, rarity, vines and full game UI still need acceptance.",
+        "All clauses individually linked to original330/332/333/334/335/336 reviews: actual settled standalone catch grants one; protected bad fruit spends exactly one and remains active; zero-pass adverse catch ends; stars never advance target or complete basket; shared fruit/star full-entry then flattened settlement.118 domain+3 rules tests pass; Apple convincing visual acceptance NOT_RUN. Reference: development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json; current executed118 domain+3rules tests; external Apple acceptance pending.",
+        "All clauses individually linked to original330/332/333/334/335/336 reviews: actual settled standalone catch grants one; protected bad fruit spends exactly one and remains active; zero-pass adverse catch ends; stars never advance target or complete basket; shared fruit/star full-entry then flattened settlement.118 domain+3 rules tests pass; Apple convincing visual acceptance NOT_RUN."
+      ],
+      "latest_batch_verification": {
+        "batch": "Founder-star-clause-complete-implementation-review",
+        "executed": {
+          "focused_controller_engine_geometry_and_physics_XCTest": 118,
+          "separate_shared_rule_catalog_XCTest": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_star_individual_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."
+        },
+        "not_run": [
+          "Apple builds and gameplay/gesture/visual settling/VoiceOver/RTL/Dynamic Type/reduced-motion UI and device performance.",
+          "Natural random-drop distribution and subjective rarity/balance/convincing-settlement acceptance."
+        ],
+        "remaining": [
+          "Run existing real Apple game UI scenarios and accept visible marker distinction, actual mouth registration and flattened settlement.",
+          "Exercise actual-device rarity/balance across levels; planner boundary tests do not establish subjective play balance.",
+          "Official MADLAD/native-language game-rule meaning remains unverified."
+        ],
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
+      },
+      "remaining_verification_requirements": [
+        "Run existing real Apple game UI scenarios and accept visible marker distinction, actual mouth registration and flattened settlement.",
+        "Exercise actual-device rarity/balance across levels; planner boundary tests do not establish subjective play balance.",
+        "Official MADLAD/native-language game-rule meaning remains unverified."
+      ],
+      "commit_reference": "batch:Founder-star-clause-complete-implementation-review (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T13:51:31.816191+00:00",
+      "batch_evidence": [
+        {
+          "batch": "Founder-star-clause-complete-implementation-review",
+          "implementation_evidence": "All clauses individually linked to original330/332/333/334/335/336 reviews: actual settled standalone catch grants one; protected bad fruit spends exactly one and remains active; zero-pass adverse catch ends; stars never advance target or complete basket; shared fruit/star full-entry then flattened settlement.118 domain+3 rules tests pass; Apple convincing visual acceptance NOT_RUN.",
+          "files": [
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+            "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+            "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+            "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
+            "development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json",
+            "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
+            "FruitfolioTests/Prompt1BFruitBasketRulesTests.swift",
+            "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+            "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift",
+            "FruitfolioTests/Prompt28FruitBasketTests.swift",
+            "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "focused_controller_engine_geometry_and_physics_XCTest": 118,
+              "separate_shared_rule_catalog_XCTest": 3,
+              "failures": 0,
+              "logs": [
+                "/tmp/fruitfolio_star_individual_closures.log",
+                "/tmp/fruitfolio_star_rule_catalog_closure.log"
+              ],
+              "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."
+            },
+            "not_run": [
+              "Apple builds and gameplay/gesture/visual settling/VoiceOver/RTL/Dynamic Type/reduced-motion UI and device performance.",
+              "Natural random-drop distribution and subjective rarity/balance/convincing-settlement acceptance."
+            ],
+            "remaining": [
+              "Run existing real Apple game UI scenarios and accept visible marker distinction, actual mouth registration and flattened settlement.",
+              "Exercise actual-device rarity/balance across levels; planner boundary tests do not establish subjective play balance.",
+              "Official MADLAD/native-language game-rule meaning remains unverified."
+            ]
+          },
+          "parent_checkpoint": "cc5e35f22d2bd09c39cf7f42d777775e2b6b354e"
+        }
       ]
     },
     {
@@ -7531,17 +7622,108 @@
       "source_end_line": 1489,
       "description": "            FRUIT BASKET \u2014 STACKABLE STAR PASSES: Standalone stars are rare beneficial drops that the player can catch independently of fruit. There is no maximum number of stars the player may collect; every successfully caught star adds one star pass to the player\u2019s currently available total. Star passes accumulate and remain available during the applicable catch round until consumed. If the player catches a BAD fruit while at least one star pass is available, automatically consume exactly one star pass and allow the round to continue. If the player catches a BAD fruit with zero star passes available, the round ends. GOOD fruit continues to count toward normal basket progress; standalone stars do not count as GOOD fruit or toward the basket-completion target. Stars should be genuinely rare drops, functioning as occasional earned protection rather than appearing frequently enough to remove the risk of BAD fruit. A star must fully enter the basket to count as caught and should visibly flatten/settle on impact using the same convincing catch treatment as fruit. Stars are also affected by vines and should visibly struggle/slow while passing through them.",
       "description_sha256": "a39b788c40b7d44cde0f85c3c9d95cc7271ece94d11540c2adad96b02f895689",
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
+        "development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json",
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift"
       ],
       "related_tests": [
-        "Prompt1BFruitBasketRulesTests"
+        "Prompt1BFruitBasketRulesTests",
+        "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketRulesTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift",
+        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
       ],
       "blockers": [],
       "evidence": [
-        "Stackable pass consumption/final-state logic checked; catch penetration, flattened rendering, rarity, vines and full game UI still need acceptance."
+        "Stackable pass consumption/final-state logic checked; catch penetration, flattened rendering, rarity, vines and full game UI still need acceptance.",
+        "All clauses linked to328\u2013337 reviews: actual both-mode rare spawning and strict boundary; independent collection;1001 separate acknowledged events without app cap; bank retained until consumed; one auto-spend/zero-pass failure; ten good fruits only; full-entry/flattened shared transit. Additional vine clause: actual testActualVineFramesSlowOnlyGoodFruitAndStarsAndEmitEntryOnce and testPaintedVinesSlowGoodFruitAndStarsButNeverBadFruit passed in118; actual star View applies contact stretch/struggle rotation with Reduce Motion disabling motion. Apple visual/rarity acceptance NOT_RUN. Reference: development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json; current executed118 domain+3rules tests; external Apple acceptance pending.",
+        "All clauses linked to328\u2013337 reviews: actual both-mode rare spawning and strict boundary; independent collection;1001 separate acknowledged events without app cap; bank retained until consumed; one auto-spend/zero-pass failure; ten good fruits only; full-entry/flattened shared transit. Additional vine clause: actual testActualVineFramesSlowOnlyGoodFruitAndStarsAndEmitEntryOnce and testPaintedVinesSlowGoodFruitAndStarsButNeverBadFruit passed in118; actual star View applies contact stretch/struggle rotation with Reduce Motion disabling motion. Apple visual/rarity acceptance NOT_RUN."
+      ],
+      "latest_batch_verification": {
+        "batch": "Founder-star-clause-complete-implementation-review",
+        "executed": {
+          "focused_controller_engine_geometry_and_physics_XCTest": 118,
+          "separate_shared_rule_catalog_XCTest": 3,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_star_individual_closures.log",
+            "/tmp/fruitfolio_star_rule_catalog_closure.log"
+          ],
+          "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."
+        },
+        "not_run": [
+          "Apple builds and gameplay/gesture/visual settling/VoiceOver/RTL/Dynamic Type/reduced-motion UI and device performance.",
+          "Natural random-drop distribution and subjective rarity/balance/convincing-settlement acceptance."
+        ],
+        "remaining": [
+          "Run existing real Apple game UI scenarios and accept visible marker distinction, actual mouth registration and flattened settlement.",
+          "Exercise actual-device rarity/balance across levels; planner boundary tests do not establish subjective play balance.",
+          "Official MADLAD/native-language game-rule meaning remains unverified."
+        ],
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
+      },
+      "remaining_verification_requirements": [
+        "Run existing real Apple game UI scenarios and accept visible marker distinction, actual mouth registration and flattened settlement.",
+        "Exercise actual-device rarity/balance across levels; planner boundary tests do not establish subjective play balance.",
+        "Official MADLAD/native-language game-rule meaning remains unverified."
+      ],
+      "commit_reference": "batch:Founder-star-clause-complete-implementation-review (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T13:51:31.816191+00:00",
+      "batch_evidence": [
+        {
+          "batch": "Founder-star-clause-complete-implementation-review",
+          "implementation_evidence": "All clauses linked to328\u2013337 reviews: actual both-mode rare spawning and strict boundary; independent collection;1001 separate acknowledged events without app cap; bank retained until consumed; one auto-spend/zero-pass failure; ten good fruits only; full-entry/flattened shared transit. Additional vine clause: actual testActualVineFramesSlowOnlyGoodFruitAndStarsAndEmitEntryOnce and testPaintedVinesSlowGoodFruitAndStarsButNeverBadFruit passed in118; actual star View applies contact stretch/struggle rotation with Reduce Motion disabling motion. Apple visual/rarity acceptance NOT_RUN.",
+          "files": [
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+            "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+            "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+            "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
+            "development_workflow/GAME_STAR_INDIVIDUAL_REQUIREMENT_CLOSURES.json",
+            "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
+            "FruitfolioTests/Prompt1BFruitBasketRulesTests.swift",
+            "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+            "FruitfolioTests/Prompt1BGameRulesCatalogTests.swift",
+            "FruitfolioTests/Prompt28FruitBasketTests.swift",
+            "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "focused_controller_engine_geometry_and_physics_XCTest": 118,
+              "separate_shared_rule_catalog_XCTest": 3,
+              "failures": 0,
+              "logs": [
+                "/tmp/fruitfolio_star_individual_closures.log",
+                "/tmp/fruitfolio_star_rule_catalog_closure.log"
+              ],
+              "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."
+            },
+            "not_run": [
+              "Apple builds and gameplay/gesture/visual settling/VoiceOver/RTL/Dynamic Type/reduced-motion UI and device performance.",
+              "Natural random-drop distribution and subjective rarity/balance/convincing-settlement acceptance."
+            ],
+            "remaining": [
+              "Run existing real Apple game UI scenarios and accept visible marker distinction, actual mouth registration and flattened settlement.",
+              "Exercise actual-device rarity/balance across levels; planner boundary tests do not establish subjective play balance.",
+              "Official MADLAD/native-language game-rule meaning remains unverified."
+            ]
+          },
+          "parent_checkpoint": "cc5e35f22d2bd09c39cf7f42d777775e2b6b354e"
+        }
       ]
     },
     {
