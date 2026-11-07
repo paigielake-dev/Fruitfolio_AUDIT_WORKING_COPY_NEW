@@ -212,3 +212,66 @@ final class Prompt1BLegacyExcerptRecoveryTests: XCTestCase {
         XCTAssertEqual(Data(cleaned.answer.utf8), Data("cafe\u{301}".utf8))
     }
 }
+
+#if DEBUG
+@MainActor
+final class Prompt1BBookPrivateFixtureTests: XCTestCase {
+    func testMissingAuthorityNeverCreatesAStore() async {
+        let fixture = Prompt10BookRegressionFixture(defaults: nil, content: .legacyExcerpt)
+        XCTAssertNil(fixture.store)
+        XCTAssertNotNil(fixture.failureMessage)
+    }
+    func testRootPrivateFixtureRemountRetainsEditsAndDoesNotReseedAnEmptyLibrary() async throws {
+        let suite = "fruitfolio.book.fixture." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let fixture = Prompt10BookRegressionFixture(defaults: defaults, content: .draft)
+        let store = try XCTUnwrap(fixture.store)
+        XCTAssertEqual(store.count, Prompt10BookStyle.allCases.count)
+        let page = try XCTUnwrap(store.encyclopedias.flatMap(\.chapters).flatMap(\.pages).first)
+        XCTAssertEqual(page.notes, "QA original note")
+        XCTAssertNotNil(page.userMaterial)
+        let bytes = defaults.data(forKey: Prompt10BookRegressionFixture.storageKey)
+        let remount = try XCTUnwrap(Prompt10BookRegressionFixture(defaults: defaults, content: .legacyExcerpt).store)
+        XCTAssertEqual(remount.encyclopedias, store.encyclopedias)
+        XCTAssertEqual(defaults.data(forKey: Prompt10BookRegressionFixture.storageKey), bytes)
+        try store.removeAllForTesting()
+        XCTAssertEqual(try XCTUnwrap(Prompt10BookRegressionFixture(defaults: defaults).store).count, 0)
+        XCTAssertNotNil(defaults.data(forKey: Prompt10BookRegressionFixture.storageKey))
+    }
+    func testProtectedPrivateFixtureIsReadableWithoutRepairOrFallback() async throws {
+        let suite = "fruitfolio.book.protected." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let key = Prompt10BookRegressionFixture.storageKey
+        let original = Data("not a library".utf8)
+        let values: [Any] = [original, "wrong type"]
+        for value in values {
+            defaults.set(value, forKey: key)
+            let fixture = Prompt10BookRegressionFixture(defaults: defaults, content: .draft)
+            let store = try XCTUnwrap(fixture.store)
+            XCTAssertTrue(store.storageUnreadable)
+            XCTAssertThrowsError(try store.createEncyclopedia(name: "never repair", style: .sage))
+            if let data = value as? Data { XCTAssertEqual(defaults.data(forKey: key), data) }
+            else { XCTAssertEqual(defaults.string(forKey: key), "wrong type") }
+        }
+    }
+    func testLegacyAndMissingSelectionFixturesPreserveBodiesUntilExplicitCleanup() async throws {
+        for missing in [false, true] {
+            let suite = "fruitfolio.book.legacy." + UUID().uuidString
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let store = try XCTUnwrap(Prompt10BookRegressionFixture(defaults: defaults,
+                content: missing ? .missingSelection : .legacyExcerpt).store)
+            let page = try XCTUnwrap(store.encyclopedias.flatMap(\.chapters).flatMap(\.pages).first)
+            XCTAssertTrue(page.hasLegacyExcerptRemainder)
+            XCTAssertEqual(page.canReviewLegacyExcerptCleanup, !missing)
+            XCTAssertTrue(page.answer.contains("retained remainder"))
+            let bytes = defaults.data(forKey: Prompt10BookRegressionFixture.storageKey)
+            let remount = try XCTUnwrap(Prompt10BookRegressionFixture(defaults: defaults).store)
+            XCTAssertEqual(remount.encyclopedias, store.encyclopedias)
+            XCTAssertEqual(defaults.data(forKey: Prompt10BookRegressionFixture.storageKey), bytes)
+        }
+    }
+}
+#endif

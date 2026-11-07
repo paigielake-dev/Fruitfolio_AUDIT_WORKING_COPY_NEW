@@ -26726,7 +26726,9 @@
         "development_workflow/ASK_PRIVATE_SAVE_AUTHORITY_AND_CONVERSION.md",
         "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26776,7 +26778,7 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -26808,70 +26810,67 @@
         "Actual4savepaths replace trapping/first-wins sourceversiondictionary with sharedbyte-exact validator; consistentduplicatescoalesce onlymap, rawSourceRecords preserved, legacy staysunversioned. Rejectconflicting/blank/mixed/Unicodecollidingmetadata visibly throughseriousfixederror andactivecomposer gate. ThreeactualFoundationtests+realcanonicalfull/excerpt persistence preservebody/quantity/DOI/records/IDs/version/time; sixinvalidvectorsreject. AppleUIflowsNOT_RUN; no authenticity/clinical/model/wholecitationcertification.",
         "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -26950,7 +26949,9 @@
         "development_workflow/ASK_PRIVATE_SAVE_AUTHORITY_AND_CONVERSION.md",
         "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27005,7 +27006,7 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -27049,70 +27050,67 @@
         "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified.",
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -28109,7 +28107,8 @@
         "Tools/sync_supplemental_spec.py",
         "development_workflow/BATCH_EVIDENCE_CONTRACT.md",
         "development_workflow/SUPPLEMENTAL_BATCH_EVIDENCE_RECONCILIATION.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28240,7 +28239,7 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -28334,70 +28333,67 @@
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
         "Recorder validates exact founder identities and structured implementation/test/remaining evidence before publication, retains blocked status, and supports separate founder targets. Sync preserves unknown progress metadata. Reconciled 14 committed recent batches to 12 founder entries without acceptance promotion. Regression caught and fixed metadata loss; 69 workflow checks pass. No app runtime changes in this batch.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -28548,7 +28544,8 @@
         "Tools/sync_supplemental_spec.py",
         "development_workflow/BATCH_EVIDENCE_CONTRACT.md",
         "development_workflow/SUPPLEMENTAL_BATCH_EVIDENCE_RECONCILIATION.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28674,7 +28671,7 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -28751,70 +28748,67 @@
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
         "Recorder validates exact founder identities and structured implementation/test/remaining evidence before publication, retains blocked status, and supports separate founder targets. Sync preserves unknown progress metadata. Reconciled 14 committed recent batches to 12 founder entries without acceptance promotion. Regression caught and fixed metadata loss; 69 workflow checks pass. No app runtime changes in this batch.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -29981,7 +29975,9 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "development_workflow/ASK_PRIVATE_SAVE_AUTHORITY_AND_CONVERSION.md",
         "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29999,76 +29995,73 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "Saved Library persistence now captures the exact baseline UserDefaults object and rejects a commit after that record changes or is cleared elsewhere. The existing actual store rolls back its candidate state on failure and exposes a specific protection reason. Explicit reload reads the latest saved baseline without writing or merging it. Protected records cannot create books, and Library, Guide Builder home and Ask save destinations provide the same inline reload notice. This is value comparison in the local process, not a cross-process transaction/ABA guarantee.\n\nAdded a Foundation JSON-field-coverage guard: after a successful typed decode, a temporary typed encoding is inspected recursively for discarded dictionary fields/array members. No scientific scalar values are changed or treated as clinically equivalent. Unknown nested book/page/citation fields prevent writes while known readable pages remain available; no raw record is rewritten. This conservative rule also protects explicit null fields omitted by the typed encoder rather than guessing they are disposable. Unreadable originals retain the existing read-only behavior. Reload does not clear an unsupported record; only a genuinely readable/round-trippable newer baseline re-enables edits.\n\nThe real Saved Library store now conditionally retains genuine Combine/ObservableObject on Apple and runs its identical control flow on Linux. Existing Saved Library tests execute against that actual store. Its physical asset-name enum is also compiled unchanged on Foundation platforms; only the SwiftUI image view is conditionally excluded. No artwork/resources or model implementation is replaced. New actual-store tests prove stale/cleared deletion rollback, exact original byte preservation, known-page/notes readability under unknown nested fields, null protection and read-only reload. A DEBUG private-suite route and an actual UI test exercise the protected notice, large text/Reduce Motion and opening the existing readable book. Apple SDK/publisher/UI/screenshots remain NOT_RUN.\n\nThe new field guard is currently applied to Saved Library only. Remaining measurement/context persistence needs the same stale/unsupported-record review and implementation; this batch does not claim all app stores are protected.",
         "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -32422,7 +32415,8 @@
         "development_workflow/SAVED_ANSWER_SUPPORT_PROVENANCE.md",
         "development_workflow/ASK_PRIVATE_SAVE_AUTHORITY_AND_CONVERSION.md",
         "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32513,7 +32507,7 @@
         "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -32569,70 +32563,67 @@
         "Actual4savepaths replace trapping/first-wins sourceversiondictionary with sharedbyte-exact validator; consistentduplicatescoalesce onlymap, rawSourceRecords preserved, legacy staysunversioned. Rejectconflicting/blank/mixed/Unicodecollidingmetadata visibly throughseriousfixederror andactivecomposer gate. ThreeactualFoundationtests+realcanonicalfull/excerpt persistence preservebody/quantity/DOI/records/IDs/version/time; sixinvalidvectorsreject. AppleUIflowsNOT_RUN; no authenticity/clinical/model/wholecitationcertification.",
         "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -32986,7 +32977,8 @@
         "Tools/sync_supplemental_spec.py",
         "development_workflow/BATCH_EVIDENCE_CONTRACT.md",
         "development_workflow/SUPPLEMENTAL_BATCH_EVIDENCE_RECONCILIATION.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -33135,7 +33127,7 @@
         "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -33304,70 +33296,67 @@
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
         "Recorder validates exact founder identities and structured implementation/test/remaining evidence before publication, retains blocked status, and supports separate founder targets. Sync preserves unknown progress metadata. Reconciled 14 committed recent batches to 12 founder entries without acceptance promotion. Regression caught and fixed metadata loss; 69 workflow checks pass. No app runtime changes in this batch.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -33596,7 +33585,8 @@
         "Tools/sync_supplemental_spec.py",
         "development_workflow/BATCH_EVIDENCE_CONTRACT.md",
         "development_workflow/SUPPLEMENTAL_BATCH_EVIDENCE_RECONCILIATION.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -33790,7 +33780,7 @@
         "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -33993,70 +33983,67 @@
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
         "Recorder validates exact founder identities and structured implementation/test/remaining evidence before publication, retains blocked status, and supports separate founder targets. Sync preserves unknown progress metadata. Reconciled 14 committed recent batches to 12 founder entries without acceptance promotion. Regression caught and fixed metadata loss; 69 workflow checks pass. No app runtime changes in this batch.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     },
     {
@@ -34263,7 +34250,8 @@
         "Tools/sync_supplemental_spec.py",
         "development_workflow/BATCH_EVIDENCE_CONTRACT.md",
         "development_workflow/SUPPLEMENTAL_BATCH_EVIDENCE_RECONCILIATION.json",
-        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md"
+        "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -34413,7 +34401,7 @@
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Legacy-excerpt-explicit-consent-and-guarded-cleanup (resolve containing commit with git log)",
+      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -34562,70 +34550,67 @@
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
         "Recorder validates exact founder identities and structured implementation/test/remaining evidence before publication, retains blocked status, and supports separate founder targets. Sync preserves unknown progress metadata. Reconciled 14 committed recent batches to 12 founder entries without acceptance promotion. Regression caught and fixed metadata loss; 69 workflow checks pass. No app runtime changes in this batch.",
-        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof."
+        "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
       ],
-      "last_updated": "2026-11-07T05:16:23.172029+00:00",
+      "last_updated": "2026-11-07T05:20:52.958451+00:00",
       "latest_batch_verification": {
-        "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
         "executed": {
-          "portable_XCTest": 955,
-          "native_CPU_XCTest": 980,
+          "portable_XCTest": 960,
+          "native_CPU_XCTest": 985,
           "SwiftTesting_each": 21,
-          "final_focused_XCTest": 6,
+          "focused_XCTest": 9,
+          "new_fixture_XCTest": 4,
           "workflow_checks": 69,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_executed": 0,
+          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_executed": 0,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
-              "bytes": 303632,
-              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            "/tmp/fruitfolio_book_private_portable.log": {
+              "bytes": 305163,
+              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
             },
-            "/tmp/fruitfolio_legacy_excerpt_native.log": {
-              "bytes": 1278692,
-              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            "/tmp/fruitfolio_book_private_native.log": {
+              "bytes": 1280309,
+              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
-              "bytes": 28546,
-              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            "/tmp/fruitfolio_book_private_focused.log": {
+              "bytes": 30145,
+              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
             },
-            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
-              "bytes": 29370,
-              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
-            },
-            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "/tmp/fruitfolio_book_private_workflow.log": {
               "bytes": 169,
-              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
             },
-            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "/tmp/fruitfolio_book_private_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "/tmp/fruitfolio_book_private_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
-          "Official MADLAD weights/tokenizer and clinical language acceptance",
-          "Physical secure deletion and OS backup behavior"
+          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
+          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
+          "Official MADLAD model/tokenizer and clinical language review"
         ],
         "remaining": [
-          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-          "Verify real-device accessibility and persistence after process restart",
-          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+          "Run process-restart and device acceptance; Foundation remount is not app restart",
+          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
-        "Verify real-device accessibility and persistence after process restart",
-        "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
-        "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
+        "Run process-restart and device acceptance; Foundation remount is not app restart",
+        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
       ]
     }
   ]

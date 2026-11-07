@@ -738,3 +738,59 @@ final class Prompt10SavedLibraryStore {
 #if canImport(Combine)
 extension Prompt10SavedLibraryStore: ObservableObject {}
 #endif
+
+#if DEBUG
+/// Uses the root regression authority. No standard-defaults fallback or
+/// disappearance cleanup; the root owns the private suite's lifetime.
+@MainActor
+final class Prompt10BookRegressionFixture {
+    enum Content: Equatable { case books, draft, legacyExcerpt, missingSelection }
+    static let storageKey = "fruitfolio.bookQA.library.v1"
+    let store: Prompt10SavedLibraryStore?
+    let failureMessage: String?
+
+    init(defaults: UserDefaults?, empty: Bool = false, content: Content = .books) {
+        guard let defaults else {
+            store = nil
+            failureMessage = "Book regression preferences are unavailable."
+            return
+        }
+        let candidate = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: Self.storageKey)
+        do {
+            // A remount, an explicitly emptied library and protected data must
+            // never be mistaken for permission to repopulate or repair it.
+            if defaults.object(forKey: Self.storageKey) == nil {
+                if empty { try candidate.removeAllForTesting() }
+                for style in empty ? [] : Prompt10BookStyle.allCases {
+                    let book = try candidate.createEncyclopedia(name: "QA \(style.rawValue)", style: style)
+                    guard style == .sage, let chapter = book.chapters.first else { continue }
+                    switch content {
+                    case .books: break
+                    case .draft:
+                        var draft = Prompt10UserMaterialDraft()
+                        draft.title = "QA editable page"
+                        draft.body = "QA original own page text"
+                        draft.notes = "QA original note"
+                        _ = try candidate.saveUserMaterial(draft, to: book.id, chapterID: chapter.id)
+                    case .legacyExcerpt, .missingSelection:
+                        _ = try candidate.savePage(.init(chapterID: chapter.id, question: "QA legacy excerpt",
+                            answer: "QA selected words plus retained remainder", saveType: .excerpt,
+                            excerptText: content == .legacyExcerpt ? "QA selected words" : nil,
+                            originalAnswerID: "QA-legacy-answer", sourceIDs: ["QA-source"],
+                            notes: "QA original note", excerptLanguage: "en"),
+                            to: book.id, chapterID: chapter.id)
+                    }
+                }
+            }
+            store = candidate
+            failureMessage = nil
+        } catch {
+            store = nil
+            failureMessage = error.localizedDescription
+        }
+    }
+}
+#if canImport(Combine)
+extension Prompt10BookRegressionFixture: ObservableObject {}
+#endif
+#endif

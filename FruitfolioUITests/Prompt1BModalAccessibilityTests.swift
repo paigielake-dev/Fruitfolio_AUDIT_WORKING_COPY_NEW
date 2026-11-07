@@ -1796,6 +1796,72 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
     }
 
+    private func openLegacyExcerptFixture(_ app: XCUIApplication, reduced: Bool, rtl: Bool, missing: Bool = false) {
+        app.launchArguments += ["-fruitfolioBookQA",
+            missing ? "-fruitfolioBookMissingExcerptFixture" : "-fruitfolioBookLegacyExcerptFixture",
+            "-fruitfolioBookQAPauseInference", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if reduced { app.launchArguments += ["-fruitfolioBookReduceMotion"] }
+        if rtl { app.launchArguments += ["-fruitfolioBookQAArabic"] }
+        app.launch()
+        let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage,")).firstMatch
+        for _ in 0..<16 { if book.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(book.isHittable)
+        book.tap()
+        let row = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.tap()
+        XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
+    }
+
+    func testLegacyExcerptExplicitKeepThenCleanupPreservesNotesAcrossPaperAndPageRemount() {
+        for rtl in [false, true] {
+            for reduced in [false, true] {
+                let app = XCUIApplication()
+                openLegacyExcerptFixture(app, reduced: reduced, rtl: rtl)
+                let reading = app.scrollViews["savedPage.scroll"]
+                let review = app.buttons["savedPage.reviewLegacyExcerpt"]
+                for _ in 0..<20 { if review.isHittable { break }; reading.swipeUp() }
+                XCTAssertTrue(review.isHittable)
+                XCTAssertGreaterThanOrEqual(review.frame.height, 44)
+                review.tap()
+                let keep = app.buttons["fruitPopup.paper.action.primary"]
+                XCTAssertTrue(keep.waitForExistence(timeout: 5))
+                XCTAssertFalse(review.exists, "Background page must be hidden from accessibility")
+                keep.tap()
+                XCTAssertTrue(review.waitForExistence(timeout: 5))
+                XCTAssertFalse(app.staticTexts["savedPage.legacyExcerptCleaned"].exists)
+                review.tap()
+                let confirm = app.buttons["fruitPopup.paper.action.secondary"]
+                XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+                confirm.tap()
+                XCTAssertTrue(app.staticTexts["savedPage.legacyExcerptCleaned"].waitForExistence(timeout: 5))
+                XCTAssertEqual(app.textViews["savedPage.notes"].value as? String, "QA original note")
+                let back = app.buttons["savedPage.back"]
+                for _ in 0..<20 { if back.isHittable { break }; reading.swipeDown() }
+                back.tap()
+                let row = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch
+                XCTAssertTrue(row.waitForExistence(timeout: 5)); row.tap()
+                XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
+                XCTAssertFalse(app.buttons["savedPage.reviewLegacyExcerpt"].exists)
+                XCTAssertFalse(app.staticTexts["savedPage.legacyExcerptNotice"].exists)
+                XCTAssertEqual(app.textViews["savedPage.notes"].value as? String, "QA original note")
+                captureGame(app, name: "legacy-excerpt-consent-rtl-\(rtl)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
+    func testLegacyExcerptMissingSelectionStaysReadableWithoutCleanupAction() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            openLegacyExcerptFixture(app, reduced: reduced, rtl: true, missing: true)
+            XCTAssertTrue(app.staticTexts["savedPage.legacyExcerptNotice"].exists)
+            XCTAssertFalse(app.buttons["savedPage.reviewLegacyExcerpt"].exists)
+            XCTAssertEqual(app.textViews["savedPage.notes"].value as? String, "QA original note")
+            app.terminate()
+        }
+    }
+
     func testSavedNotesKeepDiscardAndSaveThroughOwnedPaper() {
         let app = XCUIApplication()
         openDraftFixturePage(app)

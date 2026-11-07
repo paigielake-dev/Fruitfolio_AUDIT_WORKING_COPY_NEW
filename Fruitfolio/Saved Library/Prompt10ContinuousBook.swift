@@ -79,49 +79,41 @@ extension Prompt10BookStyle {
 #if DEBUG
 /// Disposable suite contains fixture labels only, never production saved data.
 struct Prompt1BBookRegressionHarness: View {
-    @StateObject private var store: Prompt10SavedLibraryStore
+    @EnvironmentObject private var preferences: FruitfolioRegressionPreferenceSuite
+    var body: some View {
+        Prompt1BBookRegressionContent(defaults: preferences.defaults)
+    }
+}
+
+private struct Prompt1BBookRegressionContent: View {
+    @StateObject private var fixture: Prompt10BookRegressionFixture
+    init(defaults: UserDefaults?) {
+        let arguments = ProcessInfo.processInfo.arguments
+        let content: Prompt10BookRegressionFixture.Content = arguments.contains("-fruitfolioBookLegacyExcerptFixture") ? .legacyExcerpt
+            : arguments.contains("-fruitfolioBookMissingExcerptFixture") ? .missingSelection
+            : arguments.contains("-fruitfolioBookDraftFixture") ? .draft : .books
+        _fixture = StateObject(wrappedValue: Prompt10BookRegressionFixture(defaults: defaults,
+            empty: arguments.contains("-fruitfolioBookEmptyFixture"), content: content))
+    }
+    var body: some View {
+        if let store = fixture.store { Prompt1BBookRegressionLibrary(store: store) }
+        else { Text(verbatim: fixture.failureMessage ?? "Book regression environment unavailable.") }
+    }
+}
+
+private struct Prompt1BBookRegressionLibrary: View {
+    @ObservedObject var store: Prompt10SavedLibraryStore
     @StateObject private var motion = MotionPreferences()
     @State private var showingGuides = false
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
-    private let suite: String
-    private let fixtureError: String?
-
-    init() {
-        let suite = "fruitfolio.bookQA." + UUID().uuidString
-        self.suite = suite
-        let defaults = UserDefaults(suiteName: suite) ?? .standard
-        let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
-        var failure: String?
-        do {
-            let styles: [Prompt10BookStyle] = ProcessInfo.processInfo.arguments.contains("-fruitfolioBookEmptyFixture") ? [] : Prompt10BookStyle.allCases
-            for style in styles {
-                let book = try store.createEncyclopedia(name: "QA \(style.rawValue)", style: style)
-                if style == .sage, ProcessInfo.processInfo.arguments.contains("-fruitfolioBookDraftFixture"),
-                   let chapter = book.chapters.first {
-                    var draft = Prompt10UserMaterialDraft()
-                    draft.title = "QA editable page"
-                    draft.body = "QA original own page text"
-                    draft.notes = "QA original note"
-                    _ = try store.saveUserMaterial(draft, to: book.id, chapterID: chapter.id)
-                }
-            }
-        } catch { failure = error.localizedDescription }
-        self.fixtureError = failure
-        _store = StateObject(wrappedValue: store)
-    }
     var body: some View {
-        Group {
-            if let fixtureError { Text(fixtureError) }
-            else {
-                VStack(spacing: 0) {
-                    if showingGuides {
-                        Prompt11GuideBuilderView(store: store, onBack: { showingGuides = false }, onGoToAsk: {})
-                    } else { Prompt10SavedLibraryView(store: store, onBack: {}) }
-                    Button(showingGuides ? "QA library" : "QA guide builder") { showingGuides.toggle() }
-                        .frame(minHeight: 44)
-                }
-            }
+        VStack(spacing: 0) {
+            if showingGuides {
+                Prompt11GuideBuilderView(store: store, onBack: { showingGuides = false }, onGoToAsk: {})
+            } else { Prompt10SavedLibraryView(store: store, onBack: {}) }
+            Button(showingGuides ? "QA library" : "QA guide builder") { showingGuides.toggle() }
+                .frame(minHeight: 44)
         }
         .environmentObject(motion)
         .overlay(alignment: .bottomLeading) {
@@ -143,7 +135,6 @@ struct Prompt1BBookRegressionHarness: View {
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookAudioDiagnostics") {
                 audioManager.debugRecordInteractions(false)
             }
-            UserDefaults.standard.removePersistentDomain(forName: suite)
         }
     }
 }
