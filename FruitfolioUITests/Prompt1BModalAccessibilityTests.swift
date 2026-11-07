@@ -135,7 +135,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for arabic in [false, true] {
         for reduced in [false, true] {
             let app = XCUIApplication()
-            app.launchArguments += ["-fruitfolioContactQA", "-fruitfolioContactQAPauseInference", "-UIPreferredContentSizeCategoryName",
+            app.launchArguments += ["-fruitfolioContactQA", "-fruitfolioContactQAPauseInference", "-fruitfolioAudioDiagnostics", "-UIPreferredContentSizeCategoryName",
                                     "UICTContentSizeCategoryAccessibilityXXXL"]
             if reduced { app.launchArguments += ["-fruitfolioContactReduceMotion"] }
             if arabic { app.launchArguments += ["-fruitfolioContactQAArabic"] }
@@ -151,6 +151,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let url = app.staticTexts["contact.linkFailure.destinationURL"]
             XCTAssertTrue(url.waitForExistence(timeout: 3))
             XCTAssertEqual(url.label, "https://www.instagram.com/fruitsoflife.xo")
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(url.waitForExistence(timeout: 3))
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 0")
             XCTAssertFalse(app.buttons["contact.link.email"].exists)
             for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
             XCTAssertTrue(close.isHittable)

@@ -4052,3 +4052,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_username_identity_policy_exit_XCTest": 20, "full_portable_XCTest": 1048, "full_Swift_Testing": 21, "swift_syntax_files": 326, "failures": 0, "logs": ["/tmp/fruitfolio_username_current_identity_final.log", "/tmp/fruitfolio_username_authority_full_portable.log", "/tmp/fruitfolio_username_authority_syntax.log"]}.
 - Next action: Continue remaining gameplay accessibility/FAQ/Contact/Account/global localization and other original requirements; no completion claim from test counts.
 - Commit: containing commit for batch Shared-username-current-identity-exclusions-and-editor-clauses.
+
+## Contact-active-error-feedback-and-individual-FAQ-art-clauses
+
+- Parent checkpoint: cdda1145223804eedd415a85358b932e8bd20556.
+- Source-order requirements: [6, 11, 27, 373, 375, 376, 377, 378, 379, 380, 381, 382, 383, 390, 443, 444].
+- Separate founder additions: ['SPEC-BINDING-ART-MATRIX'].
+- Source files: Fruitfolio/Hub/Contact/Prompt30ContactView.swift, Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift, Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift, Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift, Fruitfolio/Hub/FAQ/Prompt29FAQView.swift, development_workflow/CONTACT_LIFECYCLE_AND_FAQ_ART_CLAUSES.json.
+- Fix inactive/stale Contact external-link error callbacks and exact modal ownership, with3 new real production state regressions; individually reconcile10 FAQ/Contact artwork/text clauses using existing original layout tests and read-only PNG receipts. Preserve original374 missing tulip blocker.
+- Tests added/updated: FruitfolioTests/Prompt1BContactDestinationTests.swift, FruitfolioTests/Prompt1BDecorativeLayoutTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"focused_actual_Contact_state_and_identity_translation_XCTest": 7, "unchanged_shared_header_layout_XCTest_in_parent_full_suite": 6, "original_Contact_FAQ_PNGs_decoded_and_hashed": 4, "swift_syntax_files": 326, "failures": 0, "logs": ["/tmp/fruitfolio_contact_active_failure_tests.log", "/tmp/fruitfolio_contact_active_failure_syntax.log"], "parent_full_suite": "/tmp/fruitfolio_username_authority_full_portable.log:1048 XCTest+21 SwiftTesting, before current Contact lifecycle delta. Six unchanged header layout tests passed in this actual log; do not report it as a full run of current Contact delta."}.
+- Next action: Continue missing global UI/dialogue/accessibility/localization and other original requirements, maintaining exact evidence and external acceptance separation.
+- Commit: containing commit for batch Contact-active-error-feedback-and-individual-FAQ-art-clauses.

@@ -89,4 +89,63 @@ final class Prompt1BContactDestinationTests: XCTestCase {
         XCTAssertNil(state.requestID)
     }
 
+    func testInactiveFailureWaitsForActiveContactAndStaleCloseCannotDismissRetry() throws {
+        var state = Prompt30ContactLinkState()
+        state.appear(isActive: false)
+        XCTAssertNil(state.begin(.email))
+        state.setActive(true)
+        let first = try XCTUnwrap(state.begin(.email))
+        state.setActive(false)
+        state.complete(first, accepted: false)
+        XCTAssertNil(state.failedDestination)
+        XCTAssertNil(state.failureID)
+        XCTAssertNil(state.requestID)
+        XCTAssertNil(state.begin(.carrd))
+        XCTAssertFalse(state.dismiss(expectedFailureID: first))
+        state.setActive(true)
+        XCTAssertEqual(state.failedDestination, .email)
+        XCTAssertEqual(state.failureID, first)
+        state.setActive(false)
+        XCTAssertFalse(state.dismiss(expectedFailureID: first))
+        XCTAssertEqual(state.failureID, first)
+        state.setActive(true)
+        XCTAssertTrue(state.dismiss(expectedFailureID: first))
+        let retry = try XCTUnwrap(state.begin(.email))
+        state.complete(retry, accepted: false)
+        XCTAssertNotEqual(retry, first)
+        XCTAssertFalse(state.dismiss(expectedFailureID: first))
+        XCTAssertEqual(state.failureID, retry)
+        XCTAssertEqual(state.failedDestination, .email)
+        XCTAssertTrue(state.dismiss(expectedFailureID: retry))
+        XCTAssertFalse(state.dismiss(expectedFailureID: retry))
+    }
+
+    func testLeavingDiscardsDeferredFailureBeforeAnotherVisit() throws {
+        var state = Prompt30ContactLinkState()
+        state.appear()
+        let request = try XCTUnwrap(state.begin(.instagram))
+        state.setActive(false)
+        state.complete(request, accepted: false)
+        state.disappear()
+        state.appear()
+        XCTAssertNil(state.failedDestination)
+        XCTAssertNil(state.failureID)
+        state.complete(request, accepted: false)
+        XCTAssertNil(state.failedDestination)
+        XCTAssertNotNil(state.begin(.carrd))
+    }
+
+    func testAcceptedExternalHandoffMayCompleteInactiveWithoutInventingFailureOnReturn() throws {
+        var state = Prompt30ContactLinkState()
+        state.appear()
+        let request = try XCTUnwrap(state.begin(.tiktok))
+        state.setActive(false)
+        state.complete(request, accepted: true)
+        XCTAssertNil(state.requestID)
+        state.setActive(true)
+        XCTAssertNil(state.failedDestination)
+        XCTAssertNil(state.failureID)
+        XCTAssertNotNil(state.begin(.email))
+    }
+
 }

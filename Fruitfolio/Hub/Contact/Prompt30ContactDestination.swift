@@ -34,18 +34,34 @@ nonisolated enum Prompt30ContactDestination: String, CaseIterable, Identifiable,
 nonisolated struct Prompt30ContactLinkState {
     private(set) var failedDestination: Prompt30ContactDestination?
     private(set) var requestID: UUID?
+    private(set) var failureID: UUID?
+    private var deferredFailure: (destination: Prompt30ContactDestination, id: UUID)?
+    private var isActive = false
     private var requestedDestination: Prompt30ContactDestination?
     private var isVisible = false
 
-    mutating func appear() { isVisible = true }
+    mutating func appear(isActive: Bool = true) {
+        isVisible = true
+        setActive(isActive)
+    }
+    mutating func setActive(_ active: Bool) {
+        isActive = active
+        guard isVisible, active, let deferredFailure else { return }
+        failedDestination = deferredFailure.destination
+        failureID = deferredFailure.id
+        self.deferredFailure = nil
+    }
     mutating func disappear() {
         isVisible = false
+        isActive = false
+        failureID = nil
+        deferredFailure = nil
         requestID = nil
         requestedDestination = nil
         failedDestination = nil
     }
     mutating func begin(_ destination: Prompt30ContactDestination) -> UUID? {
-        guard isVisible, failedDestination == nil else { return nil }
+        guard isVisible, isActive, failedDestination == nil, deferredFailure == nil else { return nil }
         let id = UUID()
         requestID = id
         requestedDestination = destination
@@ -53,9 +69,19 @@ nonisolated struct Prompt30ContactLinkState {
     }
     mutating func complete(_ id: UUID, accepted: Bool) {
         guard isVisible, id == requestID else { return }
-        if !accepted { failedDestination = requestedDestination }
+        if !accepted, let destination = requestedDestination {
+            deferredFailure = (destination, id)
+            setActive(isActive)
+        }
         requestID = nil
         requestedDestination = nil
     }
-    mutating func dismiss() { failedDestination = nil }
+    @discardableResult
+    mutating func dismiss(expectedFailureID: UUID? = nil) -> Bool {
+        guard isVisible, isActive, let failureID,
+              expectedFailureID == nil || expectedFailureID == failureID else { return false }
+        failedDestination = nil
+        self.failureID = nil
+        return true
+    }
 }
