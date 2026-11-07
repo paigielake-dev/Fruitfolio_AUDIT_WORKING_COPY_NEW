@@ -1,0 +1,32 @@
+{
+  "requirements": [
+    65,
+    84,
+    86
+  ],
+  "source_gap": "Old unkeyed task could start while scene was inactive before launchMode existed; scene callback then had nothing to pause. Completion created an unowned delayed readiness write after navigation.",
+  "implemented": "Gate initial intro task by active scene and restart admission on scene change; state machine requires explicit active admission before flags/audio/task. Remove detached350ms intro-to-Hub hook delay; synchronously permit existing Hub-owned cancellable600ms invitation after branding and active-route checks. No animated stage/duration/artwork changed.",
+  "verification": {
+    "executed": {
+      "portable_existing_logical_checkpoint_XCTest": 2,
+      "swift_syntax_files": 326,
+      "failures": 0,
+      "logs": [
+        "/tmp/fruitfolio_intro_admission_checkpoint_tests.log",
+        "/tmp/fruitfolio_intro_active_admission_syntax.log"
+      ],
+      "historical_workflow": "71 workflow tests passed after preceding game closure: /tmp/fruitfolio_star_closure_workflow.log; not rerun for this source change."
+    },
+    "not_run": [
+      "Actual Prompt04IntroTests including new inactive-start-then-active-start regression: requires Apple Combine/SwiftUI/UIKit/audio.",
+      "Apple launch suspended/inactive/active transitions, smooth-motion/reduced-motion timing, preload and tour invitation rendering."
+    ],
+    "remaining": [
+      "Exercise actual inactive initial launch: no assets/audio/progression until active, then one sequence starts.",
+      "Run existing Apple interruption/resume/skip tests plus new real state-machine admission regression. Portable logical checkpoint tests do not execute the Apple sequence.",
+      "Verify first-launch Hub tour invitation appears after Hub branding/owned delay and never while inactive or on another route.",
+      "Requirements65/84/86 retain broader app and Apple acceptance work; this batch does not close them."
+    ]
+  },
+  "pending_test": "Prompt04IntroTests.testInactiveInitialAdmissionLeavesSequenceUnstartedAndCanStartWhenActive is written, NOT_RUN; it asserts inactive admission does not set hasStarted or stage/progress/Hub availability, later active admission works and skip completes only once."
+}

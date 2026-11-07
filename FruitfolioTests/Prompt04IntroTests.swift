@@ -9,6 +9,38 @@ final class Prompt04IntroTests: XCTestCase {
     }
 
     @MainActor
+    func testInactiveInitialAdmissionLeavesSequenceUnstartedAndCanStartWhenActive() async throws {
+        let suite = "Prompt1BInactiveIntro." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        let machine = Prompt04IntroStateMachine()
+        defer {
+            machine.cancelSequence()
+            audio.stop(category: .music)
+            audio.stop(category: .rainAmbience)
+        }
+        var completions = 0
+        machine.start(mode: .firstLaunch, audioManager: audio, settings: settings, sceneActive: false) { _ in
+            XCTFail("An inactive initial admission must not own a completion")
+        }
+        await Task.yield()
+        XCTAssertFalse(machine.hasStarted)
+        XCTAssertEqual(machine.stage, .initialStillness)
+        XCTAssertFalse(machine.hubInteractionEnabled)
+        XCTAssertEqual(machine.bookArrivalProgress, 0)
+        machine.start(mode: .firstLaunch, audioManager: audio, settings: settings, sceneActive: true) { _ in
+            completions += 1
+        }
+        XCTAssertTrue(machine.hasStarted)
+        machine.skipToHub { _ in completions += 1 }
+        await Task.yield()
+        XCTAssertEqual(completions, 1)
+        XCTAssertEqual(machine.stage, .introComplete)
+    }
+
+    @MainActor
     func testReducedMotionFirstLaunchRetainsEveryImportantVisualStage() async throws {
         let suite = "Prompt1BReducedSequence.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
@@ -25,7 +57,7 @@ final class Prompt04IntroTests: XCTestCase {
             audio.stop(category: .rainAmbience)
         }
         let completed = expectation(description: "Same readable stages with reduced motion")
-        machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings) { _ in completed.fulfill() }
+        machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings, sceneActive: true) { _ in completed.fulfill() }
         await fulfillment(of: [completed], timeout: 10)
         for stage: Prompt04IntroStage in [.blankBookSettled, .logoRevealing, .brandedBookSettled,
                                          .slightlyOpenSettled, .fullyOpenSettled, .rightPageFocusing,
@@ -46,7 +78,7 @@ final class Prompt04IntroTests: XCTestCase {
         var observed: [Prompt04IntroStage] = []
         let observation = machine.$stage.sink { observed.append($0) }
         defer { observation.cancel(); machine.cancelSequence() }
-        machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings) { _ in
+        machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings, sceneActive: true) { _ in
             XCTFail("The cancelled original sequence must not complete")
         }
         machine.handleBackgrounding(audioManager: audio)
@@ -77,7 +109,7 @@ final class Prompt04IntroTests: XCTestCase {
             audio.stop(category: .music)
             audio.stop(category: .rainAmbience)
         }
-        machine.start(mode: .returningLaunch, audioManager: audio, settings: settings) { _ in
+        machine.start(mode: .returningLaunch, audioManager: audio, settings: settings, sceneActive: true) { _ in
             XCTFail("A background-cancelled task must not complete")
         }
         machine.handleBackgrounding(audioManager: audio)
@@ -98,7 +130,7 @@ final class Prompt04IntroTests: XCTestCase {
         let audio = AudioManager(settings: settings)
         let machine = Prompt04IntroStateMachine()
         var completions = 0
-        machine.start(mode: .firstLaunch, audioManager: audio, settings: settings) { _ in completions += 1 }
+        machine.start(mode: .firstLaunch, audioManager: audio, settings: settings, sceneActive: true) { _ in completions += 1 }
         machine.skipToHub { firstLaunch in
             XCTAssertTrue(firstLaunch)
             completions += 1

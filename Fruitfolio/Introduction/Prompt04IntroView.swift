@@ -34,8 +34,8 @@ struct Prompt04IntroView: View {
             .clipped()
         }
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
-        .task {
-            guard launchMode == nil else { return }
+        .task(id: scenePhase) {
+            guard scenePhase == .active, launchMode == nil else { return }
 
             let preloadResult = Prompt04AssetPreloader.preload()
             if !preloadResult.allCriticalAssetsReady {
@@ -50,6 +50,7 @@ struct Prompt04IntroView: View {
                 mode: resolvedMode,
                 audioManager: audioManager,
                 settings: settings,
+                sceneActive: scenePhase == .active,
                 completion: completeIntro(wasFirstLaunch:)
             )
         }
@@ -193,11 +194,10 @@ struct Prompt04IntroView: View {
         navigation.enterHub()
 
         if wasFirstLaunch && !appState.tutorialCompleted {
-            Task { @MainActor in
-                try? await Task.sleep(for: Prompt04IntroConfiguration.blueberryHookDelay)
-                guard !Task.isCancelled else { return }
-                appState.firstLaunchOnboardingHookReady = true
-            }
+            // This is permission for the Hub's owned, scene-aware invitation
+            // timer, not an intro animation. Never launch a detached delay that
+            // can publish while the app is inactive or after leaving this view.
+            appState.firstLaunchOnboardingHookReady = true
         }
     }
 

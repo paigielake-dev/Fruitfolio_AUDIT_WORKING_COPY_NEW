@@ -35,9 +35,10 @@ final class Prompt04IntroStateMachine: ObservableObject {
         mode: Prompt04LaunchMode,
         audioManager: AudioManager,
         settings: SettingsStore,
+        sceneActive: Bool,
         completion: @escaping @MainActor (_ wasFirstLaunch: Bool) -> Void
     ) {
-        guard !hasStarted else { return }
+        guard sceneActive, !hasStarted else { return }
 
         hasStarted = true
         activeLaunchMode = mode

@@ -28,7 +28,6 @@ enum Prompt04IntroConfiguration {
     static let hubReveal: Duration = .milliseconds(500)
     static let completionSettle: Duration = .milliseconds(90)
     static let logoSparkleSettle: Duration = .milliseconds(180)
-    static let blueberryHookDelay: Duration = .milliseconds(350)
 
     /// Scheduled first-launch duration, excluding preload time and suspension.
     static var firstLaunchDuration: Duration {

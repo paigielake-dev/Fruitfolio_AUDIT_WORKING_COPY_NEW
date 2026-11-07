@@ -3992,3 +3992,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_controller_engine_geometry_and_physics_XCTest": 118, "separate_shared_rule_catalog_XCTest": 3, "failures": 0, "logs": ["/tmp/fruitfolio_star_individual_closures.log", "/tmp/fruitfolio_star_rule_catalog_closure.log"], "scope": "Exact real Foundation production controller/engine/store/geometry. No fake Combine/SwiftUI SDK and no rendered iOS execution."}.
 - Next action: Continue next independent unmet requirement; wind/rain/obstacle and other original sections remain in scope.
 - Commit: containing commit for batch Founder-star-clause-complete-implementation-review.
+
+## Intro-active-initial-admission-and-owned-Hub-invitation
+
+- Parent checkpoint: 6a17bec9d02efd2f586a4aaba44b4b7151b4c68f.
+- Source-order requirements: [65, 84, 86].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Introduction/Prompt04IntroView.swift, Fruitfolio/Introduction/Prompt04IntroStateMachine.swift, Fruitfolio/Introduction/Prompt04IntroConfiguration.swift, development_workflow/INTRO_INITIAL_SCENE_ADMISSION.json.
+- Gate initial intro task by active scene and restart admission on scene change; state machine requires explicit active admission before flags/audio/task. Remove detached350ms intro-to-Hub hook delay; synchronously permit existing Hub-owned cancellable600ms invitation after branding and active-route checks. No animated stage/duration/artwork changed.
+- Tests added/updated: FruitfolioTests/Prompt04IntroTests.swift, FruitfolioTests/Prompt1BIntroCheckpointTests.swift.
+- Verification: {"portable_existing_logical_checkpoint_XCTest": 2, "swift_syntax_files": 326, "failures": 0, "logs": ["/tmp/fruitfolio_intro_admission_checkpoint_tests.log", "/tmp/fruitfolio_intro_active_admission_syntax.log"], "historical_workflow": "71 workflow tests passed after preceding game closure: /tmp/fruitfolio_star_closure_workflow.log; not rerun for this source change."}.
+- Next action: Continue independent required functionality and source-grounded clause reconciliation across all parts; preserve outstanding Apple/model/clinical dependencies.
+- Commit: containing commit for batch Intro-active-initial-admission-and-owned-Hub-invitation.
