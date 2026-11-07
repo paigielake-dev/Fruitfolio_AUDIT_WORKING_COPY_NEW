@@ -56,6 +56,12 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
                 // source paragraph, not invented medical fixture content.
                 XCTAssertTrue(limitations.originalText.contains("AMH does not guarantee IVF success."))
                 XCTAssertTrue(limitations.originalText.contains("AMH does not confirm ovulation."))
+                let overview = try XCTUnwrap(article.excerpt(for: .overview))
+                let influences = try XCTUnwrap(article.excerpt(for: .measurementInfluences))
+                XCTAssertEqual(overview.noteID, "note_638477e8908b98b245971d44")
+                XCTAssertEqual(influences.noteID, overview.noteID)
+                XCTAssertTrue(overview.originalText.contains("anti-müllerian hormone, or AMH, is a hormone made by cells inside ovarian follicles."))
+                XCTAssertTrue(influences.originalText.contains("AMH naturally changes with age."))
             }
             for excerpt in article.excerpts {
                 let note = try XCTUnwrap(notes[excerpt.noteID])

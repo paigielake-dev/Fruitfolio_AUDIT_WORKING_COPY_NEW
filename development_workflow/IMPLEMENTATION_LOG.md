@@ -4124,3 +4124,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 1058, "Swift_Testing": 21, "syntax_files": 326, "failures": 0}.
 - Next action: Review missing hormone aspect source matches individually, then continue independent incomplete original and founder requirements.
 - Commit: containing commit for batch Hormone-seven-founder-aspects-qualified-source-coverage.
+
+## AMH-existing-original-definition-and-age-factor-retrieval
+
+- Parent checkpoint: d6890253ce058e1e449f287b7371cd9698cb7d32.
+- Source-order requirements: [256, 257, 258, 262, 443, 444].
+- Separate founder additions: ['SPEC-4.9.7'].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryProvider.swift, development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json, development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json.
+- Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes.
+- Tests added/updated: FruitfolioTests/Prompt1BHormoneLibraryTests.swift.
+- Verification: {"focused_hormone_XCTest": 14, "failures": 0, "log": "/tmp/fruitfolio_amh_original_definition_factor.log"}.
+- Next action: Review missing hormone aspect source matches individually, then continue independent incomplete original and founder requirements.
+- Commit: containing commit for batch AMH-existing-original-definition-and-age-factor-retrieval.

@@ -68,12 +68,12 @@ nonisolated enum FruitfolioHormoneLibraryScope {
         case .overview:
             // Require an actual named-hormone definition, not another hormone's
             // definition elsewhere in the same paragraph or a test-value claim.
-            let definition = #"(?:\s+hormone)?(?:\s*\([^)]{1,40}\))?\s*(?:(?:is|are)\s+|:\s*)(?:(?:a|an|the)\s+)?(?:(?:type|form|kind|member)\s+of\s+(?:the\s+)?)?(?:(?:main|major|primary|principal|predominant|important|gonadal|pituitary|reproductive|sex|steroid|peptide|protein|glycoprotein|polypeptide|anabolic)\s+){0,5}(?:hormones?|androgens?|estrogens?|gonadotropins?|steroids?|chemical\s+messengers?)\b"#
+            let definition = #"(?:\s+hormone)?(?:\s*\([^)]{1,40}\))?\s*,?\s*(?:(?:is|are)\s+|:\s*)(?:(?:a|an|the)\s+)?(?:(?:type|form|kind|member)\s+of\s+(?:the\s+)?)?(?:(?:main|major|primary|principal|predominant|important|gonadal|pituitary|reproductive|sex|steroid|peptide|protein|glycoprotein|polypeptide|anabolic)\s+){0,5}(?:hormones?|androgens?|estrogens?|gonadotropins?|steroids?|chemical\s+messengers?)\b"#
             return FruitfolioHormoneResearchMatch.makeMatcher(for: hormone,
                 includeClassAliases: false, followingPattern: definition)
         case .measurementInfluences:
             let factors = #"\b(?:stress|sleep|exercise|age|aging|cycle|ovulation|follicular|luteal|pregnan\w*|post[\s-]*partum|lactat\w*|breastfeed\w*|menopause|perimenopause|medications?|drugs?|contracept\w*|therapy|assays?|methods?|laborator\w*|timing|time|morning|evening|fasting|meals?|illness|thyroid|pituitary|pcos)\b"#
-            let modifiers = #"(?:(?:can|may|might|often|normally|usually|typically|also|be|is|are|does|do|not|will)\s+){0,5}"#
+            let modifiers = #"(?:(?:can|may|might|often|normally|usually|typically|naturally|also|be|is|are|does|do|not|will)\s+){0,5}"#
             let levels = #"(?:\s+hormone)?(?:\s*\([^)]{1,40}\))?(?:\s+(?:levels?|concentrations?|results?)){0,2}"#
             let change = #"(?:rise[sn]?|rising|surges?|falls?|increase[sd]?|decrease[sd]?|varies|vary|fluctuat\w*|peaks?|changes?|depend\w*|affected|influenced|altered|elevated|lowered|higher|lower)\b"#
             let connection = #"\s+(?:(?:slightly|substantially|temporarily|significantly)\s+){0,2}(?:in|with|during|after|before|by|over|following|throughout|around|across|under|because\s+of|depending\s+on|in\s+response\s+to|due\s+to)\s+(?:the\s+)?(?:(?:menstrual|daily|physical|intense|heavy|chronic|acute|different|certain|some|normal|early|late|prolonged|hormonal|reproductive)\s+){0,3}"#
