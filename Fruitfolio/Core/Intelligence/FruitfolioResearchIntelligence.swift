@@ -1092,7 +1092,7 @@ final class FruitfolioResearchIntelligenceEngine:
     ) -> String {
         // Context has already been restored from the original paragraph table.
         // Do not clip at a character limit and accidentally remove a qualifier.
-        let excerpts = notes.prefix(3).map { FruitfolioSemanticMarkup.markdown([.init(text: $0.text)]) }.filter { !$0.isEmpty }
+        let excerpts = notes.prefix(3).map { FruitfolioSemanticPolicy.sourceMarkup($0.text, serious: safety.requiresSeriousTone) }.filter { !$0.isEmpty }
         return FruitfolioCanonicalAnswerVoice.compose(excerpts: excerpts,
             hasUnansweredParts: !coverage.unsupportedClaims.isEmpty || !coverage.partiallySupportedClaims.isEmpty,
             safety: safety)

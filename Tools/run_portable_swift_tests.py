@@ -105,6 +105,7 @@ SOURCES = [
     'Fruitfolio/Saved Library/Prompt10SavedLibraryAssets.swift',
     'Fruitfolio/Core/Persistence/FruitfolioJSONFieldCoverage.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift',
+    'Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift',

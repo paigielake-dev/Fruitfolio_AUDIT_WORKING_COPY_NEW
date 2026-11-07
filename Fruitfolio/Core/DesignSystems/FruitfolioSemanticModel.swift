@@ -96,6 +96,20 @@ enum FruitfolioSemanticPolicy {
     Combine styles only when their independent meanings both apply. Bold+underline is rare; italic+underline is very rare. Triple emphasis is reserved for the exact words not, never or every, and only when the context truly warrants that emphasis. Never decorate a whole paragraph. Evaluate the whole passage and choose the smallest useful set of emphasized phrases; no per-sentence or per-paragraph quotas. Serious or safety-critical content must remain calm, with restrained informational emphasis and no playful vocal stress. Preserve all scientific claims, uncertainty, numbers, units and evidence IDs exactly; formatting must never change substantive meaning.
     """
 
+    /// Review is tied to the complete source context, never to word occurrence.
+    /// This method cannot add or omit source words, quantities or qualifiers.
+    static func reviewedSourceSpans(_ original: String, serious: Bool = false) -> [FruitfolioSemanticSpan] {
+        guard let review = FruitfolioReviewedSemanticContexts.passages.first(where: { $0.originalText.utf8.elementsEqual(original.utf8) }),
+              review.spans.map(\.text).joined().utf8.elementsEqual(original.utf8) else {
+            return [.init(text: original)]
+        }
+        return normalized(review.spans, serious: serious)
+    }
+
+    static func sourceMarkup(_ original: String, serious: Bool = false) -> String {
+        FruitfolioSemanticMarkup.markdown(reviewedSourceSpans(original, serious: serious))
+    }
+
     static func normalized(_ spans: [FruitfolioSemanticSpan], serious: Bool = false) -> [FruitfolioSemanticSpan] {
         spans.map { span in
             var emphasis = span.emphasis

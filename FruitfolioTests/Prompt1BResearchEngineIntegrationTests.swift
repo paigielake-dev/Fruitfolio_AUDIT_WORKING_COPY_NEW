@@ -26,6 +26,41 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json"))
         return FruitfolioResearchPackageStore(resourceURL: url)
     }
+    func testActualFallbackAndGameExplanationUseReviewedSourceRolesWithOriginalCitations() async throws {
+        let complete = try await store().load()
+        let review = try XCTUnwrap(FruitfolioReviewedSemanticContexts.passages.first { $0.noteID == "note_ca00d1045d9609459ec60f03" })
+        let note = try XCTUnwrap(complete.researchNoteChunks.first { $0.chunkID == review.noteID })
+        let sources = complete.sources.filter { note.sourceIDs.contains($0.sourceID) }
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        var subset = FruitfolioResearchPackage(schemaVersion: 1, contentVersion: complete.contentVersion,
+            generatedFrom: "Actual corpus subset for formatting regression", generationNote: "Original facts and citations unchanged; not new clinical evidence",
+            researchNoteChunks: [note], sources: sources, sourceChunks: [])
+        if let id = note.sourceParagraphID { subset.sourceParagraphs = [id: review.originalText] }
+        let url = directory.appendingPathComponent("research.json")
+        try JSONEncoder().encode(subset).write(to: url)
+        let packageStore = FruitfolioResearchPackageStore(resourceURL: url)
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: packageStore, languageModel: Prompt1BUnavailableSynthesis())
+        let answer = try await engine.answer(question: "apple slices", conversation: [])
+        XCTAssertEqual(answer.answerPath, .retrievalFallback)
+        XCTAssertTrue(answer.answerText.contains("**apple slices**"))
+        XCTAssertTrue(answer.answerText.contains("**peanut butter**"))
+        XCTAssertEqual(Set(answer.sourceIDs), Set(note.sourceIDs))
+        let generated = try await FruitfolioResearchIntelligenceEngine(packageStore: packageStore,
+            languageModel: Prompt1BSingleEvidenceSynthesis()).answer(question: "apple slices", conversation: [])
+        XCTAssertEqual(generated.answerPath, .generated)
+        XCTAssertTrue(generated.answerText.contains("**apple slices**"))
+        XCTAssertTrue(generated.answerText.contains("**peanut butter**"))
+        XCTAssertEqual(Set(generated.sourceIDs), Set(note.sourceIDs))
+        let game = try await Prompt28BundledResearchProvider(packageStore: packageStore).question(
+            topic: "apple slices", normalizedTopic: "apple slices", difficulty: .easy, excludingQuestionIDs: [])
+        XCTAssertEqual(game.sourceExcerpt, review.originalText)
+        XCTAssertTrue(game.explanation.contains("**apple slices**"))
+        XCTAssertTrue(game.explanation.contains("**peanut butter**"))
+        XCTAssertEqual(Set((game.sourceRecords ?? []).map(\.id)), Set(note.sourceIDs))
+    }
+
     func testActualResearchEngineProvidesCitedFallbackWhenLocalGenerationIsUnavailable() async throws {
         let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: Prompt1BUnavailableSynthesis())
         let answer = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [])

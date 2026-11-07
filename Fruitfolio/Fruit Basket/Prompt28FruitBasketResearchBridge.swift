@@ -140,7 +140,7 @@ actor Prompt28BundledResearchProvider: Prompt28ResearchProviding {
                     category: Prompt28ExcerptQuestionPresentation.category, educationalDifficulty: difficulty,
                     questionText: Prompt28ExcerptQuestionPresentation.prefix + cloze.text,
                     answerOptions: cloze.options, correctAnswerID: cloze.correctID,
-                    explanation: FruitfolioSemanticMarkup.markdown([.init(text: "the omitted word is “\(cloze.originalWord)”.\n\noriginal library excerpt:\n\n" + note.text)]),
+                    explanation: FruitfolioSemanticMarkup.markdown([.init(text: "the omitted word is “\(cloze.originalWord)”.\n\noriginal library excerpt:\n\n")] + FruitfolioSemanticPolicy.reviewedSourceSpans(note.text, serious: serious)),
                     sourceIDs: sources.map(\.id), sourceTitles: sources.map(\.title),
                     catchConceptID: "visual-starred-fruit", catchRule: "catch starred fruit; let fruit without a star pass. standalone stars bank one star pass each. this is a visual game rule, not a medical or nutrition claim about the fruit.",
                     goodFruitIDs: [.strawberry, .blueberry, .orange, .apple, .pear],

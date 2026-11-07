@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "ea93b243366fe1a59e73e8a53e2b4cf67e3c4f35",
+  "current_HEAD": "24e1834f4a91313575e80271d59bd93365ad06cc",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
   "current_requirement": 47,
-  "current_implementation_batch": "Hormone-library-source-grounded-role-and-limitations",
+  "current_implementation_batch": "Reviewed-context-semantics-on-substantive-fallbacks",
   "completed_requirements": [
     206,
     210
@@ -494,12 +494,16 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
-    "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
-    "Tools/__pycache__/run_portable_swift_tests.cpython-312.pyc",
-    "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json",
+    "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+    "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+    "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
+    "Tools/run_portable_swift_tests.py",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
+    "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -512,61 +516,87 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Actual-corpus focused7XCTest passed after stronger biological-role assertion exposed and corrected an initial failure",
+    "26focused actual source/engine/selection regressions passed",
+    "Meaningful shared evidence boundary checkpoint:978portable/1003native CPU XCTest+21SwiftTesting each passed",
+    "1focused final real normal/fallback/game integration test passed",
     "71workflow checks passed",
-    "315changed Swift syntax-only parses0errors",
-    "Read actual complete approved source paragraphs and preserved exact warning/role statements",
+    "316changed Swift syntax-only parses0errors",
+    "Actual approved source paragraph/role/UTF8/citation identity review",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_focused_XCTest": 7,
-    "failures": 0,
+    "focused_XCTest": 26,
+    "portable_full_XCTest": 978,
+    "native_CPU_full_XCTest": 1003,
+    "SwiftTesting_each_full": 21,
+    "final_normal_fallback_game_pipeline_XCTest": 1,
     "workflow_checks": 71,
-    "changed_Swift_syntax_only": 315,
-    "source_reviewed_examples": [
-      "AMH measurement limitations",
-      "LH surge biological function",
-      "Specific estradiol/E2 follicular-development role"
+    "changed_Swift_syntax_only": 316,
+    "reviewed_whole_passages": 5,
+    "portable_exit_code": 0,
+    "native_exit_code": 0,
+    "Apple_tests_executed": 0,
+    "official_MADLAD_verified": false,
+    "clinical_approval_claimed": false,
+    "unnumbered_founder_evidence": [
+      {
+        "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+        "source_start_line": 416,
+        "source_end_line": 416,
+        "paragraph_sha256": "86d3d3a192889c090009c5b5ed943038cc3ac8a9550239741735f6d66e9d1beb",
+        "implementation_evidence": "Shared authority and exact-context editorial annotations; partial corpus coverage, no keyword styling",
+        "remaining": "All applicable contexts and actual Apple/clinical/language acceptance"
+      },
+      {
+        "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+        "source_start_line": 431,
+        "source_end_line": 431,
+        "paragraph_sha256": "b8b804175daaf885003e482ec28c15819d45f120216dcbebb374dbe902ce5a0e",
+        "implementation_evidence": "Shared authority and exact-context editorial annotations; partial corpus coverage, no keyword styling",
+        "remaining": "All applicable contexts and actual Apple/clinical/language acceptance"
+      },
+      {
+        "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+        "source_start_line": 434,
+        "source_end_line": 434,
+        "paragraph_sha256": "15dca100461cb3c55574f64eaf6144d3c7579eeafd5cb27e26f35d6d26cb2869",
+        "implementation_evidence": "Shared authority and exact-context editorial annotations; partial corpus coverage, no keyword styling",
+        "remaining": "All applicable contexts and actual Apple/clinical/language acceptance"
+      }
     ],
-    "SwiftTesting_selected": 0,
-    "matched_existing_source_buckets": 32,
-    "missing_existing_source_buckets": 3,
-    "clinical_completeness_certified": false,
-    "initial_biological_role_failure": "Captured in role_review_final.log; corrected and final7passed",
-    "incremental_test_workspace_manifest": "/tmp/fruitfolio_hormone_incremental_workspace.json",
     "log_receipts": {
-      "/tmp/fruitfolio_hormone_library_amh_limits.log": {
-        "bytes": 32784,
-        "sha256": "79774a7a6cced2134d5f7cf588da850456ef6d5152fbb349ea42fda709cf2ad2"
+      "/tmp/fruitfolio_semantic_review_focused.log": {
+        "bytes": 17138,
+        "sha256": "896cc8dbe093cd108786ef3b3dcc4874cee0940c9793036a9773d2a5159f171d"
       },
-      "/tmp/fruitfolio_hormone_library_contextual_final.log": {
-        "bytes": 32788,
-        "sha256": "dde80d1fdae695627ff7450a33518809655a72bd8015a1c0a71b833248068585"
+      "/tmp/fruitfolio_semantic_review_context_final.log": {
+        "bytes": 17031,
+        "sha256": "682d9469e845a762164144d9ea9cbad425a1a070f71e210741fce2581c6e8ffe"
       },
-      "/tmp/fruitfolio_hormone_library_source_review_final.log": {
-        "bytes": 32815,
-        "sha256": "4c98f1dd7456102d8e49acdde9234036ca95f43a451747df51d6f31f6646eba3"
+      "/tmp/fruitfolio_semantic_review_full_portable.log": {
+        "bytes": 286781,
+        "sha256": "c772c574308823c7faf80f4e332d4bedda3ae7e41694d8ba4c11aac282b88090"
       },
-      "/tmp/fruitfolio_hormone_library_role_review_final.log": {
-        "bytes": 33144,
-        "sha256": "c6a0d2ec4186ef273c57cd330b4130bcb8feb03945d34210491858d3383c5dac"
+      "/tmp/fruitfolio_semantic_review_full_native.log": {
+        "bytes": 1290187,
+        "sha256": "12defb8a6c351800f5469784bbff98c6a9291118b1027dca853c6a7a2b5f1286"
       },
-      "/tmp/fruitfolio_hormone_library_role_incremental_final.log": {
-        "bytes": 10483,
-        "sha256": "1c67b4631f0b5656eb75016a2e2471b16af2ccaebe2d9779446b430ddb993e4b"
+      "/tmp/fruitfolio_semantic_review_normal_path.log": {
+        "bytes": 7298,
+        "sha256": "c4116606022cc4b0cefa69719072e792204c94c7dbfd698b5b0fd92103477f16"
       },
-      "/tmp/fruitfolio_hormone_role_final_syntax.log": {
+      "/tmp/fruitfolio_semantic_review_final_syntax.log": {
         "bytes": 106,
-        "sha256": "164012ba6ce6839f505801332a5ee14cfae9ae698468ae87dcbd13348ae9d3cc"
+        "sha256": "fc16b35df58445cfcdb7ced16f47d4d788b5140420fe4f04ddd8349ae627eff3"
       },
-      "/tmp/fruitfolio_hormone_role_final_workflow.log": {
+      "/tmp/fruitfolio_semantic_review_workflow.log": {
         "bytes": 171,
-        "sha256": "3aa531a38daf7bd9380b57696f4ab0713f9e7810b41ad448c0a61e47add5fadd"
+        "sha256": "23e362386843545ab9c0a1af6807633d5a6c7eb4ffbd804289b626d7c215662d"
       }
     }
   },
-  "next_exact_implementation_action": "Continue other original/founder functional gaps and source-grounded reconciliation. Inspect substantive fallback semantic annotations (plain spans currently retained) against universal meaning-based styling; do not infer emphasis from keyword lists. Preserve open HormoneLibrary clinical/aspect acceptance and3source gaps. No source-file/test-count status promotion.",
-  "updated_at": "2026-11-07T08:53:41.822851+00:00",
+  "next_exact_implementation_action": "Continue whole-requirement/source-grounded reconciliation across all parts. Expand reviewed semantic context coverage where actual full passages support explicit roles, without treating5examples as complete. Preserve remaining HormoneLibrary content/clinical gaps and Apple/official-model dependencies. No pushes/merges or blanket status promotion.",
+  "updated_at": "2026-11-07T09:15:31.018706+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -576,33 +606,31 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_focused_XCTest": 7,
-      "failures": 0,
+      "focused_XCTest": 26,
+      "portable_full_XCTest": 978,
+      "native_CPU_full_XCTest": 1003,
+      "SwiftTesting_each_full": 21,
+      "final_normal_fallback_game_pipeline_XCTest": 1,
       "workflow_checks": 71,
-      "changed_Swift_syntax_only": 315,
-      "source_reviewed_examples": [
-        "AMH measurement limitations",
-        "LH surge biological function",
-        "Specific estradiol/E2 follicular-development role"
-      ]
+      "changed_Swift_syntax_only": 316,
+      "reviewed_whole_passages": 5,
+      "portable_exit_code": 0,
+      "native_exit_code": 0
     },
     "not_run": [
-      "Native followup rerun;14focused native tests passed at parent ea93b24",
-      "Apple SDK build/UI/VoiceOver/native hormone selection",
-      "Clinical completeness of7founder aspects for each hormone",
-      "Official MADLAD inference and translation-quality acceptance"
+      "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+      "Official MADLAD and clinical/translation acceptance"
     ],
     "remaining": [
-      "Testosterone measurement limitations/medical guidance and prolactin measurement limitations remain empty in lexical retrieval; review specific approved source adequacy before assigning a genuine external-resource blocker",
-      "Review every founder aspect individually;32matched buckets are not complete or clinically verified content",
-      "Complete Apple and independent clinical/source acceptance; source/quoted-statement tests do not certify all medical content"
+      "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+      "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+      "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+      "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
     ]
   },
   "current_checklist_section": "Part 1 \u2014 Universal app-wide systems",
-  "last_recorded_batch_part": 5,
-  "last_supplemental_requirements": [
-    "SPEC-4.9.7"
-  ],
+  "last_recorded_batch_part": 1,
+  "last_supplemental_requirements": [],
   "implemented_requirements": [
     170,
     171,
@@ -739,6 +767,32 @@
       "scope": "MAIN CHANGE universal blur; Hub tour remains exempt",
       "implementation_evidence": "Shared black14percent visual backdrop replaces cream/black and72percent variants; common blur spec/radius retained; no Hub-tour changes",
       "remaining": "Apple rendering/lifecycle and full remaining modal source acceptance; source alone is not verified runtime"
+    },
+    {
+      "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+      "source_start_line": 416,
+      "source_end_line": 416,
+      "paragraph_sha256": "86d3d3a192889c090009c5b5ed943038cc3ac8a9550239741735f6d66e9d1beb",
+      "implementation_evidence": "Shared authority and exact-context editorial annotations; partial corpus coverage, no keyword styling",
+      "remaining": "All applicable contexts and actual Apple/clinical/language acceptance"
+    },
+    {
+      "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+      "source_start_line": 431,
+      "source_end_line": 431,
+      "paragraph_sha256": "b8b804175daaf885003e482ec28c15819d45f120216dcbebb374dbe902ce5a0e",
+      "implementation_evidence": "Shared authority and exact-context editorial annotations; partial corpus coverage, no keyword styling",
+      "remaining": "All applicable contexts and actual Apple/clinical/language acceptance"
+    },
+    {
+      "source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+      "source_start_line": 434,
+      "source_end_line": 434,
+      "paragraph_sha256": "15dca100461cb3c55574f64eaf6144d3c7579eeafd5cb27e26f35d6d26cb2869",
+      "implementation_evidence": "Shared authority and exact-context editorial annotations; partial corpus coverage, no keyword styling",
+      "remaining": "All applicable contexts and actual Apple/clinical/language acceptance"
     }
-  ]
+  ],
+  "incremental_portable_check_workspace_manifest": "/tmp/fruitfolio_hormone_incremental_workspace.json",
+  "incremental_portable_check_command": "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py [test-filter]"
 }

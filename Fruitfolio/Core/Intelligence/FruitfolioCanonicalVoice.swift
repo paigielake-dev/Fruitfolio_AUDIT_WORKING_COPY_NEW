@@ -48,7 +48,7 @@ nonisolated enum FruitfolioEvidenceCopyPolicy {
         if normalize(generated) == normalize(original) {
             // Raw scientific operators/underscores are literal source text,
             // not an invitation for Markdown to reinterpret the expression.
-            return FruitfolioSemanticMarkup.markdown([.init(text: original)])
+            return FruitfolioSemanticPolicy.sourceMarkup(original, serious: true)
         }
         guard normalize(plainCanonicalMarkup(generated)) == normalize(original) else { return nil }
         return generated
