@@ -90,7 +90,7 @@ struct Prompt25FertilizationView: View {
                         .frame(width: 22, height: 22)
                         .accessibilityHidden(true)
 
-                    Text("back")
+                    FruitfolioFixedText(source: "back", font: prompt25Font(13, relativeTo: .subheadline), color: Prompt25Palette.burgundy)
                 }
                 .font(prompt25Font(13, relativeTo: .subheadline))
                 .foregroundStyle(Prompt25Palette.burgundy)
@@ -100,24 +100,17 @@ struct Prompt25FertilizationView: View {
             .buttonStyle(
                 Prompt25SoftPressButtonStyle(reduceMotion: reduceMotion)
             )
-            .accessibilityLabel("Back")
+            .modifier(FruitfolioFixedAccessibilityLabel(source: "Back"))
 
             Spacer(minLength: 16)
 
-            Text("fertilization")
-                .font(prompt25Font(19, relativeTo: .headline))
-                .fontWeight(.bold)
-                .foregroundStyle(Prompt25Palette.burgundy)
+            FruitfolioFixedText(source: "fertilization", font: (prompt25Font(19, relativeTo: .headline)).weight(.bold), color: Prompt25Palette.burgundy, serious: true)
                 .accessibilityAddTraits(.isHeader)
         }
     }
 
     private var chapterIntro: some View {
-        Text(
-            "explore the general biological stages from an oocyte through early preimplantation development."
-        )
-        .font(prompt25Font(13, relativeTo: .body))
-        .foregroundStyle(Prompt25Palette.burgundy.opacity(0.72))
+        FruitfolioFixedText(source: "explore the general biological stages from an oocyte through early preimplantation development.", font: prompt25Font(13, relativeTo: .body), color: Prompt25Palette.burgundy.opacity(0.72), serious: true)
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: 520, alignment: .leading)
     }
@@ -144,24 +137,16 @@ struct Prompt25FertilizationView: View {
 
     private var stageHeader: some View {
         VStack(spacing: 6) {
-            Text(viewModel.stage.indicatorText)
-                .font(prompt25Font(11, relativeTo: .caption))
-                .fontWeight(.semibold)
+            FruitfolioFixedText(source: viewModel.stage.indicatorText, protectedLiterals: ["1", "2", "3", "4", "5", "6"], font: (prompt25Font(11, relativeTo: .caption)).weight(.semibold), color: Prompt25Palette.burgundy.opacity(0.56), serious: true)
                 .tracking(0.7)
-                .foregroundStyle(Prompt25Palette.burgundy.opacity(0.56))
 
-            Text(viewModel.stage.title)
-                .font(prompt25Font(27, relativeTo: .title2))
-                .fontWeight(.bold)
-                .foregroundStyle(Prompt25Palette.burgundy)
+            FruitfolioFixedText(source: viewModel.stage.title, font: (prompt25Font(27, relativeTo: .title2)).weight(.bold), color: Prompt25Palette.burgundy, serious: true)
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityFocused($stageHeadingFocused)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(
-            "Stage \(viewModel.stage.order) of 6. \(viewModel.stage.title)."
-        )
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Stage \(viewModel.stage.order) of 6. \(viewModel.stage.title).", protectedLiterals: [String(viewModel.stage.order), "6"]))
     }
 
     private func primaryIllustration(maxWidth: CGFloat) -> some View {
@@ -188,9 +173,7 @@ struct Prompt25FertilizationView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: 560, alignment: .leading)
         case .unavailable:
-            Text("approved educational content isn’t available right now.")
-                .font(prompt25Font(13, relativeTo: .body))
-                .foregroundStyle(Prompt25Palette.burgundy.opacity(0.68))
+            FruitfolioFixedText(source: "approved educational content isn’t available right now.", font: prompt25Font(13, relativeTo: .body), color: Prompt25Palette.burgundy.opacity(0.68), serious: true)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: 520)
@@ -211,14 +194,7 @@ struct Prompt25FertilizationView: View {
                         viewModel.isExpanded.toggle()
                     }
                 } label: {
-                    Text(
-                        viewModel.isExpanded
-                            ? "show less"
-                            : "learn a little more"
-                    )
-                    .font(prompt25Font(13, relativeTo: .subheadline))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Prompt25Palette.burgundy)
+                    FruitfolioFixedText(source: viewModel.isExpanded ? "show less" : "learn a little more", font: (prompt25Font(13, relativeTo: .subheadline)).weight(.semibold), color: Prompt25Palette.burgundy, serious: true)
                     .frame(minHeight: 44)
                 }
                 .buttonStyle(
@@ -237,23 +213,20 @@ struct Prompt25FertilizationView: View {
                 Button {
                     onSources(viewModel.stage)
                 } label: {
-                    Text(
-                        viewModel.content.sourceCount > 0
-                            ? "sources · \(viewModel.content.sourceCount)"
-                            : "sources"
-                    )
+                    FruitfolioFixedText(source: viewModel.content.sourceCount > 0 ? "sources · \(viewModel.content.sourceCount)" : "sources",
+                        protectedLiterals: [String(viewModel.content.sourceCount)], font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.78))
                 }
 
                 Button {
                     onAsk(viewModel.stage)
                 } label: {
-                    Text("ask")
+                    FruitfolioFixedText(source: "ask", font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.78))
                 }
 
                 Button {
                     onSave(viewModel.stage)
                 } label: {
-                    Text("save")
+                    FruitfolioFixedText(source: "save", font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.78))
                 }
             }
             .font(prompt25Font(12, relativeTo: .footnote))
@@ -274,10 +247,7 @@ struct Prompt25FertilizationView: View {
         VStack(alignment: .leading, spacing: 14) {
             ForEach(viewModel.content.expandedSections) { section in
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(section.heading)
-                        .font(prompt25Font(13, relativeTo: .headline))
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Prompt25Palette.burgundy)
+                    FruitfolioFixedText(source: section.heading, font: (prompt25Font(13, relativeTo: .headline)).weight(.semibold), color: Prompt25Palette.burgundy, serious: true)
 
                     FruitfolioTranslatedText(source: section.body, font: prompt25Font(13, relativeTo: .body), color: Prompt25Palette.burgundy.opacity(0.80))
                         .font(prompt25Font(13, relativeTo: .body))
@@ -299,9 +269,7 @@ struct Prompt25FertilizationView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: 120, maxHeight: 120)
-                            .accessibilityLabel(
-                                item.accessibilityLabel
-                            )
+                            .modifier(FruitfolioFixedAccessibilityLabel(source: item.accessibilityLabel))
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -322,15 +290,7 @@ struct Prompt25FertilizationView: View {
                     viewModel.showsRelatedTopics.toggle()
                 }
             } label: {
-                Text(
-                    viewModel.showsRelatedTopics
-                        ? "hide related topics"
-                        : "related topics"
-                )
-                .font(prompt25Font(12, relativeTo: .footnote))
-                .foregroundStyle(
-                    Prompt25Palette.burgundy.opacity(0.74)
-                )
+                FruitfolioFixedText(source: viewModel.showsRelatedTopics ? "hide related topics" : "related topics", font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.74), serious: true)
                 .frame(minHeight: 44)
             }
             .buttonStyle(
@@ -368,16 +328,10 @@ struct Prompt25FertilizationView: View {
                                 .accessibilityHidden(true)
                         }
 
-                        Text(topic.title)
-                            .font(
-                                prompt25Font(
+                        FruitfolioFixedText(source: topic.title, font: prompt25Font(
                                     12,
                                     relativeTo: .subheadline
-                                )
-                            )
-                            .foregroundStyle(
-                                Prompt25Palette.burgundy
-                            )
+                                ), color: Prompt25Palette.burgundy, serious: true)
 
                         Spacer(minLength: 8)
                     }
@@ -390,7 +344,7 @@ struct Prompt25FertilizationView: View {
                         reduceMotion: reduceMotion
                     )
                 )
-                .accessibilityLabel(topic.title)
+                .modifier(FruitfolioFixedAccessibilityLabel(source: topic.title))
             }
         }
         .frame(maxWidth: 420)
@@ -413,9 +367,7 @@ struct Prompt25FertilizationView: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(
-            "Page \(viewModel.stage.order) of 6"
-        )
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Page \(viewModel.stage.order) of 6", protectedLiterals: [String(viewModel.stage.order), "6"]))
         .offset(x: swipeCueOffset)
     }
 
@@ -448,11 +400,7 @@ struct Prompt25FertilizationView: View {
                     navigateNext()
                 }
             } else {
-                Text("end of chapter")
-                    .font(prompt25Font(12, relativeTo: .footnote))
-                    .foregroundStyle(
-                        Prompt25Palette.burgundy.opacity(0.56)
-                    )
+                FruitfolioFixedText(source: "end of chapter", font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.56), serious: true)
                     .frame(minHeight: 44)
             }
         }
@@ -582,15 +530,11 @@ private struct Prompt25NavigationButton: View {
                     icon
                 }
 
-                Text(title)
-                    .font(
-                        Font.custom(
+                FruitfolioFixedText(source: title, font: Font.custom(
                             "Chalkboard SE",
                             size: 13,
                             relativeTo: .subheadline
-                        )
-                    )
-                    .foregroundStyle(Prompt25Palette.burgundy)
+                        ), color: Prompt25Palette.burgundy, serious: true)
 
                 if !imageFirst {
                     icon
@@ -629,7 +573,7 @@ private struct Prompt25LoadingCopy: View {
                 .frame(height: 9)
         }
         .frame(maxWidth: 440)
-        .accessibilityLabel("Loading educational content")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Loading educational content"))
     }
 }
 

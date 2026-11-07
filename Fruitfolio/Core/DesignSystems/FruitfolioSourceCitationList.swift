@@ -21,8 +21,7 @@ struct FruitfolioSourceCitationList: View {
                 FruitfolioImage(id: .ask_source_pages)
                     .scaledToFit().frame(width: 28, height: 28)
                     .accessibilityHidden(true)
-                Text("sources ˚ ☆ ‧ ₊")
-                    .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline).bold())
+                FruitfolioFixedText(source: "sources ˚ ☆ ‧ ₊", protectedLiterals: ["˚ ☆ ‧ ₊"], font: .custom("Chalkboard SE", size: 15, relativeTo: .headline).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
                     .accessibilityAddTraits(.isHeader)
             }
             ForEach(sources) { source in
@@ -51,7 +50,8 @@ struct FruitfolioSourceCitationList: View {
                                 openSource(destination, sourceID: source.id)
                             }
                             .controlSize(.small)
-                            .accessibilityLabel(Text("open source: \(source.title)"))
+                            .modifier(FruitfolioFixedAccessibilityLabel(source: "open source"))
+                            .accessibilityValue(Text(verbatim: source.title))
                             .accessibilityIdentifier("sourceCitation.open.\(source.id)")
                             .accessibilityFocused($focusedSourceID, equals: source.id)
                         }

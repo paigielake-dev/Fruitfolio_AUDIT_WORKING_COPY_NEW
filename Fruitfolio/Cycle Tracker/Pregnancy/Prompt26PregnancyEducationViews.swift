@@ -61,12 +61,8 @@ private struct Prompt26PregnancyLandingView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("pregnancy")
-                        .font(.custom("Chalkboard SE", size: 30, relativeTo: .largeTitle).weight(.bold))
-                        .foregroundStyle(Prompt26Palette.burgundy)
-                    Text("A research-based guide to pregnancy biology, testing, development, prenatal care concepts, and the structures that support pregnancy.")
-                        .font(.body)
-                        .foregroundStyle(Prompt26Palette.burgundy.opacity(0.82))
+                    FruitfolioFixedText(source: "pregnancy", font: .custom("Chalkboard SE", size: 30, relativeTo: .largeTitle).weight(.bold), color: Prompt26Palette.burgundy, serious: true)
+                    FruitfolioFixedText(source: "A research-based guide to pregnancy biology, testing, development, prenatal care concepts, and the structures that support pregnancy.", font: .body, color: Prompt26Palette.burgundy.opacity(0.82), serious: true)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
@@ -112,12 +108,8 @@ private struct Prompt26TopicCard: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 5) {
-                Text(topic.title)
-                    .font(.custom("Chalkboard SE", size: 17, relativeTo: .headline).weight(.bold))
-                    .foregroundStyle(Prompt26Palette.burgundy)
-                Text(topic.subtitle)
-                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .subheadline))
-                    .foregroundStyle(Prompt26Palette.burgundy.opacity(0.75))
+                FruitfolioFixedText(source: topic.title, font: .custom("Chalkboard SE", size: 17, relativeTo: .headline).weight(.bold), color: Prompt26Palette.burgundy, serious: true)
+                FruitfolioFixedText(source: topic.subtitle, font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline), color: Prompt26Palette.burgundy.opacity(0.75), serious: true)
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -142,8 +134,8 @@ private struct Prompt26TopicCard: View {
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(topic.title). \(topic.subtitle)")
-        .accessibilityHint("Opens educational reference")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "\(topic.title). \(topic.subtitle)"))
+        .modifier(FruitfolioFixedAccessibilityHint(source: "Opens educational reference"))
     }
 }
 
@@ -169,12 +161,8 @@ private struct Prompt26PregnancyTopicView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 VStack(alignment: .leading, spacing: 7) {
-                    Text(model.topic.title)
-                        .font(.custom("Chalkboard SE", size: 30, relativeTo: .largeTitle).weight(.bold))
-                        .foregroundStyle(Prompt26Palette.burgundy)
-                    Text(model.topic.subtitle)
-                        .font(.body)
-                        .foregroundStyle(Prompt26Palette.burgundy.opacity(0.78))
+                    FruitfolioFixedText(source: model.topic.title, font: .custom("Chalkboard SE", size: 30, relativeTo: .largeTitle).weight(.bold), color: Prompt26Palette.burgundy, serious: true)
+                    FruitfolioFixedText(source: model.topic.subtitle, font: .body, color: Prompt26Palette.burgundy.opacity(0.78), serious: true)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
@@ -191,8 +179,10 @@ private struct Prompt26PregnancyTopicView: View {
                 )
 
                 if model.topic.id == .earlyDevelopment {
-                    Button("open fertilization education") {
+                    Button {
                         actions.openFertilizationEducation()
+                    } label: {
+                        FruitfolioFixedText(source: "open fertilization education", font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
                     }
                     .buttonStyle(Prompt26PaperButtonStyle())
                 }
@@ -240,21 +230,17 @@ private struct Prompt26ContentBody: View {
         case .idle, .loading:
             HStack(spacing: 10) {
                 ProgressView()
-                Text("opening approved research…")
-                    .font(.subheadline)
-                    .foregroundStyle(Prompt26Palette.burgundy.opacity(0.74))
+                FruitfolioFixedText(source: "opening approved research…", font: .subheadline, color: Prompt26Palette.burgundy.opacity(0.74), serious: true)
             }
             .accessibilityElement(children: .combine)
 
         case .unavailable:
             VStack(alignment: .leading, spacing: 12) {
-                Text("approved research is unavailable right now")
-                    .font(.custom("Chalkboard SE", size: 17, relativeTo: .headline).weight(.bold))
-                    .foregroundStyle(Prompt26Palette.burgundy)
-                Text("Fruitfolio won’t fill pregnancy medicine from unsupported model knowledge. Try again when the Research Library is available.")
-                    .font(.body)
-                    .foregroundStyle(Prompt26Palette.burgundy.opacity(0.76))
-                Button("try again", action: retry)
+                FruitfolioFixedText(source: "approved research is unavailable right now", font: .custom("Chalkboard SE", size: 17, relativeTo: .headline).weight(.bold), color: Prompt26Palette.burgundy, serious: true)
+                FruitfolioFixedText(source: "Fruitfolio won’t fill pregnancy medicine from unsupported model knowledge. Try again when the Research Library is available.", protectedLiterals: ["Fruitfolio"], font: .body, color: Prompt26Palette.burgundy.opacity(0.76), serious: true)
+                Button(action: retry) {
+                    FruitfolioFixedText(source: "try again", font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
+                }
                     .buttonStyle(Prompt26PaperButtonStyle())
             }
             .padding(16)
@@ -268,8 +254,10 @@ private struct Prompt26ContentBody: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 if !content.sections.isEmpty {
-                    Button(isExpanded ? "show less" : "learn more") {
+                    Button {
                         isExpanded.toggle()
+                    } label: {
+                        FruitfolioFixedText(source: isExpanded ? "show less" : "learn more", font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
                     }
                     .buttonStyle(Prompt26PaperButtonStyle())
 
@@ -277,9 +265,7 @@ private struct Prompt26ContentBody: View {
                         VStack(alignment: .leading, spacing: 18) {
                             ForEach(content.sections) { section in
                                 VStack(alignment: .leading, spacing: 7) {
-                                    Text(section.heading)
-                                        .font(.headline)
-                                        .foregroundStyle(Prompt26Palette.burgundy)
+                                    FruitfolioFixedText(source: section.heading, font: .headline, color: Prompt26Palette.burgundy, serious: true)
                                     FruitfolioTranslatedText(source: section.body, protectedLiterals: section.sourceIDs, font: .body, color: Prompt26Palette.burgundy.opacity(0.84), serious: true)
                                         .font(.body)
                                         .foregroundStyle(Prompt26Palette.burgundy.opacity(0.84))
@@ -296,6 +282,32 @@ private struct Prompt26ContentBody: View {
 }
 
 private struct Prompt26FetalReferenceSection: View {
+    @EnvironmentObject private var settings: SettingsStore
+    // Native Picker items need plain titles resolved by the visible parent.
+    @StateObject private var reference1 = FruitfolioControlTranslationState()
+    @StateObject private var reference2 = FruitfolioControlTranslationState()
+    @StateObject private var reference3 = FruitfolioControlTranslationState()
+    @StateObject private var reference4 = FruitfolioControlTranslationState()
+    private var referenceStates: [FruitfolioControlTranslationState] {
+        [reference1, reference2, reference3, reference4]
+    }
+    private func referenceKey(_ period: Prompt26DevelopmentReferencePeriod) -> FruitfolioControlTranslationState.Key {
+        .init(source: period.displayRange, language: settings.language)
+    }
+    private func referenceDisplay(_ period: Prompt26DevelopmentReferencePeriod) -> FruitfolioControlTranslationState.Presentation {
+        guard let index = Prompt26PregnancyEducationCatalog.fetalReferencePeriods.firstIndex(where: { $0.id == period.id }),
+              index < referenceStates.count else {
+            return .init(text: period.displayRange, status: .unavailable)
+        }
+        return referenceStates[index].presentation(for: referenceKey(period))
+    }
+    private var referenceCaption: String? {
+        let statuses = Prompt26PregnancyEducationCatalog.fetalReferencePeriods.map { referenceDisplay($0).status }
+        if statuses.contains(.unavailable) { return "original text — translation unavailable" }
+        if statuses.contains(.preparing) { return "original text" }
+        if statuses.contains(.machine) { return "local machine translation" }
+        return nil
+    }
     let provider: any Prompt26PregnancyResearchProviding
     let actions: Prompt26PregnancyEducationActions
 
@@ -311,16 +323,21 @@ private struct Prompt26FetalReferenceSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("development reference")
-                .font(.headline)
-                .foregroundStyle(Prompt26Palette.burgundy)
+            FruitfolioFixedText(source: "development reference", font: .headline, color: Prompt26Palette.burgundy, serious: true)
 
-            Picker("Development reference", selection: $selectedID) {
+            Picker(selection: $selectedID) {
                 ForEach(Prompt26PregnancyEducationCatalog.fetalReferencePeriods) { period in
-                    Text(period.displayRange).tag(Optional(period.id))
+                    Text(verbatim: FruitfolioSemanticDocument.plainText(from: referenceDisplay(period).text))
+                        .tag(Optional(period.id))
                 }
+            } label: {
+                FruitfolioFixedText(source: "Development reference", font: .body, color: Prompt26Palette.burgundy, serious: true)
             }
             .pickerStyle(.menu)
+            .accessibilityIdentifier("pregnancy.developmentReference")
+            if let referenceCaption {
+                Text(verbatim: settings.localized(referenceCaption)).font(.caption2)
+            }
 
             if let period = selectedPeriod {
                 Prompt26CanonicalImage(
@@ -329,18 +346,15 @@ private struct Prompt26FetalReferenceSection: View {
                     maxHeight: 300
                 )
 
-                Text("Reference education only — this is not a personalized pregnancy week or developmental clock.")
-                    .font(.footnote)
-                    .foregroundStyle(Prompt26Palette.burgundy.opacity(0.72))
+                FruitfolioFixedText(source: "Reference education only — this is not a personalized pregnancy week or developmental clock.", font: .footnote, color: Prompt26Palette.burgundy.opacity(0.72), serious: true)
                     .fixedSize(horizontal: false, vertical: true)
 
                 if isLoading {
-                    ProgressView("opening approved research…")
-                        .font(.footnote)
+                    ProgressView {
+                        FruitfolioFixedText(source: "opening approved research…", font: .footnote, color: Prompt26Palette.burgundy, serious: true)
+                    }
                 } else if isUnavailable {
-                    Text("Approved reference content is unavailable right now.")
-                        .font(.footnote)
-                        .foregroundStyle(Prompt26Palette.burgundy.opacity(0.74))
+                    FruitfolioFixedText(source: "Approved reference content is unavailable right now.", font: .footnote, color: Prompt26Palette.burgundy.opacity(0.74), serious: true)
                 } else if let content {
                     FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy, serious: true)
                         .font(.body)
@@ -349,8 +363,10 @@ private struct Prompt26FetalReferenceSection: View {
 
                     let sourceIDs = Array(Set(content.sourceIDs + content.sections.flatMap(\.sourceIDs))).sorted()
                     if !sourceIDs.isEmpty {
-                        Button("sources · \(sourceIDs.count)") {
+                        Button {
                             actions.openSources(sourceIDs)
+                        } label: {
+                            FruitfolioFixedText(source: "sources · \(sourceIDs.count)", protectedLiterals: [String(sourceIDs.count)], font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
                         }
                         .buttonStyle(Prompt26PaperButtonStyle())
                     }
@@ -361,6 +377,14 @@ private struct Prompt26FetalReferenceSection: View {
         .background(Prompt26Palette.card.opacity(0.55), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
         .task(id: selectedID) {
             await loadSelectedReference()
+        }
+        .task(id: FruitfolioControlTranslationState.TaskKey(
+            key: .init(source: "pregnancy development reference options", language: settings.language),
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            for (period, state) in zip(Prompt26PregnancyEducationCatalog.fetalReferencePeriods, referenceStates) {
+                guard !Task.isCancelled else { return }
+                await state.resolve(referenceKey(period), inferenceAllowed: settings.translationInferenceAllowed)
+            }
         }
     }
 
@@ -389,15 +413,13 @@ private struct Prompt26RelatedTopics: View {
     var body: some View {
         if !topic.relatedTopicIDs.isEmpty {
             VStack(alignment: .leading, spacing: 10) {
-                Text("related education")
-                    .font(.custom("Chalkboard SE", size: 17, relativeTo: .headline).weight(.bold))
-                    .foregroundStyle(Prompt26Palette.burgundy)
+                FruitfolioFixedText(source: "related education", font: .custom("Chalkboard SE", size: 17, relativeTo: .headline).weight(.bold), color: Prompt26Palette.burgundy, serious: true)
 
                 ForEach(topic.relatedTopicIDs) { relatedID in
                     let related = Prompt26PregnancyEducationCatalog.topic(relatedID)
                     NavigationLink(value: relatedID) {
                         HStack {
-                            Text(related.title)
+                            FruitfolioFixedText(source: related.title, font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
                             Spacer()
                             Image("control_next")
                                 .resizable()
@@ -428,7 +450,7 @@ private struct Prompt26ActionRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Button("save") {
+            Button {
                 let entry = Prompt26SavedEducationEntry(
                     topicID: topic.id,
                     title: content?.title ?? topic.title,
@@ -436,12 +458,16 @@ private struct Prompt26ActionRow: View {
                     sourceIDs: sourceIDs
                 )
                 actions.saveEducationEntry(entry)
+            } label: {
+                FruitfolioFixedText(source: "save", font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
             }
             .buttonStyle(Prompt26PaperButtonStyle())
 
             if !sourceIDs.isEmpty {
-                Button("sources · \(sourceIDs.count)") {
+                Button {
                     actions.openSources(sourceIDs)
+                } label: {
+                    FruitfolioFixedText(source: "sources · \(sourceIDs.count)", protectedLiterals: [String(sourceIDs.count)], font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
                 }
                 .buttonStyle(Prompt26PaperButtonStyle())
             }
@@ -452,10 +478,8 @@ private struct Prompt26ActionRow: View {
 private struct Prompt26EducationBoundaryNotice: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("pregnancy education stays intentional")
-                .font(.headline)
-            Text("Fruitfolio does not surface pregnancy-specific imagery from cycle predictions, symptoms, notifications, or background recommendations.")
-                .font(.body)
+            FruitfolioFixedText(source: "pregnancy education stays intentional", font: .headline, color: Prompt26Palette.burgundy, serious: true)
+            FruitfolioFixedText(source: "Fruitfolio does not surface pregnancy-specific imagery from cycle predictions, symptoms, notifications, or background recommendations.", protectedLiterals: ["Fruitfolio"], font: .body, color: Prompt26Palette.burgundy, serious: true)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(Prompt26Palette.burgundy)

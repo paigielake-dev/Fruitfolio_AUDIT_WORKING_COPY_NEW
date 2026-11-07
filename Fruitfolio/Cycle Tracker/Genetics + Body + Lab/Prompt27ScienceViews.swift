@@ -34,7 +34,7 @@ struct Prompt27ScientificPlateView: View {
                             )
                         }
                     }
-                    .accessibilityLabel(Text(asset.altText))
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: asset.altText))
             }
         }
     }
@@ -61,8 +61,8 @@ struct Prompt27ScientificHotspotOverlay: View {
                         )
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(Text(hotspot.label))
-                .accessibilityHint(Text("Opens educational detail"))
+                .modifier(FruitfolioFixedAccessibilityLabel(source: hotspot.label))
+                .modifier(FruitfolioFixedAccessibilityHint(source: "Opens educational detail"))
                 .position(
                     x: proxy.size.width * hotspot.normalizedX,
                     y: proxy.size.height * hotspot.normalizedY
@@ -101,7 +101,7 @@ struct Prompt27ContextualScienceSectionView: View {
             switch viewModel.state {
             case .idle, .loading:
                 ProgressView()
-                    .accessibilityLabel(Text("Loading educational content"))
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "Loading educational content"))
 
             case let .loaded(content, route):
                 loadedView(
@@ -125,9 +125,7 @@ struct Prompt27ContextualScienceSectionView: View {
     ) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
-                Text(viewModel.section.title)
-                    .font(.custom("Chalkboard SE", size: 23, relativeTo: .title2).weight(.bold))
-                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                FruitfolioFixedText(source: viewModel.section.title, font: .custom("Chalkboard SE", size: 23, relativeTo: .title2).weight(.bold), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
                     .fixedSize(horizontal: false, vertical: true)
 
                 if route.primaryAsset != nil {
@@ -150,17 +148,21 @@ struct Prompt27ContextualScienceSectionView: View {
                     .textSelection(.enabled)
 
                 HStack(spacing: 16) {
-                    Button("sources") {
+                    Button {
                         actions.showSources(content.sourceIDs)
+                    } label: {
+                        FruitfolioFixedText(source: "sources", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
                     }
                     .frame(minHeight: 44)
-                    .accessibilityHint(Text("Shows sources for this educational section"))
+                    .modifier(FruitfolioFixedAccessibilityHint(source: "Shows sources for this educational section"))
 
-                    Button("save") {
+                    Button {
                         actions.saveEducationalContent(content)
+                    } label: {
+                        FruitfolioFixedText(source: "save", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
                     }
                     .frame(minHeight: 44)
-                    .accessibilityHint(Text("Saves this educational content"))
+                    .modifier(FruitfolioFixedAccessibilityHint(source: "Saves this educational content"))
                 }
                 .buttonStyle(.plain)
             }
@@ -183,12 +185,14 @@ struct Prompt27ContextualScienceSectionView: View {
                 .frame(width: 58, height: 58)
                 .accessibilityHidden(true)
 
-            Text("this science page isn’t available right now.")
+            FruitfolioFixedText(source: "this science page isn’t available right now.", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Button("try again") {
+            Button {
                 viewModel.retry()
+            } label: {
+                FruitfolioFixedText(source: "try again", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
             }
             .frame(minHeight: 44)
         }
