@@ -1816,6 +1816,43 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
     }
 
+    func testGuideLongAuthoredTitleKeepsSeparateControlsAndNativeCountFallback() {
+        for rtl in [false, true] {
+            for reduced in [false, true] {
+                let app = XCUIApplication()
+                app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookLongGuideFixture", "-fruitfolioBookQAPauseInference",
+                    "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+                if rtl { app.launchArguments += ["-fruitfolioBookQAArabic"] }
+                if reduced { app.launchArguments += ["-fruitfolioBookReduceMotion"] }
+                app.launch()
+                let builder = app.buttons["QA guide builder"]
+                XCTAssertTrue(builder.waitForExistence(timeout: 5)); builder.tap()
+                let originalName = "QA extremely long clinical material guide"
+                let tile = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", originalName)).firstMatch
+                for _ in 0..<20 { if tile.isHittable { break }; app.swipeUp() }
+                XCTAssertTrue(tile.isHittable)
+                XCTAssertGreaterThanOrEqual(tile.frame.height, 44)
+                tile.tap()
+                let title = app.staticTexts["guide.workspace.title"]
+                XCTAssertTrue(title.waitForExistence(timeout: 5))
+                XCTAssertEqual(title.label, originalName)
+                let back = app.buttons["guide.workspace.back"]
+                let options = app.buttons["guide.options.open"]
+                XCTAssertFalse(title.frame.intersects(back.frame))
+                XCTAssertFalse(title.frame.intersects(options.frame))
+                XCTAssertGreaterThanOrEqual(options.frame.height, 44)
+                let pages = app.descendants(matching: .any)["guide.workspace.pageCount"]
+                XCTAssertTrue(pages.label.contains(rtl ? "٠" : "0"))
+                options.tap()
+                XCTAssertEqual(title.label, originalName)
+                options.tap()
+                XCTAssertEqual(title.label, originalName)
+                captureGame(app, name: "guide-long-title-rtl-\(rtl)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testBookContentsFixedControlsRespectDirectionAndPreserveAuthoredPageLabels() {
         for rtl in [false, true] {
             for reduced in [false, true] {

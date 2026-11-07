@@ -744,7 +744,8 @@ extension Prompt10SavedLibraryStore: ObservableObject {}
 /// disappearance cleanup; the root owns the private suite's lifetime.
 @MainActor
 final class Prompt10BookRegressionFixture {
-    enum Content: Equatable { case books, draft, legacyExcerpt, missingSelection }
+    enum Content: Equatable { case books, draft, legacyExcerpt, missingSelection, longGuideTitle }
+    static let longGuideTitle = "QA extremely long clinical material guide"
     static let storageKey = "fruitfolio.bookQA.library.v1"
     let store: Prompt10SavedLibraryStore?
     let failureMessage: String?
@@ -762,10 +763,11 @@ final class Prompt10BookRegressionFixture {
             if defaults.object(forKey: Self.storageKey) == nil {
                 if empty { try candidate.removeAllForTesting() }
                 for style in empty ? [] : Prompt10BookStyle.allCases {
-                    let book = try candidate.createEncyclopedia(name: "QA \(style.rawValue)", style: style)
+                    let name = style == .sage && content == .longGuideTitle ? Self.longGuideTitle : "QA \(style.rawValue)"
+                    let book = try candidate.createEncyclopedia(name: name, style: style)
                     guard style == .sage, let chapter = book.chapters.first else { continue }
                     switch content {
-                    case .books: break
+                    case .books, .longGuideTitle: break
                     case .draft:
                         var draft = Prompt10UserMaterialDraft()
                         draft.title = "QA editable page"

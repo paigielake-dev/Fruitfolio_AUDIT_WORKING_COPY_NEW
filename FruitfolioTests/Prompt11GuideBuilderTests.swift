@@ -319,3 +319,32 @@ final class Prompt11GuideBuilderTests: XCTestCase {
     }
 
 }
+
+final class Prompt1BGuideLocalizedCopyTests: XCTestCase {
+    func testNativeGuideCountsRemainProtectedAcrossLocalesAndSingularPlural() throws {
+        for language in [FruitfolioLanguage.english, .french, .arabic, .hindi, .japanese] {
+            for values in [(1, 1), (1234, 5678), (0, 0)] {
+                let copy = Prompt11GuideCountCopy(sections: values.0, pages: values.1, language: language)
+                let envelope = try FruitfolioScientificTranslationEnvelope(copy.progressSource, protectedLiterals: copy.progressLiterals)
+                XCTAssertEqual(try envelope.restore(envelope.prepared), copy.progressSource)
+                for number in copy.progressLiterals {
+                    XCTAssertThrowsError(try envelope.validateCatalogCandidate(copy.progressSource.replacingOccurrences(of: number, with: "999999")))
+                }
+                XCTAssertTrue(copy.savedPagesSource.hasSuffix(values.1 == 1 ? "saved page" : "saved pages"))
+                if language == .arabic && values.1 == 1 { XCTAssertEqual(copy.pageCountLiteral, "١") }
+            }
+        }
+    }
+    func testGuideTileEscapesAndProtectsExactAuthoredNameAlongsideNativeCount() throws {
+        let name = "[cafe\u{301}] **12,50 µg/L**"
+        let copy = Prompt11GuideTileCopy(name: name, sections: 1, pages: 1234, language: .arabic)
+        let literalName = FruitfolioSemanticMarkup.markdown([.init(text: name)])
+        XCTAssertTrue(copy.accessibilityProtectedLiterals.contains(literalName))
+        let envelope = try FruitfolioScientificTranslationEnvelope(copy.accessibilitySource,
+            protectedLiterals: copy.accessibilityProtectedLiterals)
+        XCTAssertFalse(envelope.prepared.contains("cafe\u{301}"))
+        XCTAssertFalse(envelope.prepared.contains(copy.counts.pageCountLiteral))
+        XCTAssertEqual(Data(try envelope.restore(envelope.prepared).utf8), Data(copy.accessibilitySource.utf8))
+        XCTAssertThrowsError(try envelope.validateCatalogCandidate(copy.accessibilitySource.replacingOccurrences(of: literalName, with: "rewritten name")))
+    }
+}

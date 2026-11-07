@@ -51,8 +51,11 @@ struct Prompt11GuideBookTile: View {
     let encyclopedia: Prompt10Encyclopedia
     let reduceMotion: Bool
     let action: () -> Void
+    @EnvironmentObject private var settings: SettingsStore
 
     var body: some View {
+        let copy = Prompt11GuideTileCopy(name: encyclopedia.name, sections: encyclopedia.chapterCount,
+            pages: encyclopedia.savedPageCount, language: settings.language)
         Button(action: action) {
             VStack(spacing: 7) {
                 Image(encyclopedia.style.assetName)
@@ -62,37 +65,31 @@ struct Prompt11GuideBookTile: View {
                     .accessibilityHidden(true)
 
                 VStack(spacing: 3) {
-                    Text(encyclopedia.name)
+                    Text(verbatim: encyclopedia.name)
                         .font(.custom("Chalkboard SE", size: 12))
                         .fontWeight(.bold)
                         .foregroundStyle(
                             DesignTokens.ColorToken.primaryBurgundy
                         )
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.82)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     if let subtitle = encyclopedia.subtitle,
                        !subtitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Text(subtitle)
+                        Text(verbatim: subtitle)
                             .font(.custom("Chalkboard SE", size: 8.5))
                             .foregroundStyle(
                                 DesignTokens.ColorToken.secondaryBurgundy
                             )
                             .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.82)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .frame(maxWidth: 132)
 
-                Text(
-                    "\(encyclopedia.savedPageCount) \(encyclopedia.savedPageCount == 1 ? "page" : "pages")"
-                )
-                .font(.custom("Chalkboard SE", size: 10.5))
-                .foregroundStyle(
-                    DesignTokens.ColorToken.secondaryBurgundy
-                )
+                FruitfolioFixedText(source: copy.counts.pagesSource, protectedLiterals: [copy.counts.pageCountLiteral],
+                    font: .custom("Chalkboard SE", size: 10.5), color: DesignTokens.ColorToken.secondaryBurgundy)
+
             }
             .frame(maxWidth: .infinity)
         }
@@ -101,10 +98,10 @@ struct Prompt11GuideBookTile: View {
                 reduceMotion: reduceMotion
             )
         )
-        .accessibilityLabel(
-            "\(encyclopedia.name). \(encyclopedia.savedPageCount) saved pages."
-        )
-        .accessibilityHint("Double tap to open guide.")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: copy.accessibilitySource,
+            protectedLiterals: copy.accessibilityProtectedLiterals))
+        .modifier(FruitfolioFixedAccessibilityHint(source: "Double tap to open guide."))
+        .accessibilityIdentifier("guide.book." + encyclopedia.id.uuidString)
     }
 }
 
@@ -121,12 +118,8 @@ struct Prompt11NewGuideTile: View {
                     .frame(width: 104, height: 122)
                     .accessibilityHidden(true)
 
-                Text("make a new guide")
-                    .font(.custom("Chalkboard SE", size: 11.5))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
+                FruitfolioFixedText(source: "make a new guide", font: .custom("Chalkboard SE", size: 11.5).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
@@ -136,7 +129,7 @@ struct Prompt11NewGuideTile: View {
                 reduceMotion: reduceMotion
             )
         )
-        .accessibilityLabel("Make a new guide")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Make a new guide"))
     }
 }
 

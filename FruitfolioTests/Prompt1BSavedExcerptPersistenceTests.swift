@@ -216,6 +216,21 @@ final class Prompt1BLegacyExcerptRecoveryTests: XCTestCase {
 #if DEBUG
 @MainActor
 final class Prompt1BBookPrivateFixtureTests: XCTestCase {
+    func testExplicitLongGuideFixtureUsesCanonicalPrivateLabelsAndRemountsWithoutSeedingAgain() async throws {
+        let suite = "fruitfolio.book.long-guide." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = try XCTUnwrap(Prompt10BookRegressionFixture(defaults: defaults, content: .longGuideTitle).store)
+        XCTAssertEqual(store.count, Prompt10BookStyle.allCases.count)
+        XCTAssertLessThanOrEqual(Prompt10BookRegressionFixture.longGuideTitle.count, Prompt10BookLabelPolicy.maximumTitleLength)
+        XCTAssertEqual(store.encyclopedias.first { $0.style == .sage }?.name, Prompt10BookRegressionFixture.longGuideTitle)
+        XCTAssertTrue(store.encyclopedias.flatMap(\.chapters).flatMap(\.pages).isEmpty)
+        let bytes = defaults.data(forKey: Prompt10BookRegressionFixture.storageKey)
+        let reopened = try XCTUnwrap(Prompt10BookRegressionFixture(defaults: defaults).store)
+        XCTAssertEqual(reopened.encyclopedias, store.encyclopedias)
+        XCTAssertEqual(defaults.data(forKey: Prompt10BookRegressionFixture.storageKey), bytes)
+    }
+
     func testMissingAuthorityNeverCreatesAStore() async {
         let fixture = Prompt10BookRegressionFixture(defaults: nil, content: .legacyExcerpt)
         XCTAssertNil(fixture.store)

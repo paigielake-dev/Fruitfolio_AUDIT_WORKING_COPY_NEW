@@ -19,7 +19,7 @@ struct Prompt11GuideBuilderView: View {
     @State private var showingReadMode = false
     @State private var showingGuideOptions = false
     @State private var reorderMode = false
-    @State private var reorderErrorMessage: String?
+    @State private var reorderErrorMessage: Prompt10SavedPageNotice?
     @State private var savedStatusVisible = false
     @State private var savedStatusTask: Task<Void, Never>?
     @State private var savedStatusGuideID: UUID?
@@ -155,23 +155,16 @@ struct Prompt11GuideBuilderView: View {
                     Spacer()
                 }
 
-                Text("build your own guide")
-                    .font(.custom("Chalkboard SE", size: 25))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
+                FruitfolioFixedText(source: "build your own guide",
+                    font: .custom("Chalkboard SE", size: 25).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
+                    .accessibilityIdentifier("guide.home.heading")
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 56)
             }
 
-            Text(
-                "turn the things you’ve saved into an encyclopedia of your own ♡"
-            )
-            .font(.custom("Chalkboard SE", size: 12.5))
-            .foregroundStyle(
-                DesignTokens.ColorToken.secondaryBurgundy
-            )
+            FruitfolioFixedText(source: "turn the things you’ve saved into an encyclopedia of your own ♡", protectedLiterals: ["♡"],
+                font: .custom("Chalkboard SE", size: 12.5), color: DesignTokens.ColorToken.secondaryBurgundy)
             .multilineTextAlignment(.center)
 
             Image("guide_star_divider")
@@ -217,31 +210,17 @@ struct Prompt11GuideBuilderView: View {
                 .frame(width: 66)
                 .accessibilityHidden(true)
 
-            Text("your bookshelf is waiting. :-)")
-                .font(.custom("Chalkboard SE", size: 17))
-                .fontWeight(.bold)
-                .foregroundStyle(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
+            FruitfolioFixedText(source: "your bookshelf is waiting. :-)", protectedLiterals: [":-)"],
+                font: .custom("Chalkboard SE", size: 17).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
 
-            Text(
-                "save things from Ask the Encyclopedia, then bring your favorites together here."
-            )
-            .font(.custom("Chalkboard SE", size: 12.5))
-            .foregroundStyle(
-                DesignTokens.ColorToken.secondaryBurgundy
-            )
+            FruitfolioFixedText(source: "save things from Ask the Encyclopedia, then bring your favorites together here.",
+                protectedLiterals: ["Ask the Encyclopedia"], font: .custom("Chalkboard SE", size: 12.5), color: DesignTokens.ColorToken.secondaryBurgundy)
             .multilineTextAlignment(.center)
             .frame(maxWidth: 270)
 
             if store.prompt11AllSavedMaterial().isEmpty {
-                Text(
-                    "you’ll need something saved before your first guide has pages to gather."
-                )
-                .font(.custom("Chalkboard SE", size: 11))
-                .foregroundStyle(
-                    DesignTokens.ColorToken.secondaryBurgundy
-                )
+                FruitfolioFixedText(source: "you’ll need something saved before your first guide has pages to gather.",
+                    font: .custom("Chalkboard SE", size: 11), color: DesignTokens.ColorToken.secondaryBurgundy)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 270)
             }
@@ -254,9 +233,12 @@ struct Prompt11GuideBuilderView: View {
             }
             .accessibilityIdentifier("guide.create.open")
 
-            Button("go to ask") {
+            Button {
                 audioManager.play(.buttonSoftPop)
                 onGoToAsk()
+            } label: {
+                FruitfolioFixedText(source: "go to ask", font: .custom("Chalkboard SE", size: 11.5).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
             }
             .font(.custom("Chalkboard SE", size: 11.5))
             .fontWeight(.bold)
@@ -314,8 +296,8 @@ struct Prompt11GuideBuilderView: View {
                     workspaceHeader(guide)
                     Prompt10LibraryStorageNotice(store: store)
                     if let reorderErrorMessage {
-                        FruitfolioTranslatedText(source: reorderErrorMessage,
-                            font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                        Prompt10SavedPageNoticeText(notice: reorderErrorMessage,
+                            font: .custom("Chalkboard SE", size: 14, relativeTo: .body))
                             .accessibilityIdentifier("guide.reorder.error")
                     }
 
@@ -404,75 +386,43 @@ struct Prompt11GuideBuilderView: View {
         }
     }
 
-    private func workspaceHeader(
-        _ guide: Prompt10Encyclopedia
-    ) -> some View {
-        VStack(spacing: 4) {
-            ZStack {
-                HStack {
-                    Prompt11GuideIconButton(
-                        assetName: "guide_back",
-                        identificationWord: "back",
-                        accessibilityLabel: "Back",
-                        reduceMotion: motionPreferences.reduceMotionActive,
-                        width: 34
-                    ) {
-                        audioManager.play(.pageTurn)
-
-                        withAnimation(openAnimation) {
-                            selectedGuideID = nil
-                            showingGuideOptions = false
-                            reorderMode = false
-                            searchText = ""
-                        }
+    private func workspaceHeader(_ guide: Prompt10Encyclopedia) -> some View {
+        let copy = Prompt11GuideCountCopy(sections: guide.chapterCount, pages: guide.savedPageCount, language: settings.language)
+        return VStack(spacing: 8) {
+            HStack(alignment: .center, spacing: 8) {
+                Prompt11GuideIconButton(assetName: "guide_back", identificationWord: "back", accessibilityLabel: "Back",
+                    reduceMotion: motionPreferences.reduceMotionActive, width: 34) {
+                    audioManager.play(.pageTurn)
+                    withAnimation(openAnimation) {
+                        selectedGuideID = nil
+                        showingGuideOptions = false
+                        reorderMode = false
+                        searchText = ""
                     }
-
-                    Spacer()
-
-                    Button("guide options") {
-                        audioManager.play(.buttonSoftPop)
-
-                        withAnimation(
-                            motionPreferences.reduceMotionActive
-                                ? .easeOut(duration: 0.12)
-                                : .easeOut(duration: 0.20)
-                        ) {
-                            showingGuideOptions.toggle()
-                        }
-                    }
-                    .accessibilityIdentifier("guide.options.open")
-                    .font(.custom("Chalkboard SE", size: 10.5))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                    .buttonStyle(
-                        CutePopButtonStyle(
-                            reduceMotion: motionPreferences.reduceMotionActive
-                        )
-                    )
                 }
-
-                Text(guide.name)
-                    .font(.custom("Chalkboard SE", size: 22))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.76)
-                    .padding(.horizontal, 94)
+                .accessibilityIdentifier("guide.workspace.back")
+                Spacer(minLength: 8)
+                Button {
+                    audioManager.play(.buttonSoftPop)
+                    if motionPreferences.reduceMotionActive { showingGuideOptions.toggle() }
+                    else { withAnimation(.easeOut(duration: 0.20)) { showingGuideOptions.toggle() } }
+                } label: {
+                    FruitfolioFixedText(source: "guide options", font: .custom("Chalkboard SE", size: 10.5).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
+                }
+                .accessibilityIdentifier("guide.options.open")
+                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
             }
-
-            Text(
-                "\(guide.savedPageCount) \(guide.savedPageCount == 1 ? "saved page" : "saved pages")"
-            )
-            .font(.custom("Chalkboard SE", size: 11))
-            .foregroundStyle(
-                DesignTokens.ColorToken.secondaryBurgundy
-            )
+            Text(verbatim: guide.name)
+                .font(.custom("Chalkboard SE", size: 22).bold())
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("guide.workspace.title")
+            FruitfolioFixedText(source: copy.savedPagesSource, protectedLiterals: [copy.pageCountLiteral],
+                font: .custom("Chalkboard SE", size: 11), color: DesignTokens.ColorToken.secondaryBurgundy)
+                .accessibilityIdentifier("guide.workspace.pageCount")
         }
         .padding(.top, 10)
     }
@@ -575,16 +525,11 @@ struct Prompt11GuideBuilderView: View {
         )
     }
 
-    private func guideProgress(
-        _ guide: Prompt10Encyclopedia
-    ) -> some View {
-        Text(
-            "\(guide.chapterCount) \(guide.chapterCount == 1 ? "section" : "sections") · \(guide.savedPageCount) \(guide.savedPageCount == 1 ? "page" : "pages")"
-        )
-        .font(.custom("Chalkboard SE", size: 10.5))
-        .foregroundStyle(
-            DesignTokens.ColorToken.secondaryBurgundy
-        )
+    private func guideProgress(_ guide: Prompt10Encyclopedia) -> some View {
+        let copy = Prompt11GuideCountCopy(sections: guide.chapterCount, pages: guide.savedPageCount, language: settings.language)
+        return FruitfolioFixedText(source: copy.progressSource, protectedLiterals: copy.progressLiterals,
+            font: .custom("Chalkboard SE", size: 10.5), color: DesignTokens.ColorToken.secondaryBurgundy)
+            .accessibilityIdentifier("guide.workspace.progress")
     }
 
     private func guideSearch(
@@ -1202,7 +1147,7 @@ struct Prompt11GuideBuilderView: View {
             audioManager.play(.pageTurn)
             showSavedStatus()
         } catch {
-            reorderErrorMessage = store.storageProtectionReason == nil ? error.localizedDescription : nil
+            reorderErrorMessage = store.storageProtectionReason == nil ? Prompt10SavedPageNotice(error: error) : nil
         }
     }
 
@@ -1223,7 +1168,7 @@ struct Prompt11GuideBuilderView: View {
             audioManager.play(.pageTurn)
             showSavedStatus()
         } catch {
-            reorderErrorMessage = store.storageProtectionReason == nil ? error.localizedDescription : nil
+            reorderErrorMessage = store.storageProtectionReason == nil ? Prompt10SavedPageNotice(error: error) : nil
         }
     }
 

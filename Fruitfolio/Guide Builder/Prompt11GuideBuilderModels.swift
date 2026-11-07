@@ -66,3 +66,36 @@ struct Prompt11GuideSearchMatch: Identifiable, Equatable {
 
     var id: UUID { page.id }
 }
+
+/// Display-only numeric copy. Persisted guide structure and authored text are
+/// never rewritten when the selected language changes.
+nonisolated struct Prompt11GuideCountCopy: Equatable, Sendable {
+    let pageCountLiteral: String
+    let sectionCountLiteral: String
+    let pagesSource: String
+    let savedPagesSource: String
+    let progressSource: String
+    var progressLiterals: [String] { [sectionCountLiteral, pageCountLiteral] }
+
+    init(sections: Int, pages: Int, language: FruitfolioLanguage) {
+        let locale = Locale(identifier: language.localeIdentifier)
+        pageCountLiteral = pages.formatted(.number.locale(locale))
+        sectionCountLiteral = sections.formatted(.number.locale(locale))
+        pagesSource = "\(pageCountLiteral) \(pages == 1 ? "page" : "pages")"
+        savedPagesSource = "\(pageCountLiteral) \(pages == 1 ? "saved page" : "saved pages")"
+        progressSource = "\(sectionCountLiteral) \(sections == 1 ? "section" : "sections") · \(pagesSource)"
+    }
+}
+
+nonisolated struct Prompt11GuideTileCopy: Equatable, Sendable {
+    let counts: Prompt11GuideCountCopy
+    let accessibilitySource: String
+    let accessibilityProtectedLiterals: [String]
+
+    init(name: String, sections: Int, pages: Int, language: FruitfolioLanguage) {
+        counts = .init(sections: sections, pages: pages, language: language)
+        let literalName = FruitfolioSemanticMarkup.markdown([.init(text: name)])
+        accessibilitySource = "\(literalName). \(counts.savedPagesSource)."
+        accessibilityProtectedLiterals = [literalName, counts.pageCountLiteral].filter { !$0.isEmpty }
+    }
+}

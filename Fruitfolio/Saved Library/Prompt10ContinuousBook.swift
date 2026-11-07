@@ -89,7 +89,8 @@ private struct Prompt1BBookRegressionContent: View {
     @StateObject private var fixture: Prompt10BookRegressionFixture
     init(defaults: UserDefaults?) {
         let arguments = ProcessInfo.processInfo.arguments
-        let content: Prompt10BookRegressionFixture.Content = arguments.contains("-fruitfolioBookLegacyExcerptFixture") ? .legacyExcerpt
+        let content: Prompt10BookRegressionFixture.Content = arguments.contains("-fruitfolioBookLongGuideFixture") ? .longGuideTitle
+            : arguments.contains("-fruitfolioBookLegacyExcerptFixture") ? .legacyExcerpt
             : arguments.contains("-fruitfolioBookMissingExcerptFixture") ? .missingSelection
             : arguments.contains("-fruitfolioBookDraftFixture") ? .draft : .books
         _fixture = StateObject(wrappedValue: Prompt10BookRegressionFixture(defaults: defaults,
