@@ -261,11 +261,31 @@
       "source_line": 350,
       "original_text": "MAJOR CHANGE: Add a global language selector in Settings. Users must be able to choose their preferred language, and that selection must apply consistently to EVERY user-facing piece of text throughout Fruitfolio, including navigation, buttons, labels, onboarding, Cycle Tracker, Ask the Encyclopedia, My Encyclopedias, Guide Builder, Fruit Basket, FAQ, Contact, Settings, Account, educational modules, tutorials, fruit-character dialogue, popups, error/safety messages, generated educational responses, saved/generated content where applicable, accessibility labels, and all other reachable states.",
       "original_bytes_sha256": "475c1ea4d658ef38e4530cf9e136d95e9f0ac11d809cb8a594bc8aa41046d875",
-      "applicability": "UNREVIEWED",
-      "implementation_status": "NOT_ASSESSED",
+      "applicability": "APPLICABLE",
+      "implementation_status": "IN_PROGRESS",
       "verification_status": "NOT_RUN",
-      "evidence": [],
-      "remaining_verification_requirements": []
+      "evidence": [
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "implementation": "Scoped Settings change: original section headings and About body now use existing global-language text owners with brand/self-language protection. Global paragraph covers every reachable feature; this closes specific bypasses only, not full global localization/official-model acceptance.",
+          "files": [
+            "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "executed_scope": [
+            "326 Swift syntax parses,75 workflow checks and sound ownership static diagnostics; none execute this native modal."
+          ],
+          "not_run": [
+            "New real native About UI test:4launch combinations, English/Arabic\u00d7normal/Reduce Motion; actual translation, focus, audio and escape/device acceptance."
+          ],
+          "remaining": [
+            "Apple actual Settings/About behavior and remaining paragraph subconditions."
+          ]
+        }
+      ],
+      "remaining_verification_requirements": [
+        "Execute actual native About and Settings workflows; global localization/model and other paragraph conditions remain open."
+      ]
     },
     {
       "id": "FOUNDER-SOURCE-L00353",
@@ -3581,11 +3601,31 @@
       "source_line": 1126,
       "original_text": "6A \u2014 Settings main page. Global preferences are presented using watercolor rows/toggles/volume controls. This route owns access to data management, About, My Context, and tour replay. - GOOD",
       "original_bytes_sha256": "22c80ecaf81b0a5c1820e69290be16d60bbe92eaab5ad47813a73dd9dcc73301",
-      "applicability": "UNREVIEWED",
-      "implementation_status": "NOT_ASSESSED",
+      "applicability": "APPLICABLE",
+      "implementation_status": "IN_PROGRESS",
       "verification_status": "NOT_RUN",
-      "evidence": [],
-      "remaining_verification_requirements": []
+      "evidence": [
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "implementation": "Settings retains existing watercolor rows and access to data/About/My Context/tour. About now has explicit modal semantics, header/return-focus ownership, scene/foreign-popup/stale identity gates and shared translated body/headers. Other Settings workflows are retained; actual Apple acceptance remains open.",
+          "files": [
+            "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "executed_scope": [
+            "326 Swift syntax parses,75 workflow checks and sound ownership static diagnostics; none execute this native modal."
+          ],
+          "not_run": [
+            "New real native About UI test:4launch combinations, English/Arabic\u00d7normal/Reduce Motion; actual translation, focus, audio and escape/device acceptance."
+          ],
+          "remaining": [
+            "Apple actual Settings/About behavior and remaining paragraph subconditions."
+          ]
+        }
+      ],
+      "remaining_verification_requirements": [
+        "Execute actual native About and Settings workflows; global localization/model and other paragraph conditions remain open."
+      ]
     },
     {
       "id": "FOUNDER-SOURCE-L01129",

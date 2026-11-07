@@ -4088,3 +4088,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 75, "new_source_coverage_regressions_included": 4, "swift_syntax_files": 326, "failures": 0, "original_478_preserved": 478, "exact_supplementals_preserved": 36, "founder_text_candidates_indexed": 484, "candidate_paragraphs_individually_annotated_with_scoped_evidence": 10, "candidate_applicability_reviews_remaining": 474, "logs": ["/tmp/fruitfolio_founder_coverage_tests.log", "/tmp/fruitfolio_founder_coverage_full_workflow.log", "/tmp/fruitfolio_faq_unfold_final_syntax.log"], "limits": "Candidate indexing is source integrity, not completion. No native FAQ unfold execution is included."}.
 - Next action: Continue missing actionable requirements across all original parts and exact founder additions, using new source-candidate IDs for unnumbered evidence; native FAQ/Ask/model/clinical acceptance remains pending.
 - Commit: containing commit for batch Unnumbered-founder-source-coverage-and-FAQ-unfold.
+
+## Settings-About-owned-accessibility-and-global-text-routing
+
+- Parent checkpoint: 2520fb76d9d5dd3fdcbc19451c6fceb36f0901c9.
+- Source-order requirements: [6, 11, 13, 23, 26, 27, 63, 390, 393, 395, 397, 416, 443, 444].
+- Separate founder additions: ['SPEC-7.9.2', 'SPEC-7.9.10'].
+- Source files: Fruitfolio/Privacy Settings/Prompt12SettingsView.swift, development_workflow/SETTINGS_ABOUT_LOCALIZATION_AND_MODAL_OWNERSHIP.json, development_workflow/FOUNDER_SOURCE_COVERAGE.json, development_workflow/CONTACT_LIFECYCLE_AND_FAQ_ART_CLAUSES.json, development_workflow/UNNUMBERED_FOUNDER_COVERAGE_AND_FAQ_UNFOLD.json.
+- Route exact original About body and five section-heading source labels through existing global text owners, preserving brand/native-language literals. About now has contained modal semantics, heading focus, native accessibility escape and same guarded close handler, per-presentation identity, scene/foreign-popup cancellation, one opening cue and cancellable return focus. Original artwork/copy/global preferences preserved. No whole global requirement status promoted. Prior planned native vector counts corrected with appended history.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 75, "swift_syntax_files": 326, "static_sound_ownership_diagnostics": 0, "original_About_body_source_literals_preserved": 1, "original_section_heading_source_literals_preserved": 5, "native_About_test_functions_executed": 0, "logs": ["/tmp/fruitfolio_settings_about_workflow.log", "/tmp/fruitfolio_settings_about_final_syntax.log", "/tmp/fruitfolio_settings_about_sound_ownership.log"], "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."}.
+- Next action: Continue independent incomplete functionality and individual source-grounded scope reconciliation, including original global preference and all founder additions; keep Apple/official-model/source/clinical blockers explicit.
+- Commit: containing commit for batch Settings-About-owned-accessibility-and-global-text-routing.

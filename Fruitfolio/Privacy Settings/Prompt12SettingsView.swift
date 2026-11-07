@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt12SettingsView: View {
     @ObservedObject var store: Prompt12AccountPrivacyStore
@@ -17,6 +18,20 @@ struct Prompt12SettingsView: View {
     @State private var showDataManagement = false
     @State private var showAbout = false
     @State private var showMyContext = false
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popups: PopupCoordinator
+    @State private var rootIsVisible = false
+    @State private var aboutPresentationID = UUID()
+    @State private var announcedAboutID: UUID?
+    @State private var aboutReturnTask: Task<Void, Never>?
+    @State private var needsAboutReturnFocus = false
+    @AccessibilityFocusState private var aboutHeadingFocused: Bool
+    @AccessibilityFocusState private var aboutControlFocused: Bool
+
+    private var canUseSettings: Bool {
+        rootIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active &&
+            popups.currentPopup == nil && !showMyContext
+    }
 
     var body: some View {
         ZStack {
@@ -74,6 +89,7 @@ struct Prompt12SettingsView: View {
             }
 
             if showAbout {
+                let presentationID = aboutPresentationID
                 FruitfolioTapedPaperPopup {
                     VStack(
                         alignment: .center,
@@ -92,26 +108,21 @@ struct Prompt12SettingsView: View {
                             .multilineTextAlignment(
                                 .center
                             )
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityFocused($aboutHeadingFocused)
+                            .accessibilityIdentifier("settings.about.heading")
                             .lineLimit(nil)
                             .fixedSize(
                                 horizontal: false,
                                 vertical: true
                             )
 
-                        Text(
-                            "Fruitfolio is a tiny watercolor encyclopedia world by FruitsofLife.xo. full about copy belongs to the dedicated About experience."
-                        )
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 11.5
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .secondaryBurgundy
-                        )
+                        FruitfolioTranslatedText(
+                            source: "Fruitfolio is a tiny watercolor encyclopedia world by FruitsofLife.xo. full about copy belongs to the dedicated About experience.",
+                            protectedLiterals: ["Fruitfolio", "FruitsofLife.xo"],
+                            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body),
+                            color: DesignTokens.ColorToken.secondaryBurgundy)
+                        .accessibilityIdentifier("settings.about.body")
                         .multilineTextAlignment(
                             .center
                         )
@@ -128,11 +139,9 @@ struct Prompt12SettingsView: View {
                         FruitfolioControlPillButton(
                             label: "got it ♡"
                         ) {
-                            audioManager.play(
-                                .popupClose
-                            )
-                            showAbout = false
+                            dismissAbout(expectedID: presentationID)
                         }
+                        .accessibilityIdentifier("settings.about.close")
                     }
                     .frame(
                         maxWidth: .infinity,
@@ -140,14 +149,48 @@ struct Prompt12SettingsView: View {
                     )
                 }
                 .frame(maxWidth: 350)
-                .onAppear {
-                    audioManager.play(
-                        .popupOpen
-                    )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
+                .accessibilityIdentifier("settings.about.popup")
+                .accessibilityAction(.escape) { dismissAbout(expectedID: presentationID) }
+                .task(id: "\(presentationID)-\(scenePhase == .active)-\(popups.currentPopup?.id.uuidString ?? "none")") {
+                    await Task.yield()
+                    guard !Task.isCancelled, canUseSettings, showAbout,
+                          aboutPresentationID == presentationID else { return }
+                    aboutHeadingFocused = true
+                    if announcedAboutID != presentationID {
+                        announcedAboutID = presentationID
+                        audioManager.play(.popupOpen)
+                    }
                 }
                 .zIndex(100)
             }
 
+        }
+        .onAppear { rootIsVisible = true }
+        .onDisappear {
+            rootIsVisible = false
+            aboutReturnTask?.cancel(); aboutReturnTask = nil
+            needsAboutReturnFocus = false
+            aboutPresentationID = UUID()
+            announcedAboutID = nil
+            aboutHeadingFocused = false
+            aboutControlFocused = false
+            showAbout = false
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { suspendAboutFocus() }
+            else { restoreAboutControlFocus() }
+        }
+        .onChange(of: popups.currentPopup?.id) { _, id in
+            if id != nil { suspendAboutFocus() }
+            else { restoreAboutControlFocus() }
+        }
+        .onChange(of: showDataManagement) { _, visible in
+            if visible { needsAboutReturnFocus = false; suspendAboutFocus() }
+        }
+        .onChange(of: showMyContext) { _, visible in
+            if visible { needsAboutReturnFocus = false; suspendAboutFocus() }
         }
         .fullScreenCover(isPresented: $showMyContext) {
             FruitfolioPresentedPopupHost {
@@ -390,30 +433,60 @@ struct Prompt12SettingsView: View {
                     "Fruitfolio by FruitsofLife.xo",
                 assetName:
                     "fruitfolio_logo",
-                action: {
-                    showAbout = true
-                }
+                action: openAbout
             )
+            .accessibilityIdentifier("settings.about.open")
+            .accessibilityFocused($aboutControlFocused)
         }
     }
 
-    private func sectionTitle(
-        _ text: String
-    ) -> some View {
-        Text(text)
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 15
-                )
-            )
-            .fontWeight(.bold)
-            .foregroundStyle(
-                DesignTokens
-                    .ColorToken
-                    .primaryBurgundy
-            )
+    private func openAbout() {
+        guard canUseSettings, !showAbout, !showDataManagement else { return }
+        aboutReturnTask?.cancel(); aboutReturnTask = nil
+        needsAboutReturnFocus = false
+        aboutControlFocused = false
+        aboutPresentationID = UUID()
+        showAbout = true
     }
+
+    private func dismissAbout(expectedID: UUID) {
+        guard canUseSettings, showAbout, !showDataManagement,
+              aboutPresentationID == expectedID else { return }
+        showAbout = false
+        aboutHeadingFocused = false
+        audioManager.play(.popupClose)
+        needsAboutReturnFocus = true
+        restoreAboutControlFocus()
+    }
+
+    private func suspendAboutFocus() {
+        aboutReturnTask?.cancel(); aboutReturnTask = nil
+        aboutHeadingFocused = false
+        aboutControlFocused = false
+    }
+
+    private func restoreAboutControlFocus() {
+        guard canUseSettings, needsAboutReturnFocus, !showAbout, !showDataManagement else { return }
+        aboutReturnTask?.cancel()
+        let expectedID = aboutPresentationID
+        aboutReturnTask = Task { @MainActor in
+            await Task.yield()
+            guard !Task.isCancelled, canUseSettings, needsAboutReturnFocus,
+                  !showAbout, !showDataManagement, aboutPresentationID == expectedID else { return }
+            aboutControlFocused = true
+            needsAboutReturnFocus = false
+            aboutReturnTask = nil
+        }
+    }
+
+    private func sectionTitle(_ text: String) -> some View {
+        FruitfolioFixedText(source: text,
+            protectedLiterals: ["Fruitfolio", "FruitsofLife.xo", "भाषा", "زبان"],
+            font: .custom("Chalkboard SE", size: 15, relativeTo: .headline).bold(),
+            color: DesignTokens.ColorToken.primaryBurgundy)
+            .accessibilityAddTraits(.isHeader)
+    }
+
 }
 
 

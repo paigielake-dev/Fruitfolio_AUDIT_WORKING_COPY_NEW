@@ -1651,6 +1651,58 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground() {
+        for (code, nativeName) in [("en", "English"), ("ar", "العربية")] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments = ["-fruitfolioLanguagePersistenceQA",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioLanguagePersistenceReduceMotion"] }
+            app.launch()
+            let menu = app.buttons["settings.language"]
+            XCTAssertTrue(menu.waitForExistence(timeout: 8))
+            if code != "en" {
+                menu.tap()
+                let identified = app.buttons["settings.language.option." + code]
+                let option = identified.waitForExistence(timeout: 2) ? identified : app.buttons[nativeName]
+                XCTAssertTrue(option.waitForExistence(timeout: 3))
+                option.tap()
+            }
+            let selected = app.staticTexts["languagePersistence.selected"]
+            let changed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "selected language: " + code), object: selected)
+            XCTAssertEqual(XCTWaiter.wait(for: [changed], timeout: 5), .completed)
+            let open = app.buttons["settings.about.open"]
+            let page = app.scrollViews.firstMatch
+            for _ in 0..<30 { if open.isHittable { break }; page.swipeUp() }
+            XCTAssertTrue(open.isHittable)
+            open.tap()
+            let popup = app.otherElements["settings.about.popup"]
+            XCTAssertTrue(popup.waitForExistence(timeout: 3))
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "settings.about.heading").firstMatch.exists)
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "settings.about.body").firstMatch.exists)
+            XCTAssertFalse(menu.exists)
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(popup.waitForExistence(timeout: 5))
+            XCTAssertEqual(selected.label, "selected language: " + code)
+            let close = app.buttons["settings.about.close"]
+            let paper = app.scrollViews.firstMatch
+            for _ in 0..<16 { if close.isHittable { break }; paper.swipeUp() }
+            XCTAssertTrue(close.isHittable)
+            XCTAssertGreaterThanOrEqual(close.frame.height, 44)
+            close.tap()
+            let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: popup)
+            XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 3), .completed)
+            XCTAssertTrue(open.waitForExistence(timeout: 3))
+            XCTAssertTrue(open.isHittable)
+            XCTAssertEqual(selected.label, "selected language: " + code)
+            captureGame(app, name: "settings-about-code-\(code)-reduced-\(reduced)")
+            app.buttons["languagePersistence.clear"].tap()
+            app.terminate()
+        }
+        }
+    }
+
     func testActualSettingsLanguageSurvivesFAQNavigationAndAppRelaunch() {
         for (code, nativeName) in [("fr", "Français"), ("ar", "العربية")] {
         for reduced in [false, true] {
