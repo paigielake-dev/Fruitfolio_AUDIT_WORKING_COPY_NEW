@@ -3005,3 +3005,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 883, "native_CPU_XCTest": 905, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 6, "pre_fix_failed_assertions": 12, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify present-but-blank per-source version metadata is not saved as an empty version while nil legacy versions retain known package fallback. Add actual source-record regression, reject only reproduced malformed cases without inventing provenance or rewriting citations, execute checks and checkpoint.
 - Commit: containing commit for batch Reject-malformed-question-scalar-provenance-before-save.
+
+## Reject-present-blank-source-version-preserve-nil-legacy
+
+- Parent checkpoint: 166f4fe4710c27ca977fedf13711ce23fe011b71.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift, development_workflow/SOURCE_VERSION_PRESENCE_VALIDATION.md.
+- Present blank/whitespace per-source version rejected by production question gate before saved provenance. Nil retains existing known-package fallback; no citation/DOI/record/identifier normalization or invented records. Two actual saved-source regressions;8case baseline4assertions; final885/907XCTest+21SwiftTesting each pass incl originalcitation/UTF8/sourceversion/legacy tests. Savedbuilder/schema/citation/catalog SHA unchanged. Structural labels notauthenticity/clinicalapproval; Apple/officialmodel unverified.
+- Tests added/updated: FruitfolioTests/Prompt1BGameSavedSourceTests.swift.
+- Verification: {"portable_XCTest": 885, "native_CPU_XCTest": 907, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 8, "pre_fix_failed_assertions": 4, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Continue original order at327: verify actual good-fruit/bad-fruit/standalone-star distinction and remaining accessible/localized object presentation. Use targeted source/actualcontroller evidence, implement only concrete gaps, retain original art/markers/rules and avoid counting Apple-only visuals as passed.
+- Commit: containing commit for batch Reject-present-blank-source-version-preserve-nil-legacy.

@@ -123,7 +123,14 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
             && !sourceIDs.isEmpty
             && sourceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && Set(sourceIDs).count == sourceIDs.count
-            && (sourceRecords.map { Set($0.map(\.id)) == Set(sourceIDs) && $0.count == sourceIDs.count } ?? true)
+            && (sourceRecords.map { records in
+                Set(records.map(\.id)) == Set(sourceIDs) && records.count == sourceIDs.count
+                    && records.allSatisfy { record in
+                        // Nil retains the known legacy package fallback; blank is malformed.
+                        guard let version = record.contentVersion else { return true }
+                        return !version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    }
+            } ?? true)
             && !catchRule.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !goodFruitIDs.isEmpty
             && !badFruitIDs.isEmpty

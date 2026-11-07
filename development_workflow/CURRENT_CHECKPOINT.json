@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1c14feb9115018c826f6393933a9253093fbee54",
+  "current_HEAD": "166f4fe4710c27ca977fedf13711ce23fe011b71",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
-  "current_requirement": 326,
-  "current_implementation_batch": "Reject-malformed-question-scalar-provenance-before-save",
+  "current_requirement": 327,
+  "current_implementation_batch": "Reject-present-blank-source-version-preserve-nil-legacy",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -496,8 +496,8 @@
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
     "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/QUESTION_SCALAR_METADATA_VALIDATION.md",
-    "development_workflow/RUN_LOGS/Question-scalar-metadata-evidence.json"
+    "development_workflow/RUN_LOGS/Source-version-presence-evidence.json",
+    "development_workflow/SOURCE_VERSION_PRESENCE_VALIDATION.md"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -510,26 +510,26 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Pre-fix6saved-sourcecases:12assertions",
-    "Full portable/native CPU suites including6invalidmetadata scenarios and existing legacy/source-byte preservation",
+    "Pre-fix8saved-sourcecases:4assertions",
+    "Full portable/native CPU suites incl nil legacy source version/citation preservation",
     "60workflow checks",
     "311syntax parses",
-    "SHA unchanged savedbuilder/persistedschema/catalog",
+    "SHA unchanged savedbuilder/schema/citation/catalog",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_XCTest": 883,
-    "native_CPU_XCTest": 905,
+    "portable_XCTest": 885,
+    "native_CPU_XCTest": 907,
     "SwiftTesting_each": 21,
     "workflow_checks": 60,
     "syntax_files": 311,
-    "pre_fix_XCTest": 6,
-    "pre_fix_failed_assertions": 12,
+    "pre_fix_XCTest": 8,
+    "pre_fix_failed_assertions": 4,
     "Apple_SDK": "NOT_RUN",
     "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
   },
-  "next_exact_implementation_action": "Verify present-but-blank per-source version metadata is not saved as an empty version while nil legacy versions retain known package fallback. Add actual source-record regression, reject only reproduced malformed cases without inventing provenance or rewriting citations, execute checks and checkpoint.",
-  "updated_at": "2026-11-07T00:19:29.958754+00:00",
+  "next_exact_implementation_action": "Continue original order at327: verify actual good-fruit/bad-fruit/standalone-star distinction and remaining accessible/localized object presentation. Use targeted source/actualcontroller evidence, implement only concrete gaps, retain original art/markers/rules and avoid counting Apple-only visuals as passed.",
+  "updated_at": "2026-11-07T00:25:31.135157+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -539,24 +539,24 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": 883,
-      "native_CPU_XCTest": 905,
+      "portable_XCTest": 885,
+      "native_CPU_XCTest": 907,
       "SwiftTesting_each": 21,
       "workflow_checks": 60,
       "syntax_files": 311,
-      "pre_fix_XCTest": 6,
-      "pre_fix_failed_assertions": 12,
+      "pre_fix_XCTest": 8,
+      "pre_fix_failed_assertions": 4,
       "Apple_SDK": "NOT_RUN",
       "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
     },
     "not_run": [
-      "Apple malformed-provider/load/error/recovery UI and actual device behavior",
-      "Human clinical/source/citation approval: scalar labels do not establish authenticity",
+      "Apple invalid-provider/load/save and actual device behavior",
+      "Human source/version/citation authenticity and clinical review",
       "Official MADLAD/native-language/device/clinical translation validation"
     ],
     "remaining": [
-      "Verify optional per-source versions distinguish nil legacy fallback from malformed blank labels next",
-      "Execute Apple invalid-question/provider/error/save integration checks and human source/citation review",
+      "Continue nextoriginal327 good/bad/standalone star accessible presentation and actualcontroller distinction",
+      "Execute Apple malformed-source load/save integration and human source/version/citation review",
       "Whole original checklist acceptance, exact founder320\u2013322 and external official-model/clinical/device blockers remain open"
     ]
   },

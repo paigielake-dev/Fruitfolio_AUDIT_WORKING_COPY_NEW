@@ -29,6 +29,29 @@ final class Prompt1BGameSavedSourceTests: XCTestCase {
         }
     }
 
+    func testPresentBlankSourceVersionCannotProduceEmptySavedProvenance() {
+        for version in ["", " \n"] {
+            let record = AskSourceRecord(id: "paper", title: "Original fixture attribution",
+                sourceText: "Original APA fixture x_y = 2–4", contentVersion: version)
+            let q = question(records: [record])
+            XCTAssertFalse(q.isPlayable)
+            XCTAssertTrue(Prompt28SavedResearchCopy.pending(question: q) == nil)
+        }
+    }
+
+    func testAbsentLegacySourceVersionKeepsPackageFallbackAndOriginalCitation() throws {
+        let record = AskSourceRecord(id: "paper", title: "Original fixture attribution",
+            sourceText: "  Original APA fixture x_y = 2–4 cafe\u{301}\n", doi: "10.1000/fixture")
+        XCTAssertNil(record.contentVersion)
+        let q = question(records: [record])
+        let saved = try XCTUnwrap(Prompt28SavedResearchCopy.pending(question: q))
+        XCTAssertEqual(saved.sourceVersions, ["paper": "package-v2"])
+        XCTAssertEqual(saved.sourceRecords, [record])
+        XCTAssertEqual(saved.answer, q.explanation)
+        XCTAssertEqual(saved.knowledgeBaseVersion, q.contentVersion)
+        XCTAssertEqual(saved.generationTimestamp, q.createdAt)
+    }
+
     func testKnownExcerptPresentationPreservesLiteralBytesAndSavedOriginal() throws {
         let literal = "  synthetic [blank]; x_y; FSH ≤ −2.5 IU/L. DOI:10.1234/fixture cafe\u{301}\n\n  "
         let original = Prompt28ExcerptQuestionPresentation.prefix + literal
