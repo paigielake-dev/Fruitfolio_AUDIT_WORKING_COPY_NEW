@@ -115,6 +115,7 @@ final class Prompt28FruitBasketViewModel {
     private var roundCompletionTask: Task<Void, Never>?
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var starPlanner = Prompt28RareStarPlanner()
+    private let starDropRandomUnit: @MainActor () -> Double
     private var playfieldSize: CGSize = .zero
     private var nextSpawnInterval: TimeInterval = 2
     private var lastSpawnAt = Date.distantPast
@@ -127,10 +128,12 @@ final class Prompt28FruitBasketViewModel {
         store: Prompt28FruitBasketStore,
         researchProvider: any Prompt28ResearchProviding,
         engine: Prompt28FruitBasketEngine? = nil,
-        obstacleLibrary: Prompt28ObstacleMaskLibrary? = .bundled
+        obstacleLibrary: Prompt28ObstacleMaskLibrary? = .bundled,
+        starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) }
     ) {
         self.store = store
         self.obstacleLibrary = obstacleLibrary
+        self.starDropRandomUnit = starDropRandomUnit
         self.researchProvider = researchProvider
         self.engine = engine ?? Prompt28FruitBasketEngine()
         self.difficulty = store.preferredDifficulty
@@ -639,7 +642,7 @@ final class Prompt28FruitBasketViewModel {
 
     private func spawnFruit() {
         guard let question = currentQuestion else { return }
-        if starPlanner.shouldDropStar(randomUnit: Double.random(in: 0...1)) {
+        if starPlanner.shouldDropStar(randomUnit: starDropRandomUnit()) {
             let duration = random(in: levelConfig.fallDurationRange)
             let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
             activeStars.append(Prompt28FallingStar(
@@ -677,7 +680,7 @@ final class Prompt28FruitBasketViewModel {
     private func spawnClassificationFruit() {
         guard let question = currentQuestion else { return }
         questionGeneration = UUID()
-        if starPlanner.shouldDropStar(randomUnit: Double.random(in: 0...1)) {
+        if starPlanner.shouldDropStar(randomUnit: starDropRandomUnit()) {
             classificationFruit = nil
             classificationStarAvailable = true
             return

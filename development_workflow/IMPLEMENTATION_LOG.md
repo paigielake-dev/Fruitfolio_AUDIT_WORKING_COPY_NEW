@@ -3027,3 +3027,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 887, "native_CPU_XCTest": 909, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "earlier_invalid_fixture_executed_tests": 0, "written_Apple_object_launch_vectors_extended": 4, "executed_Apple_object_launch_vectors": 0, "English_catalog_entries": 967, "nonempty_foreign_units": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify actual rare-drop planner integration in both physical and classification spawners through deterministic controlled-unit seam preserving default production randomness; test8fruit spacing and probability boundary, validate benefits against existing separate-event regression. Preserve art/rules and avoid statistical/flaky or physical-runtime claims.
 - Commit: containing commit for batch Explicit-game-object-markers-and-separate-ledger-events.
+
+## Actual-rare-star-spawners-spacing-boundary-and-physical-catch
+
+- Parent checkpoint: ff2bf15711eb4dee43b7fcf997dd58161869a68c.
+- Source-order requirements: [328, 329, 330, 334, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/ACTUAL_RARE_STAR_SPAWNERS.md.
+- Both actual spawners use optional MainActor unit draw with unchanged defaultSystemRandom; original8fruitspacing/0.05planner policy SHA unchanged. Three controller regressions verifyclassification2cycles+passedstarreset, physical9thspawn andactualbasket/mouth/transit/acknowledged1pass with0fruit/score, exactthresholdexcludedbothmodes. Controlled virtualframeprobesdiscard unselectedfruits; notstats/GUI/performanceclaim. Focus33pass; full890/912XCTest+21SwiftTesting each pass; engine/store/models/catalogunchanged. Apple balance/officialmodel notcertified.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 890, "native_CPU_XCTest": 912, "SwiftTesting_each": 21, "focused_actual_controller_XCTest": 33, "workflow_checks": 60, "syntax_files": 311, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify accumulated pass bank through actual controller and persistence beyond1000captures with no application cap, then one-pass consumption/round continuation and same-session retry carry. Add explicit large-bank native UI fixture/locale checks only as written NOT_RUN, preserve existing counters/rules/art and source privacy, run supported checks and checkpoint.
+- Commit: containing commit for batch Actual-rare-star-spawners-spacing-boundary-and-physical-catch.

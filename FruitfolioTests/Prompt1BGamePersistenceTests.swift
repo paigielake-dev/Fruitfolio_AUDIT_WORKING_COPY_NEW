@@ -25,7 +25,7 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         let name = "Fruitfolio.game-persistence-tests." + UUID().uuidString
         return (name, try XCTUnwrap(UserDefaults(suiteName: name)))
     }
-    private func setupWriteFixture() throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
+    private func setupWriteFixture(starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) }) throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
         let suite = "Fruitfolio.setup-write-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
         let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
@@ -33,7 +33,7 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         progress.currentGameLevel = 6; progress.highestGameLevelReached = 8
         progress.totalRoundsCompleted = 2
         store.updateProgress(progress)
-        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider(), starDropRandomUnit: starDropRandomUnit)
         model.rawTopic = "fixture"; model.screen = .learningSetup
         return (suite, defaults, store, model)
     }
@@ -116,10 +116,11 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(store.preferredDifficulty, .hard)
     }
 
-    private func activeModeFixture() throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
-        let (suite, defaults, store, model) = try setupWriteFixture()
+    private func activeModeFixture(mode: Prompt28ControlMode = .classification,
+                                   starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) }) throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
+        let (suite, defaults, store, model) = try setupWriteFixture(starDropRandomUnit: starDropRandomUnit)
         store.resetCurrentGameLevel(for: "fixture")
-        store.controlMode = .classification; store.persistPreferences()
+        store.controlMode = mode; store.persistPreferences()
         let question = Prompt28Question(id: "credit-fixture", topicQuery: "fixture", normalizedTopic: "fixture", category: "nonclinical test",
             educationalDifficulty: .easy, questionText: "Which visual item has a star?",
             answerOptions: [.init(id: "a", text: "Pear"), .init(id: "b", text: "Lemon")],
@@ -324,6 +325,70 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(model.screen, .catchActive); XCTAssertNil(model.roundResult)
         XCTAssertEqual(store.progress(for: "fixture")?.totalFruitCaught, 1)
         XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1)
+    }
+
+    func testActualClassificationSpawnerHonorsSpacingAndResetsAfterPassedStar() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture(starDropRandomUnit: { 0 })
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        for cycle in 1...2 {
+            for _ in 0..<8 {
+                XCTAssertNotNil(model.classificationFruit)
+                XCTAssertFalse(model.classificationStarAvailable)
+                model.classificationDecision(accept: false)
+            }
+            XCTAssertNil(model.classificationFruit); XCTAssertTrue(model.classificationStarAvailable)
+            model.classificationStarDecision(accept: false)
+            XCTAssertEqual(model.roundLedger.starsPassed, cycle)
+            XCTAssertFalse(model.classificationStarAvailable)
+        }
+        XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.availableStarPasses, 0)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 0)
+    }
+
+    func testActualPhysicalSpawnerHonorsSpacingAndStarCanEnterWithoutFruit() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture(mode: .catchMode, starDropRandomUnit: { 0 })
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        let base = Date(timeIntervalSince1970: 10_000)
+        for index in 0..<9 {
+            // Discard unselected spawn probes to isolate rarity from collisions.
+            model.activeFruit.removeAll(); model.activeStars.removeAll()
+            model.advanceGameplayFrame(delta: 0.04, now: base.addingTimeInterval(Double(index) * 10))
+            XCTAssertEqual(model.activeStars.count, index == 8 ? 1 : 0)
+            XCTAssertEqual(model.activeFruit.count, index == 8 ? 0 : 1)
+        }
+        // Follow the actual last spawned star with the basket through shared physics.
+        for frame in 1...500 {
+            model.activeFruit.removeAll()
+            if let star = model.activeStars.first { model.moveBasket(to: star.x) }
+            model.advanceGameplayFrame(delta: 0.04, now: base.addingTimeInterval(80 + Double(frame) * 0.04))
+            if model.session?.availableStarPasses == 1 { break }
+        }
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+        XCTAssertEqual(model.roundLedger.starsCollected, 1)
+        XCTAssertTrue(model.roundLedger.caughtFruit.isEmpty)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalFruitCaught, 0)
+    }
+
+    func testBothActualSpawnersExcludeProbabilityUpperBoundary() async throws {
+        for mode in Prompt28ControlMode.allCases {
+            let (suite, defaults, store, model) = try activeModeFixture(mode: mode,
+                starDropRandomUnit: { Prompt28RareStarPlanner.probability })
+            defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+            for index in 0..<32 {
+                if mode == .classification {
+                    XCTAssertNotNil(model.classificationFruit); XCTAssertFalse(model.classificationStarAvailable)
+                    model.classificationDecision(accept: false)
+                } else {
+                    model.activeFruit.removeAll(); model.activeStars.removeAll()
+                    model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 10_000 + Double(index) * 10))
+                    XCTAssertTrue(model.activeStars.isEmpty); XCTAssertEqual(model.activeFruit.count, 1)
+                }
+            }
+            XCTAssertEqual(model.session?.availableStarPasses, 0)
+            XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 0)
+        }
     }
 
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
