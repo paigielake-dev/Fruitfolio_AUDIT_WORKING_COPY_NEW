@@ -1577,7 +1577,8 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
-        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift"
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1637,7 +1638,7 @@
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1671,43 +1672,34 @@
         "Correct demonstrated gap in earlier ButtonStyle-only inventory: six Ask wrappers, one Guide icon wrapper and three Settings row wrappers added independent drag gestures/transforms around already animated controls. Compatibility containers now set the existing ButtonStyle without a second gesture/effect; icon action surface delegates its pressed visual to the same canonical effect and retains exclusive tap/hold, disabled, identification, action and sound ownership. Preserve earlier review with explicit correction rather than treating inventory as whole-app proof. Extend actual four-vector Ask UI regression to hold help without activation or draft mutation, then tap to open. Apple test NOT_RUN; no VERIFIED promotion.",
         "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure.",
         "Actual Contact failure defers while inactive/foreign modal; exact error request identity rejects stale/duplicate close and scene callbacks preserve current feedback without duplicate cue. Three new actual Foundation regressions pass; actual Apple focus/audio/UI test remains NOT_RUN. No whole global requirement closure.",
-        "Opening cue is admitted once per About presentation identity; close/escape share one guard and close cue. No delayed navigation or hidden background audio callback."
+        "Opening cue is admitted once per About presentation identity; close/escape share one guard and close cue. No delayed navigation or hidden background audio callback.",
+        "Preference bindings now reject inactive/covered writes before audio resume. Language selection admits only its current captured session."
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T15:48:16.689954+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Settings-active-owned-preference-and-navigation-actions",
         "executed": {
-          "workflow_checks": 75,
           "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
-          ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+            "/tmp/fruitfolio_settings_action_admission_syntax.log",
+            "/tmp/fruitfolio_settings_action_admission_sound.log"
+          ]
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+          "Source guards are implementation evidence only; no full-requirement status promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+        "Source guards are implementation evidence only; no full-requirement status promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -1827,6 +1819,35 @@
             "Validate original FAQ/Contact art registration and composition across actual device viewports and Dynamic Type.",
             "Canonical FAQ tulip remains missing under original374; no unrelated flower/cloud substituted.",
             "Whole478/36/unnumbered reconciliation remains unfinished."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -34308,7 +34329,8 @@
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
-        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift"
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -34336,7 +34358,7 @@
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -34350,43 +34372,34 @@
         "Sorttrigger/options now canonicaltranslatedpills, selectedtraits and source-ownedcues; newcompactAXvalueowner preserveslabel/hint+explicitvalueprovenance. ActualFoundationgate rejects inactive/collapsed/stale/duplicate selections and expiredclosedfocus tickets; actualcallbacks checkliveparent+UIApplicationactivity. Fourgate tests execute; existing4AppleLibraryUIvectors extendselection/reopen/state/popcountsNOT_RUN. Existingordering/binding/bookrecords unchanged. Full915/937+21pass, noApple/model/wholeitem certification.",
         "Corrected demonstrated canonical-modal mismatch:Root/Contact usedblack14percent, Library/Guide/Ask/Settings/Account usedcream14percent, Game storm/tutorial usedcream72percent and pause lackedcanonicaldim. All now reuse one visual backdrop in existing shared blur file, preserving current canonicalRoot black14percent, radius/scale/timings, artwork/content/actions/outside-tap policy. Pause addsnoninteractive canonicaldim underits existing modal. Hub first-launch tour unchanged; decorative painting haze not rewritten. Source-grounded original1\u20136/324/389/390/445component evidence recorded; exact unnumbered founder paragraph377hash retained. New actual SwiftUI ImageRenderer test writtenNOT_RUN;71workflow/315syntax-only passed. No blanket implementation/verification promotion.",
         "Actual Contact failure defers while inactive/foreign modal; exact error request identity rejects stale/duplicate close and scene callbacks preserve current feedback without duplicate cue. Three new actual Foundation regressions pass; actual Apple focus/audio/UI test remains NOT_RUN. No whole global requirement closure.",
-        "Implement missing affected Settings/About accessibility semantics and owned modal focus. New real native regression is written, NOT_RUN."
+        "Implement missing affected Settings/About accessibility semantics and owned modal focus. New real native regression is written, NOT_RUN.",
+        "Background root controls are disabled during inactivity/owned overlays; existing modal focus/return behavior retained; actual Apple accessibility remains pending."
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T15:48:16.689954+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Settings-active-owned-preference-and-navigation-actions",
         "executed": {
-          "workflow_checks": 75,
           "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
-          ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+            "/tmp/fruitfolio_settings_action_admission_syntax.log",
+            "/tmp/fruitfolio_settings_action_admission_sound.log"
+          ]
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+          "Source guards are implementation evidence only; no full-requirement status promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+        "Source guards are implementation evidence only; no full-requirement status promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -34455,6 +34468,35 @@
             "Validate original FAQ/Contact art registration and composition across actual device viewports and Dynamic Type.",
             "Canonical FAQ tulip remains missing under original374; no unrelated flower/cloud substituted.",
             "Whole478/36/unnumbered reconciliation remains unfinished."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -35215,7 +35257,8 @@
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -35279,7 +35322,7 @@
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -35332,43 +35375,34 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
         "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.",
-        "About popup copy now enters existing selected-language text pipeline with protected brand literals and honest fallback; actual target-language output/model is not verified."
+        "About popup copy now enters existing selected-language text pipeline with protected brand literals and honest fallback; actual target-language output/model is not verified.",
+        "Language selection error/recovery behavior remains under shared Settings authority; stale menu cannot mutate selection while suspended or covered."
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T15:48:16.689954+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Settings-active-owned-preference-and-navigation-actions",
         "executed": {
-          "workflow_checks": 75,
           "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
           "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
-          ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+            "/tmp/fruitfolio_settings_action_admission_syntax.log",
+            "/tmp/fruitfolio_settings_action_admission_sound.log"
+          ]
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+          "Source guards are implementation evidence only; no full-requirement status promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+        "Source guards are implementation evidence only; no full-requirement status promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -35422,6 +35456,35 @@
           "remaining": [
             "Run genuine Apple existing four-vector Ask icon hold/tap regression; inspect VoiceOver label and provenance in selected language and hold-label placement without changed actions.",
             "Complete missing model/catalog language coverage with real approved resources and native-language review; routing is not proof translations exist or are correct."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -35853,7 +35916,8 @@
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
-        "development_workflow/LANGUAGE_RESTART_NAVIGATION_FIXTURE.md"
+        "development_workflow/LANGUAGE_RESTART_NAVIGATION_FIXTURE.md",
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -35872,47 +35936,70 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Language-restart-private-fixture-and-native-selector-verification (resolve containing commit with git log)",
+      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
         "# Individual South American selectors and preserved unknown preferences\n\nAdded the founder-specified Quechua (`qu`, Runa Simi), Guaran\u00ed (`gn`, Ava\u00f1e\u02bc\u1ebd) and Aymara (`ay`, Aymar aru) to the existing individual language/autonym architecture. Spanish and Portuguese remain. No generic \u201cSouth American,\u201d \u201cAfrican\u201d or \u201cIndian\u201d replacement is introduced. This adds selectable stable identities and persistence, not a claim that the installed tokenizer/model has verified those target tags or that each regional variety is equivalent. Actual MADLAD vocabulary checks still gate every request.\n\nUnknown/future or wrong-type stored language data is retained. Settings explicitly discloses the temporary English display fallback and only replaces that stored value after an explicit language assignment. The same published authority records whether review is needed. Settings also explains that unavailable translation leaves the original visible. No saved source, note or measurement is rewritten.\n\nFive portable language tests now cover every individual selector's actual persistence/reinitialization, independent stores, original unknown/wrong-type bytes/objects, explicit recovery and RTL identities. Full portable verification: 457 XCTest +21 Swift Testing passed. The additional actual SettingsStore recovery/publication tests remain Apple-only and NOT_RUN. Compiler parsing covers238 changed files with zero errors. Source/API support is not complete reviewed translation, actual app process restart, dialect validation, or UI/VoiceOver/RTL rendering acceptance. Those gates remain open.\n",
         "Explicit runtime localization now opens the exact selected-language lproj table rather than relying on the formatting locale of String(localized:locale:). No other language or Chinese script is borrowed when a key is absent. English may use Base only for an English/unspecified development language. Missing/blank translations preserve the supplied source fallback exactly. Bundle injection permits real Foundation resource-table tests without changing production defaults.\n\nSettingsStore now keeps its genuine Combine observation on Apple while compiling its identical preference/control-flow implementation on Foundation-only platforms. There is no Linux mock observable wrapper. Existing language persistence/recovery/memory-pressure tests now execute against the actual store; Apple publisher assertions remain conditional and unexecuted here. Tests exercise repeated en/es/ar resource lookup, script separation, Base safety, scientific fallback literals, four independent audio choices under global mute and persisted volume bounds. These fixtures do not prove that the app catalog contains complete or clinically reviewed translations; compiled iOS catalog lookup and UI behavior remain Apple gates.",
         "Added the explicitly named missing founder languages from source lines352\u2013359 to the existing shared selector: Thai, Mongolian, Indonesian, Russian, Polish, Dutch, Swedish, Ukrainian, Turkish, Hebrew, and separate Kurdish Kurmanji/Sorani choices. Existing persisted codes remain unchanged. New codes are th/mn/id/ru/pl/nl/sv/uk/tr/he/ku/ckb with recognizable native labels. Hebrew and Sorani use RTL; Kurmanji retains Latin layout. All existing selector/preference loops now exercise the additions against actual UserDefaults and SettingsStore. A real translation-service contract fixture records twelve distinct forwarded tags; it is not evidence of model output or clinical translation quality. The production runtime continues requiring the exact target tag in the installed validated manifest. Official model support remains unverified because its artifacts are unavailable. Full static catalog coverage and Apple typography/RTL acceptance remain open.",
-        "DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof."
+        "DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof.",
+        "All actual Settings preference writes use the established store; gates prevent stale UI changes without rewriting saved data."
       ],
-      "last_updated": "2026-11-07T02:25:35.353352+00:00",
+      "last_updated": "2026-11-07T15:48:16.689954+00:00",
       "latest_batch_verification": {
-        "batch": "Language-restart-private-fixture-and-native-selector-verification",
+        "batch": "Settings-active-owned-preference-and-navigation-actions",
         "executed": {
-          "portable_XCTest": 918,
-          "native_CPU_XCTest": 940,
-          "SwiftTesting_each": 21,
-          "new_same_process_fixture_XCTest": 3,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "control_sound_ownership_findings": 0,
-          "new_Apple_UI_vectors_written": 4,
-          "Apple_UI_launches_defined": 12,
-          "Apple_UI_vectors_executed": 0,
-          "actual_OS_restart_verification": "NOT_RUN; owner recreation is same-process only"
+          "swift_syntax_files": 326,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_settings_action_admission_syntax.log",
+            "/tmp/fruitfolio_settings_action_admission_sound.log"
+          ]
         },
         "not_run": [
-          "FourFrench/Arabic actualSettings native-menu/QAhostFAQ/actualapprelaunch/cleanup UI vectors;12launchesdefined",
-          "Apple genuine Combine/menu/selector pronunciation, actualOS persistence and production navigation/backstack",
-          "OfficialMADLAD/native-language quality and physical-device acceptance"
+          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Execute4AppleUI vectors with stableprivateUUID domains and cleanup; do not inferprocessrestart from same-process owner recreation",
-          "Verify actual production navigation/backstack, native selector discovery and unavailable/future preference recovery onApple",
-          "Continue400\u2013409 requested individual language/model/tokenizer coverage, marking absent officialweights as unverified rather than assuming support"
+          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+          "Source guards are implementation evidence only; no full-requirement status promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute4AppleUI vectors with stableprivateUUID domains and cleanup; do not inferprocessrestart from same-process owner recreation",
-        "Verify actual production navigation/backstack, native selector discovery and unavailable/future preference recovery onApple",
-        "Continue400\u2013409 requested individual language/model/tokenizer coverage, marking absent officialweights as unverified rather than assuming support"
+        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+        "Source guards are implementation evidence only; no full-requirement status promotion."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Language-restart-private-fixture-and-native-selector-verification",
+          "executed": {
+            "portable_XCTest": 918,
+            "native_CPU_XCTest": 940,
+            "SwiftTesting_each": 21,
+            "new_same_process_fixture_XCTest": 3,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "control_sound_ownership_findings": 0,
+            "new_Apple_UI_vectors_written": 4,
+            "Apple_UI_launches_defined": 12,
+            "Apple_UI_vectors_executed": 0,
+            "actual_OS_restart_verification": "NOT_RUN; owner recreation is same-process only"
+          },
+          "not_run": [
+            "FourFrench/Arabic actualSettings native-menu/QAhostFAQ/actualapprelaunch/cleanup UI vectors;12launchesdefined",
+            "Apple genuine Combine/menu/selector pronunciation, actualOS persistence and production navigation/backstack",
+            "OfficialMADLAD/native-language quality and physical-device acceptance"
+          ],
+          "remaining": [
+            "Execute4AppleUI vectors with stableprivateUUID domains and cleanup; do not inferprocessrestart from same-process owner recreation",
+            "Verify actual production navigation/backstack, native selector discovery and unavailable/future preference recovery onApple",
+            "Continue400\u2013409 requested individual language/model/tokenizer coverage, marking absent officialweights as unverified rather than assuming support"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -42581,7 +42668,8 @@
         "Tools/sync_founder_source_coverage.py",
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
         "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json",
-        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json"
+        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json",
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -42757,7 +42845,7 @@
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
         "development_workflow/tests/test_founder_source_coverage.py"
       ],
-      "commit_reference": "batch:AMH-existing-original-definition-and-age-factor-retrieval (resolve containing commit with git log)",
+      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -42892,32 +42980,34 @@
         "New actual Settings/About UI regression covers4planned launches and remains NOT_RUN.75workflow and source/syntax checks passed. Prior Contact/FAQplanned-vector counts explicitly corrected, not counted passed.",
         "Actual testing scope/shared role source lookup and byte-exact citation provenance corrected; wrong Pap/STI mapping removed, source/citation gates unchanged. Complete seven-aspect Library and native/clinical acceptance remain unfinished.",
         "Full1058 portable XCTest and21 Swift Testing passed; Apple and clinical acceptance remain unexecuted.",
-        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy."
+        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
+        "326 Swift syntax parses and static sound audit passed; Apple UI regression updated but NOT_RUN."
       ],
-      "last_updated": "2026-11-07T15:46:09.109178+00:00",
+      "last_updated": "2026-11-07T15:48:16.689954+00:00",
       "latest_batch_verification": {
-        "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+        "batch": "Settings-active-owned-preference-and-navigation-actions",
         "executed": {
-          "focused_hormone_XCTest": 14,
-          "failures": 0,
-          "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
+          "swift_syntax_files": 326,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_settings_action_admission_syntax.log",
+            "/tmp/fruitfolio_settings_action_admission_sound.log"
+          ]
         },
         "not_run": [
-          "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-          "Missing bucket matches require source-specific review before identifying external content blockers.",
-          "Other four lexical-role selectors still need clinical suitability review.",
-          "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+          "Source guards are implementation evidence only; no full-requirement status promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-        "Missing bucket matches require source-specific review before identifying external content blockers.",
-        "Other four lexical-role selectors still need clinical suitability review.",
-        "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+        "Source guards are implementation evidence only; no full-requirement status promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -43596,6 +43686,24 @@
             "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+          "executed": {
+            "focused_hormone_XCTest": 14,
+            "failures": 0,
+            "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
+          },
+          "not_run": [
+            "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          ],
+          "remaining": [
+            "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
+            "Missing bucket matches require source-specific review before identifying external content blockers.",
+            "Other four lexical-role selectors still need clinical suitability review.",
+            "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -43821,7 +43929,8 @@
         "Tools/sync_founder_source_coverage.py",
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
         "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json",
-        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json"
+        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json",
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -43992,7 +44101,7 @@
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
         "development_workflow/tests/test_founder_source_coverage.py"
       ],
-      "commit_reference": "batch:AMH-existing-original-definition-and-age-factor-retrieval (resolve containing commit with git log)",
+      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -44110,32 +44219,34 @@
         "Regression added to existing project UI test source using actual Settings/private preference harness. No duplicate fake UI scene or tests counted from source presence.",
         "Actual testing scope/shared role source lookup and byte-exact citation provenance corrected; wrong Pap/STI mapping removed, source/citation gates unchanged. Complete seven-aspect Library and native/clinical acceptance remain unfinished.",
         "Record per-aspect source coverage and precise remaining verification; preserve prior evidence and recoverable local checkpoint.",
-        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy."
+        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
+        "Append exact source change/evidence and unexecuted native acceptance without replacing prior checklist history."
       ],
-      "last_updated": "2026-11-07T15:46:09.109178+00:00",
+      "last_updated": "2026-11-07T15:48:16.689954+00:00",
       "latest_batch_verification": {
-        "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+        "batch": "Settings-active-owned-preference-and-navigation-actions",
         "executed": {
-          "focused_hormone_XCTest": 14,
-          "failures": 0,
-          "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
+          "swift_syntax_files": 326,
+          "syntax_errors": 0,
+          "static_sound_diagnostics": 0,
+          "logs": [
+            "/tmp/fruitfolio_settings_action_admission_syntax.log",
+            "/tmp/fruitfolio_settings_action_admission_sound.log"
+          ]
         },
         "not_run": [
-          "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
         ],
         "remaining": [
-          "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-          "Missing bucket matches require source-specific review before identifying external content blockers.",
-          "Other four lexical-role selectors still need clinical suitability review.",
-          "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+          "Source guards are implementation evidence only; no full-requirement status promotion."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-        "Missing bucket matches require source-specific review before identifying external content blockers.",
-        "Other four lexical-role selectors still need clinical suitability review.",
-        "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+        "Source guards are implementation evidence only; no full-requirement status promotion."
       ],
       "prior_batch_verifications": [
         {
@@ -44803,6 +44914,24 @@
             "Swift_Testing": 21,
             "syntax_files": 326,
             "failures": 0
+          },
+          "not_run": [
+            "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          ],
+          "remaining": [
+            "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
+            "Missing bucket matches require source-specific review before identifying external content blockers.",
+            "Other four lexical-role selectors still need clinical suitability review.",
+            "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+          "executed": {
+            "focused_hormone_XCTest": 14,
+            "failures": 0,
+            "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
           },
           "not_run": [
             "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"

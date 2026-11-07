@@ -4136,3 +4136,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_hormone_XCTest": 14, "failures": 0, "log": "/tmp/fruitfolio_amh_original_definition_factor.log"}.
 - Next action: Review missing hormone aspect source matches individually, then continue independent incomplete original and founder requirements.
 - Commit: containing commit for batch AMH-existing-original-definition-and-age-factor-retrieval.
+
+## Settings-active-owned-preference-and-navigation-actions
+
+- Parent checkpoint: 7faf35811c002cd981adfd8fcd2c60c047badea3.
+- Source-order requirements: [11, 390, 395, 398, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Privacy Settings/Prompt12SettingsView.swift, development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json.
+- Guard actual Settings preference writes and root navigation by visible/active/no-modal ownership. Invalidate captured language-menu actions on suspension, disappearance or competing modal; preserve normal shared persistence/audio behavior.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"swift_syntax_files": 326, "syntax_errors": 0, "static_sound_diagnostics": 0, "logs": ["/tmp/fruitfolio_settings_action_admission_syntax.log", "/tmp/fruitfolio_settings_action_admission_sound.log"]}.
+- Next action: Continue source-grounded incomplete functionality across original parts and founder additions, preserving unexecuted Apple acceptance separately.
+- Commit: containing commit for batch Settings-active-owned-preference-and-navigation-actions.

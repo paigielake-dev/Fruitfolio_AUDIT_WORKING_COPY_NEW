@@ -1,0 +1,30 @@
+{
+  "requirements": [
+    11,
+    390,
+    395,
+    398,
+    443,
+    444
+  ],
+  "implementation": "Guard actual Settings preference writes and root navigation by visible/active/no-modal ownership. Invalidate captured language-menu actions on suspension, disappearance or competing modal; preserve normal shared persistence/audio behavior.",
+  "evidence": {
+    "swift_syntax_files": 326,
+    "syntax_errors": 0,
+    "static_sound_diagnostics": 0,
+    "logs": [
+      "/tmp/fruitfolio_settings_action_admission_syntax.log",
+      "/tmp/fruitfolio_settings_action_admission_sound.log"
+    ]
+  },
+  "native_regression": "testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground now also asserts header back/about opener absent while modal owns accessibility; existing4 planned launches NOT_RUN.",
+  "remaining": [
+    "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+    "Source guards are implementation evidence only; no full-requirement status promotion."
+  ],
+  "not_run": [
+    "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+    "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+  ],
+  "status": "IN_PROGRESS; no promotion"
+}

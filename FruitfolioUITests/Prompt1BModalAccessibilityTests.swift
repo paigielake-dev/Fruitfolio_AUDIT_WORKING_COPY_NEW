@@ -1681,6 +1681,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "settings.about.heading").firstMatch.exists)
             XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "settings.about.body").firstMatch.exists)
             XCTAssertFalse(menu.exists)
+            XCTAssertFalse(app.buttons["settings.routeHeader.back"].exists)
+            XCTAssertFalse(open.exists)
             XCUIDevice.shared.press(.home)
             app.activate()
             XCTAssertTrue(popup.waitForExistence(timeout: 5))

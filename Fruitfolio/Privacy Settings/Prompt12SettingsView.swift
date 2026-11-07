@@ -21,6 +21,7 @@ struct Prompt12SettingsView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var popups: PopupCoordinator
     @State private var rootIsVisible = false
+    @State private var settingsActionEpoch = UUID()
     @State private var aboutPresentationID = UUID()
     @State private var announcedAboutID: UUID?
     @State private var aboutReturnTask: Task<Void, Never>?
@@ -31,6 +32,10 @@ struct Prompt12SettingsView: View {
     private var canUseSettings: Bool {
         rootIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active &&
             popups.currentPopup == nil && !showMyContext
+    }
+
+    private var canEditSettings: Bool {
+        canUseSettings && !showAbout && !showDataManagement
     }
 
     var body: some View {
@@ -51,11 +56,15 @@ struct Prompt12SettingsView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .disabled(!canEditSettings)
 
             .safeAreaInset(edge: .top, spacing: 0) {
                 FruitfolioDecoratedRouteHeader(palette: .settings) {
                     Prompt12RouteHeader(title: "settings", subtitle: "small controls for how Fruitfolio feels",
-                                        assetName: "hub_settings", onBack: onBack)
+                                        assetName: "hub_settings", onBack: {
+                                            guard canEditSettings else { return }
+                                            onBack()
+                                        })
                 }
                 .padding(.horizontal, 20)
                 .background(DesignTokens.ColorToken.backgroundCream)
@@ -170,6 +179,7 @@ struct Prompt12SettingsView: View {
         .onAppear { rootIsVisible = true }
         .onDisappear {
             rootIsVisible = false
+            settingsActionEpoch = UUID()
             aboutReturnTask?.cancel(); aboutReturnTask = nil
             needsAboutReturnFocus = false
             aboutPresentationID = UUID()
@@ -179,18 +189,18 @@ struct Prompt12SettingsView: View {
             showAbout = false
         }
         .onChange(of: scenePhase) { _, phase in
-            if phase != .active { suspendAboutFocus() }
+            if phase != .active { settingsActionEpoch = UUID(); suspendAboutFocus() }
             else { restoreAboutControlFocus() }
         }
         .onChange(of: popups.currentPopup?.id) { _, id in
-            if id != nil { suspendAboutFocus() }
+            if id != nil { settingsActionEpoch = UUID(); suspendAboutFocus() }
             else { restoreAboutControlFocus() }
         }
         .onChange(of: showDataManagement) { _, visible in
-            if visible { needsAboutReturnFocus = false; suspendAboutFocus() }
+            if visible { settingsActionEpoch = UUID(); needsAboutReturnFocus = false; suspendAboutFocus() }
         }
         .onChange(of: showMyContext) { _, visible in
-            if visible { needsAboutReturnFocus = false; suspendAboutFocus() }
+            if visible { settingsActionEpoch = UUID(); needsAboutReturnFocus = false; suspendAboutFocus() }
         }
         .fullScreenCover(isPresented: $showMyContext) {
             FruitfolioPresentedPopupHost {
@@ -237,18 +247,26 @@ struct Prompt12SettingsView: View {
                 isOn: audioEnableBinding(\.typingASMREnabled, category: .typingASMR)
             )
 
-            Prompt12VolumeRow(title: "music", value: $settings.musicVolume)
-            Prompt12VolumeRow(title: "rain sounds", value: $settings.rainVolume)
-            Prompt12VolumeRow(title: "sound effects", value: $settings.soundEffectsVolume)
-            Prompt12VolumeRow(title: "typing asmr", value: $settings.typingVolume)
+            Prompt12VolumeRow(title: "music", value: admittedBinding(\.musicVolume))
+            Prompt12VolumeRow(title: "rain sounds", value: admittedBinding(\.rainVolume))
+            Prompt12VolumeRow(title: "sound effects", value: admittedBinding(\.soundEffectsVolume))
+            Prompt12VolumeRow(title: "typing asmr", value: admittedBinding(\.typingVolume))
         }
     }
 
     private func audioEnableBinding(_ key: ReferenceWritableKeyPath<SettingsStore, Bool>,
                                     resumeWhen: Bool = true, category: FruitfolioAudioCategory? = nil) -> Binding<Bool> {
         Binding(get: { settings[keyPath: key] }, set: { enabled in
+            guard canEditSettings else { return }
             settings[keyPath: key] = enabled
             if enabled == resumeWhen { audioManager.resumeAfterUserRequest(category: category) }
+        })
+    }
+
+    private func admittedBinding<Value>(_ key: ReferenceWritableKeyPath<SettingsStore, Value>) -> Binding<Value> {
+        Binding(get: { settings[keyPath: key] }, set: { value in
+            guard canEditSettings else { return }
+            settings[keyPath: key] = value
         })
     }
 
@@ -256,11 +274,13 @@ struct Prompt12SettingsView: View {
         Prompt12PaperCard {
             sectionTitle("language / भाषा / زبان")
 
+            let expectedEpoch = settingsActionEpoch
             Menu {
                 ForEach(FruitfolioLanguage.allCases) { language in
                     Button {
-                        audioManager.play(.buttonSoftPop)
+                        guard canEditSettings, expectedEpoch == settingsActionEpoch else { return }
                         settings.language = language
+                        audioManager.play(.buttonSoftPop)
                     } label: {
                         if settings.language == language {
                             Label(language.nativeDisplayName, systemImage: "checkmark")
@@ -310,8 +330,7 @@ struct Prompt12SettingsView: View {
             WatercolorToggle(
                 label: "reduced motion",
                 isOn:
-                    $settings
-                        .reduceAnimationOverride
+                    admittedBinding(\.reduceAnimationOverride)
             )
 
             Prompt12InfoText(
@@ -335,6 +354,7 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "hub_account",
                 action: {
+                    guard canEditSettings else { return }
                     onShowAccount()
                 }
             )
@@ -356,6 +376,7 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "popup_info",
                 action: {
+                    guard canEditSettings else { return }
                     onShowPrivacy()
                 }
             )
@@ -379,6 +400,7 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "symptom_notes",
                 action: {
+                    guard canEditSettings else { return }
                     showMyContext = true
                 }
             )
@@ -400,6 +422,7 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "ask_source_pages",
                 action: {
+                    guard canEditSettings else { return }
                     showDataManagement = true
                 }
             )
@@ -419,6 +442,7 @@ struct Prompt12SettingsView: View {
                 assetName:
                     "fruit_blueberry_friendly",
                 action: {
+                    guard canEditSettings else { return }
                     appState.beginManualTourReplay()
                     navigation.returnToHub()
                 }
@@ -446,6 +470,7 @@ struct Prompt12SettingsView: View {
         needsAboutReturnFocus = false
         aboutControlFocused = false
         aboutPresentationID = UUID()
+        settingsActionEpoch = UUID()
         showAbout = true
     }
 

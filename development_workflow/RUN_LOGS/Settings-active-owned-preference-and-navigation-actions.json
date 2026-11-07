@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-11-07T15:48:16.689954+00:00",
+  "requirements": [
+    11,
+    390,
+    395,
+    398,
+    443,
+    444
+  ],
+  "supplemental_requirements": [],
+  "commands": [
+    "Swift compiler syntax parse:326 files",
+    "SwiftSyntax sound ownership audit:all app Swift sources",
+    "Workflow integrity checks",
+    "git diff --check"
+  ],
+  "results": {
+    "swift_syntax_files": 326,
+    "syntax_errors": 0,
+    "static_sound_diagnostics": 0,
+    "logs": [
+      "/tmp/fruitfolio_settings_action_admission_syntax.log",
+      "/tmp/fruitfolio_settings_action_admission_sound.log"
+    ]
+  },
+  "verification": {
+    "executed": {
+      "swift_syntax_files": 326,
+      "syntax_errors": 0,
+      "static_sound_diagnostics": 0,
+      "logs": [
+        "/tmp/fruitfolio_settings_action_admission_syntax.log",
+        "/tmp/fruitfolio_settings_action_admission_sound.log"
+      ]
+    },
+    "not_run": [
+      "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+      "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+    ],
+    "remaining": [
+      "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+      "Source guards are implementation evidence only; no full-requirement status promotion."
+    ]
+  }
+}
