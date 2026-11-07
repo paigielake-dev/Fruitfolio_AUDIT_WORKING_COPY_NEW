@@ -106,6 +106,15 @@ final class Prompt09AskViewModel: ObservableObject {
         if phase == .searching || phase == .answering { phase = .ready }
     }
 
+    /// Preserve a newer unsent draft; restore the interrupted question only if
+    /// its submission cleared the field. Late provider callbacks stay rejected.
+    func suspendForInactivity() {
+        if phase == .searching, inputText.isEmpty {
+            inputText = messages.last(where: { $0.role == .user })?.text ?? ""
+        }
+        cancelOutstandingWork()
+    }
+
     var canSend: Bool {
         !inputText
             .trimmingCharacters(
@@ -140,7 +149,11 @@ final class Prompt09AskViewModel: ObservableObject {
             await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation, userContext: userContext)
         }
         requestTask = task
-        await task.value
+        await withTaskCancellationHandler {
+            await task.value
+        } onCancel: {
+            task.cancel()
+        }
         if requestGeneration == generation {
             requestTask = nil
             hasUserContextInFlight = false

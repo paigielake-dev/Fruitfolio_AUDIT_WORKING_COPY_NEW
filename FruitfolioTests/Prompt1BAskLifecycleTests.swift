@@ -20,6 +20,41 @@ private actor Prompt1BSuspendedAskEngine: AskKnowledgeServing {
 
 @MainActor
 final class Prompt1BAskLifecycleTests: XCTestCase {
+    func testCancellingSubmitOwnerRejectsLateProviderAnswer() async {
+        let started = expectation(description: "provider started for cancelled owner")
+        let engine = Prompt1BSuspendedAskEngine(started: started)
+        let model = Prompt09AskViewModel(engine: engine)
+        model.inputText = "old question"
+        let task = Task { await model.submitCurrentQuestion(reduceMotion: true) }
+        await fulfillment(of: [started], timeout: 2)
+        task.cancel()
+        await engine.finish()
+        await task.value
+        XCTAssertNil(model.answer)
+        XCTAssertTrue(model.answerHistory.isEmpty)
+        XCTAssertEqual(model.messages.map(\.role), [.fruitfolio, .user])
+        XCTAssertEqual(model.phase, .ready)
+    }
+
+    func testInactivityRestoresInterruptedQuestionAndRejectsLateProviderAnswer() async {
+        let started = expectation(description: "provider started before inactivity")
+        let engine = Prompt1BSuspendedAskEngine(started: started)
+        let model = Prompt09AskViewModel(engine: engine)
+        model.inputText = "old question"
+        let task = Task { await model.submitCurrentQuestion(reduceMotion: true) }
+        await fulfillment(of: [started], timeout: 2)
+        XCTAssertEqual(model.inputText, "")
+        model.suspendForInactivity()
+        XCTAssertEqual(model.inputText, "old question")
+        model.suspendForInactivity()
+        await engine.finish()
+        await task.value
+        XCTAssertNil(model.answer)
+        XCTAssertTrue(model.answerHistory.isEmpty)
+        XCTAssertEqual(model.inputText, "old question")
+        XCTAssertEqual(model.phase, .ready)
+    }
+
     func testResetRejectsLateAnswerEvenIfProviderIgnoresCancellation() async {
         let started = expectation(description: "provider received question")
         let engine = Prompt1BSuspendedAskEngine(started: started)
@@ -156,5 +191,30 @@ extension Prompt1BAskLifecycleTests {
         await task.value
         XCTAssertNil(model.answer)
         XCTAssertEqual(model.phase, .ready)
+    }
+}
+
+extension Prompt1BAskLifecycleTests {
+    func testInactivityPreservesNewerDraftAndRejectsLateContextResponse() async throws {
+        let started = expectation(description: "context provider started before inactivity")
+        let engine = Prompt1BContextSuspendedAskEngine(started: started)
+        let model = Prompt09AskViewModel(engine: engine)
+        var measurement = FruitfolioHormoneMeasurement()
+        measurement.result = "1.25"; measurement.unit = "ng/mL"; measurement.notes = "private context fixture"
+        let context = try XCTUnwrap(FruitfolioAskUserContext.selected(measurementIDs: [measurement.id], personalCategories: [],
+            measurements: [measurement], context: .unspecified))
+        model.inputText = "question"
+        let task = Task { await model.submitCurrentQuestion(reduceMotion: true, userContext: context) }
+        await fulfillment(of: [started], timeout: 2)
+        model.inputText = "my newer unsent draft"
+        model.suspendForInactivity()
+        XCTAssertEqual(model.inputText, "my newer unsent draft")
+        XCTAssertFalse(model.hasUserContextInFlight)
+        await engine.finish()
+        await task.value
+        XCTAssertNil(model.answer)
+        XCTAssertTrue(model.answerHistory.isEmpty)
+        XCTAssertEqual(model.inputText, "my newer unsent draft")
+        XCTAssertFalse(model.messages.contains { $0.text.contains("private context fixture") })
     }
 }

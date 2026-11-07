@@ -2,6 +2,44 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BAskPaperLayoutTests: XCTestCase {
+    func testRequestTicketRequiresVisibleActiveOwnerAndSurvivesDuplicateActiveEvents() throws {
+        var owner = Prompt09RequestInteraction()
+        owner.setActive(true)
+        XCTAssertNil(owner.ticket)
+        owner.appear(active: true)
+        let ticket = try XCTUnwrap(owner.ticket)
+        owner.setActive(true)
+        XCTAssertTrue(owner.accepts(ticket))
+    }
+
+    func testInactiveSendTicketCannotReviveAfterForegrounding() throws {
+        var owner = Prompt09RequestInteraction()
+        owner.appear(active: true)
+        let old = try XCTUnwrap(owner.ticket)
+        owner.setActive(false)
+        XCTAssertNil(owner.ticket)
+        XCTAssertFalse(owner.accepts(old))
+        owner.setActive(false)
+        owner.setActive(true)
+        let current = try XCTUnwrap(owner.ticket)
+        XCTAssertNotEqual(current, old)
+        XCTAssertFalse(owner.accepts(old))
+        XCTAssertTrue(owner.accepts(current))
+    }
+
+    func testDisappearedAndRemountedAskRejectsPriorQueuedSend() throws {
+        var owner = Prompt09RequestInteraction()
+        owner.appear(active: true)
+        let old = try XCTUnwrap(owner.ticket)
+        owner.disappear()
+        owner.setActive(true)
+        XCTAssertNil(owner.ticket)
+        XCTAssertFalse(owner.accepts(old))
+        owner.appear(active: true)
+        XCTAssertFalse(owner.accepts(old))
+        XCTAssertTrue(owner.accepts(try XCTUnwrap(owner.ticket)))
+    }
+
     func testOnlyExactAppGreetingUsesControlledTranslation() {
         let source = Prompt09ControlledCopy.greeting
         XCTAssertTrue(Prompt09ControlledCopy.isGreeting(AskMessage(role: .fruitfolio, text: source)))

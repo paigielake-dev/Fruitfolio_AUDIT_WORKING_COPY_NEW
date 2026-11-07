@@ -3,6 +3,7 @@ import Combine
 import UIKit
 
 struct Prompt09AskView: View {
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @EnvironmentObject private var navigation: NavigationCoordinator
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
@@ -20,6 +21,7 @@ struct Prompt09AskView: View {
     @State private var sendTask: Task<Void, Never>?
     @State private var sendTaskGeneration = UUID()
     @State private var pendingContextSend = false
+    @State private var requestInteraction = Prompt09RequestInteraction()
     @ObservedObject private var contextMeasurements: FruitfolioHormoneMeasurementStore
     @State private var showLifeBridge = false
     @State private var showingEntryPageTurn = true
@@ -257,6 +259,7 @@ struct Prompt09AskView: View {
             spacing: 0
         ) {
             inputBar
+                .disabled(!canInteractWithComposer)
                 .fruitfolioModalBlur(
                     active: pendingLibrarySave != nil || showingHelp || showingContextPicker,
                     reduceMotion: motionPreferences.reduceMotionActive
@@ -281,11 +284,26 @@ struct Prompt09AskView: View {
         .task {
             await revealSuggestions()
         }
-        .onAppear { synchronizeTypingAudio() }
+        .onAppear {
+            requestInteraction.appear(active: scenePhase == .active && UIApplication.shared.applicationState == .active)
+            synchronizeTypingAudio()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                requestInteraction.setActive(UIApplication.shared.applicationState == .active)
+            } else { suspendForInactivity() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            suspendForInactivity()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            requestInteraction.setActive(scenePhase == .active)
+        }
         .onReceive(contextMeasurements.$records.dropFirst()) { _ in invalidateChangedUserContext() }
         .onReceive(prompt27AContextStore.$context.dropFirst()) { _ in invalidateChangedUserContext() }
         .onChange(of: typingAudioActive) { _, _ in synchronizeTypingAudio() }
         .onDisappear {
+            requestInteraction.disappear()
             sendTaskGeneration = UUID(); sendTask?.cancel(); sendTask = nil; pendingContextSend = false
             selectedContextMeasurements = []; selectedContextCategories = []
             showingContextPicker = false; contextSharingMessage = nil
@@ -323,6 +341,24 @@ struct Prompt09AskView: View {
         )
     }
 
+    private var canInteractWithComposer: Bool {
+        requestInteraction.ticket != nil && scenePhase == .active && UIApplication.shared.applicationState == .active &&
+            !showingEntryPageTurn && !showingHelp && !showingContextPicker && !showLifeBridge &&
+            pendingLibrarySave == nil && popupCoordinator.currentPopup == nil
+    }
+
+    private func suspendForInactivity() {
+        requestInteraction.setActive(false)
+        let wasUsingContext = pendingContextSend || viewModel.hasUserContextInFlight
+        let hadPendingRequest = pendingContextSend || viewModel.phase == .searching
+        sendTaskGeneration = UUID(); sendTask?.cancel(); sendTask = nil; pendingContextSend = false
+        viewModel.suspendForInactivity()
+        inputFocused = false
+        audioManager.forgetLoop(category: .typingASMR)
+        if hadPendingRequest { contextSharingMessage = .requestInterrupted(wasUsingContext: wasUsingContext) }
+        // Unsent selections and a mounted context-picker draft remain intact.
+    }
+
     private var typingAudioActive: Bool {
         viewModel.phase == .answering && scenePhase == .active && settings.allowsAudio(.typingASMR)
     }
@@ -344,6 +380,7 @@ struct Prompt09AskView: View {
                                 .reduceMotionActive
                     ) {
                         BackControl {
+                            guard canInteractWithComposer else { return }
                             inputFocused =
                                 false
 
@@ -364,6 +401,7 @@ struct Prompt09AskView: View {
                             accessibilityLabel:
                                 "Ask help",
                             action: {
+                                guard canInteractWithComposer else { return }
                                 inputFocused = false
                                 audioManager.play(.popupOpen)
                                 showingHelp = true
@@ -1280,6 +1318,7 @@ struct Prompt09AskView: View {
         VStack(spacing: 4) {
             VStack(alignment: .leading, spacing: 6) {
                 WatercolorSecondaryButton(label: "attach my context") {
+                    guard canInteractWithComposer else { return }
                     inputFocused = false; showingContextPicker = true
                 }
                 .disabled(viewModel.phase == .searching)
@@ -1288,6 +1327,7 @@ struct Prompt09AskView: View {
                         count: selectedContextMeasurements.count + selectedContextCategories.count, locale: appLocale)
                     FruitfolioFixedText(source: copy.source, protectedLiterals: copy.protectedLiterals, font: .caption)
                     WatercolorSecondaryButton(label: "remove attachments") {
+                        guard canInteractWithComposer else { return }
                         selectedContextMeasurements = []; selectedContextCategories = []
                     }
                 }
@@ -1397,7 +1437,7 @@ struct Prompt09AskView: View {
                     accessibilityLabel:
                         "Send question",
                     isEnabled:
-                        viewModel.canSend,
+                        viewModel.canSend && canInteractWithComposer,
                     action:
                         sendCurrentQuestion
                 ) {
@@ -1434,7 +1474,7 @@ struct Prompt09AskView: View {
     // MARK: - Send
 
     private func sendCurrentQuestion() {
-        guard viewModel.canSend else {
+        guard canInteractWithComposer, viewModel.canSend, let ownerTicket = requestInteraction.ticket else {
             return
         }
 
@@ -1463,7 +1503,8 @@ struct Prompt09AskView: View {
             defer {
                 if sendTaskGeneration == generation { sendTask = nil; pendingContextSend = false }
             }
-            guard !Task.isCancelled, sendTaskGeneration == generation else { return }
+            guard !Task.isCancelled, sendTaskGeneration == generation,
+                  requestInteraction.accepts(ownerTicket), canInteractWithComposer else { return }
             do {
                 let current = try FruitfolioAskUserContext.selected(measurementIDs: requestedMeasurements,
                     personalCategories: requestedCategories, measurements: contextMeasurements.records,

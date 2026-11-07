@@ -4,6 +4,7 @@ import Foundation
 nonisolated enum FruitfolioAskContextNotice: Equatable, Sendable {
     case selectionChanged(wasInFlight: Bool)
     case changedBeforeSending
+    case requestInterrupted(wasUsingContext: Bool)
     case singleQuestionEducation
     case tooLarge
     case external(String)
@@ -20,6 +21,10 @@ nonisolated enum FruitfolioAskContextNotice: Equatable, Sendable {
             return wasInFlight
                 ? "your health context changed. that request was cancelled; choose current records before asking again."
                 : "your health context changed. choose the current records again before sharing them."
+        case .requestInterrupted(let wasUsingContext):
+            return wasUsingContext
+                ? "this request was cancelled when the app became inactive. choose current context again before asking."
+                : "this request was cancelled when the app became inactive. your question is preserved; ask again when you are ready."
         case .changedBeforeSending:
             return "your context changed before sending. choose current records again."
         case .singleQuestionEducation:

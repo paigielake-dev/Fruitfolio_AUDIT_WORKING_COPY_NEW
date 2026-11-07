@@ -81,3 +81,25 @@ enum Prompt09OpeningFruitArtwork: String, CaseIterable {
                       height: (pixels.height / 2 - paintedBounds.midY) * scale)
     }
 }
+
+/// A queued send belongs to one visible, active presentation epoch. Repeated
+/// active notifications preserve a live ticket; inactivity/remount invalidates it.
+struct Prompt09RequestInteraction: Sendable {
+    private(set) var isVisible = false
+    private(set) var isActive = false
+    private var generation = UUID()
+    var ticket: UUID? { isVisible && isActive ? generation : nil }
+    mutating func appear(active: Bool) {
+        generation = UUID(); isVisible = true; isActive = active
+    }
+    mutating func setActive(_ active: Bool) {
+        if isActive != active { generation = UUID() }
+        isActive = active
+    }
+    mutating func disappear() {
+        generation = UUID(); isVisible = false; isActive = false
+    }
+    func accepts(_ ticket: UUID) -> Bool {
+        isVisible && isActive && generation == ticket
+    }
+}

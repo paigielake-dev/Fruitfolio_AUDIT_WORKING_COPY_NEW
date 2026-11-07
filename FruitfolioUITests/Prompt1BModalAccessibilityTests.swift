@@ -2898,6 +2898,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             close.tap()
             XCTAssertTrue(input.waitForExistence(timeout: 3))
             XCTAssertEqual(input.value as? String, authored)
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+            XCTAssertTrue(input.waitForExistence(timeout: 3))
+            XCTAssertEqual(input.value as? String, authored, "Unsent original draft survives inactivity")
             captureGame(app, name: "ask-controls-paused-arabic-\(arabic)-reduced-\(reduced)")
             app.terminate()
         }
