@@ -4282,3 +4282,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot", "full_portable_XCTest": "1076 passed,0failures", "Swift_Testing": "21 passed,0failures", "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
 - Next action: Continue actual scientific education control/hotspot ownership and layout gaps across Fertilization/Pregnancy and related surfaces; do not treat general fallback as full context-evidence AI implementation.
 - Commit: containing commit for batch Body-biology-current-context-and-owned-motion.
+
+## Fertilization-active-owned-controls-and-sound-admission
+
+- Parent checkpoint: a608f48fe6323de746e6bddda1c3865877d14b74.
+- Source-order requirements: [11, 12, 303, 390, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift, FruitfolioTests/Prompt25FertilizationCoreTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json.
+- Fertilization actual buttons/callbacks/gestures/delayed cue and load admission now require visible foreground app with no covering canonical popup. Cover/disappear/background suspend actual viewmodel and cancel pending transition/provider acceptance; decorative reset uses disabled-animation transaction. Navigation checks isTransitioning before page sound so rejected duplicate transitions cannot emit sound without navigation. Sources/Ask/Save labels have44pt minimum touch targets. Original scientific art/content/stage order unchanged. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json
+- Tests added/updated: Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (NOT_RUN), Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy (NOT_RUN), Prompt25FertilizationCoreTests, Prompt1BEducationResearchTests.
+- Verification: {"portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block", "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking", "sound_ownership": "0diagnostics"}.
+- Next action: Continue Pregnancy Education active request and action ownership; inspect actual provider lifecycle and preserve source/citation and scientific-artwork boundaries.
+- Commit: containing commit for batch Fertilization-active-owned-controls-and-sound-admission.

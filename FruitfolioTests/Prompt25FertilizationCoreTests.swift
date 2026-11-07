@@ -189,6 +189,9 @@ final class Prompt25FertilizationLifecycleTests: XCTestCase {
         var completions = 0
         model.next(reduceMotion: false) { completions += 1 }
         XCTAssertTrue(model.isTransitioning)
+        model.next(reduceMotion: false) { completions += 100 }
+        XCTAssertEqual(model.stageID, .fertilization, "An in-flight transition must reject another advance")
+        XCTAssertEqual(completions, 0)
         model.suspendPresentation()
         XCTAssertEqual(model.stageID, .fertilization)
         XCTAssertFalse(model.isTransitioning)

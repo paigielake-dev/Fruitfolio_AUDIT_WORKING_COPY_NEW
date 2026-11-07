@@ -22,6 +22,14 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         let fertilization = app.buttons["education.collection.fertilization"]
         XCTAssertTrue(fertilization.waitForExistence(timeout: 8)); fertilization.tap()
         XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "prompt25.fertilization").firstMatch.waitForExistence(timeout: 8))
+        let stage = app.descendants(matching: .any).matching(identifier: "fertilization.stageHeading").firstMatch
+        XCTAssertTrue(stage.waitForExistence(timeout: 5))
+        let originalStage = stage.label
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+        XCTAssertTrue(stage.waitForExistence(timeout: 5))
+        XCTAssertEqual(stage.label, originalStage, "Backgrounding must preserve the educational stage without advancing or implying pregnancy")
         let back = app.buttons["fertilization.back"]
         XCTAssertTrue(back.waitForExistence(timeout: 5)); back.tap()
         let pregnancy = app.buttons["education.collection.pregnancy"]

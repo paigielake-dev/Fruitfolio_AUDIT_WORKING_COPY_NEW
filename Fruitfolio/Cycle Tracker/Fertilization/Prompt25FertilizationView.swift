@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 @MainActor
 struct Prompt25FertilizationView: View {
@@ -11,6 +12,13 @@ struct Prompt25FertilizationView: View {
 
     @StateObject private var viewModel: Prompt25FertilizationViewModel
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var viewIsVisible = false
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
+
     @Environment(\.scenePhase) private var scenePhase
     private var reduceMotion: Bool { motionPreferences.reduceMotionActive }
     private struct ContentRequest: Equatable {
@@ -78,20 +86,18 @@ struct Prompt25FertilizationView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .task(id: ContentRequest(stage: viewModel.stageID, active: scenePhase == .active)) {
-            guard !Task.isCancelled, scenePhase == .active else { return }
+        .task(id: ContentRequest(stage: viewModel.stageID, active: canInteract)) {
+            guard !Task.isCancelled, canInteract else { return }
             let requestedStage = viewModel.stageID
             if viewModel.contentState != .loaded { await viewModel.loadContent() }
-            guard !Task.isCancelled, scenePhase == .active,
+            guard !Task.isCancelled, canInteract,
                   viewModel.stageID == requestedStage else { return }
             stageHeadingFocused = true
             await showSwipeCueIfNeeded()
         }
         .onChange(of: scenePhase) { _, phase in
             if phase != .active {
-                viewModel.suspendPresentation()
-                swipeCueOffset = 0
-                dragOffset = 0
+                suspendPresentation()
             }
         }
         .onChange(of: reduceMotion) { _, reduced in
@@ -101,13 +107,24 @@ struct Prompt25FertilizationView: View {
                 dragOffset = 0
             }
         }
-        .onDisappear { viewModel.suspendPresentation() }
+        .onAppear { viewIsVisible = true }
+        .onDisappear {
+            viewIsVisible = false
+            suspendPresentation()
+        }
+        .onChange(of: popupCoordinator.currentPopup != nil) { _, covered in
+            if covered { suspendPresentation() }
+        }
+        .disabled(!canInteract)
         .accessibilityIdentifier("prompt25.fertilization")
     }
 
     private var topBar: some View {
         HStack(spacing: 12) {
-            Button(action: onBack) {
+            Button {
+                guard canInteract else { return }
+                onBack()
+            } label: {
                 HStack(spacing: 6) {
                     Image("control_previous")
                         .resizable()
@@ -172,6 +189,7 @@ struct Prompt25FertilizationView: View {
                 .accessibilityFocused($stageHeadingFocused)
         }
         .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("fertilization.stageHeading")
         .modifier(FruitfolioFixedAccessibilityLabel(source: "Stage \(viewModel.stage.order) of 6. \(viewModel.stage.title).", protectedLiterals: [String(viewModel.stage.order), "6"]))
     }
 
@@ -212,6 +230,7 @@ struct Prompt25FertilizationView: View {
             if viewModel.contentState == .loaded,
                !viewModel.content.expandedSections.isEmpty {
                 Button {
+                    guard canInteract else { return }
                     withAnimation(
                         reduceMotion
                             ? nil
@@ -237,22 +256,28 @@ struct Prompt25FertilizationView: View {
 
             HStack(spacing: 18) {
                 Button {
+                    guard canInteract else { return }
                     onSources(viewModel.stage)
                 } label: {
                     FruitfolioFixedText(source: viewModel.content.sourceCount > 0 ? "sources · \(viewModel.content.sourceCount)" : "sources",
                         protectedLiterals: [String(viewModel.content.sourceCount)], font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.78))
+                        .frame(minWidth: 44, minHeight: 44)
                 }
 
                 Button {
+                    guard canInteract else { return }
                     onAsk(viewModel.stage)
                 } label: {
                     FruitfolioFixedText(source: "ask", font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.78))
+                        .frame(minWidth: 44, minHeight: 44)
                 }
 
                 Button {
+                    guard canInteract else { return }
                     onSave(viewModel.stage)
                 } label: {
                     FruitfolioFixedText(source: "save", font: prompt25Font(12, relativeTo: .footnote), color: Prompt25Palette.burgundy.opacity(0.78))
+                        .frame(minWidth: 44, minHeight: 44)
                 }
             }
             .font(prompt25Font(12, relativeTo: .footnote))
@@ -308,6 +333,7 @@ struct Prompt25FertilizationView: View {
     private var blastocystEnding: some View {
         VStack(spacing: 10) {
             Button {
+                guard canInteract else { return }
                 withAnimation(
                     reduceMotion
                         ? nil
@@ -336,6 +362,7 @@ struct Prompt25FertilizationView: View {
         VStack(spacing: 10) {
             ForEach(Prompt25RelatedTopic.allCases) { topic in
                 Button {
+                    guard canInteract else { return }
                     onRelatedTopic(topic)
                 } label: {
                     HStack(spacing: 10) {
@@ -437,7 +464,7 @@ struct Prompt25FertilizationView: View {
     private var stageSwipeGesture: some Gesture {
         DragGesture(minimumDistance: 12)
             .onChanged { value in
-                guard scenePhase == .active, !viewModel.isTransitioning else { return }
+                guard canInteract, !viewModel.isTransitioning else { return }
                 let horizontal = value.translation.width
                 let vertical = value.translation.height
 
@@ -455,7 +482,7 @@ struct Prompt25FertilizationView: View {
                     }
                 }
 
-                guard scenePhase == .active, !viewModel.isTransitioning else { return }
+                guard canInteract, !viewModel.isTransitioning else { return }
 
                 let horizontal = value.translation.width
                 let vertical = value.translation.height
@@ -477,20 +504,27 @@ struct Prompt25FertilizationView: View {
             }
     }
 
+    private func suspendPresentation() {
+        viewModel.suspendPresentation()
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) { swipeCueOffset = 0; dragOffset = 0 }
+    }
+
     private func navigatePrevious() {
-        guard scenePhase == .active, viewModel.canGoPrevious else { return }
+        guard canInteract, !viewModel.isTransitioning, viewModel.canGoPrevious else { return }
         onPageSound()
         viewModel.previous(reduceMotion: reduceMotion)
     }
 
     private func navigateNext() {
-        guard scenePhase == .active, viewModel.canGoNext else { return }
+        guard canInteract, !viewModel.isTransitioning, viewModel.canGoNext else { return }
         onPageSound()
         viewModel.next(reduceMotion: reduceMotion)
     }
 
     private func showSwipeCueIfNeeded() async {
-        guard !hasShownSwipeCue, scenePhase == .active,
+        guard !hasShownSwipeCue, canInteract,
               viewModel.stageID == .oocyte,
               !reduceMotion
         else {
@@ -499,7 +533,7 @@ struct Prompt25FertilizationView: View {
 
         do { try await Task.sleep(for: .milliseconds(450)) }
         catch { return }
-        guard !Task.isCancelled, scenePhase == .active, !reduceMotion,
+        guard !Task.isCancelled, canInteract, !reduceMotion,
               viewModel.stageID == .oocyte else { return }
         hasShownSwipeCue = true
 
@@ -509,7 +543,7 @@ struct Prompt25FertilizationView: View {
 
         do { try await Task.sleep(for: .milliseconds(300)) }
         catch { return }
-        guard !Task.isCancelled, scenePhase == .active, !reduceMotion,
+        guard !Task.isCancelled, canInteract, !reduceMotion,
               viewModel.stageID == .oocyte else { return }
 
         withAnimation(.easeInOut(duration: 0.28)) {
