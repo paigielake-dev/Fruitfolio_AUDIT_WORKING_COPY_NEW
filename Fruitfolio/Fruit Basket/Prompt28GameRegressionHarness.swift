@@ -119,11 +119,18 @@ struct Prompt28GameRegressionHarness: View {
     private func configure() {
         if scenario.hasPrefix("protected-progress-") { return }
         if scenario == "tour" { return } // Exercise the existing first-run overlay.
-        if scenario == "setup-urgent" || scenario == "setup-unavailable" {
-            let urgent = scenario == "setup-urgent"
-            model.rawTopic = urgent ? "severe bleeding" : "watercolor"
-            model.message = (urgent ? Prompt28ResearchError.urgentTopic : .providerUnavailable).localizedDescription
-            model.screen = .topicUnsupported
+        if ["setup-urgent", "setup-urgent-opaque", "setup-unavailable", "setup-unsupported-sensitive", "setup-exhausted-sensitive"].contains(scenario) {
+            let error: Prompt28ResearchError
+            switch scenario {
+            case "setup-urgent", "setup-urgent-opaque": error = .urgentTopic
+            case "setup-unsupported-sensitive": error = .unsupportedTopic
+            case "setup-exhausted-sensitive": error = .topicExhausted
+            default: error = .providerUnavailable
+            }
+            model.rawTopic = ["setup-unavailable", "setup-urgent-opaque"].contains(scenario) ? "watercolor"
+                : scenario == "setup-urgent" ? "severe bleeding" : "pregnancy loss"
+            model.message = error.displayMessage(serious: Prompt34LocalSafetyRouter.classify(model.rawTopic).requiresSeriousTone)
+            model.screen = error == .topicExhausted ? .topicExhausted : .topicUnsupported
             return
         }
         if scenario == "setup" {

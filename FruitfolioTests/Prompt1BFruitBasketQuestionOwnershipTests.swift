@@ -15,13 +15,17 @@ private actor Prompt1BDelayedGameResearch: Prompt28ResearchProviding {
     private var waiting: CheckedContinuation<Void, Never>?
     private var started = false
     private let fail: Bool
-    init(fail: Bool = false) { self.fail = fail }
+    private let failure: Prompt28ResearchError?
+    init(fail: Bool = false, failure: Prompt28ResearchError? = nil) {
+        self.fail = fail; self.failure = failure
+    }
     func question(topic: String, normalizedTopic: String, difficulty: Prompt28EducationalDifficulty,
                   excludingQuestionIDs: Set<String>) async throws -> Prompt28Question {
         await withCheckedContinuation { continuation in
             completion = continuation; started = true
             waiting?.resume(); waiting = nil
         }
+        if let failure { throw failure }
         if fail { throw Prompt28ResearchError.providerUnavailable }
         return Prompt28Question(id: "fixture-question", topicQuery: topic, normalizedTopic: normalizedTopic,
             category: "test fixture", educationalDifficulty: difficulty, questionText: "nonmedical test question",
@@ -39,6 +43,51 @@ private actor Prompt1BDelayedGameResearch: Prompt28ResearchProviding {
 
 @MainActor
 final class Prompt1BFruitBasketQuestionOwnershipTests: XCTestCase {
+    func testSeriousUnsupportedAndExhaustedErrorsUseControlledCalmMessages() async throws {
+        for error in [Prompt28ResearchError.unsupportedTopic, .topicExhausted] {
+        for (topic, serious) in [("pregnancy loss", true), ("watercolor", false)] {
+            let suite = "Fruitfolio.calm-research-errors." + UUID().uuidString
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let store = Prompt28FruitBasketStore(defaults: defaults)
+            let provider = Prompt1BDelayedGameResearch(failure: error)
+            let model = Prompt28FruitBasketViewModel(store: store, researchProvider: provider)
+            defer { model.leaveScreen() }
+            model.rawTopic = topic
+            let task = Task { await model.loadQuestion() }
+            await provider.waitForStart(); await provider.finish(); await task.value
+            let calm = error == .unsupportedTopic
+                ? "there is not enough approved research for this topic in the FruitsofLife.xo library yet."
+                : "the available questions for this topic have been used. choose another topic."
+            XCTAssertEqual(model.message, serious ? calm : error.localizedDescription)
+            XCTAssertEqual(model.screen, error == .topicExhausted ? .topicExhausted : .topicUnsupported)
+            XCTAssertEqual(model.setupMessageRequiresSeriousTone, serious)
+            XCTAssertEqual(model.rawTopic, topic)
+            XCTAssertNil(model.currentQuestion)
+            XCTAssertTrue(store.questionHistory.isEmpty)
+        }
+        }
+    }
+
+    func testActualUrgentProviderErrorKeepsCanonicalUrgentMessageInAllContexts() async throws {
+        for topic in ["severe bleeding", "watercolor"] {
+            let suite = "Fruitfolio.urgent-source-preserved." + UUID().uuidString
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let store = Prompt28FruitBasketStore(defaults: defaults)
+            let provider = Prompt1BDelayedGameResearch(failure: .urgentTopic)
+            let model = Prompt28FruitBasketViewModel(store: store, researchProvider: provider)
+            defer { model.leaveScreen() }
+            model.rawTopic = topic
+            let task = Task { await model.loadQuestion() }
+            await provider.waitForStart(); await provider.finish(); await task.value
+            XCTAssertEqual(model.message, Prompt34LocalSafetyRouter.urgentResponseText())
+            XCTAssertTrue(model.setupMessageRequiresSeriousTone)
+            XCTAssertEqual(model.screen, .topicUnsupported)
+            XCTAssertTrue(store.questionHistory.isEmpty)
+        }
+    }
+
     func testActualUnavailableProviderSetupToneUsesLocalContextWithoutChangingMessage() async throws {
         for (topic, serious) in [("severe bleeding", true), ("pregnancy loss", true), ("watercolor", false)] {
             let suite = "Fruitfolio.setup-tone." + UUID().uuidString

@@ -150,26 +150,35 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         add(attachment)
     }
 
-    func testSetupFeedbackKeepsUrgentMessageCalmAndNativeLevelLocalized() {
+    func testSetupFeedbackKeepsClinicalMessagesCalmAndNativeLevelLocalized() {
         for language in ["en", "ar"] {
         for reduced in [false, true] {
-        for urgent in [false, true] {
+        for scenario in ["setup-unavailable", "setup-urgent", "setup-urgent-opaque", "setup-unsupported-sensitive", "setup-exhausted-sensitive"] {
+            let serious = scenario != "setup-unavailable"
             let app = XCUIApplication()
-            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", urgent ? "setup-urgent" : "setup-unavailable",
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", scenario,
                 "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
             if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
             app.launch()
             let message = app.descendants(matching: .any).matching(identifier: "fruitBasket.setup.message").firstMatch
             XCTAssertTrue(message.waitForExistence(timeout: 8))
+            if serious {
+                let raw = ([message.label] + message.descendants(matching: .staticText).allElementsBoundByIndex.map(\.label)).joined(separator: " ")
+                let content = raw.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty }.joined(separator: " ")
+                XCTAssertFalse(content.isEmpty)
+                if scenario == "setup-unsupported-sensitive" { XCTAssertTrue(content.contains("not enough approved research")) }
+                if scenario == "setup-exhausted-sensitive" { XCTAssertTrue(content.contains("available questions")) }
+                XCTAssertFalse(content.contains(":,)")); XCTAssertFalse(content.contains("little patch"))
+            }
             let level = app.descendants(matching: .any).matching(identifier: "fruitBasket.setup.startingLevel").firstMatch
             XCTAssertTrue(level.exists)
             XCTAssertTrue(level.label.contains(language == "ar" ? "١" : "1"))
             let probe = app.staticTexts["gameQA.setupFeedbackArtActive"]
-            let expected = "setup feedback art active: \(!urgent)"
+            let expected = "setup feedback art active: \(!serious)"
             let art = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: probe)
             XCTAssertEqual(XCTWaiter.wait(for: [art], timeout: 5), .completed)
-            captureGame(app, name: "setup-feedback-\(language)-reduced-\(reduced)-urgent-\(urgent)")
+            captureGame(app, name: "setup-feedback-\(language)-reduced-\(reduced)-\(scenario)")
             app.terminate()
         }
         }

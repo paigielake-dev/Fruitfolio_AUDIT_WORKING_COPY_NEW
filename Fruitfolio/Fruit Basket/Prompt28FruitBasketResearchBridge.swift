@@ -38,6 +38,20 @@ enum Prompt28ResearchError: LocalizedError, Equatable, Sendable {
             return "the source trail for that question could not be verified."
         }
     }
+
+    /// Controlled presentation copy; no typed topic or generated clinical text.
+    func displayMessage(serious: Bool) -> String {
+        guard serious else { return localizedDescription }
+        switch self {
+        case .unsupportedTopic:
+            return "there is not enough approved research for this topic in the FruitsofLife.xo library yet."
+        case .topicExhausted:
+            return "the available questions for this topic have been used. choose another topic."
+        default:
+            return localizedDescription
+        }
+    }
+
 }
 
 /// Explicit unavailable adapter for isolated integrations without a research package.
