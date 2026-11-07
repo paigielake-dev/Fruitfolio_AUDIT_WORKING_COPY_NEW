@@ -120,8 +120,9 @@ actor FruitfolioTranslationService {
         var waiters: Set<UUID>
     }
     private var flights: [RequestKey: Flight] = [:]
-    // Handles only, no source-key/result cache. Overflow callers still own
-    // independent work, but service release must be able to cancel it as well.
+    // Handles only, no source-key/result cache. Independent overflow work is
+    // bounded as well as shared metadata; rejected admission keeps original text.
+    // The runtime still serializes actual inference and release cancels all owners.
     private var unsharedTasks: [UUID: Task<FruitfolioDisplayTranslation, Error>] = [:]
 
     #if DEBUG
@@ -174,8 +175,8 @@ actor FruitfolioTranslationService {
         // Only the simplified Chinese selector maps to the generic zh tag.
         // Traditional Chinese is not silently advertised as equivalent.
         let tag = language == .chineseSimplified ? "zh" : language.rawValue
-        // Bound sharing metadata. Larger/distinct overflow requests retain the
-        // original uncached path; no text is truncated or rejected by this policy.
+        // Bound sharing metadata. Larger/distinct requests use the independent
+        // path while capacity remains; never truncate text to fit a sharing key.
         guard let key = sharingKey(source: source, protectedLiterals: protectedLiterals,
                                    sourceLanguage: sourceLanguage, targetTag: tag) else {
             return try await unsharedTranslate(source, protectedLiterals: protectedLiterals, targetTag: tag)
@@ -207,6 +208,12 @@ actor FruitfolioTranslationService {
 
     private func unsharedTranslate(_ source: String, protectedLiterals: [String],
                                    targetTag: String) async throws -> FruitfolioDisplayTranslation {
+        // This actor checks and reserves without suspension. At most 64
+        // independent jobs can retain source/paragraph/envelope buffers at once.
+        // Existing shared waiters can still join their bounded flight.
+        guard unsharedTasks.count < 64 else {
+            throw FruitfolioTranslationError.inferenceCapacityReached
+        }
         let id = UUID()
         let task = Task {
             try await self.machineTranslate(source, protectedLiterals: protectedLiterals, targetTag: targetTag)

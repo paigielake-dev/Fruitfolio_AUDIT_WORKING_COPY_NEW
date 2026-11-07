@@ -230,6 +230,43 @@ final class Prompt1BSharedTranslationTests: XCTestCase {
         await runtime.unblockAll()
     }
 
+    func testIndependentAdmissionIsBoundedWithoutBlockingSharedOwnersAndRecoversAfterRelease() async throws {
+        let runtime = Prompt1BSharedTranslationGate()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let protection = Array(repeating: "brand", count: 65) // real uncached path
+        let tasks = (0..<64).map { _ in Task {
+            try await service.translate("original passage", language: .german,
+                protectedLiterals: protection, preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 0, waiters: 0, calls: 64)
+        let full = await service.debugInFlightStatistics()
+        XCTAssertEqual(full.unshared, 64)
+        do {
+            _ = try await service.translate("overflow must stay original", language: .german,
+                protectedLiterals: protection, preferCatalog: false)
+            XCTFail("Overflow admission must fail before retaining another inference job")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inferenceCapacityReached) }
+        let afterRejection = await runtime.counts()
+        XCTAssertEqual(afterRejection.calls, 64)
+        let shared = (0..<2).map { _ in Task {
+            try await service.translate("shared owner", language: .french, preferCatalog: false)
+        } }
+        await wait(service, runtime: runtime, requests: 1, waiters: 2, calls: 65)
+        await service.releaseResources()
+        await runtime.unblockAll()
+        for task in tasks + shared {
+            do { _ = try await task.value; XCTFail("Released owner returned a translation") }
+            catch { XCTAssertTrue(error is CancellationError) }
+        }
+        let cleared = await service.debugInFlightStatistics()
+        XCTAssertEqual(cleared.requests, 0)
+        XCTAssertEqual(cleared.waiters, 0)
+        XCTAssertEqual(cleared.unshared, 0)
+        let retry = try await service.translate("original passage", language: .german,
+            protectedLiterals: protection, preferCatalog: false)
+        XCTAssertEqual(retry, "original passage")
+    }
+
     func testIdenticalConcurrentRequestsShareValidatedResultWithoutCachingCompletedText() async throws {
         let runtime = Prompt1BSharedTranslationGate()
         let service = FruitfolioTranslationService(runtime: runtime)

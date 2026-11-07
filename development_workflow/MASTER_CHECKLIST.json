@@ -24504,7 +24504,9 @@
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift"
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "Fruitfolio/Localizable.xcstrings",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24538,7 +24540,7 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift"
       ],
-      "commit_reference": "batch:Owned-unshared-translation-release-and-paragraph-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -24563,9 +24565,37 @@
         "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
         "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior.",
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
-        "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim."
+        "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-06T14:26:28.727097+00:00"
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
+      "latest_batch_verification": {
+        "batch": "Bounded-independent-translation-admission",
+        "executed": {
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "control_sound_ownership_findings": 0,
+          "new_service_saturation_regressions": 1
+        },
+        "not_run": [
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
+        ],
+        "remaining": [
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
+      ]
     },
     {
       "sequence": 420,
@@ -25036,7 +25066,8 @@
         "development_workflow/NATIVE_VOCABULARY_PREFLIGHT.md",
         "development_workflow/REQUESTED_LANGUAGE_400_408_HANDOFF.md",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md"
+        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25063,9 +25094,10 @@
         "FruitfolioTests/Prompt1BAccountActionTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
-        "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
+        "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
+        "FruitfolioTests/Prompt1BScientificTranslationTests.swift"
       ],
-      "commit_reference": "batch:Ask-controlled-greeting-and-education-notice-translation (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25087,35 +25119,36 @@
         "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
-        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations."
+        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T03:06:26.609862+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-controlled-greeting-and-education-notice-translation",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 919,
-          "native_CPU_XCTest": 943,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_gate_tests": 1
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Apple genuine typecheck and greeting/disclaimer rendering, VoiceOver, RTL, Dynamic Type and paused-inference UI",
-          "Official MADLAD inference and native-language safety/uncertainty/clinical review"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-          "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-          "Complete remaining original requirements independently; no whole-item promotion from this batch"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-        "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-        "Complete remaining original requirements independently; no whole-item promotion from this batch"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     },
     {
@@ -25167,7 +25200,8 @@
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md"
+        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25204,7 +25238,7 @@
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:Ask-controlled-greeting-and-education-notice-translation (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25230,35 +25264,36 @@
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations."
+        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T03:06:26.609862+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-controlled-greeting-and-education-notice-translation",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 919,
-          "native_CPU_XCTest": 943,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_gate_tests": 1
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Apple genuine typecheck and greeting/disclaimer rendering, VoiceOver, RTL, Dynamic Type and paused-inference UI",
-          "Official MADLAD inference and native-language safety/uncertainty/clinical review"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-          "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-          "Complete remaining original requirements independently; no whole-item promotion from this batch"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-        "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-        "Complete remaining original requirements independently; no whole-item promotion from this batch"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     },
     {
@@ -25313,7 +25348,8 @@
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/NATIVE_VOCABULARY_PREFLIGHT.md",
-        "development_workflow/REQUESTED_LANGUAGE_400_408_HANDOFF.md"
+        "development_workflow/REQUESTED_LANGUAGE_400_408_HANDOFF.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25347,7 +25383,7 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift"
       ],
-      "commit_reference": "batch:Native-vocabulary-only-language-preflight-and-resource-epoch-cache (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25372,38 +25408,36 @@
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
         "Actual moving fruit and standalone stars use one shared-state image accessibility translation owner with complete descriptions/plain semantic labels/truthful status hints. Classification supplies its existing full marker description to that owner instead of nested translation states. Keys exclude frame coordinates and counts. Twenty English keys preserve 765 prior entries. Four Apple layout-only object cases added but NOT_RUN; no art, science, geometry or physics edits.",
-        "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified."
+        "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T02:40:46.463909+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Native-vocabulary-only-language-preflight-and-resource-epoch-cache",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 918,
-          "native_CPU_XCTest": 942,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
-          "baseline_native_XCTest": 2,
-          "baseline_failed_assertions": 4,
-          "focused_native_preflight_XCTest": 3,
-          "new_native_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "official_MADLAD": "BLOCKED: synthetic untrained vocabulary/T5 fixtures are not official inference"
+          "control_sound_ownership_findings": 0,
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Official MADLAD weights/tokenizer language coverage, learned offline translation and native-language/clinical quality",
-          "Physical Apple model-framework integration, actual3B cold/warm latency, peakresidentRAM/thermal and devicepreflight behavior"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Run approved official model/tokenizer for every founder-requested individual language/variety; presence of a selector or native token is not language quality",
-          "Measure actual3B model cold/warm/offline memory/latency and Apple resource lifecycle ondevice",
-          "Continue independent410\u2013417RTL/textlength/wrapping/DynamicType/layout; preserve requested400\u2013408 and model409verification handoff"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run approved official model/tokenizer for every founder-requested individual language/variety; presence of a selector or native token is not language quality",
-        "Measure actual3B model cold/warm/offline memory/latency and Apple resource lifecycle ondevice",
-        "Continue independent410\u2013417RTL/textlength/wrapping/DynamicType/layout; preserve requested400\u2013408 and model409verification handoff"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     },
     {
@@ -25445,7 +25479,8 @@
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/NATIVE_VOCABULARY_PREFLIGHT.md",
-        "development_workflow/REQUESTED_LANGUAGE_400_408_HANDOFF.md"
+        "development_workflow/REQUESTED_LANGUAGE_400_408_HANDOFF.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25475,7 +25510,7 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Native-vocabulary-only-language-preflight-and-resource-epoch-cache (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25494,38 +25529,36 @@
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
         "Shared original-source disclosure and memory-retry use canonical compact wrapping cue/motion-owned pills, explicit show/hide and selected state. Saved/source/origin data preserved. Genuine temporary nonclinical catalog fixture resolves protected markup through production service while inference paused; default bundle remains main and bundle path joins request key. Eight Apple size/RTL/mute/motion UI scenarios added but unrun. Two English-only keys preserve 708 prior entries.",
-        "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified."
+        "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T02:40:46.463909+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Native-vocabulary-only-language-preflight-and-resource-epoch-cache",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 918,
-          "native_CPU_XCTest": 942,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
-          "baseline_native_XCTest": 2,
-          "baseline_failed_assertions": 4,
-          "focused_native_preflight_XCTest": 3,
-          "new_native_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "official_MADLAD": "BLOCKED: synthetic untrained vocabulary/T5 fixtures are not official inference"
+          "control_sound_ownership_findings": 0,
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Official MADLAD weights/tokenizer language coverage, learned offline translation and native-language/clinical quality",
-          "Physical Apple model-framework integration, actual3B cold/warm latency, peakresidentRAM/thermal and devicepreflight behavior"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Run approved official model/tokenizer for every founder-requested individual language/variety; presence of a selector or native token is not language quality",
-          "Measure actual3B model cold/warm/offline memory/latency and Apple resource lifecycle ondevice",
-          "Continue independent410\u2013417RTL/textlength/wrapping/DynamicType/layout; preserve requested400\u2013408 and model409verification handoff"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run approved official model/tokenizer for every founder-requested individual language/variety; presence of a selector or native token is not language quality",
-        "Measure actual3B model cold/warm/offline memory/latency and Apple resource lifecycle ondevice",
-        "Continue independent410\u2013417RTL/textlength/wrapping/DynamicType/layout; preserve requested400\u2013408 and model409verification handoff"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     },
     {
@@ -28646,7 +28679,8 @@
         "Fruitfolio/Fruit Basket/Prompt28SavedResearchCopy.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
-        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift"
+        "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28701,7 +28735,7 @@
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift"
       ],
-      "commit_reference": "batch:Fruit-Basket-tutorial-copy-localization-and-ten-page-catalog (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -28743,9 +28777,37 @@
         "Existing correct/incorrect feedback and catch instructions/legend use shared display translation with original copy, serious-tone choice and explicit source protection. Domain questions, literal choices, scoring and metadata unchanged. Sixteen synthetic Apple UI launch cases added for correct/incorrect, serious, English/Arabic fallback and motion; unrun. Four English-only keys preserve all 677 prior entries.",
         "Fixed statistic labels use shared control translation, integers/fractions/signed scores use display-only Foundation locale formatting and never enter inference. Failure copy preserves serious/story choice; serious retry omits heart. Ending fruit is an explicit whole-name semantic anchor within a full sentence. Two Foundation formatting regressions across all locales and integer limits pass; eight Apple UI ledger/readback/retry scenarios added but unrun. Real QA model/store are observed. Twenty-seven English-only keys preserve 681 prior entries.",
         "Shared original-source disclosure and memory-retry use canonical compact wrapping cue/motion-owned pills, explicit show/hide and selected state. Saved/source/origin data preserved. Genuine temporary nonclinical catalog fixture resolves protected markup through production service while inference paused; default bundle remains main and bundle path joins request key. Eight Apple size/RTL/mute/motion UI scenarios added but unrun. Two English-only keys preserve 708 prior entries.",
-        "Preserved all ten actual title/body pairs and page-five demo in one ordered Foundation catalog, with actual source-copy comparison receipt. Title/body use shared translation; locale-formatted counter never enters inference. Canonical skip preserves existing skip-to-rules/completion behavior. Eight Apple full-progression/skip/Arabic fallback/motion UI cases added but unrun. Twenty-one English-only keys preserve all 710 prior catalog entries."
+        "Preserved all ten actual title/body pairs and page-five demo in one ordered Foundation catalog, with actual source-copy comparison receipt. Title/body use shared translation; locale-formatted counter never enters inference. Canonical skip preserves existing skip-to-rules/completion behavior. Eight Apple full-progression/skip/Arabic fallback/motion UI cases added but unrun. Twenty-one English-only keys preserve all 710 prior catalog entries.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-06T15:50:36.001892+00:00"
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
+      "latest_batch_verification": {
+        "batch": "Bounded-independent-translation-admission",
+        "executed": {
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "control_sound_ownership_findings": 0,
+          "new_service_saturation_regressions": 1
+        },
+        "not_run": [
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
+        ],
+        "remaining": [
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
+      ]
     },
     {
       "sequence": 467,
@@ -30735,7 +30797,8 @@
         "development_workflow/RHYTHM_TRANSLATED_LAYOUT_AND_RECORD_BOUNDARY.md",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md"
+        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -30880,7 +30943,7 @@
         "FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:Ask-controlled-greeting-and-education-notice-translation (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -31034,35 +31097,36 @@
         "DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof.",
         "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
         "ActualRhythm controlledloading/header/context/section/key/adjustment copy andAX summaries nowselected-language withexistingfonts/colors/art/qualifiers. Canonicalcontrols +existingverticalgrowth. Optionalmeasurementstore injectionpropagatesactualsheet; productionshareddefaultunchanged. PrivateQAfile-backedcycle/onboarding +actualmeasurementstore;4newAppleUIvectors explicitlyresample backingbytes aftertoggle/restore/sheet,NOT_RUN. Fiveengine/models/policy/store/persistence filesSHAunchanged. Full918/942+21pass; notApple/officialmodel/clinicaladjustment acceptance.",
-        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations."
+        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T03:06:26.609862+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-controlled-greeting-and-education-notice-translation",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 919,
-          "native_CPU_XCTest": 943,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_gate_tests": 1
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Apple genuine typecheck and greeting/disclaimer rendering, VoiceOver, RTL, Dynamic Type and paused-inference UI",
-          "Official MADLAD inference and native-language safety/uncertainty/clinical review"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-          "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-          "Complete remaining original requirements independently; no whole-item promotion from this batch"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-        "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-        "Complete remaining original requirements independently; no whole-item promotion from this batch"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     },
     {
@@ -31270,7 +31334,8 @@
         "development_workflow/RHYTHM_TRANSLATED_LAYOUT_AND_RECORD_BOUNDARY.md",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md"
+        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -31460,7 +31525,7 @@
         "FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:Ask-controlled-greeting-and-education-notice-translation (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -31648,35 +31713,36 @@
         "DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof.",
         "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
         "ActualRhythm controlledloading/header/context/section/key/adjustment copy andAX summaries nowselected-language withexistingfonts/colors/art/qualifiers. Canonicalcontrols +existingverticalgrowth. Optionalmeasurementstore injectionpropagatesactualsheet; productionshareddefaultunchanged. PrivateQAfile-backedcycle/onboarding +actualmeasurementstore;4newAppleUIvectors explicitlyresample backingbytes aftertoggle/restore/sheet,NOT_RUN. Fiveengine/models/policy/store/persistence filesSHAunchanged. Full918/942+21pass; notApple/officialmodel/clinicaladjustment acceptance.",
-        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations."
+        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T03:06:26.609862+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-controlled-greeting-and-education-notice-translation",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 919,
-          "native_CPU_XCTest": 943,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_gate_tests": 1
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Apple genuine typecheck and greeting/disclaimer rendering, VoiceOver, RTL, Dynamic Type and paused-inference UI",
-          "Official MADLAD inference and native-language safety/uncertainty/clinical review"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-          "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-          "Complete remaining original requirements independently; no whole-item promotion from this batch"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-        "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-        "Complete remaining original requirements independently; no whole-item promotion from this batch"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     },
     {
@@ -31860,7 +31926,8 @@
         "development_workflow/RHYTHM_TRANSLATED_LAYOUT_AND_RECORD_BOUNDARY.md",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md"
+        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
+        "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32005,7 +32072,7 @@
         "FruitfolioTests/Prompt1BRecoveredCycleLoaderTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:Ask-controlled-greeting-and-education-notice-translation (resolve containing commit with git log)",
+      "commit_reference": "batch:Bounded-independent-translation-admission (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -32139,35 +32206,36 @@
         "DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof.",
         "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
         "ActualRhythm controlledloading/header/context/section/key/adjustment copy andAX summaries nowselected-language withexistingfonts/colors/art/qualifiers. Canonicalcontrols +existingverticalgrowth. Optionalmeasurementstore injectionpropagatesactualsheet; productionshareddefaultunchanged. PrivateQAfile-backedcycle/onboarding +actualmeasurementstore;4newAppleUIvectors explicitlyresample backingbytes aftertoggle/restore/sheet,NOT_RUN. Fiveengine/models/policy/store/persistence filesSHAunchanged. Full918/942+21pass; notApple/officialmodel/clinicaladjustment acceptance.",
-        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations."
+        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
+        "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance."
       ],
-      "last_updated": "2026-11-07T03:06:26.609862+00:00",
+      "last_updated": "2026-11-07T03:09:35.615988+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-controlled-greeting-and-education-notice-translation",
+        "batch": "Bounded-independent-translation-admission",
         "executed": {
-          "portable_XCTest": 919,
-          "native_CPU_XCTest": 943,
+          "portable_XCTest": 920,
+          "native_CPU_XCTest": 944,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_gate_tests": 1
+          "new_service_saturation_regressions": 1
         },
         "not_run": [
-          "Apple genuine typecheck and greeting/disclaimer rendering, VoiceOver, RTL, Dynamic Type and paused-inference UI",
-          "Official MADLAD inference and native-language safety/uncertainty/clinical review"
+          "Apple SwiftUI actual source fallback/retry and VoiceOver across locales",
+          "Official MADLAD weights/tokenizer inference, peak device RSS/thermal/latency and scientific language review"
         ],
         "remaining": [
-          "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-          "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-          "Complete remaining original requirements independently; no whole-item promotion from this batch"
+          "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+          "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+          "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-        "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-        "Complete remaining original requirements independently; no whole-item promotion from this batch"
+        "Verify actual device peak memory with official model and large inputs; task count bound is not a byte/RSS guarantee",
+        "Execute Apple overflow fallback and retry paths, preserving selected language and original saved data",
+        "Retain official-model, native-language and clinical acceptance blockers; no whole-item certification"
       ]
     }
   ]

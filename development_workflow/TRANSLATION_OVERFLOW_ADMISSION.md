@@ -1,0 +1,7 @@
+# Translation overflow ownership admission
+
+Shared inference retains at most 32 distinct flights and 64 waiters per flight. Independent work used when those sharing budgets or source-key metadata budgets are exceeded previously had no service-level admission cap. The actual service now admits at most 64 independent tasks without actor suspension between checking and reserving. Excess callers receive a typed capacity error and retain the original via the existing compact/long-form failure paths; no source is truncated and no partial translation is returned as complete. Existing bounded shared flights remain usable. This is a task-ownership bound, not a maximum byte-size or RSS guarantee.
+
+A protocol scheduling regression saturates the real uncached path, checks rejection before another runtime call, admits two shared owners without disturbing the saturated independent owners, releases everything, verifies cancellation and zero owner metadata, then retries successfully. Identity output from this protocol fixture is not learned model inference. Existing sharing, paragraph rejection, cancellation and real native CPU regressions also execute.
+
+Apple actual UI fallback and retry, peak memory across official-model weights/contexts, large scientific paragraphs, pressure callbacks, device thermal/latency and linguistic/clinical acceptance remain unverified. Official MADLAD weights/tokenizer are unavailable. No whole memory or official-inference requirement is certified by these source and scheduling checks.

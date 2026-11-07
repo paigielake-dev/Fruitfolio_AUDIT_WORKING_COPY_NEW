@@ -3247,3 +3247,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 919, "native_CPU_XCTest": 943, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Foundation_gate_tests": 1}.
 - Next action: Bound independent overflow translation task ownership; test admission, preservation of shared owners and release/retry. Continue original remaining requirements with Apple/official model blockers explicit.
 - Commit: containing commit for batch Ask-controlled-greeting-and-education-notice-translation.
+
+## Bounded-independent-translation-admission
+
+- Parent checkpoint: 8b29aa3369d1d08ec0091cc90a2e59d2f97a3dcb.
+- Source-order requirements: [419, 425, 426, 427, 428, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift, Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift, Fruitfolio/Localizable.xcstrings, development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md.
+- Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.
+- Tests added/updated: FruitfolioTests/Prompt1BScientificTranslationTests.swift.
+- Verification: {"portable_XCTest": 920, "native_CPU_XCTest": 944, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_service_saturation_regressions": 1}.
+- Next action: Bound source/protection allocation budgets before scientific-envelope construction, preserve original on excessive inputs, and test exact byte boundaries and no runtime work on rejection; continue original independent requirements.
+- Commit: containing commit for batch Bounded-independent-translation-admission.

@@ -1,10 +1,11 @@
 import Foundation
 
 enum FruitfolioTranslationError: LocalizedError, Equatable {
-    case resourcesMissing, invalidManifest, checksumMismatch, incompatibleModel, pausedForMemoryPressure
+    case resourcesMissing, invalidManifest, checksumMismatch, incompatibleModel, pausedForMemoryPressure, inferenceCapacityReached
     case unsupportedLanguage(String), inputTooLong, inferenceFailed, truncatedOutput, protectedContentChanged
     var errorDescription: String? {
         switch self {
+        case .inferenceCapacityReached: return "local translation is busy. the original text is preserved. please try again shortly."
         case .pausedForMemoryPressure: return "local translation is paused to reduce memory use. the original text is preserved."
         case .resourcesMissing: return "translation resources are not available on this device. the original text is preserved."
         case .unsupportedLanguage: return "this language is not verified for the installed translation model. the original text is preserved."
