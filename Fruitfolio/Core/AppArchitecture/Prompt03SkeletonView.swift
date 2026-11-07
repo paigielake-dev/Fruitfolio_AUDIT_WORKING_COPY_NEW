@@ -152,11 +152,13 @@ struct Prompt03SkeletonView: View {
             }
             #endif
         }
+        .buttonStyle(CutePopButtonStyle())
         .environmentObject(appState)
         .environmentObject(navigation)
         .environmentObject(settings)
         .environmentObject(audioManager)
         .environmentObject(motionPreferences)
+        .environment(\.fruitfolioAppReduceMotion, settings.reduceAnimationOverride)
         .environmentObject(popupCoordinator)
         .environmentObject(introLaunchStore)
         .environmentObject(prompt27AContextStore)

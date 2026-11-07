@@ -66,7 +66,7 @@ struct Prompt12ConfirmationPopup: View {
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
                 }
             }
             .padding(.horizontal, 18)

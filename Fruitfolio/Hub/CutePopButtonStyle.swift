@@ -10,38 +10,63 @@ struct CutePopButtonStyle: ButtonStyle {
     }
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        configuration.label.modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotion))
+    }
+}
+
+// This is a derived environment value, not another persisted motion preference.
+// It lets native/custom styles honor the shell's app override without requiring
+// an environment object in standalone controls or previews.
+private struct FruitfolioAppReduceMotionKey: EnvironmentKey {
+    static let defaultValue = false
+}
+extension EnvironmentValues {
+    var fruitfolioAppReduceMotion: Bool {
+        get { self[FruitfolioAppReduceMotionKey.self] }
+        set { self[FruitfolioAppReduceMotionKey.self] = newValue }
+    }
+}
+
+struct FruitfolioButtonPopEffect: ViewModifier {
+    let isPressed: Bool
+    var reduceMotion = false
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioAppReduceMotion) private var appReduceMotion
+    private var reduced: Bool { reduceMotion || systemReduceMotion || appReduceMotion }
+
+    func body(content: Content) -> some View {
+        content
             .scaleEffect(
-                reduceMotion
+                reduced
                     ? 1.0
-                    : (configuration.isPressed ? 0.88 : 1.0)
+                    : (isPressed ? 0.88 : 1.0)
             )
             .offset(
-                y: reduceMotion
+                y: reduced
                     ? 0
-                    : (configuration.isPressed ? 5 : 0)
+                    : (isPressed ? 5 : 0)
             )
             .rotationEffect(
                 .degrees(
-                    reduceMotion
+                    reduced
                         ? 0
-                        : (configuration.isPressed ? -1.2 : 0)
+                        : (isPressed ? -1.2 : 0)
                 )
             )
             .brightness(
-                configuration.isPressed
+                isPressed
                     ? -0.04
                     : 0
             )
             .animation(
-                reduceMotion
+                reduced
                     ? .easeOut(duration: 0.08)
                     : .spring(
                         response: 0.20,
                         dampingFraction: 0.38,
                         blendDuration: 0
                     ),
-                value: configuration.isPressed
+                value: isPressed
             )
     }
 }

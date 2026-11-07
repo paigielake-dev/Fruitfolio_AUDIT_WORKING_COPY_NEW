@@ -52,6 +52,19 @@ class BatchRecorderTests(unittest.TestCase):
         self.assertEqual(checkpoint['last_batch_verification'],self.batch['verification'])
         log=json.loads((self.workflow/'RUN_LOGS/fixture.json').read_text())
         self.assertEqual(log['verification'],self.batch['verification'])
+    def testLaterBatchKeepsEarlierRequirementSpecificVerificationEvidence(self):
+        self.assertEqual(self.run_recorder().returncode, 0)
+        first = json.loads((self.workflow / 'MASTER_CHECKLIST.json').read_text())['requirements'][58]
+        self.batch.update(batch='second', summary='A distinct later source correction.')
+        self.batch['verification'] = {'executed': {'focused': 3}, 'not_run': ['different Apple path'],
+                                     'remaining': ['different acceptance condition']}
+        self.assertEqual(self.run_recorder().returncode, 0)
+        second = json.loads((self.workflow / 'MASTER_CHECKLIST.json').read_text())['requirements'][58]
+        self.assertEqual(second['prior_batch_verifications'][-1], first['latest_batch_verification'])
+        self.assertEqual(second['prior_batch_verifications'][-1]['not_run'], ['Apple UI test'])
+        self.assertIn(first['evidence_of_implementation'][0], second['evidence_of_implementation'])
+        self.assertEqual(second['latest_batch_verification']['executed'], {'focused': 3})
+
     def testComponentEvidenceDoesNotDemoteImplementedRequirementClosure(self):
         self.rows[58].update(implementation_status='IMPLEMENTED', verification_status='MANUAL_VERIFICATION_REQUIRED',
             implementation_closure={'acceptance':'Source implementation complete; actual Apple rendering unrun'})

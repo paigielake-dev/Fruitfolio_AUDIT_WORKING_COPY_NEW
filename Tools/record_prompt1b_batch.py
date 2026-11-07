@@ -134,6 +134,9 @@ for n in b['requirements']:
  for key,vals in [('relevant_source_files',entry.get('files', b['files'])),('related_tests',entry.get('tests', b['tests'])),('evidence_of_implementation',[entry.get('summary', b['summary'])])]:
   row[key]=list(dict.fromkeys(row[key]+vals))
  row['commit_reference']='batch:'+b['batch']+' (resolve containing commit with git log)'
+ # Retain requirement-specific test/gap evidence before replacing the latest view.
+ if 'latest_batch_verification' in row:
+  row.setdefault('prior_batch_verifications', []).append(row['latest_batch_verification'])
  row['latest_batch_verification']={'batch': b['batch'], 'executed': row_verification['executed'], 'not_run': row_verification['not_run'], 'remaining': row_verification['remaining'], 'scope': 'Evidence for this batch only; does not certify the entire original requirement.'}
  row['remaining_verification_requirements']=row_verification['remaining']
 save(p,d)

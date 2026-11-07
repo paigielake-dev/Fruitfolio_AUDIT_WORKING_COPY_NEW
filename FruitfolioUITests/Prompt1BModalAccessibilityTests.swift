@@ -3560,6 +3560,34 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testOnboardingCalendarOwnsOneSoftPopPerActionAndHonorsMute() {
+        for reduced in [false, true] { for muted in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioCycleModalQA", "-fruitfolioCycleModalQAScenario", "onboarding-failure",
+                "-fruitfolioAudioDiagnostics"]
+            if reduced { app.launchArguments += ["-fruitfolioCycleModalReduceMotion"] }
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            app.launch()
+            let start = app.buttons["get started"]
+            XCTAssertTrue(start.waitForExistence(timeout: 8))
+            for _ in 0..<12 { if start.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(start.isHittable); start.tap()
+            let previous = app.buttons["cycleOnboarding.calendar.previous"]
+            XCTAssertTrue(previous.waitForExistence(timeout: 5))
+            for _ in 0..<12 { if previous.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(previous.isHittable)
+            previous.tap()
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 2)")
+            let next = app.buttons["cycleOnboarding.calendar.next"]
+            XCTAssertTrue(next.isHittable); next.tap()
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 3")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 3)")
+            XCTAssertTrue(app.buttons["cycleOnboarding.back"].exists)
+            app.terminate()
+        } }
+    }
+
     func testOnboardingFailedAutosaveOffersKeepDiscardOrSaveWithoutLosingSavedAnswers() {
         for reduced in [false, true] {
             for rtl in [false, true] {

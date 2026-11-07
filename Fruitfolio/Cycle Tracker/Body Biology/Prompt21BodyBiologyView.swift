@@ -377,27 +377,7 @@ private struct Prompt21SoftPressButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(
-                configuration.isPressed && !reduceMotionActive
-                    ? 0.965
-                    : 1
-            )
-            .offset(
-                y: configuration.isPressed && !reduceMotionActive
-                    ? 1.5
-                    : 0
-            )
-            .brightness(configuration.isPressed ? -0.04 : 0)
-            .animation(
-                reduceMotionActive
-                    ? nil
-                    : .spring(
-                        response: 0.22,
-                        dampingFraction: 0.70,
-                        blendDuration: 0
-                    ),
-                value: configuration.isPressed
-            )
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotionActive))
     }
 }
 

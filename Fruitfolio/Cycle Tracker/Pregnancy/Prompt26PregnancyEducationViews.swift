@@ -511,9 +511,7 @@ private struct Prompt26SoftPressButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.985 : 1)
-            .opacity(configuration.isPressed ? 0.88 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: configuration.isPressed)
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotion))
     }
 }
 
@@ -528,8 +526,7 @@ private struct Prompt26PaperButtonStyle: ButtonStyle {
             .padding(.vertical, 10)
             .frame(minHeight: 44)
             .background(Prompt26Palette.card.opacity(configuration.isPressed ? 0.84 : 0.62), in: Capsule())
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.10), value: configuration.isPressed)
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotion))
     }
 }
 #endif

@@ -128,6 +128,7 @@ struct Prompt1BCycleModalRegressionHarness: View {
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var contextStore: Prompt27AContextStore
     @EnvironmentObject private var coordinator: PopupCoordinator
+    @EnvironmentObject private var audioManager: AudioManager
     @State private var predictionOwner: FruitfolioOwnedPopupSession?
     @State private var predictionScope = UUID()
     @State private var predictionVisible = false
@@ -176,11 +177,23 @@ struct Prompt1BCycleModalRegressionHarness: View {
             }
             .environment(\.layoutDirection, ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalRTL") ? .rightToLeft : .leftToRight)
         }
+        .overlay(alignment: .bottomLeading) {
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                FruitfolioInteractionSoundDiagnostics().allowsHitTesting(false)
+            }
+        }
         .onAppear {
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                settings.globallyMuted = ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioMuted")
+                audioManager.debugRecordInteractions(true)
+            }
             predictionVisible = true
             if predictionOwner == nil { predictionOwner = FruitfolioOwnedPopupSession(coordinator: coordinator) }
         }
         .onDisappear {
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                audioManager.debugRecordInteractions(false)
+            }
             predictionVisible = false
             predictionOwner?.cancel()
         }

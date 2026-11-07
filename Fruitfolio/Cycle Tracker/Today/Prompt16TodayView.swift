@@ -1304,7 +1304,7 @@ private struct Prompt16ButterflyFlightDecoration: View {
                     .contentShape(Rectangle())
                     .accessibilityHidden(true)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(CutePopButtonStyle())
             .frame(minWidth: 74, minHeight: 74)
             .contentShape(Rectangle())
             .offset(flightOffset)

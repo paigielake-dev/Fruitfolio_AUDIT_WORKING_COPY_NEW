@@ -22,6 +22,7 @@ struct Prompt14CycleOnboardingView: View {
     @State private var trackerReady = false
     @State private var showingPersonalHealthContext = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var contextStore: Prompt27AContextStore
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     private enum ExitAction { case save, discard }
@@ -375,6 +376,7 @@ struct Prompt14CycleOnboardingView: View {
                         }
 
                         Button("＋ add another past period") {
+                            audioManager.play(.buttonSoftPop)
                             model.historyEditingDate = nil
                             model.historyPickerVisible = true
                         }
@@ -547,7 +549,7 @@ struct Prompt14CycleOnboardingView: View {
                         .labelsHidden()
                         .tint(Prompt14Palette.burgundy)
 
-                        Button("skip") { model.setBBTTime(nil) }
+                        Button("skip") { audioManager.play(.buttonSoftPop); model.setBBTTime(nil) }
                             .font(Prompt14Type.interface)
                             .foregroundStyle(Prompt14Palette.burgundy)
                             .frame(minHeight: 44)
@@ -744,10 +746,11 @@ private struct Prompt14SelectionButton: View {
 }
 
 private struct Prompt14SkipButton: View {
+    @EnvironmentObject private var audioManager: AudioManager
     let action: () -> Void
 
     var body: some View {
-        Button { action() } label: {
+        Button { audioManager.play(.buttonSoftPop); action() } label: {
             FruitfolioFixedText(source: "skip", font: Prompt14Type.interface, color: Prompt14Palette.burgundy.opacity(0.82))
         }
             .font(Prompt14Type.interface)
@@ -865,11 +868,13 @@ private struct Prompt14SproutCompletionArt: View {
 }
 
 private struct Prompt14SpottingInfo: View {
+    @EnvironmentObject private var audioManager: AudioManager
     @State private var expanded = false
 
     var body: some View {
         VStack(spacing: 8) {
             Button {
+                audioManager.play(.buttonSoftPop)
                 expanded.toggle()
             } label: {
                 HStack(spacing: 6) {
@@ -898,11 +903,12 @@ private struct Prompt14SpottingInfo: View {
 }
 
 private struct Prompt14BBTInfo: View {
+    @EnvironmentObject private var audioManager: AudioManager
     @State private var expanded = false
 
     var body: some View {
         VStack(spacing: 6) {
-            Button("BBT info") { expanded.toggle() }
+            Button("BBT info") { audioManager.play(.buttonSoftPop); expanded.toggle() }
                 .font(Prompt14Type.helper)
                 .foregroundStyle(Prompt14Palette.burgundy)
                 .frame(minHeight: 44)
@@ -918,6 +924,7 @@ private struct Prompt14BBTInfo: View {
 }
 
 private struct Prompt14HistoryRow: View {
+    @EnvironmentObject private var audioManager: AudioManager
     let date: Prompt13LocalDate
     let onEdit: () -> Void
     let onRemove: () -> Void
@@ -928,11 +935,11 @@ private struct Prompt14HistoryRow: View {
                 .font(Prompt14Type.interface)
                 .foregroundStyle(Prompt14Palette.burgundy)
             Spacer()
-            Button("edit", action: onEdit)
+            Button("edit") { audioManager.play(.buttonSoftPop); onEdit() }
                 .font(Prompt14Type.helper)
                 .foregroundStyle(Prompt14Palette.burgundy)
                 .frame(minWidth: 44, minHeight: 44)
-            Button("remove", action: onRemove)
+            Button("remove") { audioManager.play(.buttonSoftPop); onRemove() }
                 .font(Prompt14Type.helper)
                 .foregroundStyle(Prompt14Palette.burgundy)
                 .frame(minWidth: 56, minHeight: 44)
@@ -946,6 +953,7 @@ private struct Prompt14HistoryRow: View {
 }
 
 struct Prompt14Calendar: View {
+    @EnvironmentObject private var audioManager: AudioManager
     @Binding var displayedMonth: Date
     let selected: Prompt13LocalDate?
     let minimum: Prompt13LocalDate?
@@ -975,7 +983,7 @@ struct Prompt14Calendar: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Button { changeMonth(-1) } label: {
+                Button { audioManager.play(.buttonSoftPop); changeMonth(-1) } label: {
                     Image("control_previous")
                         .resizable()
                         .scaledToFit()
@@ -983,6 +991,7 @@ struct Prompt14Calendar: View {
                 }
                 .frame(width: 44, height: 44)
                 .modifier(FruitfolioFixedAccessibilityLabel(source: "Previous month"))
+                .accessibilityIdentifier("cycleOnboarding.calendar.previous")
 
                 Spacer()
 
@@ -992,7 +1001,7 @@ struct Prompt14Calendar: View {
 
                 Spacer()
 
-                Button { changeMonth(1) } label: {
+                Button { audioManager.play(.buttonSoftPop); changeMonth(1) } label: {
                     Image("control_next")
                         .resizable()
                         .scaledToFit()
@@ -1000,6 +1009,7 @@ struct Prompt14Calendar: View {
                 }
                 .frame(width: 44, height: 44)
                 .modifier(FruitfolioFixedAccessibilityLabel(source: "Next month"))
+                .accessibilityIdentifier("cycleOnboarding.calendar.next")
                 .disabled(!canMoveForward)
                 .opacity(canMoveForward ? 1 : 0.34)
             }
@@ -1019,6 +1029,7 @@ struct Prompt14Calendar: View {
                             selected: selected == value.local,
                             enabled: isEnabled(value.local)
                         ) {
+                            audioManager.play(.buttonSoftPop)
                             onSelect(value.date)
                         }
                     } else {
@@ -1118,7 +1129,7 @@ private struct Prompt14CalendarDay: View {
             .frame(maxWidth: .infinity, minHeight: 42)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle())
         .disabled(!enabled)
         .accessibilityLabel(Prompt14DateFormatting.long(value.local))
         .accessibilityAddTraits(selected ? .isSelected : [])

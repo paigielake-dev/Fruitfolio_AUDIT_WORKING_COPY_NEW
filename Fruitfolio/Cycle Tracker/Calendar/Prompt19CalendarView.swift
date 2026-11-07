@@ -959,9 +959,7 @@ private struct Prompt19DateSheet: View {
                     Rectangle()
                 )
             }
-            .buttonStyle(
-                .plain
-            )
+            .buttonStyle(CutePopButtonStyle())
             .accessibilityLabel(
                 "close"
             )
@@ -1631,9 +1629,7 @@ private struct Prompt19BubbleDecoration:
                 Rectangle()
             )
         }
-        .buttonStyle(
-            .plain
-        )
+        .buttonStyle(CutePopButtonStyle())
         .accessibilityLabel(
             "bubbles"
         )
@@ -1937,30 +1933,8 @@ private struct Prompt19DatePressStyle:
     func makeBody(
         configuration: Configuration
     ) -> some View {
-        configuration
-            .label
-            .scaleEffect(
-                reduceMotion
-                    ? 1
-                    : (
-                        configuration
-                            .isPressed
-                            ? 0.98
-                            : 1
-                    )
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(
-                        duration: 0.05
-                    )
-                    : .easeOut(
-                        duration: 0.09
-                    ),
-                value:
-                    configuration
-                        .isPressed
-            )
+        configuration.label
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotion))
     }
 }
 
@@ -1973,41 +1947,8 @@ private struct Prompt19GentlePressStyle:
     func makeBody(
         configuration: Configuration
     ) -> some View {
-        configuration
-            .label
-            .scaleEffect(
-                reduceMotion
-                    ? 1
-                    : (
-                        configuration
-                            .isPressed
-                            ? 0.975
-                            : 1
-                    )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration
-                            .isPressed
-                            ? 1
-                            : 0
-                    )
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(
-                        duration: 0.05
-                    )
-                    : .easeOut(
-                        duration: 0.10
-                    ),
-                value:
-                    configuration
-                        .isPressed
-            )
+        configuration.label
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotion))
     }
 }
 

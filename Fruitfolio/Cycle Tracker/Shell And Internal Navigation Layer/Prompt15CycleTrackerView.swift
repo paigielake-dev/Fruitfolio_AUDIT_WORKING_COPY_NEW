@@ -1123,18 +1123,7 @@ private struct Prompt15SoftPressButtonStyle:
         configuration: Configuration
     ) -> some View {
         configuration.label
-            .scaleEffect(
-                configuration.isPressed
-                    ? 0.965
-                    : 1
-            )
-            .animation(
-                .easeOut(
-                    duration: 0.10
-                ),
-                value:
-                    configuration.isPressed
-            )
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: false))
     }
 }
 
@@ -1147,54 +1136,7 @@ private struct Prompt15BubblePopButtonStyle:
         configuration: Configuration
     ) -> some View {
         configuration.label
-            .scaleEffect(
-                reduceMotion
-                    ? 1
-                    : (
-                        configuration.isPressed
-                            ? 0.965
-                            : 1
-                    )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                            ? 1.5
-                            : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                        ? 0
-                        : (
-                            configuration.isPressed
-                                ? -0.25
-                                : 0
-                        )
-                )
-            )
-            .brightness(
-                configuration.isPressed
-                    ? -0.04
-                    : 0
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(
-                        duration: 0.08
-                    )
-                    : .spring(
-                        response: 0.22,
-                        dampingFraction: 0.70,
-                        blendDuration: 0
-                    ),
-                value:
-                    configuration.isPressed
-            )
+            .modifier(FruitfolioButtonPopEffect(isPressed: configuration.isPressed, reduceMotion: reduceMotion))
     }
 }
 
