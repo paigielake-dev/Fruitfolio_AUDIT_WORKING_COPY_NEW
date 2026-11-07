@@ -440,6 +440,74 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1001)
     }
 
+    func testActualFruitAndStarCreditWaitsBeyondFullEntryUntilSettlement() async throws {
+        for isStar in [false, true] {
+            let (suite, defaults, store, model) = try activeModeFixture()
+            defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+            if isStar {
+                model.classificationFruit = nil; model.classificationStarAvailable = true
+                model.classificationStarDecision(accept: true)
+            } else {
+                model.classificationStarAvailable = false
+                model.classificationFruit = .init(fruitID: .pear, classification: .good,
+                    x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+                model.classificationDecision(accept: true)
+            }
+            let original = defaults.data(forKey: "game")
+            let ledger = model.roundLedger
+            for _ in 0..<3 { model.advanceGameplayFrame(delta: 0.08, now: Date()) }
+            let entered = try XCTUnwrap(model.catchTransits.first)
+            XCTAssertEqual(entered.progress, 1, accuracy: 0.000001)
+            XCTAssertLessThan(entered.elapsed, Prompt28CatchTransit.duration)
+            XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.availableStarPasses, 0)
+            XCTAssertEqual(model.session?.score, 0); XCTAssertEqual(model.roundLedger, ledger)
+            XCTAssertEqual(defaults.data(forKey: "game"), original)
+            model.advanceGameplayFrame(delta: 0.08, now: Date())
+            XCTAssertFalse(model.catchTransits.isEmpty)
+            XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.availableStarPasses, 0)
+            XCTAssertEqual(defaults.data(forKey: "game"), original)
+            model.advanceGameplayFrame(delta: 0.08, now: Date())
+            XCTAssertTrue(model.catchTransits.isEmpty)
+            XCTAssertEqual(model.basketCount, isStar ? 0 : 1)
+            XCTAssertEqual(model.session?.availableStarPasses, isStar ? 1 : 0)
+            XCTAssertEqual(model.session?.score, isStar ? 0 : 10)
+            XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, isStar ? 1 : 0)
+            let accepted = defaults.data(forKey: "game")
+            let credited = model.roundLedger
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.08, now: Date()) }
+            XCTAssertEqual(model.roundLedger, credited)
+            XCTAssertEqual(defaults.data(forKey: "game"), accepted)
+        }
+    }
+
+    func testSharedFruitAndStarFullEntryPoseIsFlattenedBelowPhysicalRim() async {
+        let kinds: [Prompt28CatchTransit.Kind] = [.star, .fruit(.pear, .good)]
+        for kind in kinds {
+        for relative in [-0.9, 0, 0.9] {
+        for reduced in [false, true] {
+            var transit = Prompt28CatchTransit(id: UUID(), kind: kind, relativeX: relative)
+            XCTAssertFalse(transit.advance(by: Prompt28CatchTransit.entryDuration))
+            for size in [CGSize(width: 320, height: 568), CGSize(width: 568, height: 320), CGSize(width: 390, height: 844)] {
+                let geometry = Prompt28CatchGeometry(playfield: size)
+                XCTAssertTrue(geometry.isValid)
+                let mouth = geometry.mouth(basketX: 0.5)
+                let pose = geometry.pose(for: transit, basketX: 0.5, reducedMotion: reduced)
+                XCTAssertGreaterThan(pose.size.height, 0); XCTAssertLessThan(pose.size.height, pose.size.width)
+                XCTAssertGreaterThanOrEqual(pose.center.y - pose.size.height / 2, mouth.minY - 0.000001)
+                XCTAssertGreaterThanOrEqual(pose.center.x - pose.size.width / 2, mouth.minX - 0.000001)
+                XCTAssertLessThanOrEqual(pose.center.x + pose.size.width / 2, mouth.maxX + 0.000001)
+            }
+            for size in [CGSize(width: 150, height: 132), CGSize(width: 210, height: 180)] {
+                let pose = Prompt28CatchGeometry.localPose(for: transit, basketSize: size, reducedMotion: reduced)
+                XCTAssertGreaterThan(pose.size.height, 0); XCTAssertLessThan(pose.size.height, pose.size.width)
+                XCTAssertTrue(pose.center.x.isFinite && pose.center.y.isFinite)
+                XCTAssertTrue(CGRect(origin: .zero, size: size).contains(pose.center))
+            }
+        }
+        }
+        }
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))

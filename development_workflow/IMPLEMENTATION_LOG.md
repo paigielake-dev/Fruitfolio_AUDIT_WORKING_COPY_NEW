@@ -3049,3 +3049,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 891, "native_CPU_XCTest": 913, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "actual_star_captures_in_large_bank_case": 1001, "new_native_UI_launch_vectors_written": 4, "new_native_UI_launch_vectors_executed": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify actual controller credit stays zero throughout entry/full-entry/settlement for star and fruit, matching shared flattened pose below rim in physical and local/reduced-motion geometry. Reuse existing correct implementation; add only missing runtime contract coverage, execute supported suites and preserve explicit Apple visual blockers.
 - Commit: containing commit for batch Actual-controller-bank-over-thousand-and-next-round-carry.
+
+## Actual-entry-settlement-zero-credit-and-shared-flattened-poses
+
+- Parent checkpoint: 0ebb22401fab7f775cbbedf3eb4b123394102d97.
+- Source-order requirements: [335, 336, 476, 477, 478].
+- Source files: development_workflow/ACTUAL_ENTRY_AND_SETTLEMENT_CREDIT.md.
+- Twoactual Core cases verifyfruit/starfullentry andremaining settlement have0score/pass/basket/ledger/persistedchanges; postsettlement exactly1ackcredit, laterframesnoduplicate. Sharedgeometrymatrix bothkinds/relativeoffsets/reducedmotion/portraitlandscape+localbaskets verifiesflattened physicalposebelowrim/containedwidth andfiniteboundedlocalcenters. Focus2pass; full893/915XCTest+21SwiftTesting each pass. Existingcorrect model/geometry/renderer/catalogSHAunchanged. No paintedocclusion/convincinganimation/device/officialmodelcertification.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 893, "native_CPU_XCTest": 915, "SwiftTesting_each": 21, "focused_XCTest": 2, "workflow_checks": 60, "syntax_files": 311, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Synchronize shared rule/FAQ/tutorial/catch feedback wording with actual full-entry-and-settlement star-pass banking, no fruit/points, stackable rare passes and one-pass protection. Reuse existing canonical strings, preserve pending founder replacements320–322, add meaningful catalog/tutorial contract coverage and run supported checks.
+- Commit: containing commit for batch Actual-entry-settlement-zero-credit-and-shared-flattened-poses.
