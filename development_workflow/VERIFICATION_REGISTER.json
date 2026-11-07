@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T05:57:06.334670+00:00",
+  "updated_at": "2026-11-07T06:08:22.831505+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -9873,6 +9873,139 @@
         ]
       },
       "timestamp": "2026-11-07T05:57:06.334670+00:00"
+    },
+    {
+      "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
+      "requirements": [
+        394,
+        395,
+        397,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        432,
+        433,
+        434,
+        442,
+        443,
+        444,
+        474,
+        476,
+        477,
+        478
+      ],
+      "supplemental_requirements": [
+        "SPEC-7.9.2",
+        "SPEC-7.9.4",
+        "SPEC-7.9.6",
+        "SPEC-BINDING-ASK-SESSION"
+      ],
+      "commands": [
+        "Full portable and native CPU suites",
+        "Seven focused pagination/legacy/store tests",
+        "69 workflow checks",
+        "313 changed Swift files parsed only (ReadMode newly modified relative to baseline)",
+        "SwiftSyntax sound ownership zero findings",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 970,
+        "native_CPU_XCTest": 995,
+        "SwiftTesting_each": 21,
+        "focused_XCTest": 7,
+        "new_pagination_XCTest": 1,
+        "workflow_checks": 69,
+        "changed_Swift_syntax_files": 313,
+        "control_sound_ownership_findings": 0,
+        "Apple_UI_vectors_written": 4,
+        "Apple_UI_vectors_executed": 0,
+        "English_fallbacks_added": 1,
+        "official_MADLAD_verified": false,
+        "log_receipts": {
+          "/tmp/fruitfolio_guide_paper_portable.log": {
+            "bytes": 308944,
+            "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+          },
+          "/tmp/fruitfolio_guide_paper_native.log": {
+            "bytes": 1284102,
+            "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+          },
+          "/tmp/fruitfolio_guide_paper_focused.log": {
+            "bytes": 29872,
+            "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+          },
+          "/tmp/fruitfolio_guide_paper_workflow.log": {
+            "bytes": 169,
+            "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+          },
+          "/tmp/fruitfolio_guide_paper_syntax.log": {
+            "bytes": 106,
+            "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+          },
+          "/tmp/fruitfolio_guide_paper_ownership.log": {
+            "bytes": 5,
+            "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+          }
+        }
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": 970,
+          "native_CPU_XCTest": 995,
+          "SwiftTesting_each": 21,
+          "focused_XCTest": 7,
+          "new_pagination_XCTest": 1,
+          "workflow_checks": 69,
+          "changed_Swift_syntax_files": 313,
+          "control_sound_ownership_findings": 0,
+          "Apple_UI_vectors_written": 4,
+          "Apple_UI_vectors_executed": 0,
+          "English_fallbacks_added": 1,
+          "official_MADLAD_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_guide_paper_portable.log": {
+              "bytes": 308944,
+              "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+            },
+            "/tmp/fruitfolio_guide_paper_native.log": {
+              "bytes": 1284102,
+              "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+            },
+            "/tmp/fruitfolio_guide_paper_focused.log": {
+              "bytes": 29872,
+              "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+            },
+            "/tmp/fruitfolio_guide_paper_workflow.log": {
+              "bytes": 169,
+              "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+            },
+            "/tmp/fruitfolio_guide_paper_syntax.log": {
+              "bytes": 106,
+              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+            },
+            "/tmp/fruitfolio_guide_paper_ownership.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
+        },
+        "not_run": [
+          "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+          "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
+        ],
+        "remaining": [
+          "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+          "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+          "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+          "Continue native Guide action/menu localization and captured reorder ownership"
+        ]
+      },
+      "timestamp": "2026-11-07T06:08:22.831505+00:00"
     }
   ]
 }

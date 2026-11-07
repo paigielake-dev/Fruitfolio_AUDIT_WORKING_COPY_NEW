@@ -333,13 +333,8 @@ struct Prompt11GuideBuilderView: View {
                         ) {
                             audioManager.play(.buttonSoftPop)
 
-                            withAnimation(
-                                motionPreferences.reduceMotionActive
-                                    ? .easeOut(duration: 0.12)
-                                    : .easeOut(duration: 0.20)
-                            ) {
-                                reorderMode.toggle()
-                            }
+                            if motionPreferences.reduceMotionActive { reorderMode.toggle() }
+                            else { withAnimation(.easeOut(duration: 0.20)) { reorderMode.toggle() } }
                         }
                         .accessibilityIdentifier("guide.reorder.toggle")
                     }
@@ -362,10 +357,14 @@ struct Prompt11GuideBuilderView: View {
 
                     sections(guide)
 
-                    Button("read my guide") {
+                    Button {
                         audioManager.play(.pageTurn)
                         showingReadMode = true
+                    } label: {
+                        FruitfolioFixedText(source: "read my guide", font: .custom("Chalkboard SE", size: 12).bold(),
+                            color: DesignTokens.ColorToken.primaryBurgundy)
                     }
+                    .accessibilityIdentifier("guide.read.open")
                     .font(.custom("Chalkboard SE", size: 12))
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -1225,9 +1224,7 @@ struct Prompt11GuideBuilderView: View {
         audioManager.play(.gentleCheer)
     }
 
-    private var openAnimation: Animation {
-        motionPreferences.reduceMotionActive
-            ? .easeOut(duration: 0.14)
-            : .easeOut(duration: 0.30)
+    private var openAnimation: Animation? {
+        motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.30)
     }
 }

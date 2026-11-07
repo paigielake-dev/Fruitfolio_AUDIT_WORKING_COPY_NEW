@@ -136,11 +136,12 @@ struct Prompt11NewGuideTile: View {
 struct Prompt11SectionDivider: View {
     let title: String
     let pageCount: Int
+    @EnvironmentObject private var settings: SettingsStore
 
     var body: some View {
         VStack(spacing: 4) {
             HStack {
-                Text(title)
+                Text(verbatim: title)
                     .font(.custom("Chalkboard SE", size: 16))
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -149,7 +150,7 @@ struct Prompt11SectionDivider: View {
 
                 Spacer()
 
-                Text("\(pageCount)")
+                Text(verbatim: pageCount.formatted(.number.locale(Locale(identifier: settings.language.localeIdentifier))))
                     .font(.custom("Chalkboard SE", size: 11))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -170,21 +171,29 @@ struct Prompt11SavedPagePaper: View {
     let pageNumber: Int?
     let sourceStillExists: Bool
     let onAddNote: (() -> Void)?
+    @EnvironmentObject private var settings: SettingsStore
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline) {
-                Text(page.question.isEmpty ? "saved page" : page.question)
-                    .font(.custom("Chalkboard SE", size: 15))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
+                Group {
+                    if page.question.isEmpty {
+                        FruitfolioFixedText(source: "saved page", font: .custom("Chalkboard SE", size: 15).bold(),
+                            color: DesignTokens.ColorToken.primaryBurgundy)
+                    } else {
+                        Text(verbatim: page.question)
+                            .font(.custom("Chalkboard SE", size: 15).bold())
+                            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    }
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("guide.paper.question." + page.id.uuidString)
 
                 Spacer()
 
                 if let pageNumber {
-                    Text("\(pageNumber)")
+                    Text(verbatim: pageNumber.formatted(.number.grouping(.never).locale(Locale(identifier: settings.language.localeIdentifier))))
+                        .accessibilityIdentifier("guide.paper.pageNumber." + page.id.uuidString)
                         .font(.custom("Chalkboard SE", size: 10))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -193,29 +202,30 @@ struct Prompt11SavedPagePaper: View {
             }
 
             if let provenance = page.userMaterial {
-                Text("your own material · not verified research").font(.caption).bold()
+                FruitfolioFixedText(source: "your own material · not verified research", font: .caption.bold(), serious: true)
                 if let address = provenance.sourceURL {
                     Text(verbatim: address).font(.caption).textSelection(.enabled)
                 }
             }
 
             if page.saveType == .excerpt {
-                Text("saved excerpt")
-                    .font(.custom("Chalkboard SE", size: 10.5))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
+                FruitfolioFixedText(source: "saved excerpt", font: .custom("Chalkboard SE", size: 10.5).bold(),
+                    color: DesignTokens.ColorToken.secondaryBurgundy)
+                    .accessibilityIdentifier("guide.paper.excerptType." + page.id.uuidString)
+            }
+
+            if page.hasLegacyExcerptRemainder {
+                FruitfolioFixedText(source: page.canReviewLegacyExcerptCleanup
+                    ? "this older excerpt also retains the original answer. nothing has been removed."
+                    : "this older excerpt retains answer text but has no recorded selection. it has been preserved for review.",
+                    font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                    .accessibilityIdentifier("guide.paper.legacyExcerptNotice." + page.id.uuidString)
             }
 
             if !sourceStillExists,
                page.sourceSavedPageID != nil {
-                Text("this saved page is no longer in your library")
-                    .font(.custom("Chalkboard SE", size: 11))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
+                FruitfolioFixedText(source: "this saved page is no longer in your library",
+                    font: .custom("Chalkboard SE", size: 11).bold(), color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
             }
 
             if !page.displayBody.isEmpty {
@@ -247,15 +257,12 @@ struct Prompt11SavedPagePaper: View {
                 FruitfolioSourceCitationList(sources: records)
             } else if !page.sourceIDs.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("sources")
-                        .font(.custom("Chalkboard SE", size: 11))
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "sources", font: .custom("Chalkboard SE", size: 11).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
 
-                    ForEach(page.sourceIDs, id: \.self) { sourceID in
-                        Text(sourceID)
+                    ForEach(Array(page.sourceIDs.enumerated()), id: \.offset) { offset, sourceID in
+                        Text(verbatim: sourceID)
+                            .accessibilityIdentifier("guide.paper.source." + page.id.uuidString + "." + String(offset))
                             .font(.custom("Chalkboard SE", size: 10))
                             .foregroundStyle(
                                 DesignTokens.ColorToken.secondaryBurgundy
@@ -266,14 +273,11 @@ struct Prompt11SavedPagePaper: View {
 
             if !page.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("my note")
-                        .font(.custom("Chalkboard SE", size: 11))
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "my note", font: .custom("Chalkboard SE", size: 11).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
 
-                    Text(page.notes)
+                    Text(verbatim: page.notes)
+                        .accessibilityIdentifier("guide.paper.note." + page.id.uuidString)
                         .font(.custom("Chalkboard SE", size: 12))
                         .italic()
                         .foregroundStyle(
@@ -291,9 +295,12 @@ struct Prompt11SavedPagePaper: View {
             }
 
             if let onAddNote {
-                Button("add a note") {
-                    onAddNote()
+                Button { onAddNote() } label: {
+                    FruitfolioFixedText(source: "add a note", font: .custom("Chalkboard SE", size: 11).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget, alignment: .leading)
                 }
+                .accessibilityIdentifier("guide.paper.addNote." + page.id.uuidString)
                 .font(.custom("Chalkboard SE", size: 11))
                 .fontWeight(.bold)
                 .foregroundStyle(

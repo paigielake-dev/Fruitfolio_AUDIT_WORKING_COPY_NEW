@@ -655,7 +655,9 @@
         "development_workflow/GUIDE_POPUP_TYPED_ERROR_PROVENANCE.md",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
-        "development_workflow/GUIDE_CONTENTS_SEARCH_NATIVE_COPY.md"
+        "development_workflow/GUIDE_CONTENTS_SEARCH_NATIVE_COPY.md",
+        "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+        "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -683,7 +685,8 @@
         "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim.",
         "Actual Guide home/card/workspace fixed copy and native metadata use control translation with literal name/count/heart/kaomoji protection. Authored names/subtitles wrap verbatim at original fonts; workspace separates navigation above title, removes shrink/truncation, options layout animation omitted under Reduce Motion. Reorder errors use typed canonical renderer. Three genuine metadata/envelope/private fixture tests pass; four Apple long-title vectors written NOT_RUN. Full967/992 XCTest+21 SwiftTesting each;69 workflow;312 changed-file parse-only checks;zero source sound findings. One English fallback added; no canonical data/schema change or official-model acceptance.",
         "All nine real Guide popup error states classify actual Swift domain errors through canonical typed notices; foreign messages remain verbatim and cannot gain translation authority by spoofing text. Both cover surfaces use localized accessibility labels with unchanged selection/cue/form-ticket/persistence ownership; five English fallbacks. Four actual private validation/cancel vectors written NOT_RUN. Full967/992 XCTest+21 SwiftTesting each,69 workflow,312 changed-file parses,zero source sound findings. Explicitly corrects prior requirement428 scope: no memory optimization or RSS measurement.",
-        "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance."
+        "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance.",
+        "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance."
       ],
       "batch_evidence": [
         {
@@ -1340,79 +1343,142 @@
             ]
           },
           "parent_checkpoint": "38f55a45cd801795fb6a258b98fa545e76a546d5"
+        },
+        {
+          "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
+          "implementation_evidence": "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
+          "files": [
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+            "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 970,
+              "native_CPU_XCTest": 995,
+              "SwiftTesting_each": 21,
+              "focused_XCTest": 7,
+              "new_pagination_XCTest": 1,
+              "workflow_checks": 69,
+              "changed_Swift_syntax_files": 313,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 1,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_guide_paper_portable.log": {
+                  "bytes": 308944,
+                  "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+                },
+                "/tmp/fruitfolio_guide_paper_native.log": {
+                  "bytes": 1284102,
+                  "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+                },
+                "/tmp/fruitfolio_guide_paper_focused.log": {
+                  "bytes": 29872,
+                  "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+                },
+                "/tmp/fruitfolio_guide_paper_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+                },
+                "/tmp/fruitfolio_guide_paper_syntax.log": {
+                  "bytes": 106,
+                  "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+                },
+                "/tmp/fruitfolio_guide_paper_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+              "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
+            ],
+            "remaining": [
+              "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+              "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+              "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+              "Continue native Guide action/menu localization and captured reorder ownership"
+            ]
+          },
+          "parent_checkpoint": "c34ea0b8dde2f32f147e6da952b8c720fae87ee7"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Guide-contents-native-ordinals-and-private-search-gate",
+        "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
         "executed": {
-          "portable_XCTest": 969,
-          "native_CPU_XCTest": 994,
+          "portable_XCTest": 970,
+          "native_CPU_XCTest": 995,
           "SwiftTesting_each": 21,
-          "initial_portable_XCTest": 968,
-          "initial_native_CPU_XCTest": 993,
-          "initial_focused_XCTest": 3,
-          "new_contents_and_fixture_XCTest": 2,
+          "focused_XCTest": 7,
+          "new_pagination_XCTest": 1,
           "workflow_checks": 69,
-          "changed_Swift_syntax_files": 312,
+          "changed_Swift_syntax_files": 313,
           "control_sound_ownership_findings": 0,
           "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
-          "private_fixture_real_guide_pages": 8,
+          "English_fallbacks_added": 1,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_guide_contents_portable.log": {
-              "bytes": 308132,
-              "sha256": "54f341555315707ca031a8bf9b40e8383b565593e607dc499a420689f5cc0237"
+            "/tmp/fruitfolio_guide_paper_portable.log": {
+              "bytes": 308944,
+              "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
             },
-            "/tmp/fruitfolio_guide_contents_native.log": {
-              "bytes": 1283342,
-              "sha256": "9b7d61b76bd4d3920bbaa1d01b3d6991ccd1873fa7bc026858e120c33f19a3cc"
+            "/tmp/fruitfolio_guide_paper_native.log": {
+              "bytes": 1284102,
+              "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
             },
-            "/tmp/fruitfolio_guide_contents_focused.log": {
-              "bytes": 28488,
-              "sha256": "c7e1e6a2530cb2de0fb8b2b640823bbd5e808bf3fe9d027b4006d3665d07608e"
+            "/tmp/fruitfolio_guide_paper_focused.log": {
+              "bytes": 29872,
+              "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
             },
-            "/tmp/fruitfolio_guide_contents_portable_final.log": {
-              "bytes": 308412,
-              "sha256": "fc6a4353532f5760630dc027c32cebe26c09e7e327972a3c3c369b5388909263"
-            },
-            "/tmp/fruitfolio_guide_contents_native_final.log": {
-              "bytes": 1283569,
-              "sha256": "6b859bd186adbbea3dd990169f42739750ff9c95be68cfa79b0c95108007d2b2"
-            },
-            "/tmp/fruitfolio_guide_contents_workflow_final.log": {
+            "/tmp/fruitfolio_guide_paper_workflow.log": {
               "bytes": 169,
-              "sha256": "2cdb3df64b0469500e254bcb86ed1d28b6ddafbb10029518c95a06897ff02d7f"
+              "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
             },
-            "/tmp/fruitfolio_guide_contents_syntax_final.log": {
+            "/tmp/fruitfolio_guide_paper_syntax.log": {
               "bytes": 106,
-              "sha256": "4d5b81de8b75f7027deb9dc82c40699d9b676db6429a034f9967cefe6609030a"
+              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
             },
-            "/tmp/fruitfolio_guide_contents_ownership_final.log": {
+            "/tmp/fruitfolio_guide_paper_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Four actual Apple private eight-page Guide contents/native-ordinal/search/no-write vectors",
-          "Apple SDK typecheck/build, VoiceOver/focus/scroll/RTL/XXXL/Reduce Motion and physical-device acceptance",
-          "Official MADLAD model/tokenizer and linguistic/clinical translation acceptance"
+          "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+          "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
         ],
         "remaining": [
-          "Execute actual SwiftUI search and row target/scroll/accessibility vectors; Foundation tests are not Apple UI",
-          "Verify long authored search-result layout and translated accessible phrases on Apple",
-          "Keep six-result preview/search algorithm distinct from localization; no new search-policy acceptance claim"
+          "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+          "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+          "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+          "Continue native Guide action/menu localization and captured reorder ownership"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute actual SwiftUI search and row target/scroll/accessibility vectors; Foundation tests are not Apple UI",
-        "Verify long authored search-result layout and translated accessible phrases on Apple",
-        "Keep six-result preview/search algorithm distinct from localization; no new search-policy acceptance claim"
+        "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+        "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+        "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+        "Continue native Guide action/menu localization and captured reorder ownership"
       ],
-      "commit_reference": "batch:Guide-contents-native-ordinals-and-private-search-gate (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:57:06.334670+00:00"
+      "commit_reference": "batch:Guide-paper-read-mode-native-copy-and-closing-guards (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T06:08:22.831505+00:00"
     },
     {
       "id": "SPEC-7.9.3",
@@ -1554,7 +1620,9 @@
         "development_workflow/GUIDE_POPUP_TYPED_ERROR_PROVENANCE.md",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
-        "development_workflow/GUIDE_CONTENTS_SEARCH_NATIVE_COPY.md"
+        "development_workflow/GUIDE_CONTENTS_SEARCH_NATIVE_COPY.md",
+        "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+        "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -1582,7 +1650,8 @@
         "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim.",
         "Actual Guide home/card/workspace fixed copy and native metadata use control translation with literal name/count/heart/kaomoji protection. Authored names/subtitles wrap verbatim at original fonts; workspace separates navigation above title, removes shrink/truncation, options layout animation omitted under Reduce Motion. Reorder errors use typed canonical renderer. Three genuine metadata/envelope/private fixture tests pass; four Apple long-title vectors written NOT_RUN. Full967/992 XCTest+21 SwiftTesting each;69 workflow;312 changed-file parse-only checks;zero source sound findings. One English fallback added; no canonical data/schema change or official-model acceptance.",
         "All nine real Guide popup error states classify actual Swift domain errors through canonical typed notices; foreign messages remain verbatim and cannot gain translation authority by spoofing text. Both cover surfaces use localized accessibility labels with unchanged selection/cue/form-ticket/persistence ownership; five English fallbacks. Four actual private validation/cancel vectors written NOT_RUN. Full967/992 XCTest+21 SwiftTesting each,69 workflow,312 changed-file parses,zero source sound findings. Explicitly corrects prior requirement428 scope: no memory optimization or RSS measurement.",
-        "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance."
+        "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance.",
+        "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance."
       ],
       "batch_evidence": [
         {
@@ -2239,79 +2308,142 @@
             ]
           },
           "parent_checkpoint": "38f55a45cd801795fb6a258b98fa545e76a546d5"
+        },
+        {
+          "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
+          "implementation_evidence": "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
+          "files": [
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+            "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 970,
+              "native_CPU_XCTest": 995,
+              "SwiftTesting_each": 21,
+              "focused_XCTest": 7,
+              "new_pagination_XCTest": 1,
+              "workflow_checks": 69,
+              "changed_Swift_syntax_files": 313,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 1,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_guide_paper_portable.log": {
+                  "bytes": 308944,
+                  "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+                },
+                "/tmp/fruitfolio_guide_paper_native.log": {
+                  "bytes": 1284102,
+                  "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+                },
+                "/tmp/fruitfolio_guide_paper_focused.log": {
+                  "bytes": 29872,
+                  "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+                },
+                "/tmp/fruitfolio_guide_paper_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+                },
+                "/tmp/fruitfolio_guide_paper_syntax.log": {
+                  "bytes": 106,
+                  "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+                },
+                "/tmp/fruitfolio_guide_paper_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+              "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
+            ],
+            "remaining": [
+              "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+              "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+              "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+              "Continue native Guide action/menu localization and captured reorder ownership"
+            ]
+          },
+          "parent_checkpoint": "c34ea0b8dde2f32f147e6da952b8c720fae87ee7"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Guide-contents-native-ordinals-and-private-search-gate",
+        "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
         "executed": {
-          "portable_XCTest": 969,
-          "native_CPU_XCTest": 994,
+          "portable_XCTest": 970,
+          "native_CPU_XCTest": 995,
           "SwiftTesting_each": 21,
-          "initial_portable_XCTest": 968,
-          "initial_native_CPU_XCTest": 993,
-          "initial_focused_XCTest": 3,
-          "new_contents_and_fixture_XCTest": 2,
+          "focused_XCTest": 7,
+          "new_pagination_XCTest": 1,
           "workflow_checks": 69,
-          "changed_Swift_syntax_files": 312,
+          "changed_Swift_syntax_files": 313,
           "control_sound_ownership_findings": 0,
           "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
-          "private_fixture_real_guide_pages": 8,
+          "English_fallbacks_added": 1,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_guide_contents_portable.log": {
-              "bytes": 308132,
-              "sha256": "54f341555315707ca031a8bf9b40e8383b565593e607dc499a420689f5cc0237"
+            "/tmp/fruitfolio_guide_paper_portable.log": {
+              "bytes": 308944,
+              "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
             },
-            "/tmp/fruitfolio_guide_contents_native.log": {
-              "bytes": 1283342,
-              "sha256": "9b7d61b76bd4d3920bbaa1d01b3d6991ccd1873fa7bc026858e120c33f19a3cc"
+            "/tmp/fruitfolio_guide_paper_native.log": {
+              "bytes": 1284102,
+              "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
             },
-            "/tmp/fruitfolio_guide_contents_focused.log": {
-              "bytes": 28488,
-              "sha256": "c7e1e6a2530cb2de0fb8b2b640823bbd5e808bf3fe9d027b4006d3665d07608e"
+            "/tmp/fruitfolio_guide_paper_focused.log": {
+              "bytes": 29872,
+              "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
             },
-            "/tmp/fruitfolio_guide_contents_portable_final.log": {
-              "bytes": 308412,
-              "sha256": "fc6a4353532f5760630dc027c32cebe26c09e7e327972a3c3c369b5388909263"
-            },
-            "/tmp/fruitfolio_guide_contents_native_final.log": {
-              "bytes": 1283569,
-              "sha256": "6b859bd186adbbea3dd990169f42739750ff9c95be68cfa79b0c95108007d2b2"
-            },
-            "/tmp/fruitfolio_guide_contents_workflow_final.log": {
+            "/tmp/fruitfolio_guide_paper_workflow.log": {
               "bytes": 169,
-              "sha256": "2cdb3df64b0469500e254bcb86ed1d28b6ddafbb10029518c95a06897ff02d7f"
+              "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
             },
-            "/tmp/fruitfolio_guide_contents_syntax_final.log": {
+            "/tmp/fruitfolio_guide_paper_syntax.log": {
               "bytes": 106,
-              "sha256": "4d5b81de8b75f7027deb9dc82c40699d9b676db6429a034f9967cefe6609030a"
+              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
             },
-            "/tmp/fruitfolio_guide_contents_ownership_final.log": {
+            "/tmp/fruitfolio_guide_paper_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Four actual Apple private eight-page Guide contents/native-ordinal/search/no-write vectors",
-          "Apple SDK typecheck/build, VoiceOver/focus/scroll/RTL/XXXL/Reduce Motion and physical-device acceptance",
-          "Official MADLAD model/tokenizer and linguistic/clinical translation acceptance"
+          "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+          "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
         ],
         "remaining": [
-          "Execute actual SwiftUI search and row target/scroll/accessibility vectors; Foundation tests are not Apple UI",
-          "Verify long authored search-result layout and translated accessible phrases on Apple",
-          "Keep six-result preview/search algorithm distinct from localization; no new search-policy acceptance claim"
+          "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+          "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+          "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+          "Continue native Guide action/menu localization and captured reorder ownership"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute actual SwiftUI search and row target/scroll/accessibility vectors; Foundation tests are not Apple UI",
-        "Verify long authored search-result layout and translated accessible phrases on Apple",
-        "Keep six-result preview/search algorithm distinct from localization; no new search-policy acceptance claim"
+        "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+        "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+        "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+        "Continue native Guide action/menu localization and captured reorder ownership"
       ],
-      "commit_reference": "batch:Guide-contents-native-ordinals-and-private-search-gate (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:57:06.334670+00:00"
+      "commit_reference": "batch:Guide-paper-read-mode-native-copy-and-closing-guards (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T06:08:22.831505+00:00"
     },
     {
       "id": "SPEC-7.9.5",
@@ -2578,7 +2710,9 @@
         "development_workflow/GUIDE_HEADER_NATIVE_METADATA_AND_PROVENANCE.md",
         "development_workflow/GUIDE_POPUP_TYPED_ERROR_PROVENANCE.md",
         "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
-        "development_workflow/GUIDE_CONTENTS_SEARCH_NATIVE_COPY.md"
+        "development_workflow/GUIDE_CONTENTS_SEARCH_NATIVE_COPY.md",
+        "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+        "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -2613,7 +2747,8 @@
         "Actual user-material native prompts, fixed qualifier/picker/section/accessibility labels use control translation with original bindings. Shared typed notice recognizes actual validation/library errors and missing chapter; external error spoof remains verbatim. Character limits explicitly protected. Two actual draft-validation/scientific-envelope regressions pass; four Apple edit/invalid-URL/keep/discard/reopen vectors written NOT_RUN. Thirteen English fallbacks. Full964/989 XCTest+21 SwiftTesting each;69 workflow;311 parse-only checks;zero source sound findings. No save schema change or runtime/clinical acceptance claim.",
         "Actual Guide home/card/workspace fixed copy and native metadata use control translation with literal name/count/heart/kaomoji protection. Authored names/subtitles wrap verbatim at original fonts; workspace separates navigation above title, removes shrink/truncation, options layout animation omitted under Reduce Motion. Reorder errors use typed canonical renderer. Three genuine metadata/envelope/private fixture tests pass; four Apple long-title vectors written NOT_RUN. Full967/992 XCTest+21 SwiftTesting each;69 workflow;312 changed-file parse-only checks;zero source sound findings. One English fallback added; no canonical data/schema change or official-model acceptance.",
         "All nine real Guide popup error states classify actual Swift domain errors through canonical typed notices; foreign messages remain verbatim and cannot gain translation authority by spoofing text. Both cover surfaces use localized accessibility labels with unchanged selection/cue/form-ticket/persistence ownership; five English fallbacks. Four actual private validation/cancel vectors written NOT_RUN. Full967/992 XCTest+21 SwiftTesting each,69 workflow,312 changed-file parses,zero source sound findings. Explicitly corrects prior requirement428 scope: no memory optimization or RSS measurement.",
-        "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance."
+        "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance.",
+        "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance."
       ],
       "batch_evidence": [
         {
@@ -3545,79 +3680,142 @@
             ]
           },
           "parent_checkpoint": "38f55a45cd801795fb6a258b98fa545e76a546d5"
+        },
+        {
+          "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
+          "implementation_evidence": "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
+          "files": [
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+            "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 970,
+              "native_CPU_XCTest": 995,
+              "SwiftTesting_each": 21,
+              "focused_XCTest": 7,
+              "new_pagination_XCTest": 1,
+              "workflow_checks": 69,
+              "changed_Swift_syntax_files": 313,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 1,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_guide_paper_portable.log": {
+                  "bytes": 308944,
+                  "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+                },
+                "/tmp/fruitfolio_guide_paper_native.log": {
+                  "bytes": 1284102,
+                  "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+                },
+                "/tmp/fruitfolio_guide_paper_focused.log": {
+                  "bytes": 29872,
+                  "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+                },
+                "/tmp/fruitfolio_guide_paper_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+                },
+                "/tmp/fruitfolio_guide_paper_syntax.log": {
+                  "bytes": 106,
+                  "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+                },
+                "/tmp/fruitfolio_guide_paper_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+              "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
+            ],
+            "remaining": [
+              "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+              "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+              "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+              "Continue native Guide action/menu localization and captured reorder ownership"
+            ]
+          },
+          "parent_checkpoint": "c34ea0b8dde2f32f147e6da952b8c720fae87ee7"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Guide-contents-native-ordinals-and-private-search-gate",
+        "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
         "executed": {
-          "portable_XCTest": 969,
-          "native_CPU_XCTest": 994,
+          "portable_XCTest": 970,
+          "native_CPU_XCTest": 995,
           "SwiftTesting_each": 21,
-          "initial_portable_XCTest": 968,
-          "initial_native_CPU_XCTest": 993,
-          "initial_focused_XCTest": 3,
-          "new_contents_and_fixture_XCTest": 2,
+          "focused_XCTest": 7,
+          "new_pagination_XCTest": 1,
           "workflow_checks": 69,
-          "changed_Swift_syntax_files": 312,
+          "changed_Swift_syntax_files": 313,
           "control_sound_ownership_findings": 0,
           "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
-          "private_fixture_real_guide_pages": 8,
+          "English_fallbacks_added": 1,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_guide_contents_portable.log": {
-              "bytes": 308132,
-              "sha256": "54f341555315707ca031a8bf9b40e8383b565593e607dc499a420689f5cc0237"
+            "/tmp/fruitfolio_guide_paper_portable.log": {
+              "bytes": 308944,
+              "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
             },
-            "/tmp/fruitfolio_guide_contents_native.log": {
-              "bytes": 1283342,
-              "sha256": "9b7d61b76bd4d3920bbaa1d01b3d6991ccd1873fa7bc026858e120c33f19a3cc"
+            "/tmp/fruitfolio_guide_paper_native.log": {
+              "bytes": 1284102,
+              "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
             },
-            "/tmp/fruitfolio_guide_contents_focused.log": {
-              "bytes": 28488,
-              "sha256": "c7e1e6a2530cb2de0fb8b2b640823bbd5e808bf3fe9d027b4006d3665d07608e"
+            "/tmp/fruitfolio_guide_paper_focused.log": {
+              "bytes": 29872,
+              "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
             },
-            "/tmp/fruitfolio_guide_contents_portable_final.log": {
-              "bytes": 308412,
-              "sha256": "fc6a4353532f5760630dc027c32cebe26c09e7e327972a3c3c369b5388909263"
-            },
-            "/tmp/fruitfolio_guide_contents_native_final.log": {
-              "bytes": 1283569,
-              "sha256": "6b859bd186adbbea3dd990169f42739750ff9c95be68cfa79b0c95108007d2b2"
-            },
-            "/tmp/fruitfolio_guide_contents_workflow_final.log": {
+            "/tmp/fruitfolio_guide_paper_workflow.log": {
               "bytes": 169,
-              "sha256": "2cdb3df64b0469500e254bcb86ed1d28b6ddafbb10029518c95a06897ff02d7f"
+              "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
             },
-            "/tmp/fruitfolio_guide_contents_syntax_final.log": {
+            "/tmp/fruitfolio_guide_paper_syntax.log": {
               "bytes": 106,
-              "sha256": "4d5b81de8b75f7027deb9dc82c40699d9b676db6429a034f9967cefe6609030a"
+              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
             },
-            "/tmp/fruitfolio_guide_contents_ownership_final.log": {
+            "/tmp/fruitfolio_guide_paper_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Four actual Apple private eight-page Guide contents/native-ordinal/search/no-write vectors",
-          "Apple SDK typecheck/build, VoiceOver/focus/scroll/RTL/XXXL/Reduce Motion and physical-device acceptance",
-          "Official MADLAD model/tokenizer and linguistic/clinical translation acceptance"
+          "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+          "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
         ],
         "remaining": [
-          "Execute actual SwiftUI search and row target/scroll/accessibility vectors; Foundation tests are not Apple UI",
-          "Verify long authored search-result layout and translated accessible phrases on Apple",
-          "Keep six-result preview/search algorithm distinct from localization; no new search-policy acceptance claim"
+          "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+          "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+          "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+          "Continue native Guide action/menu localization and captured reorder ownership"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute actual SwiftUI search and row target/scroll/accessibility vectors; Foundation tests are not Apple UI",
-        "Verify long authored search-result layout and translated accessible phrases on Apple",
-        "Keep six-result preview/search algorithm distinct from localization; no new search-policy acceptance claim"
+        "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+        "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+        "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+        "Continue native Guide action/menu localization and captured reorder ownership"
       ],
-      "commit_reference": "batch:Guide-contents-native-ordinals-and-private-search-gate (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:57:06.334670+00:00"
+      "commit_reference": "batch:Guide-paper-read-mode-native-copy-and-closing-guards (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T06:08:22.831505+00:00"
     },
     {
       "id": "SPEC-7.9.7",
@@ -4732,7 +4930,11 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
         "development_workflow/LEGACY_EXCERPT_CONSENT_RECOVERY.md",
         "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
-        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md"
+        "development_workflow/BOOK_PRIVATE_FIXTURE_AND_EXCERPT_UI.md",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+        "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
       ],
       "related_tests": [
         "Prompt1BAskPaperLayoutTests",
@@ -4745,7 +4947,8 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
       "blockers": [],
       "evidence": [
@@ -4758,7 +4961,8 @@
         "Reconciled batch:Ask-private-save-authority-and-exact-conversion; local commit 06fa77967e0d3cdded501c5e33ee50294c8299fa; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
         "Recorder validates exact founder identities and structured implementation/test/remaining evidence before publication, retains blocked status, and supports separate founder targets. Sync preserves unknown progress metadata. Reconciled 14 committed recent batches to 12 founder entries without acceptance promotion. Regression caught and fixed metadata loss; 69 workflow checks pass. No app runtime changes in this batch.",
         "Read-only legacy remainder detection preserves data by default. Owned confirmation stages exact selected-only cleanup across matching source-key copies; missing selections, stale bytes, conflicts or duplicate/missing targets reject without writes. Canonical write acknowledgement and protected future data remain enforced. Notes/images/citations/provenance survive, full-answer concept maps are restricted. Six actual Foundation/store tests passed. Apple UI is source-only/unexecuted, no forensic erasure or official-model proof.",
-        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass."
+        "DEBUG Book route now consumes real root private preferences via stable fixture ownership; secondary suite, standard fallback and view-disappearance domain deletion removed. Real canonical fixture seeds only absent key and retains protected/empty/remounted records. Four fixture tests pass; six Apple legacy consent/remount/missing-selection vectors written NOT_RUN. Full 960 portable/985 native XCTest and21 SwiftTesting each,69 workflow,311 parse-only checks pass.",
+        "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance."
       ],
       "batch_evidence": [
         {
@@ -5327,68 +5531,142 @@
             ]
           },
           "parent_checkpoint": "6f8a7b700f97e3ed5fe9df97854bd2fcefec337a"
+        },
+        {
+          "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
+          "implementation_evidence": "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
+          "files": [
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+            "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+            "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
+            "Fruitfolio/Localizable.xcstrings",
+            "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 970,
+              "native_CPU_XCTest": 995,
+              "SwiftTesting_each": 21,
+              "focused_XCTest": 7,
+              "new_pagination_XCTest": 1,
+              "workflow_checks": 69,
+              "changed_Swift_syntax_files": 313,
+              "control_sound_ownership_findings": 0,
+              "Apple_UI_vectors_written": 4,
+              "Apple_UI_vectors_executed": 0,
+              "English_fallbacks_added": 1,
+              "official_MADLAD_verified": false,
+              "log_receipts": {
+                "/tmp/fruitfolio_guide_paper_portable.log": {
+                  "bytes": 308944,
+                  "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+                },
+                "/tmp/fruitfolio_guide_paper_native.log": {
+                  "bytes": 1284102,
+                  "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+                },
+                "/tmp/fruitfolio_guide_paper_focused.log": {
+                  "bytes": 29872,
+                  "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+                },
+                "/tmp/fruitfolio_guide_paper_workflow.log": {
+                  "bytes": 169,
+                  "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+                },
+                "/tmp/fruitfolio_guide_paper_syntax.log": {
+                  "bytes": 106,
+                  "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+                },
+                "/tmp/fruitfolio_guide_paper_ownership.log": {
+                  "bytes": 5,
+                  "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+                }
+              }
+            },
+            "not_run": [
+              "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+              "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+              "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
+            ],
+            "remaining": [
+              "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+              "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+              "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+              "Continue native Guide action/menu localization and captured reorder ownership"
+            ]
+          },
+          "parent_checkpoint": "c34ea0b8dde2f32f147e6da952b8c720fae87ee7"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Book-root-private-authority-and-legacy-excerpt-UI-vectors",
+        "batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
         "executed": {
-          "portable_XCTest": 960,
-          "native_CPU_XCTest": 985,
+          "portable_XCTest": 970,
+          "native_CPU_XCTest": 995,
           "SwiftTesting_each": 21,
-          "focused_XCTest": 9,
-          "new_fixture_XCTest": 4,
+          "focused_XCTest": 7,
+          "new_pagination_XCTest": 1,
           "workflow_checks": 69,
-          "syntax_files": 311,
+          "changed_Swift_syntax_files": 313,
           "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 6,
+          "Apple_UI_vectors_written": 4,
           "Apple_UI_vectors_executed": 0,
+          "English_fallbacks_added": 1,
           "official_MADLAD_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_book_private_portable.log": {
-              "bytes": 305163,
-              "sha256": "e79810afa51796c9bbe86a1203bc2917dfdc8c5fbeac85bcf0bc62fb80846d89"
+            "/tmp/fruitfolio_guide_paper_portable.log": {
+              "bytes": 308944,
+              "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
             },
-            "/tmp/fruitfolio_book_private_native.log": {
-              "bytes": 1280309,
-              "sha256": "065368ca7082c07ef41092c2cf89dbe46c702236ef95c5a9e72b11cdca8421a2"
+            "/tmp/fruitfolio_guide_paper_native.log": {
+              "bytes": 1284102,
+              "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
             },
-            "/tmp/fruitfolio_book_private_focused.log": {
-              "bytes": 30145,
-              "sha256": "7fe8d04a427de5f901545873668910e107cb09b2bfe6161d8c18d2050c51c7ab"
+            "/tmp/fruitfolio_guide_paper_focused.log": {
+              "bytes": 29872,
+              "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
             },
-            "/tmp/fruitfolio_book_private_workflow.log": {
+            "/tmp/fruitfolio_guide_paper_workflow.log": {
               "bytes": 169,
-              "sha256": "a7fb231f2e757678e36d0166a3744d6dc8f7d24688cc2258c11f6cc02f4cc41f"
+              "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
             },
-            "/tmp/fruitfolio_book_private_syntax_final2.log": {
+            "/tmp/fruitfolio_guide_paper_syntax.log": {
               "bytes": 106,
-              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
             },
-            "/tmp/fruitfolio_book_private_ownership.log": {
+            "/tmp/fruitfolio_guide_paper_ownership.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Six real Book legacy excerpt confirmation/cancel/remount/missing-selection UI vectors on Apple",
-          "Apple SDK typecheck/build, VoiceOver/RTL/XXXL/reduced-motion and physical-device acceptance",
-          "Official MADLAD model/tokenizer and clinical language review"
+          "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
+          "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
+          "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
         ],
         "remaining": [
-          "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
-          "Run process-restart and device acceptance; Foundation remount is not app restart",
-          "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
+          "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+          "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+          "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+          "Continue native Guide action/menu localization and captured reorder ownership"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute written Apple vectors with actual framework and confirm popup focus/dismissal ordering",
-        "Run process-restart and device acceptance; Foundation remount is not app restart",
-        "Complete remaining original and founder requirements without promoting source-only or synthetic inference evidence"
+        "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
+        "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
+        "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
+        "Continue native Guide action/menu localization and captured reorder ownership"
       ],
-      "commit_reference": "batch:Book-root-private-authority-and-legacy-excerpt-UI-vectors (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T05:20:52.958451+00:00"
+      "commit_reference": "batch:Guide-paper-read-mode-native-copy-and-closing-guards (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T06:08:22.831505+00:00"
     },
     {
       "id": "SPEC-BINDING-ART-MATRIX",

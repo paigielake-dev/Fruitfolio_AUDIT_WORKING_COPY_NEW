@@ -27,8 +27,13 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         let saved = try XCTUnwrap(store.encyclopedia(id: guide.id))
         XCTAssertEqual(saved.savedPageCount, 8)
         XCTAssertEqual(saved.chapters[0].pages.count, 8)
+        XCTAssertTrue(saved.chapters[0].pages[0].hasLegacyExcerptRemainder)
+        XCTAssertEqual(saved.chapters[0].pages[0].displayBody, "QA selected words")
+        XCTAssertEqual(saved.chapters[0].pages[0].notes, "QA original note 12.50 pg/mL")
         XCTAssertEqual(store.prompt11TableOfContents(for: guide.id).map(\.firstPageNumber), [1, 9])
-        XCTAssertTrue(saved.chapters[0].pages.allSatisfy { $0.question.hasPrefix("QA searchable page") && $0.sourceIDs.isEmpty })
+        XCTAssertTrue(saved.chapters[0].pages.allSatisfy { $0.question.hasPrefix("QA searchable page") })
+        XCTAssertEqual(saved.chapters[0].pages[1].sourceIDs, ["QA-fixture-source", "QA-fixture-source"])
+        XCTAssertTrue(saved.chapters[0].pages.dropFirst(2).allSatisfy { $0.sourceIDs.isEmpty })
         let bytes = defaults.data(forKey: "prompt11.tests"), snapshot = store.encyclopedias
         XCTAssertThrowsError(try Prompt11GuideSearchRegressionFixture.seed(in: store, guideID: guide.id)) {
             XCTAssertEqual($0 as? Prompt10LibraryError, .contentChanged)
@@ -388,5 +393,21 @@ final class Prompt1BGuideContentsCopyTests: XCTestCase {
                 }
             }
         }
+    }
+}
+
+final class Prompt1BGuidePaginationCopyTests: XCTestCase {
+    func testNativeReadModePaginationProtectsCurrentAndTotalWithoutGroupingOrRewrite() throws {
+        for language in [FruitfolioLanguage.english, .french, .arabic, .hindi] {
+            let copy = Prompt11GuidePaginationCopy(current: 1, total: 8, language: language)
+            if language == .english { XCTAssertEqual(copy.displaySource, "1 / 8") }
+            if language == .arabic { XCTAssertEqual(copy.displaySource, "١ / ٨") }
+            let envelope = try FruitfolioScientificTranslationEnvelope(copy.accessibilitySource, protectedLiterals: copy.protectedLiterals)
+            XCTAssertEqual(try envelope.restore(envelope.prepared), copy.accessibilitySource)
+            for number in copy.protectedLiterals {
+                XCTAssertThrowsError(try envelope.validateCatalogCandidate(copy.accessibilitySource.replacingOccurrences(of: number, with: "999")))
+            }
+        }
+        XCTAssertEqual(Prompt11GuidePaginationCopy(current: 1234, total: 5678, language: .english).displaySource, "1234 / 5678")
     }
 }

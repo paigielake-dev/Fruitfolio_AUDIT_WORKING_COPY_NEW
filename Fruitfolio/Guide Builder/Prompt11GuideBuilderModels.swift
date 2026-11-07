@@ -115,3 +115,18 @@ nonisolated struct Prompt11GuideContentsCopy: Equatable, Sendable {
         protectedLiterals = [ordinalLiteral, literalName, pageLiteral].filter { !$0.isEmpty }
     }
 }
+
+nonisolated struct Prompt11GuidePaginationCopy: Equatable, Sendable {
+    let currentLiteral: String
+    let totalLiteral: String
+    let displaySource: String
+    let accessibilitySource: String
+    var protectedLiterals: [String] { [currentLiteral, totalLiteral] }
+    init(current: Int, total: Int, language: FruitfolioLanguage) {
+        let style: IntegerFormatStyle<Int> = .number.grouping(.never).locale(Locale(identifier: language.localeIdentifier))
+        currentLiteral = current.formatted(style)
+        totalLiteral = total.formatted(style)
+        displaySource = "\(currentLiteral) / \(totalLiteral)"
+        accessibilitySource = "page \(currentLiteral) of \(totalLiteral)"
+    }
+}

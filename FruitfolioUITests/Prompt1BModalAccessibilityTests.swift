@@ -547,6 +547,50 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGuidePaperAndReadModeKeepLegacyNotesNativePagesAndDuplicateSourceMarkers() {
+        for language in ["fr", "ar"] {
+            for reduced in [false, true] {
+                let app = launchGuideSave("search", reduced: reduced, rtl: language == "ar", language: language)
+                let workspace = app.scrollViews.firstMatch
+                let note = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH %@", "guide.paper.note.")).firstMatch
+                for _ in 0..<48 { if note.isHittable { break }; workspace.swipeUp() }
+                XCTAssertTrue(note.exists)
+                XCTAssertEqual(note.label, "QA original note 12.50 pg/mL")
+                let read = app.buttons["guide.read.open"]
+                for _ in 0..<48 { if read.isHittable { break }; workspace.swipeUp() }
+                XCTAssertTrue(read.isHittable); read.tap()
+                let close = app.buttons["guide.read.close"]
+                XCTAssertTrue(close.waitForExistence(timeout: 5))
+                XCTAssertEqual(app.staticTexts["guide.read.title"].label, "QA original guide")
+                let number = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH %@", "guide.paper.pageNumber.")).firstMatch
+                XCTAssertEqual(number.label, language == "ar" ? "١" : "1")
+                XCTAssertEqual(note.label, "QA original note 12.50 pg/mL")
+                let warning = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH %@", "guide.paper.legacyExcerptNotice.")).firstMatch
+                XCTAssertTrue(warning.exists)
+                XCTAssertFalse(app.staticTexts["QA selected words plus retained remainder"].exists)
+                let previous = app.buttons["guide.read.previous"], next = app.buttons["guide.read.next"]
+                XCTAssertFalse(previous.isEnabled)
+                XCTAssertTrue(next.isEnabled)
+                XCTAssertGreaterThanOrEqual(next.frame.height, 44)
+                next.tap()
+                let advanced = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", language == "ar" ? "٢" : "2"), object: number)
+                XCTAssertEqual(XCTWaiter.wait(for: [advanced], timeout: 5), .completed)
+                let warningGone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: warning)
+                XCTAssertEqual(XCTWaiter.wait(for: [warningGone], timeout: 5), .completed)
+                XCTAssertEqual(app.staticTexts.matching(NSPredicate(format: "label == %@", "QA-fixture-source")).count, 2)
+                previous.tap()
+                XCTAssertTrue(warning.waitForExistence(timeout: 5))
+                XCTAssertEqual(note.label, "QA original note 12.50 pg/mL")
+                captureGame(app, name: "guide-paper-reader-\(language)-reduced-\(reduced)")
+                close.tap()
+                XCTAssertTrue(read.waitForExistence(timeout: 5))
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 0")
+                app.terminate()
+            }
+        }
+    }
+
     func testGuideContentsNativeOrdinalsAndSearchKeepAuthoredNamesAndQuery() {
         for language in ["fr", "ar"] {
             for reduced in [false, true] {

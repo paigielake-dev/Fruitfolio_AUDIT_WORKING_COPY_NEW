@@ -6,6 +6,7 @@ struct Prompt11ReadModeView: View {
     let guideID: UUID
     let onClose: () -> Void
 
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
@@ -41,11 +42,8 @@ struct Prompt11ReadModeView: View {
                 if pages.isEmpty {
                     Spacer()
 
-                    Text("this guide is ready for its first page ♡")
-                        .font(.custom("Chalkboard SE", size: 14))
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.secondaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "this guide is ready for its first page ♡", protectedLiterals: ["♡"],
+                        font: .custom("Chalkboard SE", size: 14), color: DesignTokens.ColorToken.secondaryBurgundy)
                         .multilineTextAlignment(.center)
 
                     Spacer()
@@ -77,6 +75,7 @@ struct Prompt11ReadModeView: View {
             .opacity(contentOpacity)
             .scaleEffect(contentScale)
             .allowsHitTesting(!isClosing)
+            .accessibilityHidden(isClosing)
 
             if isClosing {
                 localBookClosingOverlay
@@ -126,17 +125,23 @@ struct Prompt11ReadModeView: View {
                 width: 34,
                 action: requestClose
             )
+            .accessibilityIdentifier("guide.read.close")
 
             Spacer()
 
-            Text(guide?.name ?? "my guide")
-                .font(.custom("Chalkboard SE", size: 20))
-                .fontWeight(.bold)
-                .foregroundStyle(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
+            Group {
+                if let guide {
+                    Text(verbatim: guide.name)
+                        .font(.custom("Chalkboard SE", size: 20).bold())
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                } else {
+                    FruitfolioFixedText(source: "my guide", font: .custom("Chalkboard SE", size: 20).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .multilineTextAlignment(.center)
+            .accessibilityIdentifier("guide.read.title")
 
             Spacer()
 
@@ -264,9 +269,10 @@ struct Prompt11ReadModeView: View {
     }
 
     private var pageControls: some View {
-        HStack(spacing: 18) {
-            Button("previous page") {
-                guard pageIndex > 0 else {
+        let copy = Prompt11GuidePaginationCopy(current: pageIndex + 1, total: pages.count, language: settings.language)
+        return HStack(spacing: 18) {
+            Button {
+                guard !isClosing, pageIndex > 0 else {
                     return
                 }
 
@@ -275,20 +281,27 @@ struct Prompt11ReadModeView: View {
                 withAnimation(pageAnimation) {
                     pageIndex -= 1
                 }
+            } label: {
+                FruitfolioFixedText(source: "previous page", font: .custom("Chalkboard SE", size: 11.5).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
+                    .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
             }
-            .disabled(pageIndex == 0)
+            .accessibilityIdentifier("guide.read.previous")
+            .disabled(isClosing || pageIndex == 0)
             .frame(
                 minHeight: DesignTokens.Layout.minimumHitTarget
             )
 
-            Text("\(pageIndex + 1) / \(pages.count)")
+            Text(verbatim: copy.displaySource)
+                .modifier(FruitfolioFixedAccessibilityLabel(source: copy.accessibilitySource, protectedLiterals: copy.protectedLiterals))
+                .accessibilityIdentifier("guide.read.pagination")
                 .font(.custom("Chalkboard SE", size: 10.5))
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
 
-            Button("next page") {
-                guard pageIndex < pages.count - 1 else {
+            Button {
+                guard !isClosing, pageIndex < pages.count - 1 else {
                     return
                 }
 
@@ -297,8 +310,13 @@ struct Prompt11ReadModeView: View {
                 withAnimation(pageAnimation) {
                     pageIndex += 1
                 }
+            } label: {
+                FruitfolioFixedText(source: "next page", font: .custom("Chalkboard SE", size: 11.5).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
+                    .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
             }
-            .disabled(pageIndex >= pages.count - 1)
+            .accessibilityIdentifier("guide.read.next")
+            .disabled(isClosing || pageIndex >= pages.count - 1)
             .frame(
                 minHeight: DesignTokens.Layout.minimumHitTarget
             )
@@ -322,10 +340,8 @@ struct Prompt11ReadModeView: View {
         ) != nil
     }
 
-    private var pageAnimation: Animation {
-        motionPreferences.reduceMotionActive
-            ? .easeOut(duration: 0.14)
-            : .easeOut(duration: 0.24)
+    private var pageAnimation: Animation? {
+        motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.24)
     }
 }
 

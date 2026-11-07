@@ -171,8 +171,21 @@ enum Prompt11GuideSearchRegressionFixture {
             throw Prompt10LibraryError.chapterNotFound
         }
         let pages = (1...8).map { index in
-            Prompt10SavedPage(chapterID: chapter.id, question: "QA searchable page \(index)",
+            var page = Prompt10SavedPage(chapterID: chapter.id, question: "QA searchable page \(index)",
                 answer: "Nonclinical private search fixture \(index).", saveType: .fullAnswer)
+            if index == 1 {
+                // Deliberately reconstruct legacy storage, not a new-save flow:
+                // new pending excerpt saves already strip unselected remainder.
+                page.saveType = .excerpt
+                page.answer = "QA selected words plus retained remainder"
+                page.excerptText = "QA selected words"
+                page.excerptLanguage = "en"
+                page.notes = "QA original note 12.50 pg/mL"
+            } else if index == 2 {
+                // Legacy repeated IDs are synthetic markers, not approved research.
+                page.sourceIDs = ["QA-fixture-source", "QA-fixture-source"]
+            }
+            return page
         }
         _ = try store.savePages(pages, to: guideID, chapterID: chapter.id)
     }
