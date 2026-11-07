@@ -3908,3 +3908,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_actual_domain_XCTest": 17, "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log", "workflow": 71, "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log", "syntax_files": 320, "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"}.
 - Next action: Reconcile the exact reviewed-method blocker for remaining Adjusted Rhythm requirements without treating absent external methodology as implemented; proceed immediately to independent unfinished requirements after recording source-specific dependencies.
 - Commit: containing commit for batch Unified-symptom-intrinsic-rows-and-calculated-provenance.
+
+## Adjusted-rhythm-specific-dependency-and-independent-guards
+
+- Parent checkpoint: 74b5b2c41118b218309500ac4b2a0e21305fa5d5.
+- Source-order requirements: [265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280].
+- Separate founder additions: ['SPEC-4.9.8'].
+- Source files: FruitfolioTests/Prompt1BHormoneAdjustmentTests.swift, Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift, Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift, development_workflow/ADJUSTED_RHYTHM_DEPENDENCY_RECONCILIATION.json.
+- Add actual production measurement-store + recovered seven-cycle prediction/rhythm-loader integration proving confidence, original curves, cycle archive and exact measurement bytes remain unchanged across opt-in/restore. Individually close six independent storage/separation/message/restore/immutability/confidence implementations with Apple acceptance pending. Classify ten real adjusted-output requirements and SPEC-4.9.8 as blocked by the absent reviewed transformation, explicitly listing missing implementation rather than treating the safe gate/disclosure constants as completed adjustment.
+- Tests added/updated: Prompt1BHormoneAdjustmentTests.testRealMeasurementWritesCannotAlterExistingPredictionConfidenceCurvesOrCycleArchive.
+- Verification: {"current_focused_XCTest": 3, "log": "/tmp/fruitfolio_rhythm_isolation_focused.log", "syntax_files": 320, "syntax_log": "/tmp/fruitfolio_rhythm_isolation_syntax.log", "prior_storage_XCTest": 39, "prior_storage_log": "/tmp/fruitfolio_hormone_history_order_final.log"}.
+- Next action: Continue required shared semantic coverage for actual app-generated/character copy across Part1 and other parts, using exact full-source contextual roles rather than global keyword emphasis; do not retry the unavailable clinical-method dependency.
+- Commit: containing commit for batch Adjusted-rhythm-specific-dependency-and-independent-guards.

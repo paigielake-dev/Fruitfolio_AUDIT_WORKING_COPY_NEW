@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T12:02:04.917307+00:00",
+  "updated_at": "2026-11-07T12:08:01.072330+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -12049,6 +12049,64 @@
         ]
       },
       "timestamp": "2026-11-07T12:02:04.917307+00:00"
+    },
+    {
+      "batch": "Adjusted-rhythm-specific-dependency-and-independent-guards",
+      "requirements": [
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280
+      ],
+      "supplemental_requirements": [
+        "SPEC-4.9.8"
+      ],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt1BHormoneAdjustmentTests",
+        "320 Swift syntax parses",
+        "Reuse prior39 actual storage tests; no redundant full-suite execution",
+        "git diff --check"
+      ],
+      "results": {
+        "current_focused_XCTest": 3,
+        "log": "/tmp/fruitfolio_rhythm_isolation_focused.log",
+        "syntax_files": 320,
+        "syntax_log": "/tmp/fruitfolio_rhythm_isolation_syntax.log",
+        "prior_storage_XCTest": 39,
+        "prior_storage_log": "/tmp/fruitfolio_hormone_history_order_final.log"
+      },
+      "verification": {
+        "executed": {
+          "current_focused_XCTest": 3,
+          "log": "/tmp/fruitfolio_rhythm_isolation_focused.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_rhythm_isolation_syntax.log",
+          "prior_storage_XCTest": 39,
+          "prior_storage_log": "/tmp/fruitfolio_hormone_history_order_final.log"
+        },
+        "not_run": [
+          "Apple actual UI/restoration/VoiceOver/RTL/Dynamic Type/relaunch and real-device acceptance.",
+          "Real reviewed adjustment methodology/clinical cases and official MADLAD translation."
+        ],
+        "remaining": [
+          "No bundled versioned, clinically reviewed research-backed transformation defines eligible measurements/units/methods/timing/context, physiological invariants and safe qualitative curve changes. Current policy always returns the original presentation; actual adjusted-output implementation is not present.",
+          "Ten actual adjusted-output requirements remain blocked, not completed; source-specific missing code and unblock evidence are explicit in the reconciliation.",
+          "Independent implemented items retain Apple acceptance pending. Whole478/36/unnumbered reconciliation remains unfinished."
+        ]
+      },
+      "timestamp": "2026-11-07T12:08:01.072330+00:00"
     }
   ]
 }

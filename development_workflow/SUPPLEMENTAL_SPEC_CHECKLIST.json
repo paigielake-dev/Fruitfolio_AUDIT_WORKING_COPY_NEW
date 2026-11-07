@@ -367,21 +367,91 @@
       "source_end_line": 152,
       "description": "1 4.9.8 \u2014 Hormone Rhythm separation and educational personalization\n\nPreserve the existing Hormone Rhythm educational visualization, including its artwork, design, and educational explanations.\nThe app must distinguish between:\n    \u2022 Hormone Rhythm: Typical, research-grounded educational patterns of hormonal changes throughout the menstrual cycle.\n    \u2022 My Measurements: Actual hormone values entered by the user, including their units, dates, and relevant testing information.\n    \u2022 Adjusted Rhythm: An optional educational visualization informed by the user\u2019s recorded hormone measurements.\nEducational personalization requirements:\n   1. Use Fruitfolio\u2019s existing Research Library and Approved Source Library exclusively to support all educational adjustments.\n   2. Allow users to opt into adjusting Hormone Rhythm based on their recorded hormone measurements.\n   3. Preserve scientifically established relationships between hormones and menstrual-cycle physiology.\n   4. Only adjust educational curves when sufficient research and measurement context support a scientifically defensible illustration.\n   5. Use recorded measurements as reference points without assuming unmeasured hormone concentrations.\n   6. Never fabricate, interpolate, or predict the user\u2019s actual hormone levels.\n   7. Never present adjusted educational curves as the user\u2019s measured hormonal profile.\n   8. Clearly distinguish educational curves from actual measurements through labels, legends, and visual styling.\n   9. Preserve the original Hormone Rhythm and allow users to restore it at any time.\n  10. Never modify or overwrite measurements stored in My Measurements.\n  11. Do not automatically adjust cycle-prediction confidence based on entered hormone measurements.\n  12. Do not use adjusted educational curves to diagnose conditions, confirm ovulation, determine fertility, or recommend treatment.\n  13. Do not automatically share hormone measurements with Ask AI.\n  14. Ensure all educational explanations and adjustments follow Fruitfolio\u2019s existing research-grounding and citation requirements.\n  15. If insufficient research or measurement context exists, retain the original educational visualization and explain why personalization is unavailable.\nRequired disclosure when educational adjustments are applied:\nyour hormone rhythm <3\nthis educational illustration has been adjusted using your recorded hormone information. the curves show possible hormonal patterns, not your measured hormone levels. actual hormone concentrations may differ.\nThe disclosure must remain accessible whenever an adjusted visualization is displayed.\nInsufficient-information message:\na little note! \u2606\nyour measurement has been saved, but there isn\u2019t enough information to adjust this illustration reliably. you can still explore the typical hormone rhythm and view your actual result in my measurements.\nVisualization behavior:\n    \u2022 Default Hormone Rhythm: Display the original research-grounded educational visualization.\n    \u2022 Adjusted Rhythm: Display research-supported educational adjustments informed by recorded measurements, with clear labeling and disclosure.\n    \u2022 My Measurements: Display only actual user-entered measurements, preserving their original values, units, and dates.\nMeasurement-history graphs must contain only recorded measurements. Do not interpolate missing values or display predicted laboratory results.\nAll three modes must follow Fruitfolio\u2019s existing visual design, accessibility, privacy, localization, and medical-safety requirements.\nAcceptance criteria:\nThe feature passes only when the original Hormone Rhythm remains intact, educational personalization is optional and clearly disclosed, actual measurements remain separate and unchanged, unsupported adjustments are prevented, and cycle-prediction confidence is unaffected by hormone measurements.",
       "description_sha256": "4060a69de24b4cedc25e6460ca00eb7375735c6585e9f0233d85309b9dad1883",
-      "implementation_status": "IN_PROGRESS",
+      "implementation_status": "BLOCKED",
       "verification_status": "SOURCE_REVIEWED",
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
-        "Fruitfolio/Hormone Information/HormoneInformationView.swift"
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneAdjustmentTests.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "development_workflow/ADJUSTED_RHYTHM_DEPENDENCY_RECONCILIATION.json"
       ],
       "related_tests": [
-        "Prompt1BHormoneValidationTests"
+        "Prompt1BHormoneValidationTests",
+        "Prompt1BHormoneAdjustmentTests.testRealMeasurementWritesCannotAlterExistingPredictionConfidenceCurvesOrCycleArchive"
       ],
       "blockers": [
-        "No approved scientifically defensible adjusted-curve method is installed; original educational rhythm and actual measurements remain separate, with insufficient-information disclosure."
+        "No approved scientifically defensible adjusted-curve method is installed; original educational rhythm and actual measurements remain separate, with insufficient-information disclosure.",
+        "No bundled versioned, clinically reviewed research-backed transformation defines eligible measurements/units/methods/timing/context, physiological invariants and safe qualitative curve changes. Current policy always returns the original presentation; actual adjusted-output implementation is not present. Full founder adjustment requirement remains blocked; independent record/confidence/restore safeguards are separately evidenced."
       ],
       "evidence": [
-        "Local entry/history/export/delete and context navigation implemented in earlier batches; field-specific UI, language, clinical and privacy acceptance remain unverified."
+        "Local entry/history/export/delete and context navigation implemented in earlier batches; field-specific UI, language, clinical and privacy acceptance remain unverified.",
+        "Add actual production measurement-store + recovered seven-cycle prediction/rhythm-loader integration proving confidence, original curves, cycle archive and exact measurement bytes remain unchanged across opt-in/restore. Individually close six independent storage/separation/message/restore/immutability/confidence implementations with Apple acceptance pending. Classify ten real adjusted-output requirements and SPEC-4.9.8 as blocked by the absent reviewed transformation, explicitly listing missing implementation rather than treating the safe gate/disclosure constants as completed adjustment."
+      ],
+      "latest_batch_verification": {
+        "batch": "Adjusted-rhythm-specific-dependency-and-independent-guards",
+        "executed": {
+          "current_focused_XCTest": 3,
+          "log": "/tmp/fruitfolio_rhythm_isolation_focused.log",
+          "syntax_files": 320,
+          "syntax_log": "/tmp/fruitfolio_rhythm_isolation_syntax.log",
+          "prior_storage_XCTest": 39,
+          "prior_storage_log": "/tmp/fruitfolio_hormone_history_order_final.log"
+        },
+        "not_run": [
+          "Apple actual UI/restoration/VoiceOver/RTL/Dynamic Type/relaunch and real-device acceptance.",
+          "Real reviewed adjustment methodology/clinical cases and official MADLAD translation."
+        ],
+        "remaining": [
+          "No bundled versioned, clinically reviewed research-backed transformation defines eligible measurements/units/methods/timing/context, physiological invariants and safe qualitative curve changes. Current policy always returns the original presentation; actual adjusted-output implementation is not present.",
+          "Ten actual adjusted-output requirements remain blocked, not completed; source-specific missing code and unblock evidence are explicit in the reconciliation.",
+          "Independent implemented items retain Apple acceptance pending. Whole478/36/unnumbered reconciliation remains unfinished."
+        ],
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
+      },
+      "remaining_verification_requirements": [
+        "No bundled versioned, clinically reviewed research-backed transformation defines eligible measurements/units/methods/timing/context, physiological invariants and safe qualitative curve changes. Current policy always returns the original presentation; actual adjusted-output implementation is not present.",
+        "Ten actual adjusted-output requirements remain blocked, not completed; source-specific missing code and unblock evidence are explicit in the reconciliation.",
+        "Independent implemented items retain Apple acceptance pending. Whole478/36/unnumbered reconciliation remains unfinished."
+      ],
+      "commit_reference": "batch:Adjusted-rhythm-specific-dependency-and-independent-guards (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T12:08:01.072330+00:00",
+      "batch_evidence": [
+        {
+          "batch": "Adjusted-rhythm-specific-dependency-and-independent-guards",
+          "implementation_evidence": "Add actual production measurement-store + recovered seven-cycle prediction/rhythm-loader integration proving confidence, original curves, cycle archive and exact measurement bytes remain unchanged across opt-in/restore. Individually close six independent storage/separation/message/restore/immutability/confidence implementations with Apple acceptance pending. Classify ten real adjusted-output requirements and SPEC-4.9.8 as blocked by the absent reviewed transformation, explicitly listing missing implementation rather than treating the safe gate/disclosure constants as completed adjustment.",
+          "files": [
+            "FruitfolioTests/Prompt1BHormoneAdjustmentTests.swift",
+            "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+            "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+            "development_workflow/ADJUSTED_RHYTHM_DEPENDENCY_RECONCILIATION.json"
+          ],
+          "tests": [
+            "Prompt1BHormoneAdjustmentTests.testRealMeasurementWritesCannotAlterExistingPredictionConfidenceCurvesOrCycleArchive"
+          ],
+          "verification": {
+            "executed": {
+              "current_focused_XCTest": 3,
+              "log": "/tmp/fruitfolio_rhythm_isolation_focused.log",
+              "syntax_files": 320,
+              "syntax_log": "/tmp/fruitfolio_rhythm_isolation_syntax.log",
+              "prior_storage_XCTest": 39,
+              "prior_storage_log": "/tmp/fruitfolio_hormone_history_order_final.log"
+            },
+            "not_run": [
+              "Apple actual UI/restoration/VoiceOver/RTL/Dynamic Type/relaunch and real-device acceptance.",
+              "Real reviewed adjustment methodology/clinical cases and official MADLAD translation."
+            ],
+            "remaining": [
+              "No bundled versioned, clinically reviewed research-backed transformation defines eligible measurements/units/methods/timing/context, physiological invariants and safe qualitative curve changes. Current policy always returns the original presentation; actual adjusted-output implementation is not present.",
+              "Ten actual adjusted-output requirements remain blocked, not completed; source-specific missing code and unblock evidence are explicit in the reconciliation.",
+              "Independent implemented items retain Apple acceptance pending. Whole478/36/unnumbered reconciliation remains unfinished."
+            ]
+          },
+          "parent_checkpoint": "74b5b2c41118b218309500ac4b2a0e21305fa5d5"
+        }
       ]
     },
     {
