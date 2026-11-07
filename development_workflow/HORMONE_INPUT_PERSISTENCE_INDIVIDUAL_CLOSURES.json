@@ -1,0 +1,275 @@
+{
+  "scope": "Individual implementation closures after live editor-to-production-domain review and actual executed tests; no whole-feature or clinical acceptance inferred.",
+  "entries": [
+    {
+      "conditions": [
+        "The controlled hormone enum includes .other; choosing it reveals a separately named field without changing the seven known hormone identities.",
+        "Validation rejects an empty/whitespace otherHormoneName; custom names are user-authored data and not interpreted as clinical hormone-library content."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testOtherHormoneRequiresNameAndCycleDayMustBePositive"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift"
+      ],
+      "pending": [
+        "Apple Other Hormone picker/required-name/edit/reopen workflow and accessible validation."
+      ],
+      "requirement": 241,
+      "original_description": "Include a controlled Other Hormone option.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "The actual persistence save path validates a complete numerical result and nonblank unit; rejects malformed, negative/nonfinite/partial numeric values and unsupported explicit number formats.",
+        "Controlled date input is a DatePicker; domain validation requires a finite Date, a named Other Hormone when selected and positive supplied cycle day. Optional fields are not made required.",
+        "Legacy unknown result formats may survive notes-only edits, while changed unknown values require an explicit recognized format."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testMalformedAndMissingRequiredFieldsAreRejected",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testLocaleSpecificDecimalAndDigitValidationNeverRewritesTheReportedValue",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testUnrecognizedExplicitReportLocaleCannotBeGuessedForNewMeasurement",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift::testInvalidDateCaptureDoesNotPartiallyMutateExistingRecord"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift"
+      ],
+      "pending": [
+        "Apple invalid/valid form submission, required-field focus and native date/numeric input acceptance."
+      ],
+      "requirement": 244,
+      "original_description": "Validate numerical values and required fields.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "Production decimal validation accepts point, comma, Arabic decimal digits/separator, leading decimal and scientific numeric notation according to explicitly recognized notation.",
+        "Validation and save keep the original entered text; the live numeric input is bound to that string and uses decimalPad rather than integer-only input."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testValidationPreservesDecimalAndExactUnit",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testLocaleSpecificDecimalAndDigitValidationNeverRewritesTheReportedValue",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+      ],
+      "pending": [
+        "Apple decimal keyboard/edit/save acceptance across supported input scripts."
+      ],
+      "requirement": 245,
+      "original_description": "Permit decimal values.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "Unit validation checks only that the raw field contains visible text; the raw unit String is retained rather than normalized or converted.",
+        "Actual store/persistence round trips, edits, reload and JSON export preserve exact reported unit including the tested \u00b5IU/mL Unicode value.",
+        "Live creation and editing bind directly to draft.unit; cards render the saved unit verbatim."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testValidationPreservesDecimalAndExactUnit",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testLocaleSpecificDecimalAndDigitValidationNeverRewritesTheReportedValue",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+      ],
+      "pending": [
+        "Apple enter/save/reopen/export exact-unit acceptance."
+      ],
+      "requirement": 246,
+      "original_description": "Preserve the exact entered units.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "No concentration-unit conversion is performed on save, render, history ordering or export. Blank required units/results are rejected instead of inferred.",
+        "Missing optional sample/reference/notes/cycle-day fields retain empty/nil values. Unknown legacy report format and original entry-zone precision are preserved, not silently inferred from a later device language/time zone.",
+        "The UI exposes reported notation and test-date confirmation separately; changes to an unknown legacy result require explicit recognized format."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testMalformedAndMissingRequiredFieldsAreRejected",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift::testLegacyMissingCivilDayAndEntryZoneRemainUnknownWhenEditingOtherFields",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testUnknownLegacyReportFormatAllowsMetadataEditWithoutReinterpretingOriginalResult"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+      ],
+      "pending": [
+        "Apple legacy/new record edit acceptance and exact report-field display; this does not provide clinical interpretation of a laboratory result."
+      ],
+      "requirement": 247,
+      "original_description": "Do not silently convert units or infer missing information.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "The actual shared measurement store delegates saves to local UserDefaults-backed measurement persistence; no cloud/network/account reservation is in that write path.",
+        "The real store creation/edit/deletion test writes through the production service, reconstructs it from the same local defaults, and verifies exact retained fields; faulty readback cannot claim a successful save.",
+        "The live editor calls that same store.save entry point and handles errors without discarding the draft."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testCreateEditDeletePreservesExactUnitsAndPersists",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testActualMeasurementStoreRefreshRetainsLastAcknowledgedRecordAfterRejectedSave",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testDroppedFirstMeasurementWriteCannotAdvanceCacheOrRevision"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+      ],
+      "pending": [
+        "Apple application/device local storage and file-protection acceptance; Linux tests establish actual domain persistence, not a device privacy audit."
+      ],
+      "requirement": 249,
+      "original_description": "Store measurements locally.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "Initialization decodes the existing acknowledged local measurement archive instead of resetting it.",
+        "Actual production-store and persistence reinitialization tests retain result/unit/notes/date, later edits, and deletion across reconstructed service instances.",
+        "Corrupt, foreign or future-field storage is preserved and protected rather than silently replaced on launch or reload."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testCreateEditDeletePreservesExactUnitsAndPersists",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testWrongTypeAndCorruptDataArePreservedAndBlockWritesUntilExplicitErase",
+        "FruitfolioTests/Prompt1BHormoneSnapshotProtectionTests.swift::testUnknownFieldsKeepReadableValuesAndRawOriginalUntilExplicitErase"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneSnapshotProtectionTests.swift"
+      ],
+      "pending": [
+        "Actual Apple app terminate/relaunch persistence. Store reconstruction passed and is explicitly not reported as a physical app relaunch."
+      ],
+      "requirement": 250,
+      "original_description": "Preserve measurements across app restarts.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    },
+    {
+      "conditions": [
+        "New measurement identities append separately rather than replacing another value merely because the hormone matches.",
+        "Executed production history regression saves three LH measurements across two reported days and retains all identities in both chronological directions; same-day ordering does not invent a collection time.",
+        "Actual per-record edit intent mutates only the selected identity; independent saved measurements remain unchanged."
+      ],
+      "tests": [
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testRecordSpecificEditingAllowsOtherMeasurementsToChangeAndPreservesReportedMetadata",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift::testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence"
+      ],
+      "files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift"
+      ],
+      "pending": [
+        "Apple repeated-measurement create/filter/edit/relaunch visible workflow."
+      ],
+      "requirement": 253,
+      "original_description": "Support repeated measurements over time.",
+      "status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "executed_evidence": {
+        "focused_domain_XCTest": 39,
+        "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+        "full_integrated_XCTest": 1009,
+        "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+        "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+      }
+    }
+  ],
+  "not_run": "Apple build/UI/VoiceOver/Dynamic Type and device acceptance.",
+  "preservation": "Original checklist text/order and all prior source/test/batch evidence retained."
+}

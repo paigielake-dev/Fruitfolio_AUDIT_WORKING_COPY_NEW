@@ -19004,10 +19004,12 @@
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19015,44 +19017,63 @@
         "Prompt1BHormonePersistenceTests",
         "Prompt1BHormoneValidationTests",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testOtherHormoneRequiresNameAndCycleDayMustBePositive"
       ],
-      "commit_reference": "batch:Protected-context-compact-hormone-labels (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
-        "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established."
+        "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 241. Apple acceptance pending.",
+        "The controlled hormone enum includes .other; choosing it reveals a separately named field without changing the seven known hormone identities. Validation rejects an empty/whitespace otherHormoneName; custom names are user-authored data and not interpreted as clinical hormone-library content. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 241."
       ],
-      "last_updated": "2026-11-06T19:17:26.509024+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Protected-context-compact-hormone-labels",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "portable_XCTest": "779 passed",
-          "native_CPU_XCTest": "801 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "compact_label": "11 Foundation cases passed; added changed-context/missing-symbol rejection and protected temporary-catalog acceptance",
-          "workflow": "50 passed",
-          "source_checks": "311 final syntax parsed, Xcode references resolve and SwiftSyntax sound check clean; all 822 old catalog entries preserved"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "Ten measurement Apple UI launches, including controlled Other Hormone and E2/source-fallback assertions",
-          "56 Guide Apple UI launches and actual Combine label publication",
-          "Apple SDK typecheck, native picker rendering/selection, accessibility, exact-value save/reopen and physical-device behavior",
-          "Official MADLAD/tokenizer offline inference and clinical/scientific terminology review"
+          "Apple Other Hormone picker/required-name/edit/reopen workflow and accessible validation."
         ],
         "remaining": [
-          "Execute controlled hormone native-picker and Other Hormone UI cases, checking exact symbol/custom name/result/unit/report-day preservation",
-          "Verify all clinical names and abbreviations across requested languages with official model/tokenizer and qualified native/clinical reviewers",
-          "Complete remaining measurement/library static, date, format and accessibility copy; current source migration does not certify feature-wide localization",
-          "Validate citation/safety/scientific meaning beyond lexical identity and complete remaining Apple/device/model gates"
+          "Apple Other Hormone picker/required-name/edit/reopen workflow and accessible validation."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute controlled hormone native-picker and Other Hormone UI cases, checking exact symbol/custom name/result/unit/report-day preservation",
-        "Verify all clinical names and abbreviations across requested languages with official model/tokenizer and qualified native/clinical reviewers",
-        "Complete remaining measurement/library static, date, format and accessibility copy; current source migration does not certify feature-wide localization",
-        "Validate citation/safety/scientific meaning beyond lexical identity and complete remaining Apple/device/model gates"
+        "Apple Other Hormone picker/required-name/edit/reopen workflow and accessible validation."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Protected-context-compact-hormone-labels",
+          "executed": {
+            "portable_XCTest": "779 passed",
+            "native_CPU_XCTest": "801 passed; synthetic T5 is not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "compact_label": "11 Foundation cases passed; added changed-context/missing-symbol rejection and protected temporary-catalog acceptance",
+            "workflow": "50 passed",
+            "source_checks": "311 final syntax parsed, Xcode references resolve and SwiftSyntax sound check clean; all 822 old catalog entries preserved"
+          },
+          "not_run": [
+            "Ten measurement Apple UI launches, including controlled Other Hormone and E2/source-fallback assertions",
+            "56 Guide Apple UI launches and actual Combine label publication",
+            "Apple SDK typecheck, native picker rendering/selection, accessibility, exact-value save/reopen and physical-device behavior",
+            "Official MADLAD/tokenizer offline inference and clinical/scientific terminology review"
+          ],
+          "remaining": [
+            "Execute controlled hormone native-picker and Other Hormone UI cases, checking exact symbol/custom name/result/unit/report-day preservation",
+            "Verify all clinical names and abbreviations across requested languages with official model/tokenizer and qualified native/clinical reviewers",
+            "Complete remaining measurement/library static, date, format and accessibility copy; current source migration does not certify feature-wide localization",
+            "Validate citation/safety/scientific meaning beyond lexical identity and complete remaining Apple/device/model gates"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -19222,10 +19243,13 @@
         "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19244,9 +19268,13 @@
         "Prompt1BHormoneMeasurementTests5newactualstore/save-intentregressions",
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testMalformedAndMissingRequiredFieldsAreRejected",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testLocaleSpecificDecimalAndDigitValidationNeverRewritesTheReportedValue",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testUnrecognizedExplicitReportLocaleCannotBeGuessedForNewMeasurement",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift::testInvalidDateCaptureDoesNotPartiallyMutateExistingRecord"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -19254,38 +19282,56 @@
         "The actual editor now uses the app-selected locale for newly typed results rather than Locale.current, keeps known report formats through later edits/language changes and offers explicit decimal-separator selection. Persistence no longer stamps unknown legacy result formats with the current locale on notes-only saves: exact original result/unit and missing provenance remain missing. Changing an unknown-format result or unit requires explicit format selection; rejected saves preserve bytes. Existing known format is retained even if a draft omits its metadata, rather than silently switching locale. Required nonnumeric metadata validation is separated so preserving an unparsed historical number does not assert its numeric interpretation. Unicode decimal-script cycle days are accepted through an exact positive integer parser; fractional/signed/separated/overflowing values reject. Three production persistence/parser regressions verify Arabic/Persian/Devanagari/fullwidth digits, malformed inputs, unchanged legacy provenance, rejected-write byte identity, explicit format confirmation, app-language changes and reload preservation. A real editor UI regression was added but NOT_RUN. Raw report values/units are never rewritten or converted.",
         "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 244. Apple acceptance pending.",
+        "The actual persistence save path validates a complete numerical result and nonblank unit; rejects malformed, negative/nonfinite/partial numeric values and unsupported explicit number formats. Controlled date input is a DatePicker; domain validation requires a finite Date, a named Other Hormone when selected and positive supplied cycle day. Optional fields are not made required. Legacy unknown result formats may survive notes-only edits, while changed unknown values require an explicit recognized format. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 244."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple invalid/valid form submission, required-field focus and native date/numeric input acceptance."
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Apple invalid/valid form submission, required-field focus and native date/numeric input acceptance."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Apple invalid/valid form submission, required-field focus and native date/numeric input acceptance."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Recognized-hormone-report-format-without-guessed-separators",
+          "executed": {
+            "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
+            "portable_XCTest": "783 passed",
+            "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "50 passed",
+            "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          },
+          "not_run": [
+            "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+            "56 Guide Apple UI launches",
+            "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
+            "Official MADLAD offline inference and language/clinical accuracy review"
+          ],
+          "remaining": [
+            "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
+            "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
+            "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
+            "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -19309,10 +19355,12 @@
         "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19329,47 +19377,68 @@
         "Prompt1BHormonePersistenceTests",
         "Prompt1BModalAccessibilityTests.testMeasurementEditorSavesArabicDecimalCycleDayAndKeepsReportedResult",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testValidationPreservesDecimalAndExactUnit",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testLocaleSpecificDecimalAndDigitValidationNeverRewritesTheReportedValue",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
         "The actual editor now uses the app-selected locale for newly typed results rather than Locale.current, keeps known report formats through later edits/language changes and offers explicit decimal-separator selection. Persistence no longer stamps unknown legacy result formats with the current locale on notes-only saves: exact original result/unit and missing provenance remain missing. Changing an unknown-format result or unit requires explicit format selection; rejected saves preserve bytes. Existing known format is retained even if a draft omits its metadata, rather than silently switching locale. Required nonnumeric metadata validation is separated so preserving an unparsed historical number does not assert its numeric interpretation. Unicode decimal-script cycle days are accepted through an exact positive integer parser; fractional/signed/separated/overflowing values reject. Three production persistence/parser regressions verify Arabic/Persian/Devanagari/fullwidth digits, malformed inputs, unchanged legacy provenance, rejected-write byte identity, explicit format confirmation, app-language changes and reload preservation. A real editor UI regression was added but NOT_RUN. Raw report values/units are never rewritten or converted.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 245. Apple acceptance pending.",
+        "Production decimal validation accepts point, comma, Arabic decimal digits/separator, leading decimal and scientific numeric notation according to explicitly recognized notation. Validation and save keep the original entered text; the live numeric input is bound to that string and uses decimalPad rather than integer-only input. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 245."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple decimal keyboard/edit/save acceptance across supported input scripts."
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Apple decimal keyboard/edit/save acceptance across supported input scripts."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Apple decimal keyboard/edit/save acceptance across supported input scripts."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Recognized-hormone-report-format-without-guessed-separators",
+          "executed": {
+            "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
+            "portable_XCTest": "783 passed",
+            "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "50 passed",
+            "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          },
+          "not_run": [
+            "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+            "56 Guide Apple UI launches",
+            "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
+            "Official MADLAD offline inference and language/clinical accuracy review"
+          ],
+          "remaining": [
+            "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
+            "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
+            "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
+            "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -19395,10 +19464,12 @@
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
-        "Fruitfolio/Hormone Information/HormoneLibraryView.swift"
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19418,9 +19489,12 @@
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testValidationPreservesDecimalAndExactUnit",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testLocaleSpecificDecimalAndDigitValidationNeverRewritesTheReportedValue",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete"
       ],
-      "commit_reference": "batch:Measurement-library-fixed-date-status-and-context-display (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -19430,37 +19504,55 @@
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
-        "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN."
+        "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 246. Apple acceptance pending.",
+        "Unit validation checks only that the raw field contains visible text; the raw unit String is retained rather than normalized or converted. Actual store/persistence round trips, edits, reload and JSON export preserve exact reported unit including the tested \u00b5IU/mL Unicode value. Live creation and editing bind directly to draft.unit; cards render the saved unit verbatim. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 246."
       ],
-      "last_updated": "2026-11-06T20:24:06.038093+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Measurement-library-fixed-date-status-and-context-display",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "workflow": "60 passed with actual Swift compiler",
-          "final_source_checks": "311 syntax parsed; Xcode references resolved, actual SwiftSyntax sound ownership clean",
-          "preservation": "Exact native date getter/setter and raw lab value renderers retained; model/persistence/provider files unchanged;842 prior catalog entries preserved",
-          "Foundation": "Unchanged; not rerun. Last full0548247:790 portable/812 native XCTest +21 Swift Testing each",
-          "written_UI_matrix": "20 measurement/56 Guide planned source launches only; no Apple execution or coverage claim"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "20 measurement Apple UI launches including two new actual library resource/header/frame/no-write cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck,DatePicker/native button/focus/AX/RTL/dynamic wrapping and real resource embedding",
-          "Official MADLAD offline inference,each language and clinical meaning/warning polarity review"
+          "Apple enter/save/reopen/export exact-unit acceptance."
         ],
         "remaining": [
-          "Execute new library and date-entry Apple cases with actual research/artwork resources and verify full wrapping,heading hierarchy,native controls and unchanged records",
-          "Verify target-language interface and scientific topic/context/safety wording with official resources and qualified native/clinical reviewers; source preservation alone does not establish semantic fidelity",
-          "Complete remaining original hormone/research/clinical,app-wide localization,Apple and physical-device acceptance",
-          "Continue all original478/founder requirements; this UI source batch does not certify whole features or official inference"
+          "Apple enter/save/reopen/export exact-unit acceptance."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new library and date-entry Apple cases with actual research/artwork resources and verify full wrapping,heading hierarchy,native controls and unchanged records",
-        "Verify target-language interface and scientific topic/context/safety wording with official resources and qualified native/clinical reviewers; source preservation alone does not establish semantic fidelity",
-        "Complete remaining original hormone/research/clinical,app-wide localization,Apple and physical-device acceptance",
-        "Continue all original478/founder requirements; this UI source batch does not certify whole features or official inference"
+        "Apple enter/save/reopen/export exact-unit acceptance."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Measurement-library-fixed-date-status-and-context-display",
+          "executed": {
+            "workflow": "60 passed with actual Swift compiler",
+            "final_source_checks": "311 syntax parsed; Xcode references resolved, actual SwiftSyntax sound ownership clean",
+            "preservation": "Exact native date getter/setter and raw lab value renderers retained; model/persistence/provider files unchanged;842 prior catalog entries preserved",
+            "Foundation": "Unchanged; not rerun. Last full0548247:790 portable/812 native XCTest +21 Swift Testing each",
+            "written_UI_matrix": "20 measurement/56 Guide planned source launches only; no Apple execution or coverage claim"
+          },
+          "not_run": [
+            "20 measurement Apple UI launches including two new actual library resource/header/frame/no-write cases",
+            "56 Guide Apple UI launches",
+            "Apple SDK typecheck,DatePicker/native button/focus/AX/RTL/dynamic wrapping and real resource embedding",
+            "Official MADLAD offline inference,each language and clinical meaning/warning polarity review"
+          ],
+          "remaining": [
+            "Execute new library and date-entry Apple cases with actual research/artwork resources and verify full wrapping,heading hierarchy,native controls and unchanged records",
+            "Verify target-language interface and scientific topic/context/safety wording with official resources and qualified native/clinical reviewers; source preservation alone does not establish semantic fidelity",
+            "Complete remaining original hormone/research/clinical,app-wide localization,Apple and physical-device acceptance",
+            "Continue all original478/founder requirements; this UI source batch does not certify whole features or official inference"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -19497,10 +19589,14 @@
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
-        "Fruitfolio/Hormone Information/HormoneLibraryView.swift"
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19525,9 +19621,13 @@
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneValidationTests.swift::testMalformedAndMissingRequiredFieldsAreRejected",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift::testLegacyMissingCivilDayAndEntryZoneRemainUnknownWhenEditingOtherFields",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testUnknownLegacyReportFormatAllowsMetadataEditWithoutReinterpretingOriginalResult"
       ],
-      "commit_reference": "batch:Measurement-library-fixed-date-status-and-context-display (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -19539,37 +19639,55 @@
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
-        "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN."
+        "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 247. Apple acceptance pending.",
+        "No concentration-unit conversion is performed on save, render, history ordering or export. Blank required units/results are rejected instead of inferred. Missing optional sample/reference/notes/cycle-day fields retain empty/nil values. Unknown legacy report format and original entry-zone precision are preserved, not silently inferred from a later device language/time zone. The UI exposes reported notation and test-date confirmation separately; changes to an unknown legacy result require explicit recognized format. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 247."
       ],
-      "last_updated": "2026-11-06T20:24:06.038093+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Measurement-library-fixed-date-status-and-context-display",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "workflow": "60 passed with actual Swift compiler",
-          "final_source_checks": "311 syntax parsed; Xcode references resolved, actual SwiftSyntax sound ownership clean",
-          "preservation": "Exact native date getter/setter and raw lab value renderers retained; model/persistence/provider files unchanged;842 prior catalog entries preserved",
-          "Foundation": "Unchanged; not rerun. Last full0548247:790 portable/812 native XCTest +21 Swift Testing each",
-          "written_UI_matrix": "20 measurement/56 Guide planned source launches only; no Apple execution or coverage claim"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "20 measurement Apple UI launches including two new actual library resource/header/frame/no-write cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck,DatePicker/native button/focus/AX/RTL/dynamic wrapping and real resource embedding",
-          "Official MADLAD offline inference,each language and clinical meaning/warning polarity review"
+          "Apple legacy/new record edit acceptance and exact report-field display; this does not provide clinical interpretation of a laboratory result."
         ],
         "remaining": [
-          "Execute new library and date-entry Apple cases with actual research/artwork resources and verify full wrapping,heading hierarchy,native controls and unchanged records",
-          "Verify target-language interface and scientific topic/context/safety wording with official resources and qualified native/clinical reviewers; source preservation alone does not establish semantic fidelity",
-          "Complete remaining original hormone/research/clinical,app-wide localization,Apple and physical-device acceptance",
-          "Continue all original478/founder requirements; this UI source batch does not certify whole features or official inference"
+          "Apple legacy/new record edit acceptance and exact report-field display; this does not provide clinical interpretation of a laboratory result."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new library and date-entry Apple cases with actual research/artwork resources and verify full wrapping,heading hierarchy,native controls and unchanged records",
-        "Verify target-language interface and scientific topic/context/safety wording with official resources and qualified native/clinical reviewers; source preservation alone does not establish semantic fidelity",
-        "Complete remaining original hormone/research/clinical,app-wide localization,Apple and physical-device acceptance",
-        "Continue all original478/founder requirements; this UI source batch does not certify whole features or official inference"
+        "Apple legacy/new record edit acceptance and exact report-field display; this does not provide clinical interpretation of a laboratory result."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Measurement-library-fixed-date-status-and-context-display",
+          "executed": {
+            "workflow": "60 passed with actual Swift compiler",
+            "final_source_checks": "311 syntax parsed; Xcode references resolved, actual SwiftSyntax sound ownership clean",
+            "preservation": "Exact native date getter/setter and raw lab value renderers retained; model/persistence/provider files unchanged;842 prior catalog entries preserved",
+            "Foundation": "Unchanged; not rerun. Last full0548247:790 portable/812 native XCTest +21 Swift Testing each",
+            "written_UI_matrix": "20 measurement/56 Guide planned source launches only; no Apple execution or coverage claim"
+          },
+          "not_run": [
+            "20 measurement Apple UI launches including two new actual library resource/header/frame/no-write cases",
+            "56 Guide Apple UI launches",
+            "Apple SDK typecheck,DatePicker/native button/focus/AX/RTL/dynamic wrapping and real resource embedding",
+            "Official MADLAD offline inference,each language and clinical meaning/warning polarity review"
+          ],
+          "remaining": [
+            "Execute new library and date-entry Apple cases with actual research/artwork resources and verify full wrapping,heading hierarchy,native controls and unchanged records",
+            "Verify target-language interface and scientific topic/context/safety wording with official resources and qualified native/clinical reviewers; source preservation alone does not establish semantic fidelity",
+            "Complete remaining original hormone/research/clinical,app-wide localization,Apple and physical-device acceptance",
+            "Continue all original478/founder requirements; this UI source batch does not certify whole features or official inference"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -19668,10 +19786,12 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19685,9 +19805,12 @@
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testCreateEditDeletePreservesExactUnitsAndPersists",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testActualMeasurementStoreRefreshRetainsLastAcknowledgedRecordAfterRejectedSave",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testDroppedFirstMeasurementWriteCannotAdvanceCacheOrRevision"
       ],
-      "commit_reference": "batch:Native-measurement-draft-preserving-reload-and-conflict-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
@@ -19697,40 +19820,58 @@
         "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS.",
-        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs."
+        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 249. Apple acceptance pending.",
+        "The actual shared measurement store delegates saves to local UserDefaults-backed measurement persistence; no cloud/network/account reservation is in that write path. The real store creation/edit/deletion test writes through the production service, reconstructs it from the same local defaults, and verifies exact retained fields; faulty readback cannot claim a successful save. The live editor calls that same store.save entry point and handles errors without discarding the draft. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 249."
       ],
-      "last_updated": "2026-11-06T19:54:23.007781+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
-          "portable_XCTest": "790 passed",
-          "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "50 passed",
-          "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
-          "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
-          "Cold-app restart/process-kill persistence durability",
-          "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+          "Apple application/device local storage and file-protection acceptance; Linux tests establish actual domain persistence, not a device privacy audit."
         ],
         "remaining": [
-          "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-          "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-          "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-          "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          "Apple application/device local storage and file-protection acceptance; Linux tests establish actual domain persistence, not a device privacy audit."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-        "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-        "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-        "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+        "Apple application/device local storage and file-protection acceptance; Linux tests establish actual domain persistence, not a device privacy audit."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+          "executed": {
+            "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
+            "portable_XCTest": "790 passed",
+            "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "50 passed",
+            "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
+            "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+          },
+          "not_run": [
+            "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
+            "56 Guide Apple UI launches",
+            "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
+            "Cold-app restart/process-kill persistence durability",
+            "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+          ],
+          "remaining": [
+            "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
+            "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
+            "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
+            "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -19748,10 +19889,13 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneSnapshotProtectionTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -19764,9 +19908,13 @@
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testCreateEditDeletePreservesExactUnitsAndPersists",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testWrongTypeAndCorruptDataArePreservedAndBlockWritesUntilExplicitErase",
+        "FruitfolioTests/Prompt1BHormoneSnapshotProtectionTests.swift::testUnknownFieldsKeepReadableValuesAndRawOriginalUntilExplicitErase"
       ],
-      "commit_reference": "batch:Native-measurement-draft-preserving-reload-and-conflict-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
@@ -19775,40 +19923,58 @@
         "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS.",
-        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs."
+        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 250. Apple acceptance pending.",
+        "Initialization decodes the existing acknowledged local measurement archive instead of resetting it. Actual production-store and persistence reinitialization tests retain result/unit/notes/date, later edits, and deletion across reconstructed service instances. Corrupt, foreign or future-field storage is preserved and protected rather than silently replaced on launch or reload. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 250."
       ],
-      "last_updated": "2026-11-06T19:54:23.007781+00:00",
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
       "latest_batch_verification": {
-        "batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
         "executed": {
-          "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
-          "portable_XCTest": "790 passed",
-          "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "50 passed",
-          "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
-          "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
         },
         "not_run": [
-          "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
-          "Cold-app restart/process-kill persistence durability",
-          "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+          "Actual Apple app terminate/relaunch persistence. Store reconstruction passed and is explicitly not reported as a physical app relaunch."
         ],
         "remaining": [
-          "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-          "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-          "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-          "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          "Actual Apple app terminate/relaunch persistence. Store reconstruction passed and is explicitly not reported as a physical app relaunch."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-        "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-        "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-        "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+        "Actual Apple app terminate/relaunch persistence. Store reconstruction passed and is explicitly not reported as a physical app relaunch."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+          "executed": {
+            "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
+            "portable_XCTest": "790 passed",
+            "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
+            "SwiftTesting": "21 passed per run",
+            "workflow": "50 passed",
+            "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
+            "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+          },
+          "not_run": [
+            "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
+            "56 Guide Apple UI launches",
+            "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
+            "Cold-app restart/process-kill persistence durability",
+            "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+          ],
+          "remaining": [
+            "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
+            "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
+            "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
+            "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -20010,25 +20176,53 @@
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
         "Prompt1BHormonePersistenceTests",
         "Prompt1BHormoneValidationTests",
-        "Prompt1BHormoneCivilDateTests"
+        "Prompt1BHormoneCivilDateTests",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift::testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords",
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift::testRecordSpecificEditingAllowsOtherMeasurementsToChangeAndPreservesReportedMetadata",
+        "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift::testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence"
       ],
-      "commit_reference": "batch:Hormone-civil-test-day-and-honest-Ask-date-precision (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-input-and-local-persistence-individual-closure (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
-        "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified."
+        "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.",
+        "Individual full-clause implementation review and executed domain evidence: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 253. Apple acceptance pending.",
+        "New measurement identities append separately rather than replacing another value merely because the hormone matches. Executed production history regression saves three LH measurements across two reported days and retains all identities in both chronological directions; same-day ordering does not invent a collection time. Actual per-record edit intent mutates only the selected identity; independent saved measurements remain unchanged. Individual closure: development_workflow/HORMONE_INPUT_PERSISTENCE_INDIVIDUAL_CLOSURES.json entry 253."
       ],
-      "last_updated": "2026-11-05T23:21:08.711392+00:00"
+      "last_updated": "2026-11-07T11:54:30.883521+00:00",
+      "latest_batch_verification": {
+        "batch": "Hormone-input-and-local-persistence-individual-closure",
+        "executed": {
+          "focused_domain_XCTest": 39,
+          "focused_log": "/tmp/fruitfolio_hormone_history_order_final.log",
+          "full_integrated_XCTest": 1009,
+          "full_log": "/tmp/fruitfolio_brand_consumer_full_portable.log",
+          "scope": "Actual Foundation production validation/persistence/store execution. UIKit/SwiftUI/Combine Apple execution not included."
+        },
+        "not_run": [
+          "Apple repeated-measurement create/filter/edit/relaunch visible workflow."
+        ],
+        "remaining": [
+          "Apple repeated-measurement create/filter/edit/relaunch visible workflow."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Apple repeated-measurement create/filter/edit/relaunch visible workflow."
+      ]
     },
     {
       "sequence": 254,
