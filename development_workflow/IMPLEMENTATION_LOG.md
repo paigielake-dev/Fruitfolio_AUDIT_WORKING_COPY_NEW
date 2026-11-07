@@ -4064,3 +4064,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_actual_Contact_state_and_identity_translation_XCTest": 7, "unchanged_shared_header_layout_XCTest_in_parent_full_suite": 6, "original_Contact_FAQ_PNGs_decoded_and_hashed": 4, "swift_syntax_files": 326, "failures": 0, "logs": ["/tmp/fruitfolio_contact_active_failure_tests.log", "/tmp/fruitfolio_contact_active_failure_syntax.log"], "parent_full_suite": "/tmp/fruitfolio_username_authority_full_portable.log:1048 XCTest+21 SwiftTesting, before current Contact lifecycle delta. Six unchanged header layout tests passed in this actual log; do not report it as a full run of current Contact delta."}.
 - Next action: Continue missing global UI/dialogue/accessibility/localization and other original requirements, maintaining exact evidence and external acceptance separation.
 - Commit: containing commit for batch Contact-active-error-feedback-and-individual-FAQ-art-clauses.
+
+## Actual-Ask-lifecycle-capability-probe-and-portable-recovery
+
+- Parent checkpoint: 301cde8a035d677475947cd3b15cab02ff6ddb7e.
+- Source-order requirements: [60, 62, 118, 119, 120, 121, 122, 123, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift, development_workflow/ASK_NATIVE_LIFECYCLE_VERIFICATION_DEPENDENCY.json.
+- Attempt actual Ask ViewModel lifecycle execution on Linux; establish genuine Apple Markdown dependency without SDK/parser substitutes. Failed probe ran0 Ask tests, original app/test/runner restored byte-exact, temporary failed inputs removed and real runner recovered with7 passing existing tests. No requirement status promoted.
+- Tests added/updated: FruitfolioTests/Prompt1BAskLifecycleTests.swift, FruitfolioTests/Prompt1BContactDestinationTests.swift.
+- Verification: {"Ask_lifecycle_tests_executed": 0, "portable_enrollment_attempt": "Compilation failed before test discovery: FruitfolioSemanticDocument is defined with the Apple renderer, outside portable source set.", "isolated_real_Linux_Foundation_probe": "Compiler rejects AttributedString markdown options/inlineOnlyPreservingWhitespace used by the actual parser; no compatibility shim installed. Initial probe cache-path issue was corrected using /tmp module cache, then the genuine API failure was confirmed.", "recovered_existing_Contact_XCTest": 7, "logs": ["/tmp/fruitfolio_actual_ask_model_lifecycle_first.log", "/tmp/fruitfolio_foundation_markdown_capability.log", "/tmp/fruitfolio_portable_probe_recovery.log"]}.
+- Next action: Continue independent original requirements and founder additions; keep native Ask lifecycle verification explicitly pending macOS/Xcode.
+- Commit: containing commit for batch Actual-Ask-lifecycle-capability-probe-and-portable-recovery.
