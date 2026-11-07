@@ -419,76 +419,10 @@ struct Prompt12SettingsView: View {
 
 // MARK: - Cute Settings Row Press
 
+/// Override the row's inherited style without a second gesture/transform.
 private struct Prompt12CuteRowPressModifier: ViewModifier {
     let reduceMotion: Bool
-
-    @GestureState
-    private var isPressed = false
-
-    func body(
-        content: Content
-    ) -> some View {
-        content
-            .scaleEffect(
-                reduceMotion
-                    ? 1
-                    : (
-                        isPressed
-                        ? 0.88
-                        : 1
-                    )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        isPressed
-                        ? 5
-                        : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                        ? 0
-                        : (
-                            isPressed
-                            ? -1.2
-                            : 0
-                        )
-                )
-            )
-            .brightness(
-                reduceMotion
-                    ? 0
-                    : (
-                        isPressed
-                        ? -0.04
-                        : 0
-                    )
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(
-                        duration: 0.08
-                    )
-                    : .spring(
-                        response: 0.20,
-                        dampingFraction: 0.38,
-                        blendDuration: 0
-                    ),
-                value: isPressed
-            )
-            .simultaneousGesture(
-                DragGesture(
-                    minimumDistance: 0
-                )
-                .updating(
-                    $isPressed
-                ) { _, state, _ in
-                    state = true
-                }
-            )
+    func body(content: Content) -> some View {
+        content.buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
     }
 }

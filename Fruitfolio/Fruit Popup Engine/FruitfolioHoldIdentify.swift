@@ -122,7 +122,7 @@ struct FruitfolioMicroLabel: View {
 /// A separate zero-distance drag gesture is used only for visual pressed-state
 /// feedback. It never triggers the action or identification label.
 ///
-/// The pressed-state animation intentionally mirrors `CutePopButtonStyle`:
+/// The pressed-state animation uses the same effect as `CutePopButtonStyle`:
 /// - scale to 0.88
 /// - move down 5 points
 /// - rotate -1.2 degrees
@@ -174,30 +174,9 @@ struct FruitfolioIconActionSurface<Label: View>: View {
             )
             .contentShape(Rectangle())
 
-            // MARK: CutePopButtonStyle-matched press animation
-
-            .scaleEffect(
-                motionPreferences.reduceMotionActive
-                    ? 1.0
-                    : (isPressed ? 0.88 : 1.0)
-            )
-            .offset(
-                y: motionPreferences.reduceMotionActive
-                    ? 0
-                    : (isPressed ? 5 : 0)
-            )
-            .rotationEffect(
-                .degrees(
-                    motionPreferences.reduceMotionActive
-                        ? 0
-                        : (isPressed ? -1.2 : 0)
-                )
-            )
-            .brightness(
-                isPressed
-                    ? -0.04
-                    : 0
-            )
+            // One canonical effect; this non-Button surface owns its gesture.
+            .modifier(FruitfolioButtonPopEffect(isPressed: isPressed,
+                reduceMotion: motionPreferences.reduceMotionActive))
             .opacity(
                 effectivelyEnabled
                     ? 1
@@ -254,18 +233,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                 action()
             }
 
-            // MARK: Animation
-
-            .animation(
-                motionPreferences.reduceMotionActive
-                    ? .easeOut(duration: 0.08)
-                    : .spring(
-                        response: 0.20,
-                        dampingFraction: 0.38,
-                        blendDuration: 0
-                    ),
-                value: isPressed
-            )
+            // Identification visibility is independent of the press effect.
             .animation(
                 .easeOut(duration: 0.12),
                 value: showingIdentification

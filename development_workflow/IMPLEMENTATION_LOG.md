@@ -3716,3 +3716,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"individually_documented_input_blockers": 4}.
 - Next action: Continue independent actionable requirements. Missing copy/tulip remains genuinely input-blocked; do not repeat clarification or substitute invented copy/art.
 - Commit: containing commit for batch Individual-missing-copy-and-tulip-input-classification.
+
+## Single-press-owner-for-gesture-wrapped-controls
+
+- Parent checkpoint: 34c022f378824e293b415c705ba4224c0afa6522.
+- Source-order requirements: [9, 10, 11, 12, 389, 472].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift, Fruitfolio/Privacy Settings/Prompt12SettingsView.swift, Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift, development_workflow/CANONICAL_BUTTON_REQUIREMENT_REVIEW.json, development_workflow/RESUME_INTEGRATION_VERIFICATION.json.
+- Correct demonstrated gap in earlier ButtonStyle-only inventory: six Ask wrappers, one Guide icon wrapper and three Settings row wrappers added independent drag gestures/transforms around already animated controls. Compatibility containers now set the existing ButtonStyle without a second gesture/effect; icon action surface delegates its pressed visual to the same canonical effect and retains exclusive tap/hold, disabled, identification, action and sound ownership. Preserve earlier review with explicit correction rather than treating inventory as whole-app proof. Extend actual four-vector Ask UI regression to hold help without activation or draft mutation, then tap to open. Apple test NOT_RUN; no VERIFIED promotion.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, FruitfolioTests/Prompt08GlobalControlsTests.swift.
+- Verification: {"portable_XCTest_passed": 982, "native_CPU_XCTest_passed": 1007, "SwiftTesting_passed_each": 21, "workflow_checks_passed": 71, "swift_syntax_files": 319, "sound_ownership_findings": 0, "new_Apple_test_vectors_executed": 0}.
+- Next action: Continue independent remaining requirements across all parts; source dependency ordering limits safe Ask parallelism. Preserve full checklist/founder reconciliation as unfinished and Apple/official model/clinical acceptance separately pending.
+- Commit: containing commit for batch Single-press-owner-for-gesture-wrapped-controls.

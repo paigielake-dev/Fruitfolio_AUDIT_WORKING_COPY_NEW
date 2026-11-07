@@ -161,5 +161,16 @@
         "No source inventory is counted as a passed Apple animation/UI test."
       ]
     }
-  ]
+  ],
+  "gesture_wrapper_follow_up": {
+    "source_review_correction": "Original inventory covered ButtonStyle adapters but missed gesture containers. Actual Ask/Guide wrappers and Settings row modifiers added a second simultaneous zero-distance-drag transform around already animated controls. The original inventory alone was not complete whole-application evidence.",
+    "implementation": "Compatibility containers now override the existing canonical ButtonStyle without an additional pressed-state gesture/transform; custom icon surface keeps its existing exclusive tap/hold recognizer and delegates its one press effect to FruitfolioButtonPopEffect. Existing actions, identification, sounds and assets remain.",
+    "files": [
+      "Fruitfolio/Ask/Prompt09AskView.swift",
+      "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+      "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+      "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+    ],
+    "verification": "319 Swift files parse; actual pressed UI geometry, long-press exclusion, disabled controls, native Menu and system/app Reduce Motion remain Apple NOT_RUN. No new VERIFIED status."
+  }
 }

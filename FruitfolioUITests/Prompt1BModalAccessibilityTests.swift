@@ -3284,7 +3284,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let authored = "My original question 12.50"
             input.typeText(authored)
             XCTAssertEqual(input.value as? String, authored)
-            app.buttons["Ask help"].tap()
+            let help = app.buttons["Ask help"]
+            XCTAssertTrue(help.isHittable)
+            help.press(forDuration: 0.65)
+            XCTAssertFalse(app.buttons["ask.help.close"].exists,
+                           "Holding the actual Ask icon must identify it without opening help")
+            XCTAssertEqual(input.value as? String, authored)
+            help.tap()
             let scroll = app.scrollViews["tapedWhitePopup.scroll"]
             XCTAssertTrue(scroll.waitForExistence(timeout: 3))
             let close = app.buttons["ask.help.close"]

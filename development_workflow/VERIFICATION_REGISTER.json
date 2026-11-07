@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T09:35:45.261401+00:00",
+  "updated_at": "2026-11-07T09:39:34.396168+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11345,6 +11345,55 @@
         ]
       },
       "timestamp": "2026-11-07T09:35:45.261401+00:00"
+    },
+    {
+      "batch": "Single-press-owner-for-gesture-wrapped-controls",
+      "requirements": [
+        9,
+        10,
+        11,
+        12,
+        389,
+        472
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "319 Swift syntax parses",
+        "Actual SwiftSyntax sound-ownership check: zero findings",
+        "Combined actual Foundation integration checkpoint: 982 portable and 1007 native CPU XCTest, 21 Swift Testing each",
+        "71 workflow checks after individual input classification",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest_passed": 982,
+        "native_CPU_XCTest_passed": 1007,
+        "SwiftTesting_passed_each": 21,
+        "workflow_checks_passed": 71,
+        "swift_syntax_files": 319,
+        "sound_ownership_findings": 0,
+        "new_Apple_test_vectors_executed": 0
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest_passed": 982,
+          "native_CPU_XCTest_passed": 1007,
+          "SwiftTesting_passed_each": 21,
+          "workflow_checks_passed": 71,
+          "swift_syntax_files": 319,
+          "sound_ownership_findings": 0,
+          "scope": "Full suites execute curated actual Foundation/native CPU sources, unchanged by view-only wrapper follow-up. They do not compile or run those SwiftUI wrappers. See persisted receipt hashes."
+        },
+        "not_run": [
+          "Extended actual Ask hold-then-tap UI regression across LTR/RTL and Reduce Motion combinations",
+          "Apple button/icon geometry, exclusive hold, disabled controls, native menus and device latency",
+          "Official MADLAD model and native-language/clinical acceptance; synthetic T5 and separate Ask model do not establish MADLAD verification"
+        ],
+        "remaining": [
+          "Execute extended Apple UI vectors and canonical geometry test; confirm one 0.88-scale press instead of compounded transforms, one audio cue/action, and no spatial feedback with OS/app Reduce Motion.",
+          "Complete remaining original478, founder36 and unnumbered instructions individually; no global completion percentage inferred from passing test counts."
+        ]
+      },
+      "timestamp": "2026-11-07T09:39:34.396168+00:00"
     }
   ]
 }

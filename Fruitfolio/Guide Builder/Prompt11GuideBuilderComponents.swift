@@ -334,43 +334,11 @@ struct Prompt11SavedPagePaper: View {
     }
 }
 
+/// The icon surface owns the one gesture-driven press effect.
 private struct Prompt11PressBounce<Content: View>: View {
     let reduceMotion: Bool
-
-    @ViewBuilder
-    let content: () -> Content
-
-    @GestureState private var isPressed = false
-
+    @ViewBuilder let content: () -> Content
     var body: some View {
-        content()
-            .scaleEffect(
-                reduceMotion ? 1.0 : (isPressed ? 0.88 : 1.0)
-            )
-            .offset(
-                y: reduceMotion ? 0 : (isPressed ? 5 : 0)
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion ? 0 : (isPressed ? -1.2 : 0)
-                )
-            )
-            .brightness(isPressed ? -0.04 : 0)
-            .animation(
-                reduceMotion
-                    ? .easeOut(duration: 0.08)
-                    : .spring(
-                        response: 0.20,
-                        dampingFraction: 0.38,
-                        blendDuration: 0
-                    ),
-                value: isPressed
-            )
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 0)
-                    .updating($isPressed) { _, state, _ in
-                        state = true
-                    }
-            )
+        content().buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
     }
 }
