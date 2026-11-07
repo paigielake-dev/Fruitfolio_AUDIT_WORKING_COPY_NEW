@@ -370,7 +370,7 @@ struct Prompt10SavedPageView: View {
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var imageImportTask: Task<Void, Never>?
     @State private var imageImportGeneration = UUID()
-    @State private var mediaMessage: String?
+    @State private var mediaMessage: Prompt10SavedPageNotice?
     @State private var notes = Prompt10NoteDraft()
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
@@ -382,7 +382,7 @@ struct Prompt10SavedPageView: View {
     @State private var pendingExcerptCleanup: Prompt10SavedPage?
     @AccessibilityFocusState private var excerptReviewFocused: Bool
     @State private var returnExcerptReviewFocus = false
-    @State private var notesMessage: String?
+    @State private var notesMessage: Prompt10SavedPageNotice?
     @State private var notesFocusRequest = UUID()
     @AccessibilityFocusState private var backFocused: Bool
     @AccessibilityFocusState private var notesMessageFocused: Bool
@@ -394,31 +394,24 @@ struct Prompt10SavedPageView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                ZStack {
-                    HStack {
-                        BackControl {
-                            if hasUnsavedNotes { requestBack() } else { onBack() }
-                        }
-                        .accessibilityIdentifier("savedPage.back")
-                        .accessibilityFocused($backFocused)
-
-                        Spacer()
+                HStack(alignment: .center, spacing: 8) {
+                    BackControl {
+                        if hasUnsavedNotes { requestBack() } else { onBack() }
                     }
+                    .accessibilityIdentifier("savedPage.back")
+                    .accessibilityFocused($backFocused)
 
-                    Text("saved page")
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 18
-                            )
-                        )
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "saved page",
+                        font: .custom("Chalkboard SE", size: 18).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                        .accessibilityIdentifier("savedPage.heading")
+                    Color.clear.frame(width: DesignTokens.Layout.minimumHitTarget, height: 1)
+                        .accessibilityHidden(true)
                 }
 
-                Text(page.question)
+                Text(verbatim: page.question)
                     .font(
                         .custom(
                             "Chalkboard SE",
@@ -453,14 +446,13 @@ struct Prompt10SavedPageView: View {
 
                 FruitfolioSavedScientificIllustrations(assetIDs: page.educationalAssetIDs ?? [])
                 if let provenance = page.userMaterial {
-                    Text("your own material · not verified research")
-                        .font(.caption).bold()
+                    FruitfolioFixedText(source: "your own material · not verified research", font: .caption.bold(), serious: true)
                     if let address = provenance.sourceURL {
                         Text(verbatim: address).font(.caption).textSelection(.enabled)
                     }
                     if let onEditUserMaterial {
                         WatercolorSecondaryButton(label: "edit my page") {
-                            if hasUnsavedNotes { mediaMessage = "save or discard your note changes before editing this page." }
+                            if hasUnsavedNotes { mediaMessage = .saveDraftBeforeEditing }
                             else { onEditUserMaterial(page) }
                         }
                         .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
@@ -484,23 +476,15 @@ struct Prompt10SavedPageView: View {
                             DesignTokens.ColorToken.primaryBurgundy.opacity(0.18)
                         )
 
-                    Text("sources")
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13
-                            )
-                        )
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "sources",
+                        font: .custom("Chalkboard SE", size: 13).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
 
                     ForEach(
                         Array(page.sourceIDs.enumerated()),
                         id: \.offset
                     ) { _, sourceID in
-                        Text(sourceID)
+                        Text(verbatim: sourceID)
                             .font(
                                 .custom(
                                     "Chalkboard SE",
@@ -547,7 +531,7 @@ struct Prompt10SavedPageView: View {
         }
         .onChange(of: page.notes) { _, _ in loadNotesIfNeeded() }
         .onChange(of: notes.text) { _, _ in
-            if notesMessage == "notes saved!" { notesMessage = nil }
+            if notesMessage == .notesSaved { notesMessage = nil }
         }
         .interactiveDismissDisabled(hasUnsavedNotes)
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
@@ -560,7 +544,7 @@ struct Prompt10SavedPageView: View {
                     let updated = try store.removeLegacyExcerptRemainder(afterConfirming: expected)
                     onPageChanged(updated)
                     excerptCleanupCompleted = true
-                } catch { mediaMessage = error.localizedDescription }
+                } catch { mediaMessage = Prompt10SavedPageNotice(error: error) }
             }
             if returnExcerptReviewFocus {
                 returnExcerptReviewFocus = false
@@ -656,12 +640,12 @@ struct Prompt10SavedPageView: View {
     private var notesSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Prompt10LibraryStorageNotice(store: store)
-            Text("my notes")
-                .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
-                .fontWeight(.bold)
+            FruitfolioFixedText(source: "my notes",
+                font: .custom("Chalkboard SE", size: 13, relativeTo: .headline).bold())
             TextEditor(text: $notes.text)
                 .focused($notesFocused)
                 .accessibilityIdentifier("savedPage.notes")
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "my notes"))
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
                 .frame(minHeight: 110)
                 .padding(8)
@@ -670,16 +654,15 @@ struct Prompt10SavedPageView: View {
                 .disabled(store.storageProtectionReason != nil)
                 .accessibilityIdentifier("savedPage.saveNotes")
             if let notesMessage {
-                FruitfolioTranslatedContent(source: notesMessage) { display, _ in
-                    FruitfolioSemanticText(markdown: display,
-                        baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
-                        .accessibilityFocused($notesMessageFocused)
-                }
-                .task(id: notesFocusRequest) {
-                    await Task.yield()
-                    guard !Task.isCancelled, viewIsVisible else { return }
-                    notesMessageFocused = true
-                }
+                Prompt10SavedPageNoticeText(notice: notesMessage,
+                    font: .custom("Chalkboard SE", size: 14, relativeTo: .body))
+                    .accessibilityIdentifier("savedPage.notesStatus")
+                    .accessibilityFocused($notesMessageFocused)
+                    .task(id: notesFocusRequest) {
+                        await Task.yield()
+                        guard !Task.isCancelled, viewIsVisible else { return }
+                        notesMessageFocused = true
+                    }
             }
         }
 
@@ -700,11 +683,11 @@ struct Prompt10SavedPageView: View {
                 .first(where: { $0.id == page.chapterID })?.pages.first(where: { $0.id == page.id }) {
                 onPageChanged(updated)
             }
-            notesMessage = "notes saved!"
+            notesMessage = .notesSaved
             notesFocusRequest = UUID()
             return true
         } catch {
-            notesMessage = error.localizedDescription
+            notesMessage = Prompt10SavedPageNotice(error: error)
             notesFocusRequest = UUID()
             return false
         }
@@ -713,10 +696,9 @@ struct Prompt10SavedPageView: View {
     @ViewBuilder
     private var importedImagesSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("my images")
-                .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
-                .fontWeight(.bold)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+            FruitfolioFixedText(source: "my images",
+                font: .custom("Chalkboard SE", size: 13, relativeTo: .headline).bold(),
+                color: DesignTokens.ColorToken.primaryBurgundy)
 
             ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
                 VStack(spacing: 6) {
@@ -724,15 +706,17 @@ struct Prompt10SavedPageView: View {
                     Prompt10ReplaceImagePicker(imageID: imageID) { item, target in
                         beginImageImport(item, replacing: target)
                     }
-                    Button("remove image") { removeImage(imageID) }
-                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                    Button { removeImage(imageID) } label: {
+                        FruitfolioFixedText(source: "remove image",
+                            font: .custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                    }
                         .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
             }
 
             PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
-                Text("add image")
-                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
+                FruitfolioFixedText(source: "add image",
+                    font: .custom("Chalkboard SE", size: 13, relativeTo: .headline))
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
             }
             .onChange(of: selectedPhotoItem) { _, item in
@@ -741,8 +725,9 @@ struct Prompt10SavedPageView: View {
             }
 
             if let mediaMessage {
-                Text(mediaMessage)
-                    .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                Prompt10SavedPageNoticeText(notice: mediaMessage,
+                    font: .custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                    .accessibilityIdentifier("savedPage.mediaStatus")
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -797,7 +782,7 @@ struct Prompt10SavedPageView: View {
             var updated = latest
             updated.importedImageIDs = ids
             onPageChanged(updated)
-            mediaMessage = replacedID == nil ? "image added!" : "image replaced!"
+            mediaMessage = replacedID == nil ? .imageAdded : .imageReplaced
             if let replacedID, !Prompt10MediaReferences.contains(replacedID, in: store.encyclopedias) {
                 // Persist and refresh first; file cleanup must not turn a saved
                 // attachment change into an apparent rollback.
@@ -808,7 +793,7 @@ struct Prompt10SavedPageView: View {
                 _ = await Task.detached(priority: .utility) { try? Prompt10LocalMediaStore.shared.delete(orphan) }.value
             }
             guard !Task.isCancelled, imageImportGeneration == generation else { return }
-            mediaMessage = "that image could not be imported."
+            mediaMessage = .imageImportFailed
         }
     }
 
@@ -824,14 +809,30 @@ struct Prompt10SavedPageView: View {
             var updated = latest
             updated.importedImageIDs = ids
             onPageChanged(updated)
-            mediaMessage = "image removed."
+            mediaMessage = .imageRemoved
             // Detaching is already committed. Cleanup failures must not leave
             // the screen displaying the removed image as if persistence failed.
             if !Prompt10MediaReferences.contains(id, in: store.encyclopedias) {
                 try? Prompt10LocalMediaStore.shared.delete(id)
             }
         } catch {
-            mediaMessage = "that image could not be removed."
+            mediaMessage = .imageRemovalFailed
         }
+    }
+}
+
+/// Only typed app copy enters translation. External messages remain exact text.
+private struct Prompt10SavedPageNoticeText: View {
+    let notice: Prompt10SavedPageNotice
+    let font: Font
+    var body: some View {
+        Group {
+            if let source = notice.controlledSource {
+                FruitfolioFixedText(source: source, font: font, serious: true)
+            } else {
+                Text(verbatim: notice.source).font(font)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }

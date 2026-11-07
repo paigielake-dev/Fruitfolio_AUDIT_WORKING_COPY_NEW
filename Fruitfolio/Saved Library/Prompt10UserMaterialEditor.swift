@@ -173,7 +173,8 @@ struct Prompt10ReplaceImagePicker: View {
     @State private var item: PhotosPickerItem?
     var body: some View {
         PhotosPicker(selection: $item, matching: .images) {
-            Text("replace image").frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+            FruitfolioFixedText(source: "replace image")
+                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
         }
         .onChange(of: item) { _, selected in
             guard let selected else { return }

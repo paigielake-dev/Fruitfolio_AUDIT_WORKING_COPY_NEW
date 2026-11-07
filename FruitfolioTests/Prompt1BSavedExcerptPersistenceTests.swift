@@ -275,3 +275,35 @@ final class Prompt1BBookPrivateFixtureTests: XCTestCase {
     }
 }
 #endif
+
+final class Prompt1BSavedPageNoticeTests: XCTestCase {
+    func testOnlyKnownOperationsAndTypedLibraryErrorsAuthorizeTranslation() {
+        let operations: [Prompt10SavedPageNotice] = [.notesSaved, .imageAdded, .imageReplaced, .imageRemoved,
+            .imageImportFailed, .imageRemovalFailed, .saveDraftBeforeEditing]
+        let errors: [Prompt10LibraryError] = [.blankTitle, .titleTooLong, .descriptionTooLong, .inappropriateLabel,
+            .encyclopediaLimitReached, .encyclopediaNotFound, .chapterNotFound, .pageNotFound,
+            .persistenceFailure, .unreadableStorage, .unsupportedStorage, .storageChanged, .contentChanged]
+        for notice in operations {
+            XCTAssertEqual(notice.controlledSource, notice.source)
+            XCTAssertFalse(notice.source.isEmpty)
+        }
+        for error in errors {
+            let notice = Prompt10SavedPageNotice(error: error)
+            XCTAssertEqual(notice, .library(error))
+            XCTAssertEqual(notice.controlledSource, error.errorDescription)
+        }
+    }
+    func testUnknownErrorsCannotGainTranslationAuthorityBySpoofingControlledCopy() {
+        struct External: LocalizedError { let errorDescription: String? }
+        let messages = [Prompt10SavedPageNotice.notesSaved.source,
+            Prompt10SavedPageNotice.imageImportFailed.source,
+            Prompt10LibraryError.contentChanged.localizedDescription,
+            "[authored patient note](file:///private) **cafe\u{301}** 12,50 µg/L\n  keep spacing  "]
+        for original in messages {
+            let notice = Prompt10SavedPageNotice(error: External(errorDescription: original))
+            XCTAssertNil(notice.controlledSource)
+            XCTAssertEqual(Data(notice.source.utf8), Data(original.utf8))
+            guard case .external = notice else { return XCTFail("Unknown error gained app-copy authority") }
+        }
+    }
+}

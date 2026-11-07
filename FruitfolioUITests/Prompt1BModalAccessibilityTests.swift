@@ -1851,6 +1851,38 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testSavedPageTypedNotesStatusPreservesAuthoredDraftWithPausedInference() {
+        for rtl in [false, true] {
+            for reduced in [false, true] {
+                let app = XCUIApplication()
+                openLegacyExcerptFixture(app, reduced: reduced, rtl: rtl)
+                let heading = app.descendants(matching: .any)["savedPage.heading"]
+                XCTAssertTrue(heading.exists)
+                XCTAssertFalse(heading.frame.intersects(app.buttons["savedPage.back"].frame))
+                let reading = app.scrollViews["savedPage.scroll"]
+                let notes = app.textViews["savedPage.notes"]
+                for _ in 0..<20 { if notes.isHittable { break }; reading.swipeUp() }
+                notes.tap(); notes.typeText(" QA saved 12.50 pg/mL")
+                let authored = notes.value as? String
+                XCTAssertTrue(authored?.contains("QA saved 12.50 pg/mL") == true)
+                let save = app.buttons["savedPage.saveNotes"]
+                for _ in 0..<20 { if save.isHittable { break }; reading.swipeUp() }
+                XCTAssertTrue(save.isHittable); save.tap()
+                let status = app.descendants(matching: .any)["savedPage.notesStatus"]
+                XCTAssertTrue(status.waitForExistence(timeout: 5))
+                XCTAssertEqual(notes.value as? String, authored)
+                XCTAssertTrue(app.buttons["savedPage.reviewLegacyExcerpt"].exists,
+                    "Saving notes never authorizes legacy answer deletion")
+                for _ in 0..<20 { if notes.isHittable { break }; reading.swipeDown() }
+                notes.tap(); notes.typeText(" unsaved draft")
+                XCTAssertFalse(status.exists)
+                XCTAssertTrue((notes.value as? String)?.contains("unsaved draft") == true)
+                captureGame(app, name: "saved-page-notice-rtl-\(rtl)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testLegacyExcerptMissingSelectionStaysReadableWithoutCleanupAction() {
         for reduced in [false, true] {
             let app = XCUIApplication()

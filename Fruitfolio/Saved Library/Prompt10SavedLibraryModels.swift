@@ -308,6 +308,39 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
     }
 }
 
+/// Provenance is established by the operation, never by matching error text.
+/// Unknown errors may contain authored material and must remain verbatim.
+enum Prompt10SavedPageNotice: Equatable {
+    case notesSaved, imageAdded, imageReplaced, imageRemoved
+    case imageImportFailed, imageRemovalFailed, saveDraftBeforeEditing
+    case library(Prompt10LibraryError)
+    case external(String)
+
+    init(error: Error) {
+        if let known = error as? Prompt10LibraryError { self = .library(known) }
+        else { self = .external(error.localizedDescription) }
+    }
+
+    var controlledSource: String? {
+        if case .external = self { return nil }
+        return source
+    }
+
+    var source: String {
+        switch self {
+        case .notesSaved: return "notes saved!"
+        case .imageAdded: return "image added!"
+        case .imageReplaced: return "image replaced!"
+        case .imageRemoved: return "image removed."
+        case .imageImportFailed: return "that image could not be imported."
+        case .imageRemovalFailed: return "that image could not be removed."
+        case .saveDraftBeforeEditing: return "save or discard your note changes before editing this page."
+        case .library(let error): return error.errorDescription ?? "that saved page could not be updated."
+        case .external(let original): return original
+        }
+    }
+}
+
 /// Draft ownership prevents unrelated media redraws from replacing unsaved notes.
 struct Prompt10NoteDraft: Equatable {
     private(set) var pageID: UUID?
