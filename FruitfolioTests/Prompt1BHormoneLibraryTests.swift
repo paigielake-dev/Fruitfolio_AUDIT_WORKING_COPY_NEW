@@ -24,6 +24,8 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
                 XCTAssertTrue(functions.originalText.contains("progesterone is made after ovulation by the corpus luteum"))
                 XCTAssertTrue(functions.originalText.contains("helps prepare and support the uterine lining"))
                 XCTAssertTrue(functions.originalText.contains("progesterone is not a pregnancy guarantee"))
+                XCTAssertTrue(functions.presentation.contains("<u>not a pregnancy guarantee</u>"))
+                XCTAssertTrue(functions.presentation.contains("<u>depends on the reason it is prescribed</u>"))
             }
 
             // Retain exact actual-corpus coverage for requirement257 / SPEC4.9.7.
@@ -39,6 +41,8 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             XCTAssertEqual(Set(article.excerpts.map { Data($0.originalText.utf8) }).count, article.excerpts.count)
             if hormone == .estradiol {
                 let functions = try XCTUnwrap(article.excerpts.first(where: { $0.section == .functions }))
+                XCTAssertTrue(functions.presentation.contains("**fsh stimulation**"))
+                XCTAssertTrue(functions.presentation.contains("<u>arrested again in metaphase ii</u>"))
                 XCTAssertTrue(FruitfolioHormoneResearchMatch.makeMatcher(for: .estradiol, includeClassAliases: false)(functions.originalText),
                               "An available specific estradiol paragraph must outrank general estrogen seed-cycling material")
                 XCTAssertTrue(functions.originalText.contains("these hormones support follicular development through local signaling."),
@@ -51,6 +55,9 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
                 XCTAssertTrue(influences.originalText.contains("luteinizing hormone surges before ovulation."))
             }
             if hormone == .amh {
+                let functions = try XCTUnwrap(article.excerpt(for: .functions))
+                XCTAssertTrue(functions.presentation.contains("<u>should not be used alone to make major life decisions</u>"))
+                XCTAssertTrue(functions.presentation.contains("<u>rough snapshot of ovarian reserve</u>"))
                 let limitations = try XCTUnwrap(article.excerpts.first(where: { $0.section == .measurementLimitations }))
                 // Both cautions are literal statements in the actual approved
                 // source paragraph, not invented medical fixture content.

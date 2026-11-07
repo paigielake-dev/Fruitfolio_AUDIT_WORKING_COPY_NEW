@@ -213,12 +213,19 @@
         "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json",
         "development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json",
         "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json",
-        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json"
+        "development_workflow/AMH_EXISTING_SOURCE_ASPECT_RECOVERY.json",
+        "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
+        "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+        "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
+        "development_workflow/BLOCKERS.md"
       ],
       "related_tests": [
         "Prompt1BHormoneLibraryTests",
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
-        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift"
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords",
+        "Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords",
+        "Prompt1BResearchEngineIntegrationTests"
       ],
       "blockers": [
         "Approved, cited hormone-library coverage is not yet connected; no clinical content is fabricated.",
@@ -231,34 +238,33 @@
         "Fix demonstrated progesterone biological-functions mismatch by including actual corpus role terms corpus luteum/endometrium/uterine lining in existing scoped retrieval. Actual selected complete paragraph now explains hormone production and lining/early-pregnancy role, retaining original no-pregnancy-guarantee qualification and all citations. Extend actual corpus regression with all three literal assertions, plus unchanged eligibility/approval/full paragraph/citation checks across seven hormones. Document unresolved testosterone/prolactin content quality instead of treating lexical coverage as full educational content. No facts, resources or measurement records rewritten; no whole requirement promotion.",
         "Fix source-role correctness and shared coverage without pretending five sections cover all seven required aspects. Current31/35 candidate buckets are not clinical/full implementation acceptance; two explicit aspects and content review remain.",
         "Explicit seven aspects and qualified source gates; candidate coverage35/49 does not establish complete founder chapters.",
-        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy."
+        "Recover two qualified AMH aspects from existing approved original paragraph: comma-appositive AMH definition and naturally changes with age. No new medical copy or approval changes. Full requirement remains IN_PROGRESS; candidate coverage does not establish clinical adequacy.",
+        "Actual Hormone Library now visibly retains progesterone/AMH interpretation limitations through shared source semantic roles; all seven hormones/seven aspects and clinical completeness remain open."
       ],
       "latest_batch_verification": {
-        "batch": "AMH-existing-original-definition-and-age-factor-retrieval",
+        "batch": "Hormone-source-context-anchors-and-qualifiers",
         "executed": {
-          "focused_hormone_XCTest": 14,
-          "failures": 0,
-          "log": "/tmp/fruitfolio_amh_original_definition_factor.log"
+          "focused_XCTest": "40 passed, zero failures; actual hormone-provider excerpt display, canonical research engine and all reviewed-context byte/approval/identity tests",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
         },
         "not_run": [
-          "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+          "Apple displayed emphasis, progressive rendering, VoiceOver, saving/reopening, guide insertion and native translation rendering",
+          "Official MADLAD and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-          "Missing bucket matches require source-specific review before identifying external content blockers.",
-          "Other four lexical-role selectors still need clinical suitability review.",
-          "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+          "Only seven complete exact source contexts are reviewed; universal generated/source educational semantic coverage remains incomplete",
+          "Full scientific educational content, source-to-image/hotspot mapping and missing approved paragraphs remain distinct gaps",
+          "Preserved original source statements are not newly clinically validated; complete all relevant external acceptance"
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
-        "Missing bucket matches require source-specific review before identifying external content blockers.",
-        "Other four lexical-role selectors still need clinical suitability review.",
-        "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+        "Only seven complete exact source contexts are reviewed; universal generated/source educational semantic coverage remains incomplete",
+        "Full scientific educational content, source-to-image/hotspot mapping and missing approved paragraphs remain distinct gaps",
+        "Preserved original source statements are not newly clinically validated; complete all relevant external acceptance"
       ],
-      "commit_reference": "batch:AMH-existing-original-definition-and-age-factor-retrieval (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T15:46:09.109178+00:00",
+      "commit_reference": "batch:Hormone-source-context-anchors-and-qualifiers (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T20:10:53.967772+00:00",
       "batch_evidence": [
         {
           "batch": "Hormone-library-complete-scoped-source-retrieval",
@@ -462,6 +468,37 @@
             ]
           },
           "parent_checkpoint": "d6890253ce058e1e449f287b7371cd9698cb7d32"
+        },
+        {
+          "batch": "Hormone-source-context-anchors-and-qualifiers",
+          "implementation_evidence": "Actual Hormone Library now visibly retains progesterone/AMH interpretation limitations through shared source semantic roles; all seven hormones/seven aspects and clinical completeness remain open.",
+          "files": [
+            "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
+            "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
+            "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
+            "development_workflow/BLOCKERS.md"
+          ],
+          "tests": [
+            "Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords",
+            "Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords",
+            "Prompt1BResearchEngineIntegrationTests"
+          ],
+          "verification": {
+            "executed": {
+              "focused_XCTest": "40 passed, zero failures; actual hormone-provider excerpt display, canonical research engine and all reviewed-context byte/approval/identity tests",
+              "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+            },
+            "not_run": [
+              "Apple displayed emphasis, progressive rendering, VoiceOver, saving/reopening, guide insertion and native translation rendering",
+              "Official MADLAD and clinical/native-language acceptance"
+            ],
+            "remaining": [
+              "Only seven complete exact source contexts are reviewed; universal generated/source educational semantic coverage remains incomplete",
+              "Full scientific educational content, source-to-image/hotspot mapping and missing approved paragraphs remain distinct gaps",
+              "Preserved original source statements are not newly clinically validated; complete all relevant external acceptance"
+            ]
+          },
+          "parent_checkpoint": "12f50378b761597b7d33022bf6836e99dfd329ef"
         }
       ]
     },

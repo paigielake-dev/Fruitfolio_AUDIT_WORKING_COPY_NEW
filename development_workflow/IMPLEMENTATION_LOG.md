@@ -4450,3 +4450,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained", "full_portable_XCTest": "1120 passed, zero failures, final source", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.", "Swift_Testing": "21 passed, zero failures"}.
 - Next action: Continue source-grounded cross-part implementation at scientific placement/content310–314; keep exact outstanding missing approved content and hotspot mappings separate from implemented canvas behavior. Complete original/founder reconciliation without claiming unrun Apple/official MADLAD acceptance.
 - Commit: containing commit for batch Calendar-daily-log-source-calendar-civil-day-handoff.
+
+## Hormone-source-context-anchors-and-qualifiers
+
+- Parent checkpoint: 12f50378b761597b7d33022bf6836e99dfd329ef.
+- Source-order requirements: [47, 50, 51, 52, 55, 59, 304, 310, 311, 313, 314, 443, 444].
+- Separate founder additions: ['SPEC-4.9.7'].
+- Source files: Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift, FruitfolioTests/Prompt1BHormoneLibraryTests.swift, FruitfolioTests/Prompt1BSemanticSliceTests.swift, development_workflow/BLOCKERS.md, development_workflow/HORMONE_SOURCE_CONTEXT_ANCHORS_AND_QUALIFIERS.json.
+- Extend canonical semantic metadata for actual complete progesterone, AMH-evaluation and follicular-differentiation paragraphs. Preserve prior anchors and all exact source words/citations; emphasize original uncertainty and prescribing limits, not diagnostic certainty. Actual provider tests caught and now prevent duplicate-authority masking. Persist exact fourteen missing approved educational content IDs rather than invent scientific paragraphs or hotspot mappings.
+- Tests added/updated: Prompt1BHormoneLibraryTests.testActualCorpusUsesOnlyCompleteEligibleParagraphsAndTheirOwnSourceRecords, Prompt1BSemanticSliceTests.testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords, Prompt1BResearchEngineIntegrationTests.
+- Verification: {"focused_XCTest": "40 passed, zero failures; actual hormone-provider excerpt display, canonical research engine and all reviewed-context byte/approval/identity tests", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."}.
+- Next action: Remove repeated full-source scans for fixed educational content IDs known unsupported in a successfully loaded immutable approved corpus; do not cache patient questions/context or transient package-load failures. Measure actual lookup behavior and preserve unavailable semantics, then continue remaining original/founder requirements.
+- Commit: containing commit for batch Hormone-source-context-anchors-and-qualifiers.

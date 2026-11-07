@@ -79,7 +79,10 @@ final class Prompt1BSemanticSliceTests: XCTestCase {
         let explicit = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_RESEARCH_PATH"].map { URL(fileURLWithPath: $0) }
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json"))
         let package = try JSONDecoder().decode(FruitfolioResearchPackage.self, from: Data(contentsOf: url))
-        for review in FruitfolioReviewedSemanticContexts.passages {
+        let reviews = FruitfolioReviewedSemanticContexts.passages
+        XCTAssertEqual(Set(reviews.map(\.noteID)).count, reviews.count, "Each reviewed source identity must have one authority")
+        XCTAssertEqual(Set(reviews.map { Data($0.originalText.utf8) }).count, reviews.count, "Duplicate exact contexts would silently hide later reviewed roles")
+        for review in reviews {
             let note = try XCTUnwrap(package.researchNoteChunks.first(where: { $0.chunkID == review.noteID }))
             XCTAssertNotEqual(note.retrievalEligibility, false)
             XCTAssertFalse(note.sourceIDs.isEmpty)
