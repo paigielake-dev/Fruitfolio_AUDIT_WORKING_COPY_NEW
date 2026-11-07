@@ -4076,3 +4076,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"Ask_lifecycle_tests_executed": 0, "portable_enrollment_attempt": "Compilation failed before test discovery: FruitfolioSemanticDocument is defined with the Apple renderer, outside portable source set.", "isolated_real_Linux_Foundation_probe": "Compiler rejects AttributedString markdown options/inlineOnlyPreservingWhitespace used by the actual parser; no compatibility shim installed. Initial probe cache-path issue was corrected using /tmp module cache, then the genuine API failure was confirmed.", "recovered_existing_Contact_XCTest": 7, "logs": ["/tmp/fruitfolio_actual_ask_model_lifecycle_first.log", "/tmp/fruitfolio_foundation_markdown_capability.log", "/tmp/fruitfolio_portable_probe_recovery.log"]}.
 - Next action: Continue independent original requirements and founder additions; keep native Ask lifecycle verification explicitly pending macOS/Xcode.
 - Commit: containing commit for batch Actual-Ask-lifecycle-capability-probe-and-portable-recovery.
+
+## Unnumbered-founder-source-coverage-and-FAQ-unfold
+
+- Parent checkpoint: ec4dfc6306cba16a7ac429b3791d34676e0df578.
+- Source-order requirements: [68, 70, 378, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Hub/FAQ/Prompt29FAQView.swift, Tools/sync_founder_source_coverage.py, development_workflow/FOUNDER_SOURCE_COVERAGE.json, development_workflow/UNNUMBERED_FOUNDER_COVERAGE_AND_FAQ_UNFOLD.json.
+- Restore founder20B FAQ unfolding with immediate state update/Reduce Motion support; establish exact persistent unindexed-source coverage preserving progress and raw legacy bytes. Individually annotate10 source paragraphs, leaving applicability/complete verification open rather than inventing completion.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, development_workflow/tests/test_founder_source_coverage.py.
+- Verification: {"workflow_checks": 75, "new_source_coverage_regressions_included": 4, "swift_syntax_files": 326, "failures": 0, "original_478_preserved": 478, "exact_supplementals_preserved": 36, "founder_text_candidates_indexed": 484, "candidate_paragraphs_individually_annotated_with_scoped_evidence": 10, "candidate_applicability_reviews_remaining": 474, "logs": ["/tmp/fruitfolio_founder_coverage_tests.log", "/tmp/fruitfolio_founder_coverage_full_workflow.log", "/tmp/fruitfolio_faq_unfold_final_syntax.log"], "limits": "Candidate indexing is source integrity, not completion. No native FAQ unfold execution is included."}.
+- Next action: Continue missing actionable requirements across all original parts and exact founder additions, using new source-candidate IDs for unnumbered evidence; native FAQ/Ask/model/clinical acceptance remains pending.
+- Commit: containing commit for batch Unnumbered-founder-source-coverage-and-FAQ-unfold.

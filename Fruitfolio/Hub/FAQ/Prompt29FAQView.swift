@@ -49,6 +49,21 @@ private struct Prompt29FAQSectionCard: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
 
+    private func toggleQuestion(_ id: String) {
+        let update = {
+            if expanded.remove(id) == nil { expanded.insert(id) }
+        }
+        if motionPreferences.reduceMotionActive {
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction, update)
+        } else {
+            // Animate intrinsic accordion layout with its original text/art,
+            // without delaying the state change or scheduling callbacks.
+            withAnimation(.easeInOut(duration: 0.20), update)
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             FruitfolioTranslatedText(source: section.title,
@@ -59,7 +74,7 @@ private struct Prompt29FAQSectionCard: View {
             ForEach(section.items) { item in
                 let isExpanded = expanded.contains(item.id)
                 Prompt29FAQQuestionButton(item: item, isExpanded: isExpanded) {
-                    if expanded.remove(item.id) == nil { expanded.insert(item.id) }
+                    toggleQuestion(item.id)
                 }
                 if isExpanded {
                     FruitfolioTranslatedText(source: item.answer,
@@ -68,6 +83,7 @@ private struct Prompt29FAQSectionCard: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)
                         .accessibilityIdentifier("faq.answer.\(item.id)")
+                        .transition(.opacity)
                     if item.id == "lifebridge-information" {
                         WatercolorSecondaryButton(label: "open LifeBridge information") { showLifeBridge = true }
                     }
