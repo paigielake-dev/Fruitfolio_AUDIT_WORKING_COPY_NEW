@@ -2807,6 +2807,10 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["1 selected for one question"].waitForExistence(timeout: 3))
         app.buttons["remove attachments"].tap()
         XCTAssertFalse(app.staticTexts["1 selected for one question"].exists)
+        attach.tap()
+        XCTAssertTrue(measurement.waitForExistence(timeout: 3))
+        XCTAssertEqual(measurement.value as? String, "0", "Removing attachments must not reselect patient records")
+        XCTAssertTrue(app.staticTexts["12.50 ng/mL"].exists, "Original laboratory fields remain verbatim")
     }
 
     func testWheelNoteActionsStayReachableAtAccessibilitySize() {

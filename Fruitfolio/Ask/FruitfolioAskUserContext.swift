@@ -1,5 +1,50 @@
 import Foundation
 
+/// Fixed privacy copy is identified by type, never by matching error text.
+nonisolated enum FruitfolioAskContextNotice: Equatable, Sendable {
+    case selectionChanged(wasInFlight: Bool)
+    case changedBeforeSending
+    case singleQuestionEducation
+    case tooLarge
+    case external(String)
+
+    init(error: any Error) {
+        if let failure = error as? FruitfolioAskUserContext.Failure {
+            switch failure { case .tooLarge: self = .tooLarge }
+        } else { self = .external(error.localizedDescription) }
+    }
+
+    var text: String {
+        switch self {
+        case .selectionChanged(let wasInFlight):
+            return wasInFlight
+                ? "your health context changed. that request was cancelled; choose current records before asking again."
+                : "your health context changed. choose the current records again before sharing them."
+        case .changedBeforeSending:
+            return "your context changed before sending. choose current records again."
+        case .singleQuestionEducation:
+            return "selected context is used only for this question; these are educational research excerpts, not a clinical interpretation."
+        case .tooLarge:
+            return "choose fewer context items for this question. nothing has been shared yet."
+        case .external(let text): return text
+        }
+    }
+    var fixedSource: String? {
+        if case .external = self { return nil }
+        return text
+    }
+}
+
+nonisolated struct FruitfolioAskContextSelectionCopy: Sendable {
+    let source: String
+    let protectedLiterals: [String]
+    init(count: Int, locale: Locale) {
+        let number = count.formatted(.number.locale(locale))
+        source = "\(number) selected for one question"
+        protectedLiterals = [number]
+    }
+}
+
 /// Explicit, single-question snapshot. Not Codable as a whole, never stored in
 /// messages, answers, analytics or Research Library caches.
 nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
@@ -14,7 +59,7 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
     static let maximumJSONBytes = 6_000
     enum Failure: LocalizedError {
         case tooLarge
-        var errorDescription: String? { "choose fewer context items for this question. nothing has been shared yet." }
+        var errorDescription: String? { FruitfolioAskContextNotice.tooLarge.text }
     }
     func promptJSON() throws -> String {
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]

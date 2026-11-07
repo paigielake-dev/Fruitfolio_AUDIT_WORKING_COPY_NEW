@@ -11,6 +11,43 @@ private actor Prompt1BContextCapturingSynthesis: FruitfolioLanguageModel {
 }
 
 final class Prompt1BAskUserContextTests: XCTestCase {
+    func testOnlyTypedContextFailuresQualifyAsFixedTranslationCopy() {
+        let controlled = FruitfolioAskContextNotice(error: FruitfolioAskUserContext.Failure.tooLarge)
+        XCTAssertEqual(controlled, .tooLarge)
+        XCTAssertEqual(controlled.fixedSource, FruitfolioAskUserContext.Failure.tooLarge.errorDescription)
+        let spoof = NSError(domain: "untrusted-provider", code: 1,
+            userInfo: [NSLocalizedDescriptionKey: controlled.text])
+        let external = FruitfolioAskContextNotice(error: spoof)
+        XCTAssertNil(external.fixedSource, "Identical error text must not establish trusted copy")
+        XCTAssertEqual(external.text, controlled.text)
+    }
+
+    func testUnknownErrorRetainsExactOriginalBytesAndIsNeverFixedCopy() {
+        let original = "cafe\u{301} [source-A] **private** 12,50 µg/L"
+        let notice = FruitfolioAskContextNotice(error: NSError(domain: "fixture", code: 2,
+            userInfo: [NSLocalizedDescriptionKey: original]))
+        XCTAssertNil(notice.fixedSource)
+        XCTAssertEqual(Array(notice.text.utf8), Array(original.utf8))
+    }
+
+    func testNativeSelectionCountIsProtectedAndCannotRewritePatientSnapshot() throws {
+        let record = measurement()
+        let snapshot = try XCTUnwrap(FruitfolioAskUserContext.selected(measurementIDs: [record.id],
+            personalCategories: [], measurements: [record], context: .unspecified))
+        let originalJSON = try snapshot.promptJSON()
+        for locale in ["en_US", "fr_FR", "ar", "hi_IN", "ja_JP"] {
+            let copy = FruitfolioAskContextSelectionCopy(count: 1234, locale: Locale(identifier: locale))
+            let number = try XCTUnwrap(copy.protectedLiterals.first)
+            let envelope = try FruitfolioScientificTranslationEnvelope(copy.source, protectedLiterals: copy.protectedLiterals)
+            XCTAssertFalse(envelope.prepared.contains(number))
+            XCTAssertEqual(try envelope.restore(envelope.prepared), copy.source)
+            XCTAssertThrowsError(try envelope.validateCatalogCandidate(copy.source.replacingOccurrences(of: number, with: "999")))
+        }
+        XCTAssertEqual(try snapshot.promptJSON(), originalJSON)
+        XCTAssertEqual(snapshot.records.first?.fields["result_exactly_as_entered"], "12,50")
+        XCTAssertEqual(snapshot.records.first?.fields["unit_exactly_as_entered"], "µg/L")
+    }
+
     private func measurement() -> FruitfolioHormoneMeasurement {
         var record = FruitfolioHormoneMeasurement()
         record.hormone = .progesterone; record.result = "12,50"; record.unit = "µg/L"

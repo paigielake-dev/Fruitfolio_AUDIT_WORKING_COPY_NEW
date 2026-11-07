@@ -16,7 +16,7 @@ struct Prompt09AskView: View {
     @State private var showingContextPicker = false
     @State private var selectedContextMeasurements: Set<UUID> = []
     @State private var selectedContextCategories: Set<FruitfolioPersonalHealthCategory> = []
-    @State private var contextSharingMessage: String?
+    @State private var contextSharingMessage: FruitfolioAskContextNotice?
     @State private var sendTask: Task<Void, Never>?
     @State private var sendTaskGeneration = UUID()
     @State private var pendingContextSend = false
@@ -42,6 +42,7 @@ struct Prompt09AskView: View {
     @State private var conversationViewportHeight: CGFloat = 0
 
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.locale) private var appLocale
 
     @FocusState private var inputFocused: Bool
 
@@ -1283,14 +1284,25 @@ struct Prompt09AskView: View {
                 }
                 .disabled(viewModel.phase == .searching)
                 if !selectedContextMeasurements.isEmpty || !selectedContextCategories.isEmpty {
-                    Text("\(selectedContextMeasurements.count + selectedContextCategories.count) selected for one question").font(.caption)
-                    Button("remove attachments") { selectedContextMeasurements = []; selectedContextCategories = [] }
-                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    let copy = FruitfolioAskContextSelectionCopy(
+                        count: selectedContextMeasurements.count + selectedContextCategories.count, locale: appLocale)
+                    FruitfolioFixedText(source: copy.source, protectedLiterals: copy.protectedLiterals, font: .caption)
+                    WatercolorSecondaryButton(label: "remove attachments") {
+                        selectedContextMeasurements = []; selectedContextCategories = []
+                    }
                 }
             }
             .padding(.horizontal, 20)
-            if let contextSharingMessage { Text(contextSharingMessage).font(.caption).padding(.horizontal, 20) }
+            if let contextSharingMessage {
+                Group {
+                    if let source = contextSharingMessage.fixedSource {
+                        FruitfolioFixedText(source: source, font: .caption, serious: true)
+                    } else {
+                        Text(verbatim: contextSharingMessage.text).font(.caption)
+                    }
+                }
+                .padding(.horizontal, 20)
+            }
             questionInputRow
         }
     }
@@ -1306,9 +1318,7 @@ struct Prompt09AskView: View {
             }
         }
         selectedContextMeasurements = []; selectedContextCategories = []
-        contextSharingMessage = wasInFlight
-            ? "your health context changed. that request was cancelled; choose current records before asking again."
-            : "your health context changed. choose the current records again before sharing them."
+        contextSharingMessage = .selectionChanged(wasInFlight: wasInFlight)
     }
 
     private var questionInputRow: some View {
@@ -1435,9 +1445,9 @@ struct Prompt09AskView: View {
             userContext = try FruitfolioAskUserContext.selected(measurementIDs: selectedContextMeasurements,
                 personalCategories: selectedContextCategories, measurements: contextMeasurements.records,
                 context: prompt27AContextStore.context)
-        } catch { contextSharingMessage = error.localizedDescription; return }
+        } catch { contextSharingMessage = .init(error: error); return }
         selectedContextMeasurements = []; selectedContextCategories = []
-        contextSharingMessage = userContext == nil ? nil : "selected context is used only for this question; these are educational research excerpts, not a clinical interpretation."
+        contextSharingMessage = userContext == nil ? nil : .singleQuestionEducation
 
         inputFocused = false
 
@@ -1459,10 +1469,10 @@ struct Prompt09AskView: View {
                     personalCategories: requestedCategories, measurements: contextMeasurements.records,
                     context: prompt27AContextStore.context)
                 guard current == userContext else {
-                    contextSharingMessage = "your context changed before sending. choose current records again."
+                    contextSharingMessage = .changedBeforeSending
                     return
                 }
-            } catch { contextSharingMessage = error.localizedDescription; return }
+            } catch { contextSharingMessage = .init(error: error); return }
             await viewModel.submitCurrentQuestion(reduceMotion: motionPreferences.reduceMotionActive, userContext: userContext)
         }
     }

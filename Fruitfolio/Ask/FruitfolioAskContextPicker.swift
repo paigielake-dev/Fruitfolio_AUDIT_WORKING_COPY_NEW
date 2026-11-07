@@ -10,7 +10,7 @@ struct FruitfolioAskContextPicker: View {
     let onCancel: () -> Void
     @State private var measurementIDs: Set<UUID>
     @State private var categories: Set<FruitfolioPersonalHealthCategory>
-    @State private var errorMessage: String?
+    @State private var errorMessage: FruitfolioAskContextNotice?
     @State private var viewIsVisible = false
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
@@ -65,7 +65,13 @@ struct FruitfolioAskContextPicker: View {
                     }
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
-                if let errorMessage { FruitfolioFixedText(source: errorMessage, color: .red, serious: true) }
+                if let errorMessage {
+                    if let source = errorMessage.fixedSource {
+                        FruitfolioFixedText(source: source, color: .red, serious: true)
+                    } else {
+                        Text(verbatim: errorMessage.text).foregroundStyle(.red)
+                    }
+                }
                 WatercolorPrimaryButton(label: "attach selected context") { attach() }
                 WatercolorSecondaryButton(label: "cancel") { guard canInteract else { return }; onCancel() }
             }
@@ -94,7 +100,7 @@ struct FruitfolioAskContextPicker: View {
             _ = try FruitfolioAskUserContext.selected(measurementIDs: validIDs, personalCategories: validCategories,
                 measurements: measurements.records, context: contextStore.context)
             onAttach(validIDs, validCategories)
-        } catch { errorMessage = error.localizedDescription }
+        } catch { errorMessage = .init(error: error) }
     }
 }
 
