@@ -4100,3 +4100,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 75, "swift_syntax_files": 326, "static_sound_ownership_diagnostics": 0, "original_About_body_source_literals_preserved": 1, "original_section_heading_source_literals_preserved": 5, "native_About_test_functions_executed": 0, "logs": ["/tmp/fruitfolio_settings_about_workflow.log", "/tmp/fruitfolio_settings_about_final_syntax.log", "/tmp/fruitfolio_settings_about_sound_ownership.log"], "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."}.
 - Next action: Continue independent incomplete functionality and individual source-grounded scope reconciliation, including original global preference and all founder additions; keep Apple/official-model/source/clinical blockers explicit.
 - Commit: containing commit for batch Settings-About-owned-accessibility-and-global-text-routing.
+
+## Hormone-testing-context-and-shared-paragraph-provenance
+
+- Parent checkpoint: 26bfac0d8b1ba7ede4b3d8a625bf35a7771b0df2.
+- Source-order requirements: [256, 257, 258, 262, 443, 444].
+- Separate founder additions: ['SPEC-4.9.7'].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryProvider.swift, Fruitfolio/Hormone Information/HormoneLibraryView.swift, development_workflow/HORMONE_TESTING_SCOPE_AND_SHARED_SOURCE_EVIDENCE.json, development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json.
+- Correct actual Pap/STI→testosterone testing misclassification, preserve shared paragraph role coverage without false unavailable/duplicate prose, and retain exact-byte citation ownership across Unicode equivalents.10 real production-provider regressions pass; no clinical/full-library completion claimed.
+- Tests added/updated: FruitfolioTests/Prompt1BHormoneLibraryTests.swift.
+- Verification: {"focused_actual_Hormone_Library_XCTest": 10, "new_role_reference_provenance_regressions": 3, "workflow_checks": 75, "swift_syntax_files": 326, "failures": 0, "actual_current_lexical_buckets": {"matched": 31, "possible_in_existing_five_section_model": 35, "clinical_complete": false}, "logs": ["/tmp/fruitfolio_hormone_scope_reference_tests.log", "/tmp/fruitfolio_hormone_scope_reference_workflow.log", "/tmp/fruitfolio_hormone_scope_reference_syntax.log"], "scope": "One actual-corpus case exercises all7 hormones; three new nonclinical fixtures exercise production provider scope/shared ownership/Unicode provenance, not clinical truth. Initial edit contained invalid escaped regex characters, compiler rejected before tests; corrected before the final10test pass."}.
+- Next action: Implement missing explicit what-the-hormone-is and measured-level-influence aspects with source-role gates; preserve all original sources and document still-missing approved content individually.
+- Commit: containing commit for batch Hormone-testing-context-and-shared-paragraph-provenance.

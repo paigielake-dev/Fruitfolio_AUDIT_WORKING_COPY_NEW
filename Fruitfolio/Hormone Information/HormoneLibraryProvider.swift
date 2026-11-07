@@ -17,7 +17,7 @@ nonisolated enum FruitfolioHormoneLibrarySection: String, CaseIterable, Identifi
         case .functions: return "function role production secretion regulation"
         case .reproductiveRelevance: return "reproductive ovulation cycle follicle fertility ovary sperm"
         case .measurementLimitations: return "limitations measurement single fluctuation variability assay snapshot guarantee"
-        case .testingContext: return "testing test sample blood laboratory timing reference"
+        case .testingContext: return "testing test tests tested sample samples sampling blood serum plasma saliva urine collection laboratory assay assays measurement measurements measured measuring timing reference"
         case .medicalGuidance: return "clinician doctor evaluate consult interpret diagnosis"
         }
     }
@@ -30,12 +30,40 @@ nonisolated struct FruitfolioHormoneLibraryExcerpt: Identifiable, Sendable {
     let originalText: String
     let presentation: String
     let sources: [AskSourceRecord]
+    var alsoCovers: [FruitfolioHormoneLibrarySection] = []
     var id: String { section.rawValue + ":" + noteID }
 }
 nonisolated struct FruitfolioHormoneLibraryArticle: Sendable {
     let hormone: FruitfolioMeasuredHormone
     let excerpts: [FruitfolioHormoneLibraryExcerpt]
     let contentVersion: String
+
+    func excerpt(for section: FruitfolioHormoneLibrarySection) -> FruitfolioHormoneLibraryExcerpt? {
+        excerpts.first { $0.section == section } ?? excerpts.first { $0.alsoCovers.contains(section) }
+    }
+}
+
+/// A hormone elsewhere in a paragraph does not make unrelated Pap/STI testing
+/// a hormone measurement. This is a bounded retrieval-scope gate, not clinical
+/// entailment or complete chapter acceptance. Original paragraphs stay intact.
+nonisolated enum FruitfolioHormoneLibraryScope {
+    private static let testing = try? NSRegularExpression(
+        pattern: #"\b(?:tests?|testing|tested|assays?|laborator(?:y|ies)|blood|serum|plasma|saliva|urine|samples?|sampling|collection|measure(?:ments?|d)?|measuring)\b"#,
+        options: .caseInsensitive)
+    private static let otherTesting = try? NSRegularExpression(
+        pattern: #"\b(?:pap|smears?|sti|stis|hpv|cervical|chlamydia|gonorrhea|mammograms?|mammography)\b"#,
+        options: .caseInsensitive)
+
+    static func permits(_ section: FruitfolioHormoneLibrarySection, text: String,
+                        matchesHormone: (String) -> Bool) -> Bool {
+        guard section == .testingContext else { return true }
+        guard let testing, let otherTesting else { return false }
+        return text.components(separatedBy: CharacterSet(charactersIn: ".!?\n")).contains { clause in
+            let range = NSRange(clause.startIndex..., in: clause)
+            return matchesHormone(clause) && testing.firstMatch(in: clause, range: range) != nil &&
+                otherTesting.firstMatch(in: clause, range: range) == nil
+        }
+    }
 }
 
 nonisolated enum FruitfolioHormoneResearchMatch {
@@ -120,7 +148,7 @@ actor FruitfolioHormoneLibraryProvider {
         // Class context remains available when no specific candidate fits.
         let matchesSpecificHormone = FruitfolioHormoneResearchMatch.makeMatcher(for: hormone, includeClassAliases: false)
         let specificIDs = Set(candidates.filter { matchesSpecificHormone($0.note.text) }.map { $0.note.chunkID })
-        var usedParagraphs: Set<String> = []
+        var usedParagraphs: Set<Data> = []
         var excerpts: [FruitfolioHormoneLibraryExcerpt] = []
         for section in FruitfolioHormoneLibrarySection.allCases {
             try Task.checkCancellation()
@@ -137,7 +165,8 @@ actor FruitfolioHormoneLibraryProvider {
             let queryTokens = FruitfolioQueryNormalizer.tokens(question)
             let normalizedQuestion = FruitfolioQueryNormalizer.normalize(question)
             var ranked: [FruitfolioRankedNote] = []
-            for candidate in candidates where !candidate.bodyTokens.intersection(terms).isEmpty {
+            for candidate in candidates where !candidate.bodyTokens.intersection(terms).isEmpty &&
+                FruitfolioHormoneLibraryScope.permits(section, text: candidate.note.text, matchesHormone: matchesHormone) {
                 let headingScore = 3 * candidate.headingTokens.intersection(queryTokens).count
                 let bodyScore = candidate.bodyTokens.intersection(queryTokens).count
                 let phraseScore = candidate.normalizedBody.contains(normalizedQuestion) ? 3 : 0
@@ -149,9 +178,18 @@ actor FruitfolioHormoneLibraryProvider {
                 if leftIsSpecific != rightIsSpecific { return leftIsSpecific }
                 return lhs.score == rhs.score ? lhs.chunk.chunkID < rhs.chunk.chunkID : lhs.score > rhs.score
             }
+            var sharedExcerptIndex: Int?
+            var selectedNewParagraph = false
             for result in ranked {
                 let note = result.chunk
-                guard !usedParagraphs.contains(note.text), !note.sourceIDs.isEmpty,
+                let identity = Data(note.text.utf8)
+                if usedParagraphs.contains(identity) {
+                    if sharedExcerptIndex == nil {
+                        sharedExcerptIndex = excerpts.firstIndex { $0.originalText.utf8.elementsEqual(note.text.utf8) }
+                    }
+                    continue
+                }
+                guard !note.sourceIDs.isEmpty,
                       note.sourceIDs.allSatisfy({ approved[$0] != nil }),
                       let presentation = FruitfolioEvidenceCopyPolicy.validatedPresentation(note.text, original: note.text) else { continue }
                 let sources = note.sourceIDs.compactMap { approved[$0] }.map {
@@ -160,8 +198,15 @@ actor FruitfolioHormoneLibraryProvider {
                 }
                 excerpts.append(.init(section: section, noteID: note.chunkID, heading: note.heading,
                     originalText: note.text, presentation: presentation, sources: sources))
-                usedParagraphs.insert(note.text)
+                usedParagraphs.insert(identity)
+                selectedNewParagraph = true
                 break
+            }
+            // Retain existing unique-paragraph choices first. If a qualifying
+            // source is already displayed, reference its actual citation owner
+            // instead of inventing missing research or repeating the paragraph.
+            if !selectedNewParagraph, let index = sharedExcerptIndex {
+                excerpts[index].alsoCovers.append(section)
             }
         }
         try Task.checkCancellation()

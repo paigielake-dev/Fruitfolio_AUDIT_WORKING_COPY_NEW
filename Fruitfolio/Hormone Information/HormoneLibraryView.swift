@@ -55,10 +55,15 @@ struct FruitfolioHormoneLibraryView: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 FruitfolioFixedText(source: section.title, font: .headline, serious: true).accessibilityAddTraits(.isHeader)
                                     .accessibilityIdentifier("hormoneLibrary.section." + section.rawValue)
-                                if let excerpt = article.excerpts.first(where: { $0.section == section }) {
-                                    Text(verbatim: excerpt.heading).font(.caption.bold())
-                                    FruitfolioTranslatedText(source: excerpt.presentation, protectedLiterals: excerpt.sources.map(\.id),
-                                        font: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true, sourceRecords: excerpt.sources)
+                                if let excerpt = article.excerpt(for: section) {
+                                    if excerpt.section == section {
+                                        Text(verbatim: excerpt.heading).font(.caption.bold())
+                                        FruitfolioTranslatedText(source: excerpt.presentation, protectedLiterals: excerpt.sources.map(\.id),
+                                            font: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true, sourceRecords: excerpt.sources)
+                                    } else {
+                                        FruitfolioFixedText(source: "the complete original excerpt for this topic is shown under \(excerpt.section.title).",
+                                            font: .callout, serious: true)
+                                    }
                                     FruitfolioSourceCitationList(sources: excerpt.sources)
                                 } else {
                                     FruitfolioFixedText(source: "details not available in the approved library yet.", font: .callout, serious: true)

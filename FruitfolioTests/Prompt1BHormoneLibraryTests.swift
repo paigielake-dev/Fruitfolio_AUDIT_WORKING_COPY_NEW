@@ -14,6 +14,11 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             let article = try await provider.article(for: hormone)
             XCTAssertEqual(article.hormone, hormone)
             XCTAssertEqual(article.contentVersion, package.contentVersion)
+            if hormone == .testosterone {
+                XCTAssertNotEqual(article.excerpt(for: .testingContext)?.noteID,
+                                  "note_c2b00a93b9db19e8dd52d0d3",
+                                  "Pap/STI screening is not testosterone laboratory testing")
+            }
             if hormone == .progesterone {
                 let functions = try XCTUnwrap(article.excerpts.first { $0.section == .functions })
                 XCTAssertTrue(functions.originalText.contains("progesterone is made after ovulation by the corpus luteum"))
@@ -23,13 +28,15 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
 
             // Retain exact actual-corpus coverage for requirement257 / SPEC4.9.7.
             // A matched excerpt is retrieval evidence, never clinical completeness.
-            let coverage = article.excerpts.map { $0.section.rawValue + "=" + $0.noteID }.joined(separator: ";")
+            let coverage = FruitfolioHormoneLibrarySection.allCases.compactMap { section in
+                article.excerpt(for: section).map { section.rawValue + "=" + $0.noteID }
+            }.joined(separator: ";")
             let missing = FruitfolioHormoneLibrarySection.allCases.filter { section in
-                !article.excerpts.contains(where: { $0.section == section })
+                article.excerpt(for: section) == nil
             }.map(\.rawValue).joined(separator: ",")
             print("HORMONE_LIBRARY_SOURCE_COVERAGE|\(hormone.rawValue)|\(coverage)|missing=\(missing)")
             XCTAssertFalse(article.excerpts.isEmpty, "Actual approved corpus should supply at least one \(hormone) excerpt")
-            XCTAssertEqual(Set(article.excerpts.map(\.originalText)).count, article.excerpts.count)
+            XCTAssertEqual(Set(article.excerpts.map { Data($0.originalText.utf8) }).count, article.excerpts.count)
             if hormone == .estradiol {
                 let functions = try XCTUnwrap(article.excerpts.first(where: { $0.section == .functions }))
                 XCTAssertTrue(FruitfolioHormoneResearchMatch.makeMatcher(for: .estradiol, includeClassAliases: false)(functions.originalText),
@@ -168,4 +175,79 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
         }
     }
 
+}
+
+extension Prompt1BHormoneLibraryTests {
+    private func scopeFixture(_ entries: [(id: String, text: String, heading: String)]) throws
+        -> (URL, FruitfolioHormoneLibraryProvider) {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let sources = entries.map { entry in
+            FruitfolioResearchSource(sourceID: "source-" + entry.id, title: "Nonclinical scope fixture",
+                authors: nil, organization: nil, publicationDate: nil, publicationType: nil,
+                canonicalURL: nil, doi: nil, apa7Reference: "Fixture, not medical evidence.",
+                verificationStatus: "verified", retrievalEligibility: true, sourceVersion: "fixture-v1",
+                verifiedAt: nil, contentVersion: "fixture-v1")
+        }
+        let notes = entries.map { entry in
+            FruitfolioResearchNoteChunk(chunkID: entry.id, researchTopicID: "scope-fixture",
+                heading: entry.heading, subheading: nil, text: entry.text,
+                sourceIDs: ["source-" + entry.id], semanticTags: [], domainTags: [], retrievalEligibility: true)
+        }
+        let package = FruitfolioResearchPackage(schemaVersion: 1, contentVersion: "fixture-v1",
+            generatedFrom: "test", generationNote: "Nonclinical role/provenance fixture only",
+            researchNoteChunks: notes, sources: sources, sourceChunks: [])
+        let url = directory.appendingPathComponent("research.json")
+        try JSONEncoder().encode(package).write(to: url)
+        return (directory, FruitfolioHormoneLibraryProvider(packageStore: .init(resourceURL: url)))
+    }
+
+    func testActualProviderRejectsHighRankedPapSTITestingAndRetainsRealHormoneTestingScope() async throws {
+        let good = "Testosterone blood testing fixture label; no medical assertion."
+        let (directory, provider) = try scopeFixture([
+            ("bad", "Testosterone and Pap tests are scope labels. STI testing is another unrelated label.",
+             "testosterone testing test sample blood laboratory timing reference"),
+            ("good", good, "Nonclinical fixture")
+        ])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .testosterone)
+        let excerpt = try XCTUnwrap(article.excerpt(for: .testingContext))
+        XCTAssertEqual(excerpt.noteID, "good")
+        XCTAssertEqual(Data(excerpt.originalText.utf8), Data(good.utf8))
+        XCTAssertEqual(excerpt.sources.map(\.id), ["source-good"])
+    }
+
+    func testOneCompleteSourceCanCoverTwoSectionsWithoutFalseUnavailableOrDuplicateBody() async throws {
+        let original = "Prolactin testing has a single measurement fixture label; no medical assertion."
+        let (directory, provider) = try scopeFixture([("shared", original, "Nonclinical fixture")])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .prolactin)
+        XCTAssertEqual(article.excerpts.count, 1)
+        let limitations = try XCTUnwrap(article.excerpt(for: .measurementLimitations))
+        let testing = try XCTUnwrap(article.excerpt(for: .testingContext))
+        XCTAssertEqual(testing.noteID, limitations.noteID)
+        XCTAssertEqual(testing.sources, limitations.sources)
+        XCTAssertEqual(testing.sources.map(\.id), ["source-shared"])
+        XCTAssertEqual(Data(testing.originalText.utf8), Data(original.utf8))
+        XCTAssertTrue(limitations.alsoCovers.contains(.testingContext))
+    }
+
+    func testCanonicallyEquivalentDistinctSourceBytesKeepTheirOwnParagraphsAndCitations() async throws {
+        let first = "Prolactin testing has a single measurement café fixture; no medical assertion."
+        let second = first.decomposedStringWithCanonicalMapping
+        XCTAssertEqual(first, second)
+        XCTAssertNotEqual(Data(first.utf8), Data(second.utf8))
+        let (directory, provider) = try scopeFixture([
+            ("a", first, "Nonclinical fixture"), ("b", second, "Nonclinical fixture")
+        ])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .prolactin)
+        XCTAssertEqual(article.excerpts.count, 2)
+        XCTAssertEqual(Set(article.excerpts.map { Data($0.originalText.utf8) }).count, 2)
+        XCTAssertEqual(Set(article.excerpts.map(\.originalText)).count, 1)
+        for excerpt in article.excerpts {
+            XCTAssertEqual(excerpt.sources.map(\.id), ["source-" + excerpt.noteID])
+            XCTAssertEqual(Data(excerpt.originalText.utf8), Data((excerpt.noteID == "a" ? first : second).utf8))
+        }
+    }
 }
