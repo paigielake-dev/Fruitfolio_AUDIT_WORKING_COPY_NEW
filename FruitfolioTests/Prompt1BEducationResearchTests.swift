@@ -216,3 +216,30 @@ final class Prompt1BEducationResearchTests: XCTestCase {
     }
 
 }
+
+#if canImport(SwiftUI) && canImport(UIKit)
+import SwiftUI
+import UIKit
+
+@MainActor
+final class Prompt1BEducationVisitOwnershipTests: XCTestCase {
+    func testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn() async {
+        let visit = FruitfolioEducationVisit(research: .shared)
+        visit.visible = true
+        visit.active = true
+        let original = visit.generation
+        let queued = Task { @MainActor in visit.acceptsAction(original) }
+        visit.path.append(FruitfolioEducationCollection.genetics)
+        XCTAssertNotEqual(visit.generation, original, "Navigation must revoke ownership synchronously, not wait for SwiftUI onChange")
+        let admitted = await queued.value
+        XCTAssertFalse(admitted, "A queued action from the previous destination must not open its sources or save payload")
+        let pushed = visit.generation
+        visit.path.removeLast()
+        XCTAssertNotEqual(visit.generation, pushed)
+        XCTAssertEqual(visit.path.count, 0)
+        visit.cancelRead()
+        XCTAssertFalse(visit.acceptsAction(pushed))
+        XCTAssertFalse(visit.loading)
+    }
+}
+#endif

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T19:50:51.574734+00:00",
+  "updated_at": "2026-11-07T19:54:56.740166+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14294,6 +14294,45 @@
         ]
       },
       "timestamp": "2026-11-07T19:50:51.574734+00:00"
+    },
+    {
+      "batch": "Education-parent-navigation-and-deferred-action-ownership",
+      "requirements": [
+        11,
+        68,
+        443,
+        444,
+        446
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt1BEducationResearchTests|Prompt27ScienceContentTests|Prompt26PregnancyEducationTests|Prompt25FertilizationCoreTests",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
+      ],
+      "results": {
+        "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+        "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+        "sound_ownership_static": "0 diagnostics"
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+          "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+          "sound_ownership_static": "0 diagnostics"
+        },
+        "not_run": [
+          "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+          "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+          "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
+        ],
+        "remaining": [
+          "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+          "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+          "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
+        ]
+      },
+      "timestamp": "2026-11-07T19:54:56.740166+00:00"
     }
   ]
 }

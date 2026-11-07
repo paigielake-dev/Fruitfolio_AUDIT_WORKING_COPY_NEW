@@ -4414,3 +4414,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests", "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"}.
 - Next action: Resume independent cross-part source reconciliation at310–314; identify actual missing illustration/content mappings and implement supported gaps without inventing artwork coordinates or scientific approvals. Context narrative clinical relevance and Apple acceptance remain open.
 - Commit: containing commit for batch Context-deterministic-display-rule-explanation.
+
+## Education-parent-navigation-and-deferred-action-ownership
+
+- Parent checkpoint: 2b193e4f7e805cbbe7245bb4b06dc258ee74c068.
+- Source-order requirements: [11, 68, 443, 444, 446].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/FruitfolioEducationLibraryView.swift, FruitfolioTests/Prompt1BEducationResearchTests.swift, development_workflow/EDUCATION_PARENT_NAVIGATION_OWNERSHIP.json.
+- Existing education visit synchronously cancels reads/revokes generation in path didSet. Deferred pregnancy/science source/save/related navigation callbacks capture only Sendable UUID owner and check current admission before mutating parent. Scene activity/visibility publish for disabled state; links and close/source-back controls guard activity and coverage. Global popup revokes pending reads; path audio foreground owner guard. No artwork, source corpus, citations, saved content or child scientific policies changed.
+- Tests added/updated: Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (NOT_RUN), Prompt1BEducationResearchTests, Prompt27ScienceContentTests, Prompt26PregnancyEducationTests, Prompt25FertilizationCoreTests.
+- Verification: {"portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent", "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified", "sound_ownership_static": "0 diagnostics"}.
+- Next action: Continue actual observed-log explanation coverage: present typed symptom-report counts with missing/deleted/foreign records excluded and no biological confirmation, then continue next independent original/founder gaps. Apple parent ownership verification remains pending.
+- Commit: containing commit for batch Education-parent-navigation-and-deferred-action-ownership.

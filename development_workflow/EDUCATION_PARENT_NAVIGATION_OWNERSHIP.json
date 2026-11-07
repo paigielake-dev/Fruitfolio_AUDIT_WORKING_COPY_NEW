@@ -1,0 +1,38 @@
+{
+  "scope": "Actual SwiftUI parent source changes and written native regression; no Linux runtime claim for changed parent",
+  "requirements": {
+    "11": "Guard parent navigation page audio and controls with foreground/visible/uncovered ownership; publish activity changes so enabled state refreshes.",
+    "68": "Synchronously revoke queued child callbacks and pending reads when NavigationPath changes rather than waiting for a deferred onChange event.",
+    "443": "Native test now checks actual parent path changes revoke generation before queued actor actions; NOT_RUN on Linux. Existing relevant corpus/model regressions passed but do not execute parent.",
+    "444": "Native regression added in existing project XCTest file, not an external-only check.",
+    "446": "Sound static ownership check passes; actual Apple navigation/sound acceptance still pending."
+  },
+  "verification": {
+    "executed": {
+      "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+      "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+      "sound_ownership_static": "0 diagnostics",
+      "workflow": "75 passed, zero failures; /tmp/fruitfolio_education_parent_ownership_workflow.log"
+    },
+    "not_run": [
+      "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+      "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+      "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
+    ],
+    "remaining": [
+      "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+      "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+      "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
+    ]
+  },
+  "source_sha256": {
+    "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift": "cdd6c4bc4b5a1be3d17d7339ef3f48882935ff60367798da198cac9c65644157",
+    "FruitfolioTests/Prompt1BEducationResearchTests.swift": "0540496cd33ab1758b5cb2a4c8a3ec1c096a2f2291ab8986356f1d6aa5c9bf8e"
+  },
+  "logs": [
+    "/tmp/fruitfolio_education_parent_ownership_portable.log",
+    "/tmp/fruitfolio_education_parent_ownership_final_syntax.log",
+    "/tmp/fruitfolio_education_parent_ownership_final_sound.log"
+  ],
+  "implementation": "Existing education visit synchronously cancels reads/revokes generation in path didSet. Deferred pregnancy/science source/save/related navigation callbacks capture only Sendable UUID owner and check current admission before mutating parent. Scene activity/visibility publish for disabled state; links and close/source-back controls guard activity and coverage. Global popup revokes pending reads; path audio foreground owner guard. No artwork, source corpus, citations, saved content or child scientific policies changed."
+}

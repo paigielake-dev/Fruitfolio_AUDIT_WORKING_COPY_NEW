@@ -4,8 +4,14 @@ import UIKit
 /// A visit owned by the existing Ask presentation. Only explicit page actions
 /// prepare sources or a save payload; navigation never depends on predictions.
 @MainActor
-private final class FruitfolioEducationVisit: ObservableObject {
-    @Published var path = NavigationPath()
+final class FruitfolioEducationVisit: ObservableObject {
+    @Published var path = NavigationPath() {
+        didSet {
+            // Invalidate synchronously, before a queued child callback can be
+            // admitted on the next actor turn for a different destination.
+            cancelRead()
+        }
+    }
     @Published var sources: [AskSourceRecord] = []
     @Published var sourceTitle = "approved sources"
     @Published var showingSources = false
@@ -14,15 +20,22 @@ private final class FruitfolioEducationVisit: ObservableObject {
     @Published private(set) var loading = false
     let research: FruitfolioEducationResearch
     weak var popups: PopupCoordinator?
-    var visible = false
-    var active = false
+    @Published var visible = false
+    @Published var active = false
     private var operation: Task<Void, Never>?
-    private var generation = UUID()
+    private(set) var generation = UUID()
 
     init(research: FruitfolioEducationResearch) { self.research = research }
-    private var canAct: Bool {
+    var canAct: Bool {
         visible && active && UIApplication.shared.applicationState == .active &&
             popups?.currentPopup == nil && !showingSources && pendingSave == nil
+    }
+    func acceptsAction(_ identity: UUID) -> Bool {
+        canAct && generation == identity && !Task.isCancelled
+    }
+    var canDismissSources: Bool {
+        visible && active && UIApplication.shared.applicationState == .active &&
+            popups?.currentPopup == nil && showingSources
     }
     func cancelRead() {
         generation = UUID()
@@ -120,6 +133,7 @@ struct FruitfolioEducationLibraryView: View {
                         }
                         .buttonStyle(CutePopButtonStyle())
                         .accessibilityIdentifier("education.collection." + collection.rawValue)
+                        .disabled(!visit.canAct)
                     }
                     FruitfolioFixedText(source: "pages show complete excerpts available in the approved local library, not a complete textbook or a personal assessment. detailed sections without approved content remain unavailable.", font: .footnote, serious: true)
                 }
@@ -140,9 +154,14 @@ struct FruitfolioEducationLibraryView: View {
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                FruitfolioControlPillButton(label: "close", action: onClose)
+                FruitfolioControlPillButton(label: "close") {
+                    guard visit.canAct else { return }
+                    visit.cancelRead()
+                    onClose()
+                }
                     .modifier(FruitfolioFixedAccessibilityLabel(source: "close education"))
                     .accessibilityIdentifier("education.close")
+                    .disabled(!visit.canAct)
             }
         }
         .safeAreaInset(edge: .bottom) {
@@ -162,8 +181,12 @@ struct FruitfolioEducationLibraryView: View {
             FruitfolioPresentedPopupHost {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        BackControl(action: { visit.showingSources = false })
+                        BackControl(action: {
+                            guard visit.canDismissSources else { return }
+                            visit.showingSources = false
+                        })
                             .accessibilityIdentifier("education.sources.back")
+                            .disabled(!visit.canDismissSources)
                         FruitfolioFixedText(source: visit.sourceTitle, font: .headline, serious: true)
                             .accessibilityAddTraits(.isHeader)
                         FruitfolioSourceCitationList(sources: visit.sources)
@@ -186,15 +209,19 @@ struct FruitfolioEducationLibraryView: View {
             if !visit.active { visit.cancelRead() }
         }
         .onChange(of: visit.path) { _, _ in
-            visit.cancelRead()
             visit.status = nil
+            guard visit.canAct else { return }
             audio.play(.pageTurn)
+        }
+        .onChange(of: popups.currentPopup?.id) { _, id in
+            if id != nil { visit.cancelRead() }
         }
         .onDisappear { visit.visible = false; visit.cancelRead() }
     }
 
     @ViewBuilder
     private func collection(_ destination: FruitfolioEducationCollection) -> some View {
+        let actionIdentity = visit.generation
         switch destination {
         case .fertilization:
             Prompt25FertilizationModule(contentProvider: FruitfolioFertilizationResearchAdapter(research: visit.research),
@@ -219,9 +246,18 @@ struct FruitfolioEducationLibraryView: View {
                 .navigationBarBackButtonHidden(true)
         case .pregnancy:
             Prompt26PregnancyEducationRootView(provider: FruitfolioPregnancyResearchAdapter(research: visit.research),
-                actions: .init(openSources: { [weak visit] ids in Task { @MainActor in visit?.openSources(ids) } },
-                    saveEducationEntry: { [weak visit] entry in Task { @MainActor in visit?.save(entry.contentID) } },
-                    openFertilizationEducation: { [weak visit] in Task { @MainActor in visit?.openFertilization() } }),
+                actions: .init(openSources: { [weak visit] ids in Task { @MainActor in
+                        guard let visit, visit.acceptsAction(actionIdentity) else { return }
+                        visit.openSources(ids)
+                    } },
+                    saveEducationEntry: { [weak visit] entry in Task { @MainActor in
+                        guard let visit, visit.acceptsAction(actionIdentity) else { return }
+                        visit.save(entry.contentID)
+                    } },
+                    openFertilizationEducation: { [weak visit] in Task { @MainActor in
+                        guard let visit, visit.acceptsAction(actionIdentity) else { return }
+                        visit.openFertilization()
+                    } }),
                 entryContext: .intentionalEncyclopediaOpen)
                 .accessibilityIdentifier("education.module.pregnancy")
         case .genetics, .body, .laboratory:
@@ -234,6 +270,7 @@ struct FruitfolioEducationLibraryView: View {
                                 font: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true).frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                         }.buttonStyle(CutePopButtonStyle())
                         .accessibilityIdentifier("education.asset." + asset.id.rawValue)
+                        .disabled(!visit.canAct)
                     }
                 }.padding(20)
             }.navigationTitle(Text(verbatim: settings.localized(destination.title)))
@@ -248,14 +285,21 @@ struct FruitfolioEducationLibraryView: View {
 
     private func sciencePage(_ asset: Prompt27ScientificAsset) -> some View {
         let id = FruitfolioEducationResearch.scienceID(for: asset)
+        let actionIdentity = visit.generation
         let section = Prompt27ContextualScienceSection(id: id,
             title: FruitfolioEducationResearch.title(for: asset),
             bodyContentID: id, primaryVisualFamily: asset.family, primaryIllustrationAssetID: asset.id,
             altText: asset.altText)
         return Prompt27ContextualScienceSectionView(section: section,
             provider: FruitfolioScienceResearchAdapter(research: visit.research),
-            actions: .init(showSources: { [weak visit] ids in Task { @MainActor in visit?.openSources(ids) } },
-                saveEducationalContent: { [weak visit] _ in Task { @MainActor in visit?.save(id) } }))
+            actions: .init(showSources: { [weak visit] ids in Task { @MainActor in
+                        guard let visit, visit.acceptsAction(actionIdentity) else { return }
+                        visit.openSources(ids)
+                    } },
+                saveEducationalContent: { [weak visit] _ in Task { @MainActor in
+                    guard let visit, visit.acceptsAction(actionIdentity) else { return }
+                    visit.save(id)
+                } }))
     }
 }
 

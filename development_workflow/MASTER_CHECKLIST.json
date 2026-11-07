@@ -1597,7 +1597,9 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
-        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift"
+        "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
+        "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1674,9 +1676,12 @@
         "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
         "Prompt10SavedLibraryTests",
         "Prompt1BBookMotionTests",
-        "Prompt1BSharedLibraryCatalogTests"
+        "Prompt1BSharedLibraryCatalogTests",
+        "Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (NOT_RUN)",
+        "Prompt27ScienceContentTests",
+        "Prompt26PregnancyEducationTests"
       ],
-      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-parent-navigation-and-deferred-action-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1718,38 +1723,33 @@
         "Science save/source/hotspot/retry callbacks now gate active visible uncovered owner; native event/audio acceptance pending. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json",
         "Final logging handoff rechecks foreground/uncovered ownership rather than visibility alone; no queued inactive navigation replay. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
         "Shell/daily-log final callbacks require current active uncovered owner; consumed confirmation cannot survive scene inactivity. Native event/sound acceptance pending. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
-        "Actual Library/create/rename/delete actions and opening page sound now require owned active presentation; captured epochs reject stale callbacks. Apple event/sound acceptance pending. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
+        "Actual Library/create/rename/delete actions and opening page sound now require owned active presentation; captured epochs reject stale callbacks. Apple event/sound acceptance pending. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json",
+        "Guard parent navigation page audio and controls with foreground/visible/uncovered ownership; publish activity changes so enabled state refreshes."
       ],
-      "last_updated": "2026-11-07T18:40:39.853144+00:00",
+      "last_updated": "2026-11-07T19:54:56.740166+00:00",
       "latest_batch_verification": {
-        "batch": "Library-owned-forms-and-shared-deletion-recovery",
+        "batch": "Education-parent-navigation-and-deferred-action-ownership",
         "executed": {
-          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
-          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
-          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
-          "sound_ownership": "0diagnostics"
+          "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+          "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+          "sound_ownership_static": "0 diagnostics"
         },
         "not_run": [
-          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
-          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
-          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
-          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+          "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+          "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+          "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
         ],
         "remaining": [
-          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+          "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+          "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+          "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+        "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+        "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+        "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
       ],
       "prior_batch_verifications": [
         {
@@ -2048,6 +2048,29 @@
             "Verify loaded dirty editor identity/draft remains intact while parent refreshes; day/owner never changes",
             "Verify consumed confirmation cannot replay after background, ordinary unconsumed popup remains available, and focus restores correctly on Apple",
             "Verify all existing shared logging overlays/canonical controls and device performance before closing original297\u2013300/303"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Library-owned-forms-and-shared-deletion-recovery",
+          "executed": {
+            "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+            "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+            "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+            "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+            "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+            "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+          ],
+          "remaining": [
+            "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+            "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+            "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+            "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+            "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -8167,7 +8190,9 @@
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
         "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json"
+        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json",
+        "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8197,9 +8222,13 @@
         "development_workflow/tests/test_founder_source_coverage.py",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
         "FruitfolioTests/Prompt1BDailyLogWriteTests.swift",
-        "FruitfolioTests/Prompt20DailyLogCoreTests.swift"
+        "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
+        "Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (NOT_RUN)",
+        "Prompt1BEducationResearchTests",
+        "Prompt27ScienceContentTests",
+        "Prompt26PregnancyEducationTests"
       ],
-      "commit_reference": "batch:Daily-log-single-expansion-owner-and-founder-main-spec-scope (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-parent-navigation-and-deferred-action-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
@@ -8211,43 +8240,33 @@
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
         "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure.",
         "FAQ unfolding changes selected state immediately inside native animation transaction with no delayed callback or artificial wait; actual native responsiveness remains unverified.",
-        "Immediate toggle uses one owner rather than a second move/fade subtree; actual latency/gesture smoothness remains native acceptance pending."
+        "Immediate toggle uses one owner rather than a second move/fade subtree; actual latency/gesture smoothness remains native acceptance pending.",
+        "Synchronously revoke queued child callbacks and pending reads when NavigationPath changes rather than waiting for a deferred onChange event."
       ],
-      "last_updated": "2026-11-07T17:13:28.701838+00:00",
+      "last_updated": "2026-11-07T19:54:56.740166+00:00",
       "latest_batch_verification": {
-        "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+        "batch": "Education-parent-navigation-and-deferred-action-ownership",
         "executed": {
-          "existing_actual_daily_log_domain_XCTest": 21,
-          "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "failures": 0,
-          "logs": [
-            "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
-            "/tmp/fruitfolio_daily_section_final_syntax.log",
-            "/tmp/fruitfolio_daily_section_sound.log"
-          ],
-          "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+          "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+          "sound_ownership_static": "0 diagnostics"
         },
         "not_run": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Official MADLAD inference, Apple UI and physical-device verification."
+          "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+          "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+          "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
         ],
         "remaining": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-          "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-          "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+          "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+          "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+          "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-        "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-        "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-        "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-        "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+        "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+        "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+        "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
       ],
       "prior_batch_verifications": [
         {
@@ -8326,6 +8345,34 @@
             "Do not infer any478-item completion percentage from candidate/commit/test counts or source presence.",
             "Execute actual FAQ fold/unfold and readable Dynamic Type/RTL layout on Apple; syntax alone does not prove it.",
             "Canonical FAQ tulip, official MADLAD artifacts/device framework, reviewed scientific/first-party content, backend and clinical acceptance remain independently open."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+          "executed": {
+            "existing_actual_daily_log_domain_XCTest": 21,
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
+              "/tmp/fruitfolio_daily_section_final_syntax.log",
+              "/tmp/fruitfolio_daily_section_sound.log"
+            ],
+            "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          },
+          "not_run": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Official MADLAD inference, Apple UI and physical-device verification."
+          ],
+          "remaining": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
+            "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
+            "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -47255,9 +47302,12 @@
         "Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance",
         "Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails",
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
-        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
+        "Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (NOT_RUN)",
+        "Prompt27ScienceContentTests",
+        "Prompt26PregnancyEducationTests"
       ],
-      "commit_reference": "batch:Context-deterministic-display-rule-explanation (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-parent-navigation-and-deferred-action-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -47416,31 +47466,33 @@
         "Three actual new production engine/projection regressions plus87focused/1111full portable and21SwiftTesting passed; Apple/official-model checks unrun. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json",
         "Execute source regression tests for actual corpus, provenance, private facts, cancellation, all personal categories, resume and context removal; native UI test written but not executed.",
         "Actual Hashimoto/Graves corpus and canonical engine test verifies relevance and question/claim separation; existing consent/privacy/limit tests extended.",
-        "Executed regression checks combined pregnancy/lactation suppression, context removal, unknown history and unchanged mathematics. Native UI assertion updated but NOT_RUN."
+        "Executed regression checks combined pregnancy/lactation suppression, context removal, unknown history and unchanged mathematics. Native UI assertion updated but NOT_RUN.",
+        "Native test now checks actual parent path changes revoke generation before queued actor actions; NOT_RUN on Linux. Existing relevant corpus/model regressions passed but do not execute parent."
       ],
-      "last_updated": "2026-11-07T19:50:51.574734+00:00",
+      "last_updated": "2026-11-07T19:54:56.740166+00:00",
       "latest_batch_verification": {
-        "batch": "Context-deterministic-display-rule-explanation",
+        "batch": "Education-parent-navigation-and-deferred-action-ownership",
         "executed": {
-          "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
-          "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+          "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+          "sound_ownership_static": "0 diagnostics"
         },
         "not_run": [
-          "Apple build and updated context-research UI test (source present; no execution)",
-          "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
-          "Official MADLAD and clinical/source relevance acceptance"
+          "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+          "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+          "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
         ],
         "remaining": [
-          "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-          "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-          "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+          "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+          "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-        "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-        "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+        "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+        "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+        "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
       ],
       "prior_batch_verifications": [
         {
@@ -48611,6 +48663,24 @@
             "Full semantic narrative interpretation and all field-specific clinical relevance remain unverified; lexical relevance is not medical entailment",
             "Non-English personal-narrative retrieval is not established by English corpus lexical matching",
             "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-deterministic-display-rule-explanation",
+          "executed": {
+            "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
+            "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          },
+          "not_run": [
+            "Apple build and updated context-research UI test (source present; no execution)",
+            "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
+            "Official MADLAD and clinical/source relevance acceptance"
+          ],
+          "remaining": [
+            "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
+            "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
+            "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -49082,9 +49152,12 @@
         "Prompt1BAskUserContextTests.testOnlyChosenRecordsRetainExactUnitsValuesAndExplicitProvenance",
         "Prompt1BAskUserContextTests.testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails",
         "Prompt27AContextResearchTests.testWhyPresentationExplainsRestrictionsWithoutInventingHistoryOrChangingPolicy",
-        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval (UPDATED, NOT_RUN)",
+        "Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (NOT_RUN)",
+        "Prompt27ScienceContentTests",
+        "Prompt26PregnancyEducationTests"
       ],
-      "commit_reference": "batch:Context-deterministic-display-rule-explanation (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-parent-navigation-and-deferred-action-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -49226,31 +49299,33 @@
         "New tests live in project Calendar engine Swift tests, exercise actual production model and typed projection; no fake locale/MADLAD inference. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json",
         "Add meaningful regression tests in project XCTest and native UI sources rather than only external checklist annotations.",
         "Project XCTest source contains executed corpus test and note-exclusion/oversize assertions.",
-        "Regression assertions live in project XCTest and existing native UI test sources; no additional disposable fixtures."
+        "Regression assertions live in project XCTest and existing native UI test sources; no additional disposable fixtures.",
+        "Native regression added in existing project XCTest file, not an external-only check."
       ],
-      "last_updated": "2026-11-07T19:50:51.574734+00:00",
+      "last_updated": "2026-11-07T19:54:56.740166+00:00",
       "latest_batch_verification": {
-        "batch": "Context-deterministic-display-rule-explanation",
+        "batch": "Education-parent-navigation-and-deferred-action-ownership",
         "executed": {
-          "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
-          "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+          "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+          "sound_ownership_static": "0 diagnostics"
         },
         "not_run": [
-          "Apple build and updated context-research UI test (source present; no execution)",
-          "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
-          "Official MADLAD and clinical/source relevance acceptance"
+          "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+          "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+          "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
         ],
         "remaining": [
-          "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-          "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-          "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+          "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+          "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
-        "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
-        "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+        "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+        "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+        "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
       ],
       "prior_batch_verifications": [
         {
@@ -50423,6 +50498,24 @@
             "Clinical acceptance of associations and every deterministic context-policy subcondition remain open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Context-deterministic-display-rule-explanation",
+          "executed": {
+            "focused_XCTest": "81 passed, zero failures; actual context policy and eight research-report tests",
+            "syntax": "337 Swift files parsed, zero syntax errors; not Apple SDK typechecking"
+          },
+          "not_run": [
+            "Apple build and updated context-research UI test (source present; no execution)",
+            "Real-device VoiceOver, Dynamic Type, localization and lifecycle acceptance",
+            "Official MADLAD and clinical/source relevance acceptance"
+          ],
+          "remaining": [
+            "Execute native policy explanation across normal, restricted, missing-history, contradictory and changed/removed contexts",
+            "Verify actual UI uses current snapshot and exposes source citations after asynchronous completion",
+            "Complete broad original/founder context-policy and clinical association requirements; this batch only explains established deterministic decisions"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -50599,7 +50692,9 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
         "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
-        "Fruitfolio/Cycle Tracker/Prompt1BCycleModalRegressionHarness.swift"
+        "Fruitfolio/Cycle Tracker/Prompt1BCycleModalRegressionHarness.swift",
+        "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -50642,9 +50737,14 @@
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (NOT_RUN)",
+        "Prompt1BEducationResearchTests",
+        "Prompt27ScienceContentTests",
+        "Prompt26PregnancyEducationTests",
+        "Prompt25FertilizationCoreTests"
       ],
-      "commit_reference": "batch:Canonical-button-interaction-and-onboarding-cue-owners (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-parent-navigation-and-deferred-action-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
         "# Real root/native-surface popup scope and original citations\n\nTargeted citation failure work exposed an actual gap: FruitPopupHost existed in Hub/gallery but did not apply the shared blur itself, and other root routes had no host. The real root now wraps the existing NavigationStack with that same host. A scoped environment flag suppresses nested Hub/gallery hosts, preserving the existing character artwork, placement, queue and timing instead of rebuilding them or rendering duplicate dialogs. The host now owns shared blur/dim, no spatial scale under Reduce Motion, whole-content hit/VoiceOver exclusion, and modal accessibility traits.\n\nNative Guide read-mode covers and Hormone Library sheets receive a presentation-surface host with its own coordinator. This prevents dialogs from rendering behind UIKit presentations or replaying sounds in root and modal hosts. The same host implementation handles both scopes. A new taped-white request surface uses the existing measured artwork/writing aperture, scroll, explicit actions, shared style/sounds and safe Escape dismissal. It renders no fruit character for the source-link error. Existing character speech remains the default. Root and native presentation/VoiceOver geometry remain Apple-runtime gates.\n\nThe last citation-link system alert is replaced by the owned white-paper request. Original citation titles, full APA/source text (when distinct from the title), publication data, DOI and URL remain verbatim/selectable. A late/superseded/disappeared source component cannot intentionally issue an obsolete request; owner disappearance/source changes cancel its current/queued request. Focus is requested back to a still-existing source button after dismissal. No clinical meaning, reference spelling or user data is rewritten.\n\nThe new queue-cancellation regression initially exposed a real defect: removing a queued request failed to remove its deduplication key, preventing retry. Cancellation now uses the existing key cleanup routine. Seven actual production coordinator tests execute on Linux after removing unnecessary SwiftUI imports and conditionally enabling only the real Combine observation layer on Apple. No fake ObservableObject/Published implementation or mirrored coordinator is used. Four pre-existing synchronous MainActor methods were made async for Linux XCTest discovery; assertions remain. A real Combine publisher regression is Apple-only and NOT_RUN.\n\nAdded actual UI source covers one nested root character popup, one measured citation popup, background exclusion/restoration, source controls and screenshots at accessibility XXXL in both motion settings and native-sheet/root scope. Corrected four invalid/redundant element firstMatch query forms in UI source. All added UIKit/SwiftUI tests and screenshots remain NOT_RUN. No visual, focus, sound or native-sheet layering success is inferred from source parsing.\n\nFinal available verification:475 portable XCTest +21 Swift Testing passed;480 actual native-linked XCTest +21 Swift Testing passed. Twenty-nine workflow tests pass;248 changed Swift files compiler-parse without syntax errors; Xcode project build-file references resolve. The configured XCFramework/Xcode and actual MADLAD resources/clinical/device acceptance remain external gates. Metadata/algorithm tests do not establish app typechecking or UI runtime behavior.\n",
@@ -50681,35 +50781,33 @@
         "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
         "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
-        "Previously silent onboarding native skip/history/help/calendar actions now request one existing soft-pop in their actual action owner; shared canonical style never requests sound. Four existing-fixture audio mute/motion vectors written, not run. Source ownership analyzer reports0; physical sound not verified. Other feature-wide audio conditions remain open."
+        "Previously silent onboarding native skip/history/help/calendar actions now request one existing soft-pop in their actual action owner; shared canonical style never requests sound. Four existing-fixture audio mute/motion vectors written, not run. Source ownership analyzer reports0; physical sound not verified. Other feature-wide audio conditions remain open.",
+        "Sound static ownership check passes; actual Apple navigation/sound acceptance still pending."
       ],
-      "last_updated": "2026-11-07T07:58:34.453670+00:00",
+      "last_updated": "2026-11-07T19:54:56.740166+00:00",
       "latest_batch_verification": {
-        "batch": "Canonical-button-interaction-and-onboarding-cue-owners",
+        "batch": "Education-parent-navigation-and-deferred-action-ownership",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "sound_ownership_source_findings": 0,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent",
+          "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified",
+          "sound_ownership_static": "0 diagnostics"
         },
         "not_run": [
-          "Apple-hosted shared effect geometry regression covering explicit/system/app Reduce Motion",
-          "Four actual onboarding calendar mute/reduce-motion audio UI vectors",
-          "Apple SDK build/typecheck, press animation/touch latency and physical-device audio"
+          "New native Prompt1BEducationVisitOwnershipTests.testPathChangesInvalidateQueuedChildActionsBeforeNextActorTurn (written, not executed)",
+          "Existing native testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+          "Apple SDK build, deferred callback/path generation/runtime enablement and real-device sound/accessibility acceptance"
         ],
         "remaining": [
-          "Execute real onboarding/mute UI vectors and inspect every other applicable sound owner",
-          "Actual device audibility/synchronization and navigation latency"
+          "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+          "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+          "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real onboarding/mute UI vectors and inspect every other applicable sound owner",
-        "Actual device audibility/synchronization and navigation latency"
+        "Execute actual parent visit and NavigationStack change/return/source/save/close/background/global-popup sequences on Apple",
+        "Confirm published owner activity restores eligible navigation and source dismissal without resetting destination or drafts",
+        "Complete missing approved science content/hotspot mappings separately; no content or coordinates invented in this batch"
       ],
       "prior_batch_verifications": [
         {
@@ -50735,6 +50833,29 @@
             "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
             "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
             "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Canonical-button-interaction-and-onboarding-cue-owners",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "sound_ownership_source_findings": 0,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple-hosted shared effect geometry regression covering explicit/system/app Reduce Motion",
+            "Four actual onboarding calendar mute/reduce-motion audio UI vectors",
+            "Apple SDK build/typecheck, press animation/touch latency and physical-device audio"
+          ],
+          "remaining": [
+            "Execute real onboarding/mute UI vectors and inspect every other applicable sound owner",
+            "Actual device audibility/synchronization and navigation latency"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
