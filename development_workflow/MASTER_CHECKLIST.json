@@ -1584,7 +1584,10 @@
         "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "FruitfolioTests/Prompt25FertilizationCoreTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1648,9 +1651,10 @@
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
-        "Prompt1BEducationResearchTests"
+        "Prompt1BEducationResearchTests",
+        "Prompt26PregnancyPresentationLifecycleTests"
       ],
-      "commit_reference": "batch:Fertilization-active-owned-controls-and-sound-admission (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1687,34 +1691,36 @@
         "Opening cue is admitted once per About presentation identity; close/escape share one guard and close cue. No delayed navigation or hidden background audio callback.",
         "Preference bindings now reject inactive/covered writes before audio resume. Language selection admits only its current captured session.",
         "Production wheel guards selection itself using parent admission; note actions consume current presentation before navigation/audio.",
-        "Page sound now admitted only with active/uncovered visible owner and no in-flight transition; actual final callbacks guarded. Apple event/audio correspondence unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json"
+        "Page sound now admitted only with active/uncovered visible owner and no in-flight transition; actual final callbacks guarded. Apple event/audio correspondence unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
+        "Actual Pregnancy save/source/navigation actions and menu bindings now gated by current owned active presentation; Apple queued-event acceptance pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:57:47.348918+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Fertilization-active-owned-controls-and-sound-admission",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
-          "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
-          "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
-          "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-          "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-          "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-          "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-        "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-        "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-        "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -1910,6 +1916,26 @@
             "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Fertilization-active-owned-controls-and-sound-admission",
+          "executed": {
+            "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
+            "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
+            "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
+            "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          ],
+          "remaining": [
+            "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
+            "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
+            "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
+            "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -1984,7 +2010,10 @@
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
         "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
         "FruitfolioTests/Prompt25FertilizationCoreTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2021,9 +2050,10 @@
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
-        "Prompt1BEducationResearchTests"
+        "Prompt1BEducationResearchTests",
+        "Prompt26PregnancyPresentationLifecycleTests"
       ],
-      "commit_reference": "batch:Fertilization-active-owned-controls-and-sound-admission (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -2038,34 +2068,36 @@
         "Press effect is immediate view-state feedback; existing action closures remain synchronous and no navigation delay/queue was introduced. This is an implementation property only, not measured input latency.",
         "Correct demonstrated gap in earlier ButtonStyle-only inventory: six Ask wrappers, one Guide icon wrapper and three Settings row wrappers added independent drag gestures/transforms around already animated controls. Compatibility containers now set the existing ButtonStyle without a second gesture/effect; icon action surface delegates its pressed visual to the same canonical effect and retains exclusive tap/hold, disabled, identification, action and sound ownership. Preserve earlier review with explicit correction rather than treating inventory as whole-app proof. Extend actual four-vector Ask UI regression to hold help without activation or draft mutation, then tap to open. Apple test NOT_RUN; no VERIFIED promotion.",
         "Selection and dismissal update synchronously; Reduce Motion uses nil animation without queued artificial delay.",
-        "Cover/background/disappear cancels actual deferred transition/load acceptance and resets cue without animation; duplicate navigation rejected before sound. No device latency claim. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json"
+        "Cover/background/disappear cancels actual deferred transition/load acceptance and resets cue without animation; duplicate navigation rejected before sound. No device latency claim. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
+        "Topic/provider cancellation, generation validation and reference-task owner/defer prevent stale work replacing current visible topic; actual model noncooperative-provider regressions passed. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:57:47.348918+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Fertilization-active-owned-controls-and-sound-admission",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
-          "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
-          "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
-          "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-          "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-          "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-          "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-        "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-        "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-        "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -2133,6 +2165,26 @@
             "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
             "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
             "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Fertilization-active-owned-controls-and-sound-admission",
+          "executed": {
+            "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
+            "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
+            "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
+            "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          ],
+          "remaining": [
+            "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
+            "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
+            "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
+            "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -27141,7 +27193,11 @@
         "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "FruitfolioTests/Prompt25FertilizationCoreTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27160,9 +27216,10 @@
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
-        "Prompt1BEducationResearchTests"
+        "Prompt1BEducationResearchTests",
+        "Prompt26PregnancyPresentationLifecycleTests"
       ],
-      "commit_reference": "batch:Fertilization-active-owned-controls-and-sound-admission (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
@@ -27171,34 +27228,36 @@
         "Single effect removes scale/offset/rotation when any explicit, OS or shell-derived app Reduce Motion input istrue. One hosted actual SwiftUI geometry test covers rest/press and all3sources; unrun. Display-only environment projection reuses existing settings authority. No claim about all other feature motions/accessibility.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
         "Inactive/covered/disappeared and reduced-motion transitions settle existing decorations without animation;44pt detail target. Apple lifecycle tests unrun. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
-        "Existing reduced-motion/canonical controls retained with nonanimated cancellation and44pt action targets; Apple motion/accessibility acceptance pending. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json"
+        "Existing reduced-motion/canonical controls retained with nonanimated cancellation and44pt action targets; Apple motion/accessibility acceptance pending. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
+        "Topic uses existing MotionPreferences authority for expansion motion; inactive interaction disabled; Apple Reduced Motion/VoiceOver acceptance unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:57:47.348918+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Fertilization-active-owned-controls-and-sound-admission",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
-          "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
-          "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
-          "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-          "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-          "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-          "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-        "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-        "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-        "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -27279,6 +27338,26 @@
             "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
             "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
             "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Fertilization-active-owned-controls-and-sound-admission",
+          "executed": {
+            "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
+            "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
+            "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
+            "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          ],
+          "remaining": [
+            "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
+            "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
+            "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
+            "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -28227,7 +28306,11 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
         "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
-        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28246,44 +28329,47 @@
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BCatalogTranslationTests.swift",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt26PregnancyPresentationLifecycleTests",
+        "Prompt1BEducationResearchTests",
+        "Prompt1BModalAccessibilityTests (NOT_RUN)"
       ],
-      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
-        "Actual scientific education presentation now qualified by existing current context policy instead of stale loaded context. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
+        "Actual scientific education presentation now qualified by existing current context policy instead of stale loaded context. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
+        "Wrong-topic research content IDs rejected before display; old invisible provider cannot replace current education. No new medical facts or approvals. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:54:19.839646+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Body-biology-current-context-and-owned-motion",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
-          "full_portable_XCTest": "1076 passed,0failures",
-          "Swift_Testing": "21 passed,0failures",
-          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK typecheck/build and Body Biology UI rendering",
-          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
-          "Clinical acceptance and official MADLAD translation"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
-          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
-          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
-          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
-        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
-        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
-        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -28302,6 +28388,28 @@
             "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
             "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
             "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Body-biology-current-context-and-owned-motion",
+          "executed": {
+            "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+            "full_portable_XCTest": "1076 passed,0failures",
+            "Swift_Testing": "21 passed,0failures",
+            "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and Body Biology UI rendering",
+            "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+            "Clinical acceptance and official MADLAD translation"
+          ],
+          "remaining": [
+            "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+            "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+            "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+            "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -36317,7 +36425,11 @@
         "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
         "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
-        "FruitfolioTests/Prompt25FertilizationCoreTests.swift"
+        "FruitfolioTests/Prompt25FertilizationCoreTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -36359,9 +36471,10 @@
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
-        "Prompt1BEducationResearchTests"
+        "Prompt1BEducationResearchTests",
+        "Prompt26PregnancyPresentationLifecycleTests"
       ],
-      "commit_reference": "batch:Fertilization-active-owned-controls-and-sound-admission (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -36381,34 +36494,36 @@
         "Own/cancel one deferred focus task, reject inactive/covered bindings/actions and retain unsubmitted fields; native accessibility remains pending.",
         "Expose current expanded/collapsed state with stable section IDs and no reduced-motion transform interpolation; native VO/gesture testing remains NOT_RUN.",
         "Accessible44pt fimbriae target and stable identifier; current context limitation remains intrinsically sized. Apple VoiceOver/UI acceptance pending. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
-        "Sources/Ask/Save44pt minimum targets, stage heading stable accessibility identifier and disabled inactive controls; Apple VoiceOver and translated layout acceptance unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json"
+        "Sources/Ask/Save44pt minimum targets, stage heading stable accessibility identifier and disabled inactive controls; Apple VoiceOver and translated layout acceptance unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
+        "Stable topic/topic-page identifiers and active-state accessibility/control ownership; Apple VoiceOver/dynamic layout pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:57:47.348918+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Fertilization-active-owned-controls-and-sound-admission",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
-          "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
-          "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
-          "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-          "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-          "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-          "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-        "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-        "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-        "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -36636,6 +36751,26 @@
             "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
             "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
             "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Fertilization-active-owned-controls-and-sound-admission",
+          "executed": {
+            "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
+            "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
+            "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
+            "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          ],
+          "remaining": [
+            "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
+            "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
+            "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
+            "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -44962,7 +45097,8 @@
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
         "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
-        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -45153,9 +45289,10 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt21BodyBiologyCoreTests",
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
-        "Prompt1BModalAccessibilityTests (NOT_RUN)"
+        "Prompt1BModalAccessibilityTests (NOT_RUN)",
+        "Prompt26PregnancyPresentationLifecycleTests"
       ],
-      "commit_reference": "batch:Fertilization-active-owned-controls-and-sound-admission (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -45304,34 +45441,36 @@
         "Actual new context-presentation XCTest covers eight explicit contexts, policy/context preservation, and absent-context nil case;82focusedtests passed. This does not execute SwiftUI. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
         "Actual new regression covers triple context, conflicting explicit reports and two overlapping-surrogacy deduplication cases;80focused XCTestpassed. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Actual new Body Biology engine regression tests explicit pregnancy, menopause and hormonal-contraception restrictions plus unchanged default input.96focused and1076full portable XCTest+21SwiftTesting passed. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
-        "Existing native lifecycle regression now asserts duplicate transition rejected; existing native UI test adds background/return stage and draft preservation. Both unrun on Linux;16underlying portable tests passed. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json"
+        "Existing native lifecycle regression now asserts duplicate transition rejected; existing native UI test adds background/return stage and draft preservation. Both unrun on Linux;16underlying portable tests passed. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
+        "Two actual production model lifecycle tests run on Linux, including canceled noncooperative provider, newer result retention, reference retention and wrong-topic rejection;24focused tests passed. Fetal SwiftUI/UI acceptance remains unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:57:47.348918+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Fertilization-active-owned-controls-and-sound-admission",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
-          "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
-          "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
-          "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-          "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-          "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-          "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-        "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-        "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-        "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -46294,6 +46433,26 @@
             "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
             "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
             "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Fertilization-active-owned-controls-and-sound-admission",
+          "executed": {
+            "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
+            "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
+            "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
+            "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          ],
+          "remaining": [
+            "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
+            "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
+            "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
+            "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -46543,7 +46702,8 @@
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
         "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
-        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -46729,9 +46889,10 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt21BodyBiologyCoreTests",
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
-        "Prompt1BModalAccessibilityTests (NOT_RUN)"
+        "Prompt1BModalAccessibilityTests (NOT_RUN)",
+        "Prompt26PregnancyPresentationLifecycleTests"
       ],
-      "commit_reference": "batch:Fertilization-active-owned-controls-and-sound-admission (resolve containing commit with git log)",
+      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -46863,34 +47024,36 @@
         "New regression lives in existing project Swift test source, not merely a checklist receipt. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
         "Regression assertions committed in project Swift test source. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Regression uses project Swift test source and actual production engine; no fake Apple framework or rendering verification. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
-        "Updated native lifecycle/UI assertions live in actual project test source, with explicit NOT_RUN status. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json"
+        "Updated native lifecycle/UI assertions live in actual project test source, with explicit NOT_RUN status. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
+        "Actual model and lifecycle tests are project Swift sources included in portable runner; native UI regression also updated with explicit NOT_RUN. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
       ],
-      "last_updated": "2026-11-07T17:57:47.348918+00:00",
+      "last_updated": "2026-11-07T18:03:18.423016+00:00",
       "latest_batch_verification": {
-        "batch": "Fertilization-active-owned-controls-and-sound-admission",
+        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
         "executed": {
-          "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
-          "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
-          "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
-          "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+          "Clinical translation acceptance/official MADLAD and real-device checks"
         ],
         "remaining": [
-          "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-          "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-          "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-          "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
-        "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
-        "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
-        "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
       ],
       "prior_batch_verifications": [
         {
@@ -47853,6 +48016,26 @@
             "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
             "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
             "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Fertilization-active-owned-controls-and-sound-admission",
+          "executed": {
+            "portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block",
+            "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Updated native Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition (SwiftUI/Combine unavailable)",
+            "Updated native educational-navigation UI test:1method/1launch with background/return stage/draft preservation",
+            "Apple popup-cover, rapid-navigation sound correspondence, VoiceOver, touch geometry, RTL and Reduce Motion acceptance"
+          ],
+          "remaining": [
+            "Verify actual popup-covered/inactive/disappeared actions cannot route or mutate education state on Apple",
+            "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
+            "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
+            "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

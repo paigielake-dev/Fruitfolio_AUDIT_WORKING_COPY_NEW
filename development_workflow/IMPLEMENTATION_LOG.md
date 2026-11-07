@@ -4294,3 +4294,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_underlying_XCTest": "16 passed,0failures:10sequence/core and6actual research-content checks; does not execute SwiftUI or native lifecycle block", "syntax": "330 Swift files parsed,0syntax errors; not Apple SDK typechecking", "sound_ownership": "0diagnostics"}.
 - Next action: Continue Pregnancy Education active request and action ownership; inspect actual provider lifecycle and preserve source/citation and scientific-artwork boundaries.
 - Commit: containing commit for batch Fertilization-active-owned-controls-and-sound-admission.
+
+## Pregnancy-owned-topic-and-reference-research-requests
+
+- Parent checkpoint: b5927b95ae70bef25cad553789f3047abf621d88.
+- Source-order requirements: [11, 12, 303, 314, 390, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift, Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift, FruitfolioTests/Prompt26PregnancyEducationTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, Tools/run_portable_swift_tests.py, development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json.
+- Actual Pregnancy topic model now has explicit request identity, cancellation/suspension, loaded-content preservation and wrong-topic content-ID rejection. Foundation lifecycle compiled directly on Linux; conditional real Combine publishing retained on Apple, no fake framework. Topic view calls suspend on cover/background/disappear; actions and expansion/reference selection gated by current visible/foreground/uncovered state. Fetal reference has selected-ID+activity task identity, stale-result checks, generation-owned loading defer, wrong-content-ID rejection and invalidation on cover/disappear. Existing artwork/medical text/source approvals untouched. Native topic-navigation test extended with background/return. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json
+- Tests added/updated: Prompt26PregnancyPresentationLifecycleTests.testSuspendedNoncooperativeProviderCannotReplaceNewVisibleRequest, Prompt26PregnancyPresentationLifecycleTests.testSuspensionRejectsOldResultWithoutReplacementAndRetryRejectsWrongTopic, Prompt26PregnancyEducationTests, Prompt1BEducationResearchTests, Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy (NOT_RUN).
+- Verification: {"portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests", "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
+- Next action: Continue Genetics/Body/Lab science education actual provider/control ownership; preserve knowledge-boundary routing and citation review.
+- Commit: containing commit for batch Pregnancy-owned-topic-and-reference-research-requests.

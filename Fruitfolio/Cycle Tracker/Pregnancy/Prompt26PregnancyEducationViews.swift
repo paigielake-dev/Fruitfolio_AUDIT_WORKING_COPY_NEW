@@ -53,6 +53,8 @@ struct Prompt26PregnancyEducationStandaloneView: View {
 }
 
 private struct Prompt26PregnancyLandingView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
     let provider: any Prompt26PregnancyResearchProviding
     let actions: Prompt26PregnancyEducationActions
     let entryContext: Prompt26PregnancyEntryContext
@@ -75,6 +77,8 @@ private struct Prompt26PregnancyLandingView: View {
                                 Prompt26TopicCard(topic: topic)
                             }
                             .buttonStyle(Prompt26SoftPressButtonStyle())
+                            .accessibilityIdentifier("pregnancy.topic." + topic.id.rawValue)
+                            .disabled(scenePhase != .active || popupCoordinator.currentPopup != nil)
                         }
                     }
                 }
@@ -142,7 +146,15 @@ private struct Prompt26TopicCard: View {
 private struct Prompt26PregnancyTopicView: View {
     @StateObject private var model: Prompt26PregnancyEducationViewModel
     @State private var isExpanded = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var viewIsVisible = false
+    private var reduceMotion: Bool { motionPreferences.reduceMotionActive }
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && popupCoordinator.currentPopup == nil
+            && UIApplication.shared.applicationState == .active
+    }
 
     private let actions: Prompt26PregnancyEducationActions
     private let modelProvider: any Prompt26PregnancyResearchProviding
@@ -167,19 +179,20 @@ private struct Prompt26PregnancyTopicView: View {
                 }
 
                 if model.topic.id == .fetalDevelopment {
-                    Prompt26FetalReferenceSection(provider: modelProvider, actions: actions)
+                    Prompt26FetalReferenceSection(provider: modelProvider, actions: actions, presentationActive: canInteract)
                 } else {
                     Prompt26HeroIllustration(topic: model.topic)
                 }
 
                 Prompt26ContentBody(
                     state: model.state,
-                    isExpanded: $isExpanded,
-                    retry: model.retry
+                    isExpanded: Binding(get: { isExpanded }, set: { if canInteract { isExpanded = $0 } }),
+                    retry: { guard canInteract else { return }; model.retry() }
                 )
 
                 if model.topic.id == .earlyDevelopment {
                     Button {
+                        guard canInteract else { return }
                         actions.openFertilizationEducation()
                     } label: {
                         FruitfolioFixedText(source: "open fertilization education", font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
@@ -192,7 +205,8 @@ private struct Prompt26PregnancyTopicView: View {
                 Prompt26ActionRow(
                     topic: model.topic,
                     content: model.loadedContent,
-                    actions: actions
+                    actions: actions,
+                    interactionAllowed: { canInteract }
                 )
             }
             .frame(maxWidth: 760, alignment: .leading)
@@ -202,7 +216,17 @@ private struct Prompt26PregnancyTopicView: View {
         .background(Prompt26Palette.paper.ignoresSafeArea())
         .navigationTitle(model.topic.title)
         .navigationBarTitleDisplayMode(.inline)
-        .task { model.loadIfNeeded() }
+        .accessibilityIdentifier("pregnancy.topicPage." + model.topic.id.rawValue)
+        .disabled(!canInteract)
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false; model.suspendPresentation() }
+        .task(id: canInteract) {
+            guard canInteract else { model.suspendPresentation(); return }
+            if let request = model.loadIfNeeded() { await request.value }
+        }
+        .onChange(of: canInteract) { _, active in
+            if !active { model.suspendPresentation() }
+        }
         .animation(reduceMotion ? nil : .easeOut(duration: 0.22), value: isExpanded)
     }
 }
@@ -310,6 +334,12 @@ private struct Prompt26FetalReferenceSection: View {
     }
     let provider: any Prompt26PregnancyResearchProviding
     let actions: Prompt26PregnancyEducationActions
+    let presentationActive: Bool
+    private struct ReferenceRequest: Equatable {
+        let selectedID: String?
+        let active: Bool
+    }
+    @State private var loadIdentity = UUID()
 
     @State private var selectedID = Prompt26PregnancyEducationCatalog.fetalReferencePeriods.first?.id
     @State private var content: Prompt26ApprovedContent?
@@ -325,7 +355,7 @@ private struct Prompt26FetalReferenceSection: View {
         VStack(alignment: .leading, spacing: 14) {
             FruitfolioFixedText(source: "development reference", font: .headline, color: Prompt26Palette.burgundy, serious: true)
 
-            Picker(selection: $selectedID) {
+            Picker(selection: Binding(get: { selectedID }, set: { if presentationActive { selectedID = $0 } })) {
                 ForEach(Prompt26PregnancyEducationCatalog.fetalReferencePeriods) { period in
                     Text(verbatim: FruitfolioSemanticDocument.plainText(from: referenceDisplay(period).text))
                         .tag(Optional(period.id))
@@ -364,6 +394,7 @@ private struct Prompt26FetalReferenceSection: View {
                     let sourceIDs = Array(Set(content.sourceIDs + content.sections.flatMap(\.sourceIDs))).sorted()
                     if !sourceIDs.isEmpty {
                         Button {
+                            guard presentationActive else { return }
                             actions.openSources(sourceIDs)
                         } label: {
                             FruitfolioFixedText(source: "sources · \(sourceIDs.count)", protectedLiterals: [String(sourceIDs.count)], font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)
@@ -375,9 +406,14 @@ private struct Prompt26FetalReferenceSection: View {
         }
         .padding(16)
         .background(Prompt26Palette.card.opacity(0.55), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .task(id: selectedID) {
+        .task(id: ReferenceRequest(selectedID: selectedID, active: presentationActive)) {
+            guard presentationActive else { return }
             await loadSelectedReference()
         }
+        .onChange(of: presentationActive) { _, active in
+            if !active { loadIdentity = UUID(); isLoading = false }
+        }
+        .onDisappear { loadIdentity = UUID(); isLoading = false }
         .task(id: FruitfolioControlTranslationState.TaskKey(
             key: .init(source: "pregnancy development reference options", language: settings.language),
             inferenceAllowed: settings.translationInferenceAllowed)) {
@@ -390,18 +426,23 @@ private struct Prompt26FetalReferenceSection: View {
 
     @MainActor
     private func loadSelectedReference() async {
+        guard presentationActive else { return }
+        let identity = UUID()
+        loadIdentity = identity
+        let requestedID = selectedID
         content = nil
         isUnavailable = false
-        guard let period = selectedPeriod else { return }
+        guard let period = selectedPeriod else { isLoading = false; return }
         isLoading = true
-        defer { isLoading = false }
+        defer { if loadIdentity == identity { isLoading = false } }
 
         do {
             let loaded = try await provider.approvedContent(for: period.contentID)
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, loadIdentity == identity, selectedID == requestedID else { return }
+            guard loaded.contentID == period.contentID else { isUnavailable = true; return }
             content = loaded
         } catch {
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, loadIdentity == identity, selectedID == requestedID else { return }
             isUnavailable = true
         }
     }
@@ -439,6 +480,7 @@ private struct Prompt26ActionRow: View {
     let topic: Prompt26PregnancyEducationTopic
     let content: Prompt26ApprovedContent?
     let actions: Prompt26PregnancyEducationActions
+    let interactionAllowed: () -> Bool
 
     var sourceIDs: [String] {
         Array(Set((content?.sourceIDs ?? []) + contentSectionsSourceIDs)).sorted()
@@ -451,6 +493,7 @@ private struct Prompt26ActionRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Button {
+                guard interactionAllowed() else { return }
                 let entry = Prompt26SavedEducationEntry(
                     topicID: topic.id,
                     title: content?.title ?? topic.title,
@@ -465,6 +508,7 @@ private struct Prompt26ActionRow: View {
 
             if !sourceIDs.isEmpty {
                 Button {
+                    guard interactionAllowed() else { return }
                     actions.openSources(sourceIDs)
                 } label: {
                     FruitfolioFixedText(source: "sources · \(sourceIDs.count)", protectedLiterals: [String(sourceIDs.count)], font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline).bold(), color: Prompt26Palette.burgundy, serious: true)

@@ -37,6 +37,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<12 { if pregnancy.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(pregnancy.isHittable); pregnancy.tap()
         XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "education.module.pregnancy").firstMatch.waitForExistence(timeout: 8))
+        let testingTopic = app.descendants(matching: .any).matching(identifier: "pregnancy.topic.testing").firstMatch
+        XCTAssertTrue(testingTopic.waitForExistence(timeout: 5)); testingTopic.tap()
+        let topicPage = app.descendants(matching: .any).matching(identifier: "pregnancy.topicPage.testing").firstMatch
+        XCTAssertTrue(topicPage.waitForExistence(timeout: 5))
+        XCUIDevice.shared.press(.home); app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+        XCTAssertTrue(topicPage.waitForExistence(timeout: 5), "Returning must preserve intentional topic navigation without changing reported pregnancy")
         let close = app.buttons["education.close"]
         XCTAssertTrue(close.isHittable); close.tap()
         XCTAssertTrue(input.waitForExistence(timeout: 5))

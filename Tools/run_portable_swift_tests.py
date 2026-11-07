@@ -93,6 +93,7 @@ SOURCES = [
     'Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationContent.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift',
     'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationModels.swift',
+    'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift',
     'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationCatalog.swift',
     'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyResearchBridge.swift',
     'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationSafety.swift',

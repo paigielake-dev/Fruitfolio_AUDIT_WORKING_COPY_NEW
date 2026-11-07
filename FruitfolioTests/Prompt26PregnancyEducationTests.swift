@@ -222,3 +222,74 @@ final class Prompt26PregnancyEducationTests: XCTestCase {
     }
 }
 
+
+/// Deliberately ignores task cancellation to test the production generation guard.
+/// These are labelled nonclinical fixtures, not approved pregnancy research.
+private actor Prompt26HeldLifecycleProvider: Prompt26PregnancyResearchProviding {
+    let started: [XCTestExpectation]
+    private var pending: [(String, CheckedContinuation<Prompt26ApprovedContent, any Error>)] = []
+    init(started: [XCTestExpectation]) { self.started = started }
+    func approvedContent(for contentID: String) async throws -> Prompt26ApprovedContent {
+        try await withCheckedThrowingContinuation { continuation in
+            let index = pending.count
+            pending.append((contentID, continuation))
+            started[index].fulfill()
+        }
+    }
+    func finish(_ index: Int, title: String, wrongContentID: Bool = false) {
+        let (contentID, continuation) = pending[index]
+        continuation.resume(returning: .init(contentID: wrongContentID ? "wrong-topic-fixture" : contentID,
+            title: title, summary: "nonclinical lifecycle fixture", sections: [], sourceIDs: ["fixture-source"]))
+    }
+}
+
+@MainActor
+final class Prompt26PregnancyPresentationLifecycleTests: XCTestCase {
+    func testSuspendedNoncooperativeProviderCannotReplaceNewVisibleRequest() async throws {
+        let started = [expectation(description: "first request"), expectation(description: "replacement request")]
+        let provider = Prompt26HeldLifecycleProvider(started: started)
+        let topic = try XCTUnwrap(Prompt26PregnancyEducationCatalog.topics.first)
+        let model = Prompt26PregnancyEducationViewModel(topic: topic, provider: provider)
+        model.selectReferencePeriod("explicit-reference-fixture")
+        let old = try XCTUnwrap(model.loadIfNeeded())
+        let waited0 = await XCTWaiter.fulfillment(of: [started[0]], timeout: 2)
+        XCTAssertEqual(waited0, .completed)
+        model.suspendPresentation()
+        XCTAssertEqual(model.state, .idle)
+        let replacement = try XCTUnwrap(model.loadIfNeeded())
+        let waited1 = await XCTWaiter.fulfillment(of: [started[1]], timeout: 2)
+        XCTAssertEqual(waited1, .completed)
+        await provider.finish(1, title: "new visible request")
+        await replacement.value
+        XCTAssertEqual(model.loadedContent?.title, "new visible request")
+        await provider.finish(0, title: "stale invisible request")
+        await old.value
+        XCTAssertEqual(model.loadedContent?.title, "new visible request")
+        XCTAssertEqual(model.selectedReferencePeriodID, "explicit-reference-fixture")
+        model.suspendPresentation()
+        XCTAssertEqual(model.loadedContent?.title, "new visible request", "Suspension retains already loaded education")
+        XCTAssertNil(model.loadIfNeeded(), "Returning to already loaded education must not trigger another provider request")
+    }
+
+    func testSuspensionRejectsOldResultWithoutReplacementAndRetryRejectsWrongTopic() async throws {
+        let started = [expectation(description: "canceled request"), expectation(description: "retry request")]
+        let provider = Prompt26HeldLifecycleProvider(started: started)
+        let topic = try XCTUnwrap(Prompt26PregnancyEducationCatalog.topics.first)
+        let model = Prompt26PregnancyEducationViewModel(topic: topic, provider: provider)
+        let old = try XCTUnwrap(model.loadIfNeeded())
+        let waited0 = await XCTWaiter.fulfillment(of: [started[0]], timeout: 2)
+        XCTAssertEqual(waited0, .completed)
+        model.suspendPresentation()
+        await provider.finish(0, title: "stale canceled result")
+        await old.value
+        XCTAssertEqual(model.state, .idle)
+        model.retry()
+        let waited1 = await XCTWaiter.fulfillment(of: [started[1]], timeout: 2)
+        XCTAssertEqual(waited1, .completed)
+        let retry = try XCTUnwrap(model.loadIfNeeded())
+        await provider.finish(1, title: "wrong topic result", wrongContentID: true)
+        await retry.value
+        XCTAssertEqual(model.state, .unavailable)
+        XCTAssertNil(model.loadedContent)
+    }
+}
