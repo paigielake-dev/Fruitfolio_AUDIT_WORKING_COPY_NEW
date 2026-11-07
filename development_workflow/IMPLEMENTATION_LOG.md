@@ -4342,3 +4342,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_XCTest": "80passed,0failures:actual daily-log model/storage/write/Today snapshot tests, including2new request-admission/generation tests", "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
 - Next action: Continue current Cycle/log state requirement reconciliation from actual shared-store and view consumers, then remaining original-order independent functionality; keep Apple/official-model acceptance distinct.
 - Commit: containing commit for batch Daily-log-owned-reads-and-shared-cycle-refresh.
+
+## Body-biology-source-grounded-authored-semantic-roles
+
+- Parent checkpoint: 8b484adac0d9db1f50fbe428e68d599ddf168723.
+- Source-order requirements: [46, 48, 50, 51, 313, 314, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift, Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift, Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift, FruitfolioTests/Prompt1BSemanticSliceTests.swift, development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json.
+- Body Biology generated presentation now stores deterministic canonical semantic markup separately from unchanged plain scientific body. Full-context editorial spans authored for follicular, ovulation, luteal and menstruation explanations; neutral education remains plain. Meaningful anchors chosen manually for exact existing contexts, with may inside ovulation anchor and after-ovulation condition retained. Initializer accepts spans only when concatenated UTF8 equals complete body byte-for-byte, otherwise literal original fallback. Existing canonical serious normalization/serializer/translator renderer used; no keyword detector, new style authority, source claim or fact change. Actual view consumes bodyMarkup. Presentation equality deterministic, no persistent schema change. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json
+- Tests added/updated: Prompt1BSemanticSliceTests.testBodyBiologyMeaningRolesKeepCompleteOriginalFounderPassagesAndUncertainty, Prompt21BodyBiologyCoreTests.
+- Verification: {"portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests", "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."}.
+- Next action: Continue missing generated-education semantic integration only where representation and exact source context are known; do not globally keyword-style unreviewed research or rewrite existing authorized markup. Continue independent original requirements when clinical/runtime review unavailable.
+- Commit: containing commit for batch Body-biology-source-grounded-authored-semantic-roles.

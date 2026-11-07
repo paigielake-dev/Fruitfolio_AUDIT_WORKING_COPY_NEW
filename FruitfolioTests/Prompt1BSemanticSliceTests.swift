@@ -35,6 +35,46 @@ final class Prompt1BSemanticSliceTests: XCTestCase {
         }
     }
 
+    func testBodyBiologyMeaningRolesKeepCompleteOriginalFounderPassagesAndUncertainty() throws {
+        guard let researchPath = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_RESEARCH_PATH"] else {
+            throw XCTSkip("Original founder source unavailable; source-golden check NOT_RUN")
+        }
+        let root = URL(fileURLWithPath: researchPath).deletingLastPathComponent().deletingLastPathComponent()
+        let data = try Data(contentsOf: root.appendingPathComponent("development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt"))
+        let start = try XCTUnwrap(data.range(of: Data("44 Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift".utf8)))
+        let end = try XCTUnwrap(data.range(of: Data("45 Cycle Tracker/Body Biology/Prompt21BodyBiologyLoader.swift".utf8),
+                                         options: [], in: start.upperBound..<data.endIndex))
+        let originalSection = data[start.upperBound..<end.lowerBound]
+        let engine = Prompt21BodyBiologyEngine()
+        for state in Prompt21BodyBiologyState.allCases {
+            let input = Prompt21BodyBiologyInput(state: state, contextKind: .educational)
+            let shown = engine.presentation(for: input)
+            XCTAssertNotNil(originalSection.range(of: Data(shown.body.utf8)), "Original complete founder paragraph missing for \(state)")
+            XCTAssertEqual(shown, engine.presentation(for: input), "Role serialization must preserve deterministic presentation equality")
+            let envelope = try FruitfolioScientificTranslationEnvelope(shown.bodyMarkup)
+            XCTAssertEqual(try envelope.restore(envelope.prepared), shown.bodyMarkup)
+            XCTAssertFalse(shown.bodyMarkup.contains("<u>"))
+            switch state {
+            case .neutral: XCTAssertFalse(shown.bodyMarkup.contains("**"))
+            case .follicularEarly, .follicularLater:
+                XCTAssertTrue(shown.bodyMarkup.contains("**follicles in the ovary**"))
+                XCTAssertTrue(shown.bodyMarkup.contains("one may become dominant"))
+            case .estimatedOvulation:
+                XCTAssertTrue(shown.bodyMarkup.contains("**may release an oocyte**"), "Uncertainty remains inside the emphasized phrase")
+            case .luteal:
+                XCTAssertTrue(shown.bodyMarkup.hasPrefix("after ovulation,"))
+                XCTAssertTrue(shown.bodyMarkup.contains("**corpus luteum**"))
+                XCTAssertTrue(shown.bodyMarkup.contains("**progesterone**"))
+            case .menstruation: XCTAssertTrue(shown.bodyMarkup.contains("**uterine lining**"))
+            }
+        }
+        let custom = Prompt21BodyBiologyPresentation(state: .luteal, title: "nonclinical fixture",
+            body: "original nonclinical wording", bodySpans: [.init(text: "different wording", emphasis: .anchorBold)],
+            heroAssetName: "fixture", heroAccessibilityLabel: "fixture")
+        XCTAssertEqual(custom.body, "original nonclinical wording")
+        XCTAssertEqual(custom.bodyMarkup, "original nonclinical wording", "Mismatched roles must fall back to complete literal source")
+    }
+
     func testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords() throws {
         let explicit = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_RESEARCH_PATH"].map { URL(fileURLWithPath: $0) }
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json"))

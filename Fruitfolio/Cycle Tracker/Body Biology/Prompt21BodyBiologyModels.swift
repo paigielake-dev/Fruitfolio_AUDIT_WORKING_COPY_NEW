@@ -49,6 +49,7 @@ nonisolated struct Prompt21BodyBiologyPresentation: Equatable, Sendable {
     let state: Prompt21BodyBiologyState
     let title: String
     let body: String
+    let bodyMarkup: String
     let heroAssetName: String
     let heroAccessibilityLabel: String
     let supportingAssetName: String?
@@ -62,6 +63,7 @@ nonisolated struct Prompt21BodyBiologyPresentation: Equatable, Sendable {
         state: Prompt21BodyBiologyState,
         title: String,
         body: String,
+        bodySpans: [FruitfolioSemanticSpan]? = nil,
         heroAssetName: String,
         heroAccessibilityLabel: String,
         supportingAssetName: String? = nil,
@@ -74,6 +76,14 @@ nonisolated struct Prompt21BodyBiologyPresentation: Equatable, Sendable {
         self.state = state
         self.title = title
         self.body = body
+        let spans = bodySpans.flatMap { authored in
+            authored.map(\.text).joined().utf8.elementsEqual(body.utf8) ? authored : nil
+        } ?? [.init(text: body)]
+        // Serialize the existing canonical roles; UUID identity is not part of
+        // this immutable presentation's equality or persisted scientific text.
+        self.bodyMarkup = FruitfolioSemanticMarkup.markdown(
+            FruitfolioSemanticPolicy.normalized(spans, serious: true)
+        )
         self.heroAssetName = heroAssetName
         self.heroAccessibilityLabel = heroAccessibilityLabel
         self.supportingAssetName = supportingAssetName

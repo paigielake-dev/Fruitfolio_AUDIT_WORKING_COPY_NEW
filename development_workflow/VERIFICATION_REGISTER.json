@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T18:20:48.104466+00:00",
+  "updated_at": "2026-11-07T18:26:36.325276+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14020,6 +14020,44 @@
         ]
       },
       "timestamp": "2026-11-07T18:20:48.104466+00:00"
+    },
+    {
+      "batch": "Body-biology-source-grounded-authored-semantic-roles",
+      "requirements": [
+        46,
+        48,
+        50,
+        51,
+        313,
+        314,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BSemanticSliceTests|Prompt21BodyBiologyCoreTests|Prompt1BSemantic'",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+      ],
+      "results": {
+        "portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests",
+        "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": "28passed,0failures;10semantic slices including actual original founder-source golden and18Body Biology core tests",
+          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+        },
+        "not_run": [
+          "Apple Body Biology semantic rendering/VoiceOver/large-text/RTL",
+          "Official MADLAD translation and clinical/native-language emphasis acceptance"
+        ],
+        "remaining": [
+          "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
+          "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
+          "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+        ]
+      },
+      "timestamp": "2026-11-07T18:26:36.325276+00:00"
     }
   ]
 }

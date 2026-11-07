@@ -30,6 +30,8 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
                 state: .follicularEarly,
                 title: "follicular phase",
                 body: "follicles in the ovary are developing, and one may become dominant as ovulation approaches.",
+                bodySpans: [.init(text: "follicles in the ovary", emphasis: .anchorBold),
+                            .init(text: " are developing, and one may become dominant as ovulation approaches.")],
                 heroAssetName: Prompt21BodyBiologyAsset.follicularEarly,
                 heroAccessibilityLabel: "watercolor educational illustration of an ovary containing developing follicles"
             )
@@ -39,6 +41,8 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
                 state: .follicularLater,
                 title: "follicular phase",
                 body: "follicles in the ovary are developing, and one may become dominant as ovulation approaches.",
+                bodySpans: [.init(text: "follicles in the ovary", emphasis: .anchorBold),
+                            .init(text: " are developing, and one may become dominant as ovulation approaches.")],
                 heroAssetName: Prompt21BodyBiologyAsset.follicularLater,
                 heroAccessibilityLabel: "watercolor educational illustration of a later follicular-stage ovary with one follicle shown more prominently"
             )
@@ -48,6 +52,8 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
                 state: .estimatedOvulation,
                 title: "estimated ovulation window",
                 body: "around ovulation, a mature follicle may release an oocyte from the ovary.",
+                bodySpans: [.init(text: "around ovulation, a mature follicle "),
+                            .init(text: "may release an oocyte", emphasis: .anchorBold), .init(text: " from the ovary.")],
                 heroAssetName: Prompt21BodyBiologyAsset.ovulationRelease,
                 heroAccessibilityLabel: "watercolor educational illustration showing an oocyte being released from a mature ovarian follicle",
                 supportingAssetName: Prompt21BodyBiologyAsset.matureOocyte,
@@ -62,6 +68,9 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
                 state: .luteal,
                 title: "luteal phase",
                 body: "after ovulation, the emptied follicle becomes the corpus luteum and produces progesterone.",
+                bodySpans: [.init(text: "after ovulation, the emptied follicle becomes the "),
+                            .init(text: "corpus luteum", emphasis: .anchorBold), .init(text: " and produces "),
+                            .init(text: "progesterone", emphasis: .anchorBold), .init(text: ".")],
                 heroAssetName: Prompt21BodyBiologyAsset.corpusLuteum,
                 heroAccessibilityLabel: "watercolor educational illustration of an ovary highlighting the corpus luteum after ovulation"
             )
@@ -71,6 +80,8 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
                 state: .menstruation,
                 title: "menstruation",
                 body: "the uterine lining is shedding, marking the beginning of a new menstrual cycle.",
+                bodySpans: [.init(text: "the "), .init(text: "uterine lining", emphasis: .anchorBold),
+                            .init(text: " is shedding, marking the beginning of a new menstrual cycle.")],
                 heroAssetName: Prompt21BodyBiologyAsset.uterus,
                 heroAccessibilityLabel: "watercolor educational illustration of the uterus during menstruation",
                 supportingAssetName: Prompt21BodyBiologyAsset.endometrium,

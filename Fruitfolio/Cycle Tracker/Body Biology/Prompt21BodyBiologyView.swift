@@ -130,7 +130,7 @@ struct Prompt21BodyBiologyView: View {
                     .foregroundStyle(Prompt21Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
-                FruitfolioTranslatedText(source: presentation.body, font: Prompt21Type.body,
+                FruitfolioTranslatedText(source: presentation.bodyMarkup, font: Prompt21Type.body,
                     color: Prompt21Palette.burgundy, serious: true)
                     .font(Prompt21Type.body)
                     .foregroundStyle(Prompt21Palette.burgundy.opacity(0.84))
