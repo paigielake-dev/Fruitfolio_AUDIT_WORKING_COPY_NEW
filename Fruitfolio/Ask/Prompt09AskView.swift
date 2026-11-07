@@ -26,6 +26,7 @@ struct Prompt09AskView: View {
     @ObservedObject private var savedLibrary: Prompt10SavedLibraryStore
     @State private var showLifeBridge = false
     @State private var showingEntryPageTurn = true
+    @State private var entryPageTurnSoundPlayed = false
 
     // MARK: Prompt 10 Save Integration
 
@@ -280,10 +281,12 @@ struct Prompt09AskView: View {
                 .zIndex(100)
             }
         }
-        .task {
+        .task(id: "\(scenePhase == .active)-\(motionPreferences.reduceMotionActive)") {
+            guard scenePhase == .active else { return }
             await runEntryTransition()
         }
-        .task {
+        .task(id: "\(scenePhase == .active)-\(motionPreferences.reduceMotionActive)") {
+            guard scenePhase == .active else { return }
             await revealSuggestions()
         }
         .onAppear {
@@ -1561,95 +1564,48 @@ struct Prompt09AskView: View {
     // MARK: - Entry Transition
 
     @MainActor
-    private func runEntryTransition()
-        async {
-
-        guard
-            showingEntryPageTurn
-        else {
-            return
+    private func runEntryTransition() async {
+        guard showingEntryPageTurn, !Task.isCancelled, scenePhase == .active else { return }
+        if !entryPageTurnSoundPlayed {
+            entryPageTurnSoundPlayed = true
+            audioManager.play(.pageTurn)
         }
-
-        audioManager.play(
-            .pageTurn
-        )
-
-        if motionPreferences
-            .reduceMotionActive {
-
-            try? await Task.sleep(
-                nanoseconds:
-                    120_000_000
-            )
-
-            showingEntryPageTurn =
-                false
-
-            return
-        }
-
-        try? await Task.sleep(
-            nanoseconds:
-                90_000_000
-        )
-
-        withAnimation(
-            .easeInOut(
-                duration: 0.70
-            )
-        ) {
-            showingEntryPageTurn =
-                false
+        do {
+            try await Task.sleep(nanoseconds: motionPreferences.reduceMotionActive ? 120_000_000 : 90_000_000)
+        } catch { return }
+        guard !Task.isCancelled, scenePhase == .active else { return }
+        if motionPreferences.reduceMotionActive {
+            showingEntryPageTurn = false
+        } else {
+            withAnimation(.easeInOut(duration: 0.70)) { showingEntryPageTurn = false }
         }
     }
 
     // MARK: - Suggestion Reveal
 
     @MainActor
-    private func revealSuggestions()
-        async {
-
-        guard
-            suggestionRevealCount ==
-                0
-        else {
-            return
-        }
-
-        if motionPreferences
-            .reduceMotionActive {
-
-            suggestionRevealCount =
-                discoverySuggestions
-                    .count
-
-            return
-        }
-
+    private func revealSuggestions() async {
         let totalSuggestions = discoverySuggestions.count
-        guard totalSuggestions > 0 else { return }
-
-        for count in 1...totalSuggestions {
-
-            if Task.isCancelled {
+        guard !Task.isCancelled, scenePhase == .active,
+              suggestionRevealCount < totalSuggestions else { return }
+        if motionPreferences.reduceMotionActive {
+            suggestionRevealCount = totalSuggestions
+            return
+        }
+        // Continue the same visible sequence after inactivity instead of leaving
+        // a partially revealed discovery card permanently incomplete.
+        for count in (suggestionRevealCount + 1)...totalSuggestions {
+            guard !Task.isCancelled, scenePhase == .active else { return }
+            if motionPreferences.reduceMotionActive {
+                suggestionRevealCount = totalSuggestions
                 return
             }
-
-            withAnimation(
-                .easeOut(
-                    duration: 0.24
-                )
-            ) {
-                suggestionRevealCount =
-                    count
-            }
-
-            try? await Task.sleep(
-                nanoseconds:
-                    115_000_000
-            )
+            withAnimation(.easeOut(duration: 0.24)) { suggestionRevealCount = count }
+            do { try await Task.sleep(nanoseconds: 115_000_000) }
+            catch { return }
         }
     }
+
 }
 
 

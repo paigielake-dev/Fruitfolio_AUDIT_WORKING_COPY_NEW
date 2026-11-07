@@ -3680,3 +3680,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest_passed": 9, "swift_syntax_files": 319, "syntax_errors": 0}.
 - Next action: Continue with outstanding Ask continuous-paper requirements and their actual source/evidence; leave Apple tour rendering, VoiceOver and official translated emphasis acceptance explicitly pending.
 - Commit: containing commit for batch Tour-explicit-feature-semantic-roles.
+
+## Ask-scene-owned-entry-and-discovery-reveal
+
+- Parent checkpoint: 4f6cfd0ff5fc1b50089590f2e2e51368ccc8298f.
+- Source-order requirements: [472, 473].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift.
+- Actual Ask page-turn/discovery tasks now belong to scene activity and Reduce Motion keys. Sleep cancellation returns before publication; inactive task entries are rejected. Interrupted discovery reveals continue from the visible count instead of abandoning all remaining suggestions. Live Reduce Motion settles the remaining suggestions without spring/movement; entry sound retains one owner and plays at most once per mounted entry. Preserve actual question/citation/retrieval/session/save behavior. No whole lifecycle or Reduce Motion status promotion.
+- Tests added/updated: .
+- Verification: {"swift_syntax_files": 319, "syntax_errors": 0, "runtime_tests_executed": 0}.
+- Next action: Continue outstanding research pipeline/functionality requirements using actual source and prior evidence; preserve pending Apple Ask entry/inactive/live Reduce Motion acceptance.
+- Commit: containing commit for batch Ask-scene-owned-entry-and-discovery-reveal.

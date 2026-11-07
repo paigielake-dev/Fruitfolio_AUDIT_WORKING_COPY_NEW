@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T09:30:49.020105+00:00",
+  "updated_at": "2026-11-07T09:32:05.231043+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11246,6 +11246,39 @@
         ]
       },
       "timestamp": "2026-11-07T09:30:49.020105+00:00"
+    },
+    {
+      "batch": "Ask-scene-owned-entry-and-discovery-reveal",
+      "requirements": [
+        472,
+        473
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "Swift syntax parse: 319 files, zero errors",
+        "git diff --check"
+      ],
+      "results": {
+        "swift_syntax_files": 319,
+        "syntax_errors": 0,
+        "runtime_tests_executed": 0
+      },
+      "verification": {
+        "executed": {
+          "swift_syntax_files": 319,
+          "syntax_errors": 0,
+          "diff_whitespace_check": "passed"
+        },
+        "not_run": [
+          "Actual SwiftUI Ask entry/discovery cancellation, inactive/resume, live Reduce Motion and one-time page-turn audio",
+          "No new Foundation API in this view-only change; earlier semantic/checkpoint passing tests do not verify these animations"
+        ],
+        "remaining": [
+          "On Apple, interrupt during entry delay and mid-discovery reveal: no hidden publication while inactive; resume all remaining suggestions without duplicated page-turn sound.",
+          "Toggle Reduce Motion while discovery is partially visible and confirm remaining content appears without movement; preserve composer, citations, paper and saved data."
+        ]
+      },
+      "timestamp": "2026-11-07T09:32:05.231043+00:00"
     }
   ]
 }
