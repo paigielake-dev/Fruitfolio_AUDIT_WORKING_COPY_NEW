@@ -7749,43 +7749,68 @@
         "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
         "Fruitfolio/First-Launch Tour/Prompt07TourModels.swift",
         "Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift",
-        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
+        "development_workflow/TOUR_REQUIREMENT_95_CLOSURE.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
         "Prompt07FirstLaunchTourTests/testDelayedInvitationRequiresActiveUncompletedHub",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift"
       ],
-      "commit_reference": "batch:Tour-explicit-feature-semantic-roles (resolve containing commit with git log)",
+      "commit_reference": "batch:Individual-tour-95-implementation-reconciliation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration.",
-        "Replace brand-only string substitution in actual tour dialogue with explicit context-specific semantic spans for library, encyclopedia, saved-page organizational features, calendar/cycle and Fruit Basket. Move the existing target/step copy into a Foundation file while retaining actual character ownership in the SwiftUI extension. Feed authored semantic markup into the existing translation envelope and canonical renderer; keep all six original messages byte-for-byte, existing nonbreaking decoration spacing, focus, design and protected names. No global keyword styling or status promotion."
+        "Replace brand-only string substitution in actual tour dialogue with explicit context-specific semantic spans for library, encyclopedia, saved-page organizational features, calendar/cycle and Fruit Basket. Move the existing target/step copy into a Foundation file while retaining actual character ownership in the SwiftUI extension. Feed authored semantic markup into the existing translation envelope and canonical renderer; keep all six original messages byte-for-byte, existing nonbreaking decoration spacing, focus, design and protected names. No global keyword styling or status promotion.",
+        "Individually reconcile the one original95 clause against every actual tour step, exact source wording/feature role, live renderer/translation consumer and executed actual-copy regression. Implementation complete; Apple visual/focus/official translated-emphasis acceptance remains explicit. Set IMPLEMENTED with MANUAL_VERIFICATION_REQUIRED only; no VERIFIED promotion and no inference about any other requirement. Preserve old evidence/history."
       ],
-      "last_updated": "2026-11-07T09:30:49.020105+00:00",
+      "last_updated": "2026-11-07T09:42:49.065620+00:00",
       "latest_batch_verification": {
-        "batch": "Tour-explicit-feature-semantic-roles",
+        "batch": "Individual-tour-95-implementation-reconciliation",
         "executed": {
-          "focused_XCTest_passed": 9,
-          "swift_syntax_files": 319,
-          "syntax_errors": 0
+          "individual_clause_evidence": "development_workflow/TOUR_REQUIREMENT_95_CLOSURE.json",
+          "semantic_suite_passed": 9,
+          "full_portable_XCTest_passed": 982,
+          "full_native_CPU_XCTest_passed": 1007
         },
         "not_run": [
-          "Apple Markdown renderer/tour UI, VoiceOver focus and translated semantic appearance",
-          "Official MADLAD translated dialogue and native-speaker meaning review"
+          "Run all six actual tour stages on Apple; inspect bold feature names, original wording, focus/accessibility and stable layout.",
+          "Verify official local translation preserves authored emphasis and protected names; official weights/device/native-language acceptance still unavailable."
         ],
         "remaining": [
-          "Execute actual tour UI in all six stages, confirm feature anchors bold without changed wording, accessible reading/focus unchanged, translated semantic roles preserved.",
-          "Linux tests verify actual authored messages/roles/markup and existing semantic slice/source boundaries; they do not verify Apple rendering or official MADLAD."
+          "Run all six actual tour stages on Apple; inspect bold feature names, original wording, focus/accessibility and stable layout.",
+          "Verify official local translation preserves authored emphasis and protected names; official weights/device/native-language acceptance still unavailable."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual tour UI in all six stages, confirm feature anchors bold without changed wording, accessible reading/focus unchanged, translated semantic roles preserved.",
-        "Linux tests verify actual authored messages/roles/markup and existing semantic slice/source boundaries; they do not verify Apple rendering or official MADLAD."
-      ]
+        "Run all six actual tour stages on Apple; inspect bold feature names, original wording, focus/accessibility and stable layout.",
+        "Verify official local translation preserves authored emphasis and protected names; official weights/device/native-language acceptance still unavailable."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Tour-explicit-feature-semantic-roles",
+          "executed": {
+            "focused_XCTest_passed": 9,
+            "swift_syntax_files": 319,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "Apple Markdown renderer/tour UI, VoiceOver focus and translated semantic appearance",
+            "Official MADLAD translated dialogue and native-speaker meaning review"
+          ],
+          "remaining": [
+            "Execute actual tour UI in all six stages, confirm feature anchors bold without changed wording, accessible reading/focus unchanged, translated semantic roles preserved.",
+            "Linux tests verify actual authored messages/roles/markup and existing semantic slice/source boundaries; they do not verify Apple rendering or official MADLAD."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
+      ],
+      "individual_implementation_review": "development_workflow/TOUR_REQUIREMENT_95_CLOSURE.json"
     },
     {
       "sequence": 96,

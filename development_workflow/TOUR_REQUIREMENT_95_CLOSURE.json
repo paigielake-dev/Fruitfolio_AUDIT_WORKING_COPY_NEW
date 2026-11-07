@@ -1,0 +1,46 @@
+{
+  "sequence": 95,
+  "requirement": "Apply semantic bold styling to important feature names in fruit-character tour dialogue.",
+  "implementation_status": "IMPLEMENTED",
+  "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+  "individual_evidence": {
+    "authored_contexts": "All six actual step messages preserve original UTF8; important feature phrases have explicit anchorBold roles, ready step has no gratuitous emphasis.",
+    "feature_names_by_step": {
+      "ask": [
+        "FruitsofLife.xo library"
+      ],
+      "library": [
+        "encyclopedia"
+      ],
+      "guideBuilder": [
+        "chapters",
+        "notes",
+        "study guides",
+        "little handbooks"
+      ],
+      "cycle": [
+        "period calendar",
+        "Fruitfolio",
+        "cycle"
+      ],
+      "fruitBasket": [
+        "fruit basket"
+      ],
+      "ready": []
+    },
+    "live_consumer": "Actual styledStepMessage passes canonical authored markup through existing translation envelope to FruitfolioSemanticText. Old brand-only global string substitution removed.",
+    "renderer": "Existing canonical anchorBold renderer applies Text.bold(); no new style authority.",
+    "executed_tests": "Actual six-context UTF8/anchor/markup regression plus complete semantic suite nine tests passed; included in full982 portable/1007 native suites.",
+    "scope_limits": "Foundation tests verify actual authored roles and immutable wording, not SwiftUI visual output, VoiceOver or official MADLAD."
+  },
+  "remaining_acceptance": [
+    "Run all six actual tour stages on Apple; inspect bold feature names, original wording, focus/accessibility and stable layout.",
+    "Verify official local translation preserves authored emphasis and protected names; official weights/device/native-language acceptance still unavailable."
+  ],
+  "source_sha256": {
+    "Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift": "9ca4deaf51843acf84a376ec15ee0b054835f0535c1850a86b978970f6ca7a63",
+    "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift": "6275c0417d54af02d241fd4be02925ecc43022d9a82141e9bf917bcc65967206",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift": "ecd7972ed719a87074001b097e102f211ace73a4e8dbaa90f1914ea0f46a0e59",
+    "FruitfolioTests/Prompt1BSemanticSliceTests.swift": "4af3f4ef5287bf35af099e6bd4be086572c6fe9c0642cf09351d24028f7faeb0"
+  }
+}

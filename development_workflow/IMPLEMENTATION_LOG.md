@@ -3740,3 +3740,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"swift_syntax_files": 319, "syntax_errors": 0, "Apple_UI_vectors_executed": 0}.
 - Next action: Continue independent missing functionality; shared icon language propagation still needs Apple/official MADLAD acceptance. Do not treat this component change as whole393–397 or founder language consistency completion.
 - Commit: containing commit for batch Shared-icon-identification-and-accessibility-language-owner.
+
+## Individual-tour-95-implementation-reconciliation
+
+- Parent checkpoint: 421180297a8b14538cdd7ade1920b0d392a3ea89.
+- Source-order requirements: [95].
+- Separate founder additions: [].
+- Source files: Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift, Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift, Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift, FruitfolioTests/Prompt1BSemanticSliceTests.swift, development_workflow/TOUR_REQUIREMENT_95_CLOSURE.json.
+- Individually reconcile the one original95 clause against every actual tour step, exact source wording/feature role, live renderer/translation consumer and executed actual-copy regression. Implementation complete; Apple visual/focus/official translated-emphasis acceptance remains explicit. Set IMPLEMENTED with MANUAL_VERIFICATION_REQUIRED only; no VERIFIED promotion and no inference about any other requirement. Preserve old evidence/history.
+- Tests added/updated: FruitfolioTests/Prompt1BSemanticSliceTests.swift.
+- Verification: {"individually_reconciled_implementation": 95, "verification_promotion": false}.
+- Next action: Continue independent remaining source requirements, with full478+36+unnumbered reconciliation still unfinished and acceptance constraints explicit.
+- Commit: containing commit for batch Individual-tour-95-implementation-reconciliation.
