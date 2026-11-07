@@ -18,15 +18,19 @@ public nonisolated struct Prompt20DailyLogOwnerID: Hashable, Codable, Sendable, 
 public struct Prompt20DailyLogRequest: Identifiable, Equatable, Sendable {
     public let id: UUID
     public let selectedDate: Date
+    public let calendar: Calendar
+    public var selectedDay: Prompt20LocalDay { .init(date: selectedDate, calendar: calendar) }
     public let initialSection: Prompt20DailyLogSection?
 
     public init(
         id: UUID = UUID(),
         selectedDate: Date,
-        initialSection: Prompt20DailyLogSection? = nil
+        initialSection: Prompt20DailyLogSection? = nil,
+        calendar: Calendar = .current
     ) {
         self.id = id
         self.selectedDate = selectedDate
+        self.calendar = calendar
         self.initialSection = initialSection
     }
 }

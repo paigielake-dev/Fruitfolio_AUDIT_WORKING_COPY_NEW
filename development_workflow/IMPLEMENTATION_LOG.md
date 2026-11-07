@@ -4438,3 +4438,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."}.
 - Next action: Reproduce and fix Calendar-to-daily-log civil-day handoff when the source and editor calendar timezones differ; preserve existing public callbacks and stored schemas. Continue remaining checklist/founder work.
 - Commit: containing commit for batch Context-observed-symptom-selection-counts.
+
+## Calendar-daily-log-source-calendar-civil-day-handoff
+
+- Parent checkpoint: 11aacc61b7b915dde2af25546b0d13a9bc952a9d.
+- Source-order requirements: [298, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift, Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarIntegration.swift, Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift, Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift, FruitfolioTests/Prompt1BDailyLogViewModelTests.swift, development_workflow/CALENDAR_DAILY_LOG_CIVIL_DAY_HANDOFF.json.
+- Freeze selected calendar/timezone in transient daily-log request and bridge source Calendar action into it. Real shell passes that calendar into existing editor. Existing callback clients, repository schema, history, values, artwork and scientific calculations unchanged.
+- Tests added/updated: Prompt1BDailyLogViewModelTests.testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord, Prompt1BDailyLogViewModelTests.testReactivatedReadRejectsOldResultAndDoesNotResetNewLoadingStateOrDraft, Prompt1BDailyLogViewModelTests.testTwoEditorsCannotOverwriteNewerSameStoreDayOrSilentlyRebase, Prompt1BDailyLogViewModelTests.testCommittedWriteRetryReconcilesWithoutAnotherRevision, Prompt20CoreTests, Prompt1BCalendarPresentationPolicyTests.
+- Verification: {"actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained", "full_portable_XCTest": "1120 passed, zero failures, final source", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.", "Swift_Testing": "21 passed, zero failures"}.
+- Next action: Continue source-grounded cross-part implementation at scientific placement/content310–314; keep exact outstanding missing approved content and hotspot mappings separate from implemented canvas behavior. Complete original/founder reconciliation without claiming unrun Apple/official MADLAD acceptance.
+- Commit: containing commit for batch Calendar-daily-log-source-calendar-civil-day-handoff.

@@ -82,6 +82,7 @@ struct Prompt15CycleTrackerView: View {
             FruitfolioPresentedPopupHost {
                 Prompt20DailyLogView(
                     selectedDate: request.selectedDate,
+                    calendar: request.calendar,
                     initialExpandedSection: request.initialSection,
                     onSaved: { _ in
                         // Reload Today and Calendar from their existing shared data
@@ -195,7 +196,10 @@ struct Prompt15CycleTrackerView: View {
                                 .supplementalProvider()
                     ),
                     context: contextStore.context,
-                    contextPolicy: contextPolicy
+                    contextPolicy: contextPolicy,
+                    onDailyLogRequest: { request in
+                        openDailyLog(request: request)
+                    }
                 ) { action in
                     switch action {
                     case .logSymptoms(let date):
@@ -273,12 +277,13 @@ struct Prompt15CycleTrackerView: View {
         date: Date,
         section: Prompt20DailyLogSection?
     ) {
+        openDailyLog(request: Prompt20DailyLogRequest(selectedDate: date, initialSection: section))
+    }
+
+    private func openDailyLog(request: Prompt20DailyLogRequest) {
         guard canInteract else { return }
         dailyLogHasUnsavedChanges = false
-        dailyLogRequest = Prompt20DailyLogRequest(
-            selectedDate: date,
-            initialSection: section
-        )
+        dailyLogRequest = request
     }
 
     private func requestPredictionInfo(_ info: Prompt16PredictionLearningInfo) {

@@ -36,3 +36,20 @@ enum Prompt20CalendarIntegration {
         Prompt20CalendarProjection.annotations(for: logs, month: month, calendar: calendar)
     }
 }
+
+
+extension Prompt19CalendarAction {
+    /// Freeze the Calendar's civil-day interpretation at the action boundary.
+    /// Passing an absolute Date alone would reinterpret midnight after travel.
+    func dailyLogRequest(calendar: Calendar) -> Prompt20DailyLogRequest? {
+        switch self {
+        case .logSymptoms(let date):
+            return .init(selectedDate: date, initialSection: .symptoms, calendar: calendar)
+        case .addTemperature(let date):
+            return .init(selectedDate: date, initialSection: .temperature, calendar: calendar)
+        case .addNote(let date):
+            return .init(selectedDate: date, initialSection: .notes, calendar: calendar)
+        case .seeBiology: return nil
+        }
+    }
+}

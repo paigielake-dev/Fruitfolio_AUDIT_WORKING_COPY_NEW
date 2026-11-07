@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T19:57:55.866554+00:00",
+  "updated_at": "2026-11-07T20:02:43.507957+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14368,6 +14368,45 @@
         ]
       },
       "timestamp": "2026-11-07T19:57:55.866554+00:00"
+    },
+    {
+      "batch": "Calendar-daily-log-source-calendar-civil-day-handoff",
+      "requirements": [
+        298,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "/workspace/toolchains/swift-6.2.1/usr/bin/swift -module-cache-path /tmp/fruitfolio-handoff-swift-cache /tmp/fruitfolio_daily_log_handoff_reproduction.swift",
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord",
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+      ],
+      "results": {
+        "actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained",
+        "full_portable_XCTest": "1120 passed, zero failures, final source",
+        "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+        "Swift_Testing": "21 passed, zero failures"
+      },
+      "verification": {
+        "executed": {
+          "actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained",
+          "full_portable_XCTest": "1120 passed, zero failures, final source",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "Swift_Testing": "21 passed, zero failures"
+        },
+        "not_run": [
+          "Apple SDK build and actual Calendar\u2192date sheet\u2192Daily Log\u2192Today save/cancel/return acceptance",
+          "Physical-device timezone change, UIKit presentation/dismissal ordering, VoiceOver/RTL/Reduce Motion acceptance"
+        ],
+        "remaining": [
+          "Execute full native save/cancel/dirty-draft/background/return sequence and cross-timezone Calendar actions",
+          "Verify accepted saves and cancelled-presentation writes refresh both views while preserving active editor identity",
+          "No portable test executes SwiftUI sheet lifecycle, enabled-state rendering or device timezone notifications"
+        ]
+      },
+      "timestamp": "2026-11-07T20:02:43.507957+00:00"
     }
   ]
 }

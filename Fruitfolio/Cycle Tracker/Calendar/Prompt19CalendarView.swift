@@ -6,6 +6,7 @@ struct Prompt19CalendarView: View {
     var context: Prompt27AUserReproductiveContext
     var contextPolicy: Prompt27AContextPolicyResult
     let onAction: (Prompt19CalendarAction) -> Void
+    private let onDailyLogRequest: ((Prompt20DailyLogRequest) -> Void)?
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
@@ -38,6 +39,7 @@ struct Prompt19CalendarView: View {
         context: Prompt27AUserReproductiveContext = .unspecified,
         contextPolicy: Prompt27AContextPolicyResult? = nil,
         initialDate: Date = Date(),
+        onDailyLogRequest: ((Prompt20DailyLogRequest) -> Void)? = nil,
         onAction: @escaping (Prompt19CalendarAction) -> Void
     ) {
         var resolvedLoader = loader ?? Prompt19CalendarLoader()
@@ -47,6 +49,7 @@ struct Prompt19CalendarView: View {
         self.context = context
         self.contextPolicy = effectivePolicy
         self.onAction = onAction
+        self.onDailyLogRequest = onDailyLogRequest
 
         var calendar = resolvedLoader.todayLoader.calendar
         calendar.firstWeekday = 1
@@ -172,7 +175,11 @@ struct Prompt19CalendarView: View {
 
                 pendingAction = nil
                 guard ownerIsActive else { return }
-                onAction(action)
+                if let onDailyLogRequest, let request = action.dailyLogRequest(calendar: calendar) {
+                    onDailyLogRequest(request)
+                } else {
+                    onAction(action)
+                }
             }
         ) {
             if let selectedDateKey = selectedKey {

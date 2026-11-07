@@ -101,6 +101,51 @@ final class Prompt1BDailyLogViewModelTests: XCTestCase {
         return (repository, now, selected, calendar)
     }
 
+    func testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord() async throws {
+        var sourceGregorian = Calendar(identifier: .gregorian)
+        sourceGregorian.timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: 14 * 3600))
+        var destination = Calendar(identifier: .gregorian)
+        destination.timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: -10 * 3600))
+        let selected = try XCTUnwrap(sourceGregorian.date(from: DateComponents(year: 2026, month: 11, day: 7)))
+        let now = try XCTUnwrap(sourceGregorian.date(from: DateComponents(year: 2026, month: 11, day: 9, hour: 12)))
+        let expected = Prompt20LocalDay(year: 2026, month: 11, day: 7)
+        let wrong = Prompt20LocalDay(date: selected, calendar: destination)
+        XCTAssertNotEqual(wrong, expected, "Reproduce the date-only handoff failure before testing the bridge")
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let repository = Prompt20CycleDailyLogStore(fileURL: file, calendar: destination)
+        var recordIDs: Set<UUID> = []
+        for identifier in [Calendar.Identifier.gregorian, .buddhist] {
+            var source = Calendar(identifier: identifier); source.timeZone = sourceGregorian.timeZone
+            for (action, section) in [(Prompt19CalendarAction.logSymptoms(selected), Prompt20DailyLogSection.symptoms),
+                                      (.addTemperature(selected), .temperature), (.addNote(selected), .notes)] {
+                let request = try XCTUnwrap(action.dailyLogRequest(calendar: source))
+                XCTAssertEqual(request.selectedDay, expected)
+                XCTAssertEqual(request.calendar, source)
+                XCTAssertEqual(request.initialSection, section)
+                let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: request.selectedDate,
+                    repository: repository, calendar: request.calendar, initialExpandedSection: request.initialSection,
+                    nowProvider: { now })
+                await model.load()
+                XCTAssertEqual(model.selectedDay, expected)
+                XCTAssertTrue(model.expandedSections.contains(section))
+                model.mutateDraft { $0.generalNote = "explicit selected civil day" }
+                let saved = await model.save()
+                XCTAssertTrue(saved)
+                let log = try await repository.load(ownerID: .localDevice, date: expected)
+                let actual = try XCTUnwrap(log)
+                XCTAssertEqual(actual.generalNote?.text, "explicit selected civil day")
+                recordIDs.insert(actual.id)
+            }
+        }
+        let all = try await repository.allActiveLogs(ownerID: .localDevice)
+        XCTAssertEqual(all.count, 1)
+        XCTAssertEqual(recordIDs.count, 1, "All three actions must edit the same recorded day")
+        let shifted = try await repository.load(ownerID: .localDevice, date: wrong)
+        XCTAssertNil(shifted, "Never create a record for the reinterpreted destination day")
+        XCTAssertNil(Prompt19CalendarAction.seeBiology(selected).dailyLogRequest(calendar: sourceGregorian))
+    }
+
     func testReactivatedReadRejectsOldResultAndDoesNotResetNewLoadingStateOrDraft() async throws {
         let started = [expectation(description: "old read"), expectation(description: "current read")]
         let repository = Prompt1BHeldDailyLogReadRepository(started: started)

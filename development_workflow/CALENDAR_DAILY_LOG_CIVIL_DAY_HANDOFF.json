@@ -1,0 +1,77 @@
+{
+  "scope": "Requirement298 individual implementation review with native acceptance pending; not verified whole founder1306 visual behavior",
+  "requirements": {
+    "298": "Preserve Calendar-selected civil day and initial logging section in a transient immutable request carrying its source calendar; actual model/file-store test proves all three actions edit one correct day across timezone/calendar differences. Existing shared refresh, read cancellation, dirty-draft and optimistic-write behavior retained.",
+    "443": "Add actual production Calendar-action bridge\u2192daily-log model\u2192file repository regression for selected-day identity, all entry sections, source calendars and no wrong-day duplicate.",
+    "444": "Regression lives in project XCTest source and executes actual file-backed store/model; original Foundation reproduction retained as evidence."
+  },
+  "source_ids": [
+    "FOUNDER-SOURCE-L01306"
+  ],
+  "verification": {
+    "executed": {
+      "actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained",
+      "full_portable_XCTest": "1120 passed, zero failures, final source",
+      "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+      "Swift_Testing": "21 passed, zero failures",
+      "workflow": "75 passed, zero failures; /tmp/fruitfolio_calendar_daily_log_handoff_workflow.log"
+    },
+    "not_run": [
+      "Apple SDK build and actual Calendar\u2192date sheet\u2192Daily Log\u2192Today save/cancel/return acceptance",
+      "Physical-device timezone change, UIKit presentation/dismissal ordering, VoiceOver/RTL/Reduce Motion acceptance"
+    ],
+    "remaining": [
+      "Execute full native save/cancel/dirty-draft/background/return sequence and cross-timezone Calendar actions",
+      "Verify accepted saves and cancelled-presentation writes refresh both views while preserving active editor identity",
+      "No portable test executes SwiftUI sheet lifecycle, enabled-state rendering or device timezone notifications"
+    ]
+  },
+  "source_sha256": {
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift": "495389cd4298269ff4092b793574eb71df2eae818a7f6fa5ca491b35d5101203",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarIntegration.swift": "37e4869d19962afcc1a24efcbace4af770324c46c036de750915b453d096eb31",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift": "3c8a82bb696cb8a6d01dd84f30083932704680c605d055d7f84e4fc0d882bf84",
+    "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift": "b7937779819a661ec95832175472788e48e7c842642ff89065dc0a89aca763df",
+    "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift": "a32d81c89a3ba5ea27b10b6d258ac278efc2e03cb64d4c58c6c11494b3e3218b"
+  },
+  "conditions": [
+    {
+      "condition": "Calendar and Today open the requested civil day/category without reinterpretation or editor replacement.",
+      "implementation": "Prompt20DailyLogRequest freezes source Calendar; Calendar onDismiss emits one typed request after existing owner guard; shell passes calendar to editor and keeps existing Date-only callbacks compatible. Today request captures calendar at action time.",
+      "executed": "testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord exercises three sections \u00d7 two calendar identifiers and verifies one saved record, correct date and no shifted-day record.",
+      "pending": "Apple actual sheet/category routing and device timezone notification acceptance."
+    },
+    {
+      "condition": "Returning from the editor preserves saved observations and rejects stale reads/writes rather than overwriting newer data.",
+      "implementation": "Existing generation-owned actual view model, snapshot-bearing writes and acknowledged file actor retained; editor is owned by root sheet, not refreshed child identity.",
+      "executed": "Existing actual model tests for reactivated reads, two editors, independent days, edits during await, cancelled save admission and committed-write retry; final full portable suite includes these unchanged tests.",
+      "pending": "Native dirty confirmation, suspend/resume and dismissal ordering."
+    },
+    {
+      "condition": "Calendar and Today refresh from the same saved data after acknowledged save or dismissal, including a write committed after cancellation.",
+      "implementation": "Root shared cycleDataRefreshID changes onSaved and sheet onDismiss; applies to both Today and Calendar, not the sheet editor. Daily-log store and owner remain shared.",
+      "executed": "Actual shared file/model persistence and calendar projection tests; live SwiftUI refresh callbacks reviewed but not executed on Linux.",
+      "pending": "Apple runtime cross-view refresh and active draft preservation; no runtime claim from source review."
+    }
+  ],
+  "implementation": "Freeze selected calendar/timezone in transient daily-log request and bridge source Calendar action into it. Real shell passes that calendar into existing editor. Existing callback clients, repository schema, history, values, artwork and scientific calculations unchanged.",
+  "logs": [
+    "/tmp/fruitfolio_daily_log_handoff_reproduction.log",
+    "/tmp/fruitfolio_calendar_daily_log_civil_handoff.log",
+    "/tmp/fruitfolio_calendar_daily_log_handoff_full.log",
+    "/tmp/fruitfolio_calendar_daily_log_civil_handoff_syntax.log"
+  ],
+  "individual_closure": {
+    "requirement": 298,
+    "original_description": "Preserve correct daily-log state when moving between Calendar and Today.",
+    "prior_status": "IN_PROGRESS",
+    "implementation_status": "IMPLEMENTED",
+    "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+    "basis": "Individual full-clause review of request day/category identity, actual model/file persistence ownership, shared-store consistency and root refresh/editor identity. See per-condition executed evidence and explicit native acceptance limitations.",
+    "remaining_implementation": "No further source gap identified within this bounded original requirement; whole founder1306 animation/rapid-interaction acceptance remains independently open.",
+    "remaining_acceptance": [
+      "Execute full native save/cancel/dirty-draft/background/return sequence and cross-timezone Calendar actions",
+      "Verify accepted saves and cancelled-presentation writes refresh both views while preserving active editor identity",
+      "No portable test executes SwiftUI sheet lifecycle, enabled-state rendering or device timezone notifications"
+    ]
+  }
+}

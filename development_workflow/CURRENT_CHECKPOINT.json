@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "39586f24e3a0a3d907aa8e89df160d4a97c046e9",
+  "current_HEAD": "11aacc61b7b915dde2af25546b0d13a9bc952a9d",
   "latest_verified_commit": null,
   "current_checklist_part": 6,
-  "current_requirement": 298,
-  "current_implementation_batch": "Context-observed-symptom-selection-counts",
+  "current_requirement": 310,
+  "current_implementation_batch": "Calendar-daily-log-source-calendar-civil-day-handoff",
   "completed_requirements": [
     206,
     210
@@ -494,10 +494,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-    "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
-    "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
-    "development_workflow/CONTEXT_OBSERVED_SYMPTOM_SELECTION_COUNTS.json",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarIntegration.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+    "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+    "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
+    "development_workflow/CALENDAR_DAILY_LOG_CIVIL_DAY_HANDOFF.json",
     "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
@@ -512,15 +514,19 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt27AContextResearchTests|Prompt20CoreTests",
+    "/workspace/toolchains/swift-6.2.1/usr/bin/swift -module-cache-path /tmp/fruitfolio-handoff-swift-cache /tmp/fruitfolio_daily_log_handoff_reproduction.swift",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py testCalendarHandoffPreservesSelectedCivilDayAcrossTimezonesAndEditsOneActualRecord",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
     "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
   ],
   "last_test_results": {
-    "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
-    "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+    "actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained",
+    "full_portable_XCTest": "1120 passed, zero failures, final source",
+    "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+    "Swift_Testing": "21 passed, zero failures"
   },
-  "next_exact_implementation_action": "Reproduce and fix Calendar-to-daily-log civil-day handoff when the source and editor calendar timezones differ; preserve existing public callbacks and stored schemas. Continue remaining checklist/founder work.",
-  "updated_at": "2026-11-07T19:57:55.866554+00:00",
+  "next_exact_implementation_action": "Continue source-grounded cross-part implementation at scientific placement/content310\u2013314; keep exact outstanding missing approved content and hotspot mappings separate from implemented canvas behavior. Complete original/founder reconciliation without claiming unrun Apple/official MADLAD acceptance.",
+  "updated_at": "2026-11-07T20:02:43.507957+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -530,20 +536,23 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules",
-      "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."
+      "actual_file_store_handoff_XCTest": "1 passed: three actions \u00d7 Gregorian/Buddhist source calendars, +14\u2192\u221210 timezone failure reproduced, one actual file-backed day record retained",
+      "full_portable_XCTest": "1120 passed, zero failures, final source",
+      "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+      "Swift_Testing": "21 passed, zero failures"
     },
     "not_run": [
-      "Apple context explanation rendering/accessibility and live removal refresh",
-      "Official MADLAD controlled-copy translation and clinical acceptance"
+      "Apple SDK build and actual Calendar\u2192date sheet\u2192Daily Log\u2192Today save/cancel/return acceptance",
+      "Physical-device timezone change, UIKit presentation/dismissal ordering, VoiceOver/RTL/Reduce Motion acceptance"
     ],
     "remaining": [
-      "Verify actual UI unknown versus empty daily-log history and selection changes on Apple",
-      "Recorded-selection counts do not establish symptom prevalence, severity, cause or clinical trends; broad full context interpretation remains incomplete"
+      "Execute full native save/cancel/dirty-draft/background/return sequence and cross-timezone Calendar actions",
+      "Verify accepted saves and cancelled-presentation writes refresh both views while preserving active editor identity",
+      "No portable test executes SwiftUI sheet lifecycle, enabled-state rendering or device timezone notifications"
     ]
   },
   "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",
-  "last_recorded_batch_part": 9,
+  "last_recorded_batch_part": 6,
   "last_supplemental_requirements": [],
   "implemented_requirements": [
     9,
@@ -624,6 +633,7 @@
     277,
     278,
     279,
+    298,
     305,
     306,
     307,
@@ -923,5 +933,11 @@
       },
       "reason": "Refresh stale recovery counters from actual registry; scope classification and implementation evidence are different counts."
     }
-  ]
+  ],
+  "last_individual_implementation_closure": {
+    "requirement": 298,
+    "evidence": "development_workflow/CALENDAR_DAILY_LOG_CIVIL_DAY_HANDOFF.json",
+    "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+    "source_status_does_not_equal_native_acceptance": true
+  }
 }
