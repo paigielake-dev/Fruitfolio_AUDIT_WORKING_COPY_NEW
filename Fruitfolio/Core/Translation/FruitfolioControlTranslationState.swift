@@ -16,6 +16,22 @@ final class FruitfolioControlTranslationState {
             self.language = language
             self.protectedLiterals = protectedLiterals
         }
+        // Patient originals and citation identifiers retain their exact bytes.
+        // Swift String equality otherwise merges NFC/NFD representations.
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.language == rhs.language &&
+            lhs.source.utf8.elementsEqual(rhs.source.utf8) &&
+            lhs.protectedLiterals.count == rhs.protectedLiterals.count &&
+            zip(lhs.protectedLiterals, rhs.protectedLiterals).allSatisfy {
+                $0.utf8.elementsEqual($1.utf8)
+            }
+        }
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(language)
+            hasher.combine(Data(source.utf8))
+            hasher.combine(protectedLiterals.count)
+            for literal in protectedLiterals { hasher.combine(Data(literal.utf8)) }
+        }
     }
     struct Presentation: Equatable, Sendable {
         let text: String

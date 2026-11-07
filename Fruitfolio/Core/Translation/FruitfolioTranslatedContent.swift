@@ -19,18 +19,25 @@ struct FruitfolioTranslatedContent<Content: View>: View {
     @State private var showOriginal = false
 
     private struct Key: Hashable {
-        let source: String
-        let language: FruitfolioLanguage
-        let protectedLiterals: [String]
+        let content: FruitfolioControlTranslationState.Key
         let enabled: Bool
-        let sourceLanguage: String
-        let bundlePath: String
+        let sourceLanguageBytes: Data
+        let bundlePathBytes: Data
+        var source: String { content.source }
+        var language: FruitfolioLanguage { content.language }
+        var protectedLiterals: [String] { content.protectedLiterals }
+        var sourceLanguage: String { String(decoding: sourceLanguageBytes, as: UTF8.self) }
     }
     private struct TaskKey: Hashable {
         let sourceKey: Key
         let paused: Bool
     }
-    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: FruitfolioCitationProtection.literals(ids: protectedLiterals, records: sourceRecords), enabled: enabled, sourceLanguage: sourceLanguage, bundlePath: bundle.bundleURL.path) }
+    private var key: Key {
+        Key(content: .init(source: source, language: settings.language,
+            protectedLiterals: FruitfolioCitationProtection.literals(ids: protectedLiterals, records: sourceRecords)),
+            enabled: enabled, sourceLanguageBytes: Data(sourceLanguage.utf8),
+            bundlePathBytes: Data(bundle.bundleURL.path.utf8))
+    }
     private var usesTranslation: Bool { enabled && settings.language.rawValue != sourceLanguage }
 
     var body: some View {

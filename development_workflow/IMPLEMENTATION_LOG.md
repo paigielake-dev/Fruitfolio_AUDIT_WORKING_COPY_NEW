@@ -3848,3 +3848,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_passed": 71, "changed_Swift_files_syntax_parsed": 320, "syntax_errors": 0}.
 - Next action: Correct byte-exact display translation identity so canonically equivalent but byte-different original text/protected citations cannot reuse an accepted result; then continue missing functionality across remaining parts.
 - Commit: containing commit for batch Ask-full-source-display-translation-overlap.
+
+## Translation-display-byte-exact-source-ownership
+
+- Parent checkpoint: a643a80ca246e71fc9281876461ce4caa7600d5d.
+- Source-order requirements: [422, 431, 433, 434, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift, Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, FruitfolioTests/Prompt1BControlTranslationStateTests.swift.
+- Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.
+- Tests added/updated: Prompt1BControlTranslationStateTests.testDisplayIdentityPreservesOriginalAndProtectedIdentifierUTF8, Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal.
+- Verification: {"focused_portable_XCTest_passed": 18, "syntax_files": 320, "syntax_errors": 0}.
+- Next action: Inspect the actual founder constraints on controlled Other Hormone entry and implement missing functional validation if required, then proceed across incomplete requirements without promoting unexecuted acceptance.
+- Commit: containing commit for batch Translation-display-byte-exact-source-ownership.

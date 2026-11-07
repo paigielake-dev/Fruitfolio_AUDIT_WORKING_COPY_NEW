@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T11:39:30.195080+00:00",
+  "updated_at": "2026-11-07T11:41:18.574663+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11833,6 +11833,43 @@
         ]
       },
       "timestamp": "2026-11-07T11:39:30.195080+00:00"
+    },
+    {
+      "batch": "Translation-display-byte-exact-source-ownership",
+      "requirements": [
+        422,
+        431,
+        433,
+        434,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt1BControlTranslationStateTests",
+        "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "git diff --check"
+      ],
+      "results": {
+        "focused_portable_XCTest_passed": 18,
+        "syntax_files": 320,
+        "syntax_errors": 0
+      },
+      "verification": {
+        "executed": {
+          "portable": "/tmp/fruitfolio_display_identity_focused.log: 18 actual owner XCTest passed, including exact-byte key set and resolved-display invalidation tests",
+          "syntax": "/tmp/fruitfolio_display_identity_syntax.log: 320 Swift parsed with zero syntax errors"
+        },
+        "not_run": [
+          "Apple long-form SwiftUI typechecking/presentation and actual selection/citation actions with byte-different originals.",
+          "Official MADLAD and clinical/native-language verification."
+        ],
+        "remaining": [
+          "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
+          "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+        ]
+      },
+      "timestamp": "2026-11-07T11:41:18.574663+00:00"
     }
   ]
 }

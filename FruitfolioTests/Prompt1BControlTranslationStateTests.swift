@@ -66,6 +66,35 @@ private actor LifecycleTranslationFixture: FruitfolioLocalTranslationRuntime {
 @MainActor
 final class Prompt1BControlTranslationStateTests: XCTestCase {
     private typealias Key = FruitfolioControlTranslationState.Key
+
+    func testDisplayIdentityPreservesOriginalAndProtectedIdentifierUTF8() {
+        let nfc = "café", nfd = "cafe\u{0301}"
+        XCTAssertEqual(nfc, nfd, "The regression requires canonical String equivalence")
+        let original = Key(source: nfc, language: .french, protectedLiterals: ["ref-1"])
+        let changedSource = Key(source: nfd, language: .french, protectedLiterals: ["ref-1"])
+        let changedCitation = Key(source: nfc, language: .french, protectedLiterals: [nfd])
+        let otherCitation = Key(source: nfc, language: .french, protectedLiterals: [nfc])
+        XCTAssertNotEqual(original, changedSource)
+        XCTAssertNotEqual(changedCitation, otherCitation)
+        XCTAssertEqual(Set([original, changedSource, changedCitation, otherCitation]).count, 4)
+        XCTAssertEqual(original, Key(source: nfc, language: .french, protectedLiterals: ["ref-1"]))
+    }
+
+    func testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal() async {
+        let runtime = ControlLabelFixtureRuntime()
+        let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
+        let old = Key(source: "nonclinical café", language: .german)
+        let current = Key(source: "nonclinical cafe\u{0301}", language: .german)
+        await state.resolve(old, inferenceAllowed: true)
+        XCTAssertEqual(state.presentation(for: old).status, .machine)
+        XCTAssertEqual(state.presentation(for: current).status, .preparing)
+        XCTAssertEqual(Data(state.presentation(for: current).text.utf8), Data(current.source.utf8))
+        await state.resolve(current, inferenceAllowed: true)
+        let calls = await runtime.calls
+        XCTAssertEqual(calls, 2)
+        XCTAssertEqual(state.presentation(for: current).status, .machine)
+        XCTAssertEqual(state.presentation(for: old).status, .preparing)
+    }
     private func lifecycleSettings() throws -> (SettingsStore, String) {
         let suite = "fruitfolio.tests.translationLifecycle." + UUID().uuidString
         return (SettingsStore(defaults: try XCTUnwrap(UserDefaults(suiteName: suite))), suite)
