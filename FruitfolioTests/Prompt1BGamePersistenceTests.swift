@@ -557,6 +557,58 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         }
     }
 
+    func testActualPaintedPuddleEntryAndExitRestoreNormalBasketMovement() async throws {
+        let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
+            ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+        let library = try Prompt28ObstacleMaskLibrary.load(url: url)
+        for size in [CGSize(width: 390, height: 620), CGSize(width: 568, height: 320)] {
+            let (suite, defaults, store, model) = try activeModeFixture(mode: .catchMode,
+                gameLevel: 6, round: 3, obstacleLibrary: library)
+            defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+            model.updatePlayfield(size: size)
+            let geometry = Prompt28ObstacleGeometry(playfield: size, level: 6, library: library)
+            XCTAssertEqual(model.weather, .softRain)
+            XCTAssertTrue(model.activeObstacles.contains(.puddle))
+            XCTAssertFalse(geometry.basketTouchesPuddle(at: 0.1))
+            XCTAssertFalse(geometry.basketTouchesPuddle(at: 0.9))
+            model.basketX = 0.1
+            model.moveBasket(to: 0.9)
+            XCTAssertEqual(model.basketX, 0.1)
+            let original = defaults.data(forKey: "game")
+            var sawContact = false
+            var sawResistance = false
+            var prior = model.basketX
+            for tick in 0..<120 {
+                // Isolate drag response from unselected falling-object collisions.
+                model.activeFruit.removeAll(); model.activeStars.removeAll()
+                model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 10_000 + Double(tick) * 0.04))
+                XCTAssertGreaterThanOrEqual(model.basketX, prior)
+                XCTAssertLessThanOrEqual(model.basketX, 0.9)
+                sawContact = sawContact || model.basketIsInPuddle
+                sawResistance = sawResistance || model.basketResistance > 0
+                if tick == 0 {
+                    XCTAssertTrue(model.basketIsInPuddle)
+                    XCTAssertGreaterThan(model.basketResistance, 0)
+                    XCTAssertGreaterThan(model.basketX, 0.1); XCTAssertLessThan(model.basketX, 0.9)
+                }
+                prior = model.basketX
+                if model.basketX == 0.9 && model.basketResistance == 0 { break }
+            }
+            XCTAssertTrue(sawContact); XCTAssertTrue(sawResistance)
+            XCTAssertEqual(model.basketX, 0.9, accuracy: 0.000001)
+            XCTAssertFalse(model.basketIsInPuddle); XCTAssertEqual(model.basketResistance, 0)
+            XCTAssertFalse(geometry.basketTouchesPuddle(at: 0.89))
+            model.moveBasket(to: 0.89)
+            model.activeFruit.removeAll(); model.activeStars.removeAll()
+            model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 10_010))
+            XCTAssertEqual(model.basketX, 0.89, accuracy: 0.000001)
+            XCTAssertEqual(model.basketResistance, 0); XCTAssertFalse(model.basketIsInPuddle)
+            XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+            XCTAssertFalse(store.isReadOnly)
+            XCTAssertEqual(defaults.data(forKey: "game"), original)
+        }
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))

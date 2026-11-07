@@ -3082,3 +3082,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 895, "native_CPU_XCTest": 917, "SwiftTesting_each": 21, "focused_XCTest": 1, "weather_direction_scenarios": 4, "workflow_checks": 60, "syntax_files": 311, "Apple_art_audio_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify actual basket inertia/resistance and restoration through painted puddle contact using real mask manifest and controller frames, including boundary/no-contact controls. Earlier64001a4 alreadyexecutespositivecontact; add only missing transitions/regression evidence, preserve original art and document remaining340/342–347Apple visual/audio/dialogue verification.
 - Commit: containing commit for batch Actual-wind-controller-frames-with-clear-rain-controls.
+
+## Actual-puddle-entry-exit-and-visible-contact-cue
+
+- Parent checkpoint: 1b3ea1972f7e47aff23392f79127e514635dbb67.
+- Source-order requirements: [348, 349, 350, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, development_workflow/ACTUAL_PUDDLE_ENTRY_EXIT.md.
+- Actual controller regression crosses checked-in painted puddle in portrait and landscape, verifies noninstant bounded movement, positive contact/resistance, exit restoration and subsequent dry response without saved credit changes. Gameplay HUD uses existing fixed-copy explanation on contact with constant reserved height to avoid moving the playfield; hidden inactive copy excluded from accessibility. Controller evidence is executed; Apple visual/VoiceOver/translation runtime is not. No whole-item certification.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 896, "native_CPU_XCTest": 918, "SwiftTesting_each": 21, "focused_XCTest": 1, "painted_puddle_viewports": 2, "workflow_checks": 60, "syntax_files": 311}.
+- Next action: Execute actual controller branch/vine contact trajectories with validated painted masks, including bad-fruit exclusion, entry-only rustle sequence and captured-speed preservation; preserve original edge-rooted art. Apple playback and visible-believability remain unverified.
+- Commit: containing commit for batch Actual-puddle-entry-exit-and-visible-contact-cue.

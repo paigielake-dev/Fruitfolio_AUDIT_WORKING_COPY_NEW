@@ -1294,6 +1294,15 @@ struct Prompt28FruitBasketView: View {
                 Prompt28StatisticRow(label: "star passes", value: number(viewModel.session?.availableStarPasses ?? 0),
                     font: Prompt28TextRole.metadata.font)
             }
+            if viewModel.activeObstacles.contains(.puddle), store.controlMode == .catchMode {
+                // Reserve the same height on dry ground: changing the measured header
+                // during contact would move the playfield and its painted puddle.
+                FruitfolioFixedText(source: "puddles gently resist your basket while it moves through the water.",
+                    font: Prompt28TextRole.metadata.font)
+                    .opacity(viewModel.basketIsInPuddle ? 1 : 0)
+                    .accessibilityHidden(!viewModel.basketIsInPuddle)
+                    .accessibilityIdentifier("fruitBasket.gameplay.puddleResistance")
+            }
         }
         .padding(.horizontal, 20).padding(.vertical, 8)
         .frame(maxWidth: 620).frame(maxWidth: .infinity)
