@@ -739,7 +739,6 @@ final class FruitfolioResearchIntelligenceEngine:
     private func answerGrounded(question: String, retrievalQuestion: String, conversation: [AskMessage],
         trackerContext: FruitfolioBoundedTrackerContext?, userContext: FruitfolioAskUserContext?,
         progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
-        if let userContext { _ = try userContext.promptJSON() }
         let trimmed =
             question.trimmingCharacters(
                 in: .whitespacesAndNewlines
@@ -766,6 +765,10 @@ final class FruitfolioResearchIntelligenceEngine:
                 answerText: Prompt34LocalSafetyRouter.urgentResponseText(), support: .partiallySupported,
                 knowledgeBaseVersion: "local-safety-guidance-v1", answerPath: .localSafety)
         }
+
+        // Optional attachment validation must not preempt local urgent guidance.
+        // Nonurgent requests still reject oversized context before retrieval.
+        if let userContext { _ = try userContext.promptJSON() }
 
         if safety.level == .normal,
            (FruitfolioLifeBridgeInformation.isOrganizationQuestion(trimmed) || FruitfolioLifeBridgeInformation.isOrganizationQuestion(searchQuestion)),

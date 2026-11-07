@@ -82,6 +82,46 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         XCTAssertTrue(tags.isEmpty)
     }
 
+    private func oversizedSelectedContext() throws -> FruitfolioAskUserContext {
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "12.50"; record.unit = "pg/mL"
+        record.notes = String(repeating: "x", count: 7_000)
+        return try XCTUnwrap(FruitfolioAskUserContext.captureSelected(measurementIDs: [record.id],
+            personalCategories: [], measurements: [record], context: .unspecified))
+    }
+
+    func testOversizedOptionalContextCannotPreemptOriginalOrTranslatedUrgentGuidance() async throws {
+        let context = try oversizedSelectedContext()
+        XCTAssertThrowsError(try context.promptJSON())
+        for (question, language) in [("severe bleeding", FruitfolioLanguage.english),
+                                     ("saignements abondants", .french)] {
+            let runtime = Prompt1BQueryTranslationRuntime(result: "heavy bleeding")
+            let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"))
+            let engine = FruitfolioResearchIntelligenceEngine(packageStore: missing,
+                languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
+            let answer = try await engine.answer(question: question, conversation: [], trackerContext: nil,
+                userContext: context, inputLanguage: language, translationInferenceAllowed: true, progress: nil)
+            XCTAssertEqual(answer.answerPath, .localSafety)
+            XCTAssertEqual(answer.originalQuestion, question)
+            XCTAssertTrue(answer.sourceIDs.isEmpty)
+            XCTAssertFalse(answer.answerText.contains("untrusted"))
+            XCTAssertNil(engine.lastDiagnostics)
+        }
+    }
+
+    func testNonurgentOversizedContextStillFailsBeforeMissingResearchCanLoad() async throws {
+        let context = try oversizedSelectedContext()
+        let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"))
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: missing, languageModel: Prompt1BUnavailableSynthesis())
+        do {
+            _ = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [],
+                trackerContext: nil, userContext: context, inputLanguage: .english,
+                translationInferenceAllowed: true, progress: nil)
+            XCTFail("Optional attachment limits remain enforced for normal research")
+        } catch { XCTAssertTrue(error is FruitfolioAskUserContext.Failure) }
+        XCTAssertNil(engine.lastDiagnostics)
+    }
+
     func testOriginalUrgentQuestionBypassesTranslationAndMissingResearchResources() async throws {
         let runtime = Prompt1BQueryTranslationRuntime()
         let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"))
@@ -95,11 +135,11 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
     }
 
     func testTranslatedUrgentQuestionRechecksSafetyBeforeResearchOrGeneration() async throws {
-        let runtime = Prompt1BQueryTranslationRuntime(result: "severe bleeding")
+        let runtime = Prompt1BQueryTranslationRuntime(result: "heavy bleeding")
         let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"))
         let engine = FruitfolioResearchIntelligenceEngine(packageStore: missing,
             languageModel: Prompt1BUnavailableSynthesis(), translationService: .init(runtime: runtime))
-        let original = "j’ai besoin d’aide maintenant"
+        let original = "saignements abondants"
         let answer = try await engine.answer(question: original, conversation: [], trackerContext: nil,
             userContext: nil, inputLanguage: .french, translationInferenceAllowed: true, progress: nil)
         XCTAssertEqual(answer.answerPath, .localSafety)

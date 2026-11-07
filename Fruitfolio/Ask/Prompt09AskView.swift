@@ -1523,14 +1523,14 @@ struct Prompt09AskView: View {
         }
 
         let submittedInput = viewModel.inputText
-        let requestedMeasurements = selectedContextMeasurements
-        let requestedCategories = selectedContextCategories
-        let userContext: FruitfolioAskUserContext?
-        do {
-            userContext = try FruitfolioAskUserContext.selected(measurementIDs: selectedContextMeasurements,
-                personalCategories: selectedContextCategories, measurements: contextMeasurements.records,
-                context: prompt27AContextStore.context)
-        } catch { contextSharingMessage = .init(error: error); return }
+        // Recognizable urgent guidance uses no optional health attachment.
+        // Do not let an oversized selected record hide that local response.
+        let urgent = Prompt34LocalSafetyRouter.classify(submittedInput).requiresUrgentGuidance
+        let requestedMeasurements: Set<UUID> = urgent ? [] : selectedContextMeasurements
+        let requestedCategories: Set<FruitfolioPersonalHealthCategory> = urgent ? [] : selectedContextCategories
+        let userContext = FruitfolioAskUserContext.captureSelected(measurementIDs: requestedMeasurements,
+            personalCategories: requestedCategories, measurements: contextMeasurements.records,
+            context: prompt27AContextStore.context)
         selectedContextMeasurements = []; selectedContextCategories = []
         contextSharingMessage = userContext == nil ? nil : .singleQuestionEducation
 
@@ -1556,15 +1556,13 @@ struct Prompt09AskView: View {
                 contextSharingMessage = .questionChangedBeforeSending
                 return
             }
-            do {
-                let current = try FruitfolioAskUserContext.selected(measurementIDs: requestedMeasurements,
-                    personalCategories: requestedCategories, measurements: contextMeasurements.records,
-                    context: prompt27AContextStore.context)
-                guard current == userContext else {
-                    contextSharingMessage = .changedBeforeSending
-                    return
-                }
-            } catch { contextSharingMessage = .init(error: error); return }
+            let current = FruitfolioAskUserContext.captureSelected(measurementIDs: requestedMeasurements,
+                personalCategories: requestedCategories, measurements: contextMeasurements.records,
+                context: prompt27AContextStore.context)
+            guard current == userContext else {
+                contextSharingMessage = .changedBeforeSending
+                return
+            }
             await viewModel.submitCurrentQuestion(reduceMotion: motionPreferences.reduceMotionActive,
                 inputLanguage: inputLanguage, translationInferenceAllowed: inferenceAllowed, userContext: userContext)
         }

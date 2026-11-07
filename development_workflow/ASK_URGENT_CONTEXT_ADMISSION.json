@@ -1,0 +1,36 @@
+{
+  "scope": "Urgent routing before optional-context size admission, retaining consent and bounded normal inference.",
+  "requirements": [
+    136,
+    263,
+    264,
+    428,
+    443,
+    444
+  ],
+  "implemented": [
+    "Actual Send captures/rechecks only explicitly selected records without serializing them first. The legacy selected() API remains strict; canonical promptJSON() admission still enforces6000 encoded UTF8 bytes.",
+    "Recognizable original urgency omits optional attachments. Engine compares original and locally prepared question safety before validating optional context, so translated urgency also returns local guidance before research/model loading.",
+    "Nonurgent oversized context still throws before research or generation; legacy contextual providers retain their prior explicit admission check.",
+    "JSON preflight counts a conservative structural/raw UTF8 lower bound before allocating escaped output. The exact encoded cap remains checked; no truncation, clipping or result/unit rewriting.",
+    "Fixed size-error wording now accurately states selected context has not generated an answer; it does not claim the already translated question was never processed."
+  ],
+  "executed": {
+    "focused_XCTest_passed": 13,
+    "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases",
+    "workflow_passed": 71,
+    "swift_syntax_files": 319
+  },
+  "translation_test_scope": "Controlled local runtime maps French saignements abondants to heavy bleeding through the actual production translation envelope. This is routing-contract evidence, not official MADLAD translation quality.",
+  "remaining": [
+    "Actual Apple Send/context selection/changed-record consent/background and urgent response UI acceptance remains NOT_RUN.",
+    "Official MADLAD and native-language clinical safety/negation/urgency review remain unavailable; source-quantity protection is not semantic-quality proof.",
+    "Device memory/latency profiling remains pending; bounded preflight is not a whole application memory certification."
+  ],
+  "source_sha256": {
+    "Fruitfolio/Ask/FruitfolioAskUserContext.swift": "67c250e3b3bdafcb30c9e48e0e21341e9f050948d9ceeacb3ec1cd5b290d60ef",
+    "Fruitfolio/Ask/Prompt09AskView.swift": "712ed949089053961a26763d7a9a1f8d144f58df4f8e072d61330806804b0cb5",
+    "Fruitfolio/Ask/Prompt09AskViewModel.swift": "847f9f2e0350918be56c4c393bba3200bb41462fc5019d614d99b528fc1bc1d9",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift": "a3763d81878d74ce0187086bdb6f6471bd748a6fd43510c52e9e1f035743b91e"
+  }
+}

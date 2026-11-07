@@ -246,6 +246,9 @@ final class Prompt09AskViewModel: ObservableObject {
             } else if questionLanguage != .english {
                 throw AskEngineError.knowledgeProviderUnavailable
             } else if let contextual = engine as? any AskContextualResearchServing {
+                // Legacy providers do not own the new safety-before-context
+                // route; preserve their existing bounded-prompt admission.
+                if let userContext { _ = try userContext.promptJSON() }
                 response = try await contextual.answer(question: question, conversation: messages,
                     trackerContext: nil, userContext: userContext, progress: progressHandler)
             } else if userContext != nil {

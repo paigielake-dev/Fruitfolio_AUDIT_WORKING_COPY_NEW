@@ -3800,3 +3800,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_context_XCTest_passed": 7, "swift_syntax_files": 319, "syntax_errors": 0}.
 - Next action: Fix confirmed urgent-guidance gate ordering: optional oversized context must not preempt recognizable urgent guidance. Preserve source/language safety and document remaining actual Apple and official-model verification.
 - Commit: containing commit for batch Ask-authorized-question-snapshot-and-newer-draft-ownership.
+
+## Urgent-question-before-optional-context-and-bounded-encoding
+
+- Parent checkpoint: 71fcacb9c185a362734f9ffbf141722ae9664581.
+- Source-order requirements: [136, 263, 264, 428, 443, 444].
+- Separate founder additions: ['SPEC-7.9.4', 'SPEC-7.9.9', 'SPEC-4.9.9'].
+- Source files: Fruitfolio/Ask/FruitfolioAskUserContext.swift, Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, development_workflow/ASK_URGENT_CONTEXT_ADMISSION.json.
+- Repair demonstrated urgent-guidance preemption by oversized selected context, including incoming-language preparation. Separate consent snapshot capture from prompt admission without weakening explicit selection/current-record comparison. Normal and legacy requests still enforce the exact6000-byte JSON cap. Add nonallocating raw/structural preflight before JSON escaping to reject oversized inputs, retaining final encoded check. Tests cover real selected oversized record, original/translated urgent guidance without package/model, normal oversize failure, exact boundary/escape expansion and unchanged privacy/citation separation. Thirteen focused XCTest and71 workflow checks pass; Apple and official MADLAD remain unverified.
+- Tests added/updated: FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift, FruitfolioTests/Prompt1BAskUserContextTests.swift.
+- Verification: {"focused_XCTest_passed": 13, "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases", "workflow_passed": 71, "swift_syntax_files": 319}.
+- Next action: Inspect actual four-channel audio bindings/backend ownership against existing individual reconciliation and close only genuinely implemented clauses; fix concrete gaps if found. Continue original/founder work across all parts without recertifying whole features from test counts.
+- Commit: containing commit for batch Urgent-question-before-optional-context-and-bounded-encoding.

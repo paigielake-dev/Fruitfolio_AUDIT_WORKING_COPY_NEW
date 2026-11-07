@@ -33,7 +33,7 @@ nonisolated enum FruitfolioAskContextNotice: Equatable, Sendable {
         case .singleQuestionEducation:
             return "selected context is used only for this question; these are educational research excerpts, not a clinical interpretation."
         case .tooLarge:
-            return "choose fewer context items for this question. nothing has been shared yet."
+            return "choose fewer context items for this question. the selected context has not been used to generate an answer."
         case .external(let text): return text
         }
     }
@@ -70,6 +70,24 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
         var errorDescription: String? { FruitfolioAskContextNotice.tooLarge.text }
     }
     func promptJSON() throws -> String {
+        // A lower bound rejects huge records before JSONEncoder allocates their
+        // escaped representation. Count mandatory structure plus raw UTF8;
+        // escaping/commas can only increase this, so retain the exact final cap.
+        var remaining = Self.maximumJSONBytes - 2 // array brackets
+        func consume(_ bytes: Int) throws {
+            guard bytes <= remaining else { throw Failure.tooLarge }
+            remaining -= bytes
+        }
+        let recordStructure = #"{"kind":"","sourceID":"","provenance":"","fields":{}}"#.utf8.count
+        for record in records {
+            try consume(recordStructure)
+            for value in [record.kind, record.sourceID, record.provenance] { try consume(value.utf8.count) }
+            for (key, value) in record.fields {
+                try consume(5) // key/value quotes and colon; exclude commas
+                try consume(key.utf8.count)
+                try consume(value.utf8.count)
+            }
+        }
         let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         let data = try encoder.encode(records)
         guard data.count <= Self.maximumJSONBytes else { throw Failure.tooLarge }
@@ -78,6 +96,17 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
 
     static func selected(measurementIDs: Set<UUID>, personalCategories: Set<FruitfolioPersonalHealthCategory>,
         measurements: [FruitfolioHormoneMeasurement], context: Prompt27AUserReproductiveContext) throws -> Self? {
+        let snapshot = captureSelected(measurementIDs: measurementIDs, personalCategories: personalCategories,
+            measurements: measurements, context: context)
+        _ = try snapshot?.promptJSON()
+        return snapshot
+    }
+
+    /// Freeze only the explicitly selected records for consent comparison.
+    /// This does not admit context to a prompt: promptJSON still enforces its
+    /// limit at use, after urgent question routing in the canonical engine.
+    static func captureSelected(measurementIDs: Set<UUID>, personalCategories: Set<FruitfolioPersonalHealthCategory>,
+        measurements: [FruitfolioHormoneMeasurement], context: Prompt27AUserReproductiveContext) -> Self? {
         var records: [Record] = []
         var hints: Set<String> = []
         for measurement in measurements.filter({ measurementIDs.contains($0.id) }).sorted(by: { $0.id.uuidString < $1.id.uuidString }) {
@@ -109,9 +138,7 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
             hints.insert(category.title)
         }
         guard !records.isEmpty else { return nil }
-        let snapshot = Self(records: records, topicHints: hints.sorted())
-        _ = try snapshot.promptJSON()
-        return snapshot
+        return Self(records: records, topicHints: hints.sorted())
     }
 }
 

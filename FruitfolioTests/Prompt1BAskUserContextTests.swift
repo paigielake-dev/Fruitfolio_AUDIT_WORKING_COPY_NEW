@@ -75,11 +75,31 @@ final class Prompt1BAskUserContextTests: XCTestCase {
         XCTAssertTrue(json.contains("clinician_confirmation_reported_by_user_not_verified_by_fruitfolio"))
         XCTAssertFalse(json.contains("must not share"))
     }
+    func testExactEncodedContextBoundaryAndEscapedExpansionRemainEnforced() throws {
+        func snapshot(_ text: String) -> FruitfolioAskUserContext {
+            .init(records: [.init(kind: "nonclinical_fixture", sourceID: "fixture", provenance: "test",
+                fields: ["notes": text])], topicHints: [])
+        }
+        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        let overhead = try encoder.encode(snapshot("").records).count
+        let capacity = FruitfolioAskUserContext.maximumJSONBytes - overhead
+        let exact = snapshot(String(repeating: "x", count: capacity))
+        XCTAssertEqual(try exact.promptJSON().utf8.count, FruitfolioAskUserContext.maximumJSONBytes)
+        XCTAssertThrowsError(try snapshot(String(repeating: "x", count: capacity + 1)).promptJSON())
+        // Raw text fits its byte budget but escaping exceeds the final JSON cap.
+        XCTAssertThrowsError(try snapshot(String(repeating: "\"", count: capacity / 2 + 1)).promptJSON())
+        XCTAssertThrowsError(try snapshot(String(repeating: "x", count: 1_000_000)).promptJSON())
+    }
+
     func testLargeContextFailsInsteadOfSilentlyClippingMedicalDetails() throws {
         var record = measurement(); record.notes = String(repeating: "x", count: 7000)
         XCTAssertThrowsError(try FruitfolioAskUserContext.selected(measurementIDs: [record.id], personalCategories: [],
             measurements: [record], context: .unspecified))
         XCTAssertEqual(record.notes.count, 7000)
+        let captured = try XCTUnwrap(FruitfolioAskUserContext.captureSelected(measurementIDs: [record.id],
+            personalCategories: [], measurements: [record], context: .unspecified))
+        XCTAssertEqual(captured.records.first?.fields["notes_user_reported"], record.notes)
+        XCTAssertThrowsError(try captured.promptJSON(), "Capture is not permission to send an oversized prompt")
     }
     @MainActor
     func testActualEngineKeepsUserContextOutsideEvidenceCitationsAndAnswerQuestion() async throws {
