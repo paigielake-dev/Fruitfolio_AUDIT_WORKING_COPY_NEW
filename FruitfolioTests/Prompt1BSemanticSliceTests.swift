@@ -2,18 +2,30 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BSemanticSliceTests: XCTestCase {
-    func testTourFeatureRolesPreserveEveryOriginalDialogueByte() {
-        let originals = [
-            "got a question? start here ( ´﹀` ) i’ll look through the FruitsofLife.xo library for you.",
-            "anything you love can be tucked into your own little encyclopedia! ♡",
-            "organize your saved pages into chapters, notes, study guides, little handbooks… whatever works for you. :-)",
-            "this is more than a period calendar. log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle.",
-            "and when you feel like playing… come fill your fruit basket! (〃⌒∇⌒)",
-            "that’s it! explore wherever you’d like. ♡"
-        ]
-        let anchors = [["FruitsofLife.xo library"], ["encyclopedia"],
+    func testTourFeatureRolesPreserveEveryOriginalDialogueByte() throws {
+        // Compare the real production strings with the original founder source,
+        // not with a second copy of whatever the implementation currently says.
+        guard let researchPath = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_RESEARCH_PATH"] else {
+            throw XCTSkip("Original founder source path is unavailable in this native test bundle; source-golden check NOT_RUN")
+        }
+        let root = URL(fileURLWithPath: researchPath).deletingLastPathComponent().deletingLastPathComponent()
+        let sourceURL = root.appendingPathComponent("development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt")
+        let data = try Data(contentsOf: sourceURL)
+        let start = try XCTUnwrap(data.range(of: Data("4 Exact string literals in this file - bold ".utf8)))
+        let end = try XCTUnwrap(data.range(of: Data("\n115 First-Launch Tour/Prompt07TourOverlay 2.swift".utf8),
+                                         options: [], in: start.upperBound..<data.endIndex))
+        // Decode only this valid UTF8 bounded section; legacy invalid bytes
+        // elsewhere in the immutable founder document are never rewritten.
+        let section = try XCTUnwrap(String(data: data[start.lowerBound..<end.lowerBound], encoding: .utf8))
+        let entries = section.components(separatedBy: "\n").map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { $0.hasPrefix("• ") }.map { String($0.dropFirst(2)) }
+        XCTAssertEqual(entries.count, 8)
+        XCTAssertEqual(entries.first, #"\(rawValue) of 6"#)
+        XCTAssertEqual(entries.last, "Prompt07HubSpace")
+        let originals = Array(entries.dropFirst().prefix(6))
+        let anchors = [["i'll look through the     FruitsofLife.xo library for you."], ["your own little encyclopedia!"],
                        ["chapters", "notes", "study guides", "little handbooks"],
-                       ["period calendar", "Fruitfolio", "cycle"], ["fruit basket"], []]
+                       ["this is more than a period calendar."], ["come fill your fruit basket!"], []]
         for (index, step) in Prompt07TourStep.allCases.enumerated() {
             XCTAssertEqual(Data(step.message.utf8), Data(originals[index].utf8))
             XCTAssertEqual(step.messageSpans.filter { $0.emphasis == .anchorBold }.map(\.text), anchors[index])

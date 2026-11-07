@@ -4234,3 +4234,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"existing_actual_daily_log_domain_XCTest": 21, "swift_syntax_files": 327, "static_sound_diagnostics": 0, "failures": 0, "logs": ["/tmp/fruitfolio_daily_section_existing_domain_tests.log", "/tmp/fruitfolio_daily_section_final_syntax.log", "/tmp/fruitfolio_daily_section_sound.log"], "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."}.
 - Next action: Continue remaining source-grounded context/adaptation requirements and individual implementation reconciliation; inspect separate founder code-evidence appendix without treating quoted instructions as new directives.
 - Commit: containing commit for batch Daily-log-single-expansion-owner-and-founder-main-spec-scope.
+
+## Founder-appendix-exact-tour-and-context-copy
+
+- Parent checkpoint: b39e41e124ff50d8e1051da8ed877ed70959a1e0.
+- Source-order requirements: [46, 48, 50, 51, 95, 155, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Context Personalization/Prompt27AContextPolicyEngine.swift, Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift, FruitfolioTests/Prompt1BSemanticSliceTests.swift, Tools/sync_founder_source_coverage.py, development_workflow/tests/test_founder_source_coverage.py, development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json.
+- Restored source-exact six tour strings/eight full founder emphasis phrases; corrected earlier self-referential golden claim. Lowercased65 authored context reasons with scientific/proper-name preservation. Registered three exact appendix author annotations with preserved identities and implementation-specific evidence; Apple/official translation acceptance remains pending. development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json
+- Tests added/updated: Prompt1BSemanticSliceTests.testTourFeatureRolesPreserveEveryOriginalDialogueByte, Prompt27AContextPersonalizationTests, development_workflow.tests.test_founder_source_coverage.
+- Verification: {"portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites", "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention", "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"}.
+- Next action: Continue original context-integration requirements281–304 from actual policy/Today/wheel consumers; implement missing behavior before any individual status closure.
+- Commit: containing commit for batch Founder-appendix-exact-tour-and-context-copy.

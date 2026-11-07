@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T17:13:28.701838+00:00",
+  "updated_at": "2026-11-07T17:45:24.699235+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -13627,6 +13627,47 @@
         ]
       },
       "timestamp": "2026-11-07T17:13:28.701838+00:00"
+    },
+    {
+      "batch": "Founder-appendix-exact-tour-and-context-copy",
+      "requirements": [
+        46,
+        48,
+        50,
+        51,
+        95,
+        155,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt1BSemanticSliceTests|Prompt27AContextPersonalizationTests|Prompt1BPersonalHealthContextTests|Prompt1BContextPersistenceTests|Prompt1BContextConfirmationRevisionTests|Prompt1BContextSnapshotProtectionTests",
+        "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest development_workflow.tests.test_founder_source_coverage",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+      ],
+      "results": {
+        "portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites",
+        "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention",
+        "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites",
+          "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention",
+          "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"
+        },
+        "not_run": [
+          "Apple build and UI/VoiceOver/dynamic-type/RTL visual acceptance",
+          "Official MADLAD model translation and native-language acceptance"
+        ],
+        "remaining": [
+          "Apple rendering and accessibility acceptance of complete tour phrases",
+          "Official MADLAD translation preserves source wording meaning and semantic anchors",
+          "Full cross-application semantic/voice coverage remains incomplete; this batch covers only explicit tour and context annotations"
+        ]
+      },
+      "timestamp": "2026-11-07T17:45:24.699235+00:00"
     }
   ]
 }

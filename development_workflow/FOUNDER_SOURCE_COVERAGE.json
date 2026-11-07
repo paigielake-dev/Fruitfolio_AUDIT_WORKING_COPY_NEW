@@ -13198,8 +13198,129 @@
     "source_end_line": 14512,
     "original_bytes_sha256": "d34e65acdf9620b6da5c8842703fcbf261a4e51eb124dc08e57b375d0d41c9fb",
     "scope": "Explicit file-by-file source-evidence appendix, including quoted string literals. Do not automatically count quotations as founder instructions; remaining applicability review is not implementation completion.",
-    "review_status": "UNREVIEWED_SOURCE_EVIDENCE",
-    "evidence": []
+    "review_status": "STRUCTURE_REVIEWED_ANNOTATIONS_TRACKED",
+    "evidence": [
+      {
+        "document": "development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json",
+        "scope": "165 numbered Swift file sections structurally reviewed; three author annotations identified separately from quoted code/literals. This is not runtime/clinical verification of the appendix."
+      }
+    ],
+    "instruction_annotations": [
+      {
+        "id": "FOUNDER-APPENDIX-L02535",
+        "source_start_line": 2535,
+        "source_end_line": 2535,
+        "original_file": "Context Personalization/Prompt27AContextPolicyEngine.swift",
+        "original_text": "4 Exact string literals in this file - ENSURE ALL THE USER VISIBLE ONES ARE LOWERCASE UNLESS SOMETHING NEEDS TO BE CAPITALIZED",
+        "original_bytes_sha256": "a64036c5680ba84da5a451866fdfa3905ce9052f7caf6d8110618bdf17bb1332",
+        "applicability": "APPLICABLE",
+        "implementation_status": "IMPLEMENTED",
+        "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+        "evidence": [
+          {
+            "document": "development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json",
+            "summary": "65 authored generic context-policy reason literals lowercased only; medical acronyms and proper feature names preserved. Control flow and scientific text unchanged, verified by nonliteral hash and casefold-only comparison.",
+            "verification": {
+              "executed": {
+                "portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites",
+                "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention",
+                "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"
+              },
+              "not_run": [
+                "Apple build and UI/VoiceOver/dynamic-type/RTL visual acceptance",
+                "Official MADLAD model translation and native-language acceptance"
+              ],
+              "remaining": [
+                "Apple rendering and accessibility acceptance of complete tour phrases",
+                "Official MADLAD translation preserves source wording meaning and semantic anchors",
+                "Full cross-application semantic/voice coverage remains incomplete; this batch covers only explicit tour and context annotations"
+              ]
+            }
+          }
+        ],
+        "remaining_verification_requirements": [
+          "Apple rendering and accessibility acceptance of complete tour phrases",
+          "Official MADLAD translation preserves source wording meaning and semantic anchors"
+        ]
+      },
+      {
+        "id": "FOUNDER-APPENDIX-L10783",
+        "source_start_line": 10783,
+        "source_end_line": 10785,
+        "original_file": "First-Launch Tour/Prompt07TourModels.swift",
+        "original_text": "4 Exact string literals in this file - bold \u201ci\u2019ll look through the\n\nFruitsofLife.xo library for you.\", bold \"your own little encyclopedia!\", bold \"chapters\", \"notes\", \"study guides\", \"little handbooks\", bold \"this is more than a period calendar.\", bold \"come fill your fruit basket!\"",
+        "original_bytes_sha256": "ac98b1126df1139c88a0d1a81f625f4801d2bde89060314d4ea6227c7c40758c",
+        "applicability": "APPLICABLE",
+        "implementation_status": "IMPLEMENTED",
+        "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+        "evidence": [
+          {
+            "document": "development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json",
+            "summary": "All eight full founder-requested bold spans authored in actual six-step tour copy and consumed by existing shared canonical semantic renderer; source-driven XCTest verifies spans and message bytes.",
+            "verification": {
+              "executed": {
+                "portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites",
+                "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention",
+                "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"
+              },
+              "not_run": [
+                "Apple build and UI/VoiceOver/dynamic-type/RTL visual acceptance",
+                "Official MADLAD model translation and native-language acceptance"
+              ],
+              "remaining": [
+                "Apple rendering and accessibility acceptance of complete tour phrases",
+                "Official MADLAD translation preserves source wording meaning and semantic anchors",
+                "Full cross-application semantic/voice coverage remains incomplete; this batch covers only explicit tour and context annotations"
+              ]
+            }
+          }
+        ],
+        "remaining_verification_requirements": [
+          "Apple rendering and accessibility acceptance of complete tour phrases",
+          "Official MADLAD translation preserves source wording meaning and semantic anchors"
+        ]
+      },
+      {
+        "id": "FOUNDER-APPENDIX-L10850",
+        "source_start_line": 10850,
+        "source_end_line": 10850,
+        "original_file": "First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "original_text": "4 Exact string literals in this file - USE THE STRINGS ABOVE FOR THE TOUR!",
+        "original_bytes_sha256": "592c18c2bb93787639cab550b7b79fda0232e421f7843df5739b0bf7b4a9b992",
+        "applicability": "APPLICABLE",
+        "implementation_status": "IMPLEMENTED",
+        "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+        "evidence": [
+          {
+            "document": "development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json",
+            "summary": "All six actual tour message UTF8 byte sequences restored to exact original founder source literals, including original punctuation, kaomoji, and spacing. Test reads immutable original source rather than duplicate implementation strings.",
+            "verification": {
+              "executed": {
+                "portable_XCTest": "93 passed, 0 failures; real source-derived tour golden and context suites",
+                "source_identity_workflow": "4 passed, including appendix omission/tamper/progress retention",
+                "syntax": "328 Swift files parsed, 0 syntax errors; not SDK typechecking"
+              },
+              "not_run": [
+                "Apple build and UI/VoiceOver/dynamic-type/RTL visual acceptance",
+                "Official MADLAD model translation and native-language acceptance"
+              ],
+              "remaining": [
+                "Apple rendering and accessibility acceptance of complete tour phrases",
+                "Official MADLAD translation preserves source wording meaning and semantic anchors",
+                "Full cross-application semantic/voice coverage remains incomplete; this batch covers only explicit tour and context annotations"
+              ]
+            }
+          }
+        ],
+        "remaining_verification_requirements": [
+          "Apple rendering and accessibility acceptance of complete tour phrases",
+          "Official MADLAD translation preserves source wording meaning and semantic anchors"
+        ]
+      }
+    ],
+    "prior_review_statuses": [
+      "UNREVIEWED_SOURCE_EVIDENCE"
+    ]
   },
   "scope_limit": "484 source-text candidates, not484 new requirements. Only the listed individually inspected paragraphs have scoped evidence. Remaining applicability and explicit source-evidence appendix review are unfinished; do not calculate completion from indexing."
 }

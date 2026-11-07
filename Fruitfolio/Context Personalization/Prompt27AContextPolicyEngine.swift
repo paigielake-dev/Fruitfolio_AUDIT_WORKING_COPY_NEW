@@ -106,10 +106,10 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
             set(.predictionUncertainty, .clarify, "TTC does not increase prediction certainty.")
 
         case .avoidingPregnancy:
-            set(.contraceptionEducation, .surface, "Avoiding pregnancy makes contraception education more relevant.")
-            set(.predictionUncertainty, .surface, "Prediction limitations should be especially discoverable when avoiding pregnancy.")
-            set(.fertileWindowPrediction, .clarify, "Estimated fertile windows are not contraceptive guarantees.")
-            set(.ovulationPrediction, .clarify, "Estimated ovulation is not a contraceptive guarantee.")
+            set(.contraceptionEducation, .surface, "avoiding pregnancy makes contraception education more relevant.")
+            set(.predictionUncertainty, .surface, "prediction limitations should be especially discoverable when avoiding pregnancy.")
+            set(.fertileWindowPrediction, .clarify, "estimated fertile windows are not contraceptive guarantees.")
+            set(.ovulationPrediction, .clarify, "estimated ovulation is not a contraceptive guarantee.")
 
         case .generalCycleTracking, .noSpecificGoal, .preferNotToSpecify, .unspecified:
             break
@@ -117,43 +117,43 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
 
         switch context.sexualActivityContext.value {
         case .notCurrentlySexuallyActive:
-            set(.fertilizationEducation, .clarify, "Automatic conception-oriented surfacing may be reduced; deliberate access remains available.")
+            set(.fertilizationEducation, .clarify, "automatic conception-oriented surfacing may be reduced; deliberate access remains available.")
         case .sexuallyActive, .preferNotToSay, .unspecified:
             break
         }
 
         switch context.reproductiveStage.value {
         case .pregnant:
-            set(.nextPeriodPrediction, .suppress, "Ordinary current-cycle period prediction is not presently applicable in user-reported pregnancy context.")
-            set(.fertileWindowPrediction, .suppress, "Ordinary current-cycle fertile-window prediction is not presently applicable in user-reported pregnancy context.")
-            set(.ovulationPrediction, .suppress, "Ordinary current-cycle ovulation prediction is not presently applicable in user-reported pregnancy context.")
-            set(.pregnancyEducation, .surface, "User-reported pregnancy may make Pregnancy Education easier to reach.")
-            set(.calendar, .clarify, "Historical records remain; current active-cycle prediction overlays may be suppressed.")
-            set(.today, .clarify, "Today should not present ordinary active-cycle predictions as currently applicable.")
+            set(.nextPeriodPrediction, .suppress, "ordinary current-cycle period prediction is not presently applicable in user-reported pregnancy context.")
+            set(.fertileWindowPrediction, .suppress, "ordinary current-cycle fertile-window prediction is not presently applicable in user-reported pregnancy context.")
+            set(.ovulationPrediction, .suppress, "ordinary current-cycle ovulation prediction is not presently applicable in user-reported pregnancy context.")
+            set(.pregnancyEducation, .surface, "user-reported pregnancy may make Pregnancy Education easier to reach.")
+            set(.calendar, .clarify, "historical records remain; current active-cycle prediction overlays may be suppressed.")
+            set(.today, .clarify, "today should not present ordinary active-cycle predictions as currently applicable.")
             set(.hormoneRhythm, .clarify, "Hormone Rhythm stays general natural-cycle education rather than a picture of pregnancy hormone levels.")
-            set(.hormoneRhythmContextMarker, .suppress, "A natural-cycle current-position marker is not appropriate in explicit pregnancy context.")
+            set(.hormoneRhythmContextMarker, .suppress, "a natural-cycle current-position marker is not appropriate in explicit pregnancy context.")
 
         case .postpartum:
-            set(.postpartumEducation, .surface, "Postpartum education is relevant to explicit postpartum context.")
-            set(.predictionUncertainty, .clarify, "Ordinary cycle assumptions may be limited postpartum.")
-            set(.calendar, .clarify, "Historical records remain while current predictions may require added context.")
-            set(.hormoneRhythm, .clarify, "Natural-cycle hormone education requires added framing postpartum.")
-            set(.hormoneRhythmContextMarker, .suppress, "Postpartum context alone does not establish current ovulatory-cycle position.")
+            set(.postpartumEducation, .surface, "postpartum education is relevant to explicit postpartum context.")
+            set(.predictionUncertainty, .clarify, "ordinary cycle assumptions may be limited postpartum.")
+            set(.calendar, .clarify, "historical records remain while current predictions may require added context.")
+            set(.hormoneRhythm, .clarify, "natural-cycle hormone education requires added framing postpartum.")
+            set(.hormoneRhythmContextMarker, .suppress, "postpartum context alone does not establish current ovulatory-cycle position.")
 
         case .perimenopause:
-            set(.perimenopauseEducation, .surface, "Perimenopause education is relevant to explicit user-reported context.")
-            set(.predictionUncertainty, .clarify, "Prediction limitations should remain clear when cycles vary.")
-            set(.trends, .clarify, "Calculated variability and user-reported perimenopause remain distinct facts.")
+            set(.perimenopauseEducation, .surface, "perimenopause education is relevant to explicit user-reported context.")
+            set(.predictionUncertainty, .clarify, "prediction limitations should remain clear when cycles vary.")
+            set(.trends, .clarify, "calculated variability and user-reported perimenopause remain distinct facts.")
 
         case .menopause:
-            set(.nextPeriodPrediction, .suppress, "Ordinary current-cycle next-period prediction is not presently applicable in user-reported menopause context.")
-            set(.fertileWindowPrediction, .suppress, "Ordinary current-cycle fertile-window prediction is not presently applicable in user-reported menopause context.")
-            set(.ovulationPrediction, .suppress, "Ordinary current-cycle ovulation prediction is not presently applicable in user-reported menopause context.")
-            set(.menopauseEducation, .surface, "Menopause-relevant education is appropriate to surface.")
-            set(.trends, .clarify, "Historical Trends remain available without rewriting prior cycle history.")
-            set(.calendar, .clarify, "Historical cycle records remain preserved.")
+            set(.nextPeriodPrediction, .suppress, "ordinary current-cycle next-period prediction is not presently applicable in user-reported menopause context.")
+            set(.fertileWindowPrediction, .suppress, "ordinary current-cycle fertile-window prediction is not presently applicable in user-reported menopause context.")
+            set(.ovulationPrediction, .suppress, "ordinary current-cycle ovulation prediction is not presently applicable in user-reported menopause context.")
+            set(.menopauseEducation, .surface, "menopause-relevant education is appropriate to surface.")
+            set(.trends, .clarify, "historical Trends remain available without rewriting prior cycle history.")
+            set(.calendar, .clarify, "historical cycle records remain preserved.")
             set(.hormoneRhythm, .clarify, "Hormone Rhythm remains qualitative education and requires context-appropriate framing.")
-            set(.hormoneRhythmContextMarker, .suppress, "A current natural-cycle position marker is not appropriate in explicit menopause context.")
+            set(.hormoneRhythmContextMarker, .suppress, "a current natural-cycle position marker is not appropriate in explicit menopause context.")
 
         case .cycling, .preferNotToSpecify, .unspecified:
             break
@@ -161,30 +161,30 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
 
         switch context.surrogacyContext.value {
         case .preparingForEmbryoTransfer:
-            set(.surrogacyEducation, .surface, "Surrogacy education is relevant to explicit gestational-carrier preparation context.")
-            set(.askEncyclopedia, .surface, "Relevant approved surrogacy education may be easier to discover.")
-            set(.predictionUncertainty, .clarify, "Surrogacy preparation does not authorize changes to cycle-prediction mathematics.")
+            set(.surrogacyEducation, .surface, "surrogacy education is relevant to explicit gestational-carrier preparation context.")
+            set(.askEncyclopedia, .surface, "relevant approved surrogacy education may be easier to discover.")
+            set(.predictionUncertainty, .clarify, "surrogacy preparation does not authorize changes to cycle-prediction mathematics.")
 
         case .pregnantGestationalCarrier:
-            set(.surrogacyEducation, .surface, "Surrogacy education is relevant to explicit gestational-carrier pregnancy context.")
-            set(.pregnancyEducation, .surface, "Pregnancy education may be relevant without assuming parenting or intended-parent status.")
-            set(.nextPeriodPrediction, .suppress, "Ordinary current-cycle period prediction is not presently applicable during an explicitly reported gestational-carrier pregnancy.")
-            set(.fertileWindowPrediction, .suppress, "Ordinary current-cycle fertile-window prediction is not presently applicable during an explicitly reported gestational-carrier pregnancy.")
-            set(.ovulationPrediction, .suppress, "Ordinary current-cycle ovulation prediction is not presently applicable during an explicitly reported gestational-carrier pregnancy.")
-            set(.calendar, .clarify, "Historical records remain while current active-cycle prediction overlays may be suppressed.")
-            set(.today, .clarify, "Today should not present ordinary active-cycle predictions as currently applicable.")
+            set(.surrogacyEducation, .surface, "surrogacy education is relevant to explicit gestational-carrier pregnancy context.")
+            set(.pregnancyEducation, .surface, "pregnancy education may be relevant without assuming parenting or intended-parent status.")
+            set(.nextPeriodPrediction, .suppress, "ordinary current-cycle period prediction is not presently applicable during an explicitly reported gestational-carrier pregnancy.")
+            set(.fertileWindowPrediction, .suppress, "ordinary current-cycle fertile-window prediction is not presently applicable during an explicitly reported gestational-carrier pregnancy.")
+            set(.ovulationPrediction, .suppress, "ordinary current-cycle ovulation prediction is not presently applicable during an explicitly reported gestational-carrier pregnancy.")
+            set(.calendar, .clarify, "historical records remain while current active-cycle prediction overlays may be suppressed.")
+            set(.today, .clarify, "today should not present ordinary active-cycle predictions as currently applicable.")
             set(.hormoneRhythm, .clarify, "Hormone Rhythm stays general natural-cycle education rather than a picture of pregnancy hormone levels.")
-            set(.hormoneRhythmContextMarker, .suppress, "A natural-cycle current-position marker is not appropriate during an explicitly reported gestational-carrier pregnancy.")
-            set(.askEncyclopedia, .surface, "Relevant approved surrogacy education may be easier to discover.")
+            set(.hormoneRhythmContextMarker, .suppress, "a natural-cycle current-position marker is not appropriate during an explicitly reported gestational-carrier pregnancy.")
+            set(.askEncyclopedia, .surface, "relevant approved surrogacy education may be easier to discover.")
 
         case .postpartumAfterSurrogatePregnancy:
-            set(.surrogacyEducation, .surface, "Surrogacy education is relevant to explicit postpartum-after-surrogacy context.")
-            set(.postpartumEducation, .surface, "Postpartum recovery education is relevant without assuming parenting or newborn-care responsibilities.")
-            set(.predictionUncertainty, .clarify, "Ordinary cycle assumptions may be limited postpartum.")
-            set(.calendar, .clarify, "Historical records remain while current predictions may require added context.")
-            set(.hormoneRhythm, .clarify, "Natural-cycle hormone education requires added framing postpartum.")
-            set(.hormoneRhythmContextMarker, .suppress, "Postpartum-after-surrogacy context alone does not establish current ovulatory-cycle position.")
-            set(.askEncyclopedia, .surface, "Relevant approved surrogacy education may be easier to discover.")
+            set(.surrogacyEducation, .surface, "surrogacy education is relevant to explicit postpartum-after-surrogacy context.")
+            set(.postpartumEducation, .surface, "postpartum recovery education is relevant without assuming parenting or newborn-care responsibilities.")
+            set(.predictionUncertainty, .clarify, "ordinary cycle assumptions may be limited postpartum.")
+            set(.calendar, .clarify, "historical records remain while current predictions may require added context.")
+            set(.hormoneRhythm, .clarify, "natural-cycle hormone education requires added framing postpartum.")
+            set(.hormoneRhythmContextMarker, .suppress, "postpartum-after-surrogacy context alone does not establish current ovulatory-cycle position.")
+            set(.askEncyclopedia, .surface, "relevant approved surrogacy education may be easier to discover.")
 
         case .preferNotToSpecify, .unspecified:
             break
@@ -192,11 +192,11 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
 
         switch context.lactationContext.value {
         case .breastfeedingOrLactating:
-            set(.lactationEducation, .surface, "Lactation education is relevant to explicit lactation context.")
-            set(.predictionUncertainty, .clarify, "Lactation does not establish whether ovulation has resumed.")
-            set(.ovulationPrediction, .clarify, "Lactation status alone does not confirm or exclude ovulation.")
-            set(.hormoneRhythm, .clarify, "Natural-cycle hormone education requires added framing during lactation.")
-            set(.hormoneRhythmContextMarker, .suppress, "Lactation status alone does not establish current ovulatory-cycle position.")
+            set(.lactationEducation, .surface, "lactation education is relevant to explicit lactation context.")
+            set(.predictionUncertainty, .clarify, "lactation does not establish whether ovulation has resumed.")
+            set(.ovulationPrediction, .clarify, "lactation status alone does not confirm or exclude ovulation.")
+            set(.hormoneRhythm, .clarify, "natural-cycle hormone education requires added framing during lactation.")
+            set(.hormoneRhythmContextMarker, .suppress, "lactation status alone does not establish current ovulatory-cycle position.")
         case .notCurrentlyBreastfeedingOrLactating, .preferNotToSpecify, .unspecified:
             break
         }
@@ -204,25 +204,25 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
         if context.cycleHealthContexts.contains(.pcos) {
             set(.pcosEducation, .surface, "PCOS education is relevant to explicit user-reported PCOS context.")
             set(.predictionUncertainty, .clarify, "PCOS context does not authorize a new prediction algorithm.")
-            set(.askEncyclopedia, .surface, "Relevant approved PCOS education may be easier to discover.")
+            set(.askEncyclopedia, .surface, "relevant approved PCOS education may be easier to discover.")
         }
 
         if context.cycleHealthContexts.contains(.endometriosis) {
-            set(.endometriosisEducation, .surface, "Endometriosis education is relevant to explicit user-reported context.")
-            set(.symptoms, .surface, "Existing symptom logging may be easier to reach without causal relabeling.")
-            set(.askEncyclopedia, .surface, "Relevant approved endometriosis education may be easier to discover.")
+            set(.endometriosisEducation, .surface, "endometriosis education is relevant to explicit user-reported context.")
+            set(.symptoms, .surface, "existing symptom logging may be easier to reach without causal relabeling.")
+            set(.askEncyclopedia, .surface, "relevant approved endometriosis education may be easier to discover.")
         }
 
         if context.cycleHealthContexts.contains(.irregularCycles) {
-            set(.predictionUncertainty, .surface, "User-reported irregular cycles make prediction limitations especially relevant.")
-            set(.trends, .clarify, "User-reported irregularity remains distinct from calculated variability.")
+            set(.predictionUncertainty, .surface, "user-reported irregular cycles make prediction limitations especially relevant.")
+            set(.trends, .clarify, "user-reported irregularity remains distinct from calculated variability.")
         }
 
         switch context.fertilityTreatmentContext.value {
         case .currentlyUndergoing:
-            set(.fertilityTreatmentEducation, .surface, "Fertility-treatment education is relevant to explicit treatment context.")
-            set(.medicationLogging, .surface, "Existing medication logging may be easier to reach.")
-            set(.treatmentNotes, .surface, "Existing notes may be easier to reach for treatment context.")
+            set(.fertilityTreatmentEducation, .surface, "fertility-treatment education is relevant to explicit treatment context.")
+            set(.medicationLogging, .surface, "existing medication logging may be easier to reach.")
+            set(.treatmentNotes, .surface, "existing notes may be easier to reach for treatment context.")
             set(.fertilizationEducation, .surface, "Fertilization Education may be easier to discover as education only.")
         case .notCurrentlyUndergoing, .preferNotToSpecify, .unspecified:
             break
@@ -230,11 +230,11 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
 
         switch context.contraceptionContext.value {
         case .hormonalContraception:
-            set(.hormoneRhythm, .clarify, "Natural-cycle hormone patterns must not be presented as measured individual physiology under hormonal contraception.")
-            set(.hormoneRhythmContextMarker, .suppress, "Current-context marker should be suppressed when established altered-context rules make it inappropriate.")
-            set(.contraceptionEducation, .surface, "Contraception education may be relevant.")
+            set(.hormoneRhythm, .clarify, "natural-cycle hormone patterns must not be presented as measured individual physiology under hormonal contraception.")
+            set(.hormoneRhythmContextMarker, .suppress, "current-context marker should be suppressed when established altered-context rules make it inappropriate.")
+            set(.contraceptionEducation, .surface, "contraception education may be relevant.")
         case .nonHormonalContraception:
-            set(.contraceptionEducation, .surface, "Contraception education may be relevant.")
+            set(.contraceptionEducation, .surface, "contraception education may be relevant.")
         case .none, .preferNotToSpecify, .unspecified:
             break
         }
@@ -245,7 +245,7 @@ nonisolated struct Prompt27AContextPolicyEngine: Sendable {
             context.reproductiveStage.value == .menopause ||
             context.surrogacyContext.value == .pregnantGestationalCarrier {
             for feature in [Prompt27AContextFeature.nextPeriodPrediction, .fertileWindowPrediction, .ovulationPrediction] {
-                p[feature] = .init(.suppress, reason: "Explicit reproductive stage makes the ordinary active-cycle prediction presently inapplicable.")
+                p[feature] = .init(.suppress, reason: "explicit reproductive stage makes the ordinary active-cycle prediction presently inapplicable.")
             }
         }
 

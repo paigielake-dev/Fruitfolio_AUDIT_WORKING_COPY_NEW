@@ -47,11 +47,11 @@ enum Prompt07TourStep: Int, CaseIterable, Identifiable, Sendable {
     var messageSpans: [FruitfolioSemanticSpan] {
         switch self {
         case .ask:
-            return [.init(text: "got a question? start here ( ´﹀` ) i’ll look through the "),
-                    .init(text: "FruitsofLife.xo library", emphasis: .anchorBold), .init(text: " for you.")]
+            return [.init(text: "got a question? start here > - < "),
+                    .init(text: "i'll look through the     FruitsofLife.xo library for you.", emphasis: .anchorBold)]
         case .library:
-            return [.init(text: "anything you love can be tucked into your own little "),
-                    .init(text: "encyclopedia", emphasis: .anchorBold), .init(text: "! ♡")]
+            return [.init(text: "anything you love can be tucked into "),
+                    .init(text: "your own little encyclopedia!", emphasis: .anchorBold)]
         case .guideBuilder:
             return [.init(text: "organize your saved pages into "),
                     .init(text: "chapters", emphasis: .anchorBold), .init(text: ", "),
@@ -60,17 +60,13 @@ enum Prompt07TourStep: Int, CaseIterable, Identifiable, Sendable {
                     .init(text: "little handbooks", emphasis: .anchorBold),
                     .init(text: "… whatever works for you. :-)")]
         case .cycle:
-            return [.init(text: "this is more than a "),
-                    .init(text: "period calendar", emphasis: .anchorBold),
-                    .init(text: ". log what you know, and "),
-                    .init(text: "Fruitfolio", emphasis: .anchorBold),
-                    .init(text: " will help you see the biology and patterns underneath your "),
-                    .init(text: "cycle", emphasis: .anchorBold), .init(text: ".")]
+            return [.init(text: "this is more than a period calendar.", emphasis: .anchorBold),
+                    .init(text: " log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle.")]
         case .fruitBasket:
-            return [.init(text: "and when you feel like playing… come fill your "),
-                    .init(text: "fruit basket", emphasis: .anchorBold), .init(text: "! (〃⌒∇⌒)")]
+            return [.init(text: "and when you feel like playing… "),
+                    .init(text: "come fill your fruit basket!", emphasis: .anchorBold)]
         case .ready:
-            return [.init(text: "that’s it! explore wherever you’d like. ♡")]
+            return [.init(text: "that’s it! explore wherever you’d like. <333")]
         }
     }
 }

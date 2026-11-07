@@ -27,6 +27,12 @@ class FounderSourceCoverageTests(unittest.TestCase):
         self.assertTrue(all(r['applicability'] == 'UNREVIEWED' and
                             r['implementation_status'] == 'NOT_ASSESSED' for r in document['candidates']))
         self.assertEqual(document['source_evidence_appendix']['review_status'], 'UNREVIEWED_SOURCE_EVIDENCE')
+        annotations = document['source_evidence_appendix']['instruction_annotations']
+        self.assertEqual([r['source_start_line'] for r in annotations], [2535, 10783, 10850])
+        self.assertEqual(annotations[1]['source_end_line'], 10785)
+        self.assertIn('little handbooks', annotations[1]['original_text'])
+        self.assertTrue(all(r['applicability'] == 'UNREVIEWED' and r['implementation_status'] == 'NOT_ASSESSED'
+                            and r['verification_status'] == 'NOT_RUN' for r in annotations))
 
     def test_legacy_invalid_utf8_roundtrips_exact_bytes_instead_of_replacement(self):
         first = MODULE.build(self.raw, self.index)['candidates'][0]
@@ -44,6 +50,8 @@ class FounderSourceCoverageTests(unittest.TestCase):
         previous = MODULE.build(self.raw, self.index)
         previous['future_review_notes'] = {'preserve': True}
         previous['candidates'][0].update(applicability='REFERENCE_ONLY', evidence=[{'review': 'fixture'}])
+        previous['source_evidence_appendix']['instruction_annotations'][0].update(
+            applicability='APPLICABLE', implementation_status='IN_PROGRESS', evidence=[{'review': 'annotation fixture'}])
         self.assertEqual(MODULE.build(self.raw, self.index, previous), previous)
         omitted = copy.deepcopy(previous)
         omitted['candidates'].pop()
@@ -55,6 +63,14 @@ class FounderSourceCoverageTests(unittest.TestCase):
         previous['candidates'][0]['original_text'] += 'changed'
         with self.assertRaisesRegex(ValueError, 'identity changed'):
             MODULE.build(self.raw, self.index, previous)
+        clean = MODULE.build(self.raw, self.index)
+        clean['source_evidence_appendix']['instruction_annotations'][0]['original_text'] += 'changed'
+        with self.assertRaisesRegex(ValueError, 'Appendix annotation source identity'):
+            MODULE.build(self.raw, self.index, clean)
+        omitted = MODULE.build(self.raw, self.index)
+        omitted['source_evidence_appendix']['instruction_annotations'].pop()
+        with self.assertRaisesRegex(ValueError, 'annotation was omitted'):
+            MODULE.build(self.raw, self.index, omitted)
         self.index['requirements'][0]['description'] += 'changed'
         with self.assertRaisesRegex(ValueError, 'description changed'):
             MODULE.build(self.raw, self.index)

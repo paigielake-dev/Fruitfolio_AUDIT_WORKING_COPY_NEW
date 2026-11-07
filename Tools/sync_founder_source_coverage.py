@@ -7,6 +7,7 @@ new numbered requirements or evidence that the original 478 are complete.
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +20,35 @@ APPENDIX = 'FILE-BY-FILE EXPERIENCE + CODE EVIDENCE'
 def require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def appendix_instruction_identities(lines, boundary):
+    """Author annotations are not quoted source strings, even inside an appendix."""
+    result = []
+    current_file = None
+    declaration = 'These are reproduced exactly from source.'
+    for index in range(boundary + 1, len(lines)):
+        line = lines[index]
+        file_match = re.fullmatch(r'\d+ (.+\.swift)', line)
+        if file_match:
+            current_file = file_match.group(1)
+        if re.fullmatch(r'\d+ Exact string literals in this file - .+', line) is None:
+            continue
+        require(current_file is not None, 'Appendix annotation has no source-file context')
+        end = index
+        cursor = index + 1
+        while cursor < len(lines) and not lines[cursor].startswith(declaration):
+            require(re.fullmatch(r'\d+ .+\.swift', lines[cursor]) is None,
+                    'Appendix annotation must terminate before the next file')
+            if lines[cursor].strip():
+                end = cursor
+            cursor += 1
+        require(cursor < len(lines), 'Appendix annotation has no quoted-source declaration')
+        text = '\n'.join(lines[index:end + 1])
+        result.append(dict(id=f'FOUNDER-APPENDIX-L{index + 1:05d}', source_start_line=index + 1,
+            source_end_line=end + 1, original_file=current_file, original_text=text,
+            original_bytes_sha256=hashlib.sha256(text.encode('utf-8', errors='surrogateescape')).hexdigest()))
+    return result
 
 
 def build(raw, supplemental, previous=None):
@@ -93,6 +123,27 @@ def build(raw, supplemental, previous=None):
         scope='Explicit file-by-file source-evidence appendix, including quoted string literals. '
               'Do not automatically count quotations as founder instructions; '
               'remaining applicability review is not implementation completion.')
+    identities = appendix_instruction_identities(lines, boundary)
+    old_annotations = appendix.get('instruction_annotations')
+    if old_annotations is not None:
+        require(isinstance(old_annotations, list) and
+                [row.get('id') for row in old_annotations] == [row['id'] for row in identities],
+                'An appendix annotation was omitted, added or reordered')
+    prior_annotations = {row['id']: row for row in old_annotations or []}
+    annotations = []
+    for identity in identities:
+        row = dict(prior_annotations.get(identity['id'], {}))
+        if row:
+            require(all(row.get(key) == value for key, value in identity.items()),
+                    'Appendix annotation source identity changed: ' + identity['id'])
+        row.update(identity)
+        for key, value in [('applicability', 'UNREVIEWED'), ('implementation_status', 'NOT_ASSESSED'),
+                           ('verification_status', 'NOT_RUN'), ('evidence', []),
+                           ('remaining_verification_requirements', [])]:
+            row.setdefault(key, value)
+        require(isinstance(row['evidence'], list), 'Appendix annotation evidence must remain a list')
+        annotations.append(row)
+    appendix['instruction_annotations'] = annotations
     appendix.setdefault('review_status', 'UNREVIEWED_SOURCE_EVIDENCE')
     appendix.setdefault('evidence', [])
     document['source_evidence_appendix'] = appendix
