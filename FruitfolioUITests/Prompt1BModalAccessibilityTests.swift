@@ -96,19 +96,25 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     }
 
     func testContactFailureUsesMeasuredModalAndRestoresLinkAccess() {
+        for arabic in [false, true] {
         for reduced in [false, true] {
             let app = XCUIApplication()
-            app.launchArguments += ["-fruitfolioContactQA", "-UIPreferredContentSizeCategoryName",
+            app.launchArguments += ["-fruitfolioContactQA", "-fruitfolioContactQAPauseInference", "-UIPreferredContentSizeCategoryName",
                                     "UICTContentSizeCategoryAccessibilityXXXL"]
             if reduced { app.launchArguments += ["-fruitfolioContactReduceMotion"] }
+            if arabic { app.launchArguments += ["-fruitfolioContactQAArabic"] }
             app.launch()
             let link = app.buttons["contact.link.instagram"]
             XCTAssertTrue(link.waitForExistence(timeout: 5))
             for _ in 0..<8 { if link.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(link.label.contains("@fruitsoflife.xo"))
             link.tap()
             let close = app.buttons["contact.linkFailure.close"]
             let scroll = app.scrollViews["tapedWhitePopup.scroll"]
             XCTAssertTrue(scroll.waitForExistence(timeout: 3))
+            let url = app.staticTexts["contact.linkFailure.destinationURL"]
+            XCTAssertTrue(url.waitForExistence(timeout: 3))
+            XCTAssertEqual(url.label, "https://www.instagram.com/fruitsoflife.xo")
             XCTAssertFalse(app.buttons["contact.link.email"].exists)
             for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
             XCTAssertTrue(close.isHittable)
@@ -117,9 +123,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertLessThanOrEqual(close.frame.maxX, scroll.frame.maxX)
             XCTAssertGreaterThanOrEqual(close.frame.minY, app.frame.minY)
             XCTAssertLessThanOrEqual(close.frame.maxY, app.frame.maxY)
+            captureGame(app, name: "contact-protected-link-arabic-\(arabic)-reduced-\(reduced)")
             close.tap()
             XCTAssertTrue(link.waitForExistence(timeout: 3))
             app.terminate()
+        }
         }
     }
 

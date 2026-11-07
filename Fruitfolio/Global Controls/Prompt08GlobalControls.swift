@@ -36,14 +36,16 @@ struct WatercolorSecondaryButton: View {
 @MainActor
 struct FruitfolioControlPillButton: View {
     let label: String
+    let protectedLiterals: [String]
     let action: () -> Void
     let isSelected: Bool?
     let artworkOpacity: Double
     let reduceMotionOverride: Bool?
 
-    init(label: String, isSelected: Bool? = nil, artworkOpacity: Double = 1,
+    init(label: String, protectedLiterals: [String] = [], isSelected: Bool? = nil, artworkOpacity: Double = 1,
          reduceMotionOverride: Bool? = nil, action: @escaping () -> Void) {
         self.label = label
+        self.protectedLiterals = protectedLiterals
         self.isSelected = isSelected
         self.artworkOpacity = artworkOpacity
         self.reduceMotionOverride = reduceMotionOverride
@@ -53,7 +55,7 @@ struct FruitfolioControlPillButton: View {
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var translation = FruitfolioControlTranslationState()
     private var translationKey: FruitfolioControlTranslationState.Key {
-        .init(source: label, language: settings.language)
+        .init(source: label, language: settings.language, protectedLiterals: protectedLiterals)
     }
     @Environment(\.controlSize) private var controlSize
     private var compact: Bool { controlSize == .small || controlSize == .mini }

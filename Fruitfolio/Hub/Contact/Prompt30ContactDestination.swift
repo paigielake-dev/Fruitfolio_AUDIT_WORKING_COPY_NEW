@@ -3,6 +3,14 @@ import Foundation
 nonisolated enum Prompt30ContactDestination: String, CaseIterable, Identifiable, Sendable {
     case instagram, tiktok, email, carrd
     var id: String { rawValue }
+    var protectedLabelLiterals: [String] {
+        switch self {
+        case .instagram: ["Instagram", "@fruitsoflife.xo"]
+        case .tiktok: ["TikTok", "@fruitsoflife.xo"]
+        case .email: ["fruitsoflifexo@gmail.com"]
+        case .carrd: ["FruitsofLife.xo", "Carrd"]
+        }
+    }
     var label: String {
         switch self {
         case .instagram: "Instagram  •  @fruitsoflife.xo"

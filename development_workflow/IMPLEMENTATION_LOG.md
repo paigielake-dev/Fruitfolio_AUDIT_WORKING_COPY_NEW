@@ -3148,3 +3148,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 903, "native_CPU_XCTest": 925, "SwiftTesting_each": 21, "baseline_XCTest": 3, "baseline_failed_assertions": 4, "final_focused_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0}.
 - Next action: Continue393–394 actual global language propagation and screen coverage. Preserve375–390Apple verification handoff,374tulip and officialMADLAD/clinical/device blockers; do not count source, AST checks or syntheticT5 as runtime acceptance.
 - Commit: containing commit for batch Language-write-acknowledgement-and-art-verification-handoff.
+
+## Contact-protected-labels-and-selected-language-copy
+
+- Parent checkpoint: caa8fa841ae5228e8c37dccfa50ef2ba6676b9bb.
+- Source-order requirements: [393, 394, 395, 397, 476, 477, 478].
+- Source files: Fruitfolio/Global Controls/Prompt08GlobalControls.swift, Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift, Fruitfolio/Hub/Contact/Prompt30ContactView.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift, Fruitfolio/Localizable.xcstrings, development_workflow/CONTACT_PROTECTED_TRANSLATION.md.
+- Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393–397/model/native-language certification.
+- Tests added/updated: FruitfolioTests/Prompt1BContactDestinationTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 905, "native_CPU_XCTest": 927, "SwiftTesting_each": 21, "new_contact_protection_XCTest": 2, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "Contact_UI_vectors_total": 4, "Contact_UI_vectors_added": 2, "Contact_UI_vectors_executed": 0, "catalog_keys": 974, "explicit_English_localization_entries": 871, "nonempty_foreign_catalog_units": 0}.
+- Next action: Continue original395–397 remaining popup/notification/validation/error/accessibility and character-dialogue translation gaps without repeating completed broad audits. Preserve393–394screen-level Apple acceptance, officialMADLAD/clinical/native-language/device blockers and all prior artwork handoff.
+- Commit: containing commit for batch Contact-protected-labels-and-selected-language-copy.

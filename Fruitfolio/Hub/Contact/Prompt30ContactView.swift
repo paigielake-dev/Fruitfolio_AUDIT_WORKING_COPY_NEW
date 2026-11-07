@@ -21,14 +21,16 @@ struct Prompt30ContactView: View {
                     VStack(spacing: 16) {
                         VStack(spacing: 4) {
                             ForEach(Prompt30ContactDestination.allCases) { destination in
-                                FruitfolioControlPillButton(label: destination.label) { openContact(destination) }
+                                FruitfolioControlPillButton(label: destination.label,
+                                    protectedLiterals: destination.protectedLabelLiterals) { openContact(destination) }
                                     .accessibilityIdentifier("contact.link.\(destination.rawValue)")
                                     .accessibilityFocused($focusedLink, equals: destination)
                             }
                         }
 
-                        Text("Fruitfolio is educational. For personal medical questions, diagnosis, treatment, or urgent concerns, contact an appropriate healthcare professional or emergency service.")
-                            .font(.custom("Chalkboard SE", size: 12, relativeTo: .footnote))
+                        FruitfolioTranslatedText(source: "Fruitfolio is educational. For personal medical questions, diagnosis, treatment, or urgent concerns, contact an appropriate healthcare professional or emergency service.",
+                            protectedLiterals: ["Fruitfolio"], font: .custom("Chalkboard SE", size: 12, relativeTo: .footnote), serious: true)
+                            .accessibilityIdentifier("contact.educationNotice")
                             .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: 340)
@@ -76,14 +78,18 @@ struct Prompt30ContactView: View {
                 .accessibilityHidden(true)
             FruitfolioTapedWhitePopup {
                 VStack(spacing: 12) {
-                    Text(settings.localized("this link could not be opened on this device"))
+                    FruitfolioFixedText(source: "this link could not be opened on this device",
+                        font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($errorHeadingFocused)
-                    Text(destination.label)
+                    FruitfolioFixedText(source: destination.label, protectedLiterals: destination.protectedLabelLiterals,
+                        font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                         .fixedSize(horizontal: false, vertical: true)
-                    Text(settings.localized("you can copy the destination and open it in another app."))
+                    FruitfolioFixedText(source: "you can copy the destination and open it in another app.",
+                        font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                         .fixedSize(horizontal: false, vertical: true)
-                    Text(destination.url.absoluteString)
+                    Text(verbatim: destination.url.absoluteString)
+                        .accessibilityIdentifier("contact.linkFailure.destinationURL")
                         .textSelection(.enabled)
                         .fixedSize(horizontal: false, vertical: true)
                     FruitfolioControlPillButton(label: "close") { dismissFailure(destination) }

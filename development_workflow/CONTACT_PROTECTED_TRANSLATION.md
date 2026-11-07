@@ -1,0 +1,9 @@
+# Contact translation propagation and protected destinations
+
+Contact now uses the existing selected-language display pipeline for its serious educational notice and compact link-failure copy. The exact public platform names, handles and email address are declared as protected label literals. The existing shared pill button accepts optional protected literals and includes them in its translation owner key; other callers retain the same empty default. Failure labels use the same protection. Actual destination URLs remain verbatim and their open/callback ownership behavior is unchanged.
+
+Two controlled-runtime regressions exercise actual contact labels through the production compact translation owner and translation service. They verify masked inference input, literal restoration, unchanged source labels and original/unavailable fallback when protected identity fields are dropped. These are deterministic protocol fixtures, not learned translation, synthetic T5, official MADLAD or linguistic quality evidence.
+
+The existing actual Contact UI method expands from two to four launch vectors: English/Arabic inference paused with Reduce Motion on/off at XXXL. It checks original handle/URL identity, measured failure dialog, access restoration and screenshots. All four remain NOT_RUN on Linux. Arabic paused inference is not Arabic machine translation verification. Serious notice meaning, actual VoiceOver focus/translation announcements, global screen propagation and physical-device layout remain Apple/native-language checks.
+
+Two English failure-copy fallbacks are added without changing existing catalog objects. The app continues to use its existing root SettingsStore environment, locale and layout direction; no alternate per-screen language authority or source/user-data rewrite is introduced. This closes a Contact copy/protection gap only; it does not certify whole originals393–394 or complete localization of every listed screen.

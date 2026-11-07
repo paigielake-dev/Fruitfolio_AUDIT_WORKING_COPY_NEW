@@ -194,7 +194,10 @@ struct Prompt03SkeletonView: View {
             Prompt30ContactView(onBack: {})
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
                 .onAppear {
-                    settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioContactReduceMotion")
+                    let args = ProcessInfo.processInfo.arguments
+                    settings.reduceAnimationOverride = args.contains("-fruitfolioContactReduceMotion")
+                    settings.language = args.contains("-fruitfolioContactQAArabic") ? .arabic : .english
+                    settings.translationPausedForMemoryPressure = args.contains("-fruitfolioContactQAPauseInference")
                     if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
                         settings.globallyMuted = ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioMuted")
                         audioManager.debugRecordInteractions(true)
