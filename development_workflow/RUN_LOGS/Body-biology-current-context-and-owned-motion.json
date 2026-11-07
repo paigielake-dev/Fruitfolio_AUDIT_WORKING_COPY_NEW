@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-11-07T17:54:19.839646+00:00",
+  "requirements": [
+    281,
+    284,
+    290,
+    291,
+    302,
+    303,
+    314,
+    390,
+    443,
+    444
+  ],
+  "supplemental_requirements": [],
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt21BodyBiologyCoreTests|Prompt27AContextPersonalizationTests|Prompt1BTodaySnapshotTests'",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
+  ],
+  "results": {
+    "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+    "full_portable_XCTest": "1076 passed,0failures",
+    "Swift_Testing": "21 passed,0failures",
+    "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+    "sound_ownership": "0diagnostics"
+  },
+  "verification": {
+    "executed": {
+      "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+      "full_portable_XCTest": "1076 passed,0failures",
+      "Swift_Testing": "21 passed,0failures",
+      "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+      "sound_ownership": "0diagnostics"
+    },
+    "not_run": [
+      "Apple SDK typecheck/build and Body Biology UI rendering",
+      "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+      "Clinical acceptance and official MADLAD translation"
+    ],
+    "remaining": [
+      "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+      "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+      "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+      "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+    ]
+  }
+}

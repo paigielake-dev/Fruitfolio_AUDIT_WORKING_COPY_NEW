@@ -226,7 +226,7 @@ struct Prompt15CycleTrackerView: View {
                     Group {
                         switch bodyDetail {
                         case .bodyBiology:
-                            Prompt21BodyBiologyView()
+                            Prompt21BodyBiologyView(context: contextStore.context, contextPolicy: contextPolicy)
                         case .hormoneRhythm:
                             Prompt22HormoneRhythmView(
                                 context: contextStore.context,

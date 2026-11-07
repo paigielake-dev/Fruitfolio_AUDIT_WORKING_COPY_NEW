@@ -4270,3 +4270,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence", "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"}.
 - Next action: Continue scientific education artwork/hotspot interaction requirements310–314; inspect actual consumers for missing functionality and preserve canonical assets.
 - Commit: containing commit for batch Combined-explicit-context-limitations-without-inference.
+
+## Body-biology-current-context-and-owned-motion
+
+- Parent checkpoint: 023ed7718eedc60a280ecb14a367886eaa54d4ae.
+- Source-order requirements: [281, 284, 290, 291, 302, 303, 314, 390, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift, Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift, Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift, FruitfolioTests/Prompt21BodyBiologyCoreTests.swift, development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json.
+- Shell passes current explicit context/policy into Body Biology. Actual engine accepts policy and returns existing neutral general education when any current-cycle prediction or hormone-rhythm marker interpretation is restricted. View presentation is computed from current immutable input/current policy, so stale state cannot retain prior personalized interpretation. Original observations and canonical asset catalog untouched. Existing human-facing context copy visible in header. Fimbriae control active/visible/uncovered guard and44pt minimum. Scene-aware cancellable load; reset decorations without animation on deactivate/disappear/popup/context/reduced-motion change. Oocyte delay rechecks actual presentation/activity and marks one-time playback only when animation starts. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json
+- Tests added/updated: Prompt21BodyBiologyCoreTests.testExplicitContextRestrictionsKeepBiologyGeneralWithoutChangingRecordedInput, Prompt27AContextPersonalizationTests, Prompt1BTodaySnapshotTests.
+- Verification: {"focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot", "full_portable_XCTest": "1076 passed,0failures", "Swift_Testing": "21 passed,0failures", "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
+- Next action: Continue actual scientific education control/hotspot ownership and layout gaps across Fertilization/Pregnancy and related surfaces; do not treat general fallback as full context-evidence AI implementation.
+- Commit: containing commit for batch Body-biology-current-context-and-owned-motion.

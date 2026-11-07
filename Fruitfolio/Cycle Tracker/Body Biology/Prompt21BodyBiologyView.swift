@@ -1,17 +1,29 @@
 import SwiftUI
 import Foundation
+import UIKit
 
 @MainActor
 struct Prompt21BodyBiologyView: View {
     var loader = Prompt21BodyBiologyLoader()
+    var context: Prompt27AUserReproductiveContext = .unspecified
+    var contextPolicy: Prompt27AContextPolicyResult = .init()
+
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var viewIsVisible = false
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
 
     @State private var loadState: LoadState = .loading
     @State private var input: Prompt21BodyBiologyInput = .neutral
-    @State private var presentation = Prompt21BodyBiologyEngine()
-        .presentation(for: .neutral)
+    private var presentation: Prompt21BodyBiologyPresentation {
+        Prompt21BodyBiologyEngine().presentation(for: input, contextPolicy: contextPolicy)
+    }
     @State private var fimbriaeExpanded = false
     @State private var illustrationVisible = false
     @State private var oocyteOffset: CGFloat = 0
@@ -39,14 +51,25 @@ struct Prompt21BodyBiologyView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .task {
+        .task(id: scenePhase) {
+            guard scenePhase == .active else { return }
             await load()
+        }
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false; settleDecorativeMotion() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { settleDecorativeMotion() }
+        }
+        .onChange(of: popupCoordinator.currentPopup != nil) { _, covered in
+            if covered { settleDecorativeMotion() }
+        }
+        .onChange(of: contextPolicy) { _, _ in
+            fimbriaeExpanded = false
+            settleDecorativeMotion()
         }
         .onChange(of: motionPreferences.reduceMotionActive) { _, reduced in
             guard reduced else { return }
-            var transaction = Transaction()
-            transaction.disablesAnimations = true
-            withTransaction(transaction) { oocyteOffset = 0; illustrationVisible = true }
+            settleDecorativeMotion()
         }
     }
 
@@ -165,6 +188,12 @@ struct Prompt21BodyBiologyView: View {
                 .foregroundStyle(Prompt21Palette.burgundy)
                 .accessibilityAddTraits(.isHeader)
 
+            if let clarification = Prompt27AContextPresentationCopy.todayClarification(context: context, policy: contextPolicy) {
+                FruitfolioTranslatedText(source: clarification, font: Prompt21Type.note, serious: true)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("bodyBiology.contextClarification")
+            }
+
             FruitfolioTranslatedText(source: "educational view based on your current cycle context", font: Prompt21Type.subtitle, serious: true)
                 .font(Prompt21Type.subtitle)
                 .foregroundStyle(Prompt21Palette.burgundy.opacity(0.66))
@@ -269,6 +298,7 @@ struct Prompt21BodyBiologyView: View {
     private var fimbriaeSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
+                guard canInteract else { return }
                 audioManager.play(.buttonSoftPop)
                 fimbriaeExpanded.toggle()
             } label: {
@@ -277,6 +307,7 @@ struct Prompt21BodyBiologyView: View {
                 .foregroundStyle(Prompt21Palette.burgundy.opacity(0.80))
                 .padding(.vertical, 8)
                 .padding(.horizontal, 10)
+                .frame(minHeight: 44)
                 .contentShape(Rectangle())
             }
             .buttonStyle(
@@ -284,6 +315,7 @@ struct Prompt21BodyBiologyView: View {
                     reduceMotionActive: motionPreferences.reduceMotionActive
                 )
             )
+            .accessibilityIdentifier("bodyBiology.fimbriaeDetail")
             .accessibilityLabel("Fimbriae detail")
             .accessibilityValue(fimbriaeExpanded ? "expanded" : "collapsed")
             .accessibilityHint("Shows or hides a small educational detail about the fimbriae")
@@ -325,14 +357,12 @@ struct Prompt21BodyBiologyView: View {
     private func load() async {
         do {
             let loadedInput = try await loader.load(now: Date())
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, scenePhase == .active else { return }
 
             input = loadedInput
-            presentation = Prompt21BodyBiologyEngine()
-                .presentation(for: loadedInput)
             loadState = .loaded
 
-            if motionPreferences.reduceMotionActive {
+            if motionPreferences.reduceMotionActive || !canInteract {
                 illustrationVisible = true
             } else {
                 illustrationVisible = false
@@ -343,29 +373,32 @@ struct Prompt21BodyBiologyView: View {
 
             await runOocyteDriftIfNeeded()
         } catch {
-            guard !Task.isCancelled else { return }
+            guard !Task.isCancelled, scenePhase == .active else { return }
             input = .neutral
-            presentation = Prompt21BodyBiologyEngine()
-                .presentation(for: .neutral)
             loadState = .failed
             illustrationVisible = true
         }
     }
 
+    private func settleDecorativeMotion() {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) { oocyteOffset = 0; illustrationVisible = true }
+    }
+
     private func runOocyteDriftIfNeeded() async {
-        guard presentation.permitsOocyteDrift,
+        guard canInteract, presentation.permitsOocyteDrift,
               !motionPreferences.reduceMotionActive,
               !oocyteDriftPlayed
         else {
             return
         }
 
-        oocyteDriftPlayed = true
-
         try? await Task.sleep(for: .milliseconds(320))
-        guard !Task.isCancelled, !motionPreferences.reduceMotionActive,
+        guard !Task.isCancelled, canInteract, !motionPreferences.reduceMotionActive,
               presentation.permitsOocyteDrift else { return }
 
+        oocyteDriftPlayed = true
         withAnimation(.easeInOut(duration: 0.72)) {
             oocyteOffset = 8
         }

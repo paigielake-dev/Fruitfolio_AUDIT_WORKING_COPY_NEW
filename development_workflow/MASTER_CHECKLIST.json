@@ -24872,7 +24872,11 @@
         "Fruitfolio/Context Personalization/FruitfolioContextStorageNotice.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24899,9 +24903,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing context clear/unknown-field cases; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN)",
+        "Prompt21BodyBiologyCoreTests"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
@@ -24916,30 +24921,37 @@
         "Shared context notice reload and delayed focus require visible active scene/UIKit owner without covering popup. Actual three callers additionally pass their current root/editor interaction gate, including native child-sheet coverage, so root visibility alone cannot allow stale actions. Read-only canonical reload/storage protection unchanged.",
         "Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.",
         "Today now consumes existing explicit-context presentation helper on successful, failed, and prediction-restricted paths. Source1221 evidence-grounded biological generation remains unfinished. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
-        "Existing shared explicit context integration now preserves independent reported facts when selecting Today limitations. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Existing shared explicit context integration now preserves independent reported facts when selecting Today limitations. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "Actual shell now supplies current explicit context and policy into previously context-unaware Body Biology. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -24977,6 +24989,23 @@
             "Verify blocked/covered/background see-what-is-happening callback cannot navigate on Apple",
             "Full evidence-mapped personalized biological explanations and complete combined-context handling remain unfinished; this change does not implement the source1221 AI layer",
             "Original requirements281/289/294/302 and cross-app test coverage remain IN_PROGRESS pending full clause reconciliation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -25155,7 +25184,11 @@
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25174,38 +25207,65 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "Prompt21BodyBiologyCoreTests"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
-        "Altered reported contexts retain independent limitations instead of replacing ordinary estimates with unsupported conclusions. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Altered reported contexts retain independent limitations instead of replacing ordinary estimates with unsupported conclusions. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "Engine uses existing prediction/marker restrictions to keep altered-cycle biology general, with original logs unmodified. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -25774,7 +25834,11 @@
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyLoader.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25801,7 +25865,7 @@
         "Prompt21BodyBiologyCoreTests",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
@@ -25811,30 +25875,37 @@
         "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.",
-        "Lactation limitation not-a-confirmation retained even alongside postpartum/other context. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Lactation limitation not-a-confirmation retained even alongside postpartum/other context. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "A recorded bleeding input no longer forces natural-cycle interpretation under restricted explicit context; original observation remains distinct. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -25852,6 +25923,23 @@
             "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
             "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
             "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -25892,7 +25980,11 @@
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25915,9 +26007,10 @@
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
         "Prompt16TodayStateBuilderTests",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing prediction host test; NOT_RUN)",
+        "Prompt21BodyBiologyCoreTests"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
@@ -25925,30 +26018,37 @@
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
         "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
         "Actual Today loading, insufficient-data fallback and context-restricted source explanations now use existing fixed/long-form semantic translation owners, keeping original uncertainty/no-history-rewrite wording and prediction/suppression logic. Fallback title has heading semantics. Progress label uses native label builder with labelsHidden. Three English additions preserve921 old entries. No policy/models/history/prediction changes. Cross-cutting context batch section-label correction recorded without rewriting history.",
-        "Avoiding-pregnancy not-a-safe-day/contraceptive-guarantee warning no longer hidden by earlier context match. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Avoiding-pregnancy not-a-safe-day/contraceptive-guarantee warning no longer hidden by earlier context match. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "Restricted input cannot show ovulation drift or personalized-cycle/day-one interpretation; neutral general education used. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -25966,6 +26066,23 @@
             "Execute actual Today loading/failure/restricted context and wheel/source behavior on Apple",
             "Verify full translated explanations, uncertainty/negation and accessible progress label with native/clinical reviewers",
             "Whole original context/predicted-confirmed/localization requirements remain IN_PROGRESS"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -26835,7 +26952,11 @@
         "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26848,35 +26969,42 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
         "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
         "Human-facing postpartum/perimenopause/lactation/contraception/PCOS/pregnancy/menopause/surrogacy limitations now reachable in loaded Today. Existing single-primary helper and full source evidence mapping remain open. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
-        "Combined limitations include explicit pregnancy-suppression explanation even when another reported field conflicts. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Combined limitations include explicit pregnancy-suppression explanation even when another reported field conflicts. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "Body Biology header reuses existing human-facing context limitations; no new scientific claim added. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -26917,6 +27045,23 @@
             "Original requirements281/289/294/302 and cross-app test coverage remain IN_PROGRESS pending full clause reconciliation"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -26933,7 +27078,10 @@
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Hub/CutePopButtonStyle.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift"
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26946,40 +27094,48 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "Prompt21BodyBiologyCoreTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:Cycle-section-navigation-responsive-accessibility (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux.",
         "Actual logging root hit testing and direct save/close/removal requests require active visible scene/UIKit owner without shared popup. Confirmation actions require active owner; both queued save task entries check cancellation/visibility before repository calls, and regular success rejects departure. Accepted consistency-preserving repository writes remain model-owned. Existing12-launch exit-choice UI matrix now backgrounds/reactivates dirty note before all three choices; NOT_RUN.",
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
         "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
         "Single effect removes scale/offset/rotation when any explicit, OS or shell-derived app Reduce Motion input istrue. One hosted actual SwiftUI geometry test covers rest/press and all3sources; unrun. Display-only environment projection reuses existing settings authority. No claim about all other feature motions/accessibility.",
-        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted."
+        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
+        "Inactive/covered/disappeared and reduced-motion transitions settle existing decorations without animation;44pt detail target. Apple lifecycle tests unrun. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T08:06:22.608047+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-section-navigation-responsive-accessibility",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "New actual UIHosting navigation sizing regression in both directions",
-          "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-          "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-          "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-        "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-        "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -27020,6 +27176,24 @@
           ],
           "remaining": [
             "Apple geometry regression, live setting changes and all other feature-specific reduced-motion/accessibility acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-section-navigation-responsive-accessibility",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual UIHosting navigation sizing regression in both directions",
+            "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          ],
+          "remaining": [
+            "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
+            "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
+            "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -27965,7 +28139,10 @@
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
-        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift"
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27983,39 +28160,66 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BCatalogTranslationTests.swift"
+        "FruitfolioTests/Prompt1BCatalogTranslationTests.swift",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:Scientific-education-and-citation-interface-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
-        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted."
+        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
+        "Actual scientific education presentation now qualified by existing current context policy instead of stale loaded context. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T07:48:42.867847+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Scientific-education-and-citation-interface-localization",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "focused_XCTest": 31,
-          "failures": 0,
-          "SwiftTesting_selected": 0,
-          "syntax_parsed_Swift_files": 314
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
-          "Official MADLAD, clinical and per-language acceptance"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-          "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-          "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-        "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-        "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Scientific-education-and-citation-interface-localization",
+          "executed": {
+            "focused_XCTest": 31,
+            "failures": 0,
+            "SwiftTesting_selected": 0,
+            "syntax_parsed_Swift_files": 314
+          },
+          "not_run": [
+            "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
+            "Official MADLAD, clinical and per-language acceptance"
+          ],
+          "remaining": [
+            "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
+            "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
+            "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -36022,7 +36226,11 @@
         "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
-        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json"
+        "development_workflow/DAILY_LOG_SINGLE_EXPANSION_AND_FOUNDER_SCOPE.json",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+        "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -36058,9 +36266,11 @@
         "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
         "FruitfolioTests/Prompt1BDailyLogWriteTests.swift",
-        "FruitfolioTests/Prompt20DailyLogCoreTests.swift"
+        "FruitfolioTests/Prompt20DailyLogCoreTests.swift",
+        "Prompt21BodyBiologyCoreTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:Daily-log-single-expansion-owner-and-founder-main-spec-scope (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -36078,43 +36288,37 @@
         "Background root controls are disabled during inactivity/owned overlays; existing modal focus/return behavior retained; actual Apple accessibility remains pending.",
         "Existing accessible large-text note actions reject suspended/stale actions; native UI background/close/reopen test updated but NOT_RUN.",
         "Own/cancel one deferred focus task, reject inactive/covered bindings/actions and retain unsubmitted fields; native accessibility remains pending.",
-        "Expose current expanded/collapsed state with stable section IDs and no reduced-motion transform interpolation; native VO/gesture testing remains NOT_RUN."
+        "Expose current expanded/collapsed state with stable section IDs and no reduced-motion transform interpolation; native VO/gesture testing remains NOT_RUN.",
+        "Accessible44pt fimbriae target and stable identifier; current context limitation remains intrinsically sized. Apple VoiceOver/UI acceptance pending. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:13:28.701838+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "existing_actual_daily_log_domain_XCTest": 21,
-          "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "failures": 0,
-          "logs": [
-            "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
-            "/tmp/fruitfolio_daily_section_final_syntax.log",
-            "/tmp/fruitfolio_daily_section_sound.log"
-          ],
-          "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Official MADLAD inference, Apple UI and physical-device verification."
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-          "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-          "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-          "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-          "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
-        "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
-        "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
-        "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
-        "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -36292,6 +36496,34 @@
             "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
             "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
             "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Daily-log-single-expansion-owner-and-founder-main-spec-scope",
+          "executed": {
+            "existing_actual_daily_log_domain_XCTest": 21,
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_daily_section_existing_domain_tests.log",
+              "/tmp/fruitfolio_daily_section_final_syntax.log",
+              "/tmp/fruitfolio_daily_section_sound.log"
+            ],
+            "scope": "21 underlying real view-model/write/core tests, not execution of new SwiftUI animation. No unnecessary full-suite rerun for UI-only source change; prior1073+21 at3b2685d remains explicitly separate."
+          },
+          "not_run": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Official MADLAD inference, Apple UI and physical-device verification."
+          ],
+          "remaining": [
+            "Actual Apple SDK typecheck/build, rapid repeated toggles, rendered interpolation, VoiceOver/focus and no-ghost visual acceptance remain NOT_RUN.",
+            "New testDailyLogRepeatedSectionActionsKeepLatestExpansionAndDraft:1 method4 planned normal/reduced-motion\u00d7LTR/RTL launches at accessibility size, NOT_RUN.",
+            "Full founder1306 Calendar/Today date/category routing and repeated switching still require native acceptance; this batch does not close every condition of that unit.",
+            "All484 main-spec candidate lines now have individual applicability/context review, not implementation closure. The6180 nonblank-line code-evidence appendix remains separately UNREVIEWED_SOURCE_EVIDENCE; do not assume every quoted code/string is a founder instruction or automatically irrelevant.",
+            "No final478/36/unnumbered implementation reconciliation or completion percentage has been established. Official MADLAD and external clinical/device acceptance remain pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -44616,7 +44848,9 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "development_workflow/tests/test_founder_source_coverage.py",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -44804,9 +45038,10 @@
         "Prompt1BSemanticSliceTests",
         "Prompt27AContextPersonalizationTests",
         "test_founder_source_coverage",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt21BodyBiologyCoreTests"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -44953,30 +45188,37 @@
         "21 actual existing domain tests pass; new actual UI test is written and NOT_RUN. Prior1073+21 checkpoint is not counted as a post-change SwiftUI execution.",
         "Existing Swift XCTest now checks actual original founder-source bytes rather than implementation-derived wording; existing workflow tests preserve three appendix annotation identities. Evidence: development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json",
         "Actual new context-presentation XCTest covers eight explicit contexts, policy/context preservation, and absent-context nil case;82focusedtests passed. This does not execute SwiftUI. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
-        "Actual new regression covers triple context, conflicting explicit reports and two overlapping-surrogacy deduplication cases;80focused XCTestpassed. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Actual new regression covers triple context, conflicting explicit reports and two overlapping-surrogacy deduplication cases;80focused XCTestpassed. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "Actual new Body Biology engine regression tests explicit pregnancy, menopause and hormonal-contraception restrictions plus unchanged default input.96focused and1076full portable XCTest+21SwiftTesting passed. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -45900,6 +46142,23 @@
             "Verify blocked/covered/background see-what-is-happening callback cannot navigate on Apple",
             "Full evidence-mapped personalized biological explanations and complete combined-context handling remain unfinished; this change does not implement the source1221 AI layer",
             "Original requirements281/289/294/302 and cross-app test coverage remain IN_PROGRESS pending full clause reconciliation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -46147,7 +46406,9 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "development_workflow/tests/test_founder_source_coverage.py",
         "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift"
+        "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+        "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -46330,9 +46591,10 @@
         "Prompt1BSemanticSliceTests",
         "Prompt27AContextPersonalizationTests",
         "test_founder_source_coverage",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt21BodyBiologyCoreTests"
       ],
-      "commit_reference": "batch:Combined-explicit-context-limitations-without-inference (resolve containing commit with git log)",
+      "commit_reference": "batch:Body-biology-current-context-and-owned-motion (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -46462,30 +46724,37 @@
         "All484 main-spec source candidates individually classified, including normative examples/preservation rules/conflicts, without requirement verification promotions. Separate code-evidence appendix still needs review.",
         "Regression assertion changes live in project Swift test source and workflow tests; no external-only test claim. Evidence: development_workflow/APPENDIX_TOUR_AND_CONTEXT_SOURCE_ALIGNMENT.json",
         "New regression lives in existing project Swift test source, not merely a checklist receipt. Evidence: development_workflow/TODAY_HUMAN_CONTEXT_LIMITATIONS.json",
-        "Regression assertions committed in project Swift test source. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json"
+        "Regression assertions committed in project Swift test source. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+        "Regression uses project Swift test source and actual production engine; no fake Apple framework or rendering verification. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json"
       ],
-      "last_updated": "2026-11-07T17:50:27.515428+00:00",
+      "last_updated": "2026-11-07T17:54:19.839646+00:00",
       "latest_batch_verification": {
-        "batch": "Combined-explicit-context-limitations-without-inference",
+        "batch": "Body-biology-current-context-and-owned-motion",
         "executed": {
-          "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-          "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+          "full_portable_XCTest": "1076 passed,0failures",
+          "Swift_Testing": "21 passed,0failures",
+          "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-          "Clinical/native-language review and official MADLAD translation"
+          "Apple SDK typecheck/build and Body Biology UI rendering",
+          "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+          "Clinical acceptance and official MADLAD translation"
         ],
         "remaining": [
-          "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-          "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-          "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+          "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+          "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+          "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+          "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-        "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-        "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+        "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+        "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+        "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+        "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
       ],
       "prior_batch_verifications": [
         {
@@ -47409,6 +47678,23 @@
             "Verify blocked/covered/background see-what-is-happening callback cannot navigate on Apple",
             "Full evidence-mapped personalized biological explanations and complete combined-context handling remain unfinished; this change does not implement the source1221 AI layer",
             "Original requirements281/289/294/302 and cross-app test coverage remain IN_PROGRESS pending full clause reconciliation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Combined-explicit-context-limitations-without-inference",
+          "executed": {
+            "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
+            "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+          },
+          "not_run": [
+            "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
+            "Clinical/native-language review and official MADLAD translation"
+          ],
+          "remaining": [
+            "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
+            "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
+            "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

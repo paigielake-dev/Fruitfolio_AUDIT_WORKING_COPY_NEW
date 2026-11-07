@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "2b52fd4033f54b9833c36c5ba6657a06788dfdf4",
+  "current_HEAD": "023ed7718eedc60a280ecb14a367886eaa54d4ae",
   "latest_verified_commit": null,
   "current_checklist_part": 6,
-  "current_requirement": 310,
-  "current_implementation_batch": "Combined-explicit-context-limitations-without-inference",
+  "current_requirement": 312,
+  "current_implementation_batch": "Body-biology-current-context-and-owned-motion",
   "completed_requirements": [
     206,
     210
@@ -494,9 +494,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift",
-    "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
-    "development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
+    "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
+    "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+    "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+    "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
+    "development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
+    "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -510,15 +513,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt27AContextPersonalizationTests|Prompt1BTodaySnapshotTests|Prompt1BContextPersistenceTests'",
-    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt21BodyBiologyCoreTests|Prompt27AContextPersonalizationTests|Prompt1BTodaySnapshotTests'",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
   ],
   "last_test_results": {
-    "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-    "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+    "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+    "full_portable_XCTest": "1076 passed,0failures",
+    "Swift_Testing": "21 passed,0failures",
+    "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+    "sound_ownership": "0diagnostics"
   },
-  "next_exact_implementation_action": "Continue scientific education artwork/hotspot interaction requirements310\u2013314; inspect actual consumers for missing functionality and preserve canonical assets.",
-  "updated_at": "2026-11-07T17:50:27.515428+00:00",
+  "next_exact_implementation_action": "Continue actual scientific education control/hotspot ownership and layout gaps across Fertilization/Pregnancy and related surfaces; do not treat general fallback as full context-evidence AI implementation.",
+  "updated_at": "2026-11-07T17:54:19.839646+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -528,17 +536,22 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": "80 passed,0failures;73context plus Today snapshot and context persistence",
-      "syntax": "328 Swift files parsed,0syntax errors; not SDK typechecking"
+      "focused_XCTest": "96 passed,0failures; actual Body Biology engine, context, Today snapshot",
+      "full_portable_XCTest": "1076 passed,0failures",
+      "Swift_Testing": "21 passed,0failures",
+      "syntax": "330 Swift files parsed,0syntax errors; not SDK typechecking",
+      "sound_ownership": "0diagnostics"
     },
     "not_run": [
-      "Apple Today UI layout/VoiceOver/RTL and context-edit refresh",
-      "Clinical/native-language review and official MADLAD translation"
+      "Apple SDK typecheck/build and Body Biology UI rendering",
+      "VoiceOver, dynamic type, RTL, actual scene/popup transition and Reduce Motion events",
+      "Clinical acceptance and official MADLAD translation"
     ],
     "remaining": [
-      "Apple acceptance of combined multi-paragraph limitations in loaded, failed and restricted Today",
-      "Full approved-source claim/evidence mapping for substantive context-based explanations/source1221 remains incomplete",
-      "Full original requirements281/283/284/286/289/290/291/302 remain subject to individual clause reconciliation"
+      "Verify actual shell passes current explicit context and updates Body Biology immediately on Apple",
+      "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
+      "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
+      "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
     ]
   },
   "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",
@@ -886,7 +899,7 @@
     "registry": "development_workflow/FOUNDER_SOURCE_COVERAGE.json",
     "check": "PYTHONDONTWRITEBYTECODE=1 python3 Tools/sync_founder_source_coverage.py --check",
     "text_candidates": 484,
-    "scoped_review_receipts": 20,
+    "scoped_review_receipts": 23,
     "applicability_unreviewed": 0,
     "source_evidence_appendix": "STRUCTURE_REVIEWED_ANNOTATIONS_TRACKED",
     "counts_are_not_requirements_or_completion": true,

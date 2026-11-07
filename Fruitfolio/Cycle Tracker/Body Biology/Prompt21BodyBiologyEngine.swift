@@ -4,9 +4,18 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
     init() {}
 
     func presentation(
-        for input: Prompt21BodyBiologyInput
+        for input: Prompt21BodyBiologyInput,
+        contextPolicy: Prompt27AContextPolicyResult = .init()
     ) -> Prompt21BodyBiologyPresentation {
-        switch input.state {
+        let adapter = Prompt27AExistingSystemPolicyAdapter(result: contextPolicy)
+        // A logged observation remains saved, but does not establish ordinary
+        // natural-cycle physiology when the existing context policy restricts it.
+        let permitsCycleInterpretation = adapter.showCurrentNextPeriodPrediction
+            && adapter.showCurrentFertileWindowPrediction
+            && adapter.showCurrentOvulationPrediction
+            && adapter.showHormoneRhythmContextMarker
+        let effectiveInput = permitsCycleInterpretation ? input : .neutral
+        switch effectiveInput.state {
         case .neutral:
             return Prompt21BodyBiologyPresentation(
                 state: .neutral,
@@ -66,7 +75,7 @@ nonisolated struct Prompt21BodyBiologyEngine: Sendable {
                 heroAccessibilityLabel: "watercolor educational illustration of the uterus during menstruation",
                 supportingAssetName: Prompt21BodyBiologyAsset.endometrium,
                 supportingAccessibilityLabel: "watercolor educational illustration of the uterine lining shedding during menstruation",
-                showsPeachDayOne: input.confirmedCycleDayOne
+                showsPeachDayOne: effectiveInput.confirmedCycleDayOne
             )
         }
     }

@@ -3,6 +3,31 @@ import XCTest
 
 @MainActor
 final class Prompt21BodyBiologyCoreTests: XCTestCase {
+    func testExplicitContextRestrictionsKeepBiologyGeneralWithoutChangingRecordedInput() async {
+        let observation = Prompt21BodyBiologyInput(state: .menstruation, contextKind: .calculated,
+            cycleDay: 1, confirmedCycleDayOne: true, upstreamContextTitle: "bleeding recorded today")
+        var pregnancy = Prompt27AUserReproductiveContext.unspecified
+        pregnancy.setReproductiveStage(.pregnant)
+        var menopause = Prompt27AUserReproductiveContext.unspecified
+        menopause.setReproductiveStage(.menopause)
+        var hormonal = Prompt27AUserReproductiveContext.unspecified
+        hormonal.setContraceptionContext(.hormonalContraception)
+        for context in [pregnancy, menopause, hormonal] {
+            let policy = Prompt27AContextPolicyEngine().policy(for: context)
+            let shown = Prompt21BodyBiologyEngine().presentation(for: observation, contextPolicy: policy)
+            XCTAssertEqual(shown.state, .neutral)
+            XCTAssertEqual(shown.heroAssetName, Prompt21BodyBiologyAsset.ovary)
+            XCTAssertFalse(shown.showsPeachDayOne)
+            XCTAssertFalse(shown.permitsOocyteDrift)
+            XCTAssertFalse(shown.permitsFimbriaeDetail)
+            XCTAssertEqual(observation.state, .menstruation)
+            XCTAssertTrue(observation.confirmedCycleDayOne)
+        }
+        let unmodified = Prompt21BodyBiologyEngine().presentation(for: observation)
+        XCTAssertEqual(unmodified.state, .menstruation)
+        XCTAssertTrue(unmodified.showsPeachDayOne)
+    }
+
     func testUnknownContextFallsBackToNeutral() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("still learning your pattern"),
