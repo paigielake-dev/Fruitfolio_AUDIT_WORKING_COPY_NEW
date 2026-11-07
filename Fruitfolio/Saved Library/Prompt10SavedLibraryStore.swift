@@ -502,6 +502,50 @@ final class Prompt10SavedLibraryStore {
         try persist()
     }
 
+    /// Call only after explicit consent to discard the retained answer remainder.
+    /// All linked snapshots must still describe the exact same selected payload.
+    /// No language, missing selection or replacement text is inferred.
+    @discardableResult
+    func removeLegacyExcerptRemainder(afterConfirming expected: Prompt10SavedPage) throws -> Prompt10SavedPage {
+        guard expected.canReviewLegacyExcerptCleanup, let selection = expected.excerptText else {
+            throw Prompt10LibraryError.contentChanged
+        }
+        let key = Prompt10SharedLibraryCatalog.sourceKey(expected)
+        var staged = encyclopedias
+        var matchingTargetCount = 0
+        var target: Prompt10SavedPage?
+        let now = Date()
+        for book in staged.indices {
+            for chapter in staged[book].chapters.indices {
+                for index in staged[book].chapters[chapter].pages.indices {
+                    let current = staged[book].chapters[chapter].pages[index]
+                    guard Prompt10SharedLibraryCatalog.sourceKey(current) == key else { continue }
+                    guard current.userMaterial == nil, current.saveType == .excerpt,
+                          Data(current.answer.utf8) == Data(expected.answer.utf8),
+                          current.excerptText.map({ Data($0.utf8) }) == Data(selection.utf8),
+                          current.excerptLanguage.map({ Data($0.utf8) }) == expected.excerptLanguage.map({ Data($0.utf8) }),
+                          current.originalAnswerID == expected.originalAnswerID else {
+                        throw Prompt10LibraryError.contentChanged
+                    }
+                    var cleaned = current
+                    cleaned.answer = selection
+                    cleaned.evidenceSupport = current.evidenceSupport?.restricted(to: .excerpt)
+                    cleaned.updatedAt = now
+                    staged[book].chapters[chapter].pages[index] = cleaned
+                    staged[book].updatedAt = now
+                    if current.id == expected.id {
+                        matchingTargetCount += 1
+                        target = cleaned
+                    }
+                }
+            }
+        }
+        guard matchingTargetCount == 1, let target else { throw Prompt10LibraryError.contentChanged }
+        encyclopedias = staged
+        try persist()
+        return target
+    }
+
     func setImportedImageIDs(
         encyclopediaID: UUID,
         chapterID: UUID,

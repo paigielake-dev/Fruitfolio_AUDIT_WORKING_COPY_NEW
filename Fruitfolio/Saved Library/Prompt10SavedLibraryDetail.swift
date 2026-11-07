@@ -378,6 +378,10 @@ struct Prompt10SavedPageView: View {
     @State private var pendingNoteAction: NoteAction?
     @State private var returnBackFocus = false
     @State private var popupInstanceID = UUID()
+    @State private var excerptCleanupCompleted = false
+    @State private var pendingExcerptCleanup: Prompt10SavedPage?
+    @AccessibilityFocusState private var excerptReviewFocused: Bool
+    @State private var returnExcerptReviewFocus = false
     @State private var notesMessage: String?
     @State private var notesFocusRequest = UUID()
     @AccessibilityFocusState private var backFocused: Bool
@@ -464,6 +468,7 @@ struct Prompt10SavedPageView: View {
                         .controlSize(.small)
                     }
                 }
+                legacyExcerptReview
                 notesSection
                 importedImagesSection
 
@@ -519,12 +524,18 @@ struct Prompt10SavedPageView: View {
             cancelImageImport()
             popupOwner?.cancel()
             pendingNoteAction = nil
+            pendingExcerptCleanup = nil
+            excerptCleanupCompleted = false
+            returnExcerptReviewFocus = false
             returnBackFocus = false
         }
         .onChange(of: page.id) { _, _ in
             cancelImageImport()
             popupOwner?.cancel()
             pendingNoteAction = nil
+            pendingExcerptCleanup = nil
+            excerptCleanupCompleted = false
+            returnExcerptReviewFocus = false
             returnBackFocus = false
             notesMessage = nil
             loadNotesIfNeeded()
@@ -542,6 +553,19 @@ struct Prompt10SavedPageView: View {
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
             popupOwner?.observeDismissal()
             guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            if let expected = pendingExcerptCleanup {
+                pendingExcerptCleanup = nil
+                guard expected.id == page.id else { return }
+                do {
+                    let updated = try store.removeLegacyExcerptRemainder(afterConfirming: expected)
+                    onPageChanged(updated)
+                    excerptCleanupCompleted = true
+                } catch { mediaMessage = error.localizedDescription }
+            }
+            if returnExcerptReviewFocus {
+                returnExcerptReviewFocus = false
+                excerptReviewFocused = true
+            }
             let action = pendingNoteAction
             pendingNoteAction = nil
             switch action {
@@ -579,6 +603,52 @@ struct Prompt10SavedPageView: View {
                     pendingNoteAction = .discard
                 }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
                 source: "saved-note-draft", deduplicationKey: "saved-note-draft-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
+    @ViewBuilder
+    private var legacyExcerptReview: some View {
+        if excerptCleanupCompleted {
+            FruitfolioFixedText(source: "the saved excerpt now retains only the selected text.",
+                font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                .accessibilityIdentifier("savedPage.legacyExcerptCleaned")
+                .accessibilityFocused($excerptReviewFocused)
+        } else if page.hasLegacyExcerptRemainder {
+            VStack(alignment: .leading, spacing: 8) {
+                FruitfolioFixedText(source: page.canReviewLegacyExcerptCleanup
+                    ? "this older excerpt also retains the original answer. nothing has been removed."
+                    : "this older excerpt retains answer text but has no recorded selection. it has been preserved for review.",
+                    font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                    .accessibilityIdentifier("savedPage.legacyExcerptNotice")
+                if page.canReviewLegacyExcerptCleanup {
+                    WatercolorSecondaryButton(label: "review retained answer text") { requestExcerptCleanup() }
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                        .accessibilityIdentifier("savedPage.reviewLegacyExcerpt")
+                        .accessibilityFocused($excerptReviewFocused)
+                }
+            }
+        }
+    }
+
+    private func requestExcerptCleanup() {
+        guard viewIsVisible, page.canReviewLegacyExcerptCleanup, let owner = popupOwner else { return }
+        let expected = page
+        returnExcerptReviewFocus = true
+        excerptReviewFocused = false
+        notesFocused = false
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .blueberry,
+                message: "keep only the recorded selected text? this removes the retained answer remainder from this excerpt and its linked saved copies. your notes, images and citations are kept. this cannot be undone.",
+                primaryAction: .init(label: "keep everything") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                },
+                secondaryAction: .init(label: "keep selected text only") {
+                    guard viewIsVisible, page.id == expected.id, owner.consumeAction(for: id) else { return }
+                    pendingExcerptCleanup = expected
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "legacy-excerpt-review", deduplicationKey: "legacy-excerpt-review-" + popupInstanceID.uuidString,
                 surface: .tapedWhite)
         }
     }

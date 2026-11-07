@@ -154,6 +154,17 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         return spans
     }
 
+    /// Read-only inspection. Loading a legacy record never authorizes deletion.
+    var hasLegacyExcerptRemainder: Bool {
+        guard userMaterial == nil, saveType == .excerpt, !answer.isEmpty else { return false }
+        guard let excerptText else { return true }
+        return Data(answer.utf8) != Data(excerptText.utf8)
+    }
+
+    var canReviewLegacyExcerptCleanup: Bool {
+        hasLegacyExcerptRemainder && excerptText != nil
+    }
+
     var displayBody: String {
         switch saveType {
         case .fullAnswer:

@@ -19,6 +19,26 @@ private final class Prompt1BLibraryWriteFaultDefaults: UserDefaults, @unchecked 
 
 @MainActor
 final class Prompt1BLibraryPersistenceTests: XCTestCase {
+    func testLegacyExcerptCleanupDroppedWriteRestoresOriginalWithoutRetryOrDataLoss() async throws {
+        let suite = "Fruitfolio.library-excerpt-drop." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BLibraryWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        let book = try store.createEncyclopedia(name: "fixture", style: .sage)
+        let page = try store.savePage(.init(chapterID: book.chapters[0].id, question: "fixture",
+            answer: "selected plus retained remainder", saveType: .excerpt, excerptText: "selected"),
+            to: book.id, chapterID: book.chapters[0].id)
+        let before = defaults.data(forKey: "library"), snapshot = store.encyclopedias, attempts = defaults.attempts
+        defaults.fault = .drop
+        XCTAssertThrowsError(try store.removeLegacyExcerptRemainder(afterConfirming: page)) {
+            XCTAssertEqual($0 as? Prompt10LibraryError, .persistenceFailure)
+        }
+        XCTAssertEqual(store.encyclopedias, snapshot)
+        XCTAssertEqual(defaults.data(forKey: "library"), before)
+        XCTAssertEqual(defaults.attempts, attempts + 1)
+        XCTAssertEqual(store.storageProtectionReason, .persistenceFailure)
+    }
+
     func testFailedEncodingPreservesCommittedSnapshotAndStoredBytes() async throws {
         let suite = "Prompt1BPersistence.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

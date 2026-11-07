@@ -94,3 +94,121 @@ final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
         XCTAssertTrue(first.isDuplicateSave(of: page(location: 0)))
     }
 }
+
+@MainActor
+final class Prompt1BLegacyExcerptRecoveryTests: XCTestCase {
+    private func fixture() throws -> (UserDefaults, String, Prompt10SavedLibraryStore, Prompt10Encyclopedia) {
+        let suite = "fruitfolio.legacyExcerpt." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        let book = try store.createEncyclopedia(name: "fixture", style: .sage)
+        return (defaults, suite, store, book)
+    }
+    private func legacy(_ chapter: UUID) -> Prompt10SavedPage {
+        .init(chapterID: chapter, question: "original", answer: "selected + private remainder", saveType: .excerpt,
+              excerptText: "selected", originalAnswerID: "original-answer", sourceIDs: ["source-1"],
+              notes: "independent note", importedImageIDs: ["independent-image"], excerptLanguage: "es")
+    }
+    func testInspectionNeverMutatesLegacyBytesAndMissingSelectionCannotBeCleaned() async throws {
+        let (defaults, suite, store, book) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var page = legacy(book.chapters[0].id)
+        page.excerptText = nil
+        let saved = try store.savePage(page, to: book.id, chapterID: page.chapterID)
+        let before = defaults.data(forKey: "library")
+        XCTAssertTrue(saved.hasLegacyExcerptRemainder)
+        XCTAssertFalse(saved.canReviewLegacyExcerptCleanup)
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        XCTAssertEqual(reopened.encyclopedias, store.encyclopedias)
+        XCTAssertThrowsError(try store.removeLegacyExcerptRemainder(afterConfirming: saved))
+        XCTAssertEqual(defaults.data(forKey: "library"), before)
+        var full = saved; full.saveType = .fullAnswer
+        XCTAssertFalse(full.hasLegacyExcerptRemainder)
+        var selected = saved; selected.excerptText = selected.answer
+        XCTAssertFalse(selected.hasLegacyExcerptRemainder)
+        selected.excerptText = ""; selected.answer = ""
+        XCTAssertFalse(selected.hasLegacyExcerptRemainder)
+    }
+    func testExplicitCleanupUpdatesLinkedCopiesAndPreservesIndependentFieldsAndReload() async throws {
+        let (defaults, suite, store, book) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let saved = try store.savePage(legacy(book.chapters[0].id), to: book.id, chapterID: book.chapters[0].id)
+        let other = try store.createEncyclopedia(name: "linked", style: .sage)
+        var linked = Prompt10SavedPage(chapterID: other.chapters[0].id, question: saved.question,
+            answer: saved.answer, saveType: .excerpt, excerptText: saved.excerptText,
+            originalAnswerID: saved.originalAnswerID, notes: "separate linked note", sourceSavedPageID: saved.id,
+            excerptLanguage: saved.excerptLanguage)
+        linked.importedImageIDs = ["linked-image"]
+        _ = try store.savePage(linked, to: other.id, chapterID: linked.chapterID)
+        try store.updatePageNotes(encyclopediaID: book.id, chapterID: saved.chapterID, pageID: saved.id, notes: "new independent note")
+        let result = try store.removeLegacyExcerptRemainder(afterConfirming: saved)
+        XCTAssertEqual(result.answer, "selected")
+        XCTAssertEqual(result.notes, "new independent note")
+        XCTAssertEqual(result.importedImageIDs, saved.importedImageIDs)
+        XCTAssertEqual(result.sourceIDs, saved.sourceIDs)
+        XCTAssertEqual(result.excerptLanguage, "es")
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        let pages = reopened.encyclopedias.flatMap(\.chapters).flatMap(\.pages)
+        XCTAssertEqual(pages.count, 2)
+        XCTAssertTrue(pages.allSatisfy { $0.answer == "selected" && !$0.hasLegacyExcerptRemainder })
+        XCTAssertEqual(pages.first { $0.id == linked.id }?.notes, "separate linked note")
+        XCTAssertEqual(pages.first { $0.id == linked.id }?.importedImageIDs, ["linked-image"])
+        XCTAssertThrowsError(try store.removeLegacyExcerptRemainder(afterConfirming: saved))
+    }
+    func testConflictingLinkedCopyRejectsEntireCleanupWithoutWriting() async throws {
+        let (defaults, suite, store, book) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let saved = try store.savePage(legacy(book.chapters[0].id), to: book.id, chapterID: book.chapters[0].id)
+        var linked = Prompt10SavedPage(chapterID: saved.chapterID, question: saved.question, answer: "different original",
+            saveType: .excerpt, excerptText: saved.excerptText, originalAnswerID: saved.originalAnswerID,
+            sourceSavedPageID: saved.id, excerptLanguage: "es")
+        linked.notes = "do not overwrite"
+        _ = try store.savePage(linked, to: book.id, chapterID: saved.chapterID)
+        let before = defaults.data(forKey: "library"), snapshot = store.encyclopedias
+        XCTAssertThrowsError(try store.removeLegacyExcerptRemainder(afterConfirming: saved)) {
+            XCTAssertEqual($0 as? Prompt10LibraryError, .contentChanged)
+        }
+        XCTAssertEqual(defaults.data(forKey: "library"), before)
+        XCTAssertEqual(store.encyclopedias, snapshot)
+    }
+    func testCleanupStripsLegacyFullConceptMapAndProtectedFutureDataIsPreserved() async throws {
+        let (defaults, suite, store, book) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var page = legacy(book.chapters[0].id)
+        let response = AskAnswer(originalQuestion: "fixture", answerText: page.answer, support: .partiallySupported,
+            supportMap: [.init(concept: "private remainder concept", support: .genuinelyNovel)], knowledgeBaseVersion: "fixture")
+        // Reproduce a decoded legacy full-answer support map on an excerpt.
+        page.evidenceSupport = Prompt09SavedAnswerSupport(answer: response)
+        let saved = try store.savePage(page, to: book.id, chapterID: page.chapterID)
+        let bytes = try XCTUnwrap(defaults.data(forKey: "library"))
+        var root = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [[String: Any]])
+        root[0]["futureLibraryField"] = "preserve original"
+        let future = try JSONSerialization.data(withJSONObject: root)
+        defaults.set(future, forKey: "library")
+        let protected = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        XCTAssertThrowsError(try protected.removeLegacyExcerptRemainder(afterConfirming: saved))
+        XCTAssertEqual(defaults.data(forKey: "library"), future)
+        defaults.set(bytes, forKey: "library")
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        let cleaned = try reopened.removeLegacyExcerptRemainder(afterConfirming: saved)
+        XCTAssertNil(cleaned.evidenceSupport?.concepts)
+        XCTAssertEqual(cleaned.evidenceSupport?.scope, .excerpt)
+        XCTAssertEqual(cleaned.evidenceSupport?.classification, .partiallySupported)
+        XCTAssertFalse(String(decoding: try XCTUnwrap(defaults.data(forKey: "library")), as: UTF8.self).contains("private remainder concept"))
+    }
+
+    func testUnicodeByteDifferenceIsNotSilentlyTreatedAsSamePayload() async throws {
+        let (defaults, suite, store, book) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var page = legacy(book.chapters[0].id)
+        page.answer = "café"; page.excerptText = "cafe\u{301}"
+        let saved = try store.savePage(page, to: book.id, chapterID: page.chapterID)
+        XCTAssertTrue(saved.hasLegacyExcerptRemainder)
+        var stale = saved; stale.answer = "cafe\u{301} plus remainder"
+        let before = defaults.data(forKey: "library")
+        XCTAssertThrowsError(try store.removeLegacyExcerptRemainder(afterConfirming: stale))
+        XCTAssertEqual(defaults.data(forKey: "library"), before)
+        let cleaned = try store.removeLegacyExcerptRemainder(afterConfirming: saved)
+        XCTAssertEqual(Data(cleaned.answer.utf8), Data("cafe\u{301}".utf8))
+    }
+}

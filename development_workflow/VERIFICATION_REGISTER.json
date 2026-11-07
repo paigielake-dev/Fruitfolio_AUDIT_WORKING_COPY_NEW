@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T05:10:44.294654+00:00",
+  "updated_at": "2026-11-07T05:16:23.172029+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -8833,6 +8833,129 @@
         ]
       },
       "timestamp": "2026-11-07T05:10:44.294654+00:00"
+    },
+    {
+      "batch": "Legacy-excerpt-explicit-consent-and-guarded-cleanup",
+      "requirements": [
+        432,
+        433,
+        434,
+        443,
+        444,
+        457,
+        474,
+        476,
+        477,
+        478
+      ],
+      "supplemental_requirements": [
+        "SPEC-7.9.6",
+        "SPEC-BINDING-ASK-SESSION"
+      ],
+      "commands": [
+        "Portable and native CPU full Swift suites",
+        "Final focused legacy excerpt and dropped-write tests",
+        "69 workflow tests",
+        "311 Swift syntax parses only",
+        "SwiftSyntax control-sound ownership: zero findings",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 955,
+        "native_CPU_XCTest": 980,
+        "SwiftTesting_each": 21,
+        "final_focused_XCTest": 6,
+        "workflow_checks": 69,
+        "syntax_files": 311,
+        "control_sound_ownership_findings": 0,
+        "Apple_UI_executed": 0,
+        "official_MADLAD_verified": false,
+        "log_receipts": {
+          "/tmp/fruitfolio_legacy_excerpt_portable.log": {
+            "bytes": 303632,
+            "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+          },
+          "/tmp/fruitfolio_legacy_excerpt_native.log": {
+            "bytes": 1278692,
+            "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+          },
+          "/tmp/fruitfolio_legacy_excerpt_focused.log": {
+            "bytes": 28546,
+            "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+          },
+          "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
+            "bytes": 29370,
+            "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
+          },
+          "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+            "bytes": 169,
+            "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+          },
+          "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+            "bytes": 106,
+            "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+          },
+          "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+            "bytes": 5,
+            "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+          }
+        }
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": 955,
+          "native_CPU_XCTest": 980,
+          "SwiftTesting_each": 21,
+          "final_focused_XCTest": 6,
+          "workflow_checks": 69,
+          "syntax_files": 311,
+          "control_sound_ownership_findings": 0,
+          "Apple_UI_executed": 0,
+          "official_MADLAD_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_legacy_excerpt_portable.log": {
+              "bytes": 303632,
+              "sha256": "2c6af89d45f319dc4001253baba6fe8ffb7adc0a95fd2aad94b9a9b16c9d553a"
+            },
+            "/tmp/fruitfolio_legacy_excerpt_native.log": {
+              "bytes": 1278692,
+              "sha256": "a67e3fc1c00aaa8177da1a8e00475bc252b4768905c4f6e16284d63d4b52fee4"
+            },
+            "/tmp/fruitfolio_legacy_excerpt_focused.log": {
+              "bytes": 28546,
+              "sha256": "54d4a7ddfac3da88d30375a77ae64211c86a940e97811868e7df44db958bd6e1"
+            },
+            "/tmp/fruitfolio_legacy_excerpt_focused_final.log": {
+              "bytes": 29370,
+              "sha256": "d105822861c0a2053ffb3e170c15556edb72ff888202fd59581abb815d716f1e"
+            },
+            "/tmp/fruitfolio_legacy_excerpt_workflow_final.log": {
+              "bytes": 169,
+              "sha256": "ec3b6a3e0bcad5816de387a4ec3c0a562a0542ab6b59337e1dd2bdbf87c4330e"
+            },
+            "/tmp/fruitfolio_legacy_excerpt_syntax_final.log": {
+              "bytes": 106,
+              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+            },
+            "/tmp/fruitfolio_legacy_excerpt_ownership.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
+        },
+        "not_run": [
+          "Apple SDK typecheck/build and actual saved-page confirmation/cancel/focus/VoiceOver/RTL/XXXL/Reduce Motion execution",
+          "Official MADLAD weights/tokenizer and clinical language acceptance",
+          "Physical secure deletion and OS backup behavior"
+        ],
+        "remaining": [
+          "Execute consent/cancellation and stale-page UI vectors on Apple with private fixtures",
+          "Verify real-device accessibility and persistence after process restart",
+          "No missing legacy selection can be inferred; retain ambiguous/conflicting records for explicit review",
+          "Six final focused tests include one support/future-data case added after the full-suite snapshots; full suites contain the preceding five new cases"
+        ]
+      },
+      "timestamp": "2026-11-07T05:16:23.172029+00:00"
     }
   ]
 }

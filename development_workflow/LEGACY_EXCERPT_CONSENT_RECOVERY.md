@@ -1,0 +1,11 @@
+# Legacy excerpt recovery
+
+Some older excerpt records contain a complete original answer in `answer` while `excerptText` controls display. New pending saves already retain only the selected payload. Legacy reads must preserve the existing record until the user explicitly consents to removal.
+
+`Prompt10SavedPage.hasLegacyExcerptRemainder` inspects exact UTF-8 bytes without changing stored data. Authored material and full-answer saves are excluded. A missing selection is reported but cannot be automatically repaired. Empty recorded selections are valid for illustration-only saves; no selection, language or occurrence range is invented.
+
+The saved-page view presents an owned, explicit-action confirmation. Keeping everything does not call the store. Confirmation captures the rendered page; the mutation waits until the owned popup is dismissed, and disappearing or changing pages cancels pending work. The shared popup provides the existing accessibility/Reduce Motion behavior; actual Apple execution remains required.
+
+`removeLegacyExcerptRemainder(afterConfirming:)` stages all matching canonical source-key snapshots. It rejects missing/duplicate targets, changed answer bytes, differing selected bytes/languages, authored/full-answer or conflicting linked snapshots before publication. Independent notes, imported/educational images, citations, source versions, IDs, dates and selection provenance remain intact. Only the retained answer field, excerpt-restricted support metadata and update timestamps change. One canonical acknowledged write publishes the batch; write failure restores the last acknowledged in-memory snapshot. Existing foreign/future-data protection remains active.
+
+Regression coverage executes against the real Foundation models and canonical store: non-mutating reads, missing selections, linked cleanup/remount, independent note/image preservation, conflicting-copy rejection, Unicode bytes, legacy full concept removal, future-field protection, and dropped-write rollback. The run log records exact executed counts and logs. These tests do not establish Apple callback/focus delivery, visual confirmation, VoiceOver, RTL, physical secure deletion, OS backups or official MADLAD quality. No automatic migration, source/body rewrite on load, forensic erasure or clinical certification is claimed.
