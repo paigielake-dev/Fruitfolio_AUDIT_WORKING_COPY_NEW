@@ -1796,7 +1796,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
     }
 
-    private func openLegacyExcerptFixture(_ app: XCUIApplication, reduced: Bool, rtl: Bool, missing: Bool = false) {
+    private func openLegacyExcerptFixture(_ app: XCUIApplication, reduced: Bool, rtl: Bool, missing: Bool = false, openPage: Bool = true) {
         app.launchArguments += ["-fruitfolioBookQA",
             missing ? "-fruitfolioBookMissingExcerptFixture" : "-fruitfolioBookLegacyExcerptFixture",
             "-fruitfolioBookQAPauseInference", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
@@ -1807,10 +1807,48 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<16 { if book.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(book.isHittable)
         book.tap()
+        if !openPage { return }
         let row = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 5))
         row.tap()
         XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
+    }
+
+    func testBookContentsFixedControlsRespectDirectionAndPreserveAuthoredPageLabels() {
+        for rtl in [false, true] {
+            for reduced in [false, true] {
+                let app = XCUIApplication()
+                openLegacyExcerptFixture(app, reduced: reduced, rtl: rtl, openPage: false)
+                let heading = app.descendants(matching: .any)["savedBook.heading"]
+                XCTAssertTrue(heading.waitForExistence(timeout: 5))
+                XCTAssertFalse(heading.frame.intersects(app.buttons["savedBook.back"].frame))
+                let contents = app.descendants(matching: .any)["savedBook.contents"]
+                let savedContent = app.descendants(matching: .any)["savedBook.savedContent"]
+                XCTAssertEqual(contents.label, rtl ? "contents, right book page" : "contents, left book page")
+                XCTAssertEqual(savedContent.label, rtl ? "saved content, left book page" : "saved content, right book page")
+                for identifier in ["savedBook.rename", "savedBook.delete", "savedBook.addOwnPage"] {
+                    let button = app.buttons[identifier]
+                    XCTAssertTrue(button.exists)
+                    XCTAssertGreaterThanOrEqual(button.frame.height, 44)
+                }
+                let chapter = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.chapter.")).firstMatch
+                XCTAssertTrue(chapter.exists)
+                XCTAssertTrue(chapter.label.contains(rtl ? "١" : "1"))
+                XCTAssertTrue((chapter.value as? String)?.contains("expanded") == true)
+                chapter.tap()
+                XCTAssertTrue((chapter.value as? String)?.contains("collapsed") == true)
+                XCTAssertFalse(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch.exists)
+                chapter.tap()
+                let row = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "savedBook.page.")).firstMatch
+                XCTAssertTrue(row.waitForExistence(timeout: 5))
+                XCTAssertTrue(row.label.contains("QA legacy excerpt"))
+                row.tap()
+                XCTAssertTrue(app.textViews["savedPage.notes"].waitForExistence(timeout: 5))
+                XCTAssertFalse(contents.exists)
+                captureGame(app, name: "book-contents-rtl-\(rtl)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
     }
 
     func testLegacyExcerptExplicitKeepThenCleanupPreservesNotesAcrossPaperAndPageRemount() {

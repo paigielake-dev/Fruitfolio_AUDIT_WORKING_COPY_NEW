@@ -10,6 +10,8 @@ struct Prompt10EncyclopediaDetailView: View {
     let onRename: () -> Void
     let onDelete: () -> Void
 
+    @EnvironmentObject private var settings: SettingsStore
+    @Environment(\.layoutDirection) private var layoutDirection
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
@@ -33,7 +35,9 @@ struct Prompt10EncyclopediaDetailView: View {
                             .accessibilityHidden(selectedPage != nil)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .accessibilityElement(children: .contain)
-                            .accessibilityLabel("contents, left book page")
+                            .modifier(FruitfolioFixedAccessibilityLabel(source: layoutDirection == .rightToLeft
+                                ? "contents, right book page" : "contents, left book page"))
+                            .accessibilityIdentifier("savedBook.contents")
                         Group {
                             if let selectedPage {
                                 Prompt10SavedPageView(store: store, encyclopediaID: encyclopediaID, page: selectedPage,
@@ -45,16 +49,19 @@ struct Prompt10EncyclopediaDetailView: View {
                                     onEditUserMaterial: { page in materialToEdit = page; showingMaterialEditor = true })
                             } else {
                                 ScrollView {
-                                    Text("choose a saved page from the contents to read it here.")
-                                        .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
-                                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                                    FruitfolioFixedText(source: "choose a saved page from the contents to read it here.",
+                                        font: .custom("Chalkboard SE", size: 14, relativeTo: .body),
+                                        color: DesignTokens.ColorToken.primaryBurgundy)
+                                        .accessibilityIdentifier("savedBook.choosePage")
                                         .padding(.vertical, 24)
                                 }
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityElement(children: .contain)
-                        .accessibilityLabel("saved content, right book page")
+                        .modifier(FruitfolioFixedAccessibilityLabel(source: layoutDirection == .rightToLeft
+                            ? "saved content, left book page" : "saved content, right book page"))
+                        .accessibilityIdentifier("savedBook.savedContent")
                     }
                 }
             }
@@ -83,30 +90,24 @@ struct Prompt10EncyclopediaDetailView: View {
                     encyclopedia
                 )
 
-                Text(encyclopedia.name)
+                Text(verbatim: encyclopedia.name)
                     .font(.custom("Chalkboard SE", size: 21, relativeTo: .title2).bold())
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Button("add my own page") {
+                Button {
                     materialToEdit = nil
                     showingMaterialEditor = true
-                }
+                } label: { FruitfolioFixedText(source: "add my own page") }
+                .accessibilityIdentifier("savedBook.addOwnPage")
                 .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 .disabled(encyclopedia.chapters.isEmpty)
 
                 if encyclopedia.chapters.isEmpty {
-                    Text("this little book is ready for saved pages ♡")
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.secondaryBurgundy
-                        )
+                    FruitfolioFixedText(source: "this little book is ready for saved pages ♡", protectedLiterals: ["♡"],
+                        font: .custom("Chalkboard SE", size: 13),
+                        color: DesignTokens.ColorToken.secondaryBurgundy)
                         .multilineTextAlignment(.center)
                         .padding(.vertical, 18)
 
@@ -148,33 +149,28 @@ struct Prompt10EncyclopediaDetailView: View {
         _ encyclopedia: Prompt10Encyclopedia
     ) -> some View {
         VStack(spacing: 8) {
-            ZStack {
-                HStack {
-                    BackControl {
-                        onBack()
-                    }
-
-                    Spacer()
-                }
-
-                Text("encyclopedia")
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 18
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
+            HStack(spacing: 8) {
+                BackControl { onBack() }
+                    .accessibilityIdentifier("savedBook.back")
+                FruitfolioFixedText(source: "encyclopedia",
+                    font: .custom("Chalkboard SE", size: 18).bold(),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("savedBook.heading")
+                Color.clear.frame(width: DesignTokens.Layout.minimumHitTarget, height: 1)
+                    .accessibilityHidden(true)
             }
 
             HStack(spacing: 12) {
-                Button("rename") {
+                Button {
                     audioManager.play(.buttonSoftPop)
                     onRename()
+                } label: {
+                    FruitfolioFixedText(source: "rename", font: .custom("Chalkboard SE", size: 11).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
                 }
+                .accessibilityIdentifier("savedBook.rename")
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -196,10 +192,14 @@ struct Prompt10EncyclopediaDetailView: View {
                         DesignTokens.Layout.minimumHitTarget
                 )
 
-                Button("delete") {
+                Button {
                     audioManager.play(.buttonSoftPop)
                     onDelete()
+                } label: {
+                    FruitfolioFixedText(source: "delete", font: .custom("Chalkboard SE", size: 11),
+                        color: DesignTokens.ColorToken.secondaryBurgundy)
                 }
+                .accessibilityIdentifier("savedBook.delete")
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -244,7 +244,7 @@ struct Prompt10EncyclopediaDetailView: View {
                         .frame(width: 42)
                         .accessibilityHidden(true)
 
-                    Text(chapter.name)
+                    Text(verbatim: chapter.name)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -258,7 +258,7 @@ struct Prompt10EncyclopediaDetailView: View {
 
                     Spacer()
 
-                    Text("\(chapter.pages.count)")
+                    Text(verbatim: chapter.pages.count.formatted(.number.locale(Locale(identifier: settings.language.localeIdentifier))))
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -274,6 +274,8 @@ struct Prompt10EncyclopediaDetailView: View {
                         DesignTokens.Layout.minimumHitTarget
                 )
             }
+            .accessibilityIdentifier("savedBook.chapter." + chapter.id.uuidString)
+            .modifier(FruitfolioFixedAccessibilityValue(source: expanded ? "expanded" : "collapsed"))
             .buttonStyle(
                 CutePopButtonStyle(
                     reduceMotion:
@@ -300,37 +302,26 @@ struct Prompt10EncyclopediaDetailView: View {
                                     .accessibilityHidden(true)
 
                                 VStack(alignment: .leading, spacing: 3) {
-                                    Text(
-                                        page.question.isEmpty
-                                            ? "saved page"
-                                            : page.question
-                                    )
-                                    .font(
-                                        .custom(
-                                            "Chalkboard SE",
-                                            size: 12.5
-                                        )
-                                    )
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(
-                                        DesignTokens.ColorToken.primaryBurgundy
-                                    )
+                                    Group {
+                                        if page.question.isEmpty {
+                                            FruitfolioFixedText(source: "saved page",
+                                                font: .custom("Chalkboard SE", size: 12.5).bold(),
+                                                color: DesignTokens.ColorToken.primaryBurgundy)
+                                        } else {
+                                            Text(verbatim: page.question)
+                                                .font(.custom("Chalkboard SE", size: 12.5).bold())
+                                                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                                        }
+                                    }
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
 
-                                    Text(
+                                    FruitfolioFixedText(source:
                                         page.userMaterial != nil ? "your own page"
-                                            : (page.saveType == .excerpt ? "saved excerpt" : "complete saved answer")
-                                    )
-                                    .font(
-                                        .custom(
-                                            "Chalkboard SE",
-                                            size: 9.5
-                                        )
-                                    )
-                                    .foregroundStyle(
-                                        DesignTokens.ColorToken.secondaryBurgundy
-                                    )
+                                            : (page.saveType == .excerpt ? "saved excerpt" : "complete saved answer"),
+                                        font: .custom("Chalkboard SE", size: 9.5),
+                                        color: DesignTokens.ColorToken.secondaryBurgundy)
+
                                 }
 
                                 Spacer()
