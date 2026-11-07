@@ -16,7 +16,7 @@ struct Prompt11CreateGuidePopup: View {
     @State private var name = ""
     @State private var guideDescription = ""
     @State private var style: Prompt10BookStyle = .sage
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -126,7 +126,8 @@ struct Prompt11CreateGuidePopup: View {
                                 reduceMotion: motionPreferences.reduceMotionActive
                             )
                         )
-                        .accessibilityLabel("\(option.displayName) cover")
+                        .modifier(FruitfolioFixedAccessibilityLabel(source: "\(option.displayName) cover"))
+                        .accessibilityIdentifier("guide.cover." + option.rawValue)
                         .accessibilityAddTraits(
                             style == option ? .isSelected : []
                         )
@@ -134,8 +135,8 @@ struct Prompt11CreateGuidePopup: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -178,7 +179,7 @@ struct Prompt11CreateGuidePopup: View {
             audioManager.play(.bookClose)
             onCreated(guide.id)
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = Prompt10SavedPageNotice(error: error)
         }
     }
 }
@@ -196,7 +197,7 @@ struct Prompt11RenameGuidePopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var name: String
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -250,8 +251,8 @@ struct Prompt11RenameGuidePopup: View {
                     )
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -271,7 +272,7 @@ struct Prompt11RenameGuidePopup: View {
                         )
                         onSaved()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
 
@@ -297,7 +298,7 @@ struct Prompt11DescriptionPopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var guideDescription: String
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -350,8 +351,8 @@ struct Prompt11DescriptionPopup: View {
                 )
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -371,7 +372,7 @@ struct Prompt11DescriptionPopup: View {
                         )
                         onSaved()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
                 .accessibilityIdentifier("guide.description.save")
@@ -400,7 +401,7 @@ struct Prompt11ChangeCoverPopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var style: Prompt10BookStyle
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -470,7 +471,8 @@ struct Prompt11ChangeCoverPopup: View {
                                 reduceMotion: motionPreferences.reduceMotionActive
                             )
                         )
-                        .accessibilityLabel("\(option.displayName) cover")
+                        .modifier(FruitfolioFixedAccessibilityLabel(source: "\(option.displayName) cover"))
+                        .accessibilityIdentifier("guide.cover." + option.rawValue)
                         .accessibilityAddTraits(
                             style == option ? .isSelected : []
                         )
@@ -478,8 +480,8 @@ struct Prompt11ChangeCoverPopup: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -499,7 +501,7 @@ struct Prompt11ChangeCoverPopup: View {
                         )
                         onSaved()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
 
@@ -523,7 +525,7 @@ struct Prompt11DeleteGuidePopup: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -550,8 +552,8 @@ struct Prompt11DeleteGuidePopup: View {
                 .multilineTextAlignment(.center)
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -573,7 +575,7 @@ struct Prompt11DeleteGuidePopup: View {
                         audioManager.play(.bookClose)
                         onDeleted()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
             }
@@ -595,7 +597,7 @@ struct Prompt11SectionPopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var name: String
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -643,8 +645,8 @@ struct Prompt11SectionPopup: View {
                     )
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -673,7 +675,7 @@ struct Prompt11SectionPopup: View {
 
                         onSaved()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
 
@@ -702,7 +704,7 @@ struct Prompt11NotePopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var note: String
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -757,8 +759,8 @@ struct Prompt11NotePopup: View {
                 )
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -779,7 +781,7 @@ struct Prompt11NotePopup: View {
                         )
                         onSaved()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
 
@@ -806,7 +808,7 @@ struct Prompt11MovePagePopup: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     private var guide: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -859,8 +861,8 @@ struct Prompt11MovePagePopup: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -902,7 +904,7 @@ struct Prompt11MovePagePopup: View {
             audioManager.play(.pageTurn)
             onMoved()
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = Prompt10SavedPageNotice(error: error)
         }
     }
 }
@@ -920,7 +922,7 @@ struct Prompt11RemovePagePopup: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
-    @State private var errorMessage: String?
+    @State private var errorMessage: Prompt10SavedPageNotice?
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -941,8 +943,8 @@ struct Prompt11RemovePagePopup: View {
                     .multilineTextAlignment(.center)
 
                 if let errorMessage {
-                    FruitfolioFixedText(source: errorMessage,
-                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                    Prompt10SavedPageNoticeText(notice: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
@@ -968,7 +970,7 @@ struct Prompt11RemovePagePopup: View {
                         audioManager.play(.pageTurn)
                         onRemoved()
                     } catch {
-                        errorMessage = error.localizedDescription
+                        errorMessage = Prompt10SavedPageNotice(error: error)
                     }
                 }
             }

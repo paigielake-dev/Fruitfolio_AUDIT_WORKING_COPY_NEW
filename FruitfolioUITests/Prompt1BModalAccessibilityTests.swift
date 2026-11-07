@@ -547,6 +547,44 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGuideTypedValidationPreservesPrivateDraftAndCoverUntilCancel() {
+        for language in ["fr", "ar"] {
+            for reduced in [false, true] {
+                let app = launchGuideSave("create", reduced: reduced, rtl: language == "ar", language: language)
+                let open = app.buttons["guide.create.open"]
+                XCTAssertTrue(open.waitForExistence(timeout: 5))
+                for _ in 0..<24 { if open.isHittable { break }; app.swipeUp() }
+                open.tap()
+                tapGuideFormAction("guide.create.save", in: app)
+                let error = app.descendants(matching: .any).matching(identifier: "guide.form.error").firstMatch
+                XCTAssertTrue(error.waitForExistence(timeout: 5))
+                XCTAssertEqual(app.staticTexts["guideQA.persistedCount"].label, "persisted guide count: 0")
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                let name = app.descendants(matching: .any).matching(identifier: "guide.create.name").firstMatch
+                let paper = app.scrollViews["fruitfolio.notebookPopup.scroll"]
+                for _ in 0..<24 { if name.isHittable { break }; paper.swipeDown() }
+                name.tap(); name.typeText("clinical notes 12.50")
+                let authored = name.value as? String
+                XCTAssertTrue(authored?.contains("clinical notes 12.50") == true)
+                let cover = app.buttons["guide.cover.lavender"]
+                for _ in 0..<24 { if cover.isHittable { break }; paper.swipeUp() }
+                XCTAssertTrue(cover.isHittable)
+                XCTAssertGreaterThanOrEqual(cover.frame.height, 44)
+                cover.tap()
+                XCTAssertTrue(cover.isSelected)
+                XCTAssertEqual(name.value as? String, authored)
+                expectGuidePopupRequests(open: 1, close: 0, in: app)
+                tapGuideFormAction("guide.create.cancel", in: app)
+                expectGuidePopupRequests(open: 1, close: 1, in: app)
+                XCTAssertEqual(app.staticTexts["guideQA.persistedCount"].label, "persisted guide count: 0")
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 0")
+                captureGame(app, name: "guide-typed-validation-\(language)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testGuideCreationSaveAndCancelUseActualPersistenceAndCallbacks() {
         for reduced in [false, true] {
         for rtl in [false, true] {
