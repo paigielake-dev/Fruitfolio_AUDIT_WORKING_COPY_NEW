@@ -40,6 +40,39 @@ struct FruitfolioEducationArticle: Sendable {
     }
 }
 
+/// Composite of the same original-paragraph records, never synthesized chapter
+/// prose. Repeated paragraphs are shown/saved once while all attribution stays.
+struct FruitfolioEducationChapter: Sendable {
+    let primary: FruitfolioEducationArticle
+    let details: [FruitfolioEducationArticle]
+    let unavailableDetailIDs: [String]
+
+    var additionalExcerpts: [FruitfolioEducationArticle] {
+        var seen: Set<Data> = [Data(primary.originalText.utf8)]
+        return details.filter { seen.insert(Data($0.originalText.utf8)).inserted }
+    }
+    var sources: [AskSourceRecord] {
+        var seen: Set<String> = []
+        return ([primary] + details).flatMap(\.sources).filter { seen.insert($0.id).inserted }
+    }
+    var presentation: String {
+        ([primary.presentation] + additionalExcerpts.map {
+            FruitfolioSemanticMarkup.markdown([.init(text: $0.title, emphasis: .anchorBold)]) + "\n" + $0.presentation
+        }).joined(separator: "\n\n")
+    }
+    func prepareSave() throws -> Prompt10PendingSavedContent {
+        guard let versions = Prompt09SaveSourceVersions.validated(sources) else {
+            throw FruitfolioEducationResearchError.invalidSourceMetadata
+        }
+        var seen: Set<String> = []
+        let notes = ([primary] + details).map(\.noteID).filter { seen.insert($0).inserted }
+        return .init(question: primary.title, answer: presentation, saveType: .fullAnswer,
+            originalAnswerID: "education:" + primary.contentID + ":" + notes.joined(separator: ";"),
+            sourceIDs: sources.map(\.id), sourceVersions: versions,
+            knowledgeBaseVersion: primary.knowledgeBaseVersion, sourceRecords: sources)
+    }
+}
+
 enum FruitfolioEducationResearchError: Error, Equatable {
     case unknownContent, unavailable, invalidSourceMetadata
 }
@@ -50,6 +83,7 @@ actor FruitfolioEducationResearch {
     static let shared = FruitfolioEducationResearch()
     private let packageStore: FruitfolioResearchPackageStore
     private var cache: [String: FruitfolioEducationArticle] = [:]
+    private var chapterCache: [String: FruitfolioEducationChapter] = [:]
 
     init(packageStore: FruitfolioResearchPackageStore = .shared) { self.packageStore = packageStore }
 
@@ -58,6 +92,8 @@ actor FruitfolioEducationResearch {
         let title: String
         let query: String
         let requiredPattern: String
+        var additionalPattern: String? = nil
+        var parentID: String? = nil
     }
 
     nonisolated static var requests: [Request] {
@@ -134,7 +170,7 @@ actor FruitfolioEducationResearch {
                 pattern = #"\bchromosomes?\b"#
                 query = "chromosomes DNA genes genetic material meiosis replication"
             case .culture:
-                pattern = #"\b(?:agar|petri|culture plates?)\b"#
+                pattern = #"\b(?:agar|petri|culture plates?|urine cultures?|bacterial cultures?)\b"#
                 query = "agar petri culture plate laboratory bacteria microbiology"
             case .kidneys:
                 pattern = #"(?s)^(?=.*\b(?:kidneys?|renal)\b)(?=.*\b(?:filtration|filter\w*|kidney function|renal function|nephron\w*|urine production)\b)"#
@@ -185,7 +221,123 @@ actor FruitfolioEducationResearch {
             return Request(id: scienceID(for: asset), title: title(for: asset), query: query,
                 requiredPattern: pattern)
         }
-        return fertilization + pregnancy + science
+        let core = fertilization + pregnancy + science
+        return core + detailRequests(core: core)
+    }
+
+    private nonisolated static func detailRequests(core: [Request]) -> [Request] {
+        var result: [Request] = []
+        for topic in Prompt26PregnancyEducationCatalog.topics {
+            guard let parent = core.first(where: { $0.id == topic.shortContentID }) else { continue }
+            for id in topic.sectionIDs {
+                let role = id.split(separator: ".").last.map(String.init) ?? ""
+                let title: String, terms: String, pattern: String
+                switch role {
+                case "hcg":
+                    title = "hCG"; terms = "hCG human chorionic gonadotropin pregnancy tests"
+                    pattern = #"\b(?:hcg|human chorionic gonadotropin)\b"#
+                case "timing":
+                    title = "testing timing"; terms = "pregnancy tests timing implantation days early"
+                    pattern = #"\b(?:timing|implantation|early|days|weeks)\b"#
+                case "results":
+                    title = "understanding results"; terms = "pregnancy tests positive negative results"
+                    pattern = #"\b(?:positive|negative|results?)\b"#
+                case "limitations":
+                    title = "limitations"; terms = "limitations false negative false positive uncertainty"
+                    pattern = #"\b(?:cannot|not always|false negative|false positive|does not|may not|varies)\b"#
+                case "implantation":
+                    title = "implantation"; terms = "implantation embryo uterine lining blastocyst"
+                    pattern = #"\bimplant\w*\b"#
+                case "terminology":
+                    title = "biological terminology"; terms = "embryo fetus definition means terminology"
+                    pattern = #"\b(?:means|called|defined|refers|embryo|fetus)\b"#
+                case "transitions":
+                    title = "developmental transitions"; terms = "fertilization blastocyst implantation embryo development"
+                    pattern = #"\b(?:zygote|blastocysts?|implantation|fertilization|embryonic)\b"#
+                case "variability":
+                    title = "variation and uncertainty"; terms = "fetal growth variation varies ultrasound estimate"
+                    pattern = #"\b(?:vary|varies|variation|different|estimate\w*|uncertain\w*)\b"#
+                case "scale":
+                    title = "interpreting developmental size"; terms = "fetal growth measurement size estimated weight"
+                    pattern = #"\b(?:size|measurement\w*|weight|growth|ultrasound)\b"#
+                case "development":
+                    title = "developmental context"; terms = "placenta development implantation trophoblast"
+                    pattern = #"\b(?:develop\w*|implant\w*|trophoblast\w*)\b"#
+                case "anatomy":
+                    title = "anatomy"; terms = "placenta umbilical cord vessels membrane anatomy"
+                    pattern = #"\b(?:vessels?|membranes?|tissue|arteries|veins?|organ|cord)\b"#
+                case "exchange":
+                    title = "oxygen and nutrient exchange"; terms = "placenta oxygen nutrients exchange maternal fetal"
+                    pattern = #"\b(?:oxygen|nutrients?|exchange|carbon dioxide)\b"#
+                case "hormones":
+                    title = "hormone production"; terms = "placenta hormones hCG progesterone estrogen"
+                    pattern = #"\b(?:hormones?|hcg|progesterone|estrogen)\b"#
+                case "circulation":
+                    title = "circulation"; terms = "placenta umbilical cord blood circulation oxygen"
+                    pattern = #"\b(?:blood|vessels?|circulation|oxygen)\b"#
+                case "vessels":
+                    title = "blood vessels"; terms = "umbilical cord arteries vein vessels"
+                    pattern = #"\b(?:arteries|veins?|vessels?)\b"#
+                case "whartons_jelly":
+                    title = "Wharton’s jelly"; terms = "umbilical cord Wharton jelly vessels protection"
+                    pattern = #"\bwharton['’]?s?\s+jelly\b"#
+                case "sound_waves":
+                    title = "sound-wave imaging"; terms = "ultrasound sound waves echo imaging"
+                    pattern = #"\b(?:sound[\s-]+waves?|echo\w*)\b"#
+                case "approaches":
+                    title = "imaging approaches"; terms = "ultrasound transvaginal transabdominal Doppler"
+                    pattern = #"\b(?:transvaginal|transabdominal|abdominal|doppler)\b"#
+                case "professional_role":
+                    title = "professional interpretation"; terms = "ultrasound clinician interpret provider monitoring"
+                    pattern = #"\b(?:clinician|provider|doctor|interpret\w*|obstetric\w*)\b"#
+                case "folate":
+                    title = "folate"; terms = "prenatal folate folic acid neural tube"
+                    pattern = #"\b(?:folate|folic acid)\b"#
+                case "nutrients":
+                    title = "nutrients"; terms = "prenatal vitamins folate iodine iron vitamin D calcium"
+                    pattern = #"\b(?:folate|folic acid|iodine|iron|vitamin d|calcium)\b"#
+                case "dosing":
+                    title = "dose and safety considerations"; terms = "prenatal vitamins dose provider review too much safety"
+                    pattern = #"(?s)^(?=.*\b(?:dose|dosage|doses|amount|too much)\b)(?=.*\b(?:clinician|provider|medical|harmful|safety|should not)\b)"#
+                case "safety":
+                    title = "safety"; terms = "prenatal vitamins safety harmful avoid interactions too much"
+                    pattern = #"\b(?:harm\w*|safe\w*|avoid|interact\w*|too much|should not)\b"#
+                case "preconception":
+                    title = "preconception context"; terms = "prenatal vitamins before pregnancy preconception folate"
+                    pattern = #"\b(?:preconception|before pregnancy|before conception|trying to conceive)\b"#
+                default:
+                    // New catalog roles require review, not an invented section.
+                    continue
+                }
+                result.append(.init(id: id, title: title, query: parent.query + " " + terms,
+                    requiredPattern: parent.requiredPattern, additionalPattern: pattern, parentID: parent.id))
+            }
+        }
+        for stage in Prompt25FertilizationSequence.stages {
+            guard let parent = core.first(where: { $0.id == stage.shortContentID }) else { continue }
+            let terms: String, pattern: String
+            switch stage.id {
+            case .oocyte:
+                terms = "mature oocyte cytoplasm polar bodies function"
+                pattern = #"\b(?:cytoplasm|polar bodies|mature oocyte|haploid|meiosis)\b"#
+            case .fertilization:
+                terms = "sperm oocyte genetic material meiosis II zygote"
+                pattern = #"\b(?:sperm|fertilization|fusion|zygote)\b"#
+            case .twoCell, .fourCell:
+                terms = "cleavage cell division blastomere"
+                pattern = #"\b(?:cleavage|division|blastomeres?)\b"#
+            case .morula:
+                terms = "morula compaction blastomere cleavage"
+                pattern = #"\b(?:morula\w*|compaction|blastomeres?|cleavage)\b"#
+            case .blastocyst:
+                terms = "blastocyst inner cell mass trophoblast blastocoel"
+                pattern = #"\b(?:inner cell mass|trophoblast\w*|trophectoderm|blastocoel|blastocyst stage)\b"#
+            }
+            result.append(.init(id: stage.expandedContentID, title: "further " + stage.title + " context",
+                query: parent.query + " " + terms, requiredPattern: parent.requiredPattern,
+                additionalPattern: pattern, parentID: parent.id))
+        }
+        return result
     }
 
     nonisolated static func title(for asset: Prompt27ScientificAsset) -> String {
@@ -220,6 +372,9 @@ actor FruitfolioEducationResearch {
         }
         let approved = Dictionary(uniqueKeysWithValues: records.map { ($0.sourceID, $0) })
         let matcher = try NSRegularExpression(pattern: request.requiredPattern, options: .caseInsensitive)
+        let additional = try request.additionalPattern.map {
+            try NSRegularExpression(pattern: $0, options: .caseInsensitive)
+        }
         let terms = FruitfolioQueryNormalizer.tokens(request.query)
         let eligible = package.researchNoteChunks.filter { $0.retrievalEligibility != false }
             .sorted { $0.chunkID < $1.chunkID }.map { FruitfolioRankedNote(chunk: $0, score: 0) }
@@ -227,7 +382,9 @@ actor FruitfolioEducationResearch {
         for note in retriever.contextualizedNotes(eligible) {
             try Task.checkCancellation()
             guard !note.sourceIDs.isEmpty, note.sourceIDs.allSatisfy({ approved[$0] != nil }),
-                  matcher.firstMatch(in: note.text, range: NSRange(note.text.startIndex..., in: note.text)) != nil else { continue }
+                  matcher.firstMatch(in: note.text, range: NSRange(note.text.startIndex..., in: note.text)) != nil,
+                  additional == nil || additional?.firstMatch(in: note.text,
+                    range: NSRange(note.text.startIndex..., in: note.text)) != nil else { continue }
             let score = 3 * terms.intersection(FruitfolioQueryNormalizer.tokens(note.heading)).count
                 + terms.intersection(FruitfolioQueryNormalizer.tokens(note.text)).count
             if best == nil || score > best!.score { best = (note, score) }
@@ -254,6 +411,23 @@ actor FruitfolioEducationResearch {
         return article
     }
 
+    func chapter(for contentID: String) async throws -> FruitfolioEducationChapter {
+        try Task.checkCancellation()
+        if let cached = chapterCache[contentID] { return cached }
+        let primary = try await article(for: contentID)
+        var details: [FruitfolioEducationArticle] = []
+        var unavailable: [String] = []
+        for request in Self.requests where request.parentID == contentID {
+            try Task.checkCancellation()
+            do { details.append(try await article(for: request.id)) }
+            catch FruitfolioEducationResearchError.unavailable { unavailable.append(request.id) }
+        }
+        try Task.checkCancellation()
+        let chapter = FruitfolioEducationChapter(primary: primary, details: details, unavailableDetailIDs: unavailable)
+        chapterCache[contentID] = chapter
+        return chapter
+    }
+
     func sourceRecords(ids: [String]) async throws -> [AskSourceRecord] {
         let package = try await packageStore.load()
         let records = package.sources.filter(\.isApprovedForDisplay)
@@ -275,18 +449,22 @@ actor FruitfolioEducationResearch {
 struct FruitfolioFertilizationResearchAdapter: Prompt25FertilizationContentProviding {
     let research: FruitfolioEducationResearch
     func content(for stage: Prompt25FertilizationStage) async -> Prompt25EducationalContent {
-        guard let article = try? await research.article(for: stage.shortContentID) else { return .unavailable }
-        return .init(shortText: article.modulePresentation, expandedSections: [],
-            sourceCount: article.sources.count, isApproved: true)
+        guard let chapter = try? await research.chapter(for: stage.shortContentID) else { return .unavailable }
+        return .init(shortText: chapter.primary.modulePresentation,
+            expandedSections: chapter.additionalExcerpts.map {
+                .init(id: $0.contentID, heading: $0.title, body: $0.presentation)
+            }, sourceCount: chapter.sources.count, isApproved: true)
     }
 }
 
 struct FruitfolioPregnancyResearchAdapter: Prompt26PregnancyResearchProviding {
     let research: FruitfolioEducationResearch
     func approvedContent(for contentID: String) async throws -> Prompt26ApprovedContent {
-        let article = try await research.article(for: contentID)
-        return .init(contentID: contentID, title: article.title, summary: article.modulePresentation,
-            sections: [], sourceIDs: article.sources.map(\.id))
+        let chapter = try await research.chapter(for: contentID)
+        return .init(contentID: contentID, title: chapter.primary.title, summary: chapter.primary.modulePresentation,
+            sections: chapter.additionalExcerpts.map {
+                .init(id: $0.contentID, heading: $0.title, body: $0.presentation, sourceIDs: $0.sources.map(\.id))
+            }, sourceIDs: chapter.sources.map(\.id))
     }
 }
 

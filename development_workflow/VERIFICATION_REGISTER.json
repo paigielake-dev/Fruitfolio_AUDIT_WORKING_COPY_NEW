@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T13:28:52.738609+00:00",
+  "updated_at": "2026-11-07T13:47:53.029102+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -12274,6 +12274,62 @@
         ]
       },
       "timestamp": "2026-11-07T13:28:52.738609+00:00"
+    },
+    {
+      "batch": "Education-original-detail-sections-and-canonical-chapter-save",
+      "requirements": [
+        146,
+        311,
+        433,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "6 focused real education corpus/adapters/save/readback XCTest",
+        "326 Swift syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "focused_XCTest": 6,
+        "failures": 0,
+        "actual_chapters_saved_and_reopened": 28,
+        "chapters_with_distinct_additional_paragraphs": 7,
+        "registered_original_catalog_ids": 73,
+        "eligible_original_paragraph_scope_matches": 59,
+        "swift_syntax_files": 326,
+        "logs": [
+          "/tmp/fruitfolio_education_details_focused.log",
+          "/tmp/fruitfolio_education_details_syntax.log"
+        ]
+      },
+      "verification": {
+        "executed": {
+          "focused_XCTest": 6,
+          "failures": 0,
+          "actual_chapters_saved_and_reopened": 28,
+          "chapters_with_distinct_additional_paragraphs": 7,
+          "registered_original_catalog_ids": 73,
+          "eligible_original_paragraph_scope_matches": 59,
+          "swift_syntax_files": 326,
+          "logs": [
+            "/tmp/fruitfolio_education_details_focused.log",
+            "/tmp/fruitfolio_education_details_syntax.log"
+          ]
+        },
+        "not_run": [
+          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
+        ],
+        "remaining": [
+          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+          "Official MADLAD model and on-device performance remain unverified."
+        ]
+      },
+      "timestamp": "2026-11-07T13:47:53.029102+00:00"
     }
   ]
 }

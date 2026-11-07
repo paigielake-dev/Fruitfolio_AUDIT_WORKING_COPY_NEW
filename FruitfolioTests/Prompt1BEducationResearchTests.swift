@@ -12,8 +12,15 @@ final class Prompt1BEducationResearchTests: XCTestCase {
     func testRegistryUsesTheExistingModuleCatalogsAndRejectsUnsupportedContentBeforeLoading() async throws {
         let requests = FruitfolioEducationResearch.requests
         XCTAssertEqual(Set(requests.map(\.id)).count, requests.count)
-        XCTAssertEqual(requests.count, Prompt25FertilizationSequence.stages.count +
+        XCTAssertEqual(requests.filter { $0.parentID == nil }.count, Prompt25FertilizationSequence.stages.count +
             Prompt26PregnancyEducationCatalog.topics.count + Prompt27ScientificAssetCatalog.canonicalAssets.count)
+        let detailIDs = Set(Prompt26PregnancyEducationCatalog.topics.flatMap(\.sectionIDs) +
+            Prompt25FertilizationSequence.stages.map(\.expandedContentID))
+        XCTAssertEqual(Set(requests.filter { $0.parentID != nil }.map(\.id)), detailIDs)
+        for request in requests where request.parentID != nil {
+            XCTAssertTrue(requests.contains { $0.parentID == nil && $0.id == request.parentID })
+            XCTAssertNotNil(request.additionalPattern)
+        }
         for stage in Prompt25FertilizationSequence.stages {
             XCTAssertTrue(requests.contains { $0.id == stage.shortContentID && $0.title == stage.title })
         }
@@ -52,6 +59,7 @@ final class Prompt1BEducationResearchTests: XCTestCase {
         }
         XCTAssertFalse(try matches(.culture, "beauty has a history, culture, and legacy."))
         XCTAssertTrue(try matches(.culture, "nonclinical agar plate scope fixture"))
+        XCTAssertTrue(try matches(.culture, "urine culture helps identify bacteria"))
         XCTAssertFalse(try matches(.cell, "sickle cell trait reproductive planning fixture"))
         XCTAssertFalse(try matches(.protein, "dairy foods provide protein and calcium"))
         XCTAssertFalse(try matches(.receptor, "hormone receptor-positive cancer may delay pregnancy"))
@@ -108,12 +116,17 @@ final class Prompt1BEducationResearchTests: XCTestCase {
         let fertilization = await FruitfolioFertilizationResearchAdapter(research: research).content(for: stage)
         XCTAssertTrue(fertilization.isApproved)
         XCTAssertEqual(fertilization.shortText, original.modulePresentation)
-        XCTAssertEqual(fertilization.sourceCount, original.sources.count)
+        let fertilizationChapter = try await research.chapter(for: stage.shortContentID)
+        XCTAssertEqual(fertilization.sourceCount, fertilizationChapter.sources.count)
+        XCTAssertEqual(fertilization.expandedSections.map(\.body), fertilizationChapter.additionalExcerpts.map(\.presentation))
         let pregnancyID = Prompt26PregnancyEducationCatalog.topic(.testing).shortContentID
         let pregnancyArticle = try await research.article(for: pregnancyID)
         let pregnancy = try await FruitfolioPregnancyResearchAdapter(research: research).approvedContent(for: pregnancyID)
         XCTAssertEqual(pregnancy.summary, pregnancyArticle.modulePresentation)
-        XCTAssertEqual(pregnancy.sourceIDs, pregnancyArticle.sources.map(\.id))
+        let pregnancyChapter = try await research.chapter(for: pregnancyID)
+        XCTAssertEqual(pregnancy.sourceIDs, pregnancyChapter.sources.map(\.id))
+        XCTAssertEqual(pregnancy.sections.map(\.body), pregnancyChapter.additionalExcerpts.map(\.presentation))
+        XCTAssertEqual(pregnancy.sections.map(\.sourceIDs), pregnancyChapter.additionalExcerpts.map { $0.sources.map(\.id) })
         let dna = try XCTUnwrap(Prompt27ScientificAssetCatalog().asset(for: .geneticsDNA))
         let scienceID = FruitfolioEducationResearch.scienceID(for: dna)
         let scienceArticle = try await research.article(for: scienceID)
@@ -152,4 +165,54 @@ final class Prompt1BEducationResearchTests: XCTestCase {
             XCTFail("Foreign IDs must not obtain invented attribution")
         } catch { XCTAssertEqual(error as? FruitfolioEducationResearchError, .invalidSourceMetadata) }
     }
+
+    @MainActor
+    func testDetailedChaptersDeduplicateOriginalParagraphsAndPersistAllAttributionThroughTheActualLibrary() async throws {
+        let research = FruitfolioEducationResearch(packageStore: try store())
+        let suite = "EducationChapterReadback." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "chapters")
+        let book = try library.createEncyclopedia(name: "fixture", style: .sage)
+        let destination = try XCTUnwrap(book.chapters.first)
+        var examined = 0
+        var expandedChapters = 0
+        for request in FruitfolioEducationResearch.requests where request.parentID == nil {
+            let chapter: FruitfolioEducationChapter
+            do { chapter = try await research.chapter(for: request.id) }
+            catch FruitfolioEducationResearchError.unavailable { continue }
+            examined += 1
+            let detailIDs = Set(FruitfolioEducationResearch.requests.filter { $0.parentID == request.id }.map(\.id))
+            XCTAssertEqual(Set(chapter.details.map(\.contentID)).union(chapter.unavailableDetailIDs), detailIDs)
+            XCTAssertTrue(Set(chapter.details.map(\.contentID)).isDisjoint(with: chapter.unavailableDetailIDs))
+            let shown = [chapter.primary] + chapter.additionalExcerpts
+            XCTAssertEqual(Set(shown.map { Data($0.originalText.utf8) }).count, shown.count)
+            for detail in chapter.details {
+                let original = try await research.article(for: detail.contentID)
+                XCTAssertEqual(Data(detail.originalText.utf8), Data(original.originalText.utf8))
+                XCTAssertEqual(detail.sources, original.sources)
+            }
+            let pending = try chapter.prepareSave()
+            XCTAssertEqual(pending.sourceVersions, Prompt09SaveSourceVersions.validated(chapter.sources))
+            XCTAssertEqual(Set(chapter.sources.map(\.id)), Set(([chapter.primary] + chapter.details).flatMap { $0.sources.map(\.id) }))
+            let stored = try library.savePage(pending.makeSavedPage(chapterID: destination.id),
+                to: book.id, chapterID: destination.id)
+            let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "chapters")
+            let reloaded = try XCTUnwrap(reopened.encyclopedia(id: book.id)?.chapters.first?.pages.first { $0.id == stored.id })
+            XCTAssertEqual(reloaded, stored)
+            XCTAssertEqual(reloaded.answer, chapter.presentation)
+            XCTAssertEqual(reloaded.sourceRecords, chapter.sources)
+            XCTAssertEqual(reloaded.sourceVersions, pending.sourceVersions)
+            XCTAssertEqual(reloaded.knowledgeBaseVersion, chapter.primary.knowledgeBaseVersion)
+            XCTAssertNil(reloaded.originalConversationID)
+            for note in [chapter.primary] + chapter.details {
+                XCTAssertTrue(reloaded.originalAnswerID?.contains(note.noteID) == true)
+            }
+            if !chapter.additionalExcerpts.isEmpty { expandedChapters += 1 }
+        }
+        XCTAssertGreaterThan(examined, 0)
+        XCTAssertGreaterThan(expandedChapters, 0, "Actually save distinct original detail paragraphs, not only core fallbacks")
+        print("Education chapter readback: \(examined) real chapters; \(expandedChapters) with distinct additional original paragraphs")
+    }
+
 }

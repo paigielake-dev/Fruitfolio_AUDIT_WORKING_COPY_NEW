@@ -10567,55 +10567,86 @@
         "Prompt1BEducationResearchTests",
         "Prompt25FertilizationCoreTests",
         "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
-        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
-      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-original-detail-sections-and-canonical-chapter-save (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple.",
-        "The existing Ask discovery card now has an explicit user-opened education sheet; sequential Fertilization and reference Pregnancy artwork stays inside intentionally selected preserved modules. No automatic prediction/symptom route or default Ask illustration is added. Source declarations and16 executed pregnancy gates support intent isolation; real UI entry test is NOT_RUN."
+        "The existing Ask discovery card now has an explicit user-opened education sheet; sequential Fertilization and reference Pregnancy artwork stays inside intentionally selected preserved modules. No automatic prediction/symptom route or default Ask illustration is added. Source declarations and16 executed pregnancy gates support intent isolation; real UI entry test is NOT_RUN.",
+        "Existing intentionally entered education now exposes source-grounded expansions; no automatic artwork or prediction navigation added."
       ],
-      "last_updated": "2026-11-07T13:28:52.738609+00:00",
+      "last_updated": "2026-11-07T13:47:53.029102+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+        "batch": "Education-original-detail-sections-and-canonical-chapter-save",
         "executed": {
-          "latest_full_portable_XCTest": 1044,
-          "latest_full_SwiftTesting": 21,
-          "focused_module_XCTest": 31,
-          "native_CPU_focused_XCTest": 21,
-          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
-          "workflow": 71,
+          "focused_XCTest": 6,
+          "failures": 0,
+          "actual_chapters_saved_and_reopened": 28,
+          "chapters_with_distinct_additional_paragraphs": 7,
+          "registered_original_catalog_ids": 73,
+          "eligible_original_paragraph_scope_matches": 59,
           "swift_syntax_files": 326,
           "logs": [
-            "/tmp/fruitfolio_education_navigation_final_full.log",
-            "/tmp/fruitfolio_education_navigation_final_focused.log",
-            "/tmp/fruitfolio_education_navigation_native.log",
-            "/tmp/fruitfolio_education_navigation_final_workflow.log",
-            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            "/tmp/fruitfolio_education_details_focused.log",
+            "/tmp/fruitfolio_education_details_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
-          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
-          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
-          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
         ],
         "remaining": [
-          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+          "Official MADLAD model and on-device performance remain unverified."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+        "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+        "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+        "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+        "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+        "Official MADLAD model and on-device performance remain unverified."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "executed": {
+            "latest_full_portable_XCTest": 1044,
+            "latest_full_SwiftTesting": 21,
+            "focused_module_XCTest": 31,
+            "native_CPU_focused_XCTest": 21,
+            "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+            "workflow": 71,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_education_navigation_final_full.log",
+              "/tmp/fruitfolio_education_navigation_final_focused.log",
+              "/tmp/fruitfolio_education_navigation_native.log",
+              "/tmp/fruitfolio_education_navigation_final_workflow.log",
+              "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+            "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+            "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+            "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          ],
+          "remaining": [
+            "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+            "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+            "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+            "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+            "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+            "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -24894,59 +24925,54 @@
         "Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition",
         "Prompt1BEducationResearchTests",
         "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
-        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
-      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-original-detail-sections-and-canonical-chapter-save (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Shared canonical science image accessible description now uses existing keyed control translation with protected present medical abbreviations and source/machine/unavailable hints. Missing-art state retains canonical description and localized fixed status. Existing image constructors, plate sizing and no-hit-testing unchanged; five genuine callers/sizing sources byte-preserved with SHA receipt. One English addition preserves947 old entries,948 total. Apple VoiceOver/medical description accuracy unverified.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
-        "The new real module adapters select complete eligible paragraphs with each paragraph's own approved sources, correct biomedical scope/aliases and original research-context headings. Counterexamples reject social culture, incidental sickle-cell disease names, nutrition-only protein and unrelated stomach mentions; generic illustrations explicitly do not depict every quoted clinical condition. Corpus integrity is verified; clinical full-topic appropriateness, detail/reference mapping and Apple layout remain unfinished."
+        "The new real module adapters select complete eligible paragraphs with each paragraph's own approved sources, correct biomedical scope/aliases and original research-context headings. Counterexamples reject social culture, incidental sickle-cell disease names, nutrition-only protein and unrelated stomach mentions; generic illustrations explicitly do not depict every quoted clinical condition. Corpus integrity is verified; clinical full-topic appropriateness, detail/reference mapping and Apple layout remain unfinished.",
+        "Detailed original paragraphs remain attached to original module topics with source context; no fabricated reference-period art mapping. Clinical explanatory suitability remains pending."
       ],
-      "last_updated": "2026-11-07T13:28:52.738609+00:00",
+      "last_updated": "2026-11-07T13:47:53.029102+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+        "batch": "Education-original-detail-sections-and-canonical-chapter-save",
         "executed": {
-          "latest_full_portable_XCTest": 1044,
-          "latest_full_SwiftTesting": 21,
-          "focused_module_XCTest": 31,
-          "native_CPU_focused_XCTest": 21,
-          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
-          "workflow": 71,
+          "focused_XCTest": 6,
+          "failures": 0,
+          "actual_chapters_saved_and_reopened": 28,
+          "chapters_with_distinct_additional_paragraphs": 7,
+          "registered_original_catalog_ids": 73,
+          "eligible_original_paragraph_scope_matches": 59,
           "swift_syntax_files": 326,
           "logs": [
-            "/tmp/fruitfolio_education_navigation_final_full.log",
-            "/tmp/fruitfolio_education_navigation_final_focused.log",
-            "/tmp/fruitfolio_education_navigation_native.log",
-            "/tmp/fruitfolio_education_navigation_final_workflow.log",
-            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            "/tmp/fruitfolio_education_details_focused.log",
+            "/tmp/fruitfolio_education_details_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
-          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
-          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
-          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
         ],
         "remaining": [
-          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+          "Official MADLAD model and on-device performance remain unverified."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+        "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+        "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+        "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+        "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+        "Official MADLAD model and on-device performance remain unverified."
       ],
       "prior_batch_verifications": [
         {
@@ -24987,6 +25013,40 @@
             "Create legitimate explicit access to Fertilization and Pregnancy (and other already implemented science modules) from existing Ask/encyclopedia/related/saved architecture, without a seventh Hub button or prediction-triggered navigation.",
             "Wire approved source-backed content and existing source/Ask/save interactions; default unavailable provider and code presence do not satisfy full education functionality.",
             "Apple execution is required to verify the new actual model/view ownership behavior; portable10 tests establish stage/asset/content-model contracts only."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "executed": {
+            "latest_full_portable_XCTest": 1044,
+            "latest_full_SwiftTesting": 21,
+            "focused_module_XCTest": 31,
+            "native_CPU_focused_XCTest": 21,
+            "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+            "workflow": 71,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_education_navigation_final_full.log",
+              "/tmp/fruitfolio_education_navigation_final_focused.log",
+              "/tmp/fruitfolio_education_navigation_native.log",
+              "/tmp/fruitfolio_education_navigation_final_workflow.log",
+              "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+            "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+            "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+            "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          ],
+          "remaining": [
+            "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+            "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+            "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+            "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+            "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+            "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37139,9 +37199,10 @@
         "Prompt1BEducationResearchTests",
         "Prompt25FertilizationCoreTests",
         "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
-        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
-      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-original-detail-sections-and-canonical-chapter-save (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -37203,50 +37264,44 @@
         "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
         "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.",
-        "The actual selected paragraph's citation/title/URL/DOI/publication/version fields are retained through shared source display and prepareSave\u2192canonical saved-library savePage\u2192store reconstruction. Real production-store readback verifies original content/context, source records, versions and note namespace without copying an Ask conversation. Other platform/UI acceptance remains pending."
+        "The actual selected paragraph's citation/title/URL/DOI/publication/version fields are retained through shared source display and prepareSave\u2192canonical saved-library savePage\u2192store reconstruction. Real production-store readback verifies original content/context, source records, versions and note namespace without copying an Ask conversation. Other platform/UI acceptance remains pending.",
+        "Actual persisted full chapter readback preserves all selected original source records, versions, knowledge-base version, note identities and complete deduplicated original paragraphs."
       ],
-      "last_updated": "2026-11-07T13:28:52.738609+00:00",
+      "last_updated": "2026-11-07T13:47:53.029102+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+        "batch": "Education-original-detail-sections-and-canonical-chapter-save",
         "executed": {
-          "latest_full_portable_XCTest": 1044,
-          "latest_full_SwiftTesting": 21,
-          "focused_module_XCTest": 31,
-          "native_CPU_focused_XCTest": 21,
-          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
-          "workflow": 71,
+          "focused_XCTest": 6,
+          "failures": 0,
+          "actual_chapters_saved_and_reopened": 28,
+          "chapters_with_distinct_additional_paragraphs": 7,
+          "registered_original_catalog_ids": 73,
+          "eligible_original_paragraph_scope_matches": 59,
           "swift_syntax_files": 326,
           "logs": [
-            "/tmp/fruitfolio_education_navigation_final_full.log",
-            "/tmp/fruitfolio_education_navigation_final_focused.log",
-            "/tmp/fruitfolio_education_navigation_native.log",
-            "/tmp/fruitfolio_education_navigation_final_workflow.log",
-            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            "/tmp/fruitfolio_education_details_focused.log",
+            "/tmp/fruitfolio_education_details_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
-          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
-          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
-          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
         ],
         "remaining": [
-          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+          "Official MADLAD model and on-device performance remain unverified."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+        "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+        "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+        "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+        "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+        "Official MADLAD model and on-device performance remain unverified."
       ],
       "prior_batch_verifications": [
         {
@@ -37388,6 +37443,40 @@
             "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
             "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
             "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "executed": {
+            "latest_full_portable_XCTest": 1044,
+            "latest_full_SwiftTesting": 21,
+            "focused_module_XCTest": 31,
+            "native_CPU_focused_XCTest": 21,
+            "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+            "workflow": 71,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_education_navigation_final_full.log",
+              "/tmp/fruitfolio_education_navigation_final_focused.log",
+              "/tmp/fruitfolio_education_navigation_native.log",
+              "/tmp/fruitfolio_education_navigation_final_workflow.log",
+              "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+            "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+            "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+            "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          ],
+          "remaining": [
+            "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+            "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+            "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+            "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+            "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+            "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -38776,9 +38865,10 @@
         "Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition",
         "Prompt1BEducationResearchTests",
         "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
-        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
-      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-original-detail-sections-and-canonical-chapter-save (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -38903,50 +38993,44 @@
         "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted.",
         "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted.",
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
-        "Add actual module protocol/corpus/citation/persistence/scope regressions, reuse existing stage and pregnancy safety tests, and write the real Apple entry/draft-preservation navigation test. UIKit image resolution is excluded on Linux instead of counted as an empty pass. This does not certify tests/acceptance for all478 requirements."
+        "Add actual module protocol/corpus/citation/persistence/scope regressions, reuse existing stage and pregnancy safety tests, and write the real Apple entry/draft-preservation navigation test. UIKit image resolution is excluded on Linux instead of counted as an empty pass. This does not certify tests/acceptance for all478 requirements.",
+        "Six real Foundation regression tests passed; detailed catalog coverage, original corpus identity, adapters and durable chapter readback exercised. Apple tests remain NOT_RUN."
       ],
-      "last_updated": "2026-11-07T13:28:52.738609+00:00",
+      "last_updated": "2026-11-07T13:47:53.029102+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+        "batch": "Education-original-detail-sections-and-canonical-chapter-save",
         "executed": {
-          "latest_full_portable_XCTest": 1044,
-          "latest_full_SwiftTesting": 21,
-          "focused_module_XCTest": 31,
-          "native_CPU_focused_XCTest": 21,
-          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
-          "workflow": 71,
+          "focused_XCTest": 6,
+          "failures": 0,
+          "actual_chapters_saved_and_reopened": 28,
+          "chapters_with_distinct_additional_paragraphs": 7,
+          "registered_original_catalog_ids": 73,
+          "eligible_original_paragraph_scope_matches": 59,
           "swift_syntax_files": 326,
           "logs": [
-            "/tmp/fruitfolio_education_navigation_final_full.log",
-            "/tmp/fruitfolio_education_navigation_final_focused.log",
-            "/tmp/fruitfolio_education_navigation_native.log",
-            "/tmp/fruitfolio_education_navigation_final_workflow.log",
-            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            "/tmp/fruitfolio_education_details_focused.log",
+            "/tmp/fruitfolio_education_details_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
-          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
-          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
-          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
         ],
         "remaining": [
-          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+          "Official MADLAD model and on-device performance remain unverified."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+        "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+        "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+        "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+        "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+        "Official MADLAD model and on-device performance remain unverified."
       ],
       "prior_batch_verifications": [
         {
@@ -39348,6 +39432,40 @@
             "Create legitimate explicit access to Fertilization and Pregnancy (and other already implemented science modules) from existing Ask/encyclopedia/related/saved architecture, without a seventh Hub button or prediction-triggered navigation.",
             "Wire approved source-backed content and existing source/Ask/save interactions; default unavailable provider and code presence do not satisfy full education functionality.",
             "Apple execution is required to verify the new actual model/view ownership behavior; portable10 tests establish stage/asset/content-model contracts only."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "executed": {
+            "latest_full_portable_XCTest": 1044,
+            "latest_full_SwiftTesting": 21,
+            "focused_module_XCTest": 31,
+            "native_CPU_focused_XCTest": 21,
+            "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+            "workflow": 71,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_education_navigation_final_full.log",
+              "/tmp/fruitfolio_education_navigation_final_focused.log",
+              "/tmp/fruitfolio_education_navigation_native.log",
+              "/tmp/fruitfolio_education_navigation_final_workflow.log",
+              "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+            "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+            "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+            "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          ],
+          "remaining": [
+            "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+            "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+            "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+            "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+            "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+            "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -39723,9 +39841,10 @@
         "Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition",
         "Prompt1BEducationResearchTests",
         "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
-        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
       ],
-      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "commit_reference": "batch:Education-original-detail-sections-and-canonical-chapter-save (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -39833,50 +39952,44 @@
         "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted.",
         "Apply existing canonical explicit semantic spans to four complete Account draft-exit contexts and the Fruit Basket level-reset explanation. Contextual underlining identifies protected stored records, local-only saving, nonsubmission of email, nonauthentication and preservation of learning/scores; level reset uses the specific speed anchor. Every original visible UTF8 byte is retained. No global keyword styling, new renderer, factual rewrite or source authority change. Changed Account messages have no existing catalog entry; the old level-reset entry is English-only, so no working non-English catalog translation is replaced or deleted.",
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
-        "Tests are in the existing FruitfolioTests/FruitfolioUITests targets; real Foundation production files/provider adapters and original module tests are enrolled in the existing portable runner. Xcode source groups auto-enroll the new Swift files. App target/UI tests remain NOT_RUN."
+        "Tests are in the existing FruitfolioTests/FruitfolioUITests targets; real Foundation production files/provider adapters and original module tests are enrolled in the existing portable runner. Xcode source groups auto-enroll the new Swift files. App target/UI tests remain NOT_RUN.",
+        "Regression assertions live in original project test source, enrolled by existing synchronized groups and real portable runner."
       ],
-      "last_updated": "2026-11-07T13:28:52.738609+00:00",
+      "last_updated": "2026-11-07T13:47:53.029102+00:00",
       "latest_batch_verification": {
-        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+        "batch": "Education-original-detail-sections-and-canonical-chapter-save",
         "executed": {
-          "latest_full_portable_XCTest": 1044,
-          "latest_full_SwiftTesting": 21,
-          "focused_module_XCTest": 31,
-          "native_CPU_focused_XCTest": 21,
-          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
-          "workflow": 71,
+          "focused_XCTest": 6,
+          "failures": 0,
+          "actual_chapters_saved_and_reopened": 28,
+          "chapters_with_distinct_additional_paragraphs": 7,
+          "registered_original_catalog_ids": 73,
+          "eligible_original_paragraph_scope_matches": 59,
           "swift_syntax_files": 326,
           "logs": [
-            "/tmp/fruitfolio_education_navigation_final_full.log",
-            "/tmp/fruitfolio_education_navigation_final_focused.log",
-            "/tmp/fruitfolio_education_navigation_native.log",
-            "/tmp/fruitfolio_education_navigation_final_workflow.log",
-            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            "/tmp/fruitfolio_education_details_focused.log",
+            "/tmp/fruitfolio_education_details_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
-          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
-          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
-          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
         ],
         "remaining": [
-          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+          "Official MADLAD model and on-device performance remain unverified."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
-        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
-        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
-        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
-        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
-        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+        "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+        "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+        "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+        "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+        "Official MADLAD model and on-device performance remain unverified."
       ],
       "prior_batch_verifications": [
         {
@@ -40278,6 +40391,40 @@
             "Create legitimate explicit access to Fertilization and Pregnancy (and other already implemented science modules) from existing Ask/encyclopedia/related/saved architecture, without a seventh Hub button or prediction-triggered navigation.",
             "Wire approved source-backed content and existing source/Ask/save interactions; default unavailable provider and code presence do not satisfy full education functionality.",
             "Apple execution is required to verify the new actual model/view ownership behavior; portable10 tests establish stage/asset/content-model contracts only."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "executed": {
+            "latest_full_portable_XCTest": 1044,
+            "latest_full_SwiftTesting": 21,
+            "focused_module_XCTest": 31,
+            "native_CPU_focused_XCTest": 21,
+            "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+            "workflow": 71,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_education_navigation_final_full.log",
+              "/tmp/fruitfolio_education_navigation_final_focused.log",
+              "/tmp/fruitfolio_education_navigation_native.log",
+              "/tmp/fruitfolio_education_navigation_final_workflow.log",
+              "/tmp/fruitfolio_education_navigation_final_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+            "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+            "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+            "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+          ],
+          "remaining": [
+            "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+            "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+            "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+            "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+            "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+            "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

@@ -3956,3 +3956,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"latest_full_portable_XCTest": 1044, "latest_full_SwiftTesting": 21, "focused_module_XCTest": 31, "native_CPU_focused_XCTest": 21, "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.", "workflow": 71, "swift_syntax_files": 326, "logs": ["/tmp/fruitfolio_education_navigation_final_full.log", "/tmp/fruitfolio_education_navigation_final_focused.log", "/tmp/fruitfolio_education_navigation_native.log", "/tmp/fruitfolio_education_navigation_final_workflow.log", "/tmp/fruitfolio_education_navigation_final_syntax.log"]}.
 - Next action: Continue required chapter functionality: triage the12 core content gaps against raw available research/approved-source eligibility and aliases; implement available Pregnancy detail/Fertilization expanded-section mappings through the same actor, preserving whole qualifiers and per-section citations. Never substitute generic fetal text for unreviewed reference periods. Keep Apple/official MADLAD/clinical blockers distinct from missing mapping code.
 - Commit: containing commit for batch Explicit-Ask-education-navigation-and-grounded-module-adapters.
+
+## Education-original-detail-sections-and-canonical-chapter-save
+
+- Parent checkpoint: 1e0b3a0c4557780529c2d8ad7eb2054a462d4b01.
+- Source-order requirements: [146, 311, 433, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift, Fruitfolio/Ask/FruitfolioEducationLibraryView.swift, development_workflow/EDUCATION_CHAPTER_SOURCE_AND_SAVE_EVIDENCE.json.
+- Connect actual original detailed section IDs and full chapter saves, preserving complete source paragraphs and citations; no blanket requirement closure.
+- Tests added/updated: FruitfolioTests/Prompt1BEducationResearchTests.swift.
+- Verification: {"focused_XCTest": 6, "failures": 0, "actual_chapters_saved_and_reopened": 28, "chapters_with_distinct_additional_paragraphs": 7, "registered_original_catalog_ids": 73, "eligible_original_paragraph_scope_matches": 59, "swift_syntax_files": 326, "logs": ["/tmp/fruitfolio_education_details_focused.log", "/tmp/fruitfolio_education_details_syntax.log"]}.
+- Next action: Continue missing actionable functionality across other parts; review current Fruit Basket required behavior against existing implementation without repeating broad audits.
+- Commit: containing commit for batch Education-original-detail-sections-and-canonical-chapter-save.

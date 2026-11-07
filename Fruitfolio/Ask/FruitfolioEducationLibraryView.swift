@@ -62,8 +62,8 @@ private final class FruitfolioEducationVisit: ObservableObject {
         loading = true
         operation = Task { @MainActor [weak self] in
             do {
-                let article = try await research.article(for: contentID)
-                let pending = try article.prepareSave()
+                let chapter = try await research.chapter(for: contentID)
+                let pending = try chapter.prepareSave()
                 guard let self, self.owns(identity, path: expected) else { return }
                 self.pendingSave = pending
                 self.loading = false
@@ -269,9 +269,9 @@ extension FruitfolioEducationVisit {
         loading = true
         operation = Task { @MainActor [weak self] in
             do {
-                let article = try await research.article(for: stage.shortContentID)
+                let chapter = try await research.chapter(for: stage.shortContentID)
                 guard let self, self.owns(identity, path: expected) else { return }
-                self.sources = article.sources
+                self.sources = chapter.sources
                 self.sourceTitle = "sources — " + stage.title
                 self.showingSources = true
                 self.loading = false
