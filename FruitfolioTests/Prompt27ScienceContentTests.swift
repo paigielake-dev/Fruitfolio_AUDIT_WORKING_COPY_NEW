@@ -11,14 +11,14 @@ final class Prompt27ScienceContentTests: XCTestCase {
     private let catalog = Prompt27ScientificAssetCatalog()
     private let router = Prompt27ContextRouter()
 
-    func testCanonicalCatalogContainsExactlyTwentySixPrompt27Assets() {
+    func testCanonicalCatalogContainsExactlyTwentySixPrompt27Assets() async {
         XCTAssertEqual(catalog.allAssets.count, 26)
         XCTAssertEqual(catalog.allAssetIDs, Prompt27ScienceAssetAudit.expectedAllAssetIDs)
         XCTAssertTrue(Prompt27ScienceAssetAudit.missingAssetIDs(in: catalog).isEmpty)
         XCTAssertTrue(Prompt27ScienceAssetAudit.unexpectedAssetIDs(in: catalog).isEmpty)
     }
 
-    func testCanonicalAssetFamilyCountsAreExact() {
+    func testCanonicalAssetFamilyCountsAreExact() async {
         let genetics = catalog.allAssets.filter { $0.family == .genetics }
         let body = catalog.allAssets.filter { $0.family == .body }
         let lab = catalog.allAssets.filter { $0.family == .lab }
@@ -28,7 +28,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(lab.count, 8)
     }
 
-    func testCanonicalFilenamesMatchPhysicalManifestExactly() {
+    func testCanonicalFilenamesMatchPhysicalManifestExactly() async {
         let filenames = Set(catalog.allAssets.map(\.filename))
 
         XCTAssertEqual(
@@ -64,13 +64,13 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testAllCanonicalAssetsAreProductionEligible() {
+    func testAllCanonicalAssetsAreProductionEligible() async {
         XCTAssertTrue(
             Prompt27ScienceAssetAudit.allCanonicalAssetsAreProductionEligible(in: catalog)
         )
     }
 
-    func testGeneticsSectionRoutesToOneExplicitGeneticsAsset() throws {
+    func testGeneticsSectionRoutesToOneExplicitGeneticsAsset() async throws {
         let section = makeSection(
             family: .genetics,
             assetID: .geneticsDNA
@@ -83,7 +83,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(route.majorIllustrationsVisible, 1)
     }
 
-    func testBodySectionRoutesToOneExplicitBodyAsset() throws {
+    func testBodySectionRoutesToOneExplicitBodyAsset() async throws {
         let section = makeSection(
             family: .body,
             assetID: .bodyThyroid
@@ -96,7 +96,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(route.majorIllustrationsVisible, 1)
     }
 
-    func testLabSectionRoutesToOneExplicitLabAsset() throws {
+    func testLabSectionRoutesToOneExplicitLabAsset() async throws {
         let section = makeSection(
             family: .lab,
             assetID: .labCollectionSwab
@@ -109,7 +109,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(route.majorIllustrationsVisible, 1)
     }
 
-    func testRouterUsesCuratedMetadataRatherThanArticleKeywords() throws {
+    func testRouterUsesCuratedMetadataRatherThanArticleKeywords() async throws {
         let section = Prompt27ContextualScienceSection(
             id: "mixed-topic",
             title: "DNA, thyroid, PCR, cervix, chromosome, microscope",
@@ -128,7 +128,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(route.majorIllustrationsVisible, 1)
     }
 
-    func testRouterRejectsFamilyMismatch() {
+    func testRouterRejectsFamilyMismatch() async {
         let section = makeSection(
             family: .genetics,
             assetID: .bodyLiver
@@ -145,7 +145,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testNoneContextRendersNoMajorIllustration() throws {
+    func testNoneContextRendersNoMajorIllustration() async throws {
         let section = Prompt27ContextualScienceSection(
             id: "text-only",
             title: "Text only",
@@ -162,7 +162,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(route.majorIllustrationsVisible, 0)
     }
 
-    func testRouterRejectsAssetInNoneContext() {
+    func testRouterRejectsAssetInNoneContext() async {
         let section = Prompt27ContextualScienceSection(
             id: "invalid",
             title: "Invalid",
@@ -179,7 +179,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testVisualFamilyRequiresExplicitCuratedAsset() {
+    func testVisualFamilyRequiresExplicitCuratedAsset() async {
         let section = Prompt27ContextualScienceSection(
             id: "missing-art",
             title: "DNA",
@@ -196,7 +196,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testUnapprovedScientificAssetFailsClosed() {
+    func testUnapprovedScientificAssetFailsClosed() async {
         let draft = Prompt27ScientificAsset(
             id: .geneticsDNA,
             family: .genetics,
@@ -223,7 +223,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testPCRContextUsesExistingCanonicalArtWithoutInventingFilename() throws {
+    func testPCRContextUsesExistingCanonicalArtWithoutInventingFilename() async throws {
         let section = makeSection(
             family: .lab,
             assetID: .labMicrocentrifugeTube
@@ -239,7 +239,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         XCTAssertEqual(route.majorIllustrationsVisible, 1)
     }
 
-    func testBrowsingDoesNotBecomeMedicalState() {
+    func testBrowsingDoesNotBecomeMedicalState() async {
         XCTAssertFalse(Prompt27ScienceSafety.browsingEstablishesMedicalState())
         XCTAssertFalse(Prompt27ScienceSafety.browsingEstablishesGenotype())
         XCTAssertFalse(Prompt27ScienceSafety.browsingEstablishesDiagnosis())
@@ -248,12 +248,12 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testRuntimeGenerativeScienceArtAndKeywordRoutingAreForbidden() {
+    func testRuntimeGenerativeScienceArtAndKeywordRoutingAreForbidden() async {
         XCTAssertFalse(Prompt27ScienceSafety.permitsRuntimeGeneratedScientificArt())
         XCTAssertFalse(Prompt27ScienceSafety.permitsNaiveKeywordIllustrationRouting())
     }
 
-    func testEducationalQuestionsRemainAllowed() {
+    func testEducationalQuestionsRemainAllowed() async {
         XCTAssertEqual(
             Prompt27ScienceSafety.boundary(for: .learnGenetics),
             .allowedEducational
@@ -268,7 +268,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testPersonalizedRiskAndLabResultInterpretationRequireSeparateValidatedSystem() {
+    func testPersonalizedRiskAndLabResultInterpretationRequireSeparateValidatedSystem() async {
         XCTAssertEqual(
             Prompt27ScienceSafety.boundary(for: .personalizedGeneticRisk),
             .requiresSeparateValidatedSystem
@@ -295,7 +295,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         )
     }
 
-    func testForbiddenInferencesRemainForbidden() {
+    func testForbiddenInferencesRemainForbidden() async {
         XCTAssertEqual(
             Prompt27ScienceSafety.boundary(for: .inferGenotype),
             .prohibitedInference
@@ -365,7 +365,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
         }
     }
 
-    func testHotspotCoordinatesAreClampedAndAccessibleByLabel() {
+    func testHotspotCoordinatesAreClampedAndAccessibleByLabel() async {
         let hotspot = Prompt27ScienceHotspot(
             id: "centromere",
             label: "centromere",
@@ -380,7 +380,7 @@ final class Prompt27ScienceContentTests: XCTestCase {
     }
 
     #if canImport(UIKit)
-    func testAllPrompt27CanonicalImagesResolveFromApplicationBundle() {
+    func testAllPrompt27CanonicalImagesResolveFromApplicationBundle() async {
         for asset in catalog.allAssets {
             XCTAssertNotNil(
                 UIImage(named: asset.imageName),
@@ -406,3 +406,77 @@ final class Prompt27ScienceContentTests: XCTestCase {
     }
 }
 
+
+private actor Prompt27HeldLifecycleProvider: Prompt27ScienceResearchProviding {
+    let started: [XCTestExpectation]
+    private var pending: [(String, CheckedContinuation<Prompt27ApprovedScienceContent, any Error>)] = []
+    init(started: [XCTestExpectation]) { self.started = started }
+    func approvedContent(for contentID: String) async throws -> Prompt27ApprovedScienceContent {
+        try await withCheckedThrowingContinuation { continuation in
+            let index = pending.count
+            pending.append((contentID, continuation))
+            started[index].fulfill()
+        }
+    }
+    func finish(_ index: Int, title: String, invalid: Bool = false) {
+        let (id, continuation) = pending[index]
+        continuation.resume(returning: .init(contentID: invalid ? "unrelated-topic" : id,
+            title: title, body: "nonclinical lifecycle fixture", sourceIDs: ["fixture-source"]))
+    }
+}
+
+@MainActor
+final class Prompt27SciencePresentationLifecycleTests: XCTestCase {
+    private var section: Prompt27ContextualScienceSection {
+        .init(id: "nonclinical-section-fixture", title: "nonclinical section", bodyContentID: "nonclinical-body-fixture",
+              primaryVisualFamily: .genetics, primaryIllustrationAssetID: .geneticsDNA,
+              hotspotIDs: ["allowed-hotspot"], altText: "nonclinical source-art fixture")
+    }
+    func testNoncooperativeCanceledProviderCannotReplaceCurrentScienceOrHotspotSelection() async throws {
+        let started = [expectation(description: "first provider"), expectation(description: "visible provider")]
+        let provider = Prompt27HeldLifecycleProvider(started: started)
+        let model = Prompt27ScienceViewModel(section: section, provider: provider)
+        model.selectHotspot("allowed-hotspot")
+        model.selectHotspot("unregistered-hotspot")
+        XCTAssertEqual(model.selectedHotspotID, "allowed-hotspot")
+        let old = try XCTUnwrap(model.loadIfNeeded())
+        let firstStarted = await XCTWaiter.fulfillment(of: [started[0]], timeout: 2)
+        XCTAssertEqual(firstStarted, .completed)
+        model.suspendPresentation()
+        XCTAssertEqual(model.state, .idle)
+        let replacement = try XCTUnwrap(model.loadIfNeeded())
+        let nextStarted = await XCTWaiter.fulfillment(of: [started[1]], timeout: 2)
+        XCTAssertEqual(nextStarted, .completed)
+        await provider.finish(1, title: "current science")
+        await replacement.value
+        await provider.finish(0, title: "stale science")
+        await old.value
+        XCTAssertEqual(model.loadedContent?.title, "current science")
+        XCTAssertEqual(model.visualRoute?.primaryAsset?.id, .geneticsDNA)
+        model.suspendPresentation()
+        XCTAssertEqual(model.loadedContent?.title, "current science")
+        XCTAssertEqual(model.selectedHotspotID, "allowed-hotspot")
+        XCTAssertNil(model.loadIfNeeded())
+    }
+    func testWrongTopicResponseCannotPublishEvenFromCustomProtocolProvider() async throws {
+        let started = expectation(description: "wrong-topic provider")
+        let provider = Prompt27HeldLifecycleProvider(started: [started])
+        let model = Prompt27ScienceViewModel(section: section, provider: provider)
+        let request = try XCTUnwrap(model.loadIfNeeded())
+        let began = await XCTWaiter.fulfillment(of: [started], timeout: 2)
+        XCTAssertEqual(began, .completed)
+        await provider.finish(0, title: "wrong-topic content", invalid: true)
+        await request.value
+        XCTAssertEqual(model.state, .unavailable)
+        XCTAssertNil(model.loadedContent)
+        XCTAssertNil(model.visualRoute)
+    }
+    func testDecodedOutOfCanvasHotspotIsRejectedWithoutRelocatingAnatomicalAnchor() async throws {
+        let raw = Data(#"{"id":"fixture","label":"nonclinical","normalizedX":4,"normalizedY":0.5,"educationalContentID":"fixture-detail"}"#.utf8)
+        let decoded = try JSONDecoder().decode(Prompt27ScienceHotspot.self, from: raw)
+        XCTAssertEqual(decoded.normalizedX, 4, "Do not silently move decoded anatomical anchors")
+        XCTAssertFalse(decoded.hasValidCanvasPlacement)
+        let valid = Prompt27ScienceHotspot(id: "valid", label: "nonclinical", normalizedX: 0, normalizedY: 1, educationalContentID: "fixture")
+        XCTAssertTrue(valid.hasValidCanvasPlacement)
+    }
+}

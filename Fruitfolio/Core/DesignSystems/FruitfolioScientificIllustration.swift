@@ -5,6 +5,7 @@ import UIKit
 /// own controls. Layout sizes the full source canvas before placing the image.
 struct FruitfolioScientificIllustration: View {
     private let image: UIImage?
+    private let interactiveOverlay: AnyView?
     let accessibilityDescription: String
     var maximumWidth: CGFloat = 310
     var maximumHeight: CGFloat = 360
@@ -12,14 +13,16 @@ struct FruitfolioScientificIllustration: View {
     @StateObject private var descriptionTranslation = FruitfolioControlTranslationState()
 
 
-    init(imageName: String, accessibilityDescription: String, maximumWidth: CGFloat = 310, maximumHeight: CGFloat = 360) {
+    init(imageName: String, accessibilityDescription: String, maximumWidth: CGFloat = 310, maximumHeight: CGFloat = 360, interactiveOverlay: AnyView? = nil) {
         image = UIImage(named: imageName)
+        self.interactiveOverlay = interactiveOverlay
         self.accessibilityDescription = accessibilityDescription
         self.maximumWidth = maximumWidth
         self.maximumHeight = maximumHeight
     }
-    init(assetID: FruitfolioAssetID, accessibilityDescription: String, maximumWidth: CGFloat = 310, maximumHeight: CGFloat = 360) {
+    init(assetID: FruitfolioAssetID, accessibilityDescription: String, maximumWidth: CGFloat = 310, maximumHeight: CGFloat = 360, interactiveOverlay: AnyView? = nil) {
         image = try? FruitfolioAssetLoader.uiImage(assetID)
+        self.interactiveOverlay = interactiveOverlay
         self.accessibilityDescription = accessibilityDescription
         self.maximumWidth = maximumWidth
         self.maximumHeight = maximumHeight
@@ -34,16 +37,23 @@ struct FruitfolioScientificIllustration: View {
             if let image {
                 FruitfolioScientificPlateLayout(intrinsic: image.size, maximumWidth: maximumWidth, maximumHeight: maximumHeight) {
                     Image(uiImage: image).resizable()
+                        .allowsHitTesting(false)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(Text(verbatim: description.text))
+                        .accessibilityHint(Text(description.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+                    // The layout proposes the identical fitted source canvas to
+                    // both layers. The noninteractive image cannot block controls.
+                    if let interactiveOverlay { interactiveOverlay }
                 }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(Text(verbatim: description.text))
+                .padding(interactiveOverlay == nil ? 0 : 22) // reserve half a 44pt target at canvas edges
             } else {
                 FruitfolioFixedText(source: "required scientific artwork unavailable", font: .footnote, serious: true)
                     .accessibilityLabel(Text(verbatim: description.text))
+                    .accessibilityHint(Text(description.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+                    .allowsHitTesting(false)
             }
         }
-        .allowsHitTesting(false)
-        .accessibilityHint(Text(description.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+        .allowsHitTesting(interactiveOverlay != nil)
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: settings.translationInferenceAllowed)) {
             await descriptionTranslation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }

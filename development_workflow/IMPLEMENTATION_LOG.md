@@ -4306,3 +4306,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests", "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
 - Next action: Continue Genetics/Body/Lab science education actual provider/control ownership; preserve knowledge-boundary routing and citation review.
 - Commit: containing commit for batch Pregnancy-owned-topic-and-reference-research-requests.
+
+## Science-owned-requests-and-shared-hotspot-source-canvas
+
+- Parent checkpoint: 316b407c79d6d992dad376b1fbea6237d258c733.
+- Source-order requirements: [11, 12, 310, 311, 312, 314, 390, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift, Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift, Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift, Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift, FruitfolioTests/Prompt27ScienceContentTests.swift, Tools/run_portable_swift_tests.py, development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json.
+- Actual science model has request identity/suspension, preserved loaded content/hotspot selection, expected content-ID/nonempty body/source validation; curated router unchanged. Real Foundation lifecycle compiled with conditional Apple Combine publishing. Contextual science view gates provider/callbacks/retry/selection by active visible uncovered ownership. Science plate now consumes shared intrinsic source-canvas sizing. Existing shared scientific illustration accepts separate overlay controls measured/placed in exactly same fitted layout, image itself noninteractive,22pt edge inset reserves half a44pt target. No overlay rendered when source image unavailable. Default no-overlay consumers retain sizing behavior. Invalid decoded hotspot coordinates and duplicate/unregistered visible IDs filtered; model rejects unregistered selection. Canonical source art, scientific text and approvals unchanged. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json
+- Tests added/updated: Prompt27SciencePresentationLifecycleTests, Prompt27ScienceContentTests (portable cases only; native UIImage NOT_RUN), Prompt1BScientificArtSizingTests.
+- Verification: {"focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests", "full_portable_XCTest": "1104 passed,0failures", "Swift_Testing": "21passed,0failures", "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
+- Next action: Continue Calendar/Today logging state and load responsiveness requirements295–300 from existing source; preserve prior checkpoints and do not revisit completed audits.
+- Commit: containing commit for batch Science-owned-requests-and-shared-hotspot-source-canvas.

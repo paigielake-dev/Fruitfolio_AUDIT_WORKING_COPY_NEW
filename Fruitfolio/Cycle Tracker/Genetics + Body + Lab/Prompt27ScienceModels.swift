@@ -136,6 +136,12 @@ struct Prompt27ScienceHotspot: Identifiable, Codable, Equatable, Hashable, Senda
     let normalizedY: Double
     let educationalContentID: String
 
+    /// Decoded payloads do not pass through the clamping initializer.
+    var hasValidCanvasPlacement: Bool {
+        normalizedX.isFinite && normalizedY.isFinite
+            && (0...1).contains(normalizedX) && (0...1).contains(normalizedY)
+    }
+
     init(
         id: String,
         label: String,

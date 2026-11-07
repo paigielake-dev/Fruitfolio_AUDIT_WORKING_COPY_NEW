@@ -1,5 +1,6 @@
 #if canImport(SwiftUI)
 import SwiftUI
+import UIKit
 
 struct Prompt27ScientificPlateView: View {
     let route: Prompt27ScienceVisualRoute
@@ -22,19 +23,12 @@ struct Prompt27ScientificPlateView: View {
     var body: some View {
         Group {
             if let asset = route.primaryAsset {
-                Image(asset.imageName)
-                    .resizable()
-                    .scaledToFit()
+                FruitfolioScientificIllustration(imageName: asset.imageName,
+                    accessibilityDescription: asset.altText, maximumWidth: maximumWidth,
+                    interactiveOverlay: hotspots.isEmpty ? nil : AnyView(
+                        Prompt27ScientificHotspotOverlay(hotspots: hotspots, onSelect: onHotspotSelect)
+                    ))
                     .frame(maxWidth: maximumWidth)
-                    .overlay {
-                        if !hotspots.isEmpty {
-                            Prompt27ScientificHotspotOverlay(
-                                hotspots: hotspots,
-                                onSelect: onHotspotSelect
-                            )
-                        }
-                    }
-                    .modifier(FruitfolioFixedAccessibilityLabel(source: asset.altText))
             }
         }
     }
@@ -73,6 +67,13 @@ struct Prompt27ScientificHotspotOverlay: View {
 }
 
 struct Prompt27ContextualScienceSectionView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var viewIsVisible = false
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+            && popupCoordinator.currentPopup == nil
+    }
     @StateObject private var viewModel: Prompt27ScienceViewModel
 
     private let hotspots: [Prompt27ScienceHotspot]
@@ -113,8 +114,15 @@ struct Prompt27ContextualScienceSectionView: View {
                 unavailableView
             }
         }
-        .task {
-            viewModel.loadIfNeeded()
+        .disabled(!canInteract)
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false; viewModel.suspendPresentation() }
+        .task(id: canInteract) {
+            guard canInteract else { viewModel.suspendPresentation(); return }
+            if let request = viewModel.loadIfNeeded() { await request.value }
+        }
+        .onChange(of: canInteract) { _, active in
+            if !active { viewModel.suspendPresentation() }
         }
     }
 
@@ -133,6 +141,7 @@ struct Prompt27ContextualScienceSectionView: View {
                         route: route,
                         hotspots: visibleHotspots,
                         onHotspotSelect: { hotspot in
+                            guard canInteract else { return }
                             viewModel.selectHotspot(hotspot.id)
                             actions.openHotspotContent(hotspot.educationalContentID)
                         }
@@ -149,6 +158,7 @@ struct Prompt27ContextualScienceSectionView: View {
 
                 HStack(spacing: 16) {
                     Button {
+                        guard canInteract else { return }
                         actions.showSources(content.sourceIDs)
                     } label: {
                         FruitfolioFixedText(source: "sources", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
@@ -157,6 +167,7 @@ struct Prompt27ContextualScienceSectionView: View {
                     .modifier(FruitfolioFixedAccessibilityHint(source: "Shows sources for this educational section"))
 
                     Button {
+                        guard canInteract else { return }
                         actions.saveEducationalContent(content)
                     } label: {
                         FruitfolioFixedText(source: "save", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
@@ -175,7 +186,10 @@ struct Prompt27ContextualScienceSectionView: View {
 
     private var visibleHotspots: [Prompt27ScienceHotspot] {
         let allowedIDs = Set(viewModel.section.hotspotIDs)
-        return hotspots.filter { allowedIDs.contains($0.id) }
+        var seen = Set<String>()
+        return hotspots.filter {
+            allowedIDs.contains($0.id) && $0.hasValidCanvasPlacement && seen.insert($0.id).inserted
+        }
     }
 
     private var unavailableView: some View {
@@ -190,6 +204,7 @@ struct Prompt27ContextualScienceSectionView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             Button {
+                guard canInteract else { return }
                 viewModel.retry()
             } label: {
                 FruitfolioFixedText(source: "try again", font: .custom("Chalkboard SE", size: 14, relativeTo: .body), color: DesignTokens.ColorToken.primaryBurgundy, serious: true)

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T18:03:18.423016+00:00",
+  "updated_at": "2026-11-07T18:10:14.720704+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -13883,6 +13883,57 @@
         ]
       },
       "timestamp": "2026-11-07T18:03:18.423016+00:00"
+    },
+    {
+      "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
+      "requirements": [
+        11,
+        12,
+        310,
+        311,
+        312,
+        314,
+        390,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt27Science|Prompt1BScientificArt'",
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
+      ],
+      "results": {
+        "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+        "full_portable_XCTest": "1104 passed,0failures",
+        "Swift_Testing": "21passed,0failures",
+        "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+        "sound_ownership": "0diagnostics"
+      },
+      "verification": {
+        "executed": {
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
+        },
+        "not_run": [
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
+        ],
+        "remaining": [
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+        ]
+      },
+      "timestamp": "2026-11-07T18:10:14.720704+00:00"
     }
   ]
 }

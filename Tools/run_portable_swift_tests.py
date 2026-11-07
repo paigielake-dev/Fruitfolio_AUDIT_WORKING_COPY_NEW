@@ -99,6 +99,10 @@ SOURCES = [
     'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationSafety.swift',
     'Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyAssetAudit.swift',
     'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift',
+    'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift',
+    'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ContextRouter.swift',
+    'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceSafety.swift',
+    'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceAssetAudit.swift',
     'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScientificAssetCatalog.swift',
     'Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ResearchBridge.swift',
 
@@ -200,6 +204,7 @@ TESTS = [
     'Prompt25FertilizationCoreTests.swift',
     'Prompt1BEducationResearchTests.swift',
     'Prompt26PregnancyEducationTests.swift',
+    'Prompt27ScienceContentTests.swift',
     'Prompt1BScientificArtSizingTests.swift',
     'Prompt1BSymptomTimelineTests.swift', 'Prompt24TrendsCoreTests.swift',
     'Prompt1BDailyLogWriteTests.swift', 'Prompt20DailyLogCoreTests.swift', 'Prompt1BDailyLogViewModelTests.swift',

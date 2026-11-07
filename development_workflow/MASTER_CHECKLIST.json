@@ -1587,7 +1587,12 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
-        "FruitfolioTests/Prompt26PregnancyEducationTests.swift"
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1652,9 +1657,12 @@
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
         "Prompt1BEducationResearchTests",
-        "Prompt26PregnancyPresentationLifecycleTests"
+        "Prompt26PregnancyPresentationLifecycleTests",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)",
+        "Prompt1BScientificArtSizingTests"
       ],
-      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -1692,35 +1700,40 @@
         "Preference bindings now reject inactive/covered writes before audio resume. Language selection admits only its current captured session.",
         "Production wheel guards selection itself using parent admission; note actions consume current presentation before navigation/audio.",
         "Page sound now admitted only with active/uncovered visible owner and no in-flight transition; actual final callbacks guarded. Apple event/audio correspondence unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
-        "Actual Pregnancy save/source/navigation actions and menu bindings now gated by current owned active presentation; Apple queued-event acceptance pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
+        "Actual Pregnancy save/source/navigation actions and menu bindings now gated by current owned active presentation; Apple queued-event acceptance pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
+        "Science save/source/hotspot/retry callbacks now gate active visible uncovered owner; native event/audio acceptance pending. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T18:03:18.423016+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
-          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
-          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
-          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
-          "Clinical translation acceptance/official MADLAD and real-device checks"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -1936,6 +1949,27 @@
             "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+          "executed": {
+            "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+            "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+            "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+            "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+            "Clinical translation acceptance/official MADLAD and real-device checks"
+          ],
+          "remaining": [
+            "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+            "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+            "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+            "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -2013,7 +2047,11 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
         "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2051,9 +2089,12 @@
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
         "Prompt1BEducationResearchTests",
-        "Prompt26PregnancyPresentationLifecycleTests"
+        "Prompt26PregnancyPresentationLifecycleTests",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)",
+        "Prompt1BScientificArtSizingTests"
       ],
-      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
@@ -2069,35 +2110,40 @@
         "Correct demonstrated gap in earlier ButtonStyle-only inventory: six Ask wrappers, one Guide icon wrapper and three Settings row wrappers added independent drag gestures/transforms around already animated controls. Compatibility containers now set the existing ButtonStyle without a second gesture/effect; icon action surface delegates its pressed visual to the same canonical effect and retains exclusive tap/hold, disabled, identification, action and sound ownership. Preserve earlier review with explicit correction rather than treating inventory as whole-app proof. Extend actual four-vector Ask UI regression to hold help without activation or draft mutation, then tap to open. Apple test NOT_RUN; no VERIFIED promotion.",
         "Selection and dismissal update synchronously; Reduce Motion uses nil animation without queued artificial delay.",
         "Cover/background/disappear cancels actual deferred transition/load acceptance and resets cue without animation; duplicate navigation rejected before sound. No device latency claim. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
-        "Topic/provider cancellation, generation validation and reference-task owner/defer prevent stale work replacing current visible topic; actual model noncooperative-provider regressions passed. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
+        "Topic/provider cancellation, generation validation and reference-task owner/defer prevent stale work replacing current visible topic; actual model noncooperative-provider regressions passed. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
+        "Actual model request identity rejects stale noncooperative provider results; preserves already loaded content/selection without redundant reload. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T18:03:18.423016+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
-          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
-          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
-          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
-          "Clinical translation acceptance/official MADLAD and real-device checks"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -2185,6 +2231,27 @@
             "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
             "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
             "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+          "executed": {
+            "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+            "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+            "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+            "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+            "Clinical translation acceptance/official MADLAD and real-device checks"
+          ],
+          "remaining": [
+            "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+            "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+            "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+            "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -27921,7 +27988,11 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
-        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift"
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27938,39 +28009,70 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BCatalogTranslationTests.swift"
+        "FruitfolioTests/Prompt1BCatalogTranslationTests.swift",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)"
       ],
-      "commit_reference": "batch:Scientific-education-and-citation-interface-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Shared canonical science image accessible description now uses existing keyed control translation with protected present medical abbreviations and source/machine/unavailable hints. Missing-art state retains canonical description and localized fixed status. Existing image constructors, plate sizing and no-hit-testing unchanged; five genuine callers/sizing sources byte-preserved with SHA receipt. One English addition preserves947 old entries,948 total. Apple VoiceOver/medical description accuracy unverified.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
-        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted."
+        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
+        "Science plate now uses same measured intrinsic source-canvas layout as other scientific illustrations; all other consumers retain default sizing. Apple layout acceptance pending. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T07:48:42.867847+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Scientific-education-and-citation-interface-localization",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "focused_XCTest": 31,
-          "failures": 0,
-          "SwiftTesting_selected": 0,
-          "syntax_parsed_Swift_files": 314
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
-          "Official MADLAD, clinical and per-language acceptance"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-          "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-          "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-        "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-        "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Scientific-education-and-citation-interface-localization",
+          "executed": {
+            "focused_XCTest": 31,
+            "failures": 0,
+            "SwiftTesting_selected": 0,
+            "syntax_parsed_Swift_files": 314
+          },
+          "not_run": [
+            "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
+            "Official MADLAD, clinical and per-language acceptance"
+          ],
+          "remaining": [
+            "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
+            "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
+            "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -28000,7 +28102,10 @@
         "FruitfolioTests/Prompt1BEducationResearchTests.swift",
         "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json"
+        "development_workflow/EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28025,9 +28130,11 @@
         "Prompt1BEducationResearchTests",
         "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
         "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
-        "FruitfolioTests/Prompt1BEducationResearchTests.swift"
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)"
       ],
-      "commit_reference": "batch:Education-original-detail-sections-and-canonical-chapter-save (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Shared canonical science image accessible description now uses existing keyed control translation with protected present medical abbreviations and source/machine/unavailable hints. Missing-art state retains canonical description and localized fixed status. Existing image constructors, plate sizing and no-hit-testing unchanged; five genuine callers/sizing sources byte-preserved with SHA receipt. One English addition preserves947 old entries,948 total. Apple VoiceOver/medical description accuracy unverified.",
@@ -28035,43 +28142,40 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
         "The new real module adapters select complete eligible paragraphs with each paragraph's own approved sources, correct biomedical scope/aliases and original research-context headings. Counterexamples reject social culture, incidental sickle-cell disease names, nutrition-only protein and unrelated stomach mentions; generic illustrations explicitly do not depict every quoted clinical condition. Corpus integrity is verified; clinical full-topic appropriateness, detail/reference mapping and Apple layout remain unfinished.",
-        "Detailed original paragraphs remain attached to original module topics with source context; no fabricated reference-period art mapping. Clinical explanatory suitability remains pending."
+        "Detailed original paragraphs remain attached to original module topics with source context; no fabricated reference-period art mapping. Clinical explanatory suitability remains pending.",
+        "Image and overlay share identical fitted source-canvas proposal; no keyword routing or substituted anatomy. Decoded invalid coordinates rejected rather than silently relocated. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T13:47:53.029102+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Education-original-detail-sections-and-canonical-chapter-save",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "focused_XCTest": 6,
-          "failures": 0,
-          "actual_chapters_saved_and_reopened": 28,
-          "chapters_with_distinct_additional_paragraphs": 7,
-          "registered_original_catalog_ids": 73,
-          "eligible_original_paragraph_scope_matches": 59,
-          "swift_syntax_files": 326,
-          "logs": [
-            "/tmp/fruitfolio_education_details_focused.log",
-            "/tmp/fruitfolio_education_details_syntax.log"
-          ]
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
-          "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
-          "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
-          "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
-          "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
-          "Official MADLAD model and on-device performance remain unverified."
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
-        "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
-        "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
-        "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
-        "Official MADLAD model and on-device performance remain unverified."
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -28148,6 +28252,34 @@
             "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Education-original-detail-sections-and-canonical-chapter-save",
+          "executed": {
+            "focused_XCTest": 6,
+            "failures": 0,
+            "actual_chapters_saved_and_reopened": 28,
+            "chapters_with_distinct_additional_paragraphs": 7,
+            "registered_original_catalog_ids": 73,
+            "eligible_original_paragraph_scope_matches": 59,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_education_details_focused.log",
+              "/tmp/fruitfolio_education_details_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK/typecheck/UI/device, clinical acceptance and official MADLAD.",
+            "Full suite and native CPU suite were not repeated for this bounded Foundation chapter composition batch. Prior checkpoint results remain historical."
+          ],
+          "remaining": [
+            "Clinical/source review: these are original context paragraphs selected by bounded topic/role gates, not a complete medically accepted textbook. A keyword/role match does not satisfy every educational subcondition.",
+            "Four pregnancy.fetal_development.reference_01 through reference_04 mappings remain unavailable pending reviewed original illustration-to-period source mappings.",
+            "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
+            "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
+            "Official MADLAD model and on-device performance remain unverified."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -28167,7 +28299,11 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
-        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift"
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28184,39 +28320,70 @@
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BCatalogTranslationTests.swift"
+        "FruitfolioTests/Prompt1BCatalogTranslationTests.swift",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)"
       ],
-      "commit_reference": "batch:Scientific-education-and-citation-interface-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Shared canonical science image accessible description now uses existing keyed control translation with protected present medical abbreviations and source/machine/unavailable hints. Missing-art state retains canonical description and localized fixed status. Existing image constructors, plate sizing and no-hit-testing unchanged; five genuine callers/sizing sources byte-preserved with SHA receipt. One English addition preserves947 old entries,948 total. Apple VoiceOver/medical description accuracy unverified.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
-        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted."
+        "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
+        "Shared image is noninteractive and separate hotspot layer receives source-canvas placement with44pt target edge clearance. Native touch/VoiceOver behavior unverified. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T07:48:42.867847+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Scientific-education-and-citation-interface-localization",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "focused_XCTest": 31,
-          "failures": 0,
-          "SwiftTesting_selected": 0,
-          "syntax_parsed_Swift_files": 314
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
-          "Official MADLAD, clinical and per-language acceptance"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-          "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-          "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
-        "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
-        "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Scientific-education-and-citation-interface-localization",
+          "executed": {
+            "focused_XCTest": 31,
+            "failures": 0,
+            "SwiftTesting_selected": 0,
+            "syntax_parsed_Swift_files": 314
+          },
+          "not_run": [
+            "Apple SDK build/typecheck, native Picker/menu accessibility and reflow",
+            "Official MADLAD, clinical and per-language acceptance"
+          ],
+          "remaining": [
+            "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
+            "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
+            "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -28310,7 +28477,10 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
         "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28332,44 +28502,51 @@
         "Prompt27AContextPersonalizationTests",
         "Prompt26PregnancyPresentationLifecycleTests",
         "Prompt1BEducationResearchTests",
-        "Prompt1BModalAccessibilityTests (NOT_RUN)"
+        "Prompt1BModalAccessibilityTests (NOT_RUN)",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)"
       ],
-      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared full-source-canvas aspect-fit layout now used for Body Biology hero, Fertilization primary, Pregnancy reference and explicitly saved science plates. Exact production sizing policy used in both SwiftUI measurement and placement; art is noninteractive, missing source explicit, source files/resources preserved. Oocyte offset scales with plate width, delayed motion rechecks Reduce Motion and active motion resets without animation. Fimbriae explanatory text no longer squeezed beside fixed-width art. Body Biology uses serious shared semantic/translation rendering and general-reference qualifier; Pregnancy research rendering serious. Production biology routing now uses typed Today state rather than localized title strings; no ovulation/luteal/follicular state inferred from day numbers, day-one character requires recorded bleeding. Legacy title helper compatibility-only. Clinical image registration, Apple custom Layout typecheck/hit testing and MT runtime remain unverified.",
         "Separated a previously reported open period episode from a bleeding observation on today\u2019s civil date. Earlier onboarding reports no longer assert current daily bleeding; they remain reported-open until updated, without inventing end dates or duration cutoffs. Invalid future/missing supplied starts and supplied ends cannot establish an open episode. Actual recorded bleeding takes precedence for today; following unlogged days manufacture no observations. Today shows explicit provenance ahead of a general wheel caption through serious shared semantic/translation renderer. Body Biology does not infer menstruation from bleeding/spotting alone: requires a reported open episode or explicit cycle day one plus today\u2019s observation. Original records untouched. Actual store/loader regression tests cover before/same-day/next-day, ended/future episodes and neutral routing.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Actual scientific education presentation now qualified by existing current context policy instead of stale loaded context. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
-        "Wrong-topic research content IDs rejected before display; old invisible provider cannot replace current education. No new medical facts or approvals. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
+        "Wrong-topic research content IDs rejected before display; old invisible provider cannot replace current education. No new medical facts or approvals. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
+        "Actual model rejects wrong-topic, empty-body or unsourced content from custom protocol providers; no new claims or source approvals. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T18:03:18.423016+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
-          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
-          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
-          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
-          "Clinical translation acceptance/official MADLAD and real-device checks"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -28410,6 +28587,27 @@
             "Verify original art, general-reference labels and logged observations remain accurate in restricted contexts",
             "Verify covered/background/disappeared controls and decorative delay cannot animate/navigate; verify Reduced Motion static settling on Apple",
             "Full source1221 context-based approved-evidence AI generation and all scientific-artwork layouts remain separately unfinished"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+          "executed": {
+            "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+            "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+            "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+            "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+            "Clinical translation acceptance/official MADLAD and real-device checks"
+          ],
+          "remaining": [
+            "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+            "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+            "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+            "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -36429,7 +36627,12 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -36472,9 +36675,12 @@
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
         "Prompt25FertilizationCoreTests",
         "Prompt1BEducationResearchTests",
-        "Prompt26PregnancyPresentationLifecycleTests"
+        "Prompt26PregnancyPresentationLifecycleTests",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)",
+        "Prompt1BScientificArtSizingTests"
       ],
-      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -36495,35 +36701,40 @@
         "Expose current expanded/collapsed state with stable section IDs and no reduced-motion transform interpolation; native VO/gesture testing remains NOT_RUN.",
         "Accessible44pt fimbriae target and stable identifier; current context limitation remains intrinsically sized. Apple VoiceOver/UI acceptance pending. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Sources/Ask/Save44pt minimum targets, stage heading stable accessibility identifier and disabled inactive controls; Apple VoiceOver and translated layout acceptance unrun. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
-        "Stable topic/topic-page identifiers and active-state accessibility/control ownership; Apple VoiceOver/dynamic layout pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
+        "Stable topic/topic-page identifiers and active-state accessibility/control ownership; Apple VoiceOver/dynamic layout pending. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
+        "Source image accessibility label remains separate from overlay controls; active controls and edge hit-target allowance. Native accessibility regression acceptance unrun. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T18:03:18.423016+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
-          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
-          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
-          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
-          "Clinical translation acceptance/official MADLAD and real-device checks"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -36771,6 +36982,27 @@
             "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
             "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
             "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+          "executed": {
+            "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+            "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+            "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+            "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+            "Clinical translation acceptance/official MADLAD and real-device checks"
+          ],
+          "remaining": [
+            "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+            "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+            "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+            "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -45098,7 +45330,11 @@
         "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
         "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -45290,9 +45526,12 @@
         "Prompt21BodyBiologyCoreTests",
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
-        "Prompt26PregnancyPresentationLifecycleTests"
+        "Prompt26PregnancyPresentationLifecycleTests",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)",
+        "Prompt1BScientificArtSizingTests"
       ],
-      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -45442,35 +45681,40 @@
         "Actual new regression covers triple context, conflicting explicit reports and two overlapping-surrogacy deduplication cases;80focused XCTestpassed. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Actual new Body Biology engine regression tests explicit pregnancy, menopause and hormonal-contraception restrictions plus unchanged default input.96focused and1076full portable XCTest+21SwiftTesting passed. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Existing native lifecycle regression now asserts duplicate transition rejected; existing native UI test adds background/return stage and draft preservation. Both unrun on Linux;16underlying portable tests passed. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
-        "Two actual production model lifecycle tests run on Linux, including canceled noncooperative provider, newer result retention, reference retention and wrong-topic rejection;24focused tests passed. Fetal SwiftUI/UI acceptance remains unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
+        "Two actual production model lifecycle tests run on Linux, including canceled noncooperative provider, newer result retention, reference retention and wrong-topic rejection;24focused tests passed. Fetal SwiftUI/UI acceptance remains unrun. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
+        "Three actual new model/payload regressions passed plus23existing science tests newly executed on Linux and6canvas math checks.1104full XCTest+21SwiftTesting passed; native UIImage test not run. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T18:03:18.423016+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
-          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
-          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
-          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
-          "Clinical translation acceptance/official MADLAD and real-device checks"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -46453,6 +46697,27 @@
             "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
             "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
             "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+          "executed": {
+            "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+            "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+            "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+            "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+            "Clinical translation acceptance/official MADLAD and real-device checks"
+          ],
+          "remaining": [
+            "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+            "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+            "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+            "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -46703,7 +46968,11 @@
         "FruitfolioTests/Prompt27AContextPersonalizationTests.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift",
         "FruitfolioTests/Prompt21BodyBiologyCoreTests.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
+        "FruitfolioTests/Prompt27ScienceContentTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -46890,9 +47159,12 @@
         "Prompt21BodyBiologyCoreTests",
         "Prompt25FertilizationLifecycleTests (NOT_RUN)",
         "Prompt1BModalAccessibilityTests (NOT_RUN)",
-        "Prompt26PregnancyPresentationLifecycleTests"
+        "Prompt26PregnancyPresentationLifecycleTests",
+        "Prompt27SciencePresentationLifecycleTests",
+        "Prompt27ScienceContentTests (portable only)",
+        "Prompt1BScientificArtSizingTests"
       ],
-      "commit_reference": "batch:Pregnancy-owned-topic-and-reference-research-requests (resolve containing commit with git log)",
+      "commit_reference": "batch:Science-owned-requests-and-shared-hotspot-source-canvas (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -47025,35 +47297,40 @@
         "Regression assertions committed in project Swift test source. Evidence: development_workflow/COMBINED_EXPLICIT_CONTEXT_LIMITATIONS.json",
         "Regression uses project Swift test source and actual production engine; no fake Apple framework or rendering verification. Evidence: development_workflow/BODY_BIOLOGY_EXPLICIT_CONTEXT_AND_ACTIVE_MOTION.json",
         "Updated native lifecycle/UI assertions live in actual project test source, with explicit NOT_RUN status. Evidence: development_workflow/FERTILIZATION_ACTIVE_CONTROL_OWNERSHIP.json",
-        "Actual model and lifecycle tests are project Swift sources included in portable runner; native UI regression also updated with explicit NOT_RUN. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json"
+        "Actual model and lifecycle tests are project Swift sources included in portable runner; native UI regression also updated with explicit NOT_RUN. Evidence: development_workflow/PREGNANCY_OWNED_RESEARCH_REQUESTS.json",
+        "Actual production model/router/safety dependencies added to portable runner; project Swift regressions updated to executable async MainActor tests, no fake SDK. Evidence: development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
       ],
-      "last_updated": "2026-11-07T18:03:18.423016+00:00",
+      "last_updated": "2026-11-07T18:10:14.720704+00:00",
       "latest_batch_verification": {
-        "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+        "batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
         "executed": {
-          "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
-          "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+          "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
+          "full_portable_XCTest": "1104 passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
-          "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
-          "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
-          "Clinical translation acceptance/official MADLAD and real-device checks"
+          "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
+          "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
+          "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
+          "Official MADLAD model and clinical/native-language acceptance"
         ],
         "remaining": [
-          "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-          "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-          "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-          "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+          "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+          "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+          "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+          "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+          "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
-        "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
-        "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
-        "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
+        "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
+        "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
+        "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
+        "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
+        "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
       ],
       "prior_batch_verifications": [
         {
@@ -48036,6 +48313,27 @@
             "Verify rapid navigation during transition causes neither rejected-navigation page sound nor extra stage advance",
             "Verify Sources/Ask/Save44pt targets fit actual translated/dynamic layouts",
             "Full cross-application interaction/semantic/localization/artwork requirements remain incomplete"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Pregnancy-owned-topic-and-reference-research-requests",
+          "executed": {
+            "portable_XCTest": "24 passed,0failures:16canonical pregnancy,2actual production topic-model lifecycle,6actual corpus/education tests",
+            "syntax": "331 Swift files parsed,0syntax errors; not SDK typechecking",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "Apple Combine publishing/SwiftUI build and actual covered/background topic/reference controls",
+            "Updated native educational-navigation UI regression:1method/1launch with Fertilization and Pregnancy background/return checks",
+            "Fetal-reference SwiftUI selected-task generation/defer lifecycle events",
+            "Clinical translation acceptance/official MADLAD and real-device checks"
+          ],
+          "remaining": [
+            "Verify actual current topic and fetal reference retained across background/uncover and old provider never publishes on Apple",
+            "Verify correct active/visible/uncovered action admission, reference menu and guarded save/source callbacks with VoiceOver/dynamic text",
+            "Verify conditional Apple Combine publishing after Foundation lifecycle extraction",
+            "Full source1221 medical-context AI, all artwork/scientific content coverage, clinical/source review and official translation remain separately open"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

@@ -1,10 +1,10 @@
-#if canImport(SwiftUI)
 import Foundation
+#if canImport(Combine)
 import Combine
-import SwiftUI
+#endif
 
 @MainActor
-final class Prompt27ScienceViewModel: ObservableObject {
+final class Prompt27ScienceViewModel {
     enum LoadState: Equatable {
         case idle
         case loading
@@ -15,14 +15,21 @@ final class Prompt27ScienceViewModel: ObservableObject {
         case unavailable
     }
 
-    @Published private(set) var state: LoadState = .idle
-    @Published private(set) var selectedHotspotID: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var state: LoadState = .idle
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var selectedHotspotID: String?
 
     let section: Prompt27ContextualScienceSection
 
     private let provider: any Prompt27ScienceResearchProviding
     private let router: Prompt27ContextRouter
     private var loadTask: Task<Void, Never>?
+    private var loadIdentity = UUID()
 
     init(
         section: Prompt27ContextualScienceSection,
@@ -38,15 +45,18 @@ final class Prompt27ScienceViewModel: ObservableObject {
         loadTask?.cancel()
     }
 
-    func loadIfNeeded() {
-        guard case .idle = state else { return }
+    @discardableResult
+    func loadIfNeeded() -> Task<Void, Never>? {
+        guard case .idle = state else { return loadTask }
 
         switch router.route(section: section) {
         case .failure:
             state = .unavailable
-            return
+            return nil
 
         case let .success(route):
+            loadIdentity = UUID()
+            let identity = loadIdentity
             state = .loading
 
             let contentID = section.bodyContentID
@@ -55,29 +65,40 @@ final class Prompt27ScienceViewModel: ObservableObject {
             loadTask = Task { [weak self] in
                 do {
                     let content = try await provider.approvedContent(for: contentID)
-                    guard !Task.isCancelled else { return }
-
-                    guard !content.sourceIDs.isEmpty else {
-                        self?.state = .unavailable
+                    guard !Task.isCancelled, let self, self.loadIdentity == identity else { return }
+                    defer { self.loadTask = nil }
+                    guard content.contentID == contentID,
+                          !content.body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                          !content.sourceIDs.isEmpty else {
+                        self.state = .unavailable
                         return
                     }
-
-                    self?.state = .loaded(content, route)
+                    self.state = .loaded(content, route)
                 } catch {
-                    guard !Task.isCancelled else { return }
-                    self?.state = .unavailable
+                    guard !Task.isCancelled, let self, self.loadIdentity == identity else { return }
+                    self.state = .unavailable
+                    self.loadTask = nil
                 }
             }
         }
+        return loadTask
+    }
+
+    func suspendPresentation() {
+        loadIdentity = UUID()
+        loadTask?.cancel()
+        loadTask = nil
+        if case .loading = state { state = .idle }
     }
 
     func retry() {
-        loadTask?.cancel()
+        suspendPresentation()
         state = .idle
         loadIfNeeded()
     }
 
     func selectHotspot(_ id: String?) {
+        if let id, !section.hotspotIDs.contains(id) { return }
         selectedHotspotID = id
     }
 
@@ -95,4 +116,6 @@ final class Prompt27ScienceViewModel: ObservableObject {
         return route
     }
 }
+#if canImport(Combine)
+extension Prompt27ScienceViewModel: ObservableObject {}
 #endif
