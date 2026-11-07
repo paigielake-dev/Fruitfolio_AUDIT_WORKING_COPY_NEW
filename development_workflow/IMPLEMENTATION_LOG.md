@@ -3656,3 +3656,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest_passed": 2, "workflow_passed": 71, "swift_syntax_files": 318, "Apple_tests_executed": 0}.
 - Next action: Inspect the next incomplete Hub loading/navigation requirement against actual source and existing evidence; implement missing functionality, preserving all prior checklist evidence.
 - Commit: containing commit for batch Intro-unseen-logo-and-cancelled-returning-checkpoints.
+
+## Hub-owned-navigation-cooldown
+
+- Parent checkpoint: 75776bfd27412c2090f78a3f3c15c632c064e1b7.
+- Source-order requirements: [88, 473].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Hub/Prompt04HubBridgeView.swift.
+- Replace the Hub unowned 450ms navigation-unlock task and swallowed cancellation with an explicitly owned cancellable task. Cancel and clear its transient lock on disappearance, interaction disablement and inactive scene transitions. Preserve immediate navigation, duplicate-tap protection, original cooldown and button audio. This addresses the concrete lifecycle ownership gap only; it does not establish Hub runtime performance or whole backgrounding acceptance.
+- Tests added/updated: .
+- Verification: {"syntax_errors": 0, "swift_syntax_files": 318, "new_tests_executed": 0}.
+- Next action: Continue original requirement-specific source review at tour semantic feature-name styling, then remaining independent requirements across all parts. Preserve pending Apple lifecycle/performance acceptance; do not promote from code presence.
+- Commit: containing commit for batch Hub-owned-navigation-cooldown.

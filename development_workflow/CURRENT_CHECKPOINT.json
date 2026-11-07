@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "8b9d73773a127e0bf1824bf126571483947f3b0a",
+  "current_HEAD": "75776bfd27412c2090f78a3f3c15c632c064e1b7",
   "latest_verified_commit": null,
   "current_checklist_part": 2,
-  "current_requirement": 88,
-  "current_implementation_batch": "Intro-unseen-logo-and-cancelled-returning-checkpoints",
+  "current_requirement": 95,
+  "current_implementation_batch": "Hub-owned-navigation-cooldown",
   "completed_requirements": [
     206,
     210
@@ -494,11 +494,7 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Introduction/Prompt04IntroCheckpoint.swift",
-    "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
-    "FruitfolioTests/Prompt04IntroTests.swift",
-    "FruitfolioTests/Prompt1BIntroCheckpointTests.swift",
-    "Tools/run_portable_swift_tests.py",
+    "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -512,19 +508,16 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Focused portable XCTest Prompt1BIntroCheckpointTests",
-    "71 workflow tests",
-    "Swift syntax parse",
+    "Swift syntax parse of 318 Swift files",
     "git diff --check"
   ],
   "last_test_results": {
-    "focused_XCTest_passed": 2,
-    "workflow_passed": 71,
+    "syntax_errors": 0,
     "swift_syntax_files": 318,
-    "Apple_tests_executed": 0
+    "new_tests_executed": 0
   },
-  "next_exact_implementation_action": "Inspect the next incomplete Hub loading/navigation requirement against actual source and existing evidence; implement missing functionality, preserving all prior checklist evidence.",
-  "updated_at": "2026-11-07T09:27:24.922207+00:00",
+  "next_exact_implementation_action": "Continue original requirement-specific source review at tour semantic feature-name styling, then remaining independent requirements across all parts. Preserve pending Apple lifecycle/performance acceptance; do not promote from code presence.",
+  "updated_at": "2026-11-07T09:28:38.578449+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -534,17 +527,17 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "focused_XCTest_passed": 2,
-      "workflow_passed": 71,
-      "swift_syntax_files": 318
+      "swift_syntax_files": 318,
+      "syntax_errors": 0,
+      "diff_whitespace_check": "passed"
     },
     "not_run": [
-      "Apple Combine tests: enhanced first-launch reduced-motion resume and new returning cancellation-before-task-start regression",
-      "Apple SDK typecheck, animation rendering, device background/foreground and audio lifecycle"
+      "Actual Apple Hub navigation/disappearance/inactive rapid-reentry and touch latency tests; SwiftUI SDK unavailable",
+      "No new executable Foundation behavior in this view-only ownership change; prior full suites not repeated"
     ],
     "remaining": [
-      "Execute actual Apple state-machine tests and check visual continuity, live Reduce Motion and no background progression on device. Foundation mapping tests do not prove animation runtime.",
-      "Other subconditions of original requirements remain subject to previous evidence and acceptance; no VERIFIED status assigned."
+      "Run Apple Hub rapid-tap/background/reentry checks: single immediate navigation, no delayed state writes after deactivation, controls unlock on return, existing audio intact.",
+      "Profile Hub loading and touch latency on device for complete requirement 88; this source change alone does not verify responsiveness."
     ]
   },
   "current_checklist_section": "Part 2 \u2014 Introduction and Hub",

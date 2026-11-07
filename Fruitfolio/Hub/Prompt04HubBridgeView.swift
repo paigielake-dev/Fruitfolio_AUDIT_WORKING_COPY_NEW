@@ -686,6 +686,7 @@ private struct Prompt05HubPaperControls:
     @State
     private var navigationLocked =
         false
+    @State private var navigationUnlockTask: Task<Void, Never>?
 
     @State
     private var titleWritingProgress:
@@ -1019,6 +1020,13 @@ private struct Prompt05HubPaperControls:
             guard interactive, scenePhase == .active else { return }
             await beginHubTitleAnimationAfterSettling()
         }
+        .onChange(of: interactive) { _, active in
+            if !active { cancelNavigationCooldown() }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { cancelNavigationCooldown() }
+        }
+        .onDisappear { cancelNavigationCooldown() }
     }
 
     // MARK: - Branding Animation
@@ -1132,15 +1140,20 @@ private struct Prompt05HubPaperControls:
 
         navigate(route)
 
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    450_000_000
-            )
-
-            navigationLocked =
-                false
+        navigationUnlockTask?.cancel()
+        navigationUnlockTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 450_000_000) }
+            catch { return }
+            guard !Task.isCancelled else { return }
+            navigationLocked = false
+            navigationUnlockTask = nil
         }
+    }
+
+    private func cancelNavigationCooldown() {
+        navigationUnlockTask?.cancel()
+        navigationUnlockTask = nil
+        navigationLocked = false
     }
 }
 

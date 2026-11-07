@@ -7456,12 +7456,34 @@
         "Prompt1BSpotlightGeometryTests",
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "commit_reference": "batch:Hub-owned-navigation-cooldown (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration.",
-        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification.",
+        "Replace the Hub unowned 450ms navigation-unlock task and swallowed cancellation with an explicitly owned cancellable task. Cancel and clear its transient lock on disappearance, interaction disablement and inactive scene transitions. Preserve immediate navigation, duplicate-tap protection, original cooldown and button audio. This addresses the concrete lifecycle ownership gap only; it does not establish Hub runtime performance or whole backgrounding acceptance."
       ],
-      "last_updated": "2026-11-05T20:11:46.164010+00:00"
+      "last_updated": "2026-11-07T09:28:38.578449+00:00",
+      "latest_batch_verification": {
+        "batch": "Hub-owned-navigation-cooldown",
+        "executed": {
+          "swift_syntax_files": 318,
+          "syntax_errors": 0,
+          "diff_whitespace_check": "passed"
+        },
+        "not_run": [
+          "Actual Apple Hub navigation/disappearance/inactive rapid-reentry and touch latency tests; SwiftUI SDK unavailable",
+          "No new executable Foundation behavior in this view-only ownership change; prior full suites not repeated"
+        ],
+        "remaining": [
+          "Run Apple Hub rapid-tap/background/reentry checks: single immediate navigation, no delayed state writes after deactivation, controls unlock on return, existing audio intact.",
+          "Profile Hub loading and touch latency on device for complete requirement 88; this source change alone does not verify responsiveness."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run Apple Hub rapid-tap/background/reentry checks: single immediate navigation, no delayed state writes after deactivation, controls unlock on return, existing audio intact.",
+        "Profile Hub loading and touch latency on device for complete requirement 88; this source change alone does not verify responsiveness."
+      ]
     },
     {
       "sequence": 89,
@@ -40280,7 +40302,8 @@
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
         "development_workflow/ASK_PRIVATE_SAVE_AUTHORITY_AND_CONVERSION.md",
         "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
-        "development_workflow/GUIDE_CAPTURED_REORDER_OWNERSHIP.md"
+        "development_workflow/GUIDE_CAPTURED_REORDER_OWNERSHIP.md",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -40316,7 +40339,7 @@
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
         "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift"
       ],
-      "commit_reference": "batch:Guide-captured-reorder-context-and-canonical-write-gates (resolve containing commit with git log)",
+      "commit_reference": "batch:Hub-owned-navigation-cooldown (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Replaced the two remaining native measurement confirmation dialogs (one/all deletion and dirty-editor discard) with owned shared taped-white requests. The existing editor native sheet now has its own PresentedPopupHost above the sheet, preventing presentation behind it/double root hosts. Shared canonical blur/dim/hit/VoiceOver exclusion and Reduce Motion govern these requests. Shared paper actions now use the canonical control pill and its single soft-pop owner rather than plain raw buttons/manual cue calls. Paper message focus is requested after mounting and guarded by the current request identity/cancellation; translation disclosure/retry controls remain separate accessible children.\n\nThe actual Foundation FruitfolioOwnedPopupSession owns one queued/current request, cancels only that request on departure, ignores queued/old/replaced/dismissing actions, and keeps the first confirmation through rapid repeated presses. Its closing identity remains owned until real dismissal finishes, avoiding the deduplication race that could otherwise drop a replacement. Escape is cancellation and cannot turn into confirmation. Measurement UI restores focus only after the shared host is empty, choosing a surviving control/reload rather than a deleted row. Dirty-editor Keep/Escape retains draft text; explicit discard waits for the actual shared dismissal before closing its sheet. Text-field keyboard focus is released locally before requesting discard; no global keyboard action or extra timer is used.\n\nDeletion intents contain only the target UUID/scope and an opaque in-memory saved revision. The actual persistence changes that revision on saves, reloads and erasure. A changed same-store record/reload invalidates an old confirmation; a separate writer still trips the exact saved-baseline guard. Successful deletion changes the revision, so replay fails. Missing targets do not become false success. No laboratory values are copied into popup ownership metadata or stored as analytics.\n\nSix new actual-core regressions execute ownership/queue cancellation, single-use/Escape, repeated presentation through dismissal, priority replacement, same-store revision/replay and reload/external-writer preservation. New DEBUG measurement fixtures use only a private suite and inject the actual store into the actual existing screen. Three Apple UI regressions cover delete/cancel/confirm at large text with normal/Reduce Motion, dirty draft Keep/discard inside the native sheet, and readable original values under an unsupported future record. Those UI tests, real VoiceOver focus order, screenshots, native-sheet interaction and sound/listening acceptance remain NOT_RUN on Linux.\n\nAvailable verification:540 portable XCTest +21 Swift Testing and545 native-linked XCTest +21 Swift Testing passed;35 workflow tests passed with all6 actual SwiftSyntax cases. All app Swift sources pass the bounded canonical immediate-cue ownership checker with zero findings. Compiler syntax parsed271 changed Swift files; Xcode project references resolve. These do not constitute an Apple build or device acceptance. The portable harness initially omitted its two new production sources; the resulting compile failure was corrected by adding the exact files, not substitutes.",
@@ -40345,88 +40368,106 @@
         "DEBUGAsk nowactualroot privatepreferenceauthority; nostandardfallback orviewdisappear domaindeletion. StableStateObjectfixture+model. ActualFoundationconstructorseeds onlymissingobject, preservesvalidrecords/explicitdeletion/future/null/corrupt/nonData, failswithoutauthority. Fourreal-store/rootowner regressionspassed. Productionmeasurementstore/persistence/schema/art/researchunchanged; nativeSwiftUIharnessNOT_RUN andno wholedata/privacycertification.",
         "ControlledsearchprogressAX nowselectedlanguage/lateststatus andprotectedbrand; illustrationinclusioncanonicaltranslatedToggle+cue. ActualFoundationcapturedconversation/answer/language+uniqueunchangedhistory+activeowner gates4saves/reveal/toggle; stalehistoricalexcerptchecks exactcurrenttext/range/language. Threepolicyregressionspass. Opt-inDEBUGregisteredartfixtureextends4AppleUIvectors reveal/include/revert/hitsize NOT_RUN; no inference/clinicalproof. OneEnglishfallback; art/rawanswer/citationsunchanged.",
         "ActualAsk injectsobservedcanonicalstore intodialog; productionshareddefaultpreserved andDEBUGrealprivateRootlibraryauthorityadded. Exactpending.makeSavedPage usedbyactualdialog+Foundationtests carriesselection/range/language/spans/art/source/version/time/restrictedsupportwithoutunsavedremainder. Threegenuinestore/domain/remount/protectedbytes/conversiontests; finalfocused10pass. FourAppleprivateinstanceidentity/cancel/draftUIvectorsextendedNOT_RUN. No standardfallback, clinical/model/wholeprivacycertification.",
-        "Actual Guide reorder callbacks capture ordered IDs/language/visit and use real canonical gateways before writes/cues/status. Hidden/inactive/stale/wrong-guide/scope/language/order and ambiguous identities reject with zero setter calls. Independent authored updates survive; old order cannot replay. Capture shared once per list. Root rotates real epochs across context changes; three section labels localize at44pt. Three real-store ownership tests pass; four Apple lifecycle/live-move vectors written NOT_RUN. Final973/998 XCTest+21 SwiftTesting each;69 workflow;313 parse-only checks;zero source sound findings. Environment reconnected with exact WIP preserved, ancestor/bundle verified; native final process handle unavailable but completed suite logs retained."
+        "Actual Guide reorder callbacks capture ordered IDs/language/visit and use real canonical gateways before writes/cues/status. Hidden/inactive/stale/wrong-guide/scope/language/order and ambiguous identities reject with zero setter calls. Independent authored updates survive; old order cannot replay. Capture shared once per list. Root rotates real epochs across context changes; three section labels localize at44pt. Three real-store ownership tests pass; four Apple lifecycle/live-move vectors written NOT_RUN. Final973/998 XCTest+21 SwiftTesting each;69 workflow;313 parse-only checks;zero source sound findings. Environment reconnected with exact WIP preserved, ancestor/bundle verified; native final process handle unavailable but completed suite logs retained.",
+        "Replace the Hub unowned 450ms navigation-unlock task and swallowed cancellation with an explicitly owned cancellable task. Cancel and clear its transient lock on disappearance, interaction disablement and inactive scene transitions. Preserve immediate navigation, duplicate-tap protection, original cooldown and button audio. This addresses the concrete lifecycle ownership gap only; it does not establish Hub runtime performance or whole backgrounding acceptance."
       ],
-      "last_updated": "2026-11-07T06:25:36.904951+00:00",
+      "last_updated": "2026-11-07T09:28:38.578449+00:00",
       "latest_batch_verification": {
-        "batch": "Guide-captured-reorder-context-and-canonical-write-gates",
+        "batch": "Hub-owned-navigation-cooldown",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "focused_XCTest": 3,
-          "new_real_store_owner_XCTest": 3,
-          "workflow_checks": 69,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "existing_English_fallbacks_verified": 3,
-          "official_MADLAD_verified": false,
-          "portable_final_command_exit_code": 0,
-          "native_final_command_exit_code": null,
-          "native_exit_status_note": "Completed suite reports retained; old process ID unavailable after environment reconnect.",
-          "recovery": {
-            "branch": "development/prompt-1b-complete",
-            "HEAD_before_batch": "7817e17221b2c4e84b55917b1b56e39a2f7212d6",
-            "ancestor_7140173_verified": true,
-            "previous_bundle_sha256": "f6724a8b33760ba3053156f2075367c24f8fe66e62f4b06a530863ff085ec156",
-            "previous_bundle_verified_readable": true,
-            "pending_six_source_test_files_preserved": true
-          },
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_reorder_owner_portable.log": {
-              "bytes": 311578,
-              "sha256": "d05c860b3e3fc7d1435e8b2d5895a5f69ba374fa141c42c1df59f0de7d3f4b3a"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_native.log": {
-              "bytes": 1286779,
-              "sha256": "d7a0609d2bf658811fd783c2aed2197e422c3263338cf9af1c06d7c2024106cf"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_focused.log": {
-              "bytes": 29810,
-              "sha256": "6fe6188f413f3a810ec85381693b42b12674e41d72520ad8e2a5b9b4ee00d863"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_portable_final.log": {
-              "bytes": 311551,
-              "sha256": "883fb12c582b710e47206473fac0f2bf4e8b8e9284b187f374aa42a7e1da8925"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_native_final.log": {
-              "bytes": 1286770,
-              "sha256": "558f21dca6e8882c234d26388110f36b57e6f0b979a38fd08319f9e05f368523"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_workflow_final.log": {
-              "bytes": 169,
-              "sha256": "3df258eb619f8eb02be154b6c5a0e8703899745fe355c50c5671f1faed639bb7"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_syntax_final.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_reorder_owner_ownership_final.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "swift_syntax_files": 318,
+          "syntax_errors": 0,
+          "diff_whitespace_check": "passed"
         },
         "not_run": [
-          "Four actual Apple Guide epoch/background/fresh-move/write-readback vectors",
-          "Apple SDK typecheck/build, native-menu callback/VoiceOver/focus/RTL/XXXL/Reduce Motion/device and physical audio acceptance",
-          "Official MADLAD model/tokenizer inference, memory and linguistic/clinical acceptance"
+          "Actual Apple Hub navigation/disappearance/inactive rapid-reentry and touch latency tests; SwiftUI SDK unavailable",
+          "No new executable Foundation behavior in this view-only ownership change; prior full suites not repeated"
         ],
         "remaining": [
-          "Execute actual SwiftUI captured-epoch and native-menu callbacks on Apple; Foundation gateways are not UI runtime",
-          "Other Guide menu/form mutations need separate captured-payload review; this is scoped reorder ownership",
-          "No device RSS or performance result follows from sharing snapshots once per list",
-          "Native wrapper process exit could not be retrieved after environment reconnect; retained Framework suites report zero failures"
+          "Run Apple Hub rapid-tap/background/reentry checks: single immediate navigation, no delayed state writes after deactivation, controls unlock on return, existing audio intact.",
+          "Profile Hub loading and touch latency on device for complete requirement 88; this source change alone does not verify responsiveness."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual SwiftUI captured-epoch and native-menu callbacks on Apple; Foundation gateways are not UI runtime",
-        "Other Guide menu/form mutations need separate captured-payload review; this is scoped reorder ownership",
-        "No device RSS or performance result follows from sharing snapshots once per list",
-        "Native wrapper process exit could not be retrieved after environment reconnect; retained Framework suites report zero failures"
+        "Run Apple Hub rapid-tap/background/reentry checks: single immediate navigation, no delayed state writes after deactivation, controls unlock on return, existing audio intact.",
+        "Profile Hub loading and touch latency on device for complete requirement 88; this source change alone does not verify responsiveness."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Guide-captured-reorder-context-and-canonical-write-gates",
+          "executed": {
+            "portable_XCTest": 973,
+            "native_CPU_XCTest": 998,
+            "SwiftTesting_each": 21,
+            "focused_XCTest": 3,
+            "new_real_store_owner_XCTest": 3,
+            "workflow_checks": 69,
+            "changed_Swift_syntax_files": 313,
+            "control_sound_ownership_findings": 0,
+            "Apple_UI_vectors_written": 4,
+            "Apple_UI_vectors_executed": 0,
+            "existing_English_fallbacks_verified": 3,
+            "official_MADLAD_verified": false,
+            "portable_final_command_exit_code": 0,
+            "native_final_command_exit_code": null,
+            "native_exit_status_note": "Completed suite reports retained; old process ID unavailable after environment reconnect.",
+            "recovery": {
+              "branch": "development/prompt-1b-complete",
+              "HEAD_before_batch": "7817e17221b2c4e84b55917b1b56e39a2f7212d6",
+              "ancestor_7140173_verified": true,
+              "previous_bundle_sha256": "f6724a8b33760ba3053156f2075367c24f8fe66e62f4b06a530863ff085ec156",
+              "previous_bundle_verified_readable": true,
+              "pending_six_source_test_files_preserved": true
+            },
+            "log_receipts": {
+              "/tmp/fruitfolio_guide_reorder_owner_portable.log": {
+                "bytes": 311578,
+                "sha256": "d05c860b3e3fc7d1435e8b2d5895a5f69ba374fa141c42c1df59f0de7d3f4b3a"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_native.log": {
+                "bytes": 1286779,
+                "sha256": "d7a0609d2bf658811fd783c2aed2197e422c3263338cf9af1c06d7c2024106cf"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_focused.log": {
+                "bytes": 29810,
+                "sha256": "6fe6188f413f3a810ec85381693b42b12674e41d72520ad8e2a5b9b4ee00d863"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_portable_final.log": {
+                "bytes": 311551,
+                "sha256": "883fb12c582b710e47206473fac0f2bf4e8b8e9284b187f374aa42a7e1da8925"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_native_final.log": {
+                "bytes": 1286770,
+                "sha256": "558f21dca6e8882c234d26388110f36b57e6f0b979a38fd08319f9e05f368523"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_workflow_final.log": {
+                "bytes": 169,
+                "sha256": "3df258eb619f8eb02be154b6c5a0e8703899745fe355c50c5671f1faed639bb7"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_syntax_final.log": {
+                "bytes": 106,
+                "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
+              },
+              "/tmp/fruitfolio_guide_reorder_owner_ownership_final.log": {
+                "bytes": 5,
+                "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+              }
+            }
+          },
+          "not_run": [
+            "Four actual Apple Guide epoch/background/fresh-move/write-readback vectors",
+            "Apple SDK typecheck/build, native-menu callback/VoiceOver/focus/RTL/XXXL/Reduce Motion/device and physical audio acceptance",
+            "Official MADLAD model/tokenizer inference, memory and linguistic/clinical acceptance"
+          ],
+          "remaining": [
+            "Execute actual SwiftUI captured-epoch and native-menu callbacks on Apple; Foundation gateways are not UI runtime",
+            "Other Guide menu/form mutations need separate captured-payload review; this is scoped reorder ownership",
+            "No device RSS or performance result follows from sharing snapshots once per list",
+            "Native wrapper process exit could not be retrieved after environment reconnect; retained Framework suites report zero failures"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
