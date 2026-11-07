@@ -34,6 +34,34 @@ struct AskSourceRecord: Identifiable, Hashable, Codable, Sendable {
     }
 }
 
+/// Version dictionaries cannot represent contradictory versions or distinct
+/// UTF-8 identifiers that Swift String equality would normalize into one key.
+enum Prompt09SaveSourceVersions {
+    static let rejectionMessage = "this answer has inconsistent source metadata and cannot be saved. the original answer is preserved."
+    private struct Seen {
+        let idBytes: Data
+        let versionBytes: Data?
+    }
+    static func validated(_ sources: [AskSourceRecord]) -> [String: String]? {
+        var seen: [String: Seen] = [:]
+        var versions: [String: String] = [:]
+        for source in sources {
+            guard !source.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+            if let version = source.contentVersion,
+               version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return nil }
+            let idBytes = Data(source.id.utf8)
+            let versionBytes = source.contentVersion.map { Data($0.utf8) }
+            if let previous = seen[source.id] {
+                guard previous.idBytes == idBytes, previous.versionBytes == versionBytes else { return nil }
+            } else {
+                seen[source.id] = Seen(idBytes: idBytes, versionBytes: versionBytes)
+                if let version = source.contentVersion { versions[source.id] = version }
+            }
+        }
+        return versions
+    }
+}
+
 /// Open only a supplied HTTPS citation or an exact DOI resolver destination.
 /// A title, search phrase or model-generated address never becomes a link.
 enum Prompt09CitationDestination {

@@ -32,6 +32,7 @@ struct Prompt09AskView: View {
         Prompt10PendingSavedContent?
 
     @State private var savedExcerptText: String?
+    @State private var hasInvalidSaveMetadata = false
     @State private var historicalSelections: [UUID: String] = [:]
     @State private var savedAnswerIDs: Set<UUID> = []
     @State private var historicalSelectionRanges: [UUID: NSRange] = [:]
@@ -322,9 +323,11 @@ struct Prompt09AskView: View {
             }
         }
         .onChange(of: viewModel.conversationID) { _, _ in
+            hasInvalidSaveMetadata = false
             sessionIllustrations = [:]
             includeIllustrationsInSave = []
         }
+        .onChange(of: viewModel.answer?.id) { _, _ in hasInvalidSaveMetadata = false }
         .onChange(of: settings.language) { _, _ in
             viewModel.selectedExcerptText = nil
             viewModel.selectedExcerptRange = nil
@@ -1113,14 +1116,13 @@ struct Prompt09AskView: View {
     }
 
     private func prepareHistoricalSave(_ answer: AskAnswer, excerpt: String?) {
+        guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
         pendingLibrarySave = Prompt10PendingSavedContent(
             question: answer.originalQuestion, answer: answer.answerText,
             saveType: excerpt == nil ? .fullAnswer : .excerpt, excerptText: excerpt,
             originalAnswerID: answer.id.uuidString, originalConversationID: viewModel.conversationID.uuidString,
             sourceIDs: answer.sourceIDs,
-            sourceVersions: Dictionary(answer.sources.compactMap { source in
-                source.contentVersion.map { (source.id, $0) }
-            }, uniquingKeysWith: { first, _ in first }),
+            sourceVersions: sourceVersions,
             knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
             selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id],
             selectedDisplayLanguage: historicalSelectionLanguages[answer.id] ?? "en",
@@ -1147,15 +1149,26 @@ struct Prompt09AskView: View {
                 }))
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
             WatercolorSecondaryButton(label: "save illustration only") {
+                guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
                 pendingLibrarySave = Prompt10PendingSavedContent(
                     question: answer.originalQuestion, answer: "", saveType: .excerpt, excerptText: "",
                     originalAnswerID: answer.id.uuidString, originalConversationID: viewModel.conversationID.uuidString,
                     sourceIDs: answer.sourceIDs,
-                    sourceVersions: Dictionary(answer.sources.compactMap { source in source.contentVersion.map { (source.id, $0) } }, uniquingKeysWith: { first, _ in first }),
+                    sourceVersions: sourceVersions,
                     knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
                     sourceRecords: answer.sources, educationalAssetIDs: visibleIllustrations(answer.id))
             }
         }
+    }
+
+    private func validatedSaveSourceVersions(for answer: AskAnswer) -> [String: String]? {
+        guard canInteractWithComposer else { return nil }
+        guard let versions = Prompt09SaveSourceVersions.validated(answer.sources) else {
+            hasInvalidSaveMetadata = true
+            return nil
+        }
+        hasInvalidSaveMetadata = false
+        return versions
     }
 
     // MARK: - Prompt 10 Save Preparation
@@ -1167,6 +1180,8 @@ struct Prompt09AskView: View {
             .answering else {
             return
         }
+
+        guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
 
         pendingLibrarySave =
             Prompt10PendingSavedContent(
@@ -1185,13 +1200,7 @@ struct Prompt09AskView: View {
                     String(describing: viewModel.conversationID),
                 sourceIDs:
                     answer.sourceIDs,
-                sourceVersions:
-                    Dictionary(
-                        uniqueKeysWithValues: answer.sources.compactMap { source in
-                            guard let version = source.contentVersion else { return nil }
-                            return (source.id, version)
-                        }
-                    ),
+                sourceVersions: sourceVersions,
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
@@ -1215,6 +1224,8 @@ struct Prompt09AskView: View {
             return
         }
 
+        guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
+
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
@@ -1234,13 +1245,7 @@ struct Prompt09AskView: View {
                     String(describing: viewModel.conversationID),
                 sourceIDs:
                     answer.sourceIDs,
-                sourceVersions:
-                    Dictionary(
-                        uniqueKeysWithValues: answer.sources.compactMap { source in
-                            guard let version = source.contentVersion else { return nil }
-                            return (source.id, version)
-                        }
-                    ),
+                sourceVersions: sourceVersions,
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
@@ -1342,6 +1347,11 @@ struct Prompt09AskView: View {
                     }
                 }
                 .padding(.horizontal, 20)
+            }
+            if hasInvalidSaveMetadata {
+                FruitfolioFixedText(source: Prompt09SaveSourceVersions.rejectionMessage, font: .caption, serious: true)
+                    .padding(.horizontal, 20)
+                    .accessibilityIdentifier("ask.saveMetadataError")
             }
             questionInputRow
         }
