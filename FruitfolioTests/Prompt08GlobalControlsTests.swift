@@ -65,6 +65,30 @@ final class Prompt08GlobalControlsTests: XCTestCase {
         return CGRect(x: CGFloat(minX), y: CGFloat(minY), width: CGFloat(maxX - minX + 1), height: CGFloat(maxY - minY + 1))
     }
 
+    func testCycleSectionNavigationGrowsAtAccessibilitySizeInBothDirections() throws {
+        let suite = "Fruitfolio.cycle-navigation-test." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.language = .english
+        func measure(_ size: DynamicTypeSize, direction: LayoutDirection) -> CGSize {
+            let navigation = Prompt15CycleNavigation(selectedSection: .today, onSelect: { _ in })
+                .environmentObject(settings).environmentObject(MotionPreferences())
+                .environment(\.dynamicTypeSize, size).environment(\.layoutDirection, direction)
+            return UIHostingController(rootView: navigation)
+                .sizeThatFits(in: CGSize(width: 280, height: 10_000))
+        }
+        let directions: [LayoutDirection] = [.leftToRight, .rightToLeft]
+        for direction in directions {
+            let normal = measure(.large, direction: direction)
+            let accessible = measure(.accessibility5, direction: direction)
+            XCTAssertGreaterThanOrEqual(normal.height, 44)
+            XCTAssertGreaterThan(accessible.height, normal.height * 2,
+                                 "Navigation must grow inside the existing screen scroll, never shrink fixed single-line tabs")
+            XCTAssertLessThanOrEqual(accessible.width, 280)
+        }
+    }
+
     // MARK: - Canonical control construction
 
     func testCanonicalPrompt08ButtonsCanBeConstructed() {

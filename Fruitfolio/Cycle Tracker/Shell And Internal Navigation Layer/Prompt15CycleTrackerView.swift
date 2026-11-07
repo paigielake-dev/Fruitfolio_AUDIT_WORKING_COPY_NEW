@@ -1140,37 +1140,34 @@ private struct Prompt15BubblePopButtonStyle:
     }
 }
 
-private struct Prompt15CycleNavigation: View {
-    let selectedSection:
-        Prompt15CycleSection
-
-    let onSelect:
-        (Prompt15CycleSection) -> Void
+struct Prompt15CycleNavigation: View {
+    let selectedSection: Prompt15CycleSection
+    let onSelect: (Prompt15CycleSection) -> Void
 
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(
-                Prompt15CycleSection.allCases
-            ) { section in
-                Prompt15CycleTab(
-                    section: section,
-                    selected:
-                        selectedSection
-                        == section
-                ) {
-                    onSelect(section)
-                }
+        ViewThatFits(in: .horizontal) {
+            tabs.fixedSize(horizontal: true, vertical: false)
+            VStack(alignment: .leading, spacing: 4) {
+                sectionButtons
             }
+            .accessibilityIdentifier("cycle.sections.wrapped")
         }
-        .frame(
-            maxWidth: .infinity
-        )
-        .accessibilityElement(
-            children: .contain
-        )
-        .accessibilityLabel(
-            "Cycle Tracker sections"
-        )
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .contain)
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Cycle Tracker sections"))
+    }
+
+    private var tabs: some View {
+        HStack(spacing: 4) { sectionButtons }
+    }
+
+    private var sectionButtons: some View {
+        ForEach(Prompt15CycleSection.allCases) { section in
+            Prompt15CycleTab(section: section, selected: selectedSection == section) {
+                onSelect(section)
+            }
+            .frame(minWidth: 44)
+        }
     }
 }
 
@@ -1186,34 +1183,11 @@ private struct Prompt15CycleTab: View {
     var body: some View {
         Button(action: action) {
             VStack(spacing: 2) {
-                Text(
-                    section.rawValue
-                )
-                .font(
-                    Prompt15Type.tab
-                )
-                .fontWeight(
-                    selected
-                        ? .semibold
-                        : .regular
-                )
-                .foregroundStyle(
-                    Prompt15Palette
-                        .burgundy
-                        .opacity(
-                            selected
-                                ? 1
-                                : 0.78
-                        )
-                )
-                .lineLimit(1)
-                .minimumScaleFactor(
-                    0.94
-                )
-                .fixedSize(
-                    horizontal: true,
-                    vertical: false
-                )
+                FruitfolioFixedText(source: section.rawValue,
+                    font: Prompt15Type.tab.weight(selected ? .semibold : .regular),
+                    color: Prompt15Palette.burgundy.opacity(selected ? 1 : 0.78))
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 ZStack {
                     Color.clear
@@ -1245,14 +1219,9 @@ private struct Prompt15CycleTab: View {
                         .reduceMotionActive
             )
         )
-        .accessibilityLabel(
-            section.rawValue
-        )
-        .accessibilityValue(
-            selected
-                ? "selected"
-                : "not selected"
-        )
+        .accessibilityIdentifier("cycle.section." + section.id)
+        .modifier(FruitfolioFixedAccessibilityLabel(source: section.rawValue))
+        .modifier(FruitfolioFixedAccessibilityValue(source: selected ? "selected" : "not selected"))
         .accessibilityAddTraits(
             selected
                 ? .isSelected
@@ -1519,31 +1488,12 @@ private struct Prompt22BodyDetailNavigation: View {
                     onSelect(detail)
                 } label: {
                     VStack(spacing: 4) {
-                        Text(detail.rawValue)
-                            .font(
-                                Font.custom(
-                                    "Chalkboard SE",
-                                    size: 13,
-                                    relativeTo: .subheadline
-                                )
-                            )
-                            .fontWeight(
-                                selection == detail
-                                    ? .semibold
-                                    : .regular
-                            )
-                            .foregroundStyle(
-                                Color(
-                                    red: 128.0 / 255.0,
-                                    green: 0,
-                                    blue: 0
-                                )
-                                .opacity(
-                                    selection == detail
-                                        ? 1
-                                        : 0.70
-                                )
-                            )
+                        FruitfolioFixedText(source: detail.rawValue,
+                            font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline)
+                                .weight(selection == detail ? .semibold : .regular),
+                            color: Prompt15Palette.burgundy.opacity(selection == detail ? 1 : 0.70))
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         Prompt22BodyDetailUnderline()
                             .fill(
@@ -1560,6 +1510,7 @@ private struct Prompt22BodyDetailNavigation: View {
                             )
                             .frame(height: 4)
                     }
+                    .frame(maxWidth: .infinity, minHeight: 44)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(
@@ -1569,11 +1520,11 @@ private struct Prompt22BodyDetailNavigation: View {
                                 .reduceMotionActive
                     )
                 )
-                .accessibilityValue(
-                    selection == detail
-                        ? "selected"
-                        : "not selected"
-                )
+                .accessibilityIdentifier("cycle.bodyDetail." + detail.id)
+                .modifier(FruitfolioFixedAccessibilityLabel(source: detail.rawValue))
+                .modifier(FruitfolioFixedAccessibilityValue(source: selection == detail ? "selected" : "not selected"))
+                .accessibilityAddTraits(selection == detail ? .isSelected : [])
+
             }
 
             Spacer(minLength: 0)
