@@ -1,0 +1,30 @@
+{
+  "scope": "Concrete audio lifecycle and OS resume-permission fixes. Not full Apple audio/runtime acceptance.",
+  "implemented": [
+    "Initial activity derives from UIApplication state; every physical start checks owned/current activity and active interruption. No eager audio-session activation at manager initialization.",
+    "Main-queue notifications update the MainActor synchronously rather than queuing stale Task state. Resignation immediately stops physical playback while preserving eligible logical loop requests.",
+    "Foreground restores all explicitly owned categories, including effect loops, respecting disabled/muted/suspended channel state. One-shots are never restored as loops.",
+    "OS interruption-ended handling honors shouldResume. Denied automatic resume holds channels until fresh channel-specific loop or explicit control intent; foreground/one-shot activity cannot release held music.",
+    "Existing Settings toggle bindings update the same persisted values and explicitly release the appropriate held channel; global unmute can release all eligible channels. Volume/artwork/recordings/keys unchanged."
+  ],
+  "executed": {
+    "portable_settings_resume_XCTest_passed": 17,
+    "workflow_passed": 71,
+    "swift_syntax_files": 320,
+    "sound_ownership_findings": 0
+  },
+  "Apple_tests_written_NOT_RUN": [
+    "Immediate willResign stop and repeated play/fade-in gating before any queued task",
+    "Eligible restoration across music/rain/effects/typing, disabled and forgotten owners",
+    "Declined OS resume not bypassed by foreground/one-shot; explicit music resume/system permission/user mute precedence"
+  ],
+  "remaining": [
+    "Apple SDK typecheck and all10 real AudioSettings unit tests, including3 new cases, remain NOT_RUN on Linux.",
+    "Real-device hearing, audio route/call/headphone interruption, first-launch/foreground timing and latency require Apple execution. Foundation policy tests do not verify AVAudioPlayer behavior."
+  ],
+  "source_sha256": {
+    "Fruitfolio/Core/Assets/AudioManager.swift": "b18a211431a86c3dbbb0c7aa4fd75852e0c97a0a63249e8502c21d19ed93aa90",
+    "Fruitfolio/Core/DesignSystems/FruitfolioAudioDesign.swift": "a4441a57ec7d8aaf71d7a47d637aa18895cb1ffb45ae918905636d0ba2ae148a",
+    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift": "176f1cfcc9848d10dd6bd6a2210e8a9d49f599fd167453740a395d313a50edf8"
+  }
+}

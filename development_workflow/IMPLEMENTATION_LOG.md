@@ -3812,3 +3812,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_XCTest_passed": 13, "breakdown": "8 actual context/privacy/size cases plus5 urgent engine cases", "workflow_passed": 71, "swift_syntax_files": 319}.
 - Next action: Inspect actual four-channel audio bindings/backend ownership against existing individual reconciliation and close only genuinely implemented clauses; fix concrete gaps if found. Continue original/founder work across all parts without recertifying whole features from test counts.
 - Commit: containing commit for batch Urgent-question-before-optional-context-and-bounded-encoding.
+
+## Audio-current-activity-and-explicit-system-resume-ownership
+
+- Parent checkpoint: 9deba1be3bae6824e71b1a83b864c0f69ae7a076.
+- Source-order requirements: [223, 224, 225, 226, 473, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/Assets/AudioManager.swift, Fruitfolio/Core/DesignSystems/FruitfolioAudioDesign.swift, Fruitfolio/Privacy Settings/Prompt12SettingsView.swift, development_workflow/AUDIO_LIFECYCLE_AND_RESUME_PERMISSION.json, development_workflow/AUDIO_SETTINGS_RECONCILIATION.md.
+- Repair actual audio lifecycle gaps: initial/current foreground gate, immediate synchronous main-queue notification handling, willResign physical stop, all-category owned-loop restoration, and shouldResume-dependent per-channel automatic-resume holds. A one-shot cannot unlock held music. Existing explicit Settings controls grant appropriate fresh intent without changing stored keys/preferences/artwork or replaying one-shots. Seventeen real Foundation settings/policy tests and71 workflow checks pass;320 syntax parses/zero sound-ownership findings. Three genuine Apple AVAudioPlayer cases written NOT_RUN; no runtime or whole audio completion promotion.
+- Tests added/updated: FruitfolioTests/Prompt1BAudioSettingsTests.swift, FruitfolioTests/Prompt1BSettingsLanguageTests.swift.
+- Verification: {"portable_settings_resume_XCTest_passed": 17, "workflow_passed": 71, "swift_syntax_files": 320, "sound_ownership_findings": 0}.
+- Next action: Implement missing source-specific LifeBridge Ask consumption through the existing approved-content contract and resource owner, preserving first-party/scientific separation, source attribution/official priority and external-content blockers. Do not count the current Instagram link or data loader alone as complete retrieval.
+- Commit: containing commit for batch Audio-current-activity-and-explicit-system-resume-ownership.

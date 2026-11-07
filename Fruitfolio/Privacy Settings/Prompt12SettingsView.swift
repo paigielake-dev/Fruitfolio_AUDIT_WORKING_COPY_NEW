@@ -173,33 +173,25 @@ struct Prompt12SettingsView: View {
                 "experience"
             )
 
-            WatercolorToggle(label: "mute all audio", isOn: $settings.globallyMuted)
+            WatercolorToggle(label: "mute all audio", isOn: audioEnableBinding(\.globallyMuted, resumeWhen: false))
             WatercolorToggle(
                 label: "sound effects",
-                isOn:
-                    $settings
-                        .soundEffectsEnabled
+                isOn: audioEnableBinding(\.soundEffectsEnabled, category: .soundEffects)
             )
 
             WatercolorToggle(
                 label: "music",
-                isOn:
-                    $settings
-                        .musicEnabled
+                isOn: audioEnableBinding(\.musicEnabled, category: .music)
             )
 
             WatercolorToggle(
                 label: "rain ambience",
-                isOn:
-                    $settings
-                        .rainEnabled
+                isOn: audioEnableBinding(\.rainEnabled, category: .rainAmbience)
             )
 
             WatercolorToggle(
                 label: "typing ASMR",
-                isOn:
-                    $settings
-                        .typingASMREnabled
+                isOn: audioEnableBinding(\.typingASMREnabled, category: .typingASMR)
             )
 
             Prompt12VolumeRow(title: "music", value: $settings.musicVolume)
@@ -207,6 +199,14 @@ struct Prompt12SettingsView: View {
             Prompt12VolumeRow(title: "sound effects", value: $settings.soundEffectsVolume)
             Prompt12VolumeRow(title: "typing asmr", value: $settings.typingVolume)
         }
+    }
+
+    private func audioEnableBinding(_ key: ReferenceWritableKeyPath<SettingsStore, Bool>,
+                                    resumeWhen: Bool = true, category: FruitfolioAudioCategory? = nil) -> Binding<Bool> {
+        Binding(get: { settings[keyPath: key] }, set: { enabled in
+            settings[keyPath: key] = enabled
+            if enabled == resumeWhen { audioManager.resumeAfterUserRequest(category: category) }
+        })
     }
 
     private var languageSection: some View {

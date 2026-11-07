@@ -262,6 +262,22 @@ final class Prompt1BSettingsLanguageTests: XCTestCase {
         XCTAssertEqual(reloaded.typingVolume, 0)
     }
 
+    func testSystemDeclinedResumeNeedsFreshIntentPerChannelWithoutChangingAudioPreferences() async {
+        var policy = FruitfolioAudioResumePolicy()
+        for category in FruitfolioAudioCategory.allCases { XCTAssertTrue(policy.allows(category)) }
+        policy.interruptionEnded(shouldResume: false)
+        for category in FruitfolioAudioCategory.allCases { XCTAssertFalse(policy.allows(category)) }
+        policy.requestPlayback(category: .soundEffects)
+        XCTAssertTrue(policy.allows(.soundEffects))
+        XCTAssertFalse(policy.allows(.music), "An effect request must not unlock music")
+        XCTAssertFalse(policy.allows(.rainAmbience))
+        policy.requestPlayback(category: nil)
+        for category in FruitfolioAudioCategory.allCases { XCTAssertTrue(policy.allows(category)) }
+        policy.interruptionEnded(shouldResume: false)
+        policy.interruptionEnded(shouldResume: true)
+        for category in FruitfolioAudioCategory.allCases { XCTAssertTrue(policy.allows(category)) }
+    }
+
     func testActualPlaybackVolumeGatesFourIndependentChannelsWithoutChangingPreferences() async throws {
         let suite = "Fruitfolio.AudioPlaybackPolicy." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

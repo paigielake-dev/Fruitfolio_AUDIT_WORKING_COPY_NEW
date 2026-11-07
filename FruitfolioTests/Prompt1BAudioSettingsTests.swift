@@ -1,4 +1,6 @@
 import XCTest
+import UIKit
+import AVFoundation
 @testable import Fruitfolio
 
 @MainActor
@@ -159,6 +161,103 @@ final class Prompt1BAudioSettingsTests: XCTestCase {
         try await Task.sleep(for: .milliseconds(250))
         XCTAssertFalse(audio.debugLoopSnapshot(category: .music).requested)
         XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing)
+    }
+    func testResignationImmediatelyStopsAndGatesOwnedLoopsBeforeAnyQueuedTaskRuns() async throws {
+        XCTAssertEqual(UIApplication.shared.applicationState, .active)
+        let suite = "Fruitfolio.AudioInactive.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        defer {
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+            audio.resetAllAudio()
+        }
+        audio.play(.fruitBasketMusicbox, loop: true)
+        _ = try XCTUnwrap(audio.debugLoopSnapshot(category: .music).volume)
+        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing)
+        XCTAssertTrue(audio.debugLoopSnapshot(category: .music).requested)
+        audio.play(.fruitBasketMusicbox, loop: true)
+        audio.fadeIn(.fruitBasketMusicbox, duration: 0)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing)
+        XCTAssertNil(audio.debugLoopSnapshot(category: .music).volume)
+    }
+
+    func testForegroundRestoresOnlyEligibleOwnedLoopsAcrossAllFourCategories() async throws {
+        XCTAssertEqual(UIApplication.shared.applicationState, .active)
+        let suite = "Fruitfolio.AudioRestoreAll.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        defer {
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+            audio.resetAllAudio()
+        }
+        for id: FruitfolioAudioID in [.fruitBasketMusicbox, .fruitBasketRainAmbience, .buttonSoftPop, .typingSoft] {
+            audio.play(id, loop: true)
+        }
+        for category in FruitfolioAudioCategory.allCases {
+            _ = try XCTUnwrap(audio.debugLoopSnapshot(category: category).volume)
+        }
+        NotificationCenter.default.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertFalse(audio.debugLoopSnapshot(category: category).playing)
+            XCTAssertTrue(audio.debugLoopSnapshot(category: category).requested)
+        }
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertTrue(audio.debugLoopSnapshot(category: category).playing,
+                          "Owned effect loops must restore just like music, rain and typing")
+        }
+        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+        settings.soundEffectsEnabled = false
+        audio.forgetLoop(category: .typingASMR)
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .soundEffects).playing)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .typingASMR).requested)
+    }
+    func testSystemDeclinedResumeIsNotOverriddenByForegroundOrOneShotAndExplicitMusicIntentWorks() async throws {
+        XCTAssertEqual(UIApplication.shared.applicationState, .active)
+        let suite = "Fruitfolio.AudioSystemResume.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        let center = NotificationCenter.default
+        func interrupt(_ type: AVAudioSession.InterruptionType, options: AVAudioSession.InterruptionOptions = []) {
+            center.post(name: AVAudioSession.interruptionNotification, object: AVAudioSession.sharedInstance(),
+                userInfo: [AVAudioSessionInterruptionTypeKey: type.rawValue,
+                           AVAudioSessionInterruptionOptionKey: options.rawValue])
+        }
+        defer {
+            // Restore notification-driven owners as well as this test manager.
+            center.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+            interrupt(.began)
+            interrupt(.ended, options: .shouldResume)
+            audio.resetAllAudio()
+        }
+        audio.play(.fruitBasketMusicbox, loop: true)
+        _ = try XCTUnwrap(audio.debugLoopSnapshot(category: .music).volume)
+        interrupt(.began)
+        interrupt(.ended)
+        center.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing)
+        audio.play(.buttonSoftPop)
+        center.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing,
+                       "An ordinary one-shot must not unlock held background music")
+        audio.resumeAfterUserRequest(category: .music)
+        XCTAssertTrue(audio.debugLoopSnapshot(category: .music).playing)
+        interrupt(.began)
+        interrupt(.ended, options: .shouldResume)
+        XCTAssertTrue(audio.debugLoopSnapshot(category: .music).playing)
+        settings.globallyMuted = true
+        interrupt(.began)
+        interrupt(.ended, options: .shouldResume)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .music).playing,
+                       "OS permission must never override the user's mute")
     }
     #endif
 

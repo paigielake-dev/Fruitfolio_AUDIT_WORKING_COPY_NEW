@@ -19,7 +19,11 @@ final class AudioManager: ObservableObject {
     private var desiredLoops: [FruitfolioAudioCategory: LoopRequest] = [:]
     private var suspendedLoopCategories = Set<FruitfolioAudioCategory>()
     private var audioInterrupted = false
-    private var applicationIsActive = true
+    private var resumePolicy = FruitfolioAudioResumePolicy()
+    private var applicationIsActive = UIApplication.shared.applicationState == .active
+    private var playbackAllowed: Bool {
+        applicationIsActive && UIApplication.shared.applicationState == .active && !audioInterrupted
+    }
     private var notificationObservers: [NSObjectProtocol] = []
 
     #if DEBUG
@@ -49,7 +53,6 @@ final class AudioManager: ObservableObject {
     #endif
 
     init(settings: SettingsStore? = nil) {
-        configureAudioSession()
         observeAudioLifecycle()
 
         #if DEBUG
@@ -93,13 +96,14 @@ final class AudioManager: ObservableObject {
         let category = category(for: id)
 
         if loop || isContinuousCategory(category) {
+            resumePolicy.requestPlayback(category: category)
             suspendedLoopCategories.remove(category)
             desiredLoops[category] = LoopRequest(
                 id: id,
                 bundle: bundle
             )
 
-            guard isEnabled(category) else {
+            guard isEnabled(category), playbackAllowed else {
                 return
             }
 
@@ -164,13 +168,14 @@ final class AudioManager: ObservableObject {
         let category = category(for: id)
 
         if isContinuousCategory(category) {
+            resumePolicy.requestPlayback(category: category)
             suspendedLoopCategories.remove(category)
             desiredLoops[category] = LoopRequest(
                 id: id,
                 bundle: bundle
             )
 
-            guard isEnabled(category) else {
+            guard isEnabled(category), playbackAllowed else {
                 return
             }
 
@@ -430,7 +435,7 @@ final class AudioManager: ObservableObject {
     private func resumeContinuousAudio(
         category: FruitfolioAudioCategory
     ) {
-        guard isEnabled(category), !audioInterrupted, applicationIsActive,
+        guard isEnabled(category), playbackAllowed, resumePolicy.allows(category),
               !suspendedLoopCategories.contains(category) else {
             return
         }
@@ -495,6 +500,14 @@ final class AudioManager: ObservableObject {
         )
     }
 
+    /// Called only by explicit audio-control intent, never by a passive
+    /// foreground notification or volume readback.
+    func resumeAfterUserRequest(category: FruitfolioAudioCategory? = nil) {
+        guard !audioInterrupted else { return }
+        resumePolicy.requestPlayback(category: category)
+        synchronizePlaybackWithSettings()
+    }
+
     private func synchronizePlaybackWithSettings() {
         for category in FruitfolioAudioCategory.allCases {
             if isEnabled(category) {
@@ -515,7 +528,7 @@ final class AudioManager: ObservableObject {
         bundle: Bundle,
         fadeDuration: TimeInterval
     ) {
-        guard !audioInterrupted, applicationIsActive else { return }
+        guard playbackAllowed, resumePolicy.allows(category) else { return }
         configureAudioSession()
 
         stopPhysicalLoop(
@@ -588,7 +601,7 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory,
         bundle: Bundle
     ) {
-        guard !audioInterrupted, applicationIsActive else { return }
+        guard playbackAllowed else { return }
         configureAudioSession()
 
         do {
@@ -953,7 +966,7 @@ final class AudioManager: ObservableObject {
             forName: AVAudioSession.interruptionNotification,
             object: AVAudioSession.sharedInstance(), queue: .main
         ) { [weak self] notification in
-            Task { @MainActor [weak self] in
+            MainActor.assumeIsolated {
                 guard let self,
                       let raw = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
                       let type = AVAudioSession.InterruptionType(rawValue: raw) else { return }
@@ -962,18 +975,32 @@ final class AudioManager: ObservableObject {
                     self.audioInterrupted = true
                     self.stopAll()
                 case .ended:
+                    guard self.audioInterrupted else { return }
                     self.audioInterrupted = false
-                    self.configureAudioSession()
+                    let rawOptions = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
+                    self.resumePolicy.interruptionEnded(shouldResume:
+                        AVAudioSession.InterruptionOptions(rawValue: rawOptions).contains(.shouldResume))
                     self.restoreDesiredLoops()
                 @unknown default: break
                 }
+            }
+        })
+        // These observers explicitly execute on the main queue. Handle the
+        // event synchronously: another Task can apply obsolete activity later.
+        notificationObservers.append(center.addObserver(
+            forName: UIApplication.willResignActiveNotification,
+            object: nil, queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                self?.applicationIsActive = false
+                self?.stopAll()
             }
         })
         notificationObservers.append(center.addObserver(
             forName: UIApplication.didEnterBackgroundNotification,
             object: nil, queue: .main
         ) { [weak self] _ in
-            Task { @MainActor [weak self] in
+            MainActor.assumeIsolated {
                 self?.applicationIsActive = false
                 self?.stopAll()
             }
@@ -982,19 +1009,18 @@ final class AudioManager: ObservableObject {
             forName: UIApplication.didBecomeActiveNotification,
             object: nil, queue: .main
         ) { [weak self] _ in
-            Task { @MainActor [weak self] in
+            MainActor.assumeIsolated {
                 guard let self else { return }
-                self.applicationIsActive = true
-                self.configureAudioSession()
+                self.applicationIsActive = UIApplication.shared.applicationState == .active
                 self.restoreDesiredLoops()
             }
         })
     }
 
     private func restoreDesiredLoops() {
-        guard !audioInterrupted, applicationIsActive else { return }
-        for category in [FruitfolioAudioCategory.music, .rainAmbience, .typingASMR] {
-            guard isEnabled(category),
+        guard playbackAllowed else { return }
+        for category in FruitfolioAudioCategory.allCases {
+            guard isEnabled(category), resumePolicy.allows(category),
                   !suspendedLoopCategories.contains(category),
                   let request = desiredLoops[category] else { continue }
             startLoop(request.id, category: category,
@@ -1005,6 +1031,7 @@ final class AudioManager: ObservableObject {
     // MARK: - Audio session
 
     private func configureAudioSession() {
+        guard playbackAllowed else { return }
         do {
             let session =
                 AVAudioSession.sharedInstance()

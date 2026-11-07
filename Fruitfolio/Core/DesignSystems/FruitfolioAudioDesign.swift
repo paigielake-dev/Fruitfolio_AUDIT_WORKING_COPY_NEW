@@ -7,6 +7,21 @@ enum FruitfolioAudioCategory: String, CaseIterable, Sendable {
     case typingASMR
 }
 
+/// Transient OS resume permission, separate from persisted channel choices.
+/// A fresh request may resume its own channel; a one-shot never grants music
+/// permission. An explicit global-unmute request can release all held channels.
+struct FruitfolioAudioResumePolicy: Sendable {
+    private var heldCategories: Set<FruitfolioAudioCategory> = []
+    func allows(_ category: FruitfolioAudioCategory) -> Bool { !heldCategories.contains(category) }
+    mutating func interruptionEnded(shouldResume: Bool) {
+        heldCategories = shouldResume ? [] : Set(FruitfolioAudioCategory.allCases)
+    }
+    mutating func requestPlayback(category: FruitfolioAudioCategory?) {
+        if let category { heldCategories.remove(category) }
+        else { heldCategories.removeAll() }
+    }
+}
+
 enum FruitfolioAudioID: String, CaseIterable, Sendable {
     case fruitBasketMusicbox = "audio_fruitbasket_musicbox"
     case fruitBasketRainAmbience = "audio_fruitbasket_rain"
