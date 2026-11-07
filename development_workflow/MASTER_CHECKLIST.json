@@ -31405,10 +31405,11 @@
         "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md"
+        "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -31422,9 +31423,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
-        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Shared-username-hints-and-native-length-counter (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -31432,38 +31434,67 @@
         "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.",
         "Actual Game Back now uses owned shared measured white-paper save/discard/keep for dirty username. Actual Foundation session freezes intent and delivers once after dismissal/all other popups, with protected Review, stale/replay/cancel guards. UI commits only acknowledged frozen intent and keeps errors/draft; discard is in-memory only. Six actual session/intent tests pass, 20 Apple launch scenarios added but NOT_RUN.",
         "Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN.",
-        "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim."
+        "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
+        "Individual clause review: USERNAME_CURRENT_IDENTITY_AND_SHARED_EDITOR_EVIDENCE.json. Account and Fruit Basket production defaults both observe the same FruitfolioUsernameStore.shared; actual store/persistence and frozen save intent share one versioned acknowledged name+consent record. Existing legacy migration/tombstone/foreign-writer protections remain. Private fixture namespaces remain isolated. Full1048 portable XCTest+21 SwiftTesting and20 focused actual username tests passed; Apple acceptance NOT_RUN.",
+        "Account and Fruit Basket production defaults both observe the same FruitfolioUsernameStore.shared; actual store/persistence and frozen save intent share one versioned acknowledged name+consent record. Existing legacy migration/tombstone/foreign-writer protections remain. Private fixture namespaces remain isolated."
       ],
-      "last_updated": "2026-11-07T01:24:18.836848+00:00",
+      "last_updated": "2026-11-07T14:06:50.349952+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-username-hints-and-native-length-counter",
+        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "new_Apple_UI_vectors_written": 4,
-          "new_Apple_UI_vectors_executed": 0
+          "focused_username_identity_policy_exit_XCTest": 20,
+          "full_portable_XCTest": 1048,
+          "full_Swift_Testing": 21,
+          "swift_syntax_files": 326,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_username_current_identity_final.log",
+            "/tmp/fruitfolio_username_authority_full_portable.log",
+            "/tmp/fruitfolio_username_authority_syntax.log"
+          ]
         },
         "not_run": [
-          "New4English/Arabic paused-inference actual username counter/draft/readback UI vectors",
-          "Apple genuine SwiftUI typecheck, Account/game VoiceOver hint speech, RTL/Dynamic Type layout and active official-model translation",
-          "Worldwide registration/global uniqueness backend and human identity review"
+          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+          "Official MADLAD/native-language moderation and actual Apple/device runtime."
         ],
         "remaining": [
-          "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
-          "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
-          "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
-          "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
-        "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
-        "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
-        "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Shared-username-hints-and-native-length-counter",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "new_Apple_UI_vectors_written": 4,
+            "new_Apple_UI_vectors_executed": 0
+          },
+          "not_run": [
+            "New4English/Arabic paused-inference actual username counter/draft/readback UI vectors",
+            "Apple genuine SwiftUI typecheck, Account/game VoiceOver hint speech, RTL/Dynamic Type layout and active official-model translation",
+            "Worldwide registration/global uniqueness backend and human identity review"
+          ],
+          "remaining": [
+            "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
+            "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
+            "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
+            "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -31488,10 +31519,11 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md"
+        "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -31504,47 +31536,78 @@
         "FruitfolioTests/Prompt1BLocalDataExportTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
-        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Shared-username-hints-and-native-length-counter (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push.",
         "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.",
         "Actual Game Back now uses owned shared measured white-paper save/discard/keep for dirty username. Actual Foundation session freezes intent and delivers once after dismissal/all other popups, with protected Review, stale/replay/cancel guards. UI commits only acknowledged frozen intent and keeps errors/draft; discard is in-memory only. Six actual session/intent tests pass, 20 Apple launch scenarios added but NOT_RUN.",
-        "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim."
+        "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
+        "Individual clause review: USERNAME_CURRENT_IDENTITY_AND_SHARED_EDITOR_EVIDENCE.json. Both original native editors expose create/edit and call the same setUsername/frozen-intent commit with expected snapshot, preserving rejected drafts/fault messages and acknowledging persistence before showing success. Actual production store fault/isolation/migration/frozen-intent tests execute; actual Apple controls remain acceptance pending. Full1048 portable XCTest+21 SwiftTesting and20 focused actual username tests passed; Apple acceptance NOT_RUN.",
+        "Both original native editors expose create/edit and call the same setUsername/frozen-intent commit with expected snapshot, preserving rejected drafts/fault messages and acknowledging persistence before showing success. Actual production store fault/isolation/migration/frozen-intent tests execute; actual Apple controls remain acceptance pending."
       ],
-      "last_updated": "2026-11-07T01:24:18.836848+00:00",
+      "last_updated": "2026-11-07T14:06:50.349952+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-username-hints-and-native-length-counter",
+        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "new_Apple_UI_vectors_written": 4,
-          "new_Apple_UI_vectors_executed": 0
+          "focused_username_identity_policy_exit_XCTest": 20,
+          "full_portable_XCTest": 1048,
+          "full_Swift_Testing": 21,
+          "swift_syntax_files": 326,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_username_current_identity_final.log",
+            "/tmp/fruitfolio_username_authority_full_portable.log",
+            "/tmp/fruitfolio_username_authority_syntax.log"
+          ]
         },
         "not_run": [
-          "New4English/Arabic paused-inference actual username counter/draft/readback UI vectors",
-          "Apple genuine SwiftUI typecheck, Account/game VoiceOver hint speech, RTL/Dynamic Type layout and active official-model translation",
-          "Worldwide registration/global uniqueness backend and human identity review"
+          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+          "Official MADLAD/native-language moderation and actual Apple/device runtime."
         ],
         "remaining": [
-          "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
-          "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
-          "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
-          "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
-        "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
-        "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
-        "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Shared-username-hints-and-native-length-counter",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "new_Apple_UI_vectors_written": 4,
+            "new_Apple_UI_vectors_executed": 0
+          },
+          "not_run": [
+            "New4English/Arabic paused-inference actual username counter/draft/readback UI vectors",
+            "Apple genuine SwiftUI typecheck, Account/game VoiceOver hint speech, RTL/Dynamic Type layout and active official-model translation",
+            "Worldwide registration/global uniqueness backend and human identity review"
+          ],
+          "remaining": [
+            "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
+            "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
+            "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
+            "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -31567,7 +31630,9 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md"
+        "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -31581,45 +31646,75 @@
         "FruitfolioTests/Prompt1BLocalDataExportTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
-        "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift"
+        "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Shared-username-hints-and-native-length-counter (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
         "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push.",
         "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.",
-        "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim."
+        "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
+        "Fix: shared production authority now consults current local account email/username at every commit, including Fruit Basket calls that supply no identity fragments and frozen exit intents created before account changes. Explicit caller/draft exclusions are added, not replaced. Identity is never written into pseudonym payload. Local unknown legal names/general moderation acceptance remains unfinished."
       ],
-      "last_updated": "2026-11-07T01:24:18.836848+00:00",
+      "last_updated": "2026-11-07T14:06:50.349952+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-username-hints-and-native-length-counter",
+        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
         "executed": {
-          "portable_XCTest": 900,
-          "native_CPU_XCTest": 922,
-          "SwiftTesting_each": 21,
-          "workflow_checks": 60,
-          "syntax_files": 311,
-          "new_Apple_UI_vectors_written": 4,
-          "new_Apple_UI_vectors_executed": 0
+          "focused_username_identity_policy_exit_XCTest": 20,
+          "full_portable_XCTest": 1048,
+          "full_Swift_Testing": 21,
+          "swift_syntax_files": 326,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_username_current_identity_final.log",
+            "/tmp/fruitfolio_username_authority_full_portable.log",
+            "/tmp/fruitfolio_username_authority_syntax.log"
+          ]
         },
         "not_run": [
-          "New4English/Arabic paused-inference actual username counter/draft/readback UI vectors",
-          "Apple genuine SwiftUI typecheck, Account/game VoiceOver hint speech, RTL/Dynamic Type layout and active official-model translation",
-          "Worldwide registration/global uniqueness backend and human identity review"
+          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+          "Official MADLAD/native-language moderation and actual Apple/device runtime."
         ],
         "remaining": [
-          "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
-          "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
-          "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
-          "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
-        "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
-        "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
-        "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Shared-username-hints-and-native-length-counter",
+          "executed": {
+            "portable_XCTest": 900,
+            "native_CPU_XCTest": 922,
+            "SwiftTesting_each": 21,
+            "workflow_checks": 60,
+            "syntax_files": 311,
+            "new_Apple_UI_vectors_written": 4,
+            "new_Apple_UI_vectors_executed": 0
+          },
+          "not_run": [
+            "New4English/Arabic paused-inference actual username counter/draft/readback UI vectors",
+            "Apple genuine SwiftUI typecheck, Account/game VoiceOver hint speech, RTL/Dynamic Type layout and active official-model translation",
+            "Worldwide registration/global uniqueness backend and human identity review"
+          ],
+          "remaining": [
+            "Run the new4Apple UI vectors and both Account/game VoiceOver hint/fallback behavior",
+            "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
+            "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
+            "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -40960,7 +41055,8 @@
         "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
         "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -41130,9 +41226,10 @@
         "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
         "FruitfolioTests/Prompt1BEducationResearchTests.swift",
         "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
-        "FruitfolioTests/Prompt1BObstacleGeometryTests.swift"
+        "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Storm-owned-resume-and-individual-obstacle-implementation-closures (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -41259,39 +41356,40 @@
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
         "Add actual module protocol/corpus/citation/persistence/scope regressions, reuse existing stage and pregnancy safety tests, and write the real Apple entry/draft-preservation navigation test. UIKit image resolution is excluded on Linux instead of counted as an empty pass. This does not certify tests/acceptance for all478 requirements.",
         "Six real Foundation regression tests passed; detailed catalog coverage, original corpus identity, adapters and durable chapter readback exercised. Apple tests remain NOT_RUN.",
-        "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure."
+        "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure.",
+        "Two new real production-store regressions verify current identity exclusion at direct/frozen commit, rejected-write byte preservation and absence of identity fields; full supported suite1048+21 passes. Apple tests remain unexecuted."
       ],
-      "last_updated": "2026-11-07T13:58:37.877058+00:00",
+      "last_updated": "2026-11-07T14:06:50.349952+00:00",
       "latest_batch_verification": {
-        "batch": "Storm-owned-resume-and-individual-obstacle-implementation-closures",
+        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
         "executed": {
-          "focused_actual_controller_engine_geometry_physics_XCTest": 119,
-          "separate_actual_mask_geometry_XCTest": 6,
-          "failures": 0,
-          "PNG_verified": 8,
-          "original_mask_hashes_matched": 3,
+          "focused_username_identity_policy_exit_XCTest": 20,
+          "full_portable_XCTest": 1048,
+          "full_Swift_Testing": 21,
           "swift_syntax_files": 326,
+          "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
-            "/tmp/fruitfolio_obstacle_geometry_closures.log",
-            "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+            "/tmp/fruitfolio_username_current_identity_final.log",
+            "/tmp/fruitfolio_username_authority_full_portable.log",
+            "/tmp/fruitfolio_username_authority_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
-          "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
+          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+          "Official MADLAD/native-language moderation and actual Apple/device runtime."
         ],
         "remaining": [
-          "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
-          "No subjective claim that geometry or source wiring proves convincing rendered physics.",
-          "No official MADLAD or target-language acceptance inferred from game-controller tests."
+          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
-        "No subjective claim that geometry or source wiring proves convincing rendered physics.",
-        "No official MADLAD or target-language acceptance inferred from game-controller tests."
+        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
       ],
       "prior_batch_verifications": [
         {
@@ -41755,6 +41853,32 @@
             "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
             "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
             "Official MADLAD model and on-device performance remain unverified."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Storm-owned-resume-and-individual-obstacle-implementation-closures",
+          "executed": {
+            "focused_actual_controller_engine_geometry_physics_XCTest": 119,
+            "separate_actual_mask_geometry_XCTest": 6,
+            "failures": 0,
+            "PNG_verified": 8,
+            "original_mask_hashes_matched": 3,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+              "/tmp/fruitfolio_obstacle_geometry_closures.log",
+              "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
+            "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
+          ],
+          "remaining": [
+            "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+            "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+            "No official MADLAD or target-language acceptance inferred from game-controller tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -41973,7 +42097,8 @@
         "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
         "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -42138,9 +42263,10 @@
         "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy",
         "FruitfolioTests/Prompt1BEducationResearchTests.swift",
         "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
-        "FruitfolioTests/Prompt1BObstacleGeometryTests.swift"
+        "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Storm-owned-resume-and-individual-obstacle-implementation-closures (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -42250,39 +42376,40 @@
         "Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.",
         "Tests are in the existing FruitfolioTests/FruitfolioUITests targets; real Foundation production files/provider adapters and original module tests are enrolled in the existing portable runner. Xcode source groups auto-enroll the new Swift files. App target/UI tests remain NOT_RUN.",
         "Regression assertions live in original project test source, enrolled by existing synchronized groups and real portable runner.",
-        "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure."
+        "Actual storm dismissal has scene/visibility/foreign-modal/writable/interaction ownership gates; actual controller stale-ticket regression passed. Existing actual multi-handler Apple storm UI regression remains NOT_RUN. No whole cross-app requirement closure.",
+        "Two new real production-store regressions verify current identity exclusion at direct/frozen commit, rejected-write byte preservation and absence of identity fields; full supported suite1048+21 passes. Apple tests remain unexecuted."
       ],
-      "last_updated": "2026-11-07T13:58:37.877058+00:00",
+      "last_updated": "2026-11-07T14:06:50.349952+00:00",
       "latest_batch_verification": {
-        "batch": "Storm-owned-resume-and-individual-obstacle-implementation-closures",
+        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
         "executed": {
-          "focused_actual_controller_engine_geometry_physics_XCTest": 119,
-          "separate_actual_mask_geometry_XCTest": 6,
-          "failures": 0,
-          "PNG_verified": 8,
-          "original_mask_hashes_matched": 3,
+          "focused_username_identity_policy_exit_XCTest": 20,
+          "full_portable_XCTest": 1048,
+          "full_Swift_Testing": 21,
           "swift_syntax_files": 326,
+          "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
-            "/tmp/fruitfolio_obstacle_geometry_closures.log",
-            "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+            "/tmp/fruitfolio_username_current_identity_final.log",
+            "/tmp/fruitfolio_username_authority_full_portable.log",
+            "/tmp/fruitfolio_username_authority_syntax.log"
           ]
         },
         "not_run": [
-          "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
-          "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
+          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+          "Official MADLAD/native-language moderation and actual Apple/device runtime."
         ],
         "remaining": [
-          "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
-          "No subjective claim that geometry or source wiring proves convincing rendered physics.",
-          "No official MADLAD or target-language acceptance inferred from game-controller tests."
+          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
-        "No subjective claim that geometry or source wiring proves convincing rendered physics.",
-        "No official MADLAD or target-language acceptance inferred from game-controller tests."
+        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
       ],
       "prior_batch_verifications": [
         {
@@ -42746,6 +42873,32 @@
             "14 qualified-unavailable content IDs are enumerated below; 11 core and 3 expanded. Do not bypass quarantine or invent prose to fill them.",
             "Apple SDK build/navigation/source/save UI and accessibility/RTL/Dynamic Type remain NOT_RUN.",
             "Official MADLAD model and on-device performance remain unverified."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Storm-owned-resume-and-individual-obstacle-implementation-closures",
+          "executed": {
+            "focused_actual_controller_engine_geometry_physics_XCTest": 119,
+            "separate_actual_mask_geometry_XCTest": 6,
+            "failures": 0,
+            "PNG_verified": 8,
+            "original_mask_hashes_matched": 3,
+            "swift_syntax_files": 326,
+            "logs": [
+              "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+              "/tmp/fruitfolio_obstacle_geometry_closures.log",
+              "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
+            "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
+          ],
+          "remaining": [
+            "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+            "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+            "No official MADLAD or target-language acceptance inferred from game-controller tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

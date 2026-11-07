@@ -4040,3 +4040,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"current_focused_controller_engine_physics_XCTest": 119, "progression_policy_XCTest": 5, "immutable_result_ledger_XCTest": 7, "rule_catalog_XCTest_at_parent_closure": 3, "failures": 0, "logs": ["/tmp/fruitfolio_storm_resume_ticket_tests.log", "/tmp/fruitfolio_progression_clause_closures.log", "/tmp/fruitfolio_result_clause_closures.log", "/tmp/fruitfolio_star_rule_catalog_closure.log"], "scope": "Actual unchanged production Foundation policy/controller/engine/store/ledger. No new tests or source edits for already-exercised behavior."}.
 - Next action: Continue shared username and remaining FAQ/Contact/Account/data/localization requirements; no rebuild/push/merge.
 - Commit: containing commit for batch Individual-bounded-progression-and-accepted-result-implementation-closures.
+
+## Shared-username-current-identity-exclusions-and-editor-clauses
+
+- Parent checkpoint: 0c1b7cecb74099f65c59450be5b3060bb1d3577c.
+- Source-order requirements: [369, 370, 371, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift, Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift, Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift, Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift, Fruitfolio/Privacy Settings/Prompt12AccountView.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, development_workflow/USERNAME_CURRENT_IDENTITY_AND_SHARED_EDITOR_EVIDENCE.json.
+- Fix known-identity validation bypass in Fruit Basket by applying current account exclusions in the existing shared username authority at commit time; frozen intents recheck current identity without storing it. Individually close369/370 implementation with Apple acceptance pending;371 remains incomplete.
+- Tests added/updated: FruitfolioTests/Prompt1BUsernamePersistenceTests.swift, FruitfolioTests/Prompt1BPseudonymPolicyTests.swift, FruitfolioTests/Prompt1BUsernameExitSessionTests.swift, FruitfolioTests/Prompt1BAccountDraftExitTests.swift.
+- Verification: {"focused_username_identity_policy_exit_XCTest": 20, "full_portable_XCTest": 1048, "full_Swift_Testing": 21, "swift_syntax_files": 326, "failures": 0, "logs": ["/tmp/fruitfolio_username_current_identity_final.log", "/tmp/fruitfolio_username_authority_full_portable.log", "/tmp/fruitfolio_username_authority_syntax.log"]}.
+- Next action: Continue remaining gameplay accessibility/FAQ/Contact/Account/global localization and other original requirements; no completion claim from test counts.
+- Commit: containing commit for batch Shared-username-current-identity-exclusions-and-editor-clauses.

@@ -1,0 +1,40 @@
+{
+  "scope": "Requirements369/370 implementation individually reviewed with actual store/persistence execution and live production UI wiring; Apple acceptance pending.371 receives new implementation evidence only, not full closure.",
+  "source_gap": "Account supplied known email identity exclusions but Fruit Basket did not; a known private identifier could bypass the Account-side check via the game editor.",
+  "fix": "Fix: shared production authority now consults current local account email/username at every commit, including Fruit Basket calls that supply no identity fragments and frozen exit intents created before account changes. Explicit caller/draft exclusions are added, not replaced. Identity is never written into pseudonym payload. Local unknown legal names/general moderation acceptance remains unfinished.",
+  "production_privacy": "Provider reads only current local account email/username synchronously at commit. No extra identity collection, network, health-profile read, caching or persistence. Existing record schema/keys unchanged; actual JSON key-set test verifies only schemaVersion/username/confirmedNonIdentifying. Private injected stores default to no production account reads.",
+  "new_real_tests": [
+    "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions",
+    "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity"
+  ],
+  "test_scope": "Uses actual username store/persistence/exit intent; second test uses existing explicit local development-account fixture. This is not real backend authentication or legal-name validation.",
+  "verification": {
+    "executed": {
+      "focused_username_identity_policy_exit_XCTest": 20,
+      "full_portable_XCTest": 1048,
+      "full_Swift_Testing": 21,
+      "swift_syntax_files": 326,
+      "failures": 0,
+      "logs": [
+        "/tmp/fruitfolio_username_current_identity_final.log",
+        "/tmp/fruitfolio_username_authority_full_portable.log",
+        "/tmp/fruitfolio_username_authority_syntax.log"
+      ]
+    },
+    "not_run": [
+      "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+      "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+      "Official MADLAD/native-language moderation and actual Apple/device runtime."
+    ],
+    "remaining": [
+      "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+      "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+      "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+    ]
+  },
+  "individual_reviews": {
+    "369": "Account and Fruit Basket production defaults both observe the same FruitfolioUsernameStore.shared; actual store/persistence and frozen save intent share one versioned acknowledged name+consent record. Existing legacy migration/tombstone/foreign-writer protections remain. Private fixture namespaces remain isolated.",
+    "370": "Both original native editors expose create/edit and call the same setUsername/frozen-intent commit with expected snapshot, preserving rejected drafts/fault messages and acknowledging persistence before showing success. Actual production store fault/isolation/migration/frozen-intent tests execute; actual Apple controls remain acceptance pending.",
+    "371": "Fix: shared production authority now consults current local account email/username at every commit, including Fruit Basket calls that supply no identity fragments and frozen exit intents created before account changes. Explicit caller/draft exclusions are added, not replaced. Identity is never written into pseudonym payload. Local unknown legal names/general moderation acceptance remains unfinished."
+  }
+}

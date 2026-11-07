@@ -27,6 +27,59 @@ final class Prompt1BUsernamePersistenceTests: XCTestCase {
 
 @MainActor
 final class Prompt1BUsernameStoreIsolationTests: XCTestCase {
+    func testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions() async throws {
+        let suite = "Fruitfolio.UsernameIdentityAuthority." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var currentIdentity = ["alice.garden@example.invalid"]
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username",
+            identifyingTextProvider: { currentIdentity })
+        XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+        let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+        let original = defaults.data(forKey: key)
+        XCTAssertNotNil(store.setUsername("alice_77", confirmedNonIdentifying: true))
+        XCTAssertEqual(defaults.data(forKey: key), original)
+        XCTAssertNotNil(store.setUsername("draftname_3", confirmedNonIdentifying: true,
+            identifyingText: ["draftname@example.invalid"]))
+        XCTAssertEqual(defaults.data(forKey: key), original)
+        currentIdentity = ["marina@example.invalid"]
+        XCTAssertNotNil(store.setUsername("marina_77", confirmedNonIdentifying: true))
+        XCTAssertEqual(store.username, "old_berry")
+        XCTAssertNil(store.setUsername("plum_77", confirmedNonIdentifying: true))
+        let bytes = try XCTUnwrap(defaults.data(forKey: key))
+        let record = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+        XCTAssertEqual(Set(record.keys), Set(["schemaVersion", "username", "confirmedNonIdentifying"]))
+        XCTAssertFalse(String(decoding: bytes, as: UTF8.self).contains("example.invalid"))
+        XCTAssertEqual(FruitfolioUsernamePersistence(defaults: defaults, key: "username").load().username, "plum_77")
+    }
+
+    func testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity() async throws {
+        let suite = "Fruitfolio.UsernameFrozenAccount." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let account = Prompt12AccountPrivacyStore(defaults: defaults, persistenceKey: "account-fixture")
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username", identifyingTextProvider: {
+            account.account.map { [$0.email, $0.username] } ?? []
+        })
+        XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+        let intent = FruitfolioUsernameSaveIntent(raw: "alice_77", confirmedNonIdentifying: true,
+            expected: store.snapshot)
+        // Existing explicit development fixture creates a local test identity;
+        // this does not claim real backend sign-in or identity verification.
+        try account.signInForDevelopment(email: "alice.garden@example.invalid")
+        let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+        let usernameBytes = defaults.data(forKey: key)
+        let accountBytes = try XCTUnwrap(defaults.data(forKey: "account-fixture"))
+        XCTAssertEqual(account.account?.email, "alice.garden@example.invalid")
+        XCTAssertNotNil(intent.commit(to: store))
+        XCTAssertEqual(defaults.data(forKey: key), usernameBytes)
+        XCTAssertEqual(defaults.data(forKey: "account-fixture"), accountBytes)
+        XCTAssertEqual(store.username, "old_berry")
+        XCTAssertNil(store.setUsername("plum_77", confirmedNonIdentifying: true))
+        XCTAssertEqual(defaults.data(forKey: "account-fixture"), accountBytes)
+        XCTAssertEqual(FruitfolioUsernamePersistence(defaults: defaults, key: "username").load().username, "plum_77")
+    }
+
     func testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces() async throws {
         let firstSuite = "Fruitfolio.UsernameFirst." + UUID().uuidString
         let secondSuite = "Fruitfolio.UsernameSecond." + UUID().uuidString
