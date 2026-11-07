@@ -869,7 +869,7 @@ struct Prompt09AskView: View {
 
                     } else {
                         FruitfolioTranslatedContent(source: viewModel.displayedAnswerText,
-                                                     protectedLiterals: answer.sourceIDs, sourceRecords: answer.sources) { display, displayLanguage in
+                                                     protectedLiterals: answer.sourceIDs + (answer.answerPath == .publisherInformation ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []), sourceRecords: answer.sources) { display, displayLanguage in
                             Prompt09MaroonSelectableAnswerText(
                                 text: display,
                                 selectedText: $viewModel.selectedExcerptText,
@@ -1095,7 +1095,7 @@ struct Prompt09AskView: View {
                 FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
                     .accessibilityIdentifier("ask.evidenceSupport.\(answer.id.uuidString)")
             }
-            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs, sourceRecords: answer.sources) { display, displayLanguage in
+            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs + (answer.answerPath == .publisherInformation ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []), sourceRecords: answer.sources) { display, displayLanguage in
                 Prompt09SelectableAnswerText(
                     text: display,
                     selectedText: Binding(get: { historicalSelections[answer.id] },

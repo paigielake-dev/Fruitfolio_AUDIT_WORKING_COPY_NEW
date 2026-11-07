@@ -15,8 +15,31 @@ actor FruitfolioResearchPackageStore {
         FruitfolioResearchPackage?
 
     private let resourceURL: URL?
+    private let lifeBridgeResourceURL: URL?
+    private var cachedLifeBridgeContent: FruitfolioLifeBridgeContent?
 
-    init(resourceURL: URL? = nil) { self.resourceURL = resourceURL }
+    init(resourceURL: URL? = nil, lifeBridgeResourceURL: URL? = nil) {
+        self.resourceURL = resourceURL
+        self.lifeBridgeResourceURL = lifeBridgeResourceURL
+    }
+
+    func lifeBridgeContent() throws -> FruitfolioLifeBridgeContent? {
+        try Task.checkCancellation()
+        if let cachedLifeBridgeContent { return cachedLifeBridgeContent }
+        let content: FruitfolioLifeBridgeContent?
+        if let lifeBridgeResourceURL { content = FruitfolioLifeBridgeInformation.load(at: lifeBridgeResourceURL) }
+        else { content = FruitfolioLifeBridgeInformation.load() }
+        try Task.checkCancellation()
+        if let content { cachedLifeBridgeContent = content }
+        return content
+    }
+
+    func lifeBridgeAnswer(originalQuestion: String, query: String) throws -> AskAnswer? {
+        try Task.checkCancellation()
+        let answer = try lifeBridgeContent()?.informationalAnswer(originalQuestion: originalQuestion, query: query)
+        try Task.checkCancellation()
+        return answer
+    }
 
     private var cachedRetriever: FruitfolioLocalResearchRetriever?
     private var indexedLocale: String?
@@ -726,7 +749,7 @@ final class FruitfolioResearchIntelligenceEngine:
         // result cache. The existing service drops source sharing keys after
         // the last waiter; its envelope protects scientific values/references.
         let query = try await translationService.translateForDisplay(question, language: .english,
-            sourceLanguage: inputLanguage.rawValue, preferCatalog: false,
+            protectedLiterals: FruitfolioLifeBridgeInformation.protectedNames(in: question), sourceLanguage: inputLanguage.rawValue, preferCatalog: false,
             inferenceAllowed: translationInferenceAllowed).text
         try Task.checkCancellation()
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
@@ -771,8 +794,11 @@ final class FruitfolioResearchIntelligenceEngine:
         if let userContext { _ = try userContext.promptJSON() }
 
         if safety.level == .normal,
-           (FruitfolioLifeBridgeInformation.isOrganizationQuestion(trimmed) || FruitfolioLifeBridgeInformation.isOrganizationQuestion(searchQuestion)),
-           FruitfolioLifeBridgeInformation.load() == nil {
+           (FruitfolioLifeBridgeInformation.isInformationQuestion(trimmed) || FruitfolioLifeBridgeInformation.isInformationQuestion(searchQuestion)) {
+            lastDiagnostics = nil
+            if let answer = try await packageStore.lifeBridgeAnswer(originalQuestion: trimmed, query: searchQuestion) {
+                return answer
+            }
             return AskAnswer(
                 originalQuestion: trimmed,
                 answerText: "details not available in the approved library yet. open LifeBridge information for the founder-specified official websites. current organization-specific claims require reviewed snapshots from both LifeBridge and FruitsofLife.xo.",

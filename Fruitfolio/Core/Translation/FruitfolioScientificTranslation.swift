@@ -102,6 +102,9 @@ struct FruitfolioDisplayTranslation: Equatable, Sendable {
 }
 
 actor FruitfolioTranslationService {
+    static let maximumInputBytes = 1024 * 1024
+    static let maximumProtectedLiterals = 1024
+    static let maximumProtectedLiteralBytes = 64 * 1024
     static let shared = FruitfolioTranslationService(runtime: FruitfolioMADLADRuntime.shared)
     private let runtime: any FruitfolioLocalTranslationRuntime
     init(runtime: any FruitfolioLocalTranslationRuntime) { self.runtime = runtime }
@@ -195,15 +198,15 @@ actor FruitfolioTranslationService {
         // Reject excessive work before trimming, catalog lookup, paragraph copies
         // or regex/envelope construction. These are UTF-8 bytes, not Characters.
         // Same-language display never needs inference and retains its original.
-        guard source.utf8.count <= 1024 * 1024,
+        guard source.utf8.count <= Self.maximumInputBytes,
               sourceLanguage.utf8.count <= 64,
-              protectedLiterals.count <= 1024 else {
+              protectedLiterals.count <= Self.maximumProtectedLiterals else {
             throw FruitfolioTranslationError.inputTooLong
         }
         var protectedBytes = 0
         for literal in protectedLiterals {
             let count = literal.utf8.count
-            guard count <= 64 * 1024 - protectedBytes else {
+            guard count <= Self.maximumProtectedLiteralBytes - protectedBytes else {
                 throw FruitfolioTranslationError.inputTooLong
             }
             protectedBytes += count

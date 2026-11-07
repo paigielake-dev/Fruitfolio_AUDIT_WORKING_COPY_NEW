@@ -3,7 +3,8 @@ import UIKit
 
 struct FruitfolioLifeBridgeInformationView: View {
     let onBack: () -> Void
-    private let approved = FruitfolioLifeBridgeInformation.load()
+    @State private var approved: FruitfolioLifeBridgeContent?
+    @State private var loading = true
     @State private var viewIsVisible = false
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
@@ -16,11 +17,11 @@ struct FruitfolioLifeBridgeInformationView: View {
                 BackControl(action: { guard canInteract else { return }; onBack() })
                 FruitfolioFixedText(source: "LifeBridge information", font: .title2.bold(), serious: true).accessibilityAddTraits(.isHeader)
                 if let approved {
-                    ForEach(approved.snapshots, id: \.id) { snapshot in
+                    ForEach(approved.orderedSnapshots, id: \.id) { snapshot in
                         VStack(alignment: .leading, spacing: 8) {
                             Text(verbatim: snapshot.title).bold()
                             FruitfolioTranslatedText(source: snapshot.approvedText,
-                                                     protectedLiterals: [snapshot.sourceURL.absoluteString] + ["FruitsofLife.xo", "LifeBridge Surrogacy"].filter { snapshot.approvedText.contains($0) }, serious: true)
+                                                     protectedLiterals: [snapshot.sourceURL.absoluteString] + FruitfolioLifeBridgeInformation.protectedNames(in: snapshot.approvedText), serious: true)
                             Text(verbatim: snapshot.sourceURL.absoluteString).font(.caption)
                             HStack(alignment: .firstTextBaseline) {
                                 FruitfolioFixedText(source: "retrieved", serious: true)
@@ -33,11 +34,22 @@ struct FruitfolioLifeBridgeInformationView: View {
                             }.accessibilityElement(children: .combine)
                         }
                     }
-                    if let disclosure = approved.relationshipDisclosure { FruitfolioTranslatedText(source: disclosure, protectedLiterals: ["FruitsofLife.xo", "LifeBridge Surrogacy"].filter { disclosure.contains($0) }, serious: true) }
+                    if let differences = approved.sourceDiscrepancies, !differences.isEmpty {
+                        FruitfolioFixedText(source: "source differences flagged for founder review", serious: true)
+                            .accessibilityAddTraits(.isHeader)
+                        ForEach(Array(differences.enumerated()), id: \.offset) { _, text in
+                            FruitfolioTranslatedText(source: text, protectedLiterals: FruitfolioLifeBridgeInformation.protectedNames(in: text), serious: true)
+                        }
+                    }
+                    FruitfolioFixedText(source: "for organization-specific details, follow LifeBridge’s official source. founder context is shown separately.",
+                        protectedLiterals: ["LifeBridge"], serious: true)
+                    if let disclosure = approved.relationshipDisclosure { FruitfolioTranslatedText(source: disclosure, protectedLiterals: FruitfolioLifeBridgeInformation.protectedNames(in: disclosure), serious: true) }
                     if let application = approved.officialApplicationURL {
                         Link(destination: application) { FruitfolioFixedText(source: "official application — opens an external website", serious: true) }
                         .disabled(!canInteract)
                     }
+                } else if loading {
+                    ProgressView { FruitfolioFixedText(source: "loading information", serious: true) }
                 } else {
                     FruitfolioFixedText(source: FruitfolioLifeBridgeInformation.missingContent, serious: true)
                         .accessibilityIdentifier("lifebridge.awaitingVerifiedContent")
@@ -70,6 +82,17 @@ struct FruitfolioLifeBridgeInformationView: View {
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .task {
+            do {
+                let content = try await FruitfolioResearchPackageStore.shared.lifeBridgeContent()
+                guard !Task.isCancelled else { return }
+                approved = content
+            } catch {
+                guard !Task.isCancelled else { return }
+                approved = nil
+            }
+            loading = false
+        }
         .onAppear { viewIsVisible = true }
         .onDisappear { viewIsVisible = false }
         .accessibilityIdentifier("lifebridge.information")
