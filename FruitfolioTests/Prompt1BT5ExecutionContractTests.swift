@@ -296,7 +296,58 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         XCTAssertFalse(rejected.modelLoaded); XCTAssertFalse(rejected.resourcesLoaded)
     }
 
-    func testDeclaredButMissingVocabularyTagNeverAllocatesContext() async throws {
+    func testRejectedVocabularyTagCacheIsBoundedToResourceReleaseEpoch() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let manifestURL = directory.appendingPathComponent("MADLAD400.manifest.json")
+        var manifest = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: manifestURL)) as? [String: Any])
+        manifest["supportedLanguageTags"] = ["de", "en", "fr"]
+        try JSONSerialization.data(withJSONObject: manifest).write(to: manifestURL)
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        for _ in 0..<2 {
+            do { _ = try await runtime.translate("fixture", targetTag: "fr"); XCTFail("Missing actual vocabulary tag") }
+            catch { XCTAssertEqual(error as? FruitfolioTranslationError, .unsupportedLanguage("fr")) }
+        }
+        let cached = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(cached.vocabularyPreflightCalls, 1)
+        XCTAssertEqual(cached.successfulResourceVerifications, 1)
+        XCTAssertEqual(cached.activeVocabularyOnlyModels, 0)
+        XCTAssertEqual(cached.vocabularyPreflightMainThreadCalls, 0)
+        XCTAssertEqual(cached.checkedBlockingCalls, 0)
+        XCTAssertFalse(cached.modelLoaded); XCTAssertFalse(cached.resourcesLoaded)
+        await runtime.releaseResources()
+        do { _ = try await runtime.translate("fixture", targetTag: "fr"); XCTFail("Missing actual vocabulary tag") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .unsupportedLanguage("fr")) }
+        let retried = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(retried.vocabularyPreflightCalls, 2)
+        XCTAssertEqual(retried.successfulResourceVerifications, 2)
+        XCTAssertEqual(retried.activeVocabularyOnlyModels, 0)
+        XCTAssertEqual(retried.vocabularyPreflightMainThreadCalls, 0)
+        XCTAssertFalse(retried.modelLoaded)
+        await runtime.releaseResources()
+    }
+
+    func testMissingLanguageTagCanBeRejectedFromVocabularyOnlyGGUFWithoutAnyTensors() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false, vocabularyOnly: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let manifestURL = directory.appendingPathComponent("MADLAD400.manifest.json")
+        var manifest = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: manifestURL)) as? [String: Any])
+        manifest["supportedLanguageTags"] = ["de", "en", "fr"]
+        try JSONSerialization.data(withJSONObject: manifest).write(to: manifestURL)
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        do { _ = try await runtime.translate("fixture", targetTag: "fr"); XCTFail("Missing actual vocabulary tag") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .unsupportedLanguage("fr")) }
+        let stats = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(stats.checkedBlockingCalls, 0)
+        XCTAssertEqual(stats.vocabularyPreflightCalls, 1)
+        XCTAssertEqual(stats.vocabularyPreflightMainThreadCalls, 0)
+        XCTAssertEqual(stats.activeVocabularyOnlyModels, 0)
+        XCTAssertFalse(stats.modelLoaded); XCTAssertFalse(stats.resourcesLoaded)
+        XCTAssertEqual(stats.encoderCalls, 0); XCTAssertEqual(stats.decoderCalls, 0)
+        await runtime.releaseResources()
+    }
+
+    func testDeclaredButMissingVocabularyTagNeverLoadsTensorsOrContext() async throws {
         let directory = try SyntheticT5Contract.write(gated: false)
         defer { try? FileManager.default.removeItem(at: directory) }
         let manifestURL = directory.appendingPathComponent("MADLAD400.manifest.json")
@@ -307,13 +358,16 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         do { _ = try await runtime.translate("fixture", targetTag: "fr"); XCTFail("Manifest cannot invent a vocabulary tag") }
         catch { XCTAssertEqual(error as? FruitfolioTranslationError, .unsupportedLanguage("fr")) }
         let rejected = await runtime.debugExecutionStatistics()
-        XCTAssertEqual(rejected.checkedBlockingCalls, 1)
-        XCTAssertTrue(rejected.modelLoaded); XCTAssertFalse(rejected.resourcesLoaded)
+        XCTAssertEqual(rejected.checkedBlockingCalls, 0)
+        XCTAssertFalse(rejected.modelLoaded); XCTAssertFalse(rejected.resourcesLoaded)
         XCTAssertEqual(rejected.encoderCalls, 0); XCTAssertEqual(rejected.decoderCalls, 0)
         do { _ = try await runtime.translate("fixture", targetTag: "de"); XCTFail("Empty synthetic output") }
         catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inferenceFailed) }
         let valid = await runtime.debugExecutionStatistics()
         XCTAssertEqual(valid.checkedBlockingCalls, 4)
+        XCTAssertEqual(valid.successfulResourceVerifications, 1, "The verified resource epoch need not hash the same weights twice")
+        XCTAssertEqual(valid.vocabularyPreflightCalls, 2)
+        XCTAssertEqual(valid.activeVocabularyOnlyModels, 0)
         XCTAssertEqual(valid.encoderCalls, 1); XCTAssertEqual(valid.decoderCalls, 1)
         await runtime.releaseResources()
     }
@@ -486,13 +540,13 @@ private enum SyntheticT5Contract {
         return data
     }
     static func write(gated: Bool, repeatToken: Bool = false, oneTokenThenEOS: Bool = false,
-                      addSpacePrefix: Bool = false, languageTagType: Int = 4) throws -> URL {
+                      addSpacePrefix: Bool = false, languageTagType: Int = 4, vocabularyOnly: Bool = false) throws -> URL {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("fruitfolio-SYNTHETIC-T5-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         do {
             let url = directory.appendingPathComponent("SYNTHETIC-UNTRAINED-NOT-MADLAD.gguf")
             try model(gated: gated, repeatToken: repeatToken, oneTokenThenEOS: oneTokenThenEOS,
-                addSpacePrefix: addSpacePrefix, languageTagType: languageTagType).write(to: url)
+                addSpacePrefix: addSpacePrefix, languageTagType: languageTagType, vocabularyOnly: vocabularyOnly).write(to: url)
             let file = try FileHandle(forReadingFrom: url)
             defer { try? file.close() }
             let hash = try FruitfolioModelChecksum.sha256(file: file)
@@ -505,7 +559,7 @@ private enum SyntheticT5Contract {
         } catch { try? FileManager.default.removeItem(at: directory); throw error }
     }
     static func model(gated: Bool, repeatToken: Bool, oneTokenThenEOS: Bool,
-                      addSpacePrefix: Bool, languageTagType: Int) -> Data {
+                      addSpacePrefix: Bool, languageTagType: Int, vocabularyOnly: Bool = false) -> Data {
         var metadata: [(String, UInt64, Data)] = []
         func text(_ key: String, _ value: String) { metadata.append((key, 8, string(value))) }
         func number(_ key: String, _ value: UInt64) { metadata.append((key, 4, integer(value, bytes: 4))) }
@@ -566,6 +620,7 @@ private enum SyntheticT5Contract {
             tensor(prefix + "ffn_down", [64, 32])
             if gated { tensor(prefix + "ffn_gate", [32, 64]) }
         }
+        if vocabularyOnly { tensors.removeAll() } // Deliberately no executable tensor payload.
         var data = Data("GGUF".utf8) + integer(3, bytes: 4) + integer(UInt64(tensors.count)) + integer(UInt64(metadata.count))
         for (key, type, value) in metadata { data += string(key) + integer(type, bytes: 4) + value }
         var payload = Data()

@@ -18,9 +18,13 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     private var checkedBlockingCalls = 0
     private var mainThreadBlockingCalls = 0
     private var largestTokenBuffer = 0
+    private var vocabularyPreflightCalls = 0
+    private var vocabularyPreflightMainThreadCalls = 0
+    private var activeVocabularyOnlyModels = 0
+    private var successfulResourceVerifications = 0
 
-    /// Samples the invoking thread at model load, context allocation, encode and
-    /// decode. No text, tokens or identities are recorded. This is not profiling.
+    /// Samples full tensor-model load, context allocation, encode and decode.
+    /// Vocabulary-only preflight has separate counters. This is not profiling.
     private func recordBlockingExecutionThread() {
         checkedBlockingCalls += 1
         if Thread.isMainThread { mainThreadBlockingCalls += 1 }
@@ -29,11 +33,20 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     /// Actual call/resource counters and largest Swift token-buffer allocation,
     /// never user content. Synthetic execution does not establish language quality.
     func debugExecutionStatistics() -> (encoderCalls: Int, decoderCalls: Int, resourcesLoaded: Bool,
-                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int, modelLoaded: Bool, largestTokenBuffer: Int) {
+                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int, modelLoaded: Bool, largestTokenBuffer: Int,
+                                         vocabularyPreflightCalls: Int, vocabularyPreflightMainThreadCalls: Int, activeVocabularyOnlyModels: Int,
+                                         successfulResourceVerifications: Int) {
         (successfulEncoderCalls, successfulDecoderCalls, model != nil && context != nil,
-         checkedBlockingCalls, mainThreadBlockingCalls, model != nil, largestTokenBuffer)
+         checkedBlockingCalls, mainThreadBlockingCalls, model != nil, largestTokenBuffer,
+         vocabularyPreflightCalls, vocabularyPreflightMainThreadCalls, activeVocabularyOnlyModels,
+         successfulResourceVerifications)
     }
     #endif
+
+    // Negative vocabulary evidence belongs to this immutable resource epoch.
+    // Like a loaded model, it is discarded by explicit resource release.
+    private var rejectedVocabularyTags: Set<String> = []
+    private var verifiedResourceManifest: FruitfolioMADLADManifest?
 
     init(resourceDirectory: URL? = nil) { self.resourceDirectory = resourceDirectory }
     deinit {
@@ -53,6 +66,8 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         if let model { llama_model_free(model) }
         model = nil
         manifest = nil
+        rejectedVocabularyTags.removeAll(keepingCapacity: false)
+        verifiedResourceManifest = nil
         // Process-wide backend registration also serves Ask; never free it here.
     }
 
@@ -65,13 +80,7 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         guard manifest.supportedLanguageTags.contains(targetTag) else {
             throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
         }
-        let tag = "<2\(targetTag)>"
-        let tagTokens = try tokenize(tag, vocab: vocab, addSpecial: false)
-        guard tagTokens.count == 1,
-              String(bytes: try piece(tagTokens[0], vocab: vocab, special: true), encoding: .utf8)?
-                .trimmingCharacters(in: .whitespacesAndNewlines) == tag else {
-            throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
-        }
+        let tag = try verifiedTargetTag(targetTag, vocab: vocab)
         let input = try tokenize("\(tag) \(text)", vocab: vocab, addSpecial: true,
                                  maximumTokens: manifest.contextLength - 1)
         guard input.count < manifest.contextLength else { throw FruitfolioTranslationError.inputTooLong }
@@ -122,9 +131,13 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
 
     private func loadModelIfNeeded(targetTag: String) throws {
         if model != nil { return }
+        if rejectedVocabularyTags.contains(targetTag) {
+            throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
+        }
         let directory = resourceDirectory ?? Bundle.main.resourceURL
         guard let directory else { throw FruitfolioTranslationError.resourcesMissing }
-        let config = try FruitfolioMADLADManifest.load(at: directory.appendingPathComponent("MADLAD400.manifest.json"))
+        let config = try verifiedResourceManifest
+            ?? FruitfolioMADLADManifest.load(at: directory.appendingPathComponent("MADLAD400.manifest.json"))
         // A negative declaration needs no model allocation or multi-gigabyte
         // checksum pass. Positive membership still requires all actual model,
         // tokenizer and inference checks below; this does not verify a language.
@@ -132,10 +145,25 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
             throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
         }
         let modelURL = directory.appendingPathComponent(config.modelFile)
-        try config.verifyModel(at: modelURL)
-        try config.verifyExecutableMetadata(at: modelURL)
+        if verifiedResourceManifest == nil {
+            try config.verifyModel(at: modelURL)
+            try config.verifyExecutableMetadata(at: modelURL)
+            verifiedResourceManifest = config
+            #if DEBUG
+            successfulResourceVerifications += 1
+            #endif
+        }
         try Task.checkCancellation()
         FruitfolioLlamaBackend.initialize()
+        do {
+            try verifyVocabularyBeforeTensorLoad(at: modelURL, targetTag: targetTag)
+        } catch let error as FruitfolioTranslationError {
+            if case .unsupportedLanguage = error, rejectedVocabularyTags.count < 512 {
+                rejectedVocabularyTags.insert(targetTag)
+            }
+            throw error
+        }
+        try Task.checkCancellation()
         var parameters = llama_model_default_params()
         // Start with CPU execution on all targets. Enable Metal only after the
         // installed T5 graph passes compatibility and device memory checks.
@@ -169,6 +197,47 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         model = loaded
         vocab = loadedVocab
         manifest = config
+    }
+
+    private func verifiedTargetTag(_ targetTag: String, vocab: OpaquePointer) throws -> String {
+        let tag = "<2\(targetTag)>"
+        let tokens = try tokenize(tag, vocab: vocab, addSpecial: false)
+        guard tokens.count == 1,
+              String(bytes: try piece(tokens[0], vocab: vocab, special: true), encoding: .utf8)?
+                .trimmingCharacters(in: .whitespacesAndNewlines) == tag else {
+            throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
+        }
+        return tag
+    }
+
+    /// A manifest cannot invent tokenizer support. This scoped native model
+    /// loads vocabulary only and is freed before any tensor-model allocation.
+    private func verifyVocabularyBeforeTensorLoad(at url: URL, targetTag: String) throws {
+        var parameters = llama_model_default_params()
+        parameters.n_gpu_layers = 0
+        parameters.vocab_only = true
+        #if DEBUG
+        vocabularyPreflightCalls += 1
+        if Thread.isMainThread { vocabularyPreflightMainThreadCalls += 1 }
+        #endif
+        guard let vocabularyModel = llama_model_load_from_file(url.path, parameters) else {
+            throw FruitfolioTranslationError.incompatibleModel
+        }
+        #if DEBUG
+        activeVocabularyOnlyModels += 1
+        #endif
+        defer {
+            llama_model_free(vocabularyModel)
+            #if DEBUG
+            activeVocabularyOnlyModels -= 1
+            #endif
+        }
+        try Task.checkCancellation()
+        guard let vocabulary = llama_model_get_vocab(vocabularyModel) else {
+            throw FruitfolioTranslationError.incompatibleModel
+        }
+        _ = try verifiedTargetTag(targetTag, vocab: vocabulary)
+        try Task.checkCancellation()
     }
 
     /// Tokenization needs the loaded model vocabulary, but rejected inputs do

@@ -3214,3 +3214,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 918, "native_CPU_XCTest": 940, "SwiftTesting_each": 21, "new_same_process_fixture_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Apple_UI_vectors_written": 4, "Apple_UI_launches_defined": 12, "Apple_UI_vectors_executed": 0, "actual_OS_restart_verification": "NOT_RUN; owner recreation is same-process only"}.
 - Next action: Continue original400–409 requested individually named languages and actual model/tokenizer compatibility. Preserve existing source and regional-language evidence; missing officialMADLADweights cannot be counted as support. Document verification blockers and proceed to independent410–417layout/typography work without waiting for Xcode or repeating broad audits.
 - Commit: containing commit for batch Language-restart-private-fixture-and-native-selector-verification.
+
+## Native-vocabulary-only-language-preflight-and-resource-epoch-cache
+
+- Parent checkpoint: 8395796e6b30e942c3d18b98eabdd5774b56ad38.
+- Source-order requirements: [400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 425, 427, 428, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift, development_workflow/NATIVE_VOCABULARY_PREFLIGHT.md, development_workflow/REQUESTED_LANGUAGE_400_408_HANDOFF.md.
+- Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400–408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 918, "native_CPU_XCTest": 942, "SwiftTesting_each": 21, "baseline_native_XCTest": 2, "baseline_failed_assertions": 4, "focused_native_preflight_XCTest": 3, "new_native_XCTest": 2, "workflow_checks": 60, "syntax_files": 311, "official_MADLAD": "BLOCKED: synthetic untrained vocabulary/T5 fixtures are not official inference"}.
+- Next action: Continue original410–417 selected-language RTL, long text, wrapping/DynamicType/visualhierarchy using existing layouts and originalart. Preserve400–409 officialmodel/native-language/clinical/device gates; do not count native vocabulary membership or synthetic graph tests as official translation.
+- Commit: containing commit for batch Native-vocabulary-only-language-preflight-and-resource-epoch-cache.
