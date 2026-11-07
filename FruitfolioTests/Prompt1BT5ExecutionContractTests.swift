@@ -6,6 +6,52 @@ import XCTest
 /// These deterministic, UNTRAINED tensors exercise the native T5 graph only.
 /// No official MADLAD weights, translation or clinical accuracy is asserted.
 final class Prompt1BT5ExecutionContractTests: XCTestCase {
+    func testLifecycleAdmissionUnloadsActualT5AndLazilyReloadsOnlyAfterAcknowledgedResume() async throws {
+        for gated in [false, true] {
+            let directory = try SyntheticT5Contract.write(gated: gated, oneTokenThenEOS: true)
+            defer { try? FileManager.default.removeItem(at: directory) }
+            let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+            let service = FruitfolioTranslationService(runtime: runtime)
+            let first = try await service.translate("fixture", language: .german, preferCatalog: false)
+            XCTAssertEqual(first, "fixture", "Untrained deterministic token output, not translation quality")
+            let warm = await runtime.debugExecutionStatistics()
+            XCTAssertTrue(warm.modelLoaded); XCTAssertTrue(warm.resourcesLoaded)
+            XCTAssertEqual(warm.encoderCalls, 1); XCTAssertEqual(warm.decoderCalls, 2)
+            let token = UUID()
+            await service.suspendForLifecycle(token)
+            let released = await runtime.debugExecutionStatistics()
+            XCTAssertFalse(released.modelLoaded); XCTAssertFalse(released.resourcesLoaded)
+            XCTAssertEqual(released.activeVocabularyOnlyModels, 0)
+            let stale = await service.resumeAfterLifecycle(UUID())
+            XCTAssertFalse(stale)
+            do {
+                _ = try await service.translate("fixture", language: .german, preferCatalog: false)
+                XCTFail("Suspended service must not reload actual native resources")
+            } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .pausedForLifecycle) }
+            let blocked = await runtime.debugExecutionStatistics()
+            XCTAssertEqual(blocked.checkedBlockingCalls, warm.checkedBlockingCalls)
+            XCTAssertEqual(blocked.vocabularyPreflightCalls, warm.vocabularyPreflightCalls)
+            XCTAssertEqual(blocked.successfulResourceVerifications, warm.successfulResourceVerifications)
+            XCTAssertFalse(blocked.modelLoaded)
+            let resumed = await service.resumeAfterLifecycle(token)
+            XCTAssertTrue(resumed)
+            let lazy = await runtime.debugExecutionStatistics()
+            XCTAssertFalse(lazy.modelLoaded); XCTAssertFalse(lazy.resourcesLoaded)
+            let second = try await service.translate("fixture", language: .german, preferCatalog: false)
+            XCTAssertEqual(second, "fixture")
+            let reloaded = await runtime.debugExecutionStatistics()
+            XCTAssertTrue(reloaded.modelLoaded); XCTAssertTrue(reloaded.resourcesLoaded)
+            XCTAssertEqual(reloaded.encoderCalls, 2); XCTAssertEqual(reloaded.decoderCalls, 4)
+            XCTAssertEqual(reloaded.checkedBlockingCalls, 10)
+            XCTAssertEqual(reloaded.vocabularyPreflightCalls, 2)
+            XCTAssertEqual(reloaded.successfulResourceVerifications, 2)
+            XCTAssertEqual(reloaded.activeVocabularyOnlyModels, 0)
+            XCTAssertEqual(reloaded.mainThreadBlockingCalls, 0)
+            XCTAssertEqual(reloaded.vocabularyPreflightMainThreadCalls, 0)
+            await runtime.releaseResources()
+        }
+    }
+
     func testActualEncoderDecoderRejectEmptyOutputAndReleaseReloadBothT5Graphs() async throws {
         for gated in [false, true] {
             let directory = try SyntheticT5Contract.write(gated: gated)
@@ -220,12 +266,22 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
         defer { try? FileManager.default.removeItem(at: directory) }
         let translation = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        let translationService = FruitfolioTranslationService(runtime: translation)
         async let draft = ask.generateDraft(question: question, evidence: evidence)
         async let outputs: [String] = {
             var results: [String] = []
-            for _ in 0..<8 {
-                results.append(try await translation.translate("fixture", targetTag: "de"))
-                await translation.releaseResources()
+            for iteration in 0..<8 {
+                results.append(try await translationService.translate("fixture", language: .german, preferCatalog: false))
+                if iteration.isMultiple(of: 2) {
+                    await translation.releaseResources()
+                } else {
+                    let token = UUID()
+                    await translationService.suspendForLifecycle(token)
+                    let released = await translation.debugExecutionStatistics()
+                    XCTAssertFalse(released.modelLoaded); XCTAssertFalse(released.resourcesLoaded)
+                    let resumed = await translationService.resumeAfterLifecycle(token)
+                    XCTAssertTrue(resumed)
+                }
             }
             return results
         }()
@@ -234,7 +290,7 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         XCTAssertEqual(translated, Array(repeating: "fixture", count: 8))
         XCTAssertNotNil(FruitfolioGeneratedDraftValidator.validatedText(draft: concurrent, evidence: evidence))
         // Ask's model/context existed before every translation resource release.
-        // A further actual decode must remain valid after all eight releases.
+        // Four direct and four lifecycle releases must leave the Ask backend valid.
         let afterRelease = try await ask.generateDraft(question: question, evidence: evidence)
         XCTAssertEqual(afterRelease, warmed)
         await ask.releaseResources()

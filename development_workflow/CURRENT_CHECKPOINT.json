@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "03e61ef09a11860d151990b77dc98fb59a7910e2",
+  "current_HEAD": "df7eaceee476a5470145397187b2970484acf039",
   "latest_verified_commit": null,
   "current_checklist_part": 10,
-  "current_requirement": 473,
-  "current_implementation_batch": "Translation-lifecycle-admission-and-release-acknowledgement",
+  "current_requirement": 475,
+  "current_implementation_batch": "Actual-native-lifecycle-release-and-cross-model-contract",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,23 +493,9 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-    "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
-    "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
-    "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-    "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-    "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-    "Fruitfolio/Localizable.xcstrings",
-    "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
-    "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
+    "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
+    "development_workflow/NATIVE_LIFECYCLE_RELEASE_CONTRACT.md"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -522,65 +508,53 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Initialfocused15XCTestpassedbeforefifthrecoverycase,SwiftTesting0selected",
-    "Initialfull932portable/956nativeCPU+21SwiftTestingeach beforefifthrecoveryhardening",
-    "Finalcombinedfullportable/native CPU suites: /tmp/fruitfolio_translation_lifecycle_{portable_final,native_final}.log",
+    "Focused2actualnativeC lifecycle/Ask-T5ownership XCTest passed;0SwiftTestingselected",
+    "Fullportable/native CPU Swift suites /tmp/fruitfolio_native_lifecycle_{portable,native}.log",
     "60workflowchecks",
     "311Swift syntaxparses(notAppleSDKtypecheck)",
-    "SwiftSyntaxsource control-sound ownership0findings",
+    "git diff --quiet -- Fruitfolio confirms productionappsource unchanged",
     "git diff --check"
   ],
   "last_test_results": {
     "portable_XCTest": 933,
-    "native_CPU_XCTest": 957,
+    "native_CPU_XCTest": 958,
     "SwiftTesting_each": 21,
     "workflow_checks": 60,
     "syntax_files": 311,
-    "control_sound_ownership_findings": 0,
-    "new_Foundation_lifecycle_regressions": 5,
-    "extended_catalog_test": 1,
-    "initial_focused_XCTest_before_recovery_case": 15,
-    "initial_full_portable_before_recovery_case": 932,
-    "initial_full_native_before_recovery_case": 956,
+    "focused_native_XCTest": 2,
+    "focused_SwiftTesting_selected": 0,
+    "new_native_XCTest": 1,
+    "T5_graph_variants": 2,
+    "cross_model_direct_release_cycles": 4,
+    "cross_model_lifecycle_release_cycles": 4,
+    "production_application_source_changed": false,
     "Apple_tests_executed": 0,
     "official_MADLAD_inference_verified": false,
     "log_receipts": {
-      "/tmp/fruitfolio_translation_lifecycle_focused.log": {
-        "bytes": 31585,
-        "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+      "/tmp/fruitfolio_native_lifecycle_focused.log": {
+        "bytes": 270265,
+        "sha256": "8d673771e1494e10a10ec4f1cead04a80e2cbbdc045c9265bcb0e8d21ce85d5e"
       },
-      "/tmp/fruitfolio_translation_lifecycle_portable.log": {
-        "bytes": 295709,
-        "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+      "/tmp/fruitfolio_native_lifecycle_portable.log": {
+        "bytes": 296037,
+        "sha256": "f776d2a6fe44acd0d035d139eaf53bcae761e2d7fbc2f23edb5490bc27c37678"
       },
-      "/tmp/fruitfolio_translation_lifecycle_native.log": {
-        "bytes": 1211724,
-        "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+      "/tmp/fruitfolio_native_lifecycle_native.log": {
+        "bytes": 1271158,
+        "sha256": "cfb0d921e5ba25ae9f74468af413a43bc0e89ac618fd9cd44ece692ee1e6ba13"
       },
-      "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
-        "bytes": 296040,
-        "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
-      },
-      "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
-        "bytes": 1212026,
-        "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
-      },
-      "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+      "/tmp/fruitfolio_native_lifecycle_workflow.log": {
         "bytes": 160,
-        "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+        "sha256": "39e1997f47153687601c5582c39f33b0ae15b6e39fe488e0c0247bdb95a147e5"
       },
-      "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+      "/tmp/fruitfolio_native_lifecycle_syntax.log": {
         "bytes": 106,
         "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-      },
-      "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
-        "bytes": 5,
-        "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
       }
     }
   },
-  "next_exact_implementation_action": "Verify lifecycle barrier through actual native C T5 model/context unload, paused no-allocation and acknowledged lazy reload. Extend separate-loaded Ask/T5 resource ownership test with lifecycle releases. Explicitlysynthetic untrainedT5 isnot officialMADLAD and no clinical meaning acceptance. Continue remaining independent requirements.",
-  "updated_at": "2026-11-07T03:40:42.944963+00:00",
+  "next_exact_implementation_action": "Fix actual Ask typewriter strong self lifetime across sleeps without changing semantic parser or speed; add genuine Apple weak-deallocation regression and record that Apple execution remains unavailable. Continue next independent requirements without substituting SDK behavior.",
+  "updated_at": "2026-11-07T03:45:56.457535+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -591,64 +565,53 @@
   "last_batch_verification": {
     "executed": {
       "portable_XCTest": 933,
-      "native_CPU_XCTest": 957,
+      "native_CPU_XCTest": 958,
       "SwiftTesting_each": 21,
       "workflow_checks": 60,
       "syntax_files": 311,
-      "control_sound_ownership_findings": 0,
-      "new_Foundation_lifecycle_regressions": 5,
-      "extended_catalog_test": 1,
-      "initial_focused_XCTest_before_recovery_case": 15,
-      "initial_full_portable_before_recovery_case": 932,
-      "initial_full_native_before_recovery_case": 956,
+      "focused_native_XCTest": 2,
+      "focused_SwiftTesting_selected": 0,
+      "new_native_XCTest": 1,
+      "T5_graph_variants": 2,
+      "cross_model_direct_release_cycles": 4,
+      "cross_model_lifecycle_release_cycles": 4,
+      "production_application_source_changed": false,
       "Apple_tests_executed": 0,
       "official_MADLAD_inference_verified": false,
       "log_receipts": {
-        "/tmp/fruitfolio_translation_lifecycle_focused.log": {
-          "bytes": 31585,
-          "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+        "/tmp/fruitfolio_native_lifecycle_focused.log": {
+          "bytes": 270265,
+          "sha256": "8d673771e1494e10a10ec4f1cead04a80e2cbbdc045c9265bcb0e8d21ce85d5e"
         },
-        "/tmp/fruitfolio_translation_lifecycle_portable.log": {
-          "bytes": 295709,
-          "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+        "/tmp/fruitfolio_native_lifecycle_portable.log": {
+          "bytes": 296037,
+          "sha256": "f776d2a6fe44acd0d035d139eaf53bcae761e2d7fbc2f23edb5490bc27c37678"
         },
-        "/tmp/fruitfolio_translation_lifecycle_native.log": {
-          "bytes": 1211724,
-          "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+        "/tmp/fruitfolio_native_lifecycle_native.log": {
+          "bytes": 1271158,
+          "sha256": "cfb0d921e5ba25ae9f74468af413a43bc0e89ac618fd9cd44ece692ee1e6ba13"
         },
-        "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
-          "bytes": 296040,
-          "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
-        },
-        "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
-          "bytes": 1212026,
-          "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
-        },
-        "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+        "/tmp/fruitfolio_native_lifecycle_workflow.log": {
           "bytes": 160,
-          "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+          "sha256": "39e1997f47153687601c5582c39f33b0ae15b6e39fe488e0c0247bdb95a147e5"
         },
-        "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+        "/tmp/fruitfolio_native_lifecycle_syntax.log": {
           "bytes": 106,
           "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-        },
-        "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
-          "bytes": 5,
-          "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
         }
       }
     },
     "not_run": [
-      "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
-      "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
-      "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
+      "OfficialMADLAD weights/tokenizer and learnedtranslation/clinicalmeaning tests",
+      "AppleUIKit/Combine lifecycle/UI/task/VoiceOver tests andactualdeviceframeworkbuild",
+      "PeakphysicaldeviceRSS/thermal/latency andallocatorprofiling; nativehandle/callcountersdonotproveprocessmemoryreclamation"
     ],
     "remaining": [
-      "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
-      "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
-      "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
+      "SupplyapprovedofficialMADLAD resources and execute realoffline translation/citation/safety/native-language quality acceptance",
+      "Run Apple earlyforeground/repeatedinactive UI+device memory tests withactualmodel; no wholemodel/memory/backgroundingcertification",
+      "Keep syntheticT5+separateAskmodel proofs distinct fromofficialMADLAD; continue actualtypewriter ownership sourcefix next"
     ]
   },
   "current_checklist_section": "Part 10 \u2014 Testing, integration, and final verification",
-  "last_recorded_batch_part": 9
+  "last_recorded_batch_part": 10
 }
