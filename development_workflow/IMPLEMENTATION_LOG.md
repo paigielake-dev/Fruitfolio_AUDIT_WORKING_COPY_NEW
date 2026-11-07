@@ -3071,3 +3071,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 894, "native_CPU_XCTest": 916, "SwiftTesting_each": 21, "focused_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "English_catalog_entries": 969, "nonempty_foreign_units": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Verify actual controller/shared-frame wind displacement of fruit and standalone stars under breezy direction changes with genuine mask manifest; compare clear/rain cases with no hidden wind. Reuse existing physics if correct, add only missing integration evidence and preserve art/masks/source/code architecture.
 - Commit: containing commit for batch Shared-star-pass-instructions-FAQ-and-tutorial-sync.
+
+## Actual-wind-controller-frames-with-clear-rain-controls
+
+- Parent checkpoint: 7ef39ef4b36b5abd435c94dafbff41f0a31f310d.
+- Source-order requirements: [339, 341, 344, 476, 477, 478].
+- Source files: development_workflow/ACTUAL_CONTROLLER_WIND_FRAMES.md.
+- Oneactual controller/frame casewithvalidatedchecked-inmasks coversbreezybothdirections+clear+rainhiddenwindcontrol. Zero-drift above-contact trackedfruit/star moveequallywithwind andremainconstantclear/rain; no branch/vine/credit/persistedchanges. Legitimatehighlevel/roundquestion-intro-begin setup; virtualframesnotpaintedrealism. Focus1pass; full895/917XCTest+21SwiftTesting each pass. Productionmodel/engine/physics/masks/renderer/audio/catalogSHAunchanged. Existing originalassets/soundkeys andexactstormdialogue sourceinspected, NOT_RUNApple.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 895, "native_CPU_XCTest": 917, "SwiftTesting_each": 21, "focused_XCTest": 1, "weather_direction_scenarios": 4, "workflow_checks": 60, "syntax_files": 311, "Apple_art_audio_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify actual basket inertia/resistance and restoration through painted puddle contact using real mask manifest and controller frames, including boundary/no-contact controls. Earlier64001a4 alreadyexecutespositivecontact; add only missing transitions/regression evidence, preserve original art and document remaining340/342–347Apple visual/audio/dialogue verification.
+- Commit: containing commit for batch Actual-wind-controller-frames-with-clear-rain-controls.

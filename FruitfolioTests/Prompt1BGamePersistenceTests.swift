@@ -25,7 +25,8 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         let name = "Fruitfolio.game-persistence-tests." + UUID().uuidString
         return (name, try XCTUnwrap(UserDefaults(suiteName: name)))
     }
-    private func setupWriteFixture(starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) }) throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
+    private func setupWriteFixture(starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) },
+                                   obstacleLibrary: Prompt28ObstacleMaskLibrary? = .bundled) throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
         let suite = "Fruitfolio.setup-write-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
         let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
@@ -33,7 +34,7 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         progress.currentGameLevel = 6; progress.highestGameLevelReached = 8
         progress.totalRoundsCompleted = 2
         store.updateProgress(progress)
-        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider(), starDropRandomUnit: starDropRandomUnit)
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider(), obstacleLibrary: obstacleLibrary, starDropRandomUnit: starDropRandomUnit)
         model.rawTopic = "fixture"; model.screen = .learningSetup
         return (suite, defaults, store, model)
     }
@@ -117,9 +118,16 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
     }
 
     private func activeModeFixture(mode: Prompt28ControlMode = .classification,
-                                   starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) }) throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
-        let (suite, defaults, store, model) = try setupWriteFixture(starDropRandomUnit: starDropRandomUnit)
+                                   starDropRandomUnit: @escaping @MainActor () -> Double = { Double.random(in: 0...1) },
+                                   gameLevel: Int = 1, round: Int = 1,
+                                   obstacleLibrary: Prompt28ObstacleMaskLibrary? = .bundled) throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
+        let (suite, defaults, store, model) = try setupWriteFixture(starDropRandomUnit: starDropRandomUnit, obstacleLibrary: obstacleLibrary)
         store.resetCurrentGameLevel(for: "fixture")
+        if gameLevel != 1 {
+            var progress = store.ensureProgress(for: "fixture")
+            progress.currentGameLevel = gameLevel
+            store.updateProgress(progress)
+        }
         store.controlMode = mode; store.persistPreferences()
         let question = Prompt28Question(id: "credit-fixture", topicQuery: "fixture", normalizedTopic: "fixture", category: "nonclinical test",
             educationalDifficulty: .easy, questionText: "Which visual item has a star?",
@@ -130,7 +138,8 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
             contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0))
         model.currentQuestion = question
         model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture",
-            difficulty: .easy, startingLevel: 1)
+            difficulty: .easy, startingLevel: gameLevel)
+        model.session?.currentRound = round
         model.updatePlayfield(size: CGSize(width: 390, height: 620))
         model.screen = .question
         model.answer("a", expectedQuestionID: question.id)
@@ -505,6 +514,46 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
             }
         }
         }
+        }
+    }
+
+    func testActualWindFramesMoveFruitAndStarWhileClearAndRainHaveNoHiddenWind() async throws {
+        let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
+            ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+        let library = try Prompt28ObstacleMaskLibrary.load(url: url)
+        for (level, round, direction) in [(5, 1, 1), (4, 2, -1), (1, 1, 0), (6, 3, 0)] {
+            let (suite, defaults, store, model) = try activeModeFixture(mode: .catchMode,
+                gameLevel: level, round: round, obstacleLibrary: library)
+            defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+            XCTAssertEqual(model.screen, .catchActive)
+            let fruit = Prompt28FallingFruit(fruitID: .pear, classification: .good,
+                x: 0.5, y: -0.3, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            let star = Prompt28FallingStar(x: 0.5, y: -0.3, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.activeFruit = [fruit]; model.activeStars = [star]
+            let original = defaults.data(forKey: "game")
+            for tick in 0..<10 {
+                model.advanceGameplayFrame(delta: 0.08, now: Date(timeIntervalSince1970: 10_000 + Double(tick) * 0.08))
+            }
+            let movedFruit = try XCTUnwrap(model.activeFruit.first { $0.id == fruit.id })
+            let movedStar = try XCTUnwrap(model.activeStars.first { $0.id == star.id })
+            if direction > 0 {
+                XCTAssertGreaterThan(movedFruit.x, fruit.x); XCTAssertGreaterThan(movedStar.x, star.x)
+                XCTAssertEqual(model.weather, .breezy)
+            } else if direction < 0 {
+                XCTAssertLessThan(movedFruit.x, fruit.x); XCTAssertLessThan(movedStar.x, star.x)
+                XCTAssertEqual(model.weather, .breezy)
+            } else {
+                XCTAssertEqual(movedFruit.x, fruit.x, accuracy: 0.000001)
+                XCTAssertEqual(movedStar.x, star.x, accuracy: 0.000001)
+                XCTAssertFalse(model.activeObstacles.contains(.wind))
+                XCTAssertEqual(model.weather, level == 6 ? .softRain : .clear)
+            }
+            XCTAssertEqual(movedFruit.x - fruit.x, movedStar.x - star.x, accuracy: 0.000001)
+            XCTAssertFalse(movedFruit.branchDeflected); XCTAssertFalse(movedFruit.isInVines)
+            XCTAssertFalse(movedStar.isInVines)
+            XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+            XCTAssertFalse(store.isReadOnly)
+            XCTAssertEqual(defaults.data(forKey: "game"), original)
         }
     }
 
