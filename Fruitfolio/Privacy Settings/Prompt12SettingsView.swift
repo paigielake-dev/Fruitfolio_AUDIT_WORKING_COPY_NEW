@@ -90,19 +90,7 @@ struct Prompt12SettingsView: View {
                             )
                             .accessibilityHidden(true)
 
-                        Text("about Fruitfolio")
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 16
-                                )
-                            )
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
-                            )
+                        FruitfolioFixedText(source: "about Fruitfolio", protectedLiterals: ["Fruitfolio"], font: .custom("Chalkboard SE", size: 16).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
                             .multilineTextAlignment(
                                 .center
                             )

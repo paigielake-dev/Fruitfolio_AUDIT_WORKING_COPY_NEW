@@ -50,7 +50,7 @@ struct Prompt14CycleOnboardingView: View {
             if model.isLoading {
                 ProgressView()
                     .tint(Prompt14Palette.burgundy)
-                    .accessibilityLabel("Loading cycle setup")
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "Loading cycle setup"))
             } else if model.savedDraft == nil {
                 VStack(spacing: 16) {
                     FruitfolioTranslatedText(source: model.errorMessage ?? "cycle setup could not be opened. please try again.",
@@ -153,8 +153,7 @@ struct Prompt14CycleOnboardingView: View {
 
                     if model.draft.step == .cycleAffectingContext || model.draft.step == .complete {
                         WatercolorSecondaryButton(label: "optional personal health context") { showingPersonalHealthContext = true }
-                        Text("add only what you choose. you can skip this and reopen it later in Settings → My Context.")
-                            .font(Prompt14Type.helper)
+                        FruitfolioFixedText(source: "add only what you choose. you can skip this and reopen it later in Settings → My Context.", font: Prompt14Type.helper)
                             .multilineTextAlignment(.center)
                     }
 
@@ -245,15 +244,11 @@ struct Prompt14CycleOnboardingView: View {
 
     private var intro: some View {
         VStack(spacing: 18) {
-            Text("your cycle, little by little")
-                .font(Prompt14Type.title)
-                .foregroundStyle(Prompt14Palette.burgundy)
+            FruitfolioFixedText(source: "your cycle, little by little", font: Prompt14Type.title, color: Prompt14Palette.burgundy)
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
 
-            Text("you can skip anything you don’t know.")
-                .font(Prompt14Type.body)
-                .foregroundStyle(Prompt14Palette.burgundy)
+            FruitfolioFixedText(source: "you can skip anything you don’t know.", font: Prompt14Type.body, color: Prompt14Palette.burgundy)
                 .multilineTextAlignment(.center)
 
             Prompt14PeachMessage(
@@ -386,7 +381,7 @@ struct Prompt14CycleOnboardingView: View {
                         .font(Prompt14Type.interface)
                         .foregroundStyle(Prompt14Palette.burgundy)
                         .frame(minHeight: 44)
-                        .accessibilityLabel("Add another past period")
+                        .modifier(FruitfolioFixedAccessibilityLabel(source: "Add another past period"))
                     }
                 }
 
@@ -490,9 +485,7 @@ struct Prompt14CycleOnboardingView: View {
                     selected: model.draft.fertilityPreference == .notRightNow
                 ) { model.chooseFertilityPreference(.notRightNow) }
 
-                Text("these are estimates based on logged information and aren’t contraception or confirmation of ovulation.")
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.82))
+                FruitfolioFixedText(source: "these are estimates based on logged information and aren’t contraception or confirmation of ovulation.", font: Prompt14Type.helper, color: Prompt14Palette.burgundy.opacity(0.82))
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 2)
 
@@ -527,9 +520,7 @@ struct Prompt14CycleOnboardingView: View {
                 ) { model.chooseBBTTracking(.notRightNow) }
 
                 if model.draft.bbtTrackingChoice == .yes || model.draft.bbtTrackingChoice == .wouldLikeToStart {
-                    Text("which temperature unit do you use?")
-                        .font(Prompt14Type.body)
-                        .foregroundStyle(Prompt14Palette.burgundy)
+                    FruitfolioFixedText(source: "which temperature unit do you use?", font: Prompt14Type.body, color: Prompt14Palette.burgundy)
                         .padding(.top, 6)
 
                     HStack(spacing: 12) {
@@ -542,12 +533,8 @@ struct Prompt14CycleOnboardingView: View {
                     }
 
                     VStack(spacing: 5) {
-                        Text("about what time do you usually measure?")
-                            .font(Prompt14Type.body)
-                            .foregroundStyle(Prompt14Palette.burgundy)
-                        Text("optional")
-                            .font(Prompt14Type.helper)
-                            .foregroundStyle(Prompt14Palette.burgundy.opacity(0.7))
+                        FruitfolioFixedText(source: "about what time do you usually measure?", font: Prompt14Type.body, color: Prompt14Palette.burgundy)
+                        FruitfolioFixedText(source: "optional", font: Prompt14Type.helper, color: Prompt14Palette.burgundy.opacity(0.7))
 
                         DatePicker(
                             "usual BBT measurement time",
@@ -593,9 +580,7 @@ struct Prompt14CycleOnboardingView: View {
                     .frame(width: 78, height: 78)
                     .accessibilityHidden(true)
 
-                Text("Fruitfolio records what you observe so you can look back at how it changes over time.")
-                    .font(Prompt14Type.body)
-                    .foregroundStyle(Prompt14Palette.burgundy)
+                FruitfolioFixedText(source: "Fruitfolio records what you observe so you can look back at how it changes over time.", protectedLiterals: ["Fruitfolio"], font: Prompt14Type.body, color: Prompt14Palette.burgundy)
                     .multilineTextAlignment(.center)
 
                 WatercolorPrimaryButton(label: "got it ♡") {
@@ -625,7 +610,7 @@ struct Prompt14CycleOnboardingView: View {
             }
             .frame(maxWidth: 320)
             if model.isFinishing {
-                ProgressView().accessibilityLabel("Saving cycle setup")
+                ProgressView().modifier(FruitfolioFixedAccessibilityLabel(source: "Saving cycle setup"))
             }
         }
         .padding(.top, 22)
@@ -650,9 +635,7 @@ private struct Prompt14ReadyState: View {
                 .frame(width: 86, height: 86)
                 .accessibilityHidden(true)
 
-            Text("your cycle picture is ready ♡")
-                .font(Prompt14Type.title)
-                .foregroundStyle(Prompt14Palette.burgundy)
+            FruitfolioFixedText(source: "your cycle picture is ready ♡", font: Prompt14Type.title, color: Prompt14Palette.burgundy)
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
 
@@ -660,9 +643,7 @@ private struct Prompt14ReadyState: View {
                 text: "start wherever you are! :-) your little cycle picture will fill in as you log."
             )
 
-            Text("your setup is saved locally. the tracker can build from what you actually supplied without filling in missing pieces.")
-                .font(Prompt14Type.body)
-                .foregroundStyle(Prompt14Palette.burgundy.opacity(0.82))
+            FruitfolioFixedText(source: "your setup is saved locally. the tracker can build from what you actually supplied without filling in missing pieces.", font: Prompt14Type.body, color: Prompt14Palette.burgundy.opacity(0.82))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 18)
 
@@ -697,21 +678,15 @@ private struct Prompt14QuestionCard<Content: View>: View {
     var body: some View {
         VStack(spacing: 16) {
             if let eyebrow {
-                Text(eyebrow)
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.72))
+                FruitfolioFixedText(source: eyebrow, font: Prompt14Type.helper, color: Prompt14Palette.burgundy.opacity(0.72))
             }
 
-            Text(title)
-                .font(Prompt14Type.question)
-                .foregroundStyle(Prompt14Palette.burgundy)
+            FruitfolioFixedText(source: title, font: Prompt14Type.question, color: Prompt14Palette.burgundy)
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
 
             if let helper {
-                Text(helper)
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.76))
+                FruitfolioFixedText(source: helper, font: Prompt14Type.helper, color: Prompt14Palette.burgundy.opacity(0.76))
                     .multilineTextAlignment(.center)
             }
 
@@ -736,9 +711,7 @@ private struct Prompt14SelectionButton: View {
             action()
         } label: {
             HStack(spacing: 9) {
-                Text(label)
-                    .font(Prompt14Type.interface)
-                    .foregroundStyle(Prompt14Palette.burgundy)
+                FruitfolioFixedText(source: label, protectedLiterals: ["°C", "°F"], font: Prompt14Type.interface, color: Prompt14Palette.burgundy)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
 
@@ -764,8 +737,8 @@ private struct Prompt14SelectionButton: View {
             .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-        .accessibilityLabel(label)
-        .accessibilityValue(selected ? "selected" : "not selected")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: label, protectedLiterals: ["°C", "°F"]))
+        .modifier(FruitfolioFixedAccessibilityValue(source: selected ? "selected" : "not selected"))
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }
@@ -774,11 +747,13 @@ private struct Prompt14SkipButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button("skip") { action() }
+        Button { action() } label: {
+            FruitfolioFixedText(source: "skip", font: Prompt14Type.interface, color: Prompt14Palette.burgundy.opacity(0.82))
+        }
             .font(Prompt14Type.interface)
             .foregroundStyle(Prompt14Palette.burgundy.opacity(0.82))
             .frame(minWidth: 88, minHeight: 44)
-            .accessibilityHint("Leaves this answer unknown")
+            .modifier(FruitfolioFixedAccessibilityHint(source: "Leaves this answer unknown"))
     }
 }
 
@@ -791,11 +766,9 @@ private struct Prompt14PeachMessage: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 68, height: 68)
-                .accessibilityLabel("Peach")
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "Peach"))
 
-            Text(text)
-                .font(Prompt14Type.body)
-                .foregroundStyle(Prompt14Palette.burgundy)
+            FruitfolioFixedText(source: text, font: Prompt14Type.body, color: Prompt14Palette.burgundy)
                 .multilineTextAlignment(.leading)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 12)
@@ -880,7 +853,7 @@ private struct Prompt14SproutCompletionArt: View {
             }
         }
         .frame(height: 104)
-        .accessibilityLabel("Watercolor seed growing into a sprout")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Watercolor seed growing into a sprout"))
         .onAppear {
             if motionPreferences.reduceMotionActive {
                 withAnimation(.easeOut(duration: 0.18)) { revealed = true }
@@ -902,18 +875,16 @@ private struct Prompt14SpottingInfo: View {
                 HStack(spacing: 6) {
                     Image(systemName: "info.circle")
                         .accessibilityHidden(true)
-                    Text("spotting info")
+                    FruitfolioFixedText(source: "spotting info", font: Prompt14Type.helper, color: Prompt14Palette.burgundy)
                 }
                 .font(Prompt14Type.helper)
                 .foregroundStyle(Prompt14Palette.burgundy)
                 .frame(minHeight: 44)
             }
-            .accessibilityLabel("Spotting information")
+            .modifier(FruitfolioFixedAccessibilityLabel(source: "Spotting information"))
 
             if expanded {
-                Text("spotting is lighter bleeding that can happen outside your full menstrual flow. for cycle tracking, choose the first day your full menstrual bleeding began — not light spotting.")
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy)
+                FruitfolioFixedText(source: "spotting is lighter bleeding that can happen outside your full menstrual flow. for cycle tracking, choose the first day your full menstrual bleeding began — not light spotting.", font: Prompt14Type.helper, color: Prompt14Palette.burgundy)
                     .multilineTextAlignment(.center)
                     .padding(14)
                     .background(
@@ -935,11 +906,9 @@ private struct Prompt14BBTInfo: View {
                 .font(Prompt14Type.helper)
                 .foregroundStyle(Prompt14Palette.burgundy)
                 .frame(minHeight: 44)
-                .accessibilityLabel("Basal body temperature information")
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "Basal body temperature information"))
             if expanded {
-                Text("BBT is usually measured after your longest stretch of sleep and before getting up or becoming active.")
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy)
+                FruitfolioFixedText(source: "BBT is usually measured after your longest stretch of sleep and before getting up or becoming active.", protectedLiterals: ["BBT"], font: Prompt14Type.helper, color: Prompt14Palette.burgundy)
                     .multilineTextAlignment(.center)
                     .padding(12)
                     .background(RoundedRectangle(cornerRadius: 16).fill(Prompt14Palette.creamWash))
@@ -1013,7 +982,7 @@ struct Prompt14Calendar: View {
                         .frame(width: 28, height: 28)
                 }
                 .frame(width: 44, height: 44)
-                .accessibilityLabel("Previous month")
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "Previous month"))
 
                 Spacer()
 
@@ -1030,7 +999,7 @@ struct Prompt14Calendar: View {
                         .frame(width: 28, height: 28)
                 }
                 .frame(width: 44, height: 44)
-                .accessibilityLabel("Next month")
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "Next month"))
                 .disabled(!canMoveForward)
                 .opacity(canMoveForward ? 1 : 0.34)
             }

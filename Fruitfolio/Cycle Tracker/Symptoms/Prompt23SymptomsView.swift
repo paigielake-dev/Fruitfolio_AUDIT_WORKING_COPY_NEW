@@ -76,14 +76,10 @@ struct Prompt23SymptomsView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text("how are you feeling?")
-                .font(Prompt23Type.title)
-                .foregroundStyle(Prompt23Palette.burgundy)
+            FruitfolioFixedText(source: "how are you feeling?", font: Prompt23Type.title, color: Prompt23Palette.burgundy)
                 .accessibilityAddTraits(.isHeader)
 
-            Text("tap anything that feels true today ♡")
-                .font(Prompt23Type.subtitle)
-                .foregroundStyle(Prompt23Palette.burgundy.opacity(0.68))
+            FruitfolioFixedText(source: "tap anything that feels true today ♡", font: Prompt23Type.subtitle, color: Prompt23Palette.burgundy.opacity(0.68))
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -96,22 +92,18 @@ struct Prompt23SymptomsView: View {
                 .frame(width: 44, height: 44)
                 .accessibilityHidden(true)
 
-            Text("opening today’s observations…")
-                .font(Prompt23Type.body)
-                .foregroundStyle(Prompt23Palette.burgundy.opacity(0.72))
+            FruitfolioFixedText(source: "opening today’s observations…", font: Prompt23Type.body, color: Prompt23Palette.burgundy.opacity(0.72))
         }
         .frame(maxWidth: .infinity, minHeight: 220, alignment: .center)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Loading symptoms")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Loading symptoms"))
     }
 
     private var futureDateState: some View {
-        Text("future days stay unrecorded until they arrive ♡")
-            .font(Prompt23Type.body)
-            .foregroundStyle(Prompt23Palette.burgundy.opacity(0.76))
+        FruitfolioFixedText(source: "future days stay unrecorded until they arrive ♡", font: Prompt23Type.body, color: Prompt23Palette.burgundy.opacity(0.76))
             .frame(maxWidth: .infinity, minHeight: 220, alignment: .center)
             .multilineTextAlignment(.center)
-            .accessibilityLabel("Symptoms cannot be recorded for a future date")
+            .modifier(FruitfolioFixedAccessibilityLabel(source: "Symptoms cannot be recorded for a future date"))
     }
 
     private var symptomGrid: some View {
@@ -125,7 +117,7 @@ struct Prompt23SymptomsView: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Symptoms")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Symptoms"))
     }
 
     private var gridColumns: [GridItem] {
@@ -178,13 +170,9 @@ struct Prompt23SymptomsView: View {
                 }
                 .frame(width: 74, height: 68)
 
-                Text(item.displayLabel)
-                    .font(Prompt23Type.label)
-                    .foregroundStyle(
-                        Prompt23Palette.burgundy.opacity(selected ? 0.96 : 0.78)
-                    )
+                FruitfolioFixedText(source: item.displayLabel, font: Prompt23Type.label, color: Prompt23Palette.burgundy.opacity(selected ? 0.96 : 0.78))
                     .multilineTextAlignment(.center)
-                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, minHeight: 104, alignment: .top)
@@ -196,9 +184,9 @@ struct Prompt23SymptomsView: View {
             )
         )
         .disabled(model.isLoading || model.isFutureDate || model.saveState == .saving)
-        .accessibilityLabel(item.displayLabel)
-        .accessibilityValue(selected ? "selected" : "not selected")
-        .accessibilityHint("Double tap to \(selected ? "deselect" : "select")")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: item.displayLabel))
+        .modifier(FruitfolioFixedAccessibilityValue(source: selected ? "selected" : "not selected"))
+        .modifier(FruitfolioFixedAccessibilityHint(source: selected ? "Double tap to deselect" : "Double tap to select"))
     }
 
     private var saveArea: some View {
@@ -219,9 +207,7 @@ struct Prompt23SymptomsView: View {
                         .frame(maxWidth: 185)
                         .accessibilityHidden(true)
 
-                    Text(model.saveState == .saving ? "saving…" : "save today")
-                        .font(Prompt23Type.save)
-                        .foregroundStyle(Prompt23Palette.burgundy)
+                    FruitfolioFixedText(source: model.saveState == .saving ? "saving…" : "save today", font: Prompt23Type.save, color: Prompt23Palette.burgundy)
                 }
                 .frame(minHeight: 48)
             }
@@ -232,18 +218,14 @@ struct Prompt23SymptomsView: View {
             )
             .disabled(!model.canSave)
             .opacity(model.canSave || model.saveState == .saving ? 1 : 0.54)
-            .accessibilityLabel(model.saveState == .saving ? "Saving symptoms" : "Save symptoms")
+            .modifier(FruitfolioFixedAccessibilityLabel(source: model.saveState == .saving ? "Saving symptoms" : "Save symptoms"))
 
             switch model.saveState {
             case .saved:
-                Text("saved to your day ♡")
-                    .font(Prompt23Type.note)
-                    .foregroundStyle(Prompt23Palette.burgundy.opacity(0.72))
+                FruitfolioFixedText(source: "saved to your day ♡", font: Prompt23Type.note, color: Prompt23Palette.burgundy.opacity(0.72))
                     .transition(.opacity)
             case .failed:
-                Text("that didn’t save yet — your choices are still here")
-                    .font(Prompt23Type.note)
-                    .foregroundStyle(Prompt23Palette.burgundy.opacity(0.78))
+                FruitfolioFixedText(source: "that didn’t save yet — your choices are still here", font: Prompt23Type.note, color: Prompt23Palette.burgundy.opacity(0.78))
                     .fixedSize(horizontal: false, vertical: true)
             case .idle, .saving:
                 EmptyView()

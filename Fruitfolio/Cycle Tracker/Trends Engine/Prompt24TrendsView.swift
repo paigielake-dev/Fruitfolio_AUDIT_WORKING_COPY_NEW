@@ -104,16 +104,11 @@ struct Prompt24TrendsView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .center, spacing: 8) {
-                Text("trends")
-                    .font(
-                        Font.custom(
+                FruitfolioFixedText(source: "trends", font: (Font.custom(
                             "Chalkboard SE",
                             size: 26,
                             relativeTo: .title2
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(Prompt24Palette.burgundy)
+                        )).weight(.bold), color: Prompt24Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
                 Image("decor_sun")
@@ -124,15 +119,11 @@ struct Prompt24TrendsView: View {
                     .accessibilityHidden(true)
             }
 
-            Text("your records, carefully mapped over time ♡")
-                .font(
-                    Font.custom(
+            FruitfolioFixedText(source: "your records, carefully mapped over time ♡", font: Font.custom(
                         "Chalkboard SE",
                         size: 14,
                         relativeTo: .subheadline
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.74))
+                    ), color: Prompt24Palette.burgundy.opacity(0.74))
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -152,16 +143,11 @@ struct Prompt24TrendsView: View {
                     }
                 } label: {
                     VStack(spacing: 4) {
-                        Text(tab.rawValue)
-                            .font(
-                                Font.custom(
+                        FruitfolioFixedText(source: tab.rawValue, font: (Font.custom(
                                     "Chalkboard SE",
                                     size: 13,
                                     relativeTo: .subheadline
-                                )
-                            )
-                            .fontWeight(selectedTab == tab ? .semibold : .regular)
-                            .foregroundStyle(Prompt24Palette.burgundy)
+                                )).weight(selectedTab == tab ? .semibold : .regular), color: Prompt24Palette.burgundy)
 
                         Prompt24Underline()
                             .stroke(
@@ -282,15 +268,11 @@ struct Prompt24TrendsView: View {
             }
 
             if snapshot.hasTemperatureData {
-                Text(temperatureShiftCopy(snapshot.temperatureShiftStatus))
-                    .font(
-                        Font.custom(
+                FruitfolioFixedText(source: temperatureShiftCopy(snapshot.temperatureShiftStatus), font: Font.custom(
                             "Chalkboard SE",
                             size: 12,
                             relativeTo: .footnote
-                        )
-                    )
-                    .foregroundStyle(Prompt24Palette.burgundy.opacity(0.70))
+                        ), color: Prompt24Palette.burgundy.opacity(0.70))
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -345,7 +327,7 @@ struct Prompt24TrendsView: View {
                             FruitfolioFixedText(source: "date unavailable; this observation cannot be plotted", serious: true)
                         }
                         if let day = occurrence.cycleDay {
-                            Text("recorded cycle day \(day)")
+                            FruitfolioFixedText(source: "recorded cycle day \(day)", protectedLiterals: [String(day)], serious: true)
                         } else {
                             FruitfolioFixedText(source: "cycle day unavailable; observation retained", serious: true)
                         }
@@ -400,36 +382,25 @@ struct Prompt24TrendsView: View {
         _ pattern: Prompt24SymptomPattern
     ) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(pattern.symptomID.displayName)
-                .fontWeight(.semibold)
+            FruitfolioFixedText(source: pattern.symptomID.displayName, font: .custom("Chalkboard SE", size: 13, relativeTo: .body).weight(.semibold), color: Prompt24Palette.burgundy.opacity(0.82), serious: true)
             switch pattern.status {
             case .insufficientData:
-                Text("your patterns will grow here ♡")
+                FruitfolioFixedText(source: "your patterns will grow here ♡", font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: Prompt24Palette.burgundy.opacity(0.82), serious: true)
             case .unsupported:
-                Text(
-                    "no recurring timing pattern is supported yet from the completed cycles available."
-                )
+                FruitfolioFixedText(source: "no recurring timing pattern is supported yet from the completed cycles available.", font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: Prompt24Palette.burgundy.opacity(0.82), serious: true)
             case .developing:
-                Text(
-                    "there are a few repeated observations, but not enough consistent timing to call this a supported pattern."
-                )
+                FruitfolioFixedText(source: "there are a few repeated observations, but not enough consistent timing to call this a supported pattern.", font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: Prompt24Palette.burgundy.opacity(0.82), serious: true)
             case .supported:
                 if let start = pattern.windowStartDay,
                    let end = pattern.windowEndDay {
-                    Text(
-                        "you’ve logged this around a similar time in your cycle before — days \(start)–\(end) appeared in \(pattern.cyclesMatched) of \(pattern.cyclesEvaluated) eligible cycles."
-                    )
+                    FruitfolioFixedText(source: "you’ve logged this around a similar time in your cycle before — days \(start)–\(end) appeared in \(pattern.cyclesMatched) of \(pattern.cyclesEvaluated) eligible cycles.", protectedLiterals: [String(start), String(end), String(pattern.cyclesMatched), String(pattern.cyclesEvaluated)], font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: Prompt24Palette.burgundy.opacity(0.82), serious: true)
                 } else {
-                    Text(
-                        "you’ve logged this around a similar time in your cycle before."
-                    )
+                    FruitfolioFixedText(source: "you’ve logged this around a similar time in your cycle before.", font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: Prompt24Palette.burgundy.opacity(0.82), serious: true)
                 }
             }
 
             if pattern.cyclesEvaluated > 0 {
-                Text(
-                    "\(pattern.cyclesMatched) of \(pattern.cyclesEvaluated) eligible completed cycles"
-                )
+                FruitfolioFixedText(source: "\(pattern.cyclesMatched) of \(pattern.cyclesEvaluated) eligible completed cycles", protectedLiterals: [String(pattern.cyclesMatched), String(pattern.cyclesEvaluated)], font: .custom("Chalkboard SE", size: 11, relativeTo: .caption), color: Prompt24Palette.burgundy.opacity(0.60), serious: true)
                 .font(
                     Font.custom(
                         "Chalkboard SE",
@@ -459,15 +430,11 @@ struct Prompt24TrendsView: View {
                 .frame(width: 54)
                 .accessibilityHidden(true)
 
-            Text("opening your trend pages…")
-                .font(
-                    Font.custom(
+            FruitfolioFixedText(source: "opening your trend pages…", font: Font.custom(
                         "Chalkboard SE",
                         size: 13,
                         relativeTo: .body
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.68))
+                    ), color: Prompt24Palette.burgundy.opacity(0.68))
         }
         .frame(maxWidth: .infinity, minHeight: 310)
     }
@@ -486,15 +453,11 @@ struct Prompt24TrendsView: View {
                 .frame(width: 48)
                 .accessibilityHidden(true)
 
-            Text("your patterns will grow here ♡")
-                .font(
-                    Font.custom(
+            FruitfolioFixedText(source: "your patterns will grow here ♡", font: Font.custom(
                         "Chalkboard SE",
                         size: 14,
                         relativeTo: .body
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.76))
+                    ), color: Prompt24Palette.burgundy.opacity(0.76))
         }
         .frame(maxWidth: .infinity, minHeight: 320)
     }
@@ -550,27 +513,18 @@ private struct Prompt24MetricSection<Chart: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(
-                    Font.custom(
+            FruitfolioFixedText(source: title, font: (Font.custom(
                         "Chalkboard SE",
                         size: 17,
                         relativeTo: .headline
-                    )
-                )
-                .fontWeight(.semibold)
-                .foregroundStyle(Prompt24Palette.burgundy)
+                    )).weight(.semibold), color: Prompt24Palette.burgundy)
                 .accessibilityAddTraits(.isHeader)
 
-            Text(subtitle)
-                .font(
-                    Font.custom(
+            FruitfolioFixedText(source: subtitle, font: Font.custom(
                         "Chalkboard SE",
                         size: 11,
                         relativeTo: .caption
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.62))
+                    ), color: Prompt24Palette.burgundy.opacity(0.62))
 
             if hasData {
                 chart()
@@ -597,21 +551,17 @@ private struct Prompt24EmptyGraph: View {
                     .frame(width: 48)
                     .accessibilityHidden(true)
 
-                Text("your patterns will grow here ♡")
-                    .font(
-                        Font.custom(
+                FruitfolioFixedText(source: "your patterns will grow here ♡", font: Font.custom(
                             "Chalkboard SE",
                             size: 13,
                             relativeTo: .body
-                        )
-                    )
-                    .foregroundStyle(Prompt24Palette.burgundy.opacity(0.72))
+                        ), color: Prompt24Palette.burgundy.opacity(0.72))
             }
         }
         .frame(maxWidth: .infinity)
         .frame(height: 230)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("your patterns will grow here")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "your patterns will grow here"))
     }
 }
 
@@ -1053,9 +1003,7 @@ private struct Prompt24UnifiedSymptomChart: View {
                         }
                     }
                     ForEach(Array(timeline.symptoms.enumerated()), id: \.element) { row, symptom in
-                        Text(symptom.displayName)
-                            .font(.body)
-                            .foregroundStyle(Prompt24Palette.burgundy)
+                        FruitfolioFixedText(source: symptom.displayName, font: .body, color: Prompt24Palette.burgundy, serious: true)
                             .multilineTextAlignment(.trailing)
                             .frame(width: 130, alignment: .trailing)
                             .position(x: 73, y: 24 + (CGFloat(row) + 0.5) / CGFloat(max(timeline.symptoms.count, 1)) * max(plotHeight - 80, 1))
@@ -1070,7 +1018,7 @@ private struct Prompt24UnifiedSymptomChart: View {
                         .font(.caption)
                         .padding(.leading, 150)
                         .padding(.trailing, 24)
-                        Text("recorded dates →").font(.caption)
+                        FruitfolioFixedText(source: "recorded dates →", protectedLiterals: ["→"], font: .caption, color: Prompt24Palette.burgundy)
                     }
                     .foregroundStyle(Prompt24Palette.burgundy)
                     .padding(.bottom, 4)
@@ -1092,30 +1040,14 @@ private struct Prompt24AxisLabels: View {
         GeometryReader { proxy in
             let frame = Prompt24ChartMath.plotFrame(in: proxy.size)
 
-            Text(x)
-                .font(
-                    Font.custom(
-                        "Chalkboard SE",
-                        size: 9,
-                        relativeTo: .caption2
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.58))
+            FruitfolioFixedText(source: x, protectedLiterals: ["→", "°C", "°F"], font: .custom("Chalkboard SE", size: 9, relativeTo: .caption2), color: Prompt24Palette.burgundy.opacity(0.58))
                 .fixedSize()
                 .position(
                     x: frame.midX,
                     y: min(proxy.size.height - 8, frame.maxY + 13)
                 )
 
-            Text(y)
-                .font(
-                    Font.custom(
-                        "Chalkboard SE",
-                        size: 9,
-                        relativeTo: .caption2
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.58))
+            FruitfolioFixedText(source: y, protectedLiterals: ["→", "°C", "°F"], font: .custom("Chalkboard SE", size: 9, relativeTo: .caption2), color: Prompt24Palette.burgundy.opacity(0.58))
                 .fixedSize()
                 .rotationEffect(.degrees(-90))
                 .position(
@@ -1200,15 +1132,11 @@ private struct Prompt24TinyStat: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(Prompt24Palette.burgundy)
 
-            Text(title)
-                .font(
-                    Font.custom(
+            FruitfolioFixedText(source: title, font: Font.custom(
                         "Chalkboard SE",
                         size: 10,
                         relativeTo: .caption2
-                    )
-                )
-                .foregroundStyle(Prompt24Palette.burgundy.opacity(0.60))
+                    ), color: Prompt24Palette.burgundy.opacity(0.60))
         }
     }
 }

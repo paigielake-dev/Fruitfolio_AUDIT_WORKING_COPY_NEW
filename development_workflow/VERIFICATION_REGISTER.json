@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T07:35:33.139413+00:00",
+  "updated_at": "2026-11-07T07:43:53.263069+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -10383,6 +10383,85 @@
         ]
       },
       "timestamp": "2026-11-07T07:35:33.139413+00:00"
+    },
+    {
+      "batch": "Global-and-cycle-controlled-copy-localization",
+      "requirements": [
+        24,
+        394,
+        395,
+        397,
+        411,
+        412,
+        414,
+        415,
+        416,
+        417,
+        432,
+        433,
+        434,
+        442,
+        443,
+        444,
+        474,
+        476,
+        477,
+        478
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "Focused existing portable XCTest selected by CatalogTranslation|ControlTranslationState|Ownership|Intro:32passed",
+        "Focused expanded existing portable XCTest including Cycle|Symptom|Trends:58passed",
+        "Swift compiler syntax parse only:314files0errors",
+        "git diff --check",
+        "70 workflow integrity checks passed"
+      ],
+      "results": {
+        "focused_initial_XCTest": 32,
+        "focused_cycle_XCTest": 58,
+        "focused_failures": 0,
+        "syntax_files": 314,
+        "syntax_errors": 0,
+        "log_receipts": {
+          "/tmp/fruitfolio_misc_focused.log": {
+            "sha256": "dd96cffa3f49f6d59b118dd31fb7293849bc900fe5e6a97f27b6a2277c1916c6",
+            "bytes": 38758
+          },
+          "/tmp/fruitfolio_misc_cycle_focused.log": {
+            "sha256": "a0b576f6d81199a06cd9e06fe70e142c3cbaf10509366944c1a56b12bb6d9db7",
+            "bytes": 46268
+          },
+          "/tmp/fruitfolio_misc_cycle_final_syntax.log": {
+            "sha256": "a08dbf8f043ecdcd3c1cfd79298fabaa0e83494c33ef0722631f882f55cf35e0",
+            "bytes": 106
+          },
+          "/tmp/fruitfolio_misc_cycle_workflow.log": {
+            "sha256": "b0f1424176ce8f090d178d3a6e72494952416a39a6c9d65d3d2fce7183997268",
+            "bytes": 170
+          }
+        },
+        "workflow_checks": 70
+      },
+      "verification": {
+        "executed": {
+          "focused_initial_XCTest": 32,
+          "focused_cycle_XCTest": 58,
+          "focused_failures": 0,
+          "syntax_files": 314,
+          "syntax_errors": 0,
+          "workflow_checks": 70
+        },
+        "not_run": [
+          "Apple SDK typecheck/build, SwiftUI rendering, VoiceOver, RTL and large-text execution",
+          "Official MADLAD inference and clinical/linguistic translation acceptance"
+        ],
+        "remaining": [
+          "Execute changed native controls and reflow on Apple; focused Foundation tests do not execute SwiftUI",
+          "Complete other Cycle education/daily/wheel/date-picker and chart-generated label localization; reconcile original checklist independently",
+          "Official model/tokenizer, supported Apple device and clinical/language review remain external dependencies"
+        ]
+      },
+      "timestamp": "2026-11-07T07:43:53.263069+00:00"
     }
   ]
 }

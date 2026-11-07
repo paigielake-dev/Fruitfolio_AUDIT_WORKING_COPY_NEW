@@ -23,12 +23,7 @@ struct Prompt12OwnershipView: View {
                     )
 
                     Prompt12PaperCard {
-                        Text(store.ownershipState.displayTitle)
-                            .font(.custom("Chalkboard SE", size: 17))
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
+                        FruitfolioFixedText(source: store.ownershipState.displayTitle, font: .custom("Chalkboard SE", size: 17).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
 
                         Prompt12InfoText(store.ownershipState.displayDetail)
                         if let message = store.ownershipValidationMessage { Prompt12InfoText(message) }
@@ -41,12 +36,7 @@ struct Prompt12OwnershipView: View {
                     }
 
                     Prompt12PaperCard {
-                        Text("no second paywall")
-                            .font(.custom("Chalkboard SE", size: 15))
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
+                        FruitfolioFixedText(source: "no second paywall", font: .custom("Chalkboard SE", size: 15).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
 
                         Prompt12InfoText(
                             "after the app is legitimately obtained through the storefront, Fruitfolio should open into the experience—not a subscription screen."
@@ -54,12 +44,7 @@ struct Prompt12OwnershipView: View {
                     }
 
                     Prompt12PaperCard {
-                        Text("restore ≠ sign in")
-                            .font(.custom("Chalkboard SE", size: 15))
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
+                        FruitfolioFixedText(source: "restore ≠ sign in", font: .custom("Chalkboard SE", size: 15).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
 
                         Prompt12InfoText(
                             "storefront ownership restoration and Fruitfolio data restoration are separate ideas. signing in may restore supported data; it is not another purchase."

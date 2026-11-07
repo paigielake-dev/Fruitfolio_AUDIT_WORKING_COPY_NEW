@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "8e3ecdde337bbb8ebebd0507fec72838f95e01ac",
+  "current_HEAD": "fd4a700f3824f25adac5eff09336624b1d1240b2",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
   "current_requirement": 397,
-  "current_implementation_batch": "Guide-required-alignment-and-Part4-implementation-closure",
+  "current_implementation_batch": "Global-and-cycle-controlled-copy-localization",
   "completed_requirements": [
     206,
     210
@@ -494,20 +494,17 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-    "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
-    "Fruitfolio/Localizable.xcstrings",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-    "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/record_prompt1b_batch.py",
-    "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-    "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
-    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
-    "development_workflow/tests/test_batch_recorder.py"
+    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+    "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+    "Fruitfolio/Cycle Tracker/Symptoms/Prompt23SymptomsView.swift",
+    "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+    "Fruitfolio/Introduction/Prompt04IntroView.swift",
+    "Fruitfolio/Privacy Settings/Prompt12DataManagementView.swift",
+    "Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift",
+    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+    "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -520,69 +517,40 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "37initial and43final focused existing regressions",
-    "Meaningful feature checkpoint:973portable/998native CPU XCTest+21SwiftTesting each",
-    "70workflow checks including closure-preservation regression",
-    "313changed Swift files parsed only",
-    "Source sound ownership zero findings",
-    "Part4 individual implementation review and28exact founder source paragraph hashes",
-    "git diff --check"
+    "Focused existing portable XCTest selected by CatalogTranslation|ControlTranslationState|Ownership|Intro:32passed",
+    "Focused expanded existing portable XCTest including Cycle|Symptom|Trends:58passed",
+    "Swift compiler syntax parse only:314files0errors",
+    "git diff --check",
+    "70 workflow integrity checks passed"
   ],
   "last_test_results": {
-    "portable_XCTest": 973,
-    "native_CPU_XCTest": 998,
-    "SwiftTesting_each": 21,
-    "initial_focused_XCTest": 37,
-    "final_focused_XCTest": 43,
-    "workflow_checks": 70,
-    "changed_Swift_syntax_files": 313,
-    "control_sound_ownership_findings": 0,
-    "Apple_UI_vectors_written": 4,
-    "Apple_UI_vectors_executed": 0,
-    "English_fallbacks_added": 6,
-    "existing_empty_English_records_populated": 2,
-    "official_MADLAD_verified": false,
-    "portable_command_exit_code": 0,
-    "native_command_exit_code": 0,
-    "Part4_implementation_reviews": 52,
-    "Part4_core_verified_ids": [
-      206,
-      210
-    ],
-    "Part4_awaiting_Apple_external": 50,
+    "focused_initial_XCTest": 32,
+    "focused_cycle_XCTest": 58,
+    "focused_failures": 0,
+    "syntax_files": 314,
+    "syntax_errors": 0,
     "log_receipts": {
-      "/tmp/fruitfolio_guide_alignment_portable.log": {
-        "bytes": 311580,
-        "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
+      "/tmp/fruitfolio_misc_focused.log": {
+        "sha256": "dd96cffa3f49f6d59b118dd31fb7293849bc900fe5e6a97f27b6a2277c1916c6",
+        "bytes": 38758
       },
-      "/tmp/fruitfolio_guide_alignment_native.log": {
-        "bytes": 1286769,
-        "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
+      "/tmp/fruitfolio_misc_cycle_focused.log": {
+        "sha256": "a0b576f6d81199a06cd9e06fe70e142c3cbaf10509366944c1a56b12bb6d9db7",
+        "bytes": 46268
       },
-      "/tmp/fruitfolio_guide_alignment_focused.log": {
-        "bytes": 39613,
-        "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
+      "/tmp/fruitfolio_misc_cycle_final_syntax.log": {
+        "sha256": "a08dbf8f043ecdcd3c1cfd79298fabaa0e83494c33ef0722631f882f55cf35e0",
+        "bytes": 106
       },
-      "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-        "bytes": 41508,
-        "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-      },
-      "/tmp/fruitfolio_guide_alignment_workflow.log": {
-        "bytes": 170,
-        "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-      },
-      "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-        "bytes": 106,
-        "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-      },
-      "/tmp/fruitfolio_guide_alignment_ownership.log": {
-        "bytes": 5,
-        "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+      "/tmp/fruitfolio_misc_cycle_workflow.log": {
+        "sha256": "b0f1424176ce8f090d178d3a6e72494952416a39a6c9d65d3d2fce7183997268",
+        "bytes": 170
       }
-    }
+    },
+    "workflow_checks": 70
   },
-  "next_exact_implementation_action": "Finish remaining required fixed-copy localization in other feature families using existing components; group compatible changes and focused tests. Close individually evidenced implementations without promoting unavailable Apple/official-model/clinical acceptance; reconcile remaining original/founder clauses for final audit.",
-  "updated_at": "2026-11-07T07:35:33.139413+00:00",
+  "next_exact_implementation_action": "Continue related required localization in cycle education, wheel/daily, source citations and native date/chart labels, preserving scientific numbers/citations/patient bindings; perform individual implementation closure when evidenced.",
+  "updated_at": "2026-11-07T07:43:53.263069+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -592,76 +560,26 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": 973,
-      "native_CPU_XCTest": 998,
-      "SwiftTesting_each": 21,
-      "initial_focused_XCTest": 37,
-      "final_focused_XCTest": 43,
-      "workflow_checks": 70,
-      "changed_Swift_syntax_files": 313,
-      "control_sound_ownership_findings": 0,
-      "Apple_UI_vectors_written": 4,
-      "Apple_UI_vectors_executed": 0,
-      "English_fallbacks_added": 6,
-      "existing_empty_English_records_populated": 2,
-      "official_MADLAD_verified": false,
-      "portable_command_exit_code": 0,
-      "native_command_exit_code": 0,
-      "Part4_implementation_reviews": 52,
-      "Part4_core_verified_ids": [
-        206,
-        210
-      ],
-      "Part4_awaiting_Apple_external": 50,
-      "log_receipts": {
-        "/tmp/fruitfolio_guide_alignment_portable.log": {
-          "bytes": 311580,
-          "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-        },
-        "/tmp/fruitfolio_guide_alignment_native.log": {
-          "bytes": 1286769,
-          "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-        },
-        "/tmp/fruitfolio_guide_alignment_focused.log": {
-          "bytes": 39613,
-          "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-        },
-        "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-          "bytes": 41508,
-          "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-        },
-        "/tmp/fruitfolio_guide_alignment_workflow.log": {
-          "bytes": 170,
-          "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-        },
-        "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-          "bytes": 106,
-          "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-        },
-        "/tmp/fruitfolio_guide_alignment_ownership.log": {
-          "bytes": 5,
-          "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-        }
-      }
+      "focused_initial_XCTest": 32,
+      "focused_cycle_XCTest": 58,
+      "focused_failures": 0,
+      "syntax_files": 314,
+      "syntax_errors": 0,
+      "workflow_checks": 70
     },
     "not_run": [
-      "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-      "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-      "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+      "Apple SDK typecheck/build, SwiftUI rendering, VoiceOver, RTL and large-text execution",
+      "Official MADLAD inference and clinical/linguistic translation acceptance"
     ],
     "remaining": [
-      "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-      "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-      "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+      "Execute changed native controls and reflow on Apple; focused Foundation tests do not execute SwiftUI",
+      "Complete other Cycle education/daily/wheel/date-picker and chart-generated label localization; reconcile original checklist independently",
+      "Official model/tokenizer, supported Apple device and clinical/language review remain external dependencies"
     ]
   },
   "current_checklist_section": "Part 9 \u2014 Localization and MADLAD",
-  "last_recorded_batch_part": 4,
-  "last_supplemental_requirements": [
-    "SPEC-7.9.2",
-    "SPEC-7.9.4",
-    "SPEC-7.9.6"
-  ],
+  "last_recorded_batch_part": 9,
+  "last_supplemental_requirements": [],
   "implemented_requirements": [
     170,
     171,

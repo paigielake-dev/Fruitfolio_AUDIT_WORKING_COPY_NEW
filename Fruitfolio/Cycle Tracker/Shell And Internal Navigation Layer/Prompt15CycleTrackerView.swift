@@ -128,9 +128,7 @@ struct Prompt15CycleTrackerView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 7) {
             HStack(alignment: .center, spacing: 10) {
-                Text("cycle tracker")
-                    .font(Prompt15Type.title)
-                    .foregroundStyle(Prompt15Palette.burgundy)
+                FruitfolioFixedText(source: "cycle tracker", font: Prompt15Type.title, color: Prompt15Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
                 Image("decor_moon")
@@ -143,11 +141,7 @@ struct Prompt15CycleTrackerView: View {
                 Spacer(minLength: 0)
             }
 
-            Text("your cycle, with the biology underneath")
-                .font(Prompt15Type.subtitle)
-                .foregroundStyle(
-                    Prompt15Palette.burgundy.opacity(0.76)
-                )
+            FruitfolioFixedText(source: "your cycle, with the biology underneath", font: Prompt15Type.subtitle, color: Prompt15Palette.burgundy.opacity(0.76))
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.top, 8)
@@ -1643,7 +1637,7 @@ private struct Prompt22BodyDetailNavigation: View {
             Spacer(minLength: 0)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Body education sections")
+        .modifier(FruitfolioFixedAccessibilityLabel(source: "Body education sections"))
     }
 }
 

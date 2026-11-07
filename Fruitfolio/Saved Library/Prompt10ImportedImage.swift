@@ -21,11 +21,11 @@ struct Prompt10ImportedImage: View {
                     .frame(maxWidth: .infinity)
                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                     .accessibilityHidden(false)
-                    .accessibilityLabel("user imported image")
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "user imported image"))
             } else if unavailable {
-                Text("this local image is unavailable")
+                FruitfolioFixedText(source: "this local image is unavailable")
             } else {
-                ProgressView().accessibilityLabel("loading local image")
+                ProgressView().modifier(FruitfolioFixedAccessibilityLabel(source: "loading local image"))
             }
         }
         .task(id: imageID) {

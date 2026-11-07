@@ -67,13 +67,13 @@ struct Prompt04IntroView: View {
                         FruitfolioImage(id: .control_next)
                             .scaledToFit().frame(width: 44, height: 44)
                             .accessibilityHidden(true)
-                        Text("skip tour").font(.caption)
+                        FruitfolioFixedText(source: "skip tour", font: .caption, color: DesignTokens.ColorToken.primaryBurgundy)
                     }
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .frame(minWidth: 44, minHeight: 44)
                 }
                 .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                .accessibilityLabel("skip tour")
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "skip tour"))
                 .accessibilityIdentifier("intro.skipTour")
                 .padding(20)
             }

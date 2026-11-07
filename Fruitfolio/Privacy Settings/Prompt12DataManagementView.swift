@@ -354,19 +354,7 @@ struct Prompt12DataManagementView: View {
                     )
                     .accessibilityHidden(true)
 
-                Text("delete data")
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 15
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
+                FruitfolioFixedText(source: "delete data", protectedLiterals: [], font: .custom("Chalkboard SE", size: 15).bold(), color: DesignTokens.ColorToken.primaryBurgundy)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .fixedSize(

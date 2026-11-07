@@ -14,6 +14,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
     @State private var rendered: String?
     @State private var resolvedKey: Key?
     @State private var failure: String?
+    @State private var failureIsControlled = false
     @State private var translationOrigin: FruitfolioTranslationOrigin?
     @State private var showOriginal = false
 
@@ -38,7 +39,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                     resolvedKey == key && rendered != nil ? settings.language.rawValue : sourceLanguage)
             if usesTranslation {
                 if resolvedKey == key, rendered != nil {
-                    if translationOrigin == .machine { Text("local machine translation").font(.caption) }
+                    if translationOrigin == .machine { Text(verbatim: settings.localized("local machine translation")).font(.caption) }
                     FruitfolioControlPillButton(label: showOriginal ? "hide original text" : "show original text", isSelected: showOriginal) {
                         showOriginal.toggle()
                     }
@@ -49,8 +50,8 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                             .accessibilityIdentifier("translation.originalText")
                     }
                 } else if resolvedKey == key, let failure {
-                    Text("original text — translation unavailable").font(.caption).bold()
-                    Text(LocalizedStringKey(failure)).font(.caption)
+                    Text(verbatim: settings.localized("original text — translation unavailable")).font(.caption).bold()
+                    Text(verbatim: failureIsControlled ? settings.localized(failure) : failure).font(.caption)
                     if settings.translationPausedForMemoryPressure {
                         FruitfolioControlPillButton(label: "try translation again") {
                             settings.translationPausedForMemoryPressure = false
@@ -59,7 +60,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                         .accessibilityIdentifier("translation.retryAfterMemoryPressure")
                     }
                 } else {
-                    Text("original text — preparing local translation…").font(.caption)
+                    Text(verbatim: settings.localized("original text — preparing local translation…")).font(.caption)
                 }
             }
         }
@@ -71,6 +72,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
             if resolvedKey == request, rendered != nil { return }
             rendered = nil
             failure = nil
+            failureIsControlled = false
             resolvedKey = nil
             translationOrigin = nil
             guard usesTranslation else { return }
@@ -85,6 +87,9 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                 resolvedKey = request
             } catch {
                 guard !Task.isCancelled else { return }
+                // Translate only our typed error vocabulary through the chosen catalog.
+                // Provider/OS details are never reinterpreted as localization keys.
+                failureIsControlled = error is FruitfolioTranslationError
                 failure = error.localizedDescription
                 resolvedKey = request
             }
