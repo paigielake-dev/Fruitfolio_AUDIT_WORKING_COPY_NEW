@@ -308,3 +308,236 @@ nonisolated enum Prompt27AContextPresentationCopy {
         return Array(questions.prefix(3))
     }
 }
+
+/// Ephemeral descriptions of supplied history, not inferred biological events.
+/// Private notes and medication names never enter this projection.
+nonisolated struct Prompt27AObservedCycleFacts: Codable, Hashable, Sendable {
+    let enteredPeriodStartCount: Int?
+    let recentCompletedCycleLengths: [Int]
+    let recordedLogCount: Int?
+    let recordedBasalTemperatureCount: Int?
+    let recordedCervicalFluidCount: Int?
+    let recordedSymptomCounts: [String: Int]
+    let historyIdentity: String
+
+    static let unknown = Self(prediction: nil, dailyLogs: nil)
+
+    init(prediction: Prompt17CyclePredictionResult?, dailyLogs: [Prompt20DailyLog]?, ownerID: Prompt20DailyLogOwnerID = .localDevice) {
+        enteredPeriodStartCount = prediction?.normalizedCycleStartDates.count
+        recentCompletedCycleLengths = Array(prediction?.recentCycleLengths.suffix(12) ?? [])
+        let logs = dailyLogs?.filter { !$0.isDeleted && $0.ownerID == ownerID }
+        recordedLogCount = logs?.count
+        recordedBasalTemperatureCount = logs?.filter { $0.temperature?.readingType == .basalWaking }.count
+        recordedCervicalFluidCount = logs?.filter { $0.cervicalFluid != nil }.count
+        var symptoms: [String: Int] = [:]
+        for log in logs ?? [] {
+            for id in log.symptoms?.selectedIDs ?? [] { symptoms[id.rawValue, default: 0] += 1 }
+        }
+        recordedSymptomCounts = symptoms
+        var identity = Hasher()
+        identity.combine(prediction?.historyVersion)
+        for log in (logs ?? []).sorted(by: { $0.id.uuidString < $1.id.uuidString }) {
+            identity.combine(log.id); identity.combine(log.revision); identity.combine(log.updatedAt)
+        }
+        historyIdentity = String(identity.finalize()) // ephemeral, never persisted or supplied to the model
+    }
+
+    func promptJSON() throws -> String {
+        struct Payload: Encodable {
+            let enteredPeriodStartCount: Int?
+            let recentCompletedCycleLengths: [Int]
+            let recordedLogCount: Int?
+            let recordedBasalTemperatureCount: Int?
+            let recordedCervicalFluidCount: Int?
+            let recordedSymptomCounts: [String: Int]
+        }
+        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
+        return String(decoding: try encoder.encode(Payload(enteredPeriodStartCount: enteredPeriodStartCount,
+            recentCompletedCycleLengths: recentCompletedCycleLengths, recordedLogCount: recordedLogCount,
+            recordedBasalTemperatureCount: recordedBasalTemperatureCount,
+            recordedCervicalFluidCount: recordedCervicalFluidCount, recordedSymptomCounts: recordedSymptomCounts)), as: UTF8.self)
+    }
+}
+
+nonisolated struct Prompt27AContextResearchTopic: Equatable, Sendable, Identifiable {
+    let id: String
+    let reportedTitle: String
+    let reportedValue: String
+    let question: String?
+    var personalCategory: FruitfolioPersonalHealthCategory? = nil
+}
+
+/// Planning uses explicit choices/category metadata, never diagnoses parsed from
+/// narrative, names, symptoms, dates or laboratory values.
+nonisolated enum Prompt27AContextResearchPlan {
+    static func topics(for context: Prompt27AUserReproductiveContext) -> [Prompt27AContextResearchTopic] {
+        var result: [Prompt27AContextResearchTopic] = []
+        func add(_ id: String, _ title: String, _ value: String, _ question: String) {
+            result.append(.init(id: id, reportedTitle: title, reportedValue: value, question: question))
+        }
+        switch context.trackingGoal.value {
+        case .tryingToConceive: add("goal", "tracking goal", context.trackingGoal.value.displayName, "what can menstrual cycle estimates show when trying to conceive, and what are their limitations?")
+        case .avoidingPregnancy: add("goal", "tracking goal", context.trackingGoal.value.displayName, "why can a predicted fertile window not guarantee contraception or a safe day?")
+        case .generalCycleTracking, .noSpecificGoal: add("goal", "tracking goal", context.trackingGoal.value.displayName, "what can recorded menstrual cycle lengths show, and what remains uncertain?")
+        case .preferNotToSpecify, .unspecified: break
+        }
+        switch context.sexualActivityContext.value {
+        case .sexuallyActive, .notCurrentlySexuallyActive:
+            result.append(.init(id: "sexualActivity", reportedTitle: "sexual activity context",
+                reportedValue: context.sexualActivityContext.value.displayName, question: nil))
+        case .preferNotToSay, .unspecified: break
+        }
+        switch context.reproductiveStage.value {
+        case .pregnant: add("stage", "reproductive stage", context.reproductiveStage.value.displayName, "how does pregnancy affect menstrual cycles and ovulation?")
+        case .postpartum: add("stage", "reproductive stage", context.reproductiveStage.value.displayName, "what biological changes can affect menstrual cycle return postpartum?")
+        case .perimenopause: add("stage", "reproductive stage", context.reproductiveStage.value.displayName, "how can menstrual cycles change during perimenopause?")
+        case .menopause: add("stage", "reproductive stage", context.reproductiveStage.value.displayName, "how does menopause affect menstrual cycles and ovulation?")
+        case .cycling: add("stage", "reproductive stage", context.reproductiveStage.value.displayName, "what variation can occur in menstrual cycle lengths?")
+        case .preferNotToSpecify, .unspecified: break
+        }
+        for health in context.cycleHealthContexts.sorted(by: { $0.rawValue < $1.rawValue }) {
+            let question: String
+            switch health {
+            case .pcos: question = "how can PCOS be associated with irregular menstrual cycles?"
+            case .endometriosis: question = "what is endometriosis and how can it relate to menstrual symptoms?"
+            case .irregularCycles: question = "what can cause variation in menstrual cycle lengths, and what are prediction limitations?"
+            }
+            add("health." + health.rawValue, "cycle health context", health.displayName, question)
+        }
+        if context.lactationContext.value == .breastfeedingOrLactating {
+            add("lactation", "lactation context", context.lactationContext.value.displayName, "how can lactation relate to menstrual cycle return and ovulation?")
+        }
+        if context.lactationContext.value == .notCurrentlyBreastfeedingOrLactating {
+            result.append(.init(id: "lactation", reportedTitle: "lactation context",
+                reportedValue: context.lactationContext.value.displayName, question: nil))
+        }
+        if context.infertilityContext.value == .notReported {
+            result.append(.init(id: "infertility", reportedTitle: "fertility history",
+                reportedValue: context.infertilityContext.value.displayName, question: nil))
+        }
+        if context.fertilityTreatmentContext.value == .notCurrentlyUndergoing {
+            result.append(.init(id: "treatment", reportedTitle: "fertility treatment context",
+                reportedValue: context.fertilityTreatmentContext.value.displayName, question: nil))
+        }
+        if context.infertilityContext.value == .userReportedInfertility {
+            add("infertility", "fertility history", context.infertilityContext.value.displayName, "what does infertility mean, and what cannot be established by menstrual cycle tracking alone?")
+        }
+        if context.fertilityTreatmentContext.value == .currentlyUndergoing {
+            add("treatment", "fertility treatment context", context.fertilityTreatmentContext.value.displayName, "what are the main types of fertility treatment and how can treatment affect menstrual cycles?")
+        }
+        switch context.contraceptionContext.value {
+        case .hormonalContraception: add("contraception", "contraception context", context.contraceptionContext.value.displayName, "how can hormonal contraception affect bleeding and ovulation?")
+        case .nonHormonalContraception: add("contraception", "contraception context", context.contraceptionContext.value.displayName, "what are non-hormonal contraception methods and their limitations?")
+        case .none:
+            result.append(.init(id: "contraception", reportedTitle: "contraception context",
+                reportedValue: context.contraceptionContext.value.displayName, question: nil))
+        case .preferNotToSpecify, .unspecified: break
+        }
+        switch context.surrogacyContext.value {
+        case .preparingForEmbryoTransfer: add("surrogacy", "gestational carrier context", context.surrogacyContext.value.displayName, "what happens during gestational carrier embryo transfer preparation?")
+        case .pregnantGestationalCarrier: add("surrogacy", "gestational carrier context", context.surrogacyContext.value.displayName, "what biological changes occur during a gestational carrier pregnancy?")
+        case .postpartumAfterSurrogatePregnancy: add("surrogacy", "gestational carrier context", context.surrogacyContext.value.displayName, "what biological recovery changes can occur after a surrogate pregnancy, without assuming parenting?")
+        case .preferNotToSpecify, .unspecified: break
+        }
+        for category in FruitfolioPersonalHealthCategory.allCases {
+            guard let entry = context.personalHealthEntries[category.rawValue], entry.status == .provided,
+                  entry.text != nil else { continue }
+            result.append(.init(id: "personal." + category.rawValue, reportedTitle: category.title,
+                reportedValue: entry.provenance.label,
+                question: "what approved research relates \(category.title) to menstrual cycle patterns, and what remains unknown?",
+                personalCategory: category))
+        }
+        return result
+    }
+}
+
+nonisolated struct Prompt27AContextResearchItem: Identifiable, Sendable {
+    enum Unavailable: Sendable { case contextTooLarge, missingResearch, requestFailed, noBiologicalInference, narrativeNeedsValidatedModel }
+    let topic: Prompt27AContextResearchTopic
+    let answer: AskAnswer?
+    let unavailable: Unavailable?
+    var id: String { topic.id }
+}
+
+/// Never Codable/persisted. A caller must discard it on context/history changes
+/// and presentation loss; sources remain the canonical engine's verified records.
+nonisolated struct Prompt27AContextResearchReport: Sendable {
+    let context: Prompt27AUserReproductiveContext
+    let observedFacts: Prompt27AObservedCycleFacts
+    let items: [Prompt27AContextResearchItem]
+    let isComplete: Bool
+    init(context: Prompt27AUserReproductiveContext, observedFacts: Prompt27AObservedCycleFacts,
+         items: [Prompt27AContextResearchItem], isComplete: Bool = true) {
+        self.context = context; self.observedFacts = observedFacts
+        self.items = items; self.isComplete = isComplete
+    }
+}
+
+@MainActor
+final class Prompt27AContextResearchService {
+    private let engine: FruitfolioResearchIntelligenceEngine
+    init(engine: FruitfolioResearchIntelligenceEngine? = nil) {
+        self.engine = engine ?? .shared
+    }
+
+    func explain(context: Prompt27AUserReproductiveContext,
+                 observedFacts: Prompt27AObservedCycleFacts,
+                 previous: Prompt27AContextResearchReport? = nil,
+                 progress: (@MainActor (Prompt27AContextResearchReport) -> Void)? = nil) async throws -> Prompt27AContextResearchReport {
+        try Task.checkCancellation()
+        let topics = Prompt27AContextResearchPlan.topics(for: context)
+        var items = previous.flatMap { $0.context == context && $0.observedFacts == observedFacts ? $0.items : nil } ?? []
+        let completed = Set(items.map(\.id))
+        func publish() {
+            progress?(.init(context: context, observedFacts: observedFacts, items: items, isComplete: false))
+        }
+        publish()
+        let tracker = FruitfolioBoundedTrackerContext(predictionConfidence: nil,
+            reasonCode: "reported_context_education_not_diagnostic",
+            trackingGoal: context.trackingGoal.value.rawValue,
+            reproductiveStage: context.reproductiveStage.value.rawValue,
+            cycleHealthContext: context.cycleHealthContexts.map(\.rawValue).sorted().joined(separator: ","),
+            observedCycleFacts: observedFacts)
+        for topic in topics where !completed.contains(topic.id) {
+            try Task.checkCancellation()
+            defer { if !Task.isCancelled { publish() } }
+            guard let question = topic.question else {
+                items.append(.init(topic: topic, answer: nil, unavailable: .noBiologicalInference))
+                continue
+            }
+            let userContext: FruitfolioAskUserContext?
+            do {
+                userContext = try topic.personalCategory.flatMap { category in
+                    try FruitfolioAskUserContext.selected(measurementIDs: [], personalCategories: [category],
+                        measurements: [], context: context)
+                }
+            } catch {
+                items.append(.init(topic: topic, answer: nil, unavailable: .contextTooLarge))
+                continue // Never truncate qualifiers or silently use an oversized narrative.
+            }
+            do {
+                let answer = try await engine.answer(question: question, conversation: [],
+                    trackerContext: tracker, userContext: userContext, progress: nil)
+                try Task.checkCancellation()
+                guard !answer.isDevelopmentPreview, !answer.sources.isEmpty, !answer.sourceIDs.isEmpty,
+                      answer.answerPath == .generated || answer.answerPath == .retrievalFallback else {
+                    items.append(.init(topic: topic, answer: nil, unavailable: .missingResearch))
+                    continue
+                }
+                if topic.personalCategory != nil && answer.answerPath != .generated {
+                    // A generic retrieval match does not interpret a narrative.
+                    // The default model must select/validate its evidence first.
+                    items.append(.init(topic: topic, answer: nil, unavailable: .narrativeNeedsValidatedModel))
+                    continue
+                }
+                items.append(.init(topic: topic, answer: answer, unavailable: nil))
+            } catch is CancellationError { throw CancellationError() }
+            catch {
+                try Task.checkCancellation()
+                items.append(.init(topic: topic, answer: nil, unavailable: .requestFailed))
+            }
+        }
+        try Task.checkCancellation()
+        return .init(context: context, observedFacts: observedFacts, items: items)
+    }
+}

@@ -3,6 +3,26 @@ import XCTest
 final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testCycleContextExplanationUsesCitationsAndDisappearsAfterContextRemoval() {
+        let app = launchCycleModal("context-research", reduced: true, rtl: false)
+        let open = app.buttons["cycleTracker.contextResearch.open"]
+        XCTAssertTrue(open.waitForExistence(timeout: 10))
+        for _ in 0..<12 { if open.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(open.isHittable); open.tap()
+        let unknown = app.staticTexts["what remains unknown"]
+        XCTAssertTrue(unknown.waitForExistence(timeout: 20))
+        for title in ["what you reported", "what your logs show", "what approved research supports"] {
+            XCTAssertTrue(app.staticTexts[title].exists)
+        }
+        XCTAssertTrue(app.staticTexts["sources ˚ ☆ ‧ ₊"].firstMatch.exists, "An explanation must offer actual approved-library citations")
+        let remove = app.buttons["cycleModalQA.removeResearchContext"]
+        XCTAssertTrue(remove.isHittable); remove.tap()
+        XCTAssertFalse(open.exists)
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "cycleTracker.contextResearch").firstMatch.exists)
+        captureGame(app, name: "cycle-context-research-removed-no-stale-explanation")
+        app.terminate()
+    }
+
     func testSharedDeletionOfOpenLibraryBookRestoresInteractiveShelf() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioLibraryStorageQA", "-fruitfolioLibraryEditableFixture",

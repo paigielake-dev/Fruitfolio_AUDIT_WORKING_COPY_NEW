@@ -77,6 +77,9 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
             trackingGoal=\(context.trackingGoal ?? "unknown")
             reproductiveStage=\(context.reproductiveStage ?? "unknown")
             cycleHealthContext=\(context.cycleHealthContext ?? "unknown")
+            Explicit context choices are user-reported, not independently verified diagnoses.
+            Recorded/calculated history below describes supplied entries only; it does not confirm ovulation, pregnancy, fertility, hormone levels, a diagnosis, a drug effect or causality. Never convert an association into a user-specific medical fact. These values are not approved evidence IDs.
+            observedCycleFacts=\(context.observedCycleFacts.flatMap { try? $0.promptJSON() } ?? "not supplied")
             """
         } else {
             trackerContext = "[none supplied]"

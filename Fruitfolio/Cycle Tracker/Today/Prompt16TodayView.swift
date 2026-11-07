@@ -6,6 +6,8 @@ struct Prompt16TodayView: View {
     var loader = Prompt16TodayLoader()
     var context: Prompt27AUserReproductiveContext = .unspecified
     var contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult()
+    var dailyLogRepository: any Prompt20DailyLogRepository = Prompt20CycleDailyLogStore.shared
+    var dailyLogOwnerID: Prompt20DailyLogOwnerID = .localDevice
     var predictionInfoFocus: AccessibilityFocusState<Bool>.Binding? = nil
     @AccessibilityFocusState private var localPredictionInfoFocus: Bool
 
@@ -31,6 +33,21 @@ struct Prompt16TodayView: View {
     @State private var loadState: Prompt16LoadState = .loading
     @State private var revealProgress: CGFloat = 0
     @State private var showMarker = false
+    @State private var observedContextFacts = Prompt27AObservedCycleFacts.unknown
+    @State private var showingContextResearch = false
+    @State private var contextResearch: Prompt27AContextResearchReport?
+    @State private var contextResearchLoading = false
+    private struct ContextResearchRequest: Equatable {
+        let context: Prompt27AUserReproductiveContext
+        let facts: Prompt27AObservedCycleFacts
+        let active: Bool
+    }
+    private var contextResearchRequest: ContextResearchRequest {
+        let ready: Bool
+        switch loadState { case .loaded, .failed: ready = true; case .loading: ready = false }
+        return .init(context: context, facts: observedContextFacts,
+            active: canInteract && showingContextResearch && ready)
+    }
 
     private var wheelModel: Prompt18WheelModel {
         guard let predictionResult else {
@@ -160,12 +177,47 @@ struct Prompt16TodayView: View {
             alignment: .leading
         )
         .task(id: loadGeneration) { await load() }
+        .task(id: contextResearchRequest) { [request = contextResearchRequest] in
+            guard request.active else {
+                contextResearchLoading = false
+                // Keep a completed report mounted while its citation confirmation
+                // covers Today; unmounting it would cancel that popup's owner.
+                if !showingContextResearch || !viewIsVisible || scenePhase != .active
+                    || contextResearch?.context != request.context
+                    || contextResearch?.observedFacts != request.facts {
+                    contextResearch = nil
+                }
+                return
+            }
+            if let report = contextResearch, report.context == request.context,
+               report.observedFacts == request.facts, report.isComplete { return }
+            let previous = contextResearch
+            contextResearch = nil
+            contextResearchLoading = true
+            defer { if request == contextResearchRequest { contextResearchLoading = false } }
+            do {
+                let report = try await Prompt27AContextResearchService().explain(context: request.context,
+                    observedFacts: request.facts, previous: previous) { partial in
+                    guard !Task.isCancelled, request == contextResearchRequest, canInteract else { return }
+                    contextResearch = partial
+                }
+                guard !Task.isCancelled, request == contextResearchRequest, canInteract else { return }
+                contextResearch = report
+            } catch { /* The source owner cancels; no stale or invented result is published. */ }
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { loadGeneration = UUID() }
-            else { revealTask?.cancel() }
+            else {
+                revealTask?.cancel()
+                contextResearch = nil; contextResearchLoading = false
+            }
         }
+        .onChange(of: context) { _, _ in contextResearch = nil }
         .onAppear { viewIsVisible = true }
-        .onDisappear { viewIsVisible = false; revealTask?.cancel(); revealTask = nil }
+        .onDisappear {
+            viewIsVisible = false; revealTask?.cancel(); revealTask = nil
+            contextResearch = nil; contextResearchLoading = false
+        }
         .accessibilityIdentifier("prompt16.today")
     }
 
@@ -193,6 +245,7 @@ struct Prompt16TodayView: View {
             spacing: 16
         ) {
             contextClarification
+            contextResearchSection
 
             Prompt16DayIndicator(
                 cycleDay: displayCycleDay
@@ -250,6 +303,29 @@ struct Prompt16TodayView: View {
         }
     }
 
+    @ViewBuilder
+    private var contextResearchSection: some View {
+        if !Prompt27AContextResearchPlan.topics(for: context).isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                FruitfolioControlPillButton(label: showingContextResearch ? "hide this explanation" : "why am I seeing this?") {
+                    guard canInteract else { return }
+                    showingContextResearch.toggle()
+                    if !showingContextResearch { contextResearch = nil }
+                }
+                .accessibilityIdentifier("cycleTracker.contextResearch.open")
+                if showingContextResearch {
+                    let current = contextResearch.flatMap {
+                        $0.context == context && $0.observedFacts == observedContextFacts ? $0 : nil
+                    }
+                    Prompt27AContextResearchPanel(report: current ?? .init(context: context,
+                        observedFacts: observedContextFacts, items: [], isComplete: false),
+                        isLoading: contextResearchLoading || current?.isComplete != true)
+                }
+            }
+            .padding(.vertical, 10)
+        }
+    }
+
     private var contextRestrictedContent: some View {
         VStack(alignment: .leading, spacing: 14) {
             FruitfolioFixedText(source: "today", font: Prompt16Type.contextTitle, serious: true)
@@ -267,6 +343,8 @@ struct Prompt16TodayView: View {
                 .foregroundStyle(Prompt16Palette.burgundy.opacity(0.72))
                 .fixedSize(horizontal: false, vertical: true)
 
+            contextResearchSection
+
             actionArea(showBBT: false)
                 .padding(.top, 6)
         }
@@ -279,6 +357,7 @@ struct Prompt16TodayView: View {
             spacing: 0
         ) {
             contextClarification
+            contextResearchSection
 
             Prompt16DayIndicator(
                 cycleDay: displayCycleDay
@@ -497,11 +576,7 @@ struct Prompt16TodayView: View {
             async let snapshotTask = loader.loadSnapshot(now: now)
 
             async let dailyLogsTask =
-                Prompt20CycleDailyLogStore
-                    .shared
-                    .allActiveLogs(
-                        ownerID: .localDevice
-                    )
+                dailyLogRepository.allActiveLogs(ownerID: dailyLogOwnerID)
 
             let snapshot = try await snapshotTask
             let loadedState = snapshot.state
@@ -531,6 +606,7 @@ struct Prompt16TodayView: View {
                 prediction
 
             estimatedIntervals = .none
+            observedContextFacts = .init(prediction: prediction, dailyLogs: dailyLogs, ownerID: dailyLogOwnerID)
 
             loadState = .loaded
 
@@ -541,6 +617,7 @@ struct Prompt16TodayView: View {
             }
 
             state = .empty
+            observedContextFacts = .unknown
             predictionResult = nil
             estimatedIntervals = .none
             loadState = .failed

@@ -33,6 +33,7 @@ private final class Prompt1BCycleModalFixture {
     let calendar: Calendar
     let daily: Prompt20CycleDailyLogStore
     let onboarding: Prompt14CycleOnboardingStore
+    let cycle: Prompt13CycleStore
     let scenario: String
     #if canImport(Combine)
     @Published
@@ -71,7 +72,7 @@ private final class Prompt1BCycleModalFixture {
         calendar = gregorian
         daily = Prompt20CycleDailyLogStore(fileURL: dailyURL, calendar: gregorian)
         let boundary = Prompt1BCycleModalOnboardingBoundary(fileURL: onboardingURL, failures: scenario == "onboarding-retry" ? 1 : Int.max)
-        let cycle = Prompt13CycleStore(persistence: Prompt13FileCyclePersistence(fileURL: directory.appendingPathComponent("cycle.json")))
+        cycle = Prompt13CycleStore(persistence: Prompt13FileCyclePersistence(fileURL: directory.appendingPathComponent("cycle.json")))
         onboarding = Prompt14CycleOnboardingStore(persistence: boundary, cycleStore: cycle)
     }
 
@@ -79,6 +80,15 @@ private final class Prompt1BCycleModalFixture {
         guard !ready else { return }
         do {
             if scenario == "prediction-sign" { ready = true; return }
+            if scenario == "context-research" {
+                try await Prompt14FileOnboardingPersistence(fileURL: onboardingURL).save(Prompt14OnboardingDraft())
+                let today = try Prompt13LocalDate(Date(), calendar: calendar)
+                for days in [-35, -7] {
+                    let day = try Prompt13LocalDate(calendar.date(byAdding: .day, value: days, to: Date())!, calendar: calendar)
+                    _ = try await cycle.recordCycleStart(on: day, today: today)
+                }
+                ready = true; return
+            }
             if scenario.hasPrefix("daily-") {
                 var draft = Prompt20DailyLogDraft()
                 draft.generalNote = "original fixture note"
@@ -137,6 +147,7 @@ struct Prompt1BCycleModalRegressionHarness: View {
     @AccessibilityFocusState private var predictionFocused: Bool
     @State private var dailyPresented = false
     @State private var didPresentDaily = false
+    @State private var researchContext = Prompt27AUserReproductiveContext(cycleHealthContexts: [.pcos])
 
     var body: some View {
         Group {
@@ -151,6 +162,17 @@ struct Prompt1BCycleModalRegressionHarness: View {
                         .accessibilityIdentifier("cycleModalQA.predictionInfo")
                     Text(predictionClosed ? "prediction explanation closed" : "prediction fixture ready")
                         .accessibilityIdentifier("cycleModalQA.predictionStatus")
+                }
+            } else if fixture.scenario == "context-research" {
+                VStack {
+                    Button("remove disposable context") { researchContext.clear() }
+                        .accessibilityIdentifier("cycleModalQA.removeResearchContext")
+                    ScrollView {
+                        Prompt16TodayView(loader: .init(cycleStore: fixture.cycle, onboardingStore: fixture.onboarding, calendar: fixture.calendar),
+                            context: researchContext, contextPolicy: Prompt27AContextPolicyEngine().policy(for: researchContext),
+                            dailyLogRepository: fixture.daily, dailyLogOwnerID: fixture.owner,
+                            onSeeBiology: {}, onLogToday: {}, onLogBBT: {}, onPredictionInfoRequested: { _ in })
+                    }
                 }
             } else if fixture.scenario.hasPrefix("onboarding-") && !fixture.didExit {
                 Prompt14CycleOnboardingView(store: fixture.onboarding) {

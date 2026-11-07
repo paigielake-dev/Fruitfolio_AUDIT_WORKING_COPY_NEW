@@ -576,3 +576,189 @@ final class Prompt27AContextPersonalizationTests: XCTestCase {
     }
 
 }
+
+/// Actual canonical research engine; only model availability is controlled.
+private actor Prompt27AContextResearchCaptureModel: FruitfolioLanguageModel {
+    private(set) var packets: [FruitfolioEvidencePacket] = []
+    func availability() async -> FruitfolioLanguageModelAvailability { .packageNotLinked }
+    func generateDraft(question: String, evidence: FruitfolioEvidencePacket) async throws -> FruitfolioGeneratedDraft {
+        packets.append(evidence)
+        throw FruitfolioLanguageModelError.unavailable(.packageNotLinked)
+    }
+}
+
+@MainActor
+final class Prompt27AContextResearchTests: XCTestCase {
+    private func researchStore() throws -> FruitfolioResearchPackageStore {
+        let path = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_RESEARCH_PATH"].map { URL(fileURLWithPath: $0) }
+        return .init(resourceURL: try XCTUnwrap(path ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json")))
+    }
+
+    func testActualApprovedResearchKeepsReportedContextLogsSourcesAndUnknownsSeparate() async throws {
+        var context = Prompt27AUserReproductiveContext(cycleHealthContexts: [.pcos])
+        try context.setPersonalHealth(.thyroid, text: "private-context-marker not approved evidence")
+        let original = context
+        let model = Prompt27AContextResearchCaptureModel()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try researchStore(), languageModel: model)
+        let service = Prompt27AContextResearchService(engine: engine)
+        var snapshots: [Prompt27AContextResearchReport] = []
+        let report = try await service.explain(context: context, observedFacts: .unknown, progress: { snapshots.append($0) })
+        XCTAssertEqual(snapshots.first?.items.count, 0)
+        XCTAssertTrue(snapshots.allSatisfy { !$0.isComplete })
+        XCTAssertEqual(snapshots.last?.items.count, report.items.count)
+        XCTAssertTrue(report.isComplete)
+        let callsBeforeResume = await model.packets.count
+        let resumed = try await service.explain(context: context, observedFacts: .unknown, previous: report)
+        XCTAssertEqual(resumed.items.count, report.items.count)
+        let callsAfterResume = await model.packets.count
+        XCTAssertEqual(callsAfterResume, callsBeforeResume, "Unchanged visible report resumes without repeating inference")
+        let cleared = try await service.explain(context: .unspecified, observedFacts: .unknown, previous: report)
+        XCTAssertTrue(cleared.items.isEmpty, "Removed context must invalidate prior results")
+        XCTAssertEqual(report.context, original)
+        XCTAssertNil(report.observedFacts.enteredPeriodStartCount, "Unavailable logs must not become zero or invented dates")
+        let pcos = try XCTUnwrap(report.items.first { $0.id == "health.pcos" })
+        let answer = try XCTUnwrap(pcos.answer, "Actual supplied library should provide PCOS education")
+        XCTAssertEqual(answer.answerPath, .retrievalFallback, "Model-unavailable research is not claimed as generated inference")
+        XCTAssertFalse(answer.sources.isEmpty)
+        XCTAssertTrue(Set(answer.sourceIDs).isSubset(of: Set(answer.sources.map(\.id))))
+        for item in report.items {
+            XCTAssertFalse(item.answer?.answerText.contains("private-context-marker") == true)
+            XCTAssertFalse(item.answer?.sourceIDs.contains(FruitfolioPersonalHealthCategory.thyroid.rawValue) == true)
+        }
+        let packets = await model.packets
+        XCTAssertFalse(packets.isEmpty)
+        XCTAssertTrue(packets.allSatisfy { $0.permittedContext?.predictionConfidence == nil })
+        XCTAssertTrue(packets.allSatisfy { $0.permittedContext?.observedCycleFacts == .unknown })
+        XCTAssertEqual(context, original)
+    }
+
+    func testRemovedSkippedAndNegativeEntriesNeverBecomeDiagnosesOrResearchInstructions() async throws {
+        var context = Prompt27AUserReproductiveContext(sexualActivityContext: .notCurrentlySexuallyActive,
+            lactationContext: .notCurrentlyBreastfeedingOrLactating, infertilityContext: .notReported,
+            fertilityTreatmentContext: .notCurrentlyUndergoing, contraceptionContext: .none)
+        try context.setPersonalHealth(.dna, text: "private removed genetic finding")
+        try context.setPersonalHealth(.dna, text: "", status: .removed)
+        let topics = Prompt27AContextResearchPlan.topics(for: context)
+        XCTAssertEqual(topics.count, 5)
+        XCTAssertTrue(topics.allSatisfy { $0.question == nil })
+        XCTAssertFalse(topics.contains { $0.personalCategory == .dna })
+        let model = Prompt27AContextResearchCaptureModel()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: .init(resourceURL: URL(fileURLWithPath: "/missing/context-library.json")), languageModel: model)
+        let service = Prompt27AContextResearchService(engine: engine)
+        let report = try await service.explain(context: context, observedFacts: .unknown)
+        XCTAssertTrue(report.items.allSatisfy { if case .noBiologicalInference = $0.unavailable { return true }; return false })
+        var removed = context; removed.clear()
+        let cleared = try await service.explain(context: removed, observedFacts: .unknown)
+        XCTAssertTrue(cleared.items.isEmpty)
+        let packets = await model.packets
+        XCTAssertTrue(packets.isEmpty)
+    }
+
+    func testOversizedNarrativeAndMissingResearchFailWithoutTruncationOrInventedSupport() async throws {
+        let model = Prompt27AContextResearchCaptureModel()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: .init(resourceURL: URL(fileURLWithPath: "/missing/context-library.json")), languageModel: model)
+        let service = Prompt27AContextResearchService(engine: engine)
+        var large = Prompt27AUserReproductiveContext.unspecified
+        let original = String(repeating: "日", count: 9_000)
+        try large.setPersonalHealth(.general, text: original)
+        let oversized = try await service.explain(context: large, observedFacts: .unknown)
+        XCTAssertEqual(large.personalHealthEntries[FruitfolioPersonalHealthCategory.general.rawValue]?.text, original)
+        XCTAssertEqual(oversized.items.count, 1)
+        guard case .contextTooLarge = oversized.items[0].unavailable else { return XCTFail("Whole narrative must not be silently truncated") }
+        let missing = try await service.explain(context: .init(cycleHealthContexts: [.pcos]), observedFacts: .unknown)
+        XCTAssertNil(missing.items.first?.answer)
+        let packets = await model.packets
+        XCTAssertTrue(packets.isEmpty)
+    }
+
+    func testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords() throws {
+        let now = Date()
+        var draft = Prompt20DailyLogDraft()
+        draft.generalNote = "private-journal-marker"
+        draft.symptomNote = "private-symptom-marker"
+        draft.selectedSymptoms = [.cramps]
+        var entry = Prompt20MedicationEntry(); entry.name = "private-medication-marker"
+        draft.medications = [entry]
+        let log = try XCTUnwrap(Prompt20DailyLogRules.makeLog(ownerID: .localDevice,
+            date: .init(date: now, calendar: .current), draft: draft, existing: nil, now: now))
+        var deleted = log; deleted.isDeleted = true
+        let foreign = Prompt20DailyLog(ownerID: .init(rawValue: "other-owner"), date: log.date)
+        let facts = Prompt27AObservedCycleFacts(prediction: nil, dailyLogs: [log, deleted, foreign])
+        XCTAssertEqual(facts.recordedLogCount, 1)
+        XCTAssertEqual(facts.recordedSymptomCounts, ["cramps": 1])
+        let json = try facts.promptJSON()
+        for marker in ["private-journal-marker", "private-symptom-marker", "private-medication-marker", log.id.uuidString, "historyIdentity"] {
+            XCTAssertFalse(json.contains(marker))
+        }
+        var changed = log; changed.revision += 1
+        let revised = Prompt27AObservedCycleFacts(prediction: nil, dailyLogs: [changed])
+        XCTAssertNotEqual(facts.historyIdentity, revised.historyIdentity)
+        XCTAssertEqual(try facts.promptJSON(), try revised.promptJSON(), "Record identity invalidates UI without disclosing IDs to the model")
+    }
+}
+
+private actor Prompt27AContextHeldSynthesis: FruitfolioLanguageModel {
+    let started: XCTestExpectation
+    private var waiting: CheckedContinuation<Void, Never>?
+    init(started: XCTestExpectation) { self.started = started }
+    func availability() async -> FruitfolioLanguageModelAvailability { .available }
+    func generateDraft(question: String, evidence: FruitfolioEvidencePacket) async throws -> FruitfolioGeneratedDraft {
+        await withCheckedContinuation { continuation in waiting = continuation; started.fulfill() }
+        let ids = Set(evidence.claimEvidenceMap.flatMap(\.noteChunkIDs))
+        let note = try XCTUnwrap(evidence.researchNoteChunks.first { ids.contains($0.chunkID) })
+        return .init(bridge: nil, claims: [.init(text: note.text, evidenceIDs: [note.chunkID])], limitation: nil)
+    }
+    func finish() { waiting?.resume(); waiting = nil }
+}
+
+extension Prompt27AContextResearchTests {
+    func testCanceledNoncooperativeResearchDoesNotReturnOldInterpretation() async throws {
+        let started = expectation(description: "context synthesis started")
+        let model = Prompt27AContextHeldSynthesis(started: started)
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try researchStore(), languageModel: model)
+        let service = Prompt27AContextResearchService(engine: engine)
+        let task = Task { try await service.explain(context: .init(cycleHealthContexts: [.pcos]), observedFacts: .unknown) }
+        let result = await XCTWaiter.fulfillment(of: [started], timeout: 3)
+        XCTAssertEqual(result, .completed)
+        task.cancel()
+        await model.finish()
+        do { _ = try await task.value; XCTFail("Canceled source interpretation must not publish") }
+        catch { XCTAssertTrue(error is CancellationError) }
+    }
+
+    func testEveryPersonalCategoryUsesOnlyCurrentProvidedEntryAndPreservesContradictoryReports() async throws {
+        var context = Prompt27AUserReproductiveContext(reproductiveStage: .pregnant,
+            surrogacyContext: .postpartumAfterSurrogatePregnancy)
+        for category in FruitfolioPersonalHealthCategory.allCases {
+            try context.setPersonalHealth(category, text: "nonclinical planning fixture",
+                provenance: .userReportsClinicianConfirmed)
+        }
+        let topics = Prompt27AContextResearchPlan.topics(for: context)
+        XCTAssertEqual(Set(topics.compactMap(\.personalCategory)), Set(FruitfolioPersonalHealthCategory.allCases))
+        XCTAssertEqual(topics.count, Set(topics.map(\.id)).count)
+        XCTAssertTrue(topics.contains { $0.id == "stage" && $0.reportedValue == "pregnant" })
+        XCTAssertTrue(topics.contains { $0.id == "surrogacy" && $0.reportedValue.contains("postpartum") })
+        XCTAssertTrue(topics.filter { $0.personalCategory != nil }.allSatisfy {
+            $0.reportedValue == FruitfolioPersonalHealthProvenance.userReportsClinicianConfirmed.label
+        })
+        try context.setPersonalHealth(.dna, text: "", status: .preferNotToSay)
+        XCTAssertFalse(Prompt27AContextResearchPlan.topics(for: context).contains { $0.personalCategory == .dna })
+        XCTAssertEqual(Prompt27AContextPolicyEngine().policy(for: context)[.ovulationPrediction].effect, .suppress)
+    }
+
+    #if canImport(llama)
+    func testActualNativeSynthesisUsesContextResearchWithoutLeakingLocalHistoryIdentity() async throws {
+        let modelURL = try XCTUnwrap(ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"].map { URL(fileURLWithPath: $0) }
+            ?? Bundle.main.url(forResource: "FruitfolioAI", withExtension: "gguf"))
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try researchStore(),
+            languageModel: LlamaFruitfolioLanguageModel(modelURL: modelURL))
+        let report = try await Prompt27AContextResearchService(engine: engine).explain(
+            context: .init(cycleHealthContexts: [.pcos]), observedFacts: .unknown)
+        let answer = try XCTUnwrap(report.items.first?.answer)
+        XCTAssertEqual(answer.answerPath, .generated)
+        XCTAssertFalse(answer.sources.isEmpty)
+        XCTAssertFalse(answer.answerText.contains(report.observedFacts.historyIdentity))
+        XCTAssertTrue(Set(answer.sourceIDs).isSubset(of: Set(answer.sources.map(\.id))))
+    }
+    #endif
+}

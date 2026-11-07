@@ -65,6 +65,7 @@ nonisolated struct FruitfolioBoundedTrackerContext:
     let trackingGoal: String?
     let reproductiveStage: String?
     let cycleHealthContext: String?
+    var observedCycleFacts: Prompt27AObservedCycleFacts? = nil
 
     static let none = FruitfolioBoundedTrackerContext(
         predictionConfidence: nil,

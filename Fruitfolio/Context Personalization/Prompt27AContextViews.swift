@@ -466,4 +466,85 @@ private enum Prompt27AType {
         relativeTo: .subheadline
     )
 }
+
+/// Source-cited interpretation remains local to the currently requested view.
+struct Prompt27AContextResearchPanel: View {
+    let report: Prompt27AContextResearchReport?
+    let isLoading: Bool
+    @Environment(\.locale) private var locale
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            FruitfolioFixedText(source: "why you’re seeing this", font: .headline, serious: true)
+                .accessibilityAddTraits(.isHeader)
+            FruitfolioFixedText(source: "this uses your supplied context and recorded history on this device. research does not change your prediction calculations.", serious: true)
+            if isLoading {
+                ProgressView { FruitfolioFixedText(source: "looking through the approved Research Library…", serious: true) }
+            }
+            if let report {
+                section("what you reported")
+                ForEach(Prompt27AContextResearchPlan.topics(for: report.context)) { topic in
+                    VStack(alignment: .leading, spacing: 3) {
+                        FruitfolioFixedText(source: topic.reportedTitle, font: .subheadline.bold(), serious: true)
+                        FruitfolioFixedText(source: topic.reportedValue, serious: true)
+                        if let category = topic.personalCategory,
+                           let text = report.context.personalHealthEntries[category.rawValue]?.text {
+                            DisclosureGroup {
+                                Text(verbatim: text).textSelection(.enabled)
+                            } label: { FruitfolioFixedText(source: "review the entry used here", serious: true) }
+                        }
+                    }
+                }
+                section("what your logs show")
+                if let starts = report.observedFacts.enteredPeriodStartCount {
+                    fact("period-start dates you supplied", starts)
+                    if !report.observedFacts.recentCompletedCycleLengths.isEmpty {
+                        let lengths = report.observedFacts.recentCompletedCycleLengths.map { $0.formatted(.number.grouping(.never).locale(locale)) }
+                        FruitfolioFixedText(source: "recent cycle lengths calculated from those starts: \(lengths.joined(separator: ", ")) days",
+                            protectedLiterals: lengths, serious: true)
+                    }
+                } else {
+                    FruitfolioFixedText(source: "period-start history could not be read for this explanation. no dates have been filled in.", serious: true)
+                }
+                if let logs = report.observedFacts.recordedLogCount { fact("saved daily logs", logs) }
+                if let bbt = report.observedFacts.recordedBasalTemperatureCount { fact("logs with a recorded basal temperature", bbt) }
+                if let fluid = report.observedFacts.recordedCervicalFluidCount { fact("logs with recorded cervical fluid", fluid) }
+                FruitfolioFixedText(source: "these describe entries you supplied, not confirmed ovulation, pregnancy, fertility or hormone levels.", serious: true)
+                section("what approved research supports")
+                FruitfolioFixedText(source: "these are general research excerpts, not proof that a reported condition caused your recorded pattern. not every detail applies to your situation.", serious: true)
+                ForEach(report.items) { item in
+                    VStack(alignment: .leading, spacing: 10) {
+                        FruitfolioFixedText(source: item.topic.reportedTitle, font: .subheadline.bold(), serious: true)
+                        if let answer = item.answer {
+                            FruitfolioTranslatedText(source: answer.answerText, protectedLiterals: answer.sourceIDs, serious: true)
+                            FruitfolioSourceCitationList(sources: answer.sources)
+                        } else {
+                            FruitfolioFixedText(source: unavailableCopy(item.unavailable), serious: true)
+                        }
+                    }
+                }
+                section("what remains unknown")
+                FruitfolioFixedText(source: "context and logs alone do not establish a diagnosis, genotype, ovulation event, pregnancy, fertility status, hormone level or a causal relationship. no effect of an unspecified medication is assumed. unsupported details stay unknown; a skipped or removed field is not a negative medical finding.", serious: true)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .accessibilityIdentifier("cycleTracker.contextResearch")
+    }
+    private func section(_ title: String) -> some View {
+        FruitfolioFixedText(source: title, font: .subheadline.bold(), serious: true).accessibilityAddTraits(.isHeader)
+    }
+    private func fact(_ label: String, _ value: Int) -> some View {
+        let number = value.formatted(.number.grouping(.never).locale(locale))
+        return FruitfolioFixedText(source: "\(label): \(number)", protectedLiterals: [number], serious: true)
+    }
+    private func unavailableCopy(_ reason: Prompt27AContextResearchItem.Unavailable?) -> String {
+        switch reason {
+        case .contextTooLarge: return "this entry is too large for this local research request and was not sent to the model. you can shorten it in My Context; its original text is still saved."
+        case .noBiologicalInference: return "this choice is kept as you reported it. it does not establish a biological state or justify a new prediction calculation."
+        case .narrativeNeedsValidatedModel: return "a source-grounded explanation of this entry is not ready. a general category match is not treated as proof about the details you reported."
+        case .missingResearch: return "the approved library did not return cited support for this item. no biological effect is inferred from missing support."
+        case .requestFailed, nil: return "approved research could not be read for this item. no explanation has been improvised, and your records are unchanged."
+        }
+    }
+}
 #endif
