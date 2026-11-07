@@ -4112,3 +4112,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_actual_Hormone_Library_XCTest": 10, "new_role_reference_provenance_regressions": 3, "workflow_checks": 75, "swift_syntax_files": 326, "failures": 0, "actual_current_lexical_buckets": {"matched": 31, "possible_in_existing_five_section_model": 35, "clinical_complete": false}, "logs": ["/tmp/fruitfolio_hormone_scope_reference_tests.log", "/tmp/fruitfolio_hormone_scope_reference_workflow.log", "/tmp/fruitfolio_hormone_scope_reference_syntax.log"], "scope": "One actual-corpus case exercises all7 hormones; three new nonclinical fixtures exercise production provider scope/shared ownership/Unicode provenance, not clinical truth. Initial edit contained invalid escaped regex characters, compiler rejected before tests; corrected before the final10test pass."}.
 - Next action: Implement missing explicit what-the-hormone-is and measured-level-influence aspects with source-role gates; preserve all original sources and document still-missing approved content individually.
 - Commit: containing commit for batch Hormone-testing-context-and-shared-paragraph-provenance.
+
+## Hormone-seven-founder-aspects-qualified-source-coverage
+
+- Parent checkpoint: dc9eadf68b6e73fa5e18f6a489c4593b91ae5f2f.
+- Source-order requirements: [256, 257, 258, 262, 443, 444].
+- Separate founder additions: ['SPEC-4.9.7'].
+- Source files: Fruitfolio/Hormone Information/HormoneLibraryProvider.swift, development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json.
+- Expose overview and measured-level influences alongside five existing aspects. Require explicit hormone-specific definition/factor relation; preserve original paragraphs and complete source metadata. Qualified shared paragraphs remain cross-referenced once. Preserve prior primary selections.
+- Tests added/updated: FruitfolioTests/Prompt1BHormoneLibraryTests.swift.
+- Verification: {"portable_XCTest": 1058, "Swift_Testing": 21, "syntax_files": 326, "failures": 0}.
+- Next action: Review missing hormone aspect source matches individually, then continue independent incomplete original and founder requirements.
+- Commit: containing commit for batch Hormone-seven-founder-aspects-qualified-source-coverage.

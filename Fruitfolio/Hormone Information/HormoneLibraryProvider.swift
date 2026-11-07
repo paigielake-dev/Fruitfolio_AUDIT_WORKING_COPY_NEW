@@ -1,24 +1,32 @@
 import Foundation
 
 nonisolated enum FruitfolioHormoneLibrarySection: String, CaseIterable, Identifiable, Sendable {
-    case functions, reproductiveRelevance, measurementLimitations, testingContext, medicalGuidance
+    case overview, functions, reproductiveRelevance, measurementInfluences, testingContext, measurementLimitations, medicalGuidance
+    // Preserve the established primary source assignments; new aspects may
+    // reference an already displayed paragraph through alsoCovers.
+    static let retrievalOrder: [Self] = [.functions, .reproductiveRelevance,
+        .measurementLimitations, .testingContext, .medicalGuidance, .overview, .measurementInfluences]
     var id: String { rawValue }
     var title: String {
         switch self {
+        case .overview: return "what the hormone is"
         case .functions: return "biological functions"
         case .reproductiveRelevance: return "reproductive relevance"
         case .measurementLimitations: return "measurement limitations"
         case .testingContext: return "testing context"
         case .medicalGuidance: return "medical guidance and interpretation"
+        case .measurementInfluences: return "factors affecting measured levels"
         }
     }
     var retrievalTerms: String {
         switch self {
+        case .overview: return "hormone hormones steroid estrogen androgen gonadotropin messenger definition"
         case .functions: return "function role production secretion regulation"
         case .reproductiveRelevance: return "reproductive ovulation cycle follicle fertility ovary sperm"
         case .measurementLimitations: return "limitations measurement single fluctuation variability assay snapshot guarantee"
         case .testingContext: return "testing test tests tested sample samples sampling blood serum plasma saliva urine collection laboratory assay assays measurement measurements measured measuring timing reference"
         case .medicalGuidance: return "clinician doctor evaluate consult interpret diagnosis"
+        case .measurementInfluences: return "levels concentration stress sleep age cycle ovulation pregnancy postpartum menopause medication timing assay method variation increase decrease rise fall"
         }
     }
 }
@@ -54,6 +62,37 @@ nonisolated enum FruitfolioHormoneLibraryScope {
         pattern: #"\b(?:pap|smears?|sti|stis|hpv|cervical|chlamydia|gonorrhea|mammograms?|mammography)\b"#,
         options: .caseInsensitive)
 
+    static func makeMatcher(for section: FruitfolioHormoneLibrarySection,
+                            hormone: FruitfolioMeasuredHormone) -> (String) -> Bool {
+        switch section {
+        case .overview:
+            // Require an actual named-hormone definition, not another hormone's
+            // definition elsewhere in the same paragraph or a test-value claim.
+            let definition = #"(?:\s+hormone)?(?:\s*\([^)]{1,40}\))?\s*(?:(?:is|are)\s+|:\s*)(?:(?:a|an|the)\s+)?(?:(?:type|form|kind|member)\s+of\s+(?:the\s+)?)?(?:(?:main|major|primary|principal|predominant|important|gonadal|pituitary|reproductive|sex|steroid|peptide|protein|glycoprotein|polypeptide|anabolic)\s+){0,5}(?:hormones?|androgens?|estrogens?|gonadotropins?|steroids?|chemical\s+messengers?)\b"#
+            return FruitfolioHormoneResearchMatch.makeMatcher(for: hormone,
+                includeClassAliases: false, followingPattern: definition)
+        case .measurementInfluences:
+            let factors = #"\b(?:stress|sleep|exercise|age|aging|cycle|ovulation|follicular|luteal|pregnan\w*|post[\s-]*partum|lactat\w*|breastfeed\w*|menopause|perimenopause|medications?|drugs?|contracept\w*|therapy|assays?|methods?|laborator\w*|timing|time|morning|evening|fasting|meals?|illness|thyroid|pituitary|pcos)\b"#
+            let modifiers = #"(?:(?:can|may|might|often|normally|usually|typically|also|be|is|are|does|do|not|will)\s+){0,5}"#
+            let levels = #"(?:\s+hormone)?(?:\s*\([^)]{1,40}\))?(?:\s+(?:levels?|concentrations?|results?)){0,2}"#
+            let change = #"(?:rise[sn]?|rising|surges?|falls?|increase[sd]?|decrease[sd]?|varies|vary|fluctuat\w*|peaks?|changes?|depend\w*|affected|influenced|altered|elevated|lowered|higher|lower)\b"#
+            let connection = #"\s+(?:(?:slightly|substantially|temporarily|significantly)\s+){0,2}(?:in|with|during|after|before|by|over|following|throughout|around|across|under|because\s+of|depending\s+on|in\s+response\s+to|due\s+to)\s+(?:the\s+)?(?:(?:menstrual|daily|physical|intense|heavy|chronic|acute|different|certain|some|normal|early|late|prolonged|hormonal|reproductive)\s+){0,3}"#
+            let forward = FruitfolioHormoneResearchMatch.makeMatcher(for: hormone,
+                includeClassAliases: false,
+                followingPattern: levels + #"\s+"# + modifiers + change + connection + factors)
+            let reverse = FruitfolioHormoneResearchMatch.makeMatcher(for: hormone,
+                includeClassAliases: false, followingPattern: levels,
+                precedingPattern: factors + #"\s+"# + modifiers +
+                    #"(?:raise[sd]?|lower[sd]?|increase[sd]?|decrease[sd]?|affect[sd]?|alter[sd]?|change[sd]?|elevate[sd]?|influence[sd]?|reduce[sd]?)\s+(?:(?:measured|serum|blood|circulating)\s+)?(?:levels?\s+of\s+)?"#)
+            return { forward($0) || reverse($0) }
+        case .testingContext:
+            let named = FruitfolioHormoneResearchMatch.makeMatcher(for: hormone)
+            return { permits(section, text: $0, matchesHormone: named) }
+        default:
+            return { _ in true }
+        }
+    }
+
     static func permits(_ section: FruitfolioHormoneLibrarySection, text: String,
                         matchesHormone: (String) -> Bool) -> Bool {
         guard section == .testingContext else { return true }
@@ -73,7 +112,8 @@ nonisolated enum FruitfolioHormoneResearchMatch {
 
     /// Compile once for an exhaustive article lookup, retaining the exact
     /// existing Unicode/name boundary policy for every source paragraph.
-    static func makeMatcher(for hormone: FruitfolioMeasuredHormone, includeClassAliases: Bool = true) -> (String) -> Bool {
+    static func makeMatcher(for hormone: FruitfolioMeasuredHormone, includeClassAliases: Bool = true,
+                            followingPattern: String = "", precedingPattern: String = "") -> (String) -> Bool {
         // Typography in an original medical name may use a Unicode hyphen or
         // nonbreaking space. This lookup never rewrites the quoted evidence.
         let compoundSeparator = #"[\p{Pd}\p{Zs}\t\r\n]+"#
@@ -88,7 +128,8 @@ nonisolated enum FruitfolioHormoneResearchMatch {
         case .amh: alternatives = "anti" + compoundSeparator + "mullerian|amh"
         case .other: return { _ in false }
         }
-        let pattern = "(?<![\\p{L}\\p{N}])(?:" + alternatives + ")(?![\\p{L}\\p{N}])"
+        // Fragments are trusted internal role patterns, never user/model text.
+        let pattern = precedingPattern + "(?<![\\p{L}\\p{N}])(?:" + alternatives + ")(?![\\p{L}\\p{N}])" + followingPattern
         guard let expression = try? NSRegularExpression(pattern: pattern) else { return { _ in false } }
         return { text in
             let folded = text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))
@@ -150,7 +191,7 @@ actor FruitfolioHormoneLibraryProvider {
         let specificIDs = Set(candidates.filter { matchesSpecificHormone($0.note.text) }.map { $0.note.chunkID })
         var usedParagraphs: Set<Data> = []
         var excerpts: [FruitfolioHormoneLibraryExcerpt] = []
-        for section in FruitfolioHormoneLibrarySection.allCases {
+        for section in FruitfolioHormoneLibrarySection.retrievalOrder {
             try Task.checkCancellation()
             // The existing oogenesis evidence describes LH's function as its
             // surge triggering follicular rupture, not with the word "function".
@@ -164,9 +205,11 @@ actor FruitfolioHormoneLibraryProvider {
             let question = aliases + " " + sectionTerms
             let queryTokens = FruitfolioQueryNormalizer.tokens(question)
             let normalizedQuestion = FruitfolioQueryNormalizer.normalize(question)
+            let fitsRole = FruitfolioHormoneLibraryScope.makeMatcher(for: section, hormone: hormone)
+            let hasExplicitScope = section == .overview || section == .measurementInfluences || section == .testingContext
             var ranked: [FruitfolioRankedNote] = []
-            for candidate in candidates where !candidate.bodyTokens.intersection(terms).isEmpty &&
-                FruitfolioHormoneLibraryScope.permits(section, text: candidate.note.text, matchesHormone: matchesHormone) {
+            for candidate in candidates where (hasExplicitScope || !candidate.bodyTokens.intersection(terms).isEmpty) &&
+                fitsRole(candidate.note.text) {
                 let headingScore = 3 * candidate.headingTokens.intersection(queryTokens).count
                 let bodyScore = candidate.bodyTokens.intersection(queryTokens).count
                 let phraseScore = candidate.normalizedBody.contains(normalizedQuestion) ? 3 : 0

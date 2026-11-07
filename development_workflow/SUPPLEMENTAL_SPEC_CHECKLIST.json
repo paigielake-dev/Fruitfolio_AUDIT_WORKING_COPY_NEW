@@ -211,7 +211,8 @@
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "development_workflow/HORMONE_LIBRARY_RETRIEVAL_COVERAGE.json",
-        "development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json"
+        "development_workflow/HORMONE_LIBRARY_FUNCTION_REVIEW.json",
+        "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json"
       ],
       "related_tests": [
         "Prompt1BHormoneLibraryTests",
@@ -227,48 +228,36 @@
         "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed.",
         "Addressed actual approved-source relevance failures for original257 andSPEC4.9.7:AMH limitation wording now finds the existing full paragraph containing both no-IVF-guarantee and no-ovulation-confirmation cautions; LH function query recognizes the actual surge/follicular-rupture evidence. Specific estradiol/E2 evidence outranks general estrogen class material while class context remains available. Source review caught a further problem: hormone-name preference still chose an ovarian-testing list as functions; a stronger actual biological-role assertion failed, then the query was corrected to the approved follicular-development role and all7focused tests passed. Full original text/citation checks remain. Historical coverage artifact retained; followup32of35lexical buckets/3empty recorded without treating them as clinical completeness or478-item progress.71workflow/315syntax-only passed. No research/data/artwork rewritten and no whole requirement promoted.",
         "Fix demonstrated progesterone biological-functions mismatch by including actual corpus role terms corpus luteum/endometrium/uterine lining in existing scoped retrieval. Actual selected complete paragraph now explains hormone production and lining/early-pregnancy role, retaining original no-pregnancy-guarantee qualification and all citations. Extend actual corpus regression with all three literal assertions, plus unchanged eligibility/approval/full paragraph/citation checks across seven hormones. Document unresolved testosterone/prolactin content quality instead of treating lexical coverage as full educational content. No facts, resources or measurement records rewritten; no whole requirement promotion.",
-        "Fix source-role correctness and shared coverage without pretending five sections cover all seven required aspects. Current31/35 candidate buckets are not clinical/full implementation acceptance; two explicit aspects and content review remain."
+        "Fix source-role correctness and shared coverage without pretending five sections cover all seven required aspects. Current31/35 candidate buckets are not clinical/full implementation acceptance; two explicit aspects and content review remain.",
+        "Explicit seven aspects and qualified source gates; candidate coverage35/49 does not establish complete founder chapters."
       ],
       "latest_batch_verification": {
-        "batch": "Hormone-testing-context-and-shared-paragraph-provenance",
+        "batch": "Hormone-seven-founder-aspects-qualified-source-coverage",
         "executed": {
-          "focused_actual_Hormone_Library_XCTest": 10,
-          "new_role_reference_provenance_regressions": 3,
-          "workflow_checks": 75,
-          "swift_syntax_files": 326,
-          "failures": 0,
-          "actual_current_lexical_buckets": {
-            "matched": 31,
-            "possible_in_existing_five_section_model": 35,
-            "clinical_complete": false
-          },
-          "logs": [
-            "/tmp/fruitfolio_hormone_scope_reference_tests.log",
-            "/tmp/fruitfolio_hormone_scope_reference_workflow.log",
-            "/tmp/fruitfolio_hormone_scope_reference_syntax.log"
-          ],
-          "scope": "One actual-corpus case exercises all7 hormones; three new nonclinical fixtures exercise production provider scope/shared ownership/Unicode provenance, not clinical truth. Initial edit contained invalid escaped regex characters, compiler rejected before tests; corrected before the final10test pass."
+          "portable_XCTest": 1058,
+          "Swift_Testing": 21,
+          "syntax_files": 326,
+          "failures": 0
         },
         "not_run": [
-          "Apple Library rendering/shared-source cross-reference navigation/VoiceOver/RTL/selected-language display.",
-          "Clinical completeness of all7 founder aspects and official MADLAD/scientific translation."
+          "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
         ],
         "remaining": [
-          "Add explicit overview/what-the-hormone-is and factors-influencing-measured-levels aspects; five buckets cannot establish the complete seven-aspect founder requirement.",
-          "Testosterone currently lacks qualified limitation/testing/guidance excerpts; prolactin lacks limitations. These are current role-gated corpus results, not automatically classified external blockers.",
-          "Testing clause gate is retrieval scope only; complete clinical suitability and other section-role matches remain review work.",
-          "Read original complete source context; no concentration, dosing or normal/abnormal interpretation is inferred from entered measurements."
+          "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
+          "Missing bucket matches require source-specific review before identifying external content blockers.",
+          "Other four lexical-role selectors still need clinical suitability review.",
+          "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Add explicit overview/what-the-hormone-is and factors-influencing-measured-levels aspects; five buckets cannot establish the complete seven-aspect founder requirement.",
-        "Testosterone currently lacks qualified limitation/testing/guidance excerpts; prolactin lacks limitations. These are current role-gated corpus results, not automatically classified external blockers.",
-        "Testing clause gate is retrieval scope only; complete clinical suitability and other section-role matches remain review work.",
-        "Read original complete source context; no concentration, dosing or normal/abnormal interpretation is inferred from entered measurements."
+        "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
+        "Missing bucket matches require source-specific review before identifying external content blockers.",
+        "Other four lexical-role selectors still need clinical suitability review.",
+        "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
       ],
-      "commit_reference": "batch:Hormone-testing-context-and-shared-paragraph-provenance (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T15:19:46.655064+00:00",
+      "commit_reference": "batch:Hormone-seven-founder-aspects-qualified-source-coverage (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T15:44:45.356720+00:00",
       "batch_evidence": [
         {
           "batch": "Hormone-library-complete-scoped-source-retrieval",
@@ -414,6 +403,35 @@
             ]
           },
           "parent_checkpoint": "26bfac0d8b1ba7ede4b3d8a625bf35a7771b0df2"
+        },
+        {
+          "batch": "Hormone-seven-founder-aspects-qualified-source-coverage",
+          "implementation_evidence": "Explicit seven aspects and qualified source gates; candidate coverage35/49 does not establish complete founder chapters.",
+          "files": [
+            "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+            "development_workflow/HORMONE_SEVEN_FOUNDER_ASPECTS_EVIDENCE.json"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BHormoneLibraryTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "portable_XCTest": 1058,
+              "Swift_Testing": 21,
+              "syntax_files": 326,
+              "failures": 0
+            },
+            "not_run": [
+              "Apple SDK build/UI/VoiceOver/RTL/device, clinical review, official MADLAD inference"
+            ],
+            "remaining": [
+              "Candidate paragraph matches do not prove clinical adequacy or every subcondition.",
+              "Missing bucket matches require source-specific review before identifying external content blockers.",
+              "Other four lexical-role selectors still need clinical suitability review.",
+              "Apple builds/UI, actual accessibility and localization, clinical review and official MADLAD inference NOT_RUN."
+            ]
+          },
+          "parent_checkpoint": "dc9eadf68b6e73fa5e18f6a489c4593b91ae5f2f"
         }
       ]
     },

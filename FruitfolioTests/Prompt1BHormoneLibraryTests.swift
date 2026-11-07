@@ -47,6 +47,8 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             if hormone == .lh {
                 let functions = try XCTUnwrap(article.excerpts.first(where: { $0.section == .functions }))
                 XCTAssertTrue(functions.originalText.contains("the lh surge causes the follicular wall to rupture."))
+                let influences = try XCTUnwrap(article.excerpt(for: .measurementInfluences))
+                XCTAssertTrue(influences.originalText.contains("luteinizing hormone surges before ovulation."))
             }
             if hormone == .amh {
                 let limitations = try XCTUnwrap(article.excerpts.first(where: { $0.section == .measurementLimitations }))
@@ -58,14 +60,19 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
             for excerpt in article.excerpts {
                 let note = try XCTUnwrap(notes[excerpt.noteID])
                 XCTAssertNotEqual(note.retrievalEligibility, false)
-                XCTAssertEqual(excerpt.originalText, note.sourceParagraphID.flatMap { package.sourceParagraphs?[$0] } ?? note.text)
+                let original = note.sourceParagraphID.flatMap { package.sourceParagraphs?[$0] } ?? note.text
+                XCTAssertEqual(Data(excerpt.originalText.utf8), Data(original.utf8))
                 XCTAssertTrue(FruitfolioHormoneResearchMatch.contains(hormone, in: excerpt.originalText))
                 XCTAssertEqual(Set(excerpt.sources.map(\.id)), Set(note.sourceIDs))
                 for citation in excerpt.sources {
                     let source = try XCTUnwrap(sources[citation.id])
                     XCTAssertTrue(source.isApprovedForDisplay)
                     XCTAssertEqual(citation.title, source.apa7Reference ?? source.title)
+                    XCTAssertEqual(citation.sourceText, source.apa7Reference)
+                    XCTAssertEqual(citation.urlString, source.canonicalURL)
                     XCTAssertEqual(citation.doi, source.doi)
+                    XCTAssertEqual(citation.publicationData, source.publicationDate)
+                    XCTAssertEqual(citation.contentVersion, source.contentVersion)
                 }
             }
         }
@@ -178,6 +185,67 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
 }
 
 extension Prompt1BHormoneLibraryTests {
+    func testSevenFounderAspectsRetainSourceOrderAndReuseQualifiedOriginalParagraphs() async throws {
+        XCTAssertEqual(FruitfolioHormoneLibrarySection.allCases.map(\.rawValue),
+            ["overview", "functions", "reproductiveRelevance", "measurementInfluences",
+             "testingContext", "measurementLimitations", "medicalGuidance"])
+        let definition = "Nonclinical fixture: prolactin is a hormone. Prolactin function fixture label."
+        let influence = "Nonclinical fixture: stress can raise prolactin levels. Prolactin blood sampling timing fixture label."
+        let (directory, provider) = try scopeFixture([
+            ("definition", definition, "Nonclinical fixture"),
+            ("influence", influence, "Nonclinical fixture")
+        ])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .prolactin)
+        let overview = try XCTUnwrap(article.excerpt(for: .overview))
+        let factors = try XCTUnwrap(article.excerpt(for: .measurementInfluences))
+        XCTAssertEqual(overview.noteID, "definition")
+        XCTAssertEqual(factors.noteID, "influence")
+        XCTAssertEqual(Data(overview.originalText.utf8), Data(definition.utf8))
+        XCTAssertEqual(Data(factors.originalText.utf8), Data(influence.utf8))
+        XCTAssertEqual(overview.sources.map(\.id), ["source-definition"])
+        XCTAssertEqual(factors.sources.map(\.id), ["source-influence"])
+        XCTAssertTrue(overview.alsoCovers.contains(.overview))
+        XCTAssertTrue(factors.alsoCovers.contains(.measurementInfluences))
+        XCTAssertEqual(article.excerpts.count, 2)
+    }
+
+    func testOtherHormoneDefinitionAndStressStatementCannotFillSelectedHormoneAspects() async throws {
+        let (directory, provider) = try scopeFixture([
+            ("other-subjects", "Prolactin has a fixture function. Testosterone is a hormone. Stress raises cortisol levels.",
+             "Nonclinical fixture")
+        ])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .prolactin)
+        XCTAssertNotNil(article.excerpt(for: .functions))
+        XCTAssertNil(article.excerpt(for: .overview))
+        XCTAssertNil(article.excerpt(for: .measurementInfluences))
+    }
+
+    func testQualifiedFactorRelationIsNotHiddenByLiteralRankingVocabulary() async throws {
+        let original = "LH fluctuates during the luteal phase. Nonclinical fixture label."
+        XCTAssertTrue(FruitfolioQueryNormalizer.tokens(original).isDisjoint(with:
+            FruitfolioQueryNormalizer.tokens(FruitfolioHormoneLibrarySection.measurementInfluences.retrievalTerms)))
+        let (directory, provider) = try scopeFixture([("factor", original, "Nonclinical fixture")])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .lh)
+        let excerpt = try XCTUnwrap(article.excerpt(for: .measurementInfluences))
+        XCTAssertEqual(excerpt.noteID, "factor")
+        XCTAssertEqual(Data(excerpt.originalText.utf8), Data(original.utf8))
+        XCTAssertEqual(excerpt.sources.map(\.id), ["source-factor"])
+    }
+
+    func testUnicodeFullMedicalNameWithParentheticalAbbreviationRetainsQualifiedFactorSource() async throws {
+        let original = "Anti\u{2011}Müllerian hormone (AMH) levels may change with age. Nonclinical fixture label."
+        let (directory, provider) = try scopeFixture([("parenthetical", original, "Nonclinical fixture")])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let article = try await provider.article(for: .amh)
+        let excerpt = try XCTUnwrap(article.excerpt(for: .measurementInfluences))
+        XCTAssertEqual(excerpt.noteID, "parenthetical")
+        XCTAssertEqual(Data(excerpt.originalText.utf8), Data(original.utf8))
+        XCTAssertEqual(excerpt.sources.map(\.id), ["source-parenthetical"])
+    }
+
     private func scopeFixture(_ entries: [(id: String, text: String, heading: String)]) throws
         -> (URL, FruitfolioHormoneLibraryProvider) {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
