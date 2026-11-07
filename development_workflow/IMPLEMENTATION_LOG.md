@@ -3644,3 +3644,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Commit: containing commit for batch Canonical-button-individual-implementation-review.
 
 - Post-review integrity:71workflow checks passed after explicit9/10implementation closure; Apple verification remains NOT_RUN. No whole section or VERIFIED status was promoted.
+
+## Intro-unseen-logo-and-cancelled-returning-checkpoints
+
+- Parent checkpoint: 8b9d73773a127e0bf1824bf126571483947f3b0a.
+- Source-order requirements: [76, 77, 84, 85, 86, 87].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Introduction/Prompt04IntroStateMachine.swift, Fruitfolio/Introduction/Prompt04IntroCheckpoint.swift.
+- Resume an early first-launch interruption through the original gradual logo reveal instead of abruptly substituting the branded book. Returning launches restore the branded checkpoint without acquiring first-launch stages. Guard queued tasks against cancellation before entry. Existing normal reveal timings, artwork, audio and opening sequence preserved. Two Foundation checkpoint tests passed; actual Combine and animation behavior remains Apple acceptance pending. No whole-requirement promotion.
+- Tests added/updated: FruitfolioTests/Prompt1BIntroCheckpointTests.swift, FruitfolioTests/Prompt04IntroTests.swift.
+- Verification: {"focused_XCTest_passed": 2, "workflow_passed": 71, "swift_syntax_files": 318, "Apple_tests_executed": 0}.
+- Next action: Inspect the next incomplete Hub loading/navigation requirement against actual source and existing evidence; implement missing functionality, preserving all prior checklist evidence.
+- Commit: containing commit for batch Intro-unseen-logo-and-cancelled-returning-checkpoints.

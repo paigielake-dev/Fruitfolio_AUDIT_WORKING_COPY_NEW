@@ -2,22 +2,6 @@ import Combine
 import Foundation
 import SwiftUI
 
-enum Prompt04IntroStage: String, CaseIterable, Sendable {
-    case initialStillness
-    case blankBookArriving
-    case blankBookSettled
-    case logoRevealing
-    case brandedBookSettled
-    case slightlyOpening
-    case slightlyOpenSettled
-    case fullyOpening
-    case fullyOpenSettled
-    case rightPageFocusing
-    case standalonePaperResolving
-    case hubRevealing
-    case introComplete
-}
-
 /// One authoritative, cancellable Prompt 04 progression.
 /// No Timer or delayed-callback pile is used. Every main book state has its own
 /// readable stage, followed by a right-page focus, standalone-paper resolve,
@@ -66,7 +50,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
         startAmbience(audioManager: audioManager)
 
         sequenceTask = Task { @MainActor [weak self] in
-            guard let self else { return }
+            guard let self, self.isCurrent(generation) else { return }
 
             if mode.isFirstLaunch {
                 await self.runFirstLaunchSequence(
@@ -111,33 +95,13 @@ final class Prompt04IntroStateMachine: ObservableObject {
         audioManager.stop(category: .music)
         audioManager.stop(category: .rainAmbience)
 
-        switch stage {
-        case .initialStillness,
-             .blankBookArriving,
-             .blankBookSettled:
-            settleAtBlankBook()
-
-        case .logoRevealing,
-             .brandedBookSettled:
-            settleAtBrandedBook()
-
-        case .slightlyOpening,
-             .slightlyOpenSettled:
-            settleAtSlightlyOpenBook()
-
-        case .fullyOpening,
-             .fullyOpenSettled:
-            settleAtFullyOpenBook()
-
-        case .rightPageFocusing:
-            settleAtFullyOpenBook()
-
-        case .standalonePaperResolving,
-             .hubRevealing:
-            settleAtHubPaper()
-
-        case .introComplete:
-            break
+        switch Prompt04IntroCheckpoint.resolve(stage: stage, firstLaunch: activeLaunchMode?.isFirstLaunch == true) {
+        case .blankBook: settleAtBlankBook()
+        case .brandedBook: settleAtBrandedBook()
+        case .slightlyOpenBook: settleAtSlightlyOpenBook()
+        case .fullyOpenBook: settleAtFullyOpenBook()
+        case .hubPaper: settleAtHubPaper()
+        case .complete: break
         }
     }
 
@@ -157,18 +121,11 @@ final class Prompt04IntroStateMachine: ObservableObject {
         sequenceTask?.cancel()
 
         sequenceTask = Task { @MainActor [weak self] in
-            guard let self else { return }
+            guard let self, self.isCurrent(generation) else { return }
 
             switch self.stage {
             case .blankBookSettled:
-                self.settleAtBrandedBook()
-
-                guard await self.sleep(
-                    .milliseconds(120),
-                    generation: generation
-                ) else {
-                    return
-                }
+                guard await self.revealLogoAndSettle(generation: generation, audioManager: audioManager) else { return }
 
                 await self.finishFromBrandedBook(
                     generation: generation,
@@ -270,53 +227,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
             return
         }
 
-        stage = .logoRevealing
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .logoReveal
-                    .timeInterval
-            )
-        ) {
-            logoRevealProgress = 1
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.logoReveal,
-            generation: generation
-        ) else {
-            return
-        }
-
-        brandedBookResolved = true
-        stage = .brandedBookSettled
-
-        withAnimation(.easeInOut(duration: 0.18)) {
-            logoSettleScale = 1.010
-            sparkleOpacity = 0.58
-        }
-
-        audioManager.play(.starChime)
-
-        guard await sleep(
-            Prompt04IntroConfiguration.logoSparkleSettle,
-            generation: generation
-        ) else {
-            return
-        }
-
-        withAnimation(.easeInOut(duration: 0.18)) {
-            logoSettleScale = 1
-            sparkleOpacity = 0
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.brandedBookHold,
-            generation: generation
-        ) else {
-            return
-        }
+        guard await revealLogoAndSettle(generation: generation, audioManager: audioManager) else { return }
 
         stage = .slightlyOpening
 
@@ -387,6 +298,58 @@ final class Prompt04IntroStateMachine: ObservableObject {
             completion: completion,
             wasFirstLaunch: true
         )
+    }
+
+    private func revealLogoAndSettle(generation: UInt, audioManager: AudioManager) async -> Bool {
+        stage = .logoRevealing
+
+        withAnimation(
+            .easeInOut(
+                duration: Prompt04IntroConfiguration
+                    .logoReveal
+                    .timeInterval
+            )
+        ) {
+            logoRevealProgress = 1
+        }
+
+        guard await sleep(
+            Prompt04IntroConfiguration.logoReveal,
+            generation: generation
+        ) else {
+            return false
+        }
+
+        brandedBookResolved = true
+        stage = .brandedBookSettled
+
+        withAnimation(.easeInOut(duration: 0.18)) {
+            logoSettleScale = 1.010
+            sparkleOpacity = 0.58
+        }
+
+        audioManager.play(.starChime)
+
+        guard await sleep(
+            Prompt04IntroConfiguration.logoSparkleSettle,
+            generation: generation
+        ) else {
+            return false
+        }
+
+        withAnimation(.easeInOut(duration: 0.18)) {
+            logoSettleScale = 1
+            sparkleOpacity = 0
+        }
+
+        guard await sleep(
+            Prompt04IntroConfiguration.brandedBookHold,
+            generation: generation
+        ) else {
+            return false
+        }
+
+        return true
     }
 
     private func runReturningSequence(

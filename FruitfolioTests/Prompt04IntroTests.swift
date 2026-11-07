@@ -43,6 +43,9 @@ final class Prompt04IntroTests: XCTestCase {
         let audio = AudioManager(settings: settings)
         let machine = Prompt04IntroStateMachine()
         let resumed = expectation(description: "Reduced-motion resume completes using crossfades")
+        var observed: [Prompt04IntroStage] = []
+        let observation = machine.$stage.sink { observed.append($0) }
+        defer { observation.cancel(); machine.cancelSequence() }
         machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings) { _ in
             XCTFail("The cancelled original sequence must not complete")
         }
@@ -51,12 +54,39 @@ final class Prompt04IntroTests: XCTestCase {
             XCTAssertTrue(firstLaunch)
             resumed.fulfill()
         }, wasFirstLaunch: true)
-        await fulfillment(of: [resumed], timeout: 4)
+        await fulfillment(of: [resumed], timeout: 6)
+        XCTAssertTrue(observed.contains(.logoRevealing), "Resuming the blank first-launch book must not skip its unrevealed logo")
+        XCTAssertFalse(observed.contains(.blankBookArriving), "Resumption must not restart the arrival sequence")
         XCTAssertTrue(machine.usesReducedMotion)
         XCTAssertEqual(machine.stage, .introComplete)
         XCTAssertTrue(machine.hubInteractionEnabled)
         audio.stop(category: .music)
         audio.stop(category: .rainAmbience)
+    }
+
+    @MainActor
+    func testReturningLaunchCancelledBeforeTaskStartsStaysAtBackgroundCheckpoint() async throws {
+        let suite = "Prompt1BReturningBackground.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        let machine = Prompt04IntroStateMachine()
+        defer {
+            machine.cancelSequence()
+            audio.stop(category: .music)
+            audio.stop(category: .rainAmbience)
+        }
+        machine.start(mode: .returningLaunch, audioManager: audio, settings: settings) { _ in
+            XCTFail("A background-cancelled task must not complete")
+        }
+        machine.handleBackgrounding(audioManager: audio)
+        XCTAssertEqual(machine.stage, .brandedBookSettled)
+        var postBackgroundStages: [Prompt04IntroStage] = []
+        let observation = machine.$stage.sink { postBackgroundStages.append($0) }
+        defer { observation.cancel() }
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertEqual(postBackgroundStages, [.brandedBookSettled], "The queued cancelled task must not advance or republish stages")
     }
 
     @MainActor
