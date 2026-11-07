@@ -956,8 +956,7 @@ private struct Prompt20MedicationRow: View {
             )
 
             if let validationMessage {
-                Text(validationMessage)
-                    .font(Prompt20Type.micro)
+                FruitfolioFixedText(source: validationMessage, font: Prompt20Type.micro, serious: true)
                     .foregroundStyle(Prompt20Palette.burgundy.opacity(0.70))
             }
 

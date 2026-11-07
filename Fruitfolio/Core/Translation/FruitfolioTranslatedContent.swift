@@ -256,10 +256,11 @@ struct FruitfolioTranslationDisclosureRegressionHarness: View {
 @MainActor
 struct FruitfolioFixedAccessibilityLabel: ViewModifier {
     let source: String
+    var protectedLiterals: [String] = []
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var translation = FruitfolioControlTranslationState()
     private var key: FruitfolioControlTranslationState.Key {
-        .init(source: source, language: settings.language)
+        .init(source: source, language: settings.language, protectedLiterals: protectedLiterals)
     }
     func body(content: Content) -> some View {
         let display = translation.presentation(for: key)
@@ -278,11 +279,12 @@ struct FruitfolioFixedAccessibilityLabel: ViewModifier {
 @MainActor
 struct FruitfolioFixedAccessibilityHint: ViewModifier {
     let source: String
+    var protectedLiterals: [String] = []
     var supplementalDetail: String = ""
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var translation = FruitfolioControlTranslationState()
     private var key: FruitfolioControlTranslationState.Key {
-        .init(source: source, language: settings.language)
+        .init(source: source, language: settings.language, protectedLiterals: protectedLiterals)
     }
     func body(content: Content) -> some View {
         let display = translation.presentation(for: key)

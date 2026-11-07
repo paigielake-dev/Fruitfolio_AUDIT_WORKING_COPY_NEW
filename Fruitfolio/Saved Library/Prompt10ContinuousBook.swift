@@ -83,6 +83,7 @@ struct Prompt1BBookRegressionHarness: View {
     @StateObject private var motion = MotionPreferences()
     @State private var showingGuides = false
     @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var audioManager: AudioManager
     private let suite: String
     private let fixtureError: String?
 
@@ -93,7 +94,8 @@ struct Prompt1BBookRegressionHarness: View {
         let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
         var failure: String?
         do {
-            for style in Prompt10BookStyle.allCases {
+            let styles: [Prompt10BookStyle] = ProcessInfo.processInfo.arguments.contains("-fruitfolioBookEmptyFixture") ? [] : Prompt10BookStyle.allCases
+            for style in styles {
                 let book = try store.createEncyclopedia(name: "QA \(style.rawValue)", style: style)
                 if style == .sage, ProcessInfo.processInfo.arguments.contains("-fruitfolioBookDraftFixture"),
                    let chapter = book.chapters.first {
@@ -122,12 +124,27 @@ struct Prompt1BBookRegressionHarness: View {
             }
         }
         .environmentObject(motion)
+        .overlay(alignment: .bottomLeading) {
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookAudioDiagnostics") {
+                FruitfolioInteractionSoundDiagnostics().allowsHitTesting(false)
+            }
+        }
         .onAppear {
             let reduced = ProcessInfo.processInfo.arguments.contains("-fruitfolioBookReduceMotion")
             settings.reduceAnimationOverride = reduced
+            settings.language = ProcessInfo.processInfo.arguments.contains("-fruitfolioBookQAArabic") ? .arabic : .english
+            settings.translationPausedForMemoryPressure = ProcessInfo.processInfo.arguments.contains("-fruitfolioBookQAPauseInference")
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookAudioDiagnostics") {
+                audioManager.debugRecordInteractions(true)
+            }
             motion.update(systemReduceMotion: false, appOverride: reduced)
         }
-        .onDisappear { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        .onDisappear {
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookAudioDiagnostics") {
+                audioManager.debugRecordInteractions(false)
+            }
+            UserDefaults.standard.removePersistentDomain(forName: suite)
+        }
     }
 }
 #endif

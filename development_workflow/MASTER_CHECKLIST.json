@@ -21505,7 +21505,12 @@
         "Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Tools/normalize_control_sound_ownership.swift",
-        "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md"
+        "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -21520,32 +21525,48 @@
         "Prompt1BModalAccessibilityTests.testContactButtonOwnsOneSoftPopAndMutePreventsSoftwarePlayback (Apple NOT_RUN)",
         "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess",
         "Existing interaction audio UI regressions (NOT_RUN)",
-        "Existing full portable/native/workflow regressions"
+        "Existing full portable/native/workflow regressions",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Language-write-acknowledgement-and-art-verification-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
         "# One canonical press cue and distinct popup cues\n\nThe existing canonical pill owns its press sound. Actual SwiftSyntax analysis found ten immediate caller duplicates in Ask, Cycle Tracker Daily Log/Today, Account, confirmation, ownership and saved pages. Those extra calls are removed without changing their actions, source labels, navigation or other cue types. Contact's indirect canonical-button callback had an eleventh duplicate and is corrected separately. Raw Button actions retain their own feedback. This is a bounded check of verified control types/direct callbacks, not a claim that every indirect interaction has been runtime-tested.\n\n`Tools/normalize_control_sound_ownership.swift` uses the installed toolchain's real SwiftParser/SwiftSyntax. It checks exact immediate closure statements, preserving strings/comments, nested raw buttons, other sounds, UTF-8, source permissions and semicolon neighbors. All files parse before applying any change; a changed captured source is rejected. Six executable tool regressions passed. A second check of all app Swift sources reports zero remaining immediate duplicates for the seven verified owner types. The removal inventory is in RUN_LOGS/Control-sound-ownership-removals.json.\n\nContact's measured failure popup and the game storm note now have distinct open/close cues; repeated dismiss calls do not replay close. Contact Escape does not invent another button press. Buttons keep immediate action execution; no debounce delay was added. The compact control target also uses the shared minimum-hit-target token.\n\nThe actual AudioManager has opt-in DEBUG counters for three interaction cues only. Ordinary debug/release operation does not record interaction traces; nothing is persisted or sent. Requested calls and successful AVAudioPlayer.play() starts are separate. The Contact regression route enables this explicitly, displays the appropriate in-modal/outside diagnostic panel and tests one press cue plus mute behavior. A real AudioManager unit test covers opt-in/muted tracing. Both those Apple/AVFoundation test cases remain NOT_RUN; software play success would still not prove physical audibility/listening quality.\n\nAvailable verification:35 workflow tests passed, including all six real SwiftSyntax regressions;489 portable XCTest +21 Swift Testing passed;494 actual native-linked XCTest +21 Swift Testing passed. Compiler parsed253 changed Swift files without syntax errors. Original soft-pop/open/close MP3 assets fully decoded with ffmpeg with no errors; ffprobe durations are2.136s/0.744s/0.417938s. Original resource hashes/metadata are recorded in RUN_LOGS/Interaction-cue-asset-decode.json. Decoding is not app-bundle or device playback acceptance. Actual tap latency, perceived mix, motion and audio remain Apple/device gates.\n\nTo build the source checker, use the Swift compiler with its matching `usr/lib/swift/host` imports/libraries, link SwiftSyntax/SwiftParser and set a writable module-cache path. `--check` reports/fails on findings, `--apply` removes only verified redundant statements, and the default is report-only. Run workflow tests with FRUITFOLIO_SWIFTC set to that compiler so these checks execute rather than skip when Swift is absent from PATH.\n",
         "Contact failure close now uses the actual canonical watercolor pill, shared pop feedback/motion and localized wrapping label. The feature helper no longer plays an additional press cue; it retains the distinct popup-close cue, and accessibility Escape calls that helper without synthesizing a button press. The existing Contact UI regression additionally checks minimum action height and horizontal writing-area bounds; it remains NOT_RUN without Apple SDK. Retained historical Prompt03TextButton and Prompt03BackControl now delegate to existing canonical controls instead of keeping coded gray/burgundy outlines and plain behavior. These placeholder declarations are not routed by the current production route switch; this is source consistency, not a claim of a newly visible feature. The existing navigation shell/route architecture is preserved and its stale header comment corrected. Full available Foundation/real native regressions571/576 XCTest+21 SwiftTesting pass,39 workflow tests pass,278 Swift files parse, and the actual SwiftSyntax sound-owner all-app scan passes without duplicate direct press cues. Source/UI tests do not establish device sound playback, Apple typechecking, visual layout or VoiceOver/Reduce Motion behavior.",
-        "Verification carry-forward only; existing implementation evidence remains open, without a repeated broad audit or whole-item certification. Execute actual AVFoundation/button/popup mute, background and Reduce Motion checks; AST ownership is source-only."
+        "Verification carry-forward only; existing implementation evidence remains open, without a repeated broad audit or whole-item certification. Execute actual AVFoundation/button/popup mute, background and Reduce Motion checks; AST ownership is source-only.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:31:35.009739+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Language-write-acknowledgement-and-art-verification-handoff",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
-          "carry_forward": "Existing evidence retained; current Linux checks do not execute this original Apple appearance/interaction acceptance."
+          "portable_XCTest": 905,
+          "native_CPU_XCTest": 927,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "control_sound_ownership_findings": 0,
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Execute actual AVFoundation/button/popup mute, background and Reduce Motion checks; AST ownership is source-only."
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute actual AVFoundation/button/popup mute, background and Reduce Motion checks; AST ownership is source-only."
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual AVFoundation/button/popup mute, background and Reduce Motion checks; AST ownership is source-only."
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     },
     {
@@ -21577,7 +21598,13 @@
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md"
+        "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -21597,9 +21624,10 @@
         "Prompt1BModalAccessibilityTests.testDataManagementUsesMeasuredPaperAndTruthfulAvailableActions (Apple NOT_RUN)",
         "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess",
         "Existing interaction audio UI regressions (NOT_RUN)",
-        "Existing full portable/native/workflow regressions"
+        "Existing full portable/native/workflow regressions",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Language-write-acknowledgement-and-art-verification-handoff (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -21607,24 +21635,39 @@
         "# Real root/native-surface popup scope and original citations\n\nTargeted citation failure work exposed an actual gap: FruitPopupHost existed in Hub/gallery but did not apply the shared blur itself, and other root routes had no host. The real root now wraps the existing NavigationStack with that same host. A scoped environment flag suppresses nested Hub/gallery hosts, preserving the existing character artwork, placement, queue and timing instead of rebuilding them or rendering duplicate dialogs. The host now owns shared blur/dim, no spatial scale under Reduce Motion, whole-content hit/VoiceOver exclusion, and modal accessibility traits.\n\nNative Guide read-mode covers and Hormone Library sheets receive a presentation-surface host with its own coordinator. This prevents dialogs from rendering behind UIKit presentations or replaying sounds in root and modal hosts. The same host implementation handles both scopes. A new taped-white request surface uses the existing measured artwork/writing aperture, scroll, explicit actions, shared style/sounds and safe Escape dismissal. It renders no fruit character for the source-link error. Existing character speech remains the default. Root and native presentation/VoiceOver geometry remain Apple-runtime gates.\n\nThe last citation-link system alert is replaced by the owned white-paper request. Original citation titles, full APA/source text (when distinct from the title), publication data, DOI and URL remain verbatim/selectable. A late/superseded/disappeared source component cannot intentionally issue an obsolete request; owner disappearance/source changes cancel its current/queued request. Focus is requested back to a still-existing source button after dismissal. No clinical meaning, reference spelling or user data is rewritten.\n\nThe new queue-cancellation regression initially exposed a real defect: removing a queued request failed to remove its deduplication key, preventing retry. Cancellation now uses the existing key cleanup routine. Seven actual production coordinator tests execute on Linux after removing unnecessary SwiftUI imports and conditionally enabling only the real Combine observation layer on Apple. No fake ObservableObject/Published implementation or mirrored coordinator is used. Four pre-existing synchronous MainActor methods were made async for Linux XCTest discovery; assertions remain. A real Combine publisher regression is Apple-only and NOT_RUN.\n\nAdded actual UI source covers one nested root character popup, one measured citation popup, background exclusion/restoration, source controls and screenshots at accessibility XXXL in both motion settings and native-sheet/root scope. Corrected four invalid/redundant element firstMatch query forms in UI source. All added UIKit/SwiftUI tests and screenshots remain NOT_RUN. No visual, focus, sound or native-sheet layering success is inferred from source parsing.\n\nFinal available verification:475 portable XCTest +21 Swift Testing passed;480 actual native-linked XCTest +21 Swift Testing passed. Twenty-nine workflow tests pass;248 changed Swift files compiler-parse without syntax errors; Xcode project build-file references resolve. The configured XCFramework/Xcode and actual MADLAD resources/clinical/device acceptance remain external gates. Metadata/algorithm tests do not establish app typechecking or UI runtime behavior.\n",
         "# Truthful data management, actual store regressions and measured popup\n\nThe Data screen no longer claims a data document is ready after creating only a metadata summary. It links to the working Hormone Information JSON exporter and to existing books, Guide organization, cycle-record and measurement management; Settings also supplies the actual My Context entry. No item is deleted merely by opening these options. Ask-session data is not advertised as a stored/exportable cache. A combined export remains open implementation work; its legacy method now reports unavailable without creating a false readiness record.\n\nRemote account deletion no longer clears a local record and calls that remote success. With no configured account service it reports unavailable and preserves the local identity/pending edits. On loading, stored authenticated/in-flight/deletion flags are not treated as a new verified session/remote acknowledgment; local identity and raw saved bytes remain. Synced/syncing flags cannot establish present cloud availability. Existing installed paid-app access remains independent.\n\nThe actual account/privacy store now compiles as the same Foundation implementation on Linux, conditionally enabling real Combine observation only on Apple. No fake observation library or copied control-flow implementation is used. Eight actual store tests and three actual owned-verification tests now run, in addition to three restoration-policy tests. They verify original identity/bytes, unavailable exports/deletion, pending edits, coalesced verification, corrupt/cleared/newer state refusal and late reset suppression. MainActor tests were made async for actual Linux XCTest discovery. StoreKit signature validation and Combine publication remain Apple gates.\n\nThe popup uses the existing measured taped-white aperture and its scroll view, removing the fixed280-point/320-point minimum frame. Popup sections no longer layer separate coded cards inside the paper. Compact shared control sizing reduces blank padding while retaining15-point Dynamic Type labels and a44-point minimum target; ordinary control sizing remains. Body prose uses the existing selected-language display pipeline and thirteen-point scalable text. The actual Data UI regression source checks available actions, no fake readiness, management options, background isolation and Close at accessibility XXXL in both motion settings. UI/screenshot/actual route/file-export acceptance is NOT_RUN here.\n\nFinal verification:489 portable XCTest +21 Swift Testing passed;494 actual native-linked XCTest +21 Swift Testing passed. Twenty-nine workflow tests pass;251 changed Swift files parse without syntax errors. The three erroneous root-popup evidence attachments to unrelated rows7/8/10 were restored from their original parent; original478 descriptions are unchanged. These test-case counts are not checklist acceptance; app/clinical/MADLAD/device gates and remaining implementation work stay open.\n\nRestored-file model check found only the existing executable Qwen model plus vendor vocabulary fixtures in accessible workspace/temporary files, and no tracked model paths in the other existing repository. No runnable official MADLAD model was recovered. The root-private HF cache was inaccessible and was not retried; the accessible workspace remains usable. No blocked-domain network attempt or alternate-source substitution was performed.\n",
         "Contact failure close now uses the actual canonical watercolor pill, shared pop feedback/motion and localized wrapping label. The feature helper no longer plays an additional press cue; it retains the distinct popup-close cue, and accessibility Escape calls that helper without synthesizing a button press. The existing Contact UI regression additionally checks minimum action height and horizontal writing-area bounds; it remains NOT_RUN without Apple SDK. Retained historical Prompt03TextButton and Prompt03BackControl now delegate to existing canonical controls instead of keeping coded gray/burgundy outlines and plain behavior. These placeholder declarations are not routed by the current production route switch; this is source consistency, not a claim of a newly visible feature. The existing navigation shell/route architecture is preserved and its stale header comment corrected. Full available Foundation/real native regressions571/576 XCTest+21 SwiftTesting pass,39 workflow tests pass,278 Swift files parse, and the actual SwiftSyntax sound-owner all-app scan passes without duplicate direct press cues. Source/UI tests do not establish device sound playback, Apple typechecking, visual layout or VoiceOver/Reduce Motion behavior.",
-        "Verification carry-forward only; existing implementation evidence remains open, without a repeated broad audit or whole-item certification. Execute actual labels/values/VoiceOver/focus/dismissal/targets/Reduce Motion states."
+        "Verification carry-forward only; existing implementation evidence remains open, without a repeated broad audit or whole-item certification. Execute actual labels/values/VoiceOver/focus/dismissal/targets/Reduce Motion states.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:31:35.009739+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Language-write-acknowledgement-and-art-verification-handoff",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
-          "carry_forward": "Existing evidence retained; current Linux checks do not execute this original Apple appearance/interaction acceptance."
+          "portable_XCTest": 905,
+          "native_CPU_XCTest": 927,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "control_sound_ownership_findings": 0,
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Execute actual labels/values/VoiceOver/focus/dismissal/targets/Reduce Motion states."
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute actual labels/values/VoiceOver/focus/dismissal/targets/Reduce Motion states."
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual labels/values/VoiceOver/focus/dismissal/targets/Reduce Motion states."
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     },
     {
@@ -22206,7 +22249,11 @@
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
-        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md"
+        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22251,7 +22298,7 @@
         "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift"
       ],
-      "commit_reference": "batch:Contact-protected-labels-and-selected-language-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -22283,42 +22330,39 @@
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
-        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification."
+        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:36:56.183024+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Contact-protected-labels-and-selected-language-copy",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
           "portable_XCTest": 905,
           "native_CPU_XCTest": 927,
           "SwiftTesting_each": 21,
-          "new_contact_protection_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Contact_UI_vectors_total": 4,
-          "Contact_UI_vectors_added": 2,
-          "Contact_UI_vectors_executed": 0,
-          "catalog_keys": 974,
-          "explicit_English_localization_entries": 871,
-          "nonempty_foreign_catalog_units": 0
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Fouractual English/Arabic paused-inference Contact modal/protectedURL/handle/XXXL/Reduce Motion UI vectors",
-          "Apple genuine SwiftUI typechecking, global language/locale propagation, translated footer/error wrapping, VoiceOver focus/provenance and audio",
-          "Official MADLAD inference and native-language serious notice quality"
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-          "Run official model/native-language review for serious educational notice and global screen coverage",
-          "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-        "Run official model/native-language review for serious educational notice and global screen coverage",
-        "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     },
     {
@@ -22436,7 +22480,11 @@
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
-        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md"
+        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22468,7 +22516,7 @@
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift"
       ],
-      "commit_reference": "batch:Contact-protected-labels-and-selected-language-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -22493,42 +22541,39 @@
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
-        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification."
+        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:36:56.183024+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Contact-protected-labels-and-selected-language-copy",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
           "portable_XCTest": 905,
           "native_CPU_XCTest": 927,
           "SwiftTesting_each": 21,
-          "new_contact_protection_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Contact_UI_vectors_total": 4,
-          "Contact_UI_vectors_added": 2,
-          "Contact_UI_vectors_executed": 0,
-          "catalog_keys": 974,
-          "explicit_English_localization_entries": 871,
-          "nonempty_foreign_catalog_units": 0
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Fouractual English/Arabic paused-inference Contact modal/protectedURL/handle/XXXL/Reduce Motion UI vectors",
-          "Apple genuine SwiftUI typechecking, global language/locale propagation, translated footer/error wrapping, VoiceOver focus/provenance and audio",
-          "Official MADLAD inference and native-language serious notice quality"
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-          "Run official model/native-language review for serious educational notice and global screen coverage",
-          "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-        "Run official model/native-language review for serious educational notice and global screen coverage",
-        "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     },
     {
@@ -30054,7 +30099,9 @@
         "development_workflow/LANGUAGE_WRITE_ACKNOWLEDGEMENT.md",
         "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md",
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
-        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md"
+        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -30194,7 +30241,7 @@
         "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift"
       ],
-      "commit_reference": "batch:Contact-protected-labels-and-selected-language-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -30340,42 +30387,39 @@
         "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
         "FAQ question buttons explicitly render semantic plain words at regularweight; originalquestion/answer/citationrecords unchanged and answer semantic renderer retained. Existing4Apple disclosurevectors add expanded screenshot capture; NOT_RUN. Foundation suites do not certify SwiftUI typography. 374missingcanonicaltulip blocker preserved; no new substituteasset.",
         "ThreeactualSettings regressions reproduced4assertionfailures against9d0f65c. Exact typed language readback now owns acknowledgement; failedwrites reload savedselection/review without automatic overwrite and showcontrolled feedback. Finalfocused3adds singlewrite/error/retry assertions; full903/925+21each execute initial3statecases with sameproductionfix. Existing375\u2013390source evidence remainsIN_PROGRESS; individually enumerated Apple acceptancechecks carriedforward, not certified. Missing374tulip unchanged.",
-        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification."
+        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:36:56.183024+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Contact-protected-labels-and-selected-language-copy",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
           "portable_XCTest": 905,
           "native_CPU_XCTest": 927,
           "SwiftTesting_each": 21,
-          "new_contact_protection_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Contact_UI_vectors_total": 4,
-          "Contact_UI_vectors_added": 2,
-          "Contact_UI_vectors_executed": 0,
-          "catalog_keys": 974,
-          "explicit_English_localization_entries": 871,
-          "nonempty_foreign_catalog_units": 0
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Fouractual English/Arabic paused-inference Contact modal/protectedURL/handle/XXXL/Reduce Motion UI vectors",
-          "Apple genuine SwiftUI typechecking, global language/locale propagation, translated footer/error wrapping, VoiceOver focus/provenance and audio",
-          "Official MADLAD inference and native-language serious notice quality"
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-          "Run official model/native-language review for serious educational notice and global screen coverage",
-          "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-        "Run official model/native-language review for serious educational notice and global screen coverage",
-        "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     },
     {
@@ -30571,7 +30615,9 @@
         "development_workflow/LANGUAGE_WRITE_ACKNOWLEDGEMENT.md",
         "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md",
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
-        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md"
+        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -30756,7 +30802,7 @@
         "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift"
       ],
-      "commit_reference": "batch:Contact-protected-labels-and-selected-language-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -30936,42 +30982,39 @@
         "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
         "FAQ question buttons explicitly render semantic plain words at regularweight; originalquestion/answer/citationrecords unchanged and answer semantic renderer retained. Existing4Apple disclosurevectors add expanded screenshot capture; NOT_RUN. Foundation suites do not certify SwiftUI typography. 374missingcanonicaltulip blocker preserved; no new substituteasset.",
         "ThreeactualSettings regressions reproduced4assertionfailures against9d0f65c. Exact typed language readback now owns acknowledgement; failedwrites reload savedselection/review without automatic overwrite and showcontrolled feedback. Finalfocused3adds singlewrite/error/retry assertions; full903/925+21each execute initial3statecases with sameproductionfix. Existing375\u2013390source evidence remainsIN_PROGRESS; individually enumerated Apple acceptancechecks carriedforward, not certified. Missing374tulip unchanged.",
-        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification."
+        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:36:56.183024+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Contact-protected-labels-and-selected-language-copy",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
           "portable_XCTest": 905,
           "native_CPU_XCTest": 927,
           "SwiftTesting_each": 21,
-          "new_contact_protection_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Contact_UI_vectors_total": 4,
-          "Contact_UI_vectors_added": 2,
-          "Contact_UI_vectors_executed": 0,
-          "catalog_keys": 974,
-          "explicit_English_localization_entries": 871,
-          "nonempty_foreign_catalog_units": 0
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Fouractual English/Arabic paused-inference Contact modal/protectedURL/handle/XXXL/Reduce Motion UI vectors",
-          "Apple genuine SwiftUI typechecking, global language/locale propagation, translated footer/error wrapping, VoiceOver focus/provenance and audio",
-          "Official MADLAD inference and native-language serious notice quality"
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-          "Run official model/native-language review for serious educational notice and global screen coverage",
-          "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-        "Run official model/native-language review for serious educational notice and global screen coverage",
-        "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     },
     {
@@ -31141,7 +31184,10 @@
         "development_workflow/LANGUAGE_WRITE_ACKNOWLEDGEMENT.md",
         "development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md",
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
-        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md"
+        "development_workflow/CONTACT_PROTECTED_TRANSLATION.md",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -31281,7 +31327,7 @@
         "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
         "FruitfolioTests/Prompt1BContactDestinationTests.swift"
       ],
-      "commit_reference": "batch:Contact-protected-labels-and-selected-language-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-dialog-copy-native-counts-and-controlled-errors (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -31407,42 +31453,39 @@
         "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
         "FAQ question buttons explicitly render semantic plain words at regularweight; originalquestion/answer/citationrecords unchanged and answer semantic renderer retained. Existing4Apple disclosurevectors add expanded screenshot capture; NOT_RUN. Foundation suites do not certify SwiftUI typography. 374missingcanonicaltulip blocker preserved; no new substituteasset.",
         "ThreeactualSettings regressions reproduced4assertionfailures against9d0f65c. Exact typed language readback now owns acknowledgement; failedwrites reload savedselection/review without automatic overwrite and showcontrolled feedback. Finalfocused3adds singlewrite/error/retry assertions; full903/925+21each execute initial3statecases with sameproductionfix. Existing375\u2013390source evidence remainsIN_PROGRESS; individually enumerated Apple acceptancechecks carriedforward, not certified. Missing374tulip unchanged.",
-        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification."
+        "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification.",
+        "SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof."
       ],
-      "last_updated": "2026-11-07T01:36:56.183024+00:00",
+      "last_updated": "2026-11-07T01:45:09.615489+00:00",
       "latest_batch_verification": {
-        "batch": "Contact-protected-labels-and-selected-language-copy",
+        "batch": "Library-dialog-copy-native-counts-and-controlled-errors",
         "executed": {
           "portable_XCTest": 905,
           "native_CPU_XCTest": 927,
           "SwiftTesting_each": 21,
-          "new_contact_protection_XCTest": 2,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "Contact_UI_vectors_total": 4,
-          "Contact_UI_vectors_added": 2,
-          "Contact_UI_vectors_executed": 0,
-          "catalog_keys": 974,
-          "explicit_English_localization_entries": 871,
-          "nonempty_foreign_catalog_units": 0
+          "new_Library_UI_vectors_written": 4,
+          "new_Library_UI_vectors_executed": 0
         },
         "not_run": [
-          "Fouractual English/Arabic paused-inference Contact modal/protectedURL/handle/XXXL/Reduce Motion UI vectors",
-          "Apple genuine SwiftUI typechecking, global language/locale propagation, translated footer/error wrapping, VoiceOver focus/provenance and audio",
-          "Official MADLAD inference and native-language serious notice quality"
+          "Fournew actualLibrary blankname/nativecount/authoring/create/softpop UI vectors",
+          "Apple create/rename/delete/full-library translated layout, field bindings, unknown system-error verbatim branch, VoiceOver and gesture ownership",
+          "Actual DailyLog inline medication validation, translated clinical language and actual AVFoundation/audibility",
+          "Official MADLAD inference and native-language/clinical/device review"
         ],
         "remaining": [
-          "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-          "Run official model/native-language review for serious educational notice and global screen coverage",
-          "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+          "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+          "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+          "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute fouractual Contact Apple UI vectors; paused Arabic is a locale/fallback check, not translated language quality",
-        "Run official model/native-language review for serious educational notice and global screen coverage",
-        "Continue395\u2013397 other popup/notification/validation/error/accessibility/dialogue copy gaps;393\u2013394whole-screen acceptance remains open"
+        "Run new4Library UI vectors and actual create/rename/delete/full-library/daily medication error paths at RTL/XXXL/Reduce Motion",
+        "Verify genuine Apple typed-field and modifier typechecking, focus/provenance and per-action audio requests/physical playback",
+        "Continue original396 dynamic fruit-character/generated-content translation with atomic question/answer contract protection; existing quiz source-language fallback is not localized-question completion"
       ]
     }
   ]

@@ -12,6 +12,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
     @State private var title = ""
     @State private var selectedStyle: Prompt10BookStyle = .sage
     @State private var errorMessage: String?
+    @State private var errorIsFixedCopy = false
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -37,6 +38,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
                 errorMessageView(
                     errorMessage
                 )
+                .accessibilityIdentifier("library.createBook.error")
                 .padding(.bottom, 16)
             }
 
@@ -48,15 +50,8 @@ struct Prompt10CreateEncyclopediaPopup: View {
     }
 
     private var popupTitle: some View {
-        Text(
-            "what should we call this little encyclopedia? ☆"
-        )
-        .font(
-            .custom(
-                "Chalkboard SE",
-                size: 13.5
-            )
-        )
+        FruitfolioFixedText(source: "what should we call this little encyclopedia? ☆", protectedLiterals: ["☆"],
+            font: .custom("Chalkboard SE", size: 13.5, relativeTo: .body))
         .fontWeight(.bold)
         .foregroundStyle(
             DesignTokens.ColorToken.primaryBurgundy
@@ -70,11 +65,12 @@ struct Prompt10CreateEncyclopediaPopup: View {
     }
 
     private var encyclopediaNameField: some View {
-        TextField(
+        FruitfolioFixedTextField(
             "encyclopedia name",
             text: $title
         )
-                .bookLabelGuidance(text: title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
+                .accessibilityIdentifier("library.createBook.name")
+        .bookLabelGuidance(text: title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
         .font(
             .custom(
                 "Chalkboard SE",
@@ -198,7 +194,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
     private func errorMessageView(
         _ message: String
     ) -> some View {
-        Text(message)
+        Prompt10LibraryPopupErrorText(message: message, isFixedCopy: errorIsFixedCopy)
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -225,6 +221,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
             createEncyclopedia()
         }
         .frame(maxWidth: 295)
+        .accessibilityIdentifier("library.createBook.submit")
     }
 
     private var cancelButton: some View {
@@ -247,10 +244,6 @@ struct Prompt10CreateEncyclopediaPopup: View {
                 style: selectedStyle
             )
 
-            audioManager.play(
-                .buttonSoftPop
-            )
-
             onDismiss()
 
         } catch Prompt10LibraryError
@@ -259,8 +252,8 @@ struct Prompt10CreateEncyclopediaPopup: View {
             onFull()
 
         } catch {
-            errorMessage =
-                error.localizedDescription
+            errorIsFixedCopy = error is Prompt10LibraryError
+            errorMessage = error.localizedDescription
         }
     }
 }
@@ -279,6 +272,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
 
     @State private var title: String
     @State private var errorMessage: String?
+    @State private var errorIsFixedCopy = false
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -299,21 +293,14 @@ struct Prompt10RenameEncyclopediaPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                Text(
-                    "rename this little encyclopedia"
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 15
-                    )
-                )
+                FruitfolioFixedText(source: "rename this little encyclopedia",
+            font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
 
-                TextField(
+                FruitfolioFixedTextField(
                     "encyclopedia name",
                     text: $title
                 )
@@ -340,7 +327,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
+                    Prompt10LibraryPopupErrorText(message: errorMessage, isFixedCopy: errorIsFixedCopy)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -367,8 +354,8 @@ struct Prompt10RenameEncyclopediaPopup: View {
                         onDismiss()
 
                     } catch {
-                        errorMessage =
-                            error.localizedDescription
+                        errorIsFixedCopy = error is Prompt10LibraryError
+                        errorMessage = error.localizedDescription
                     }
                 }
 
@@ -404,6 +391,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
     @EnvironmentObject private var audioManager: AudioManager
 
     @State private var errorMessage: String?
+    @State private var errorIsFixedCopy = false
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -416,15 +404,8 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 .frame(width: 58)
                 .accessibilityHidden(true)
 
-                Text(
-                    "delete this encyclopedia?"
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 15
-                    )
-                )
+                FruitfolioFixedText(source: "delete this encyclopedia?",
+            font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -442,15 +423,8 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                     )
                     .accessibilityHidden(true)
 
-                    Text(
-                        "deleting it removes the saved collection inside it."
-                    )
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 11.5
-                        )
-                    )
+                    FruitfolioFixedText(source: "deleting it removes the saved collection inside it.",
+            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
@@ -458,7 +432,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
+                    Prompt10LibraryPopupErrorText(message: errorMessage, isFixedCopy: errorIsFixedCopy)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -496,8 +470,8 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                         onDeleted()
 
                     } catch {
-                        errorMessage =
-                            error.localizedDescription
+                        errorIsFixedCopy = error is Prompt10LibraryError
+                        errorMessage = error.localizedDescription
                     }
                 }
             }
@@ -529,30 +503,16 @@ struct Prompt10FullLibraryPopup: View {
                 .frame(width: 58)
                 .accessibilityHidden(true)
 
-                Text(
-                    "your little library is completely full."
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 15
-                    )
-                )
+                FruitfolioFixedText(source: "your little library is completely full.",
+            font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
                 .multilineTextAlignment(.center)
 
-                Text(
-                    "delete an encyclopedia you don’t need anymore to make room for another! :-)"
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 11.5
-                    )
-                )
+                FruitfolioFixedText(source: "delete an encyclopedia you don’t need anymore to make room for another! :-)",
+            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
@@ -573,6 +533,26 @@ struct Prompt10FullLibraryPopup: View {
             audioManager.play(
                 .popupOpen
             )
+        }
+    }
+}
+
+
+/// Controlled library validation can be translated. Unknown system errors may
+/// contain paths or authored values and remain verbatim.
+private struct Prompt10LibraryPopupErrorText: View {
+    let message: String
+    let isFixedCopy: Bool
+    var body: some View {
+        Group {
+            if isFixedCopy {
+                FruitfolioFixedText(source: message,
+                    font: .custom("Chalkboard SE", size: 10.5, relativeTo: .caption),
+                    color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+            } else {
+                Text(verbatim: message)
+                    .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .caption))
+            }
         }
     }
 }

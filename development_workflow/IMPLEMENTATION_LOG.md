@@ -3159,3 +3159,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 905, "native_CPU_XCTest": 927, "SwiftTesting_each": 21, "new_contact_protection_XCTest": 2, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "Contact_UI_vectors_total": 4, "Contact_UI_vectors_added": 2, "Contact_UI_vectors_executed": 0, "catalog_keys": 974, "explicit_English_localization_entries": 871, "nonempty_foreign_catalog_units": 0}.
 - Next action: Continue original395–397 remaining popup/notification/validation/error/accessibility and character-dialogue translation gaps without repeating completed broad audits. Preserve393–394screen-level Apple acceptance, officialMADLAD/clinical/native-language/device blockers and all prior artwork handoff.
 - Commit: containing commit for batch Contact-protected-labels-and-selected-language-copy.
+
+## Library-dialog-copy-native-counts-and-controlled-errors
+
+- Parent checkpoint: 9d087e5eebd6a74ce7b1c03a16e187c5a86565b5.
+- Source-order requirements: [389, 390, 395, 397, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift, Fruitfolio/Saved Library/Prompt10ContinuousBook.swift, Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift, development_workflow/LIBRARY_DIALOG_COPY_LOCALIZATION.md.
+- SixexistingLibrary fixedtitles/help and2native nameprompts now translate; typedlibraryerrors translated/unknownsystemerrorsverbatim. Sharedbooklabelguidance nativecount/limit and protecteddisplay/AXinstructions nevertranslateauthoredname. InlineDailyLog medicationvalidation uses seriousfixedcopy. Removed redundantcreatehelper softpop; canonicalpillownsbuttoncue. New4Apple actualprivateLibrary create/error/count/author/save/audio-request vectorswrittenNOT_RUN. Foundation905/927+21 andsyntax/ownership arenotAppleUI/clinical/modelproof.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 905, "native_CPU_XCTest": 927, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Library_UI_vectors_written": 4, "new_Library_UI_vectors_executed": 0}.
+- Next action: Continue original396 dynamic fruit-character/generated-content localization. Preserve atomic quiz option/answer/source contracts; inspect existing display boundaries before adding a complete-package translation owner. Do not independently translate question/options or claim official model behavior without weights. Keep395/397globalcoverage and all Apple UI/officialMADLAD/clinical/device blockers open.
+- Commit: containing commit for batch Library-dialog-copy-native-counts-and-controlled-errors.

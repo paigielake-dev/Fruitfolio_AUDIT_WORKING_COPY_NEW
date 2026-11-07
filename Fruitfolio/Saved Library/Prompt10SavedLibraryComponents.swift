@@ -309,12 +309,28 @@ struct Prompt10WatercolorPopup<Content: View>: View {
 
 extension View {
     func bookLabelGuidance(text: String, maximum: Int) -> some View {
+        modifier(Prompt10BookLabelGuidanceModifier(text: text, maximum: maximum))
+    }
+}
+
+private struct Prompt10BookLabelGuidanceModifier: ViewModifier {
+    let text: String
+    let maximum: Int
+    @EnvironmentObject private var settings: SettingsStore
+    func body(content: Content) -> some View {
+        let locale = Locale(identifier: settings.language.localeIdentifier)
+        let count = text.count.formatted(.number.locale(locale))
+        let limit = maximum.formatted(.number.locale(locale))
         VStack(alignment: .leading, spacing: 5) {
-            self.accessibilityHint("maximum \(maximum) characters; clinical and sexual-health terms are welcome")
-            Text("\(text.count) / \(maximum) characters")
-                .font(.caption)
-                .foregroundStyle(text.count > maximum ? Color.red : DesignTokens.ColorToken.secondaryBurgundy)
-                .accessibilityLabel("\(text.count) of \(maximum) characters")
+            content.modifier(FruitfolioFixedAccessibilityHint(
+                source: "maximum \(limit) characters; clinical and sexual-health terms are welcome",
+                protectedLiterals: [limit]))
+            FruitfolioFixedText(source: "\(count) / \(limit) characters",
+                protectedLiterals: [count, limit], font: .caption,
+                color: text.count > maximum ? Color.red : DesignTokens.ColorToken.secondaryBurgundy)
+                .modifier(FruitfolioFixedAccessibilityLabel(source: "\(count) of \(limit) characters",
+                    protectedLiterals: [count, limit]))
+                .accessibilityIdentifier("library.bookLabelGuidance.count")
         }
     }
 }

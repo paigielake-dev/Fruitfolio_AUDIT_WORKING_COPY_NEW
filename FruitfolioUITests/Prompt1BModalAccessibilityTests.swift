@@ -2514,6 +2514,48 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["your own material · not verified research"].waitForExistence(timeout: 3))
     }
 
+    func testLibraryCreateKeepsAuthoredNameNativeCountAndOneSoftPopPerAction() {
+        for arabic in [false, true] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookEmptyFixture", "-fruitfolioBookQAPauseInference",
+                "-fruitfolioBookAudioDiagnostics", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if arabic { app.launchArguments += ["-fruitfolioBookQAArabic"] }
+            if reduced { app.launchArguments += ["-fruitfolioBookReduceMotion"] }
+            app.launch()
+            let build = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "build my first encyclopedia")).firstMatch
+            XCTAssertTrue(build.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if build.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(build.isHittable); build.tap()
+            let field = app.textFields["library.createBook.name"]
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            let submit = app.buttons["library.createBook.submit"]
+            let scroll = app.scrollViews["fruitfolio.notebookPopup.scroll"]
+            XCTAssertTrue(scroll.waitForExistence(timeout: 3))
+            for _ in 0..<18 { if submit.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(submit.isHittable); submit.tap()
+            let error = app.descendants(matching: .any).matching(identifier: "library.createBook.error").firstMatch
+            XCTAssertTrue(error.waitForExistence(timeout: 3))
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
+            for _ in 0..<18 { if field.isHittable { break }; scroll.swipeDown() }
+            XCTAssertTrue(field.isHittable); field.tap(); field.typeText("QA private book")
+            XCTAssertEqual(field.value as? String, "QA private book")
+            let count = app.descendants(matching: .any).matching(identifier: "library.bookLabelGuidance.count").firstMatch
+            XCTAssertTrue(count.waitForExistence(timeout: 3))
+            XCTAssertTrue(count.label.contains(arabic ? "١٥" : "15"))
+            XCTAssertTrue(count.label.contains(arabic ? "٤٨" : "48"))
+            for _ in 0..<18 { if submit.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(submit.isHittable); submit.tap()
+            XCTAssertFalse(submit.exists)
+            let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA private book,")).firstMatch
+            XCTAssertTrue(book.waitForExistence(timeout: 5))
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 3")
+            captureGame(app, name: "library-native-name-arabic-\(arabic)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookReduceMotion"]
