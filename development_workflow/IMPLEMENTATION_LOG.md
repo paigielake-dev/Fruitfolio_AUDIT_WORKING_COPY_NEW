@@ -4426,3 +4426,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"portable_XCTest": "55 passed, zero failures: existing actual education-corpus/module models; these do NOT execute the changed SwiftUI parent", "syntax": "337 Swift files parsed, zero syntax errors; Apple SDK typechecking/linking NOT verified", "sound_ownership_static": "0 diagnostics"}.
 - Next action: Continue actual observed-log explanation coverage: present typed symptom-report counts with missing/deleted/foreign records excluded and no biological confirmation, then continue next independent original/founder gaps. Apple parent ownership verification remains pending.
 - Commit: containing commit for batch Education-parent-navigation-and-deferred-action-ownership.
+
+## Context-observed-symptom-selection-counts
+
+- Parent checkpoint: 39586f24e3a0a3d907aa8e89df160d4a97c046e9.
+- Source-order requirements: [281, 286, 290, 302, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift, Fruitfolio/Context Personalization/Prompt27AContextViews.swift, FruitfolioTests/Prompt27AContextPersonalizationTests.swift, development_workflow/CONTEXT_OBSERVED_SYMPTOM_SELECTION_COUNTS.json.
+- Project known typed symptom selections into stable count rows; panel shows how many saved logs contain each selection. Unknown history, no saved selections and observed counts are distinct. Deleted/foreign-owner records and private notes remain excluded; no storage/model/prediction/art changes.
+- Tests added/updated: Prompt27AContextResearchTests.testObservedFactsExcludePrivateNotesOtherOwnersAndDeletedRecords, Prompt20CoreTests.
+- Verification: {"focused_XCTest": "60 passed, zero failures; eight context-research tests plus actual daily-log core rules", "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified."}.
+- Next action: Reproduce and fix Calendar-to-daily-log civil-day handoff when the source and editor calendar timezones differ; preserve existing public callbacks and stored schemas. Continue remaining checklist/founder work.
+- Commit: containing commit for batch Context-observed-symptom-selection-counts.

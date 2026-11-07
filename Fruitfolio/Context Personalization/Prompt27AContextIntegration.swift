@@ -342,6 +342,15 @@ nonisolated struct Prompt27AObservedCycleFacts: Codable, Hashable, Sendable {
         historyIdentity = String(identity.finalize()) // ephemeral, never persisted or supplied to the model
     }
 
+    /// Counts of saved selections, not symptom frequency in unlogged time,
+    /// severity, a medical finding, or evidence that a condition caused them.
+    var reportedSymptoms: [Prompt27ARecordedSymptomCount] {
+        Prompt20SymptomID.allCases.compactMap { symptom in
+            guard let count = recordedSymptomCounts[symptom.rawValue], count > 0 else { return nil }
+            return .init(symptom: symptom, logCount: count)
+        }
+    }
+
     func promptJSON() throws -> String {
         struct Payload: Encodable {
             let enteredPeriodStartCount: Int?
@@ -357,6 +366,12 @@ nonisolated struct Prompt27AObservedCycleFacts: Codable, Hashable, Sendable {
             recordedBasalTemperatureCount: recordedBasalTemperatureCount,
             recordedCervicalFluidCount: recordedCervicalFluidCount, recordedSymptomCounts: recordedSymptomCounts)), as: UTF8.self)
     }
+}
+
+nonisolated struct Prompt27ARecordedSymptomCount: Identifiable, Sendable {
+    let symptom: Prompt20SymptomID
+    let logCount: Int
+    var id: String { symptom.rawValue }
 }
 
 nonisolated struct Prompt27AContextResearchTopic: Equatable, Sendable, Identifiable {

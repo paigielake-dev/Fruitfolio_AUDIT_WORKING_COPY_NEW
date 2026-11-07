@@ -509,6 +509,16 @@ struct Prompt27AContextResearchPanel: View {
                 if let logs = report.observedFacts.recordedLogCount { fact("saved daily logs", logs) }
                 if let bbt = report.observedFacts.recordedBasalTemperatureCount { fact("logs with a recorded basal temperature", bbt) }
                 if let fluid = report.observedFacts.recordedCervicalFluidCount { fact("logs with recorded cervical fluid", fluid) }
+                if report.observedFacts.recordedLogCount == nil {
+                    FruitfolioFixedText(source: "daily-log history could not be read for this explanation. missing records are not treated as empty logs.", serious: true)
+                } else if report.observedFacts.reportedSymptoms.isEmpty {
+                    FruitfolioFixedText(source: "no symptom selections were found in these saved logs. this does not mean you had no symptoms.", serious: true)
+                } else {
+                    ForEach(report.observedFacts.reportedSymptoms) { selection in
+                        fact("logs where you selected " + selection.symptom.displayName, selection.logCount)
+                    }
+                    FruitfolioFixedText(source: "these count selections in saved logs, not symptoms during unlogged time, symptom severity or an explanation of their cause.", serious: true)
+                }
                 FruitfolioFixedText(source: "these describe entries you supplied, not confirmed ovulation, pregnancy, fertility or hormone levels.", serious: true)
                 section("what approved research supports")
                 FruitfolioFixedText(source: "these are general research excerpts, not proof that a reported condition caused your recorded pattern. not every detail applies to your situation.", serious: true)

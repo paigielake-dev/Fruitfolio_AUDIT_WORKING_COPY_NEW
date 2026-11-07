@@ -740,6 +740,19 @@ final class Prompt27AContextResearchTests: XCTestCase {
         let facts = Prompt27AObservedCycleFacts(prediction: nil, dailyLogs: [log, deleted, foreign])
         XCTAssertEqual(facts.recordedLogCount, 1)
         XCTAssertEqual(facts.recordedSymptomCounts, ["cramps": 1])
+        XCTAssertEqual(facts.reportedSymptoms.map(\.symptom), [.cramps])
+        XCTAssertEqual(facts.reportedSymptoms.map(\.logCount), [1])
+        var removedSelection = log
+        removedSelection.symptoms = nil
+        removedSelection.revision += 1
+        let clearedSelections = Prompt27AObservedCycleFacts(prediction: nil, dailyLogs: [removedSelection])
+        XCTAssertEqual(clearedSelections.recordedLogCount, 1)
+        XCTAssertTrue(clearedSelections.reportedSymptoms.isEmpty)
+        XCTAssertNotEqual(clearedSelections.historyIdentity, facts.historyIdentity)
+        XCTAssertNil(Prompt27AObservedCycleFacts.unknown.recordedLogCount)
+        XCTAssertTrue(Prompt27AObservedCycleFacts.unknown.reportedSymptoms.isEmpty)
+        XCTAssertEqual(Prompt27AObservedCycleFacts(prediction: nil, dailyLogs: []).recordedLogCount, 0)
+
         let json = try facts.promptJSON()
         for marker in ["private-journal-marker", "private-symptom-marker", "private-medication-marker", log.id.uuidString, "historyIdentity"] {
             XCTAssertFalse(json.contains(marker))
