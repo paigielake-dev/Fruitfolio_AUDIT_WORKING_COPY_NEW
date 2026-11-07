@@ -179,21 +179,40 @@ extension SettingsStore: ObservableObject {}
 #endif
 
 #if DEBUG
-/// Disposable UI-test preferences live as long as the root fixture owner, not
-/// as long as one appearance. Production defaults never enter this authority.
+/// Normal UI-test preferences follow root ownership, not one appearance.
+/// Explicit UUID restart fixtures require cleanup after relaunch verification.
+/// Production defaults never enter this authority.
 @MainActor
 final class FruitfolioRegressionPreferenceSuite {
     let suiteName: String
     let defaults: UserDefaults?
+    let isPersistentFixture: Bool
+    private let cleanupOnRelease: Bool
 
-    init() {
-        let name = "fruitfolio.uiQA." + UUID().uuidString
+    nonisolated static func restartToken(arguments: [String]) -> UUID? {
+        guard arguments.contains("-fruitfolioLanguagePersistenceQA"),
+              let index = arguments.firstIndex(of: "-fruitfolioLanguagePersistenceToken"),
+              index + 1 < arguments.count else { return nil }
+        return UUID(uuidString: arguments[index + 1])
+    }
+
+    init(persistenceToken: UUID? = nil) {
+        let name = persistenceToken.map { "fruitfolio.uiQA.languageRestart." + $0.uuidString }
+            ?? ("fruitfolio.uiQA." + UUID().uuidString)
         suiteName = name
         defaults = UserDefaults(suiteName: name)
+        isPersistentFixture = persistenceToken != nil
+        cleanupOnRelease = persistenceToken == nil
+    }
+
+    func cleanUp() {
+        defaults?.removePersistentDomain(forName: suiteName)
     }
 
     deinit {
-        UserDefaults(suiteName: suiteName)?.removePersistentDomain(forName: suiteName)
+        if cleanupOnRelease {
+            UserDefaults(suiteName: suiteName)?.removePersistentDomain(forName: suiteName)
+        }
     }
 }
 

@@ -90,6 +90,49 @@ final class Prompt1BSettingsLanguageTests: XCTestCase {
 
 
     #if DEBUG
+    func testRestartPreferenceFixturePreservesActualLanguageUntilExplicitCleanup() async throws {
+        let token = UUID()
+        var owner: FruitfolioRegressionPreferenceSuite? = FruitfolioRegressionPreferenceSuite(persistenceToken: token)
+        let defaults = try XCTUnwrap(owner?.defaults)
+        let name = try XCTUnwrap(owner?.suiteName)
+        defer { UserDefaults(suiteName: name)?.removePersistentDomain(forName: name) }
+        XCTAssertTrue(try XCTUnwrap(owner).isPersistentFixture)
+        let settings = SettingsStore(defaults: defaults)
+        settings.language = .arabic
+        XCTAssertNil(settings.languagePersistenceMessage)
+        weak var reference = owner
+        owner = nil
+        XCTAssertNil(reference)
+        let restored = FruitfolioRegressionPreferenceSuite(persistenceToken: token)
+        XCTAssertEqual(restored.suiteName, name)
+        XCTAssertEqual(SettingsStore(defaults: try XCTUnwrap(restored.defaults)).language, .arabic)
+        restored.cleanUp()
+        XCTAssertNil(restored.defaults?.object(forKey: FruitfolioLanguagePreferences.defaultsKey))
+        XCTAssertEqual(SettingsStore(defaults: try XCTUnwrap(restored.defaults)).language, .english)
+    }
+
+    func testRestartPreferenceArgumentsCannotSelectArbitraryOrProductionDomains() async {
+        let token = UUID()
+        let flag = "-fruitfolioLanguagePersistenceQA", key = "-fruitfolioLanguagePersistenceToken"
+        XCTAssertNil(FruitfolioRegressionPreferenceSuite.restartToken(arguments: [key, token.uuidString]))
+        XCTAssertNil(FruitfolioRegressionPreferenceSuite.restartToken(arguments: [flag, key]))
+        XCTAssertNil(FruitfolioRegressionPreferenceSuite.restartToken(arguments: [flag, key, "com.example.production"]))
+        XCTAssertEqual(FruitfolioRegressionPreferenceSuite.restartToken(arguments: [flag, key, token.uuidString]), token)
+    }
+
+    func testIndependentRestartPreferenceFixturesCannotReadOrClearEachOther() async throws {
+        let first = FruitfolioRegressionPreferenceSuite(persistenceToken: UUID())
+        let second = FruitfolioRegressionPreferenceSuite(persistenceToken: UUID())
+        defer { first.cleanUp(); second.cleanUp() }
+        let a = SettingsStore(defaults: try XCTUnwrap(first.defaults))
+        let b = SettingsStore(defaults: try XCTUnwrap(second.defaults))
+        a.language = .french; b.language = .japanese
+        XCTAssertNotEqual(first.suiteName, second.suiteName)
+        first.cleanUp()
+        XCTAssertNil(first.defaults?.object(forKey: FruitfolioLanguagePreferences.defaultsKey))
+        XCTAssertEqual(SettingsStore(defaults: try XCTUnwrap(second.defaults)).language, .japanese)
+    }
+
     func testActualTemporaryCatalogCanResolveProtectedFixtureWhileInferenceIsPaused() async throws {
         let fixture = try FruitfolioTranslationCatalogRegressionFixture()
         XCTAssertEqual(FruitfolioLocalization.catalogValue("**fixture source**", language: .french,

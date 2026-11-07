@@ -3203,3 +3203,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 915, "native_CPU_XCTest": 937, "SwiftTesting_each": 21, "new_sort_ownership_XCTest": 4, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "existing_Library_UI_vectors_extended": 4, "Apple_UI_vectors_executed": 0}.
 - Next action: Continue398–399 actual language preference restoration/navigation and always-recognizable selector using existing authority and tests. Preserve globalcopy coverage and all Apple/UI/MADLAD/clinical/device blockers; do not claim same-process recreation is verified process restart.
 - Commit: containing commit for batch Library-sort-translated-values-and-owned-selection.
+
+## Language-restart-private-fixture-and-native-selector-verification
+
+- Parent checkpoint: a95d28e30507dbaf0a10c46674ea347ee7c33835.
+- Source-order requirements: [393, 398, 399, 476, 477, 478].
+- Source files: Fruitfolio/Core/AppArchitecture/SettingsStore.swift, Fruitfolio/Fruitfolio/ContentView.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift, Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift, Fruitfolio/Privacy Settings/Prompt12SettingsView.swift, development_workflow/LANGUAGE_RESTART_NAVIGATION_FIXTURE.md.
+- DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof.
+- Tests added/updated: FruitfolioTests/Prompt1BSettingsLanguageTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 918, "native_CPU_XCTest": 940, "SwiftTesting_each": 21, "new_same_process_fixture_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Apple_UI_vectors_written": 4, "Apple_UI_launches_defined": 12, "Apple_UI_vectors_executed": 0, "actual_OS_restart_verification": "NOT_RUN; owner recreation is same-process only"}.
+- Next action: Continue original400–409 requested individually named languages and actual model/tokenizer compatibility. Preserve existing source and regional-language evidence; missing officialMADLADweights cannot be counted as support. Document verification blockers and proceed to independent410–417layout/typography work without waiting for Xcode or repeating broad audits.
+- Commit: containing commit for batch Language-restart-private-fixture-and-native-selector-verification.

@@ -1436,6 +1436,55 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testActualSettingsLanguageSurvivesFAQNavigationAndAppRelaunch() {
+        for (code, nativeName) in [("fr", "Français"), ("ar", "العربية")] {
+        for reduced in [false, true] {
+            XCUIDevice.shared.orientation = .portrait
+            let app = XCUIApplication()
+            app.launchArguments = ["-fruitfolioLanguagePersistenceQA", "-fruitfolioLanguagePersistenceToken", UUID().uuidString,
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioLanguagePersistenceReduceMotion"] }
+            defer {
+                app.terminate()
+                app.launchArguments += ["-fruitfolioLanguagePersistenceCleanup"]
+                app.launch()
+                let saved = app.staticTexts["languagePersistence.saved"]
+                XCTAssertTrue(saved.waitForExistence(timeout: 8))
+                let cleared = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "saved language: missing"), object: saved)
+                XCTAssertEqual(XCTWaiter.wait(for: [cleared], timeout: 5), .completed)
+                app.terminate()
+            }
+            app.launch()
+            let fixture = app.staticTexts["languagePersistence.fixture"]
+            XCTAssertTrue(fixture.waitForExistence(timeout: 8)); XCTAssertEqual(fixture.label, "persistent fixture: true")
+            let menu = app.buttons["settings.language"]
+            XCTAssertTrue(menu.waitForExistence(timeout: 5)); XCTAssertTrue(menu.isHittable); menu.tap()
+            let identified = app.buttons["settings.language.option." + code]
+            let option = identified.waitForExistence(timeout: 2) ? identified : app.buttons[nativeName]
+            XCTAssertTrue(option.waitForExistence(timeout: 3)); option.tap()
+            let selected = app.staticTexts["languagePersistence.selected"]
+            let saved = app.staticTexts["languagePersistence.saved"]
+            let changed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "selected language: " + code), object: selected)
+            XCTAssertEqual(XCTWaiter.wait(for: [changed], timeout: 5), .completed)
+            XCTAssertEqual(saved.label, "saved language: " + code)
+            app.buttons["languagePersistence.showFAQ"].tap()
+            XCTAssertTrue(app.buttons["faq.question.about-1"].waitForExistence(timeout: 5))
+            XCTAssertEqual(selected.label, "selected language: " + code)
+            let environment = app.staticTexts["languagePersistence.environment"]
+            XCTAssertTrue(environment.label.hasPrefix("locale: " + code))
+            XCTAssertTrue(environment.label.contains(code == "ar" ? "direction: rtl" : "direction: ltr"))
+            app.buttons["languagePersistence.showSettings"].tap()
+            XCTAssertTrue(menu.waitForExistence(timeout: 5)); XCTAssertEqual(menu.value as? String, nativeName)
+            app.terminate(); app.launch()
+            XCTAssertTrue(selected.waitForExistence(timeout: 8))
+            XCTAssertEqual(selected.label, "selected language: " + code)
+            XCTAssertEqual(saved.label, "saved language: " + code)
+            XCTAssertEqual(menu.value as? String, nativeName)
+            captureGame(app, name: "language-relaunch-\(code)-reduced-\(reduced)")
+        }
+        }
+    }
+
     func testFAQQuestionTranslationFallbackRetainsDisclosureAndSingleCueOwnership() {
         for arabic in [false, true] {
         for reduced in [false, true] {

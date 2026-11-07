@@ -2,9 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     #if DEBUG
-    @StateObject private var regressionPreferences = FruitfolioRegressionPreferenceSuite()
+    @StateObject private var regressionPreferences = FruitfolioRegressionPreferenceSuite(
+        persistenceToken: FruitfolioRegressionPreferenceSuite.restartToken(arguments: ProcessInfo.processInfo.arguments))
     private var isRegressionRun: Bool {
-        let flags = ["-fruitfolioGuideSaveQA", "-fruitfolioTranslationDisclosureQA", "-fruitfolioFAQQA", "-fruitfolioSettingsControlsQA", "-fruitfolioAccountActionQA", "-fruitfolioCycleModalQA", "-fruitfolioMeasurementsQA", "-fruitfolioLibraryStorageQA", "-fruitfolioContextStorageQA", "-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioSymptomGraphQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
+        let flags = ["-fruitfolioLanguagePersistenceQA", "-fruitfolioGuideSaveQA", "-fruitfolioTranslationDisclosureQA", "-fruitfolioFAQQA", "-fruitfolioSettingsControlsQA", "-fruitfolioAccountActionQA", "-fruitfolioCycleModalQA", "-fruitfolioMeasurementsQA", "-fruitfolioLibraryStorageQA", "-fruitfolioContextStorageQA", "-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioSymptomGraphQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
                      "-fruitfolioAskPaperQA", "-fruitfolioTourQA", "-fruitfolioModalQA"]
         return flags.contains(where: ProcessInfo.processInfo.arguments.contains)
     }
@@ -17,6 +18,7 @@ struct ContentView: View {
                 // All regression routes receive the real shell's environment
                 // objects, backed by a disposable preferences/context suite.
                 Prompt03SkeletonView(defaults: defaults)
+                    .environmentObject(regressionPreferences)
             } else {
                 Text("UI regression environment could not be created.")
             }

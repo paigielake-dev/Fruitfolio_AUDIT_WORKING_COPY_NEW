@@ -36,4 +36,64 @@ struct Prompt1BSettingsControlRegressionHarness: View {
         .onDisappear { audio.debugRecordInteractions(false) }
     }
 }
+
+/// Uses actual Settings and FAQ with the shell's shared language/locale objects.
+/// Only the explicitly UUID-scoped DEBUG fixture can survive a test relaunch.
+struct Prompt1BLanguagePersistenceRegressionHarness: View {
+    @EnvironmentObject private var preferences: FruitfolioRegressionPreferenceSuite
+    @EnvironmentObject private var settings: SettingsStore
+    @Environment(\.locale) private var locale
+    @Environment(\.layoutDirection) private var direction
+    @State private var store: Prompt12AccountPrivacyStore?
+    @State private var showingFAQ = false
+    @State private var cleared = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            if let store {
+                if showingFAQ {
+                    Prompt29FAQView(onBack: { showingFAQ = false })
+                } else {
+                    Prompt12SettingsView(store: store, onBack: { showingFAQ = true },
+                        onShowAccount: { showingFAQ = true }, onShowPrivacy: { showingFAQ = true })
+                }
+            } else { ProgressView() }
+            VStack(spacing: 2) {
+                Text("persistent fixture: \(preferences.isPersistentFixture ? "true" : "false")")
+                    .accessibilityIdentifier("languagePersistence.fixture")
+                Text("selected language: \(settings.language.rawValue)")
+                    .accessibilityIdentifier("languagePersistence.selected")
+                Text("saved language: \(preferences.defaults?.string(forKey: FruitfolioLanguagePreferences.defaultsKey) ?? "missing")")
+                    .accessibilityIdentifier("languagePersistence.saved")
+                Text("locale: \(locale.identifier); direction: \(direction == .rightToLeft ? "rtl" : "ltr")")
+                    .accessibilityIdentifier("languagePersistence.environment")
+                HStack {
+                    Button("QA FAQ") { showingFAQ = true }
+                        .accessibilityIdentifier("languagePersistence.showFAQ")
+                    Button("QA settings") { showingFAQ = false }
+                        .accessibilityIdentifier("languagePersistence.showSettings")
+                    Button("QA clear") {
+                        preferences.cleanUp()
+                        cleared = true
+                    }
+                    .disabled(cleared)
+                    .accessibilityIdentifier("languagePersistence.clear")
+                }
+                .frame(minHeight: 44)
+            }
+            .font(.caption2)
+            .padding(4)
+        }
+        .task {
+            guard store == nil, let defaults = preferences.defaults else { return }
+            settings.translationPausedForMemoryPressure = true
+            settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioLanguagePersistenceReduceMotion")
+            store = Prompt12AccountPrivacyStore(defaults: defaults, persistenceKey: "languagePersistence.accountFixture")
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioLanguagePersistenceCleanup") {
+                preferences.cleanUp()
+                cleared = true
+            }
+        }
+    }
+}
 #endif

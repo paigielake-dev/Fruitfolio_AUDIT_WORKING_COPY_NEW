@@ -154,7 +154,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGuideSaveQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioLanguagePersistenceQA") {
+            Prompt1BLanguagePersistenceRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioGuideSaveQA") {
             Prompt11GuideSaveRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioSettingsControlsQA") {
             Prompt1BSettingsControlRegressionHarness()

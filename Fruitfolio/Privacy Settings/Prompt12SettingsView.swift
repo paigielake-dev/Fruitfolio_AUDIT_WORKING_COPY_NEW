@@ -239,6 +239,7 @@ struct Prompt12SettingsView: View {
                             Text(language.nativeDisplayName)
                         }
                     }
+                    .accessibilityIdentifier("settings.language.option." + language.rawValue)
                 }
             } label: {
                 HStack(spacing: 10) {
