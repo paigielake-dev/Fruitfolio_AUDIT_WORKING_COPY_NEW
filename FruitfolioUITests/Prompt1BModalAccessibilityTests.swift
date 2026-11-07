@@ -4103,6 +4103,36 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice() {
+        for destination in ["privacy", "dataExport"] {
+        for choice in ["keep", "save", "discard"] {
+            let app = launchAccountAction("sign-out", reduced: false, rtl: false)
+            let username = app.textFields["account.publicUsername"]
+            revealAccountInput(username, app: app)
+            username.tap(); username.typeText("sprout_one")
+            if choice == "save" {
+                let confirmation = app.descendants(matching: .any).matching(identifier: "account.usernameConfirmation").firstMatch
+                revealAccountInput(confirmation, app: app); confirmation.tap()
+            }
+            let destinationButton = app.buttons["account." + destination]
+            revealAccountInput(destinationButton, app: app); destinationButton.tap()
+            XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+            let slot = choice == "keep" ? "primary" : (choice == "save" ? "secondary" : "tertiary")
+            let label = choice == "keep" ? "keep editing" : (choice == "save" ? "save username + leave" : "discard drafts + leave")
+            tapMeasuredPaperAction(slot, label: label, app: app, context: "account-route-" + destination + "-" + choice)
+            let requested = choice == "keep" ? 0 : 1
+            let counter = destination == "privacy" ? "privacy" : "export"
+            waitForLabelValue("accountQA." + counter + "Requests", value: counter + " requests: \(requested)", app: app)
+            waitForLabelValue("accountQA.backRequests", value: "back requests: 0", app: app)
+            XCTAssertEqual(app.staticTexts["account.qa.savedUsername"].label.contains("sprout_one"), choice == "save")
+            revealAccountInput(username, app: app)
+            XCTAssertEqual((username.value as? String) == "sprout_one", choice != "discard")
+            waitForLabelValue("accountQA.healthUnchanged", value: "yes", app: app)
+            app.terminate()
+        }
+        }
+    }
+
     func testAccountInputLabelsPreserveTypedUsernameAndEmail() {
         for reduced in [false, true] {
         for rtl in [false, true] {
@@ -4120,8 +4150,17 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let save = app.buttons["account.saveUsername"]
             revealAccountInput(save, app: app)
             XCTAssertGreaterThanOrEqual(save.frame.height, 44)
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            revealAccountInput(username, app: app)
+            XCTAssertEqual(username.value as? String, "sprout_one")
+            XCTAssertFalse(app.staticTexts["account.qa.savedUsername"].label.contains("sprout_one"))
+            revealAccountInput(save, app: app)
             save.tap()
             XCTAssertEqual(app.staticTexts["account.qa.savedUsername"].label, "saved username: sprout_one")
+            let sharedHeading = app.descendants(matching: .any).matching(identifier: "account.sharedUsername").firstMatch
+            XCTAssertTrue(sharedHeading.waitForExistence(timeout: 3))
+            XCTAssertEqual(sharedHeading.label, "sprout_one")
             openAccountAction("account.signOut", app: app)
             tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
             waitForLabelValue("accountQA.identity", value: "none", app: app)
@@ -4132,6 +4171,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             email.tap()
             email.typeText("fixture+note@example.invalid")
             XCTAssertEqual(email.value as? String, "fixture+note@example.invalid")
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            revealAccountInput(email, app: app)
+            XCTAssertEqual(email.value as? String, "fixture+note@example.invalid")
+            waitForLabelValue("accountQA.identity", value: "none", app: app)
             captureGame(app, name: "account-literal-input-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()
         }

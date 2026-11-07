@@ -90,6 +90,7 @@ struct Prompt12RouteHeader: View {
 struct Prompt12NavigationRow: View {
     let title: String
     let detail: String?
+    var detailIsVerbatim = false
     let assetName: String?
     let action: () -> Void
 
@@ -131,10 +132,17 @@ struct Prompt12NavigationRow: View {
                         .fontWeight(.bold)
                     statusCaption(heading.status)
                     if detail != nil {
-                        FruitfolioSemanticText(markdown: explanation.text,
-                            baseFont: .custom("Chalkboard SE", size: 10.5, relativeTo: .body),
-                            color: DesignTokens.ColorToken.secondaryBurgundy)
-                        statusCaption(explanation.status)
+                        if detailIsVerbatim {
+                            Text(verbatim: detail ?? "")
+                                .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
+                                .foregroundStyle(DesignTokens.ColorToken.secondaryBurgundy)
+                                .fixedSize(horizontal: false, vertical: true)
+                        } else {
+                            FruitfolioSemanticText(markdown: explanation.text,
+                                baseFont: .custom("Chalkboard SE", size: 10.5, relativeTo: .body),
+                                color: DesignTokens.ColorToken.secondaryBurgundy)
+                            statusCaption(explanation.status)
+                        }
                     }
                 }
 
@@ -170,9 +178,9 @@ struct Prompt12NavigationRow: View {
             inferenceAllowed: settings.translationInferenceAllowed)) {
             await titleTranslation.resolve(titleKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
-        .task(id: FruitfolioControlTranslationState.TaskKey(key: detailKey,
+        .task(id: detailIsVerbatim ? nil : FruitfolioControlTranslationState.TaskKey(key: detailKey,
             inferenceAllowed: settings.translationInferenceAllowed)) {
-            if detail != nil {
+            if detail != nil && !detailIsVerbatim {
                 await detailTranslation.resolve(detailKey, inferenceAllowed: settings.translationInferenceAllowed)
             }
         }
@@ -191,9 +199,12 @@ struct Prompt12NavigationRow: View {
         var parts = [heading.status.accessibilityDetail(
             original: FruitfolioSemanticDocument.plainText(from: title), localized: { settings.localized($0) })]
         if let detail {
-            parts.insert(FruitfolioSemanticDocument.plainText(from: explanation.text), at: 0)
-            parts.append(explanation.status.accessibilityDetail(
-                original: FruitfolioSemanticDocument.plainText(from: detail), localized: { settings.localized($0) }))
+            if detailIsVerbatim { parts.insert(detail, at: 0) }
+            else {
+                parts.insert(FruitfolioSemanticDocument.plainText(from: explanation.text), at: 0)
+                parts.append(explanation.status.accessibilityDetail(
+                    original: FruitfolioSemanticDocument.plainText(from: detail), localized: { settings.localized($0) }))
+            }
         }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
     }

@@ -20065,10 +20065,13 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
         "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -20081,18 +20084,62 @@
         "FruitfolioTests/Prompt1BLocalDataExportTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
-        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Owned-Account-username-and-unsubmitted-email-draft-exit (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
         "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
         "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push.",
         "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.",
         "Actual Game Back now uses owned shared measured white-paper save/discard/keep for dirty username. Actual Foundation session freezes intent and delivers once after dismissal/all other popups, with protected Review, stale/replay/cancel guards. UI commits only acknowledged frozen intent and keeps errors/draft; discard is in-memory only. Six actual session/intent tests pass, 20 Apple launch scenarios added but NOT_RUN.",
-        "Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN."
+        "Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN.",
+        "Complete clause review: Account always exposes create/edit shared pseudonym alongside the signed-in status/email or email sign-in form; store validation, acknowledgment and frozen intents preserve data. New route guards prevent losing drafts via Privacy/external export; Apple UI pending.",
+        "Individual complete clause review: development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json#229; Complete clause review: Account always exposes create/edit shared pseudonym alongside the signed-in status/email or email sign-in form; store validation, acknowledgment and frozen intents preserve data. New route guards prevent losing drafts via Privacy/external export; Apple UI pending."
       ],
-      "last_updated": "2026-11-06T12:51:56.551707+00:00"
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
+      "latest_batch_verification": {
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+        "executed": {
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+          ],
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+        },
+        "not_run": [
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+        ],
+        "remaining": [
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+      ]
     },
     {
       "sequence": 230,
@@ -20114,10 +20161,13 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
         "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -20130,18 +20180,62 @@
         "FruitfolioTests/Prompt1BLocalDataExportTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
-        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Owned-Account-username-and-unsubmitted-email-draft-exit (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
         "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
         "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push.",
         "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.",
         "Actual Game Back now uses owned shared measured white-paper save/discard/keep for dirty username. Actual Foundation session freezes intent and delivers once after dismissal/all other popups, with protected Review, stale/replay/cancel guards. UI commits only acknowledged frozen intent and keeps errors/draft; discard is in-memory only. Six actual session/intent tests pass, 20 Apple launch scenarios added but NOT_RUN.",
-        "Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN."
+        "Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN.",
+        "Complete clause review: Account and Fruit Basket use the same default observed FruitfolioUsernameStore.shared; Account/Settings headings now consume that authority rather than older identity.username. Private fixtures inject separate authorities. Identity data is not rewritten.",
+        "Individual complete clause review: development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json#230; Complete clause review: Account and Fruit Basket use the same default observed FruitfolioUsernameStore.shared; Account/Settings headings now consume that authority rather than older identity.username. Private fixtures inject separate authorities. Identity data is not rewritten."
       ],
-      "last_updated": "2026-11-06T12:51:56.551707+00:00"
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
+      "latest_batch_verification": {
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+        "executed": {
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+          ],
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+        },
+        "not_run": [
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+        ],
+        "remaining": [
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+      ]
     },
     {
       "sequence": 231,
@@ -20159,10 +20253,15 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift",
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
@@ -20173,16 +20272,62 @@
         "FruitfolioUsernameStoreTests",
         "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
         "FruitfolioTests/Prompt1BLocalDataExportTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Fruit-Basket-frozen-username-editor-and-safe-QA-lifetime (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
         "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
         "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push.",
-        "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred."
+        "Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.",
+        "Complete clause review: all username display/edit consumers observe the same live authority, commits refresh canonical values and stale intents fail; current values survive reload. Actual Combine/SwiftUI cross-screen propagation acceptance remains NOT_RUN.",
+        "Individual complete clause review: development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json#231; Complete clause review: all username display/edit consumers observe the same live authority, commits refresh canonical values and stale intents fail; current values survive reload. Actual Combine/SwiftUI cross-screen propagation acceptance remains NOT_RUN."
       ],
-      "last_updated": "2026-11-06T12:20:49.425039+00:00"
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
+      "latest_batch_verification": {
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+        "executed": {
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+          ],
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+        },
+        "not_run": [
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+        ],
+        "remaining": [
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+      ]
     },
     {
       "sequence": 232,
@@ -32761,7 +32906,10 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md",
-        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -32781,7 +32929,7 @@
         "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
         "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -32791,39 +32939,49 @@
         "Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN.",
         "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
         "Individual clause review: USERNAME_CURRENT_IDENTITY_AND_SHARED_EDITOR_EVIDENCE.json. Account and Fruit Basket production defaults both observe the same FruitfolioUsernameStore.shared; actual store/persistence and frozen save intent share one versioned acknowledged name+consent record. Existing legacy migration/tombstone/foreign-writer protections remain. Private fixture namespaces remain isolated. Full1048 portable XCTest+21 SwiftTesting and20 focused actual username tests passed; Apple acceptance NOT_RUN.",
-        "Account and Fruit Basket production defaults both observe the same FruitfolioUsernameStore.shared; actual store/persistence and frozen save intent share one versioned acknowledged name+consent record. Existing legacy migration/tombstone/foreign-writer protections remain. Private fixture namespaces remain isolated."
+        "Account and Fruit Basket production defaults both observe the same FruitfolioUsernameStore.shared; actual store/persistence and frozen save intent share one versioned acknowledged name+consent record. Existing legacy migration/tombstone/foreign-writer protections remain. Private fixture namespaces remain isolated.",
+        "Extend previously closed shared-source evidence to Account and Settings headers; do not let old authenticated identity name compete with canonical public pseudonym."
       ],
-      "last_updated": "2026-11-07T14:06:50.349952+00:00",
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
         "executed": {
-          "focused_username_identity_policy_exit_XCTest": 20,
-          "full_portable_XCTest": 1048,
-          "full_Swift_Testing": 21,
-          "swift_syntax_files": 326,
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+          ],
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
           "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_username_current_identity_final.log",
-            "/tmp/fruitfolio_username_authority_full_portable.log",
-            "/tmp/fruitfolio_username_authority_syntax.log"
-          ]
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
         },
         "not_run": [
-          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
-          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
-          "Official MADLAD/native-language moderation and actual Apple/device runtime."
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
         ],
         "remaining": [
-          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
-          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
-          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
-        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
-        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
       ],
       "prior_batch_verifications": [
         {
@@ -32847,6 +33005,32 @@
             "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
             "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
             "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
+          "executed": {
+            "focused_username_identity_policy_exit_XCTest": 20,
+            "full_portable_XCTest": 1048,
+            "full_Swift_Testing": 21,
+            "swift_syntax_files": 326,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_username_current_identity_final.log",
+              "/tmp/fruitfolio_username_authority_full_portable.log",
+              "/tmp/fruitfolio_username_authority_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+            "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+            "Official MADLAD/native-language moderation and actual Apple/device runtime."
+          ],
+          "remaining": [
+            "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+            "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+            "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -32875,7 +33059,12 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md",
-        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift"
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
       "implementation_status": "IMPLEMENTED",
       "verification_status": "MANUAL_VERIFICATION_REQUIRED",
@@ -32895,7 +33084,7 @@
         "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Shared-username-current-identity-exclusions-and-editor-clauses (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -32904,39 +33093,49 @@
         "Actual Game Back now uses owned shared measured white-paper save/discard/keep for dirty username. Actual Foundation session freezes intent and delivers once after dismissal/all other popups, with protected Review, stale/replay/cancel guards. UI commits only acknowledged frozen intent and keeps errors/draft; discard is in-memory only. Six actual session/intent tests pass, 20 Apple launch scenarios added but NOT_RUN.",
         "Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.",
         "Individual clause review: USERNAME_CURRENT_IDENTITY_AND_SHARED_EDITOR_EVIDENCE.json. Both original native editors expose create/edit and call the same setUsername/frozen-intent commit with expected snapshot, preserving rejected drafts/fault messages and acknowledging persistence before showing success. Actual production store fault/isolation/migration/frozen-intent tests execute; actual Apple controls remain acceptance pending. Full1048 portable XCTest+21 SwiftTesting and20 focused actual username tests passed; Apple acceptance NOT_RUN.",
-        "Both original native editors expose create/edit and call the same setUsername/frozen-intent commit with expected snapshot, preserving rejected drafts/fault messages and acknowledging persistence before showing success. Actual production store fault/isolation/migration/frozen-intent tests execute; actual Apple controls remain acceptance pending."
+        "Both original native editors expose create/edit and call the same setUsername/frozen-intent commit with expected snapshot, preserving rejected drafts/fault messages and acknowledging persistence before showing success. Actual production store fault/isolation/migration/frozen-intent tests execute; actual Apple controls remain acceptance pending.",
+        "Retain editable shared identity and exact validation authority while guarding scene/modal ownership and all Account exit destinations."
       ],
-      "last_updated": "2026-11-07T14:06:50.349952+00:00",
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
         "executed": {
-          "focused_username_identity_policy_exit_XCTest": 20,
-          "full_portable_XCTest": 1048,
-          "full_Swift_Testing": 21,
-          "swift_syntax_files": 326,
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+          ],
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
           "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_username_current_identity_final.log",
-            "/tmp/fruitfolio_username_authority_full_portable.log",
-            "/tmp/fruitfolio_username_authority_syntax.log"
-          ]
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
         },
         "not_run": [
-          "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
-          "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
-          "Official MADLAD/native-language moderation and actual Apple/device runtime."
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
         ],
         "remaining": [
-          "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
-          "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
-          "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
-        "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
-        "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
       ],
       "prior_batch_verifications": [
         {
@@ -32960,6 +33159,32 @@
             "Verify actual official MADLAD translation and native-language quality; paused Arabic checks native numbers only",
             "Public backend remains unavailable and non-identifying confirmation is not proof of legal identity; preserve existing human/clinical/device blockers",
             "Continue original373FAQ plain question emphasis and374missing approved tulip; then independent approved artwork/layout/accessibility requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Shared-username-current-identity-exclusions-and-editor-clauses",
+          "executed": {
+            "focused_username_identity_policy_exit_XCTest": 20,
+            "full_portable_XCTest": 1048,
+            "full_Swift_Testing": 21,
+            "swift_syntax_files": 326,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_username_current_identity_final.log",
+              "/tmp/fruitfolio_username_authority_full_portable.log",
+              "/tmp/fruitfolio_username_authority_syntax.log"
+            ]
+          },
+          "not_run": [
+            "Apple Account\u2192Fruit Basket\u2192Account edit/create/reopen/focus/validation/foreign-modal/scene UI; existing actual UI scenarios remain NOT_RUN.",
+            "Backend/global username reservation or authenticated legal-name validation: no approved service configured.",
+            "Official MADLAD/native-language moderation and actual Apple/device runtime."
+          ],
+          "remaining": [
+            "Execute actual cross-screen username editing and native failure/reload/scene/accessibility acceptance.",
+            "The local bounded explicit-name policy and identity-fragment exclusion do not prove every arbitrary username is non-explicit or not an unknown legal name; requirement371 is not promoted complete.",
+            "Keep usernames verbatim and local; never transmit identity/health data or claim a global reservation."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -34731,7 +34956,12 @@
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json"
+        "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -34759,9 +34989,14 @@
         "FruitfolioTests/Prompt1BContactDestinationTests.swift",
         "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
-        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift"
+        "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Cycle-wheel-owned-note-selection-and-stale-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n",
@@ -34777,37 +35012,49 @@
         "Actual Contact failure defers while inactive/foreign modal; exact error request identity rejects stale/duplicate close and scene callbacks preserve current feedback without duplicate cue. Three new actual Foundation regressions pass; actual Apple focus/audio/UI test remains NOT_RUN. No whole global requirement closure.",
         "Implement missing affected Settings/About accessibility semantics and owned modal focus. New real native regression is written, NOT_RUN.",
         "Background root controls are disabled during inactivity/owned overlays; existing modal focus/return behavior retained; actual Apple accessibility remains pending.",
-        "Existing accessible large-text note actions reject suspended/stale actions; native UI background/close/reopen test updated but NOT_RUN."
+        "Existing accessible large-text note actions reject suspended/stale actions; native UI background/close/reopen test updated but NOT_RUN.",
+        "Own/cancel one deferred focus task, reject inactive/covered bindings/actions and retain unsubmitted fields; native accessibility remains pending."
       ],
-      "last_updated": "2026-11-07T15:52:05.101803+00:00",
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
         "executed": {
-          "focused_actual_wheel_and_layout_XCTest": 15,
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+          ],
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
           "swift_syntax_files": 327,
-          "syntax_errors": 0,
           "static_sound_diagnostics": 0,
+          "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_wheel_owned_note_tests.log",
-            "/tmp/fruitfolio_wheel_owned_note_syntax.log",
-            "/tmp/fruitfolio_wheel_owned_note_sound.log"
-          ]
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
         },
         "not_run": [
-          "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
-          "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
         ],
         "remaining": [
-          "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-          "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-          "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
-        "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
-        "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
       ],
       "prior_batch_verifications": [
         {
@@ -34926,6 +35173,30 @@
           "remaining": [
             "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
             "Source guards are implementation evidence only; no full-requirement status promotion."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-wheel-owned-note-selection-and-stale-actions",
+          "executed": {
+            "focused_actual_wheel_and_layout_XCTest": 15,
+            "swift_syntax_files": 327,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_wheel_owned_note_tests.log",
+              "/tmp/fruitfolio_wheel_owned_note_syntax.log",
+              "/tmp/fruitfolio_wheel_owned_note_sound.log"
+            ]
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and updated real wheel accessibility UI test.",
+            "Actual VoiceOver, normal/reduced-motion visual acceptance, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple wheel background/close/reopen/learn/accessibility regression.",
+            "Founder line1267 external arrows/mini descriptions are still unfinished; this action-ownership fix does not implement that separate instruction.",
+            "Clinical correctness, phase estimation and all other original requirement subconditions are not established by interaction-session tests."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -36121,7 +36392,9 @@
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -36172,9 +36445,13 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
+        "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -36222,43 +36499,49 @@
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
         "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.",
-        "Remove specific raw Text bypasses for About and dynamic section-title helper. Native language choice names intentionally stay verbatim/recognizable."
+        "Remove specific raw Text bypasses for About and dynamic section-title helper. Native language choice names intentionally stay verbatim/recognizable.",
+        "Pseudonym row details are typed verbatim, skip translation task and Markdown in visual/accessibility paths; user text is not an English localization key."
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
         "executed": {
-          "workflow_checks": 75,
-          "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
-          "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
           ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
       ],
       "prior_batch_verifications": [
         {
@@ -36312,6 +36595,35 @@
           "remaining": [
             "Run genuine Apple existing four-vector Ask icon hold/tap regression; inspect VoiceOver label and provenance in selected language and hold-label placement without changed actions.",
             "Complete missing model/catalog language coverage with real approved resources and native-language review; routing is not proof translations exist or are correct."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -43196,7 +43508,8 @@
         "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
         "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json",
-        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -43373,9 +43686,10 @@
         "development_workflow/tests/test_founder_source_coverage.py",
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
         "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
-        "FruitfolioTests/Prompt1BAskScrollTests.swift"
+        "FruitfolioTests/Prompt1BAskScrollTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
       ],
-      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -43515,43 +43829,49 @@
         "15 actual production wheel/layout tests pass,327 syntax parses pass; Apple UI tests remain NOT_RUN.",
         "17 actual Foundation tests pass; new native rendered five-region regression is written and NOT_RUN.",
         "15 focused actual production policy/layout/ownership tests pass; priorfull1062+21 is explicitly scoped to9c7c4ed before this Ask change.",
-        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN.",
+        "14 real underlying tests pass and4 existing named authority methods reused;327 syntax parses/static sound pass. New SwiftUI behavior is not claimed runtime verified."
       ],
-      "last_updated": "2026-11-07T16:08:45.120184+00:00",
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
         "executed": {
-          "focused_actual_follow_paper_ownership_XCTest": 15,
-          "failures": 0,
-          "syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "prior_checkpoint_full_portable_XCTest": 1062,
-          "prior_checkpoint_Swift_Testing": 21,
-          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
-          "logs": [
-            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
-            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
-            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
-            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
           ],
-          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
         },
         "not_run": [
-          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
-          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
-          "Actual official MADLAD and physical-device runtime."
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
         ],
         "remaining": [
-          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
-          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
-          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
-        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
-        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
       ],
       "prior_batch_verifications": [
         {
@@ -44316,6 +44636,36 @@
             "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
             "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
             "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+          "executed": {
+            "focused_actual_follow_paper_ownership_XCTest": 15,
+            "failures": 0,
+            "syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "prior_checkpoint_full_portable_XCTest": 1062,
+            "prior_checkpoint_Swift_Testing": 21,
+            "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+            "logs": [
+              "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+              "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+              "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+              "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+            ],
+            "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+          },
+          "not_run": [
+            "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+            "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+            "Actual official MADLAD and physical-device runtime."
+          ],
+          "remaining": [
+            "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+            "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+            "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -44550,7 +44900,8 @@
         "development_workflow/CYCLE_WHEEL_NOTE_ACTION_OWNERSHIP.json",
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
         "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json",
-        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json"
+        "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json",
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -44722,9 +45073,10 @@
         "development_workflow/tests/test_founder_source_coverage.py",
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
         "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
-        "FruitfolioTests/Prompt1BAskScrollTests.swift"
+        "FruitfolioTests/Prompt1BAskScrollTests.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
       ],
-      "commit_reference": "batch:Ask-measured-content-growth-and-reader-follow-intent (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -44847,43 +45199,49 @@
         "Retain exact executed behavioral evidence and unfinished founder annotation instruction separately; no status promotion.",
         "Append exact original/source-unit evidence and distinguish source implementation from native visual verification.",
         "Append executed versus native-unrun evidence and two individual implementation closures; no VERIFIED promotion.",
-        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN."
+        "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN.",
+        "Append exact full-clause reviews229230231 and explicit unexecuted native acceptance without removing prior evidence."
       ],
-      "last_updated": "2026-11-07T16:08:45.120184+00:00",
+      "last_updated": "2026-11-07T16:21:00.833865+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
         "executed": {
-          "focused_actual_follow_paper_ownership_XCTest": 15,
-          "failures": 0,
-          "syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "prior_checkpoint_full_portable_XCTest": 1062,
-          "prior_checkpoint_Swift_Testing": 21,
-          "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
-          "logs": [
-            "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
-            "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
-            "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
-            "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+          "current_existing_domain_XCTest": 14,
+          "reused_prior_checkpoint_specific_isolation_methods": [
+            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
           ],
-          "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "swift_syntax_files": 327,
+          "static_sound_diagnostics": 0,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+            "/tmp/fruitfolio_account_shared_display_sound.log"
+          ],
+          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
         },
         "not_run": [
-          "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
-          "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
-          "Actual official MADLAD and physical-device runtime."
+          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
         ],
         "remaining": [
-          "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
-          "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
-          "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
-        "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
-        "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
       ],
       "prior_batch_verifications": [
         {
@@ -45648,6 +46006,36 @@
             "Run native annotation regression and visual acceptance across iPhone widths, text lengths, normal/Reduce Motion and RTL.",
             "Verify leader routing/visual weight and actual noncrowding with rendered fonts; Foundation geometry and syntax are not screenshot acceptance.",
             "Unknown intervals intentionally remain unresolved; no annotation can fabricate unavailable physiology or clinical timing."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Ask-measured-content-growth-and-reader-follow-intent",
+          "executed": {
+            "focused_actual_follow_paper_ownership_XCTest": 15,
+            "failures": 0,
+            "syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "prior_checkpoint_full_portable_XCTest": 1062,
+            "prior_checkpoint_Swift_Testing": 21,
+            "prior_full_suite_commit": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+            "logs": [
+              "/tmp/fruitfolio_ask_content_growth_follow_tests.log",
+              "/tmp/fruitfolio_ask_content_growth_follow_syntax.log",
+              "/tmp/fruitfolio_ask_content_growth_follow_sound.log",
+              "/tmp/fruitfolio_phase_checkpoint_full_portable.log"
+            ],
+            "scope": "1062+21 is the pre-Ask-change checkpoint suite; current Ask change validated by15 focused tests. No claim of a1066 full run."
+          },
+          "not_run": [
+            "Apple SDK build, actual SwiftUI LazyVStack/preference delivery, long native streaming and scroll gestures/VoiceOver.",
+            "Existing native testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport and Ask lifecycle suite NOT_RUN.",
+            "Actual official MADLAD and physical-device runtime."
+          ],
+          "remaining": [
+            "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
+            "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
+            "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

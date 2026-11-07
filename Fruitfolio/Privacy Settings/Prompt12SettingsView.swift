@@ -1,8 +1,10 @@
 import SwiftUI
 import UIKit
 
+@MainActor
 struct Prompt12SettingsView: View {
     @ObservedObject var store: Prompt12AccountPrivacyStore
+    @ObservedObject private var usernameStore: FruitfolioUsernameStore
 
     let onBack: () -> Void
     let onShowAccount: () -> Void
@@ -28,6 +30,16 @@ struct Prompt12SettingsView: View {
     @State private var needsAboutReturnFocus = false
     @AccessibilityFocusState private var aboutHeadingFocused: Bool
     @AccessibilityFocusState private var aboutControlFocused: Bool
+
+    init(store: Prompt12AccountPrivacyStore, onBack: @escaping () -> Void,
+         onShowAccount: @escaping () -> Void, onShowPrivacy: @escaping () -> Void,
+         usernameStore: FruitfolioUsernameStore = .shared) {
+        self.store = store
+        self.onBack = onBack
+        self.onShowAccount = onShowAccount
+        self.onShowPrivacy = onShowPrivacy
+        _usernameStore = ObservedObject(wrappedValue: usernameStore)
+    }
 
     private var canUseSettings: Bool {
         rootIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active &&
@@ -349,8 +361,9 @@ struct Prompt12SettingsView: View {
                 title: "account",
                 detail:
                     store.isSignedIn
-                    ? store.accountDisplayName
+                    ? (usernameStore.username.isEmpty ? "local Fruitfolio" : usernameStore.username)
                     : "sign in or view ownership",
+                detailIsVerbatim: store.isSignedIn && !usernameStore.username.isEmpty,
                 assetName:
                     "hub_account",
                 action: {

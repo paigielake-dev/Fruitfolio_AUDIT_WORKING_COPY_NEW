@@ -128,6 +128,8 @@ struct Prompt12AccountActionRegressionHarness: View {
     @EnvironmentObject private var settings: SettingsStore
     @State private var visible = false
     @State private var backRequests = 0
+    @State private var privacyRequests = 0
+    @State private var exportRequests = 0
     var body: some View {
         Group {
             if let error = fixture.error {
@@ -136,8 +138,8 @@ struct Prompt12AccountActionRegressionHarness: View {
                 VStack(spacing: 4) {
                     Text("disposable local account fixture — no remote authentication")
                         .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.fixture")
-                    Prompt12AccountView(store: fixture.store, onBack: { backRequests += 1 }, onShowPrivacy: {},
-                        usernameStore: fixture.username, onShowDataExport: {})
+                    Prompt12AccountView(store: fixture.store, onBack: { backRequests += 1 }, onShowPrivacy: { privacyRequests += 1 },
+                        usernameStore: fixture.username, onShowDataExport: { exportRequests += 1 })
                     HStack {
                         Text(fixture.identity).accessibilityIdentifier("accountQA.identity")
                         Text(fixture.pending).accessibilityIdentifier("accountQA.pending")
@@ -147,6 +149,10 @@ struct Prompt12AccountActionRegressionHarness: View {
                     .font(.system(size: 9)).dynamicTypeSize(.xSmall)
                     Text("back requests: \(backRequests)")
                         .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.backRequests")
+                    Text("privacy requests: \(privacyRequests)")
+                        .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.privacyRequests")
+                    Text("export requests: \(exportRequests)")
+                        .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.exportRequests")
                     Text(fixture.username.username.isEmpty ? "empty private username" : "private username set")
                         .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.username")
                 }

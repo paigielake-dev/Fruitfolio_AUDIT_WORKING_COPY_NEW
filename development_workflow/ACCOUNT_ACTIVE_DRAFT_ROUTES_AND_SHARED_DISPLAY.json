@@ -1,0 +1,61 @@
+{
+  "requirements": [
+    229,
+    230,
+    231,
+    369,
+    370,
+    390,
+    397,
+    443,
+    444
+  ],
+  "implementation": "Guard Account bindings, save/reload/auth/account actions and callbacks by active visible ownership. Route Back/Privacy/external-export through existing frozen draft confirmation, preserve internal export drafts, cancel interrupted consumed actions with feedback, and own one cancellable focus task. Account/Settings display shared canonical pseudonym without translating/parsing it; preserve authentication identity data and isolated QA authorities.",
+  "individual_complete_clause_reviews": {
+    "229": "Complete clause review: Account always exposes create/edit shared pseudonym alongside the signed-in status/email or email sign-in form; store validation, acknowledgment and frozen intents preserve data. New route guards prevent losing drafts via Privacy/external export; Apple UI pending.",
+    "230": "Complete clause review: Account and Fruit Basket use the same default observed FruitfolioUsernameStore.shared; Account/Settings headings now consume that authority rather than older identity.username. Private fixtures inject separate authorities. Identity data is not rewritten.",
+    "231": "Complete clause review: all username display/edit consumers observe the same live authority, commits refresh canonical values and stale intents fail; current values survive reload. Actual Combine/SwiftUI cross-screen propagation acceptance remains NOT_RUN."
+  },
+  "verification": {
+    "executed": {
+      "current_existing_domain_XCTest": 14,
+      "reused_prior_checkpoint_specific_isolation_methods": [
+        "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+        "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+        "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+        "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+      ],
+      "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+      "swift_syntax_files": 327,
+      "static_sound_diagnostics": 0,
+      "failures": 0,
+      "logs": [
+        "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+        "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+        "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+        "/tmp/fruitfolio_account_shared_display_sound.log"
+      ],
+      "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+    },
+    "not_run": [
+      "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+      "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+      "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+      "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+    ],
+    "remaining": [
+      "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+      "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+      "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+    ]
+  },
+  "source_sha256": {
+    "Fruitfolio/Privacy Settings/Prompt12AccountView.swift": "a8e832dc2010f5986b9c25f2eb45146b2742fcf6ce7df95753940fb6a05e1c71",
+    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift": "b8667948e253adff20912d5c7a34705c099de5bcad14288265fbb5a68aef8385",
+    "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift": "4bbe3076f725e8b822752d867e9ed846c29bed3fff7a517f02b2c52ea4e5342c",
+    "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift": "3183d9b7504fdea26335ef49c83d5f6881931fc5614fa2042a842ba1865a6e22",
+    "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift": "2e9fbd029238ee7e9dcc497e1c59eece2983ec709bf965ccc5eaf47c11be5420",
+    "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift": "b81de3c8bfeb3ffdbfa911bb450638abb54672144f4e50a1069fba526c596bbd"
+  },
+  "implementation_status": "229230231 IMPLEMENTED with MANUAL_VERIFICATION_REQUIRED; no VERIFIED promotion"
+}

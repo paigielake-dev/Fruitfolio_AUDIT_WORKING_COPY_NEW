@@ -45,17 +45,18 @@ struct Prompt1BLanguagePersistenceRegressionHarness: View {
     @Environment(\.locale) private var locale
     @Environment(\.layoutDirection) private var direction
     @State private var store: Prompt12AccountPrivacyStore?
+    @State private var usernameStore: FruitfolioUsernameStore?
     @State private var showingFAQ = false
     @State private var cleared = false
 
     var body: some View {
         VStack(spacing: 0) {
-            if let store {
+            if let store, let usernameStore {
                 if showingFAQ {
                     Prompt29FAQView(onBack: { showingFAQ = false })
                 } else {
                     Prompt12SettingsView(store: store, onBack: { showingFAQ = true },
-                        onShowAccount: { showingFAQ = true }, onShowPrivacy: { showingFAQ = true })
+                        onShowAccount: { showingFAQ = true }, onShowPrivacy: { showingFAQ = true }, usernameStore: usernameStore)
                 }
             } else { ProgressView() }
             VStack(spacing: 2) {
@@ -88,6 +89,7 @@ struct Prompt1BLanguagePersistenceRegressionHarness: View {
             guard store == nil, let defaults = preferences.defaults else { return }
             settings.translationPausedForMemoryPressure = true
             settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioLanguagePersistenceReduceMotion")
+            usernameStore = FruitfolioUsernameStore(defaults: defaults, key: "languagePersistence.usernameFixture")
             store = Prompt12AccountPrivacyStore(defaults: defaults, persistenceKey: "languagePersistence.accountFixture")
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioLanguagePersistenceCleanup") {
                 preferences.cleanUp()

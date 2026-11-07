@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 @MainActor
 struct Prompt12AccountView: View {
@@ -24,12 +25,13 @@ struct Prompt12AccountView: View {
     @State private var email = ""
     @State private var message: String?
     private enum AccountControl: Hashable { case signOut, deleteAccount, sync, message, dataExport, usernameInput, emailInput, usernameError }
+    private enum AccountExit { case back, privacy, dataExport }
     private enum AccountAction {
         case signOut(Prompt12AccountActionSnapshot)
         case sync(Prompt12AccountActionSnapshot)
         case delete(Prompt12AccountActionSnapshot)
-        case leaveDiscardingDrafts
-        case saveUsernameAndLeave(FruitfolioUsernameSaveIntent)
+        case leaveDiscardingDrafts(AccountExit)
+        case saveUsernameAndLeave(FruitfolioUsernameSaveIntent, AccountExit)
     }
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
@@ -37,7 +39,8 @@ struct Prompt12AccountView: View {
     @State private var pendingAccountAction: AccountAction?
     @State private var returnAccountFocus: AccountControl?
     @State private var viewIsVisible = false
-    @State private var messageFocusRequest = UUID()
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var focusTask: Task<Void, Never>?
     @AccessibilityFocusState private var accountFocus: AccountControl?
     @State private var showDataExport = false
     @State private var usernameDraft = ""
@@ -56,6 +59,13 @@ struct Prompt12AccountView: View {
         self.onShowDataExport = onShowDataExport
     }
 
+    private var canUseAccount: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
+    private var canEditAccount: Bool {
+        canUseAccount && !showDataExport && popupCoordinator.currentPopup == nil
+    }
+
     var body: some View {
         ZStack {
             DesignTokens.ColorToken.backgroundCream
@@ -69,7 +79,7 @@ struct Prompt12AccountView: View {
                             title: "your account",
                             subtitle: "your little corner of Fruitfolio ♡",
                             assetName: "hub_account",
-                            onBack: requestLeavingAccount
+                            onBack: { requestLeavingAccount() }
                         )
 
                         HStack(spacing: -7) {
@@ -110,17 +120,13 @@ struct Prompt12AccountView: View {
                             color: DesignTokens.ColorToken.primaryBurgundy, serious: true)
                             .accessibilityFocused($accountFocus, equals: .message)
                             .accessibilityIdentifier("account.actionMessage")
-                            .task(id: messageFocusRequest) {
-                                await Task.yield()
-                                guard !Task.isCancelled, viewIsVisible, popupCoordinator.currentPopup == nil else { return }
-                                accountFocus = .message
-                            }
                     }
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .disabled(!canEditAccount)
             .scrollDismissesKeyboard(.interactively)
             .accessibilityIdentifier("account.scroll")
             .fruitfolioModalBlur(
@@ -145,32 +151,63 @@ struct Prompt12AccountView: View {
         }
         .onDisappear {
             viewIsVisible = false
+            focusTask?.cancel(); focusTask = nil
             popupOwner?.cancel()
             pendingAccountAction = nil
             returnAccountFocus = nil
         }
-        .onChange(of: showDataExport) { _, presented in
-            if presented { accountFocus = nil }
-            else {
-                Task { @MainActor in
-                    await Task.yield()
-                    guard viewIsVisible, !showDataExport, popupCoordinator.currentPopup == nil else { return }
-                    accountFocus = .dataExport
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active {
+                focusTask?.cancel(); focusTask = nil
+                accountFocus = nil
+                if pendingAccountAction != nil {
+                    pendingAccountAction = nil
+                    showMessage("that account action was interrupted. review and confirm it again.")
                 }
-            }
+            } else { finishAccountPopupDismissal() }
         }
-        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+        .onChange(of: showDataExport) { _, presented in
+            if presented { focusTask?.cancel(); focusTask = nil; accountFocus = nil }
+            else { requestAccountFocus(.dataExport) }
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, id in
             popupOwner?.observeDismissal()
-            guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
-            if let action = pendingAccountAction {
-                pendingAccountAction = nil
-                returnAccountFocus = nil
-                performAccountAction(action)
-            } else if let control = returnAccountFocus {
-                returnAccountFocus = nil
-                accountFocus = control
-            }
+            if id != nil { focusTask?.cancel(); focusTask = nil; accountFocus = nil }
+            else { finishAccountPopupDismissal() }
         }
+    }
+
+    private func finishAccountPopupDismissal() {
+        guard canEditAccount, popupOwner?.requestID == nil else { return }
+        if let action = pendingAccountAction {
+            pendingAccountAction = nil
+            returnAccountFocus = nil
+            performAccountAction(action)
+        } else { restoreAccountFocus() }
+    }
+
+    private func requestAccountFocus(_ control: AccountControl) {
+        returnAccountFocus = control
+        restoreAccountFocus()
+    }
+
+    private func restoreAccountFocus() {
+        guard canEditAccount, let control = returnAccountFocus else { return }
+        focusTask?.cancel()
+        focusTask = Task { @MainActor in
+            await Task.yield()
+            guard !Task.isCancelled, canEditAccount, returnAccountFocus == control else { return }
+            accountFocus = control
+            returnAccountFocus = nil
+            focusTask = nil
+        }
+    }
+
+    private func admittedBinding<Value>(_ binding: Binding<Value>) -> Binding<Value> {
+        Binding(get: { binding.wrappedValue }, set: { value in
+            guard canEditAccount else { return }
+            binding.wrappedValue = value
+        })
     }
 
     private var activeOverlay: Bool {
@@ -210,7 +247,7 @@ struct Prompt12AccountView: View {
                 .fontWeight(.bold)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
-            TextField("", text: $usernameDraft,
+            TextField("", text: admittedBinding($usernameDraft),
                 prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                 .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                 .modifier(FruitfolioFixedAccessibilityHint(source: Prompt28LeaderboardUsernamePolicy.inputInstructions,
@@ -234,12 +271,15 @@ struct Prompt12AccountView: View {
             Prompt12InfoText("this is your pseudonymous Fruit Basket name. Account and Fruit Basket use the same locally saved name. public registration and global uniqueness are unavailable until the secure service is configured.")
 
             WatercolorToggle(label: "this is not my real or legal name and contains no identifying details",
-                isOn: $usernameNonIdentifying)
+                isOn: admittedBinding($usernameNonIdentifying))
                 .accessibilityIdentifier("account.usernameConfirmation")
 
             if let issue = usernameStore.persistenceMessage {
                 Prompt12InfoText(issue)
-                WatercolorSecondaryButton(label: "reload saved username") { usernameStore.reloadSavedUsername() }
+                WatercolorSecondaryButton(label: "reload saved username") {
+                    guard canEditAccount else { return }
+                    usernameStore.reloadSavedUsername()
+                }
                     .accessibilityIdentifier("account.reloadUsername")
             }
             if let usernameMessage {
@@ -250,6 +290,7 @@ struct Prompt12AccountView: View {
             }
 
             WatercolorSecondaryButton(label: "save username") {
+                guard canEditAccount else { return }
                 if let error = usernameStore.setUsername(usernameDraft, confirmedNonIdentifying: usernameNonIdentifying,
                     identifyingText: [email, store.account?.email ?? ""], expecting: usernameBaseline) {
                     usernameNonIdentifying = false
@@ -314,7 +355,7 @@ struct Prompt12AccountView: View {
                 "sign in to keep supported Fruitfolio data connected to you across devices. local features can still use local storage when available."
             )
 
-            TextField("", text: $email,
+            TextField("", text: admittedBinding($email),
                 prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                 .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                 .accessibilityHint(Text(input.status.accessibilityDetail(
@@ -373,7 +414,12 @@ struct Prompt12AccountView: View {
 
     private var signedInCard: some View {
         Prompt12PaperCard {
-            Text(verbatim: store.accountDisplayName)
+            Group {
+                if usernameStore.username.isEmpty {
+                    FruitfolioFixedText(source: "local Fruitfolio", protectedLiterals: ["Fruitfolio"], serious: true)
+                } else { Text(verbatim: usernameStore.username) }
+            }
+                .accessibilityIdentifier("account.sharedUsername")
                 .font(.custom("Chalkboard SE", size: 17, relativeTo: .headline))
                 .fontWeight(.bold)
                 .foregroundStyle(
@@ -409,9 +455,11 @@ struct Prompt12AccountView: View {
                 detail: "how Fruitfolio handles your information",
                 assetName: "popup_info",
                 action: {
-                    onShowPrivacy()
+                    guard canEditAccount else { return }
+                    requestLeavingAccount(to: .privacy)
                 }
             )
+            .accessibilityIdentifier("account.privacy")
 
             Divider()
                 .opacity(0.18)
@@ -421,7 +469,9 @@ struct Prompt12AccountView: View {
                 detail: "prepare supported account and local data",
                 assetName: "ask_source_pages",
                 action: {
-                    if let onShowDataExport { onShowDataExport() } else { showDataExport = true }
+                    guard canEditAccount else { return }
+                    if onShowDataExport != nil { requestLeavingAccount(to: .dataExport) }
+                    else { showDataExport = true }
                 }
             )
             .accessibilityFocused($accountFocus, equals: .dataExport)
@@ -466,6 +516,7 @@ struct Prompt12AccountView: View {
                 store: store,
                 mode: .popup,
                 onBack: {
+                    guard canUseAccount, showDataExport, popupCoordinator.currentPopup == nil else { return }
                     showDataExport = false
                 }
             )
@@ -474,11 +525,11 @@ struct Prompt12AccountView: View {
 
     private func showMessage(_ text: String) {
         message = text
-        messageFocusRequest = UUID()
+        requestAccountFocus(.message)
     }
 
     private func performAccountAction(_ action: AccountAction) {
-        guard viewIsVisible else { return }
+        guard canEditAccount else { return }
         do {
             switch action {
             case .signOut(let expected):
@@ -490,35 +541,31 @@ struct Prompt12AccountView: View {
                 try store.attemptSyncNow(expecting: expected)
             case .delete(let expected):
                 try store.deleteAccountAndAssociatedRemoteData(expecting: expected)
-            case .leaveDiscardingDrafts:
-                discardLocalAccountDraftsAndLeave()
-            case .saveUsernameAndLeave(let intent):
+            case .leaveDiscardingDrafts(let destination):
+                discardLocalAccountDraftsAndLeave(to: destination)
+            case .saveUsernameAndLeave(let intent, let destination):
                 if let error = intent.commit(to: usernameStore) {
                     usernameMessage = error
                     usernameNonIdentifying = false
-                    Task { @MainActor in
-                        await Task.yield()
-                        guard viewIsVisible, popupCoordinator.currentPopup == nil else { return }
-                        accountFocus = .usernameError
-                    }
+                    requestAccountFocus(.usernameError)
                 } else {
                     usernameDraft = usernameStore.username
                     usernameBaseline = usernameStore.snapshot
                     usernameNonIdentifying = usernameStore.confirmedNonIdentifying
                     usernameMessage = "saved on this device only."
                     email = "" // Explicitly disclosed as an unsubmitted draft, never an account update.
-                    onBack()
+                    completeAccountExit(destination)
                 }
             }
         } catch { showMessage(error.localizedDescription) }
     }
 
-    private func requestLeavingAccount() {
-        guard viewIsVisible else { return }
+    private func requestLeavingAccount(to destination: AccountExit = .back) {
+        guard canEditAccount else { return }
         let hasUsernameDraft = usernameEditorHasLoaded &&
             usernameBaseline.map({ usernameDraft != $0.username }) == true
         let hasEmailDraft = !email.isEmpty
-        guard hasUsernameDraft || hasEmailDraft else { onBack(); return }
+        guard hasUsernameDraft || hasEmailDraft else { completeAccountExit(destination); return }
         guard let owner = popupOwner else { return }
         if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
         let intent = usernameBaseline.map {
@@ -532,29 +579,38 @@ struct Prompt12AccountView: View {
                 hasUsernameDraft: hasUsernameDraft, hasEmailDraft: hasEmailDraft,
                 canSaveUsername: usernameStore.canPersistUsername && intent != nil,
                 onKeep: {
-                    guard viewIsVisible else { return }
+                    guard canUseAccount else { return }
                     _ = owner.consumeAction(for: id)
                 }, onSaveUsername: {
-                    guard viewIsVisible, let intent, owner.consumeAction(for: id) else { return }
-                    pendingAccountAction = .saveUsernameAndLeave(intent)
+                    guard canUseAccount, let intent, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .saveUsernameAndLeave(intent, destination)
                 }, onDiscard: {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
-                    pendingAccountAction = .leaveDiscardingDrafts
+                    guard canUseAccount, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .leaveDiscardingDrafts(destination)
                 })
         }
     }
 
-    private func discardLocalAccountDraftsAndLeave() {
+    private func discardLocalAccountDraftsAndLeave(to destination: AccountExit) {
         usernameDraft = usernameStore.username
         usernameNonIdentifying = usernameStore.confirmedNonIdentifying
         usernameBaseline = usernameStore.snapshot
         usernameMessage = nil
         email = ""
-        onBack()
+        completeAccountExit(destination)
+    }
+
+    private func completeAccountExit(_ destination: AccountExit) {
+        guard canEditAccount else { return }
+        switch destination {
+        case .back: onBack()
+        case .privacy: onShowPrivacy()
+        case .dataExport: onShowDataExport?()
+        }
     }
 
     private func requestSignOut() {
-        guard viewIsVisible, let owner = popupOwner else { return }
+        guard canEditAccount, let owner = popupOwner else { return }
         if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
         let expected = store.accountActionSnapshot
         returnAccountFocus = .signOut
@@ -565,13 +621,13 @@ struct Prompt12AccountView: View {
                     ? "**before you go…**\n\nsome local changes have not been synced. signing out can keep them on this device. cloud synchronization requires a configured account service."
                     : "**before you go…**\n\nsigning out removes the account session and keeps local health information on this device.",
                 primaryAction: .init(label: "cancel") {
-                    guard viewIsVisible else { return }
+                    guard canUseAccount else { return }
                     _ = owner.consumeAction(for: id)
                 }, secondaryAction: .init(label: "keep on this device + sign out") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard canUseAccount, owner.consumeAction(for: id) else { return }
                     pendingAccountAction = .signOut(expected)
                 }, tertiaryAction: expected.pendingLocalChanges ? .init(label: "try cloud sync") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard canUseAccount, owner.consumeAction(for: id) else { return }
                     pendingAccountAction = .sync(expected)
                 } : nil,
                 dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
@@ -581,7 +637,7 @@ struct Prompt12AccountView: View {
     }
 
     private func requestAccountDeletion() {
-        guard viewIsVisible, let owner = popupOwner else { return }
+        guard canEditAccount, let owner = popupOwner else { return }
         if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
         let expected = store.accountActionSnapshot
         returnAccountFocus = .deleteAccount
@@ -590,10 +646,10 @@ struct Prompt12AccountView: View {
             FruitPopupRequest(id: id, character: .peach,
                 message: "**request account deletion?**\n\naccount deletion needs confirmation from the account service. this action does not erase local health information or cancel or refund the app purchase. your account stays in place unless deletion is confirmed.",
                 primaryAction: .init(label: "keep my account") {
-                    guard viewIsVisible else { return }
+                    guard canUseAccount else { return }
                     _ = owner.consumeAction(for: id)
                 }, secondaryAction: .init(label: "request account deletion") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard canUseAccount, owner.consumeAction(for: id) else { return }
                     pendingAccountAction = .delete(expected)
                 }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
                 source: "account-deletion", deduplicationKey: "account-deletion-" + popupScope.uuidString,
@@ -602,6 +658,7 @@ struct Prompt12AccountView: View {
     }
 
     private func signIn() {
+        guard canEditAccount else { return }
         do {
             try store.requestSignIn(email: email)
             message = nil
