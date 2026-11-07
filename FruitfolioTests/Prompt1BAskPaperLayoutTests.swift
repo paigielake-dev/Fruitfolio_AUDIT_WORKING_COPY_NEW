@@ -83,3 +83,39 @@ final class Prompt1BAskPaperLayoutTests: XCTestCase {
         }
     }
 }
+
+final class Prompt1BAskAnswerActionOwnershipTests: XCTestCase {
+    private func answer(id: UUID = UUID(), text: String = "fixture answer") -> AskAnswer {
+        AskAnswer(id: id, originalQuestion: "fixture question", answerText: text, support: .supported,
+            knowledgeBaseVersion: "fixture", generationTimestamp: Date(timeIntervalSince1970: 99))
+    }
+    func testUniqueCurrentAnswerRequiresActiveOwner() {
+        let record = answer(), conversation = UUID()
+        let owner = Prompt09AnswerActionOwner(conversationID: conversation, answerID: record.id, language: .english)
+        XCTAssertTrue(owner.accepts(answer: record, conversationID: conversation, language: .english,
+                                    history: [record], isActive: true))
+        XCTAssertFalse(owner.accepts(answer: record, conversationID: conversation, language: .english,
+                                     history: [record], isActive: false))
+    }
+    func testConversationResetAndLanguageChangeInvalidateCapturedActions() {
+        let record = answer(), conversation = UUID()
+        let owner = Prompt09AnswerActionOwner(conversationID: conversation, answerID: record.id, language: .english)
+        XCTAssertFalse(owner.accepts(answer: record, conversationID: UUID(), language: .english,
+                                     history: [record], isActive: true))
+        XCTAssertFalse(owner.accepts(answer: record, conversationID: conversation, language: .arabic,
+                                     history: [record], isActive: true))
+        XCTAssertFalse(owner.accepts(answer: record, conversationID: conversation, language: .english,
+                                     history: [], isActive: true))
+    }
+    func testReplacedDuplicateOrUnownedAnswersCannotPrepareASave() {
+        let record = answer(), conversation = UUID()
+        let owner = Prompt09AnswerActionOwner(conversationID: conversation, answerID: record.id, language: .english)
+        for history in [[answer(id: record.id, text: "new revision")], [record, record], [answer()]] {
+            XCTAssertFalse(owner.accepts(answer: record, conversationID: conversation, language: .english,
+                                         history: history, isActive: true))
+        }
+        let other = answer()
+        XCTAssertFalse(owner.accepts(answer: other, conversationID: conversation, language: .english,
+                                     history: [other], isActive: true))
+    }
+}

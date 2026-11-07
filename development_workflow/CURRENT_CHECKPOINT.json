@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "3d49700c9fd427c451054a5f548aced48b0cafe0",
+  "current_HEAD": "53d900700a91483b39c9bda3baafd168bb21f6a7",
   "latest_verified_commit": null,
-  "current_checklist_part": 9,
-  "current_requirement": 435,
-  "current_implementation_batch": "Saved-answer-support-provenance-and-selection-privacy",
+  "current_checklist_part": 10,
+  "current_requirement": 474,
+  "current_implementation_batch": "Ask-captured-action-and-illustration-control-ownership",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,20 +493,15 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+    "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
     "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+    "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
     "Fruitfolio/Localizable.xcstrings",
-    "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-    "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-    "FruitfolioTests/Prompt1BAskUserContextTests.swift",
-    "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SAVED_ANSWER_SUPPORT_PROVENANCE.md"
+    "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/ASK_CAPTURED_ACTION_AND_ILLUSTRATION_CONTROLS.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -519,66 +514,56 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Initialfocused4actualFoundationmetadata/canonical/privacyXCTestpassed,0SwiftTestingselected",
-    "Fullcombined944portable/969nativeCPU XCTest+21SwiftTestingeach onproductionmetadatachanges",
-    "Afterfullruns: addedprivate-contextmetadataassertions; focusedactual-enginecase1portable+1native-linked passed;0SwiftTestingselected",
+    "Focused3Foundationcaptured-ownerXCTestpassed,0SwiftTestingselected",
+    "Fullportable/native CPU Swift suites /tmp/fruitfolio_ask_action_{portable,native}.log",
     "60workflowchecks",
     "311Swift syntaxparses(notAppleSDKtypecheck)",
     "SwiftSyntaxsource control-sound ownership0findings",
+    "FourAppleAskillustrationcontrolsUIvectorsextendedNOT_RUN",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_XCTest": 944,
-    "native_CPU_XCTest": 969,
+    "portable_XCTest": 947,
+    "native_CPU_XCTest": 972,
     "SwiftTesting_each": 21,
     "workflow_checks": 60,
     "syntax_files": 311,
     "control_sound_ownership_findings": 0,
-    "new_Foundation_support_tests": 4,
-    "focused_XCTest": 4,
+    "new_Foundation_action_owner_tests": 3,
+    "focused_XCTest": 3,
     "focused_SwiftTesting_selected": 0,
-    "late_real_engine_privacy_test_portable": 1,
-    "late_real_engine_privacy_test_native": 1,
-    "late_privacy_assertions_added_after_full_runs": true,
-    "Apple_UI_tests_executed": 0,
+    "extended_Apple_illustration_UI_vectors": 4,
+    "extended_Apple_UI_vectors_executed": 0,
     "official_MADLAD_inference_verified": false,
     "log_receipts": {
-      "/tmp/fruitfolio_saved_support_focused.log": {
-        "bytes": 28540,
-        "sha256": "617d991dfbadc863c11bbdf954b193a23dc5e113a169d9e3b63b93f58785ed24"
+      "/tmp/fruitfolio_ask_action_focused.log": {
+        "bytes": 28204,
+        "sha256": "50eda76003789bbf1b92796db56b934a1da1f2d45a672a4179f0a7c99660e2c1"
       },
-      "/tmp/fruitfolio_saved_support_portable.log": {
-        "bytes": 299880,
-        "sha256": "02c191cb14618c28a2c58a21256f0539d6a671c74794d6f4eb4c6d6e825ae1b9"
+      "/tmp/fruitfolio_ask_action_portable.log": {
+        "bytes": 300924,
+        "sha256": "8c1139a044031ca0bae3f4c4f998e4f5edcb8b89db53420f6167573ce98564e0"
       },
-      "/tmp/fruitfolio_saved_support_native.log": {
-        "bytes": 1275056,
-        "sha256": "d25f105b2c5200520b4dffb87bd47ec677df5e3e2d32875cf49f526af8ce3978"
+      "/tmp/fruitfolio_ask_action_native.log": {
+        "bytes": 1276072,
+        "sha256": "d8d2b24db2f13fb218f9c516dbfc03fffedad6116132b501bcb883fc9d47a6d7"
       },
-      "/tmp/fruitfolio_saved_support_context.log": {
-        "bytes": 27672,
-        "sha256": "c52443e24985f247724ebeacaa6c7b092338c41e0b61dd04e00163e364306f28"
-      },
-      "/tmp/fruitfolio_saved_support_context_native.log": {
-        "bytes": 31098,
-        "sha256": "953a9fb0162cc58376a69ca15701a34a05cdb9d282214d1b84735bb2c844a5a6"
-      },
-      "/tmp/fruitfolio_saved_support_workflow.log": {
+      "/tmp/fruitfolio_ask_action_workflow.log": {
         "bytes": 160,
-        "sha256": "c298a0049f3dc44c722f0526f062babad49d712c74db9b075d5e5efbfbf30e13"
+        "sha256": "d51b942c85c074092b9d8696da38c86c1f814fc27919db09c167d14aad08c995"
       },
-      "/tmp/fruitfolio_saved_support_syntax.log": {
+      "/tmp/fruitfolio_ask_action_syntax_final.log": {
         "bytes": 106,
         "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
       },
-      "/tmp/fruitfolio_saved_support_ownership.log": {
+      "/tmp/fruitfolio_ask_action_ownership.log": {
         "bytes": 5,
         "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
       }
     }
   },
-  "next_exact_implementation_action": "Localize actual Ask illustration inclusion toggle and searching accessibility label; use canonical toggle and active/known-answer callback ownership, preserving image selection/save metadata. Reject stale queued save/toggle callbacks after conversation reset. Add/update meaningful regressions and record Apple runtime gaps.",
-  "updated_at": "2026-11-07T04:26:48.401662+00:00",
+  "next_exact_implementation_action": "Inject canonical saved-library store into actual Ask view/save dialog, keeping production shared default and giving DEBUGprivate-root fixture its own real library authority. Test independent domains and remount/source-metadata preservation; extend native dialog cancellation/readback only after private injection. No standard fallback or user-data writes.",
+  "updated_at": "2026-11-07T04:38:14.989149+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -588,66 +573,56 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": 944,
-      "native_CPU_XCTest": 969,
+      "portable_XCTest": 947,
+      "native_CPU_XCTest": 972,
       "SwiftTesting_each": 21,
       "workflow_checks": 60,
       "syntax_files": 311,
       "control_sound_ownership_findings": 0,
-      "new_Foundation_support_tests": 4,
-      "focused_XCTest": 4,
+      "new_Foundation_action_owner_tests": 3,
+      "focused_XCTest": 3,
       "focused_SwiftTesting_selected": 0,
-      "late_real_engine_privacy_test_portable": 1,
-      "late_real_engine_privacy_test_native": 1,
-      "late_privacy_assertions_added_after_full_runs": true,
-      "Apple_UI_tests_executed": 0,
+      "extended_Apple_illustration_UI_vectors": 4,
+      "extended_Apple_UI_vectors_executed": 0,
       "official_MADLAD_inference_verified": false,
       "log_receipts": {
-        "/tmp/fruitfolio_saved_support_focused.log": {
-          "bytes": 28540,
-          "sha256": "617d991dfbadc863c11bbdf954b193a23dc5e113a169d9e3b63b93f58785ed24"
+        "/tmp/fruitfolio_ask_action_focused.log": {
+          "bytes": 28204,
+          "sha256": "50eda76003789bbf1b92796db56b934a1da1f2d45a672a4179f0a7c99660e2c1"
         },
-        "/tmp/fruitfolio_saved_support_portable.log": {
-          "bytes": 299880,
-          "sha256": "02c191cb14618c28a2c58a21256f0539d6a671c74794d6f4eb4c6d6e825ae1b9"
+        "/tmp/fruitfolio_ask_action_portable.log": {
+          "bytes": 300924,
+          "sha256": "8c1139a044031ca0bae3f4c4f998e4f5edcb8b89db53420f6167573ce98564e0"
         },
-        "/tmp/fruitfolio_saved_support_native.log": {
-          "bytes": 1275056,
-          "sha256": "d25f105b2c5200520b4dffb87bd47ec677df5e3e2d32875cf49f526af8ce3978"
+        "/tmp/fruitfolio_ask_action_native.log": {
+          "bytes": 1276072,
+          "sha256": "d8d2b24db2f13fb218f9c516dbfc03fffedad6116132b501bcb883fc9d47a6d7"
         },
-        "/tmp/fruitfolio_saved_support_context.log": {
-          "bytes": 27672,
-          "sha256": "c52443e24985f247724ebeacaa6c7b092338c41e0b61dd04e00163e364306f28"
-        },
-        "/tmp/fruitfolio_saved_support_context_native.log": {
-          "bytes": 31098,
-          "sha256": "953a9fb0162cc58376a69ca15701a34a05cdb9d282214d1b84735bb2c844a5a6"
-        },
-        "/tmp/fruitfolio_saved_support_workflow.log": {
+        "/tmp/fruitfolio_ask_action_workflow.log": {
           "bytes": 160,
-          "sha256": "c298a0049f3dc44c722f0526f062babad49d712c74db9b075d5e5efbfbf30e13"
+          "sha256": "d51b942c85c074092b9d8696da38c86c1f814fc27919db09c167d14aad08c995"
         },
-        "/tmp/fruitfolio_saved_support_syntax.log": {
+        "/tmp/fruitfolio_ask_action_syntax_final.log": {
           "bytes": 106,
           "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
         },
-        "/tmp/fruitfolio_saved_support_ownership.log": {
+        "/tmp/fruitfolio_ask_action_ownership.log": {
           "bytes": 5,
           "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
         }
       }
     },
     "not_run": [
-      "Apple actualAskfour-save-path/dialog/reading/guide/source supportnotice wiring andtranslatedmeaning/VoiceOver/RTL/XXXL/focus",
-      "OfficialMADLAD weights/tokenizer and native-language scientific/safety/uncertainty review",
-      "Physicaldeviceframeworkbuild/performance/ARC andfull-source/APA validation"
+      "FouractualAppleFrench/Arabicpaused/ReduceMotionXXXlillustration/control UIvectors",
+      "AppleSDKtypecheck/current+historical staleSave/selection/reset/language/modalcallbacks/VoiceOver andRTLartlayout",
+      "OfficialMADLAD/native-languageclinical/device acceptance"
     ],
     "remaining": [
-      "Execute actualApple supportmetadata saves/guidecopies/readingnotices withpreview/safety/unavailable/partial/unsupported andselection scopes",
-      "Verify translated clinicalmeaning/uncertainty withofficialmodel andnative reviewers; typedenumroundtripsarenotscientifictruth",
-      "Preserve onlyexposedconceptsupportmap; fullclaim/evidencegraphnotinventedandrawcontextpacketnotpersisted; retainlegacyunknown/futureprotection andoverallopenacceptance"
+      "Execute actualApplecaptured-action/selection callbacks andnative illustrationcontrol accessibility/cues/layout",
+      "Make actual AskQA save-store authority private before expanding dialogwrite/cancel tests; currentUIvectors onlytoggleandneverSave",
+      "Verify officialmodeltranslationsandnative-language scientificmeaning; Foundationgates/syntax donotcertifywholeUI/localization/lifecycle"
     ]
   },
-  "current_checklist_section": "Part 9 \u2014 Localization and MADLAD",
+  "current_checklist_section": "Part 10 \u2014 Testing, integration, and final verification",
   "last_recorded_batch_part": 9
 }

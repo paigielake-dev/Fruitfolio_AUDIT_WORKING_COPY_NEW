@@ -103,3 +103,18 @@ struct Prompt09RequestInteraction: Sendable {
         isVisible && isActive && generation == ticket
     }
 }
+
+/// Captured when an answer's controls render, checked again when they act.
+/// A callback cannot move an old answer into a new conversation/language epoch.
+struct Prompt09AnswerActionOwner: Sendable {
+    let conversationID: UUID
+    let answerID: UUID
+    let language: FruitfolioLanguage
+    func accepts(answer: AskAnswer, conversationID: UUID, language: FruitfolioLanguage,
+                 history: [AskAnswer], isActive: Bool) -> Bool {
+        guard isActive, self.conversationID == conversationID, self.language == language,
+              answerID == answer.id else { return false }
+        let matches = history.filter { $0.id == answerID }
+        return matches.count == 1 && matches[0] == answer
+    }
+}

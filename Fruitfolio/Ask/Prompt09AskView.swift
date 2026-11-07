@@ -790,9 +790,8 @@ struct Prompt09AskView: View {
         .accessibilityElement(
             children: .combine
         )
-        .accessibilityLabel(
-            "Looking through the FruitsofLife.xo library"
-        )
+        .modifier(FruitfolioFixedAccessibilityLabel(source: viewModel.searchStatusText,
+                                                    protectedLiterals: ["FruitsofLife.xo"]))
     }
 
     // MARK: - Answer
@@ -800,7 +799,8 @@ struct Prompt09AskView: View {
     private func answerView(
         _ answer: AskAnswer
     ) -> some View {
-        VStack(spacing: 12) {
+        let owner = Prompt09AnswerActionOwner(conversationID: viewModel.conversationID, answerID: answer.id, language: settings.language)
+        return VStack(spacing: 12) {
             ZStack {
                 VStack(
                     alignment: .leading,
@@ -895,7 +895,7 @@ struct Prompt09AskView: View {
                                         : "save selection ♡",
                                     action: {
                                         prepareExcerptForLibrarySave(
-                                            answer
+                                            answer, owner: owner
                                         )
                                     }
                                 )
@@ -953,9 +953,11 @@ struct Prompt09AskView: View {
                        viewModel.selectedEducationalAssets.isEmpty,
                        !viewModel.availableEducationalAssets.isEmpty {
                         WatercolorSecondaryButton(label: "view educational illustration") {
+                            guard acceptsAnswerAction(answer, owner: owner) else { return }
                             viewModel.revealEducationalIllustration()
                             sessionIllustrations[answer.id] = viewModel.selectedEducationalAssets.map(\.assetID)
                         }
+                        .accessibilityIdentifier("ask.illustration.reveal")
                     }
 
                     ForEach(
@@ -1027,7 +1029,7 @@ struct Prompt09AskView: View {
                                                 }
 
                                                 prepareFullAnswerForLibrarySave(
-                                                    answer
+                                                    answer, owner: owner
                                                 )
                                             }
                                         )
@@ -1082,7 +1084,8 @@ struct Prompt09AskView: View {
     }
 
     private func historicalAnswerView(_ answer: AskAnswer) -> some View {
-        VStack(alignment: .leading, spacing: 14) {
+        let owner = Prompt09AnswerActionOwner(conversationID: viewModel.conversationID, answerID: answer.id, language: settings.language)
+        return VStack(alignment: .leading, spacing: 14) {
             if let notice = Prompt09SavedAnswerSupport(answer: answer).notice {
                 FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
                     .accessibilityIdentifier("ask.evidenceSupport.\(answer.id.uuidString)")
@@ -1105,12 +1108,12 @@ struct Prompt09AskView: View {
             illustrationSaveControls(answer)
             sourceSection(answer.sources)
             WatercolorSecondaryButton(label: savedAnswerIDs.contains(answer.id) ? "answer saved ♡" : "save answer ♡") {
-                prepareHistoricalSave(answer, excerpt: nil)
+                prepareHistoricalSave(answer, excerpt: nil, owner: owner)
             }
             .disabled(savedAnswerIDs.contains(answer.id))
             if let excerpt = historicalSelections[answer.id], !excerpt.isEmpty {
                 WatercolorSecondaryButton(label: "save selection ♡") {
-                    prepareHistoricalSave(answer, excerpt: excerpt)
+                    prepareHistoricalSave(answer, excerpt: excerpt, owner: owner)
                 }
                 .disabled(isExcerptSaved(answerID: answer.id, range: historicalSelectionRanges[answer.id],
                                          language: historicalSelectionLanguages[answer.id], text: historicalSelections[answer.id]))
@@ -1123,8 +1126,14 @@ struct Prompt09AskView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func prepareHistoricalSave(_ answer: AskAnswer, excerpt: String?) {
-        guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
+    private func prepareHistoricalSave(_ answer: AskAnswer, excerpt: String?, owner: Prompt09AnswerActionOwner) {
+        if let excerpt {
+            guard let current = historicalSelections[answer.id], current.utf8.elementsEqual(excerpt.utf8),
+                  let language = historicalSelectionLanguages[answer.id], !language.isEmpty,
+                  Prompt09ExcerptIdentity(answerID: answer.id, renderedRange: historicalSelectionRanges[answer.id],
+                                          language: language, selectionText: excerpt) != nil else { return }
+        }
+        guard let sourceVersions = validatedSaveSourceVersions(for: answer, owner: owner) else { return }
         pendingLibrarySave = Prompt10PendingSavedContent(
             question: answer.originalQuestion, answer: answer.answerText,
             saveType: excerpt == nil ? .fullAnswer : .excerpt, excerptText: excerpt,
@@ -1148,16 +1157,18 @@ struct Prompt09AskView: View {
 
     @ViewBuilder
     private func illustrationSaveControls(_ answer: AskAnswer) -> some View {
+        let owner = Prompt09AnswerActionOwner(conversationID: viewModel.conversationID, answerID: answer.id, language: settings.language)
         if !visibleIllustrations(answer.id).isEmpty {
-            Toggle("include this illustration with saved text", isOn: Binding(
+            WatercolorToggle(label: "include this illustration with saved text", isOn: Binding(
                 get: { includeIllustrationsInSave.contains(answer.id) },
                 set: { include in
+                    guard acceptsAnswerAction(answer, owner: owner), !visibleIllustrations(answer.id).isEmpty else { return }
                     if include { includeIllustrationsInSave.insert(answer.id) }
                     else { includeIllustrationsInSave.remove(answer.id) }
-                }))
-                .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+                }), isDisabled: !acceptsAnswerAction(answer, owner: owner))
+                .accessibilityIdentifier("ask.illustration.include")
             WatercolorSecondaryButton(label: "save illustration only") {
-                guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
+                guard let sourceVersions = validatedSaveSourceVersions(for: answer, owner: owner) else { return }
                 pendingLibrarySave = Prompt10PendingSavedContent(
                     question: answer.originalQuestion, answer: "", saveType: .excerpt, excerptText: "",
                     originalAnswerID: answer.id.uuidString, originalConversationID: viewModel.conversationID.uuidString,
@@ -1169,8 +1180,13 @@ struct Prompt09AskView: View {
         }
     }
 
-    private func validatedSaveSourceVersions(for answer: AskAnswer) -> [String: String]? {
-        guard canInteractWithComposer else { return nil }
+    private func acceptsAnswerAction(_ answer: AskAnswer, owner: Prompt09AnswerActionOwner) -> Bool {
+        owner.accepts(answer: answer, conversationID: viewModel.conversationID, language: settings.language,
+                      history: viewModel.answerHistory, isActive: canInteractWithComposer)
+    }
+
+    private func validatedSaveSourceVersions(for answer: AskAnswer, owner: Prompt09AnswerActionOwner) -> [String: String]? {
+        guard acceptsAnswerAction(answer, owner: owner) else { return nil }
         guard let versions = Prompt09SaveSourceVersions.validated(answer.sources) else {
             hasInvalidSaveMetadata = true
             return nil
@@ -1182,14 +1198,15 @@ struct Prompt09AskView: View {
     // MARK: - Prompt 10 Save Preparation
 
     private func prepareFullAnswerForLibrarySave(
-        _ answer: AskAnswer
+        _ answer: AskAnswer,
+        owner: Prompt09AnswerActionOwner
     ) {
         guard viewModel.phase !=
             .answering else {
             return
         }
 
-        guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
+        guard let sourceVersions = validatedSaveSourceVersions(for: answer, owner: owner) else { return }
 
         pendingLibrarySave =
             Prompt10PendingSavedContent(
@@ -1220,7 +1237,8 @@ struct Prompt09AskView: View {
     }
 
     private func prepareExcerptForLibrarySave(
-        _ answer: AskAnswer
+        _ answer: AskAnswer,
+        owner: Prompt09AnswerActionOwner
     ) {
         guard
             viewModel.phase !=
@@ -1233,7 +1251,7 @@ struct Prompt09AskView: View {
             return
         }
 
-        guard let sourceVersions = validatedSaveSourceVersions(for: answer) else { return }
+        guard let sourceVersions = validatedSaveSourceVersions(for: answer, owner: owner) else { return }
 
         pendingLibrarySave =
             Prompt10PendingSavedContent(

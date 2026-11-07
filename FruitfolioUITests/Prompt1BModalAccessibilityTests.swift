@@ -2873,7 +2873,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for arabic in [false, true] {
         for reduced in [false, true] {
             let app = XCUIApplication()
-            app.launchArguments += ["-fruitfolioAskPaperQA", "-fruitfolioAskControlsQA",
+            app.launchArguments += ["-fruitfolioAskPaperQA", "-fruitfolioAskControlsQA", "-fruitfolioAskIllustrationQA",
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
             if arabic { app.launchArguments += ["-fruitfolioAskControlsQAArabic"] }
             if reduced { app.launchArguments += ["-fruitfolioAskControlsQAReduceMotion"] }
@@ -2903,6 +2903,21 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
             XCTAssertTrue(input.waitForExistence(timeout: 3))
             XCTAssertEqual(input.value as? String, authored, "Unsent original draft survives inactivity")
+            let conversation = app.scrollViews["ask.conversation"]
+            let reveal = app.buttons["ask.illustration.reveal"]
+            for _ in 0..<40 { if reveal.isHittable { break }; conversation.swipeUp() }
+            XCTAssertTrue(reveal.isHittable)
+            reveal.tap()
+            let include = app.descendants(matching: .any).matching(identifier: "ask.illustration.include").firstMatch
+            for _ in 0..<20 { if include.isHittable { break }; conversation.swipeUp() }
+            XCTAssertTrue(include.isHittable)
+            XCTAssertGreaterThanOrEqual(include.frame.height, 44)
+            let initial = (include.value as? String)?.components(separatedBy: ". ").first
+            XCTAssertNotNil(initial)
+            include.tap()
+            XCTAssertNotEqual((include.value as? String)?.components(separatedBy: ". ").first, initial)
+            include.tap()
+            XCTAssertEqual((include.value as? String)?.components(separatedBy: ". ").first, initial)
             captureGame(app, name: "ask-controls-paused-arabic-\(arabic)-reduced-\(reduced)")
             app.terminate()
         }

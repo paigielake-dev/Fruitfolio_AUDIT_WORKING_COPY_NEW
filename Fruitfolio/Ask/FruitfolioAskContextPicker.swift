@@ -115,9 +115,11 @@ struct FruitfolioAskContextRegressionHarness: View {
 private struct FruitfolioAskContextRegressionContent: View {
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var fixture: FruitfolioAskContextRegressionFixture
-    @StateObject private var model = Prompt09AskViewModel.paperRegressionFixture()
+    @StateObject private var model: Prompt09AskViewModel
     init(defaults: UserDefaults?) {
         _fixture = StateObject(wrappedValue: FruitfolioAskContextRegressionFixture(defaults: defaults))
+        _model = StateObject(wrappedValue: Prompt09AskViewModel.paperRegressionFixture(
+            illustrationOption: ProcessInfo.processInfo.arguments.contains("-fruitfolioAskIllustrationQA")))
     }
     var body: some View {
         Group {
