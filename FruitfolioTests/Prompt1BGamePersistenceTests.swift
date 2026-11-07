@@ -336,6 +336,32 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1)
     }
 
+    func testBackgroundRejectsCapturedStormResumeTicketWithoutMutatingPausedGameOrStorage() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        model.pause()
+        let captured = model.questionInteractionID
+        let session = model.session
+        let ledger = model.roundLedger
+        let bytes = defaults.data(forKey: "game")
+        model.sceneBecameInactive()
+        XCTAssertNotEqual(model.questionInteractionID, captured)
+        model.resume(expectedInteractionID: captured)
+        XCTAssertEqual(model.screen, .paused)
+        XCTAssertTrue(model.isPaused)
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+        XCTAssertFalse(store.isReadOnly)
+        // A fresh foreground UI action supplies the current ticket. The View
+        // additionally checks real scene/app activity before calling resume.
+        model.resume(expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertFalse(model.isPaused)
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+    }
+
     func testActualClassificationSpawnerHonorsSpacingAndResetsAfterPassedStar() async throws {
         let (suite, defaults, store, model) = try activeModeFixture(starDropRandomUnit: { 0 })
         defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }

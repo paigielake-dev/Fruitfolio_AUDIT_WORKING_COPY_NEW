@@ -7733,42 +7733,109 @@
       "source_end_line": 1548,
       "description": "    FRUIT BASKET \u2014 VINES: Standalone stars are affected by vines just like GOOD fruit. When a star or GOOD fruit encounters the vine obstacle, it should visibly struggle/slow while passing through it, with the existing vine interaction/audio treatment. BAD fruit does not use this vine interaction. The animation and physics must make the resistance visually believable rather than merely reducing velocity invisibly.",
       "description_sha256": "171304ecd04f2a1968e7231f470a6d9db8658414ebbb6b31e229ca11c1986f09",
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json"
       ],
       "related_tests": [
-        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
+        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "blockers": [],
-      "evidence": [],
-      "last_updated": "2026-11-06T17:12:06.196416+00:00",
+      "evidence": [
+        "Original353\u2013357 full-clause review: actual controller and sparse-painted physics slow GOOD fruit and standalone stars, exclude bad fruit, emit entry once, preserve base motion, and live source renders contact-driven strain with Reduce Motion alternative.125 executed controller/physics/geometry tests include these behaviors; visible believability/audio/device acceptance is pending. Reference: development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json. No VERIFIED status or Apple pass inferred.",
+        "Original353\u2013357 full-clause review: actual controller and sparse-painted physics slow GOOD fruit and standalone stars, exclude bad fruit, emit entry once, preserve base motion, and live source renders contact-driven strain with Reduce Motion alternative.125 executed controller/physics/geometry tests include these behaviors; visible believability/audio/device acceptance is pending."
+      ],
+      "last_updated": "2026-11-07T13:59:08.115810+00:00",
       "evidence_of_implementation": [
         "Reconciled stale NOT_STARTED against existing actual painted-vine physics for good fruit/standalone stars, preserved bad-fruit distinction and actual render/contact/audio paths."
       ],
-      "commit_reference": "batch:Assessment-snapshot-and-individual-tracker-reconciliation (resolve containing commit)",
+      "commit_reference": "batch:Founder-vine-and-puddle-clause-complete-implementation-review (resolve containing commit with git log)",
       "latest_batch_verification": {
-        "batch": "Assessment-snapshot-and-individual-tracker-reconciliation",
+        "batch": "Founder-vine-and-puddle-clause-complete-implementation-review",
         "executed": {
-          "source_inspection": "Reconciled stale NOT_STARTED against existing actual painted-vine physics for good fruit/standalone stars, preserved bad-fruit distinction and actual render/contact/audio paths.",
-          "prior_executed_regression": "testPaintedVinesSlowGoodFruitAndStarsButNeverBadFruit passed in the actual preceding portable/native suite; no Swift code changed in this reconciliation"
+          "focused_actual_controller_engine_geometry_physics_XCTest": 119,
+          "separate_actual_mask_geometry_XCTest": 6,
+          "failures": 0,
+          "PNG_verified": 8,
+          "original_mask_hashes_matched": 3,
+          "swift_syntax_files": 326,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_obstacle_geometry_closures.log",
+            "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+          ]
         },
         "not_run": [
-          "Apple gameplay visual/motion/audio/gesture acceptance",
-          "Real device obstacle responsiveness/performance"
+          "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
+          "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
         ],
         "remaining": [
-          "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
-          "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+          "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+          "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+          "No official MADLAD or target-language acceptance inferred from game-controller tests."
         ],
-        "scope": "Existing implementation evidence reconciled; no new physics or runtime completion claim."
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
-        "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+        "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+        "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+        "No official MADLAD or target-language acceptance inferred from game-controller tests."
+      ],
+      "batch_evidence": [
+        {
+          "batch": "Founder-vine-and-puddle-clause-complete-implementation-review",
+          "implementation_evidence": "Original353\u2013357 full-clause review: actual controller and sparse-painted physics slow GOOD fruit and standalone stars, exclude bad fruit, emit entry once, preserve base motion, and live source renders contact-driven strain with Reduce Motion alternative.125 executed controller/physics/geometry tests include these behaviors; visible believability/audio/device acceptance is pending.",
+          "files": [
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+            "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+            "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+            "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+            "development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+            "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
+            "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "focused_actual_controller_engine_geometry_physics_XCTest": 119,
+              "separate_actual_mask_geometry_XCTest": 6,
+              "failures": 0,
+              "PNG_verified": 8,
+              "original_mask_hashes_matched": 3,
+              "swift_syntax_files": 326,
+              "logs": [
+                "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+                "/tmp/fruitfolio_obstacle_geometry_closures.log",
+                "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+              ]
+            },
+            "not_run": [
+              "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
+              "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
+            ],
+            "remaining": [
+              "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+              "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+              "No official MADLAD or target-language acceptance inferred from game-controller tests."
+            ]
+          },
+          "parent_checkpoint": "f9e290c95cd44bcff55f88b0ef60e58306b1b1bd"
+        }
       ]
     },
     {
@@ -7778,42 +7845,109 @@
       "source_end_line": 1550,
       "description": "    FRUIT BASKET \u2014 PUDDLE: Basket inertia applies only while the basket is physically passing through the puddle. The basket\u2019s movement/animation must visually communicate that it is actually moving through the puddle and encountering resistance rather than simply applying an unexplained slowdown. Once the basket has exited the puddle, normal basket movement resumes; the puddle must not leave an unintended persistent inertia effect.",
       "description_sha256": "7e073696ad6dd280faf7ad63792232cd8399a5ec8477caacc72247ce379078d6",
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+        "development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json"
       ],
       "related_tests": [
-        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
+        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
       "blockers": [],
-      "evidence": [],
-      "last_updated": "2026-11-06T17:12:06.196416+00:00",
+      "evidence": [
+        "Original348\u2013350 full-clause review: actual portrait/landscape controller crosses original painted puddle, encounters monotonic resistance and restores immediate dry travel with zero residual contact/resistance. Live basket tilt/translation and ground-state cue follow current contact; original puddle art preserved.125 actual domain/geometry tests pass; physical gesture/visual acceptance is pending. Reference: development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json. No VERIFIED status or Apple pass inferred.",
+        "Original348\u2013350 full-clause review: actual portrait/landscape controller crosses original painted puddle, encounters monotonic resistance and restores immediate dry travel with zero residual contact/resistance. Live basket tilt/translation and ground-state cue follow current contact; original puddle art preserved.125 actual domain/geometry tests pass; physical gesture/visual acceptance is pending."
+      ],
+      "last_updated": "2026-11-07T13:59:08.115810+00:00",
       "evidence_of_implementation": [
         "Reconciled stale NOT_STARTED against existing actual painted-puddle overlap/resistance and dry-ground restoration physics and basket render paths."
       ],
-      "commit_reference": "batch:Assessment-snapshot-and-individual-tracker-reconciliation (resolve containing commit)",
+      "commit_reference": "batch:Founder-vine-and-puddle-clause-complete-implementation-review (resolve containing commit with git log)",
       "latest_batch_verification": {
-        "batch": "Assessment-snapshot-and-individual-tracker-reconciliation",
+        "batch": "Founder-vine-and-puddle-clause-complete-implementation-review",
         "executed": {
-          "source_inspection": "Reconciled stale NOT_STARTED against existing actual painted-puddle overlap/resistance and dry-ground restoration physics and basket render paths.",
-          "prior_executed_regression": "testPuddleResistanceFollowsTargetThenRestoresDryResponse passed in the actual preceding portable/native suite; no Swift code changed in this reconciliation"
+          "focused_actual_controller_engine_geometry_physics_XCTest": 119,
+          "separate_actual_mask_geometry_XCTest": 6,
+          "failures": 0,
+          "PNG_verified": 8,
+          "original_mask_hashes_matched": 3,
+          "swift_syntax_files": 326,
+          "logs": [
+            "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+            "/tmp/fruitfolio_obstacle_geometry_closures.log",
+            "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+          ]
         },
         "not_run": [
-          "Apple gameplay visual/motion/audio/gesture acceptance",
-          "Real device obstacle responsiveness/performance"
+          "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
+          "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
         ],
         "remaining": [
-          "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
-          "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+          "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+          "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+          "No official MADLAD or target-language acceptance inferred from game-controller tests."
         ],
-        "scope": "Existing implementation evidence reconciled; no new physics or runtime completion claim."
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
-        "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+        "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+        "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+        "No official MADLAD or target-language acceptance inferred from game-controller tests."
+      ],
+      "batch_evidence": [
+        {
+          "batch": "Founder-vine-and-puddle-clause-complete-implementation-review",
+          "implementation_evidence": "Original348\u2013350 full-clause review: actual portrait/landscape controller crosses original painted puddle, encounters monotonic resistance and restores immediate dry travel with zero residual contact/resistance. Live basket tilt/translation and ground-state cue follow current contact; original puddle art preserved.125 actual domain/geometry tests pass; physical gesture/visual acceptance is pending.",
+          "files": [
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+            "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+            "Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift",
+            "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+            "Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift",
+            "development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json"
+          ],
+          "tests": [
+            "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+            "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift",
+            "FruitfolioTests/Prompt1BObstacleGeometryTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+          ],
+          "verification": {
+            "executed": {
+              "focused_actual_controller_engine_geometry_physics_XCTest": 119,
+              "separate_actual_mask_geometry_XCTest": 6,
+              "failures": 0,
+              "PNG_verified": 8,
+              "original_mask_hashes_matched": 3,
+              "swift_syntax_files": 326,
+              "logs": [
+                "/tmp/fruitfolio_storm_resume_ticket_tests.log",
+                "/tmp/fruitfolio_obstacle_geometry_closures.log",
+                "/tmp/fruitfolio_storm_resume_ticket_syntax.log"
+              ]
+            },
+            "not_run": [
+              "Apple SDK build/UI/gesture/VoiceOver/RTL/Reduce Motion, actual audio and physical-device obstacle balance/visual acceptance.",
+              "Existing actual multi-handler storm background/foreground UI test is written but NOT_RUN."
+            ],
+            "remaining": [
+              "Run actual Apple obstacle and storm-modal regressions and physical-device gesture/audio/visual acceptance.",
+              "No subjective claim that geometry or source wiring proves convincing rendered physics.",
+              "No official MADLAD or target-language acceptance inferred from game-controller tests."
+            ]
+          },
+          "parent_checkpoint": "f9e290c95cd44bcff55f88b0ef60e58306b1b1bd"
+        }
       ]
     }
   ]

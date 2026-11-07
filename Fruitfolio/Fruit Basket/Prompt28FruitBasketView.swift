@@ -515,6 +515,7 @@ struct Prompt28FruitBasketView: View {
 
     private var stormNote: some View {
         let serious = viewModel.currentQuestion?.usesSeriousFeedback == true
+        let interactionID = viewModel.questionInteractionID
         return ZStack {
             FruitfolioModalBackdrop()
             FruitfolioLargeControlCardPopup {
@@ -525,7 +526,7 @@ struct Prompt28FruitBasketView: View {
                                 .accessibilityLabel("Strawberry")
                         }
                         Spacer()
-                        CloseControl(action: dismissStormNote)
+                        CloseControl { dismissStormNote(expectedInteractionID: interactionID) }
                             .accessibilityIdentifier("fruitBasket.storm.close")
                     }
                     FruitfolioTranslatedContent(source: serious ? "a rain obstacle is active." : "uh oh! a little storm is passing. o__o", protectedLiterals: ["o__o"]) { display, _ in
@@ -536,12 +537,12 @@ struct Prompt28FruitBasketView: View {
                     }
                     FruitfolioTranslatedText(source: "puddles gently resist your basket while it moves through the water.",
                         font: Prompt28TextRole.secondary.font, serious: serious)
-                    FruitfolioControlPillButton(label: "got it") { dismissStormNote() }
+                    FruitfolioControlPillButton(label: "got it") { dismissStormNote(expectedInteractionID: interactionID) }
                         .accessibilityIdentifier("fruitBasket.storm.acknowledge")
                     #if DEBUG
                     if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
                         if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQAEscape") {
-                            FruitfolioControlPillButton(label: "QA accessibility escape", action: dismissStormNote)
+                            FruitfolioControlPillButton(label: "QA accessibility escape") { dismissStormNote(expectedInteractionID: interactionID) }
                                 .controlSize(.small).accessibilityIdentifier("gameQA.stormEscape")
                         }
                         if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
@@ -555,19 +556,26 @@ struct Prompt28FruitBasketView: View {
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
         .accessibilityIdentifier("fruitBasket.stormNote")
-        .accessibilityAction(.escape) { dismissStormNote() }
+        .accessibilityAction(.escape) { dismissStormNote(expectedInteractionID: interactionID) }
         .task {
             await Task.yield()
-            guard showStormNote, !Task.isCancelled else { return }
+            guard rootIsVisible, showStormNote, scenePhase == .active,
+                  UIApplication.shared.applicationState == .active,
+                  popupCoordinator.currentPopup == nil,
+                  interactionID == viewModel.questionInteractionID, !Task.isCancelled else { return }
             stormHeadingFocused = true
         }
     }
 
-    private func dismissStormNote() {
-        guard showStormNote else { return }
+    private func dismissStormNote(expectedInteractionID: UUID) {
+        guard rootIsVisible, showStormNote, scenePhase == .active,
+              UIApplication.shared.applicationState == .active,
+              popupCoordinator.currentPopup == nil, !store.isReadOnly,
+              !showTour, !showingSaveDestination, pendingSaveContent == nil,
+              expectedInteractionID == viewModel.questionInteractionID else { return }
         showStormNote = false
         stormHeadingFocused = false
-        if viewModel.screen == .paused { viewModel.resume() }
+        if viewModel.screen == .paused { viewModel.resume(expectedInteractionID: expectedInteractionID) }
         Task { @MainActor in
             await Task.yield()
             guard rootIsVisible, !showStormNote, scenePhase == .active,

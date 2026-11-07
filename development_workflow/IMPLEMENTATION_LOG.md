@@ -4004,3 +4004,27 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_existing_logical_checkpoint_XCTest": 2, "swift_syntax_files": 326, "failures": 0, "logs": ["/tmp/fruitfolio_intro_admission_checkpoint_tests.log", "/tmp/fruitfolio_intro_active_admission_syntax.log"], "historical_workflow": "71 workflow tests passed after preceding game closure: /tmp/fruitfolio_star_closure_workflow.log; not rerun for this source change."}.
 - Next action: Continue independent required functionality and source-grounded clause reconciliation across all parts; preserve outstanding Apple/model/clinical dependencies.
 - Commit: containing commit for batch Intro-active-initial-admission-and-owned-Hub-invitation.
+
+## Storm-owned-resume-and-individual-obstacle-implementation-closures
+
+- Parent checkpoint: f9e290c95cd44bcff55f88b0ef60e58306b1b1bd.
+- Source-order requirements: [6, 11, 68, 324, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift, Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift, Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift, development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json.
+- Guard actual storm modal resume against inactive/stale/foreign callbacks, execute new actual controller regression, and reconcile19 obstacle requirements individually with source/resource/controller evidence and Apple acceptance pending.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioTests/Prompt1BObstaclePhysicsTests.swift, FruitfolioTests/Prompt1BObstacleGeometryTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"focused_actual_controller_engine_geometry_physics_XCTest": 119, "separate_actual_mask_geometry_XCTest": 6, "failures": 0, "PNG_verified": 8, "original_mask_hashes_matched": 3, "swift_syntax_files": 326, "logs": ["/tmp/fruitfolio_storm_resume_ticket_tests.log", "/tmp/fruitfolio_obstacle_geometry_closures.log", "/tmp/fruitfolio_storm_resume_ticket_syntax.log"]}.
+- Next action: Continue progression/result/username and other original sections; remaining Apple/model/clinical/source dependencies stay explicitly open.
+- Commit: containing commit for batch Storm-owned-resume-and-individual-obstacle-implementation-closures.
+
+## Founder-vine-and-puddle-clause-complete-implementation-review
+
+- Parent checkpoint: f9e290c95cd44bcff55f88b0ef60e58306b1b1bd.
+- Source-order requirements: [348, 349, 350, 351, 352, 353, 354, 355, 356, 357].
+- Separate founder additions: ['SPEC-BINDING-GAME-VINES', 'SPEC-BINDING-GAME-PUDDLE'].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift, Fruitfolio/Fruit Basket/Prompt28ObstacleGeometry.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift, Fruitfolio/Core/DesignSystems/FruitfolioLargeControlCardPopup.swift, development_workflow/GAME_OBSTACLE_INDIVIDUAL_CLOSURES.json.
+- Reconcile exact indexed founder vine and puddle clauses with individual original requirements, current actual controller/painted-mask execution and live display wiring; external Apple acceptance remains pending.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioTests/Prompt1BObstaclePhysicsTests.swift, FruitfolioTests/Prompt1BObstacleGeometryTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"focused_actual_controller_engine_geometry_physics_XCTest": 119, "separate_actual_mask_geometry_XCTest": 6, "failures": 0, "PNG_verified": 8, "original_mask_hashes_matched": 3, "swift_syntax_files": 326, "logs": ["/tmp/fruitfolio_storm_resume_ticket_tests.log", "/tmp/fruitfolio_obstacle_geometry_closures.log", "/tmp/fruitfolio_storm_resume_ticket_syntax.log"]}.
+- Next action: Continue progression/result/username and other original sections; remaining Apple/model/clinical/source dependencies stay explicitly open.
+- Commit: containing commit for batch Founder-vine-and-puddle-clause-complete-implementation-review.

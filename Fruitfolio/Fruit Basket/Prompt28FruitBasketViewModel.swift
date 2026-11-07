@@ -421,8 +421,10 @@ final class Prompt28FruitBasketViewModel {
         screen = .paused
     }
 
-    func resume() {
-        guard screen == .paused, !roundResultLocked else { return }
+    func resume(expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly,
+              expectedInteractionID == nil || expectedInteractionID == questionGeneration,
+              screen == .paused, !roundResultLocked else { return }
         isPaused = false
         screen = .catchActive
         if store.controlMode == .catchMode || !catchTransits.isEmpty { startGameplayLoop() }
