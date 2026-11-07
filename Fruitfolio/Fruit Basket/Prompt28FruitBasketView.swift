@@ -2093,10 +2093,9 @@ struct Prompt28FruitBasketView: View {
                             RoundedRectangle(cornerRadius: 15, style: .continuous)
                                 .stroke(DesignTokens.ColorToken.primaryBurgundy.opacity(0.18), lineWidth: 1)
                         }
-                        .accessibilityHint(Text([
-                            settings.localized("Three to sixteen characters. Letters, numbers, periods, and underscores only. Public usernames cannot be explicit."),
-                            input.status.accessibilityDetail(original: usernameLabelKey.source, localized: { settings.localized($0) })
-                        ].filter { !$0.isEmpty }.joined(separator: ". ")))
+                        .modifier(FruitfolioFixedAccessibilityHint(source: Prompt28LeaderboardUsernamePolicy.inputInstructions,
+                            supplementalDetail: input.status.accessibilityDetail(original: usernameLabelKey.source,
+                                localized: { settings.localized($0) })))
                         if let status = input.status.captionKey {
                             Text(LocalizedStringKey(status)).prompt28Text(.metadata).accessibilityHidden(true)
                         }
@@ -2131,10 +2130,15 @@ struct Prompt28FruitBasketView: View {
                         #endif
 
                         HStack {
-                            Text("3–\(Prompt28LeaderboardUsernamePolicy.maximumLength) characters")
+                            let minimum = Prompt28GameStatisticFormatting.integer(Prompt28LeaderboardUsernamePolicy.minimumLength, language: settings.language)
+                            let maximum = Prompt28GameStatisticFormatting.integer(Prompt28LeaderboardUsernamePolicy.maximumLength, language: settings.language)
+                            FruitfolioFixedText(source: "\(minimum)–\(maximum) characters",
+                                protectedLiterals: [minimum, maximum], font: Prompt28TextRole.metadata.font)
                             Spacer()
-                            Text("\(leaderboardUsernameDraft.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
+                            Text(verbatim: Prompt28GameStatisticFormatting.fraction(leaderboardUsernameDraft.count,
+                                target: Prompt28LeaderboardUsernamePolicy.maximumLength, language: settings.language))
                                 .monospacedDigit()
+                                .accessibilityIdentifier("fruitBasket.usernameLength")
                         }
                         .prompt28Text(.metadata)
                         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.68))
@@ -2157,8 +2161,7 @@ struct Prompt28FruitBasketView: View {
 
                         if usernameStore.confirmedNonIdentifying, Prompt28LeaderboardUsernamePolicy.isValid(usernameStore.username) {
                             HStack(spacing: 6) {
-                                Text("public name")
-                                    .prompt28Text(.metadata)
+                                FruitfolioFixedText(source: "public name", font: Prompt28TextRole.metadata.font)
                                 Spacer(minLength: 8)
                                 Text(verbatim: usernameStore.username)
                                     .prompt28Text(.body)
@@ -2169,10 +2172,9 @@ struct Prompt28FruitBasketView: View {
                             .frame(maxWidth: .infinity)
                         }
 
-                        Text(
-                            "topics, difficulty, wrong answers, accuracy, bad-fruit catches, accessibility mode, health data, and saved content are never leaderboard fields."
-                        )
-                        .prompt28Text(.metadata)
+                        FruitfolioFixedText(source:
+                            "topics, difficulty, wrong answers, accuracy, bad-fruit catches, accessibility mode, health data, and saved content are never leaderboard fields.",
+                            font: Prompt28TextRole.metadata.font)
                         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)

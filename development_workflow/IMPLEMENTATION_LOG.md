@@ -3115,3 +3115,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 900, "native_CPU_XCTest": 922, "SwiftTesting_each": 21, "actual_spawn_vectors": 16, "actual_terminal_vectors": 16, "workflow_checks": 60, "syntax_files": 311}.
 - Next action: Continue leaderboard/rules fixed-copy localization and mechanism consistency, then shared username/FAQ/accessibility requirements. Preserve exact founder copy clarification and external backend/model/clinical/device blockers.
 - Commit: containing commit for batch Actual-level-speed-and-acknowledged-progression-matrices.
+
+## Shared-username-hints-and-native-length-counter
+
+- Parent checkpoint: 4ac780a1a9fcaa1f8974718c1badb06e372be5b9.
+- Source-order requirements: [369, 370, 371, 372, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Privacy Settings/Prompt12AccountView.swift, Fruitfolio/Localizable.xcstrings, development_workflow/USERNAME_SHARED_HINT_LOCALIZATION.md.
+- Account/game now share canonical policy instructions through independent compact translated accessibility hints with pause/cancellation/provenance. Game fixed public-name/privacy copy translated, native range/fraction display preserves authoredusername verbatim. Shared authority/persistence schema and safety confirmation unchanged. Fouractual Apple UI launchvectors addedbutNOT_RUN. No wholeitem certification or official-model/native-language/identity claim.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, FruitfolioTests/FruitfolioUsernameStoreTests.swift, FruitfolioTests/Prompt1BUsernamePersistenceTests.swift, FruitfolioTests/Prompt1BUsernameExitSessionTests.swift.
+- Verification: {"portable_XCTest": 900, "native_CPU_XCTest": 922, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "new_Apple_UI_vectors_written": 4, "new_Apple_UI_vectors_executed": 0}.
+- Next action: Continue original373FAQ plain question emphasis without altering scientific text,374approvedtulip blocker, then remaining independent approved art/layout/accessibility. Preserve earlier checklist evidence; do not repeat completed broad audits or count source as Apple runtime proof.
+- Commit: containing commit for batch Shared-username-hints-and-native-length-counter.

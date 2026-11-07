@@ -273,3 +273,29 @@ struct FruitfolioFixedAccessibilityLabel: ViewModifier {
             }
     }
 }
+
+/// Translates instructions without replacing a control's independently owned label.
+@MainActor
+struct FruitfolioFixedAccessibilityHint: ViewModifier {
+    let source: String
+    var supplementalDetail: String = ""
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: source, language: settings.language)
+    }
+    func body(content: Content) -> some View {
+        let display = translation.presentation(for: key)
+        content
+            .accessibilityHint(Text([
+                FruitfolioSemanticDocument.plainText(from: display.text),
+                display.status.accessibilityDetail(original: source,
+                    localized: { settings.localized($0) }),
+                supplementalDetail
+            ].filter { !$0.isEmpty }.joined(separator: ". ")))
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
+    }
+}

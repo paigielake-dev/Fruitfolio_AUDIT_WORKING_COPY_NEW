@@ -3105,6 +3105,35 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(element.isHittable)
     }
 
+    func testUsernameLocaleCounterPreservesAuthoredDraftAndActualSavedName() {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "leaderboard",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let field = app.textFields["fruitBasket.publicUsername"]
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            revealLeaderboardInput(field, app: app)
+            field.tap(); field.typeText("sprout_one")
+            XCTAssertEqual(field.value as? String, "sprout_one")
+            let count = app.staticTexts["fruitBasket.usernameLength"]
+            revealLeaderboardInput(count, app: app)
+            XCTAssertEqual(count.label, language == "ar" ? "١٠ / ١٦" : "10 / 16")
+            let confirm = app.descendants(matching: .any).matching(identifier: "fruitBasket.usernameConfirmation").firstMatch
+            revealLeaderboardInput(confirm, app: app); confirm.tap()
+            let save = app.buttons["fruitBasket.saveUsername"]
+            revealLeaderboardInput(save, app: app)
+            XCTAssertTrue(save.isEnabled); save.tap()
+            XCTAssertEqual(app.staticTexts["fruitBasket.qa.savedUsername"].label, "saved username: sprout_one")
+            captureGame(app, name: "username-native-count-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testFruitBasketUsernameDraftSurvivesReappearanceAndSavesToActualAuthority() {
         for reduced in [false, true] {
         for rtl in [false, true] {

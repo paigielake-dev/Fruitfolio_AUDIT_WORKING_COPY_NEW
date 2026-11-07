@@ -215,8 +215,9 @@ struct Prompt12AccountView: View {
             TextField("", text: $usernameDraft,
                 prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                 .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
-                .accessibilityHint(Text(input.status.accessibilityDetail(
-                    original: usernameLabelKey.source, localized: { settings.localized($0) })))
+                .modifier(FruitfolioFixedAccessibilityHint(source: Prompt28LeaderboardUsernamePolicy.inputInstructions,
+                    supplementalDetail: input.status.accessibilityDetail(original: usernameLabelKey.source,
+                        localized: { settings.localized($0) })))
                 .task(id: FruitfolioControlTranslationState.TaskKey(key: usernameLabelKey,
                     inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
                     await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)

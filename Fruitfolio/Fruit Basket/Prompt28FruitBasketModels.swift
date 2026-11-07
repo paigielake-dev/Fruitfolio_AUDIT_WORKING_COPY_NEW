@@ -386,6 +386,7 @@ enum Prompt28ObstacleKind: String, Hashable, Sendable {
 enum Prompt28LeaderboardUsernamePolicy {
     static let minimumLength = 3
     static let maximumLength = 16
+    static let inputInstructions = "Three to sixteen characters. Letters, numbers, periods, and underscores only. Public usernames cannot be explicit."
 
     private static let allowed = CharacterSet.alphanumerics
         .union(CharacterSet(charactersIn: "._"))
