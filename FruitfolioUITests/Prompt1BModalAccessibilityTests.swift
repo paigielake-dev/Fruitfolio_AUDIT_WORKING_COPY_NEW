@@ -486,6 +486,40 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGuideReorderRotatesActualVisitEpochAcrossBackgroundBeforeFreshAcknowledgedMove() {
+        for language in ["fr", "ar"] {
+            for reduced in [false, true] {
+                let app = launchGuideSave("reorder", reduced: reduced, rtl: language == "ar", language: language)
+                let scroll = app.scrollViews.firstMatch
+                let toggle = app.buttons["guide.reorder.toggle"]
+                XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+                for _ in 0..<24 { if toggle.isHittable { break }; scroll.swipeUp() }
+                toggle.tap()
+                let epoch = app.staticTexts["guideQA.actionEpoch"]
+                let initialEpoch = epoch.label
+                XCTAssertFalse(initialEpoch.contains("pending"))
+                let fixtureOwner = app.staticTexts["guideQA.owner"].label
+                XCUIDevice.shared.press(.home); app.activate()
+                let resumed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label != %@", initialEpoch), object: epoch)
+                XCTAssertEqual(XCTWaiter.wait(for: [resumed], timeout: 5), .completed)
+                XCTAssertEqual(app.staticTexts["guideQA.owner"].label, fixtureOwner)
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 0")
+                let move = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND enabled == true", "guide.section.moveUp.")).firstMatch
+                for _ in 0..<24 { if move.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(move.isHittable)
+                XCTAssertGreaterThanOrEqual(move.frame.height, 44)
+                move.tap()
+                let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "first section name: QA second section"), object: app.staticTexts["guideQA.firstSectionName"])
+                XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 5), .completed)
+                XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 1")
+                XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 1")
+                captureGame(app, name: "guide-reorder-epoch-\(language)-reduced-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testGuideReorderAcknowledgesPersistenceAndOffersReloadAfterRejectedWrite() {
         for reduced in [false, true] {
         for rtl in [false, true] {

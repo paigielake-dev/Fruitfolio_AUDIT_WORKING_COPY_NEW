@@ -14,6 +14,7 @@ struct Prompt11GuideBuilderView: View {
     @State private var selectedGuideID: UUID?
     @StateObject private var formSession = Prompt11GuideFormSession()
     @State private var rootIsVisible = false
+    @State private var actionEpoch = UUID()
     @Environment(\.scenePhase) private var scenePhase
     private var overlay: Prompt11Overlay? { formSession.current }
     @State private var showingReadMode = false
@@ -94,26 +95,34 @@ struct Prompt11GuideBuilderView: View {
             }
         }
         .onAppear {
+            actionEpoch = UUID()
             rootIsVisible = true
             if scenePhase == .active { formSession.resume() }
             else { formSession.suspend() }
         }
         .onChange(of: scenePhase) { _, phase in
+            actionEpoch = UUID()
             if rootIsVisible, phase == .active { formSession.resume() }
             else { formSession.suspend() }
         }
         .onDisappear {
+            actionEpoch = UUID()
             rootIsVisible = false
             formSession.suspend()
             dismissSavedStatus()
         }
         .onChange(of: selectedGuideID) { _, guideID in
+            actionEpoch = UUID()
             reorderErrorMessage = nil
             if savedStatusGuideID != guideID { dismissSavedStatus() }
         }
+        .onChange(of: settings.language) { _, _ in actionEpoch = UUID() }
+        .onChange(of: overlay) { _, _ in actionEpoch = UUID() }
+        .onChange(of: showingReadMode) { _, _ in actionEpoch = UUID() }
         .toolbar(.hidden, for: .navigationBar)
         #if DEBUG
         .preference(key: Prompt11GuideSavedStatusRequestKey.self, value: savedStatusRequests)
+        .preference(key: Prompt11GuideActionEpochKey.self, value: actionEpoch.uuidString)
         #endif
     }
 
@@ -670,6 +679,7 @@ struct Prompt11GuideBuilderView: View {
         _ guide: Prompt10Encyclopedia
     ) -> some View {
         let sortedChapters = guide.chapters.sorted { $0.order < $1.order }
+        let sectionOwner = Prompt11GuideReorderOwner(guide: guide, scope: .sections, epoch: actionEpoch, languageID: settings.language.rawValue)
 
         return VStack(spacing: 18) {
             if sortedChapters.isEmpty {
@@ -687,7 +697,8 @@ struct Prompt11GuideBuilderView: View {
                     guide: guide,
                     chapter: chapter,
                     isFirst: chapter.id == sortedChapters.first?.id,
-                    isLast: chapter.id == sortedChapters.last?.id
+                    isLast: chapter.id == sortedChapters.last?.id,
+                    owner: sectionOwner
                 )
                 .id(chapter.id)
             }
@@ -698,35 +709,46 @@ struct Prompt11GuideBuilderView: View {
         guide: Prompt10Encyclopedia,
         chapter: Prompt10Chapter,
         isFirst: Bool,
-        isLast: Bool
+        isLast: Bool,
+        owner: Prompt11GuideReorderOwner?
     ) -> some View {
-        VStack(spacing: 12) {
+        let pageOwner = owner == nil ? nil : Prompt11GuideReorderOwner(guideID: guide.id, chapter: chapter,
+            epoch: actionEpoch, languageID: settings.language.rawValue)
+        return VStack(spacing: 12) {
             Prompt11SectionDivider(
                 title: chapter.name,
                 pageCount: chapter.pages.count
             )
 
             HStack(spacing: 10) {
-                Button("rename") {
-                    setGuideOverlay(.renameSection(
-                        guide.id,
-                        chapter.id,
-                        chapter.name
-                    ))
+                Button {
+                    setGuideOverlay(.renameSection(guide.id, chapter.id, chapter.name))
+                } label: {
+                    FruitfolioFixedText(source: "rename", font: .custom("Chalkboard SE", size: 10.5).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy)
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
 
                 if reorderMode {
-                    Button("move up") {
-                        moveChapter(guide.id, chapter.id, offset: -1)
+                    Button {
+                        moveChapter(guide.id, chapter.id, offset: -1, owner: owner)
+                    } label: {
+                        FruitfolioFixedText(source: "move up", font: .custom("Chalkboard SE", size: 10.5).bold(),
+                            color: DesignTokens.ColorToken.primaryBurgundy)
+                            .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                     }
                     .accessibilityIdentifier("guide.section.moveUp." + chapter.id.uuidString)
-                    .disabled(isFirst)
+                    .disabled(isFirst || owner == nil)
 
-                    Button("move down") {
-                        moveChapter(guide.id, chapter.id, offset: 1)
+                    Button {
+                        moveChapter(guide.id, chapter.id, offset: 1, owner: owner)
+                    } label: {
+                        FruitfolioFixedText(source: "move down", font: .custom("Chalkboard SE", size: 10.5).bold(),
+                            color: DesignTokens.ColorToken.primaryBurgundy)
+                            .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                     }
                     .accessibilityIdentifier("guide.section.moveDown." + chapter.id.uuidString)
-                    .disabled(isLast)
+                    .disabled(isLast || owner == nil)
                 }
             }
             .font(.custom("Chalkboard SE", size: 10.5))
@@ -773,7 +795,8 @@ struct Prompt11GuideBuilderView: View {
                         chapter: chapter,
                         page: page,
                         isFirst: page.id == sortedPages.first?.id,
-                        isLast: page.id == sortedPages.last?.id
+                        isLast: page.id == sortedPages.last?.id,
+                        owner: pageOwner
                     )
                 }
             }
@@ -785,9 +808,10 @@ struct Prompt11GuideBuilderView: View {
         chapter: Prompt10Chapter,
         page: Prompt10SavedPage,
         isFirst: Bool,
-        isLast: Bool
+        isLast: Bool,
+        owner: Prompt11GuideReorderOwner?
     ) -> some View {
-        Menu("page options") {
+        return Menu("page options") {
             Button("move") {
                 setGuideOverlay(.movePage(
                     guide.id,
@@ -817,20 +841,20 @@ struct Prompt11GuideBuilderView: View {
                         guide.id,
                         chapter.id,
                         page.id,
-                        offset: -1
+                        offset: -1, owner: owner
                     )
                 }
-                .disabled(isFirst)
+                .disabled(isFirst || owner == nil)
 
                 Button("move down") {
                     movePage(
                         guide.id,
                         chapter.id,
                         page.id,
-                        offset: 1
+                        offset: 1, owner: owner
                     )
                 }
-                .disabled(isLast)
+                .disabled(isLast || owner == nil)
             }
 
             Button("remove from guide") {
@@ -841,6 +865,7 @@ struct Prompt11GuideBuilderView: View {
                 ))
             }
         }
+        .id(actionEpoch)
         .font(.custom("Chalkboard SE", size: 10.5))
         .fontWeight(.bold)
         .foregroundStyle(
@@ -1139,13 +1164,13 @@ struct Prompt11GuideBuilderView: View {
     private func moveChapter(
         _ guideID: UUID,
         _ chapterID: UUID,
-        offset: Int
+        offset: Int,
+        owner: Prompt11GuideReorderOwner?
     ) {
         do {
-            guard try store.moveChapter(
-                encyclopediaID: guideID,
-                chapterID: chapterID,
-                offset: offset
+            guard try store.prompt11MoveOwnedSection(
+                guideID: guideID, chapterID: chapterID, offset: offset,
+                owner: owner, context: currentInteractionContext
             ) else { return }
             reorderErrorMessage = nil
             audioManager.play(.pageTurn)
@@ -1159,14 +1184,13 @@ struct Prompt11GuideBuilderView: View {
         _ guideID: UUID,
         _ chapterID: UUID,
         _ pageID: UUID,
-        offset: Int
+        offset: Int,
+        owner: Prompt11GuideReorderOwner?
     ) {
         do {
-            guard try store.movePageWithinChapter(
-                encyclopediaID: guideID,
-                chapterID: chapterID,
-                pageID: pageID,
-                offset: offset
+            guard try store.prompt11MoveOwnedPage(
+                guideID: guideID, chapterID: chapterID, pageID: pageID, offset: offset,
+                owner: owner, context: currentInteractionContext
             ) else { return }
             reorderErrorMessage = nil
             audioManager.play(.pageTurn)
@@ -1174,6 +1198,12 @@ struct Prompt11GuideBuilderView: View {
         } catch {
             reorderErrorMessage = store.storageProtectionReason == nil ? Prompt10SavedPageNotice(error: error) : nil
         }
+    }
+
+    private var currentInteractionContext: Prompt11GuideInteractionContext {
+        .init(epoch: actionEpoch, languageID: settings.language.rawValue, selectedGuideID: selectedGuideID,
+            isVisible: rootIsVisible, isActive: scenePhase == .active && UIApplication.shared.applicationState == .active,
+            allowsInteraction: overlay == nil && !showingReadMode)
     }
 
     private func setGuideOverlay(_ next: Prompt11Overlay?) {

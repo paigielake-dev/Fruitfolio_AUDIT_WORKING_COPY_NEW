@@ -86,6 +86,7 @@ struct Prompt11GuideSaveRegressionHarness: View {
     @StateObject private var fixture = Prompt11GuideSaveFixture()
     @State private var configured = false
     @State private var savedStatusRequests = 0
+    @State private var actionEpoch = "pending"
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audio: AudioManager
     @Environment(\.scenePhase) private var scenePhase
@@ -95,8 +96,10 @@ struct Prompt11GuideSaveRegressionHarness: View {
                 if phase == .background { fixture.applyConcurrentDescriptionIfRequested() }
             }
             .onPreferenceChange(Prompt11GuideSavedStatusRequestKey.self) { savedStatusRequests = $0 }
+            .onPreferenceChange(Prompt11GuideActionEpochKey.self) { actionEpoch = $0 }
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading) {
+                    Text("action epoch: " + actionEpoch).accessibilityIdentifier("guideQA.actionEpoch")
                     Prompt11GuideSaveReadback(store: fixture.store, defaults: fixture.defaults,
                         baseline: fixture.baselineBytes, token: fixture.token, savedStatusRequests: savedStatusRequests,
                         guideID: fixture.initialGuideID)
@@ -149,6 +152,11 @@ private struct Prompt11GuideSaveReadback: View {
             }
         }
     }
+}
+/// Read-only diagnostics emitted by the actual Guide root ownership state.
+nonisolated struct Prompt11GuideActionEpochKey: PreferenceKey {
+    static let defaultValue = "pending"
+    static func reduce(value: inout String, nextValue: () -> String) { value = nextValue() }
 }
 /// A count emitted by the actual save-status entry point; not a fabricated save.
 nonisolated struct Prompt11GuideSavedStatusRequestKey: PreferenceKey {

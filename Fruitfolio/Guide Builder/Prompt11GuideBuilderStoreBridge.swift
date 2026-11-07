@@ -191,3 +191,22 @@ enum Prompt11GuideSearchRegressionFixture {
     }
 }
 #endif
+
+@MainActor
+extension Prompt10SavedLibraryStore {
+    @discardableResult
+    func prompt11MoveOwnedSection(guideID: UUID, chapterID: UUID, offset: Int,
+                                 owner: Prompt11GuideReorderOwner?, context: Prompt11GuideInteractionContext) throws -> Bool {
+        guard let owner, owner.guideID == guideID, owner.scope == .sections,
+              owner.renderedIDs.contains(chapterID), owner.accepts(in: encyclopedias, context: context) else { return false }
+        return try moveChapter(encyclopediaID: guideID, chapterID: chapterID, offset: offset)
+    }
+
+    @discardableResult
+    func prompt11MoveOwnedPage(guideID: UUID, chapterID: UUID, pageID: UUID, offset: Int,
+                              owner: Prompt11GuideReorderOwner?, context: Prompt11GuideInteractionContext) throws -> Bool {
+        guard let owner, owner.guideID == guideID, owner.scope == .pages(chapterID),
+              owner.renderedIDs.contains(pageID), owner.accepts(in: encyclopedias, context: context) else { return false }
+        return try movePageWithinChapter(encyclopediaID: guideID, chapterID: chapterID, pageID: pageID, offset: offset)
+    }
+}

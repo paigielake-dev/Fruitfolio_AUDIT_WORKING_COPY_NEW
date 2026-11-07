@@ -130,3 +130,67 @@ nonisolated struct Prompt11GuidePaginationCopy: Equatable, Sendable {
         accessibilitySource = "page \(currentLiteral) of \(totalLiteral)"
     }
 }
+
+nonisolated struct Prompt11GuideInteractionContext: Equatable, Sendable {
+    var epoch: UUID
+    var languageID: String
+    var selectedGuideID: UUID?
+    var isVisible: Bool
+    var isActive: Bool
+    var allowsInteraction: Bool
+}
+
+/// Captures displayed placement, not independent authored content. A delayed
+/// reorder may never act on a different visit, guide or newly ordered list.
+nonisolated struct Prompt11GuideReorderOwner: Equatable, Sendable {
+    enum Scope: Equatable, Sendable { case sections, pages(UUID) }
+    let guideID: UUID
+    let scope: Scope
+    let epoch: UUID
+    let languageID: String
+    let renderedIDs: [UUID]
+
+    init?(guide: Prompt10Encyclopedia, scope: Scope, epoch: UUID, languageID: String) {
+        guard let identifiers = Self.identifiers(in: guide, scope: scope) else { return nil }
+        guideID = guide.id
+        self.scope = scope
+        self.epoch = epoch
+        self.languageID = languageID
+        renderedIDs = identifiers
+    }
+
+    /// Capture one page-list snapshot at the section boundary, then share its
+    /// immutable array with every row instead of sorting/copying it per page.
+    init?(guideID: UUID, chapter: Prompt10Chapter, epoch: UUID, languageID: String) {
+        let ids = chapter.pages.sorted { $0.order < $1.order }.map(\.id)
+        guard chapter.encyclopediaID == guideID, Set(ids).count == ids.count else { return nil }
+        self.guideID = guideID
+        scope = .pages(chapter.id)
+        self.epoch = epoch
+        self.languageID = languageID
+        renderedIDs = ids
+    }
+
+    func accepts(in records: [Prompt10Encyclopedia], context: Prompt11GuideInteractionContext) -> Bool {
+        guard context.isVisible, context.isActive, context.allowsInteraction,
+              context.selectedGuideID == guideID, context.epoch == epoch, context.languageID == languageID else { return false }
+        let matches = records.filter { $0.id == guideID }
+        guard matches.count == 1, let guide = matches.first else { return false }
+        return Self.identifiers(in: guide, scope: scope) == renderedIDs
+    }
+
+    private static func identifiers(in guide: Prompt10Encyclopedia, scope: Scope) -> [UUID]? {
+        let ids: [UUID]
+        switch scope {
+        case .sections:
+            guard guide.chapters.allSatisfy({ $0.encyclopediaID == guide.id }) else { return nil }
+            ids = guide.chapters.sorted { $0.order < $1.order }.map(\.id)
+        case .pages(let chapterID):
+            let chapters = guide.chapters.filter { $0.id == chapterID }
+            guard chapters.count == 1, let chapter = chapters.first, chapter.encyclopediaID == guide.id else { return nil }
+            ids = chapter.pages.sorted { $0.order < $1.order }.map(\.id)
+        }
+        guard Set(ids).count == ids.count else { return nil }
+        return ids
+    }
+}

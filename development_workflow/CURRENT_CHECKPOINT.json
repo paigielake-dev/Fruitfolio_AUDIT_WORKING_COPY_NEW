@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "c34ea0b8dde2f32f147e6da952b8c720fae87ee7",
+  "current_HEAD": "7817e17221b2c4e84b55917b1b56e39a2f7212d6",
   "latest_verified_commit": null,
-  "current_checklist_part": 10,
-  "current_requirement": 474,
-  "current_implementation_batch": "Guide-paper-read-mode-native-copy-and-closing-guards",
+  "current_checklist_part": 9,
+  "current_requirement": 395,
+  "current_implementation_batch": "Guide-captured-reorder-context-and-canonical-write-gates",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,15 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
     "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
     "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
     "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-    "Fruitfolio/Guide Builder/Prompt11ReadMode.swift",
-    "Fruitfolio/Localizable.xcstrings",
-    "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+    "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/GUIDE_PAPER_READ_MODE_NATIVE_COPY.md",
+    "development_workflow/GUIDE_CAPTURED_REORDER_OWNERSHIP.md",
     "development_workflow/MASTER_CHECKLIST.json",
     "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
   ],
@@ -516,55 +514,76 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable and native CPU suites",
-    "Seven focused pagination/legacy/store tests",
-    "69 workflow checks",
-    "313 changed Swift files parsed only (ReadMode newly modified relative to baseline)",
+    "Initial and final portable/native full suites,973/998 XCTest plus21 SwiftTesting each",
+    "Three focused real-store owner tests",
+    "69 final workflow checks",
+    "313 changed Swift files parsed only",
     "SwiftSyntax sound ownership zero findings",
+    "Verified exact branch,7817e17,7140173 ancestry, six preserved WIP files and readable previous bundle after reconnect",
+    "Verified enforced/current network revision3; official-model host remains unallowed",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_XCTest": 970,
-    "native_CPU_XCTest": 995,
+    "portable_XCTest": 973,
+    "native_CPU_XCTest": 998,
     "SwiftTesting_each": 21,
-    "focused_XCTest": 7,
-    "new_pagination_XCTest": 1,
+    "focused_XCTest": 3,
+    "new_real_store_owner_XCTest": 3,
     "workflow_checks": 69,
     "changed_Swift_syntax_files": 313,
     "control_sound_ownership_findings": 0,
     "Apple_UI_vectors_written": 4,
     "Apple_UI_vectors_executed": 0,
-    "English_fallbacks_added": 1,
+    "existing_English_fallbacks_verified": 3,
     "official_MADLAD_verified": false,
+    "portable_final_command_exit_code": 0,
+    "native_final_command_exit_code": null,
+    "native_exit_status_note": "Completed suite reports retained; old process ID unavailable after environment reconnect.",
+    "recovery": {
+      "branch": "development/prompt-1b-complete",
+      "HEAD_before_batch": "7817e17221b2c4e84b55917b1b56e39a2f7212d6",
+      "ancestor_7140173_verified": true,
+      "previous_bundle_sha256": "f6724a8b33760ba3053156f2075367c24f8fe66e62f4b06a530863ff085ec156",
+      "previous_bundle_verified_readable": true,
+      "pending_six_source_test_files_preserved": true
+    },
     "log_receipts": {
-      "/tmp/fruitfolio_guide_paper_portable.log": {
-        "bytes": 308944,
-        "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+      "/tmp/fruitfolio_guide_reorder_owner_portable.log": {
+        "bytes": 311578,
+        "sha256": "d05c860b3e3fc7d1435e8b2d5895a5f69ba374fa141c42c1df59f0de7d3f4b3a"
       },
-      "/tmp/fruitfolio_guide_paper_native.log": {
-        "bytes": 1284102,
-        "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+      "/tmp/fruitfolio_guide_reorder_owner_native.log": {
+        "bytes": 1286779,
+        "sha256": "d7a0609d2bf658811fd783c2aed2197e422c3263338cf9af1c06d7c2024106cf"
       },
-      "/tmp/fruitfolio_guide_paper_focused.log": {
-        "bytes": 29872,
-        "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+      "/tmp/fruitfolio_guide_reorder_owner_focused.log": {
+        "bytes": 29810,
+        "sha256": "6fe6188f413f3a810ec85381693b42b12674e41d72520ad8e2a5b9b4ee00d863"
       },
-      "/tmp/fruitfolio_guide_paper_workflow.log": {
+      "/tmp/fruitfolio_guide_reorder_owner_portable_final.log": {
+        "bytes": 311551,
+        "sha256": "883fb12c582b710e47206473fac0f2bf4e8b8e9284b187f374aa42a7e1da8925"
+      },
+      "/tmp/fruitfolio_guide_reorder_owner_native_final.log": {
+        "bytes": 1286770,
+        "sha256": "558f21dca6e8882c234d26388110f36b57e6f0b979a38fd08319f9e05f368523"
+      },
+      "/tmp/fruitfolio_guide_reorder_owner_workflow_final.log": {
         "bytes": 169,
-        "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+        "sha256": "3df258eb619f8eb02be154b6c5a0e8703899745fe355c50c5671f1faed639bb7"
       },
-      "/tmp/fruitfolio_guide_paper_syntax.log": {
+      "/tmp/fruitfolio_guide_reorder_owner_syntax_final.log": {
         "bytes": 106,
         "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
       },
-      "/tmp/fruitfolio_guide_paper_ownership.log": {
+      "/tmp/fruitfolio_guide_reorder_owner_ownership_final.log": {
         "bytes": 5,
         "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
       }
     }
   },
-  "next_exact_implementation_action": "Add captured Guide reorder ownership to reject stale/inactive/wrong-guide/language/order callbacks before canonical writes and cues; retain independent notes and existing form tickets. Add real canonical snapshot/epoch regressions and scoped Apple vectors, then continue remaining Guide action/menu copy.",
-  "updated_at": "2026-11-07T06:08:22.831505+00:00",
+  "next_exact_implementation_action": "Implement actual native Guide page-menu label translation with plain Text menu items and a root-owned fixed-copy coordinator; preserve source fallback provenance and captured context. Test real control-state integration/cancellation on Linux; write actual Apple menu vectors without claiming UIKit execution.",
+  "updated_at": "2026-11-07T06:25:36.904951+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -574,63 +593,81 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": 970,
-      "native_CPU_XCTest": 995,
+      "portable_XCTest": 973,
+      "native_CPU_XCTest": 998,
       "SwiftTesting_each": 21,
-      "focused_XCTest": 7,
-      "new_pagination_XCTest": 1,
+      "focused_XCTest": 3,
+      "new_real_store_owner_XCTest": 3,
       "workflow_checks": 69,
       "changed_Swift_syntax_files": 313,
       "control_sound_ownership_findings": 0,
       "Apple_UI_vectors_written": 4,
       "Apple_UI_vectors_executed": 0,
-      "English_fallbacks_added": 1,
+      "existing_English_fallbacks_verified": 3,
       "official_MADLAD_verified": false,
+      "portable_final_command_exit_code": 0,
+      "native_final_command_exit_code": null,
+      "native_exit_status_note": "Completed suite reports retained; old process ID unavailable after environment reconnect.",
+      "recovery": {
+        "branch": "development/prompt-1b-complete",
+        "HEAD_before_batch": "7817e17221b2c4e84b55917b1b56e39a2f7212d6",
+        "ancestor_7140173_verified": true,
+        "previous_bundle_sha256": "f6724a8b33760ba3053156f2075367c24f8fe66e62f4b06a530863ff085ec156",
+        "previous_bundle_verified_readable": true,
+        "pending_six_source_test_files_preserved": true
+      },
       "log_receipts": {
-        "/tmp/fruitfolio_guide_paper_portable.log": {
-          "bytes": 308944,
-          "sha256": "23298083964832be2e3a0b65bde7ba7055fdeb01d0743d3ce6ed4543f162661b"
+        "/tmp/fruitfolio_guide_reorder_owner_portable.log": {
+          "bytes": 311578,
+          "sha256": "d05c860b3e3fc7d1435e8b2d5895a5f69ba374fa141c42c1df59f0de7d3f4b3a"
         },
-        "/tmp/fruitfolio_guide_paper_native.log": {
-          "bytes": 1284102,
-          "sha256": "c9fa171b27eadf047c6c57f52f300321b48a8d392cd50d669c39dbbb8b44b4f4"
+        "/tmp/fruitfolio_guide_reorder_owner_native.log": {
+          "bytes": 1286779,
+          "sha256": "d7a0609d2bf658811fd783c2aed2197e422c3263338cf9af1c06d7c2024106cf"
         },
-        "/tmp/fruitfolio_guide_paper_focused.log": {
-          "bytes": 29872,
-          "sha256": "db1e60cede35c5dcf220478c5e33d19b84bc5a11e218b7d2f2e2e44eecf15039"
+        "/tmp/fruitfolio_guide_reorder_owner_focused.log": {
+          "bytes": 29810,
+          "sha256": "6fe6188f413f3a810ec85381693b42b12674e41d72520ad8e2a5b9b4ee00d863"
         },
-        "/tmp/fruitfolio_guide_paper_workflow.log": {
+        "/tmp/fruitfolio_guide_reorder_owner_portable_final.log": {
+          "bytes": 311551,
+          "sha256": "883fb12c582b710e47206473fac0f2bf4e8b8e9284b187f374aa42a7e1da8925"
+        },
+        "/tmp/fruitfolio_guide_reorder_owner_native_final.log": {
+          "bytes": 1286770,
+          "sha256": "558f21dca6e8882c234d26388110f36b57e6f0b979a38fd08319f9e05f368523"
+        },
+        "/tmp/fruitfolio_guide_reorder_owner_workflow_final.log": {
           "bytes": 169,
-          "sha256": "5edd139a5e217e6a572b6e8ca2f9db6647f667c2327e09115deee4f1a47542ed"
+          "sha256": "3df258eb619f8eb02be154b6c5a0e8703899745fe355c50c5671f1faed639bb7"
         },
-        "/tmp/fruitfolio_guide_paper_syntax.log": {
+        "/tmp/fruitfolio_guide_reorder_owner_syntax_final.log": {
           "bytes": 106,
           "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
         },
-        "/tmp/fruitfolio_guide_paper_ownership.log": {
+        "/tmp/fruitfolio_guide_reorder_owner_ownership_final.log": {
           "bytes": 5,
           "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
         }
       }
     },
     "not_run": [
-      "Four actual Apple Guide legacy-paper/read-mode/note/number/duplicate-source/closing/no-write vectors",
-      "Apple SDK typecheck/build, VoiceOver/focus/animation/RTL/XXXL and device/physical audio acceptance",
-      "Official MADLAD model/tokenizer inference and linguistic/clinical translation acceptance"
+      "Four actual Apple Guide epoch/background/fresh-move/write-readback vectors",
+      "Apple SDK typecheck/build, native-menu callback/VoiceOver/focus/RTL/XXXL/Reduce Motion/device and physical audio acceptance",
+      "Official MADLAD model/tokenizer inference, memory and linguistic/clinical acceptance"
     ],
     "remaining": [
-      "Execute actual page transitions/closing guards, exact notes and repeated-source display on Apple",
-      "Verify translated paper/footer layout and locale pagination ordering with real device accessibility",
-      "Legacy retained-body notice is informational; viewing is not deletion consent or whole privacy acceptance",
-      "Continue native Guide action/menu localization and captured reorder ownership"
+      "Execute actual SwiftUI captured-epoch and native-menu callbacks on Apple; Foundation gateways are not UI runtime",
+      "Other Guide menu/form mutations need separate captured-payload review; this is scoped reorder ownership",
+      "No device RSS or performance result follows from sharing snapshots once per list",
+      "Native wrapper process exit could not be retrieved after environment reconnect; retained Framework suites report zero failures"
     ]
   },
-  "current_checklist_section": "Part 10 \u2014 Testing, integration, and final verification",
-  "last_recorded_batch_part": 9,
+  "current_checklist_section": "Part 9 \u2014 Localization and MADLAD",
+  "last_recorded_batch_part": 10,
   "last_supplemental_requirements": [
     "SPEC-7.9.2",
     "SPEC-7.9.4",
-    "SPEC-7.9.6",
-    "SPEC-BINDING-ASK-SESSION"
+    "SPEC-7.9.6"
   ]
 }
