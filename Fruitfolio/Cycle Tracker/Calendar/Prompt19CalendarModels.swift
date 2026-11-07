@@ -107,6 +107,8 @@ public struct Prompt19CalendarDayAnnotation: Equatable, Sendable {
     public var symptomSummary: [String]
     public var temperatureDisplay: String?
     public var noteText: String?
+    public var symptomSummaryIsAuthoredUI: Bool
+    public var temperatureDisplayProtectedLiterals: [String]
 
     public init(
         key: Prompt19CalendarDateKey,
@@ -120,7 +122,9 @@ public struct Prompt19CalendarDayAnnotation: Equatable, Sendable {
         noteAdded: Bool = false,
         symptomSummary: [String] = [],
         temperatureDisplay: String? = nil,
-        noteText: String? = nil
+        noteText: String? = nil,
+        symptomSummaryIsAuthoredUI: Bool = false,
+        temperatureDisplayProtectedLiterals: [String] = []
     ) {
         self.key = key
         self.cycleDay = cycleDay
@@ -134,6 +138,8 @@ public struct Prompt19CalendarDayAnnotation: Equatable, Sendable {
         self.symptomSummary = symptomSummary
         self.temperatureDisplay = temperatureDisplay
         self.noteText = noteText
+        self.symptomSummaryIsAuthoredUI = symptomSummaryIsAuthoredUI
+        self.temperatureDisplayProtectedLiterals = temperatureDisplayProtectedLiterals
     }
 
     public var primaryState: Prompt19CalendarPrimaryState {

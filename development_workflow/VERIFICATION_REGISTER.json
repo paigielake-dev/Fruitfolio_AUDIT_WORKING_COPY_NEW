@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T18:40:39.853144+00:00",
+  "updated_at": "2026-11-07T19:00:06.708337+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -14111,6 +14111,56 @@
         ]
       },
       "timestamp": "2026-11-07T18:40:39.853144+00:00"
+    },
+    {
+      "batch": "Calendar-selected-locale-and-typed-display-labels",
+      "requirements": [
+        393,
+        394,
+        395,
+        397,
+        410,
+        415,
+        422,
+        423,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt19CalendarEngineTests|Prompt1BCalendarPresentationPolicyTests|Prompt20CoreTests|Prompt1BCanonicalCalendarTests|Prompt1BHormoneCivilDateTests'",
+        "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
+        "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
+      ],
+      "results": {
+        "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+        "full_portable_XCTest": "1111passed,0failures",
+        "Swift_Testing": "21passed,0failures",
+        "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+        "sound_ownership": "0diagnostics"
+      },
+      "verification": {
+        "executed": {
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
+        },
+        "not_run": [
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
+        ],
+        "remaining": [
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
+        ]
+      },
+      "timestamp": "2026-11-07T19:00:06.708337+00:00"
     }
   ]
 }

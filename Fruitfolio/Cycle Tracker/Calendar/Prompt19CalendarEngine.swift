@@ -2,11 +2,13 @@ import Foundation
 
 public struct Prompt19CalendarEngine: Sendable {
     public var calendar: Calendar
+    public var displayLocale: Locale
 
-    public init(calendar: Calendar = .current) {
+    public init(calendar: Calendar = .current, displayLocale: Locale = Locale(identifier: "en_US_POSIX")) {
         var calendar = calendar
         calendar.firstWeekday = 1
         self.calendar = calendar
+        self.displayLocale = displayLocale
     }
 
     public func buildMonth(
@@ -77,65 +79,68 @@ public struct Prompt19CalendarEngine: Sendable {
         )
     }
 
-    public func monthTitle(
-        _ month: Prompt19CalendarMonth
-    ) -> String {
-        let abbreviations = [
-            "jan",
-            "feb",
-            "mar",
-            "apr",
-            "may",
-            "jun",
-            "jul",
-            "aug",
-            "sep",
-            "oct",
-            "nov",
-            "dec"
-        ]
+    public func displayNumber(_ number: Int) -> String {
+        number.formatted(.number.grouping(.never).locale(displayLocale))
+    }
 
-        guard month.month >= 1,
-              month.month <= abbreviations.count
-        else {
-            return "\(month.year)"
-        }
+    public var weekdaySymbols: [String] {
+        var symbolsCalendar = calendar
+        symbolsCalendar.locale = displayLocale
+        let symbols = symbolsCalendar.veryShortStandaloneWeekdaySymbols
+        guard symbols.count == 7 else { return symbols }
+        let offset = ((calendar.firstWeekday - 1) % 7 + 7) % 7
+        return Array(symbols[offset...] + symbols[..<offset])
+    }
 
-        return "\(abbreviations[month.month - 1]) \(month.year)"
+    private func formatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = displayLocale
+        // Display language never changes the calendar system or timezone used
+        // for stored civil-day keys and deterministic predictions.
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        return formatter
+    }
+
+    public func monthTitle(_ month: Prompt19CalendarMonth) -> String {
+        guard let date = month.firstDate(in: calendar) else { return displayNumber(month.year) }
+        let formatter = formatter()
+        formatter.setLocalizedDateFormatFromTemplate("MMM y")
+        let value = formatter.string(from: date)
+        return displayLocale.language.languageCode?.identifier == "en"
+            ? value.lowercased(with: displayLocale) : value
     }
 
     public func displayDateTitle(_ key: Prompt19CalendarDateKey) -> String {
-        guard let date = key.date(in: calendar) else {
-            return ""
-        }
-
-        let formatter = DateFormatter()
-        formatter.calendar = calendar
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = calendar.timeZone
-        formatter.dateFormat = "MMMM d"
-        return formatter.string(from: date).lowercased()
+        guard let date = key.date(in: calendar) else { return "" }
+        let formatter = formatter()
+        formatter.setLocalizedDateFormatFromTemplate("MMMM d")
+        let value = formatter.string(from: date)
+        return displayLocale.language.languageCode?.identifier == "en"
+            ? value.lowercased(with: displayLocale) : value
     }
 
-    public func accessibilityLabel(
-        for cell: Prompt19CalendarCell
-    ) -> String {
+    public func accessibilityLabel(for cell: Prompt19CalendarCell) -> String {
+        accessibilityCopy(for: cell).source
+    }
+
+    public func accessibilityCopy(for cell: Prompt19CalendarCell) -> Prompt19CalendarAccessibilityCopy {
         guard let key = cell.key,
               let date = key.date(in: calendar)
         else {
-            return ""
+            return .init(source: "", protectedLiterals: [])
         }
 
-        let formatter = DateFormatter()
-        formatter.calendar = calendar
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = calendar.timeZone
-        formatter.dateStyle = .long
-
-        var parts = [formatter.string(from: date)]
+        let formatter = formatter()
+        formatter.dateStyle = .full
+        let dateLiteral = formatter.string(from: date)
+        var protectedLiterals = [dateLiteral]
+        var parts = [dateLiteral]
 
         if let cycleDay = cell.annotation?.cycleDay {
-            parts.append("cycle day \(cycleDay)")
+            let number = displayNumber(cycleDay)
+            protectedLiterals.append(number)
+            parts.append("cycle day \(number)")
         }
 
         if cell.annotation?.recordedPeriod == true {
@@ -174,7 +179,7 @@ public struct Prompt19CalendarEngine: Sendable {
             parts.append("selected")
         }
 
-        return parts.joined(separator: ", ")
+        return .init(source: parts.joined(separator: ", "), protectedLiterals: protectedLiterals)
     }
 
     public func cycleDay(
@@ -289,11 +294,13 @@ public struct Prompt19CalendarEngine: Sendable {
         if !incoming.symptomSummary.isEmpty {
             merged.symptomSummary =
                 incoming.symptomSummary
+            merged.symptomSummaryIsAuthoredUI = incoming.symptomSummaryIsAuthoredUI
         }
 
-        merged.temperatureDisplay =
-            incoming.temperatureDisplay
-            ?? merged.temperatureDisplay
+        if let temperature = incoming.temperatureDisplay {
+            merged.temperatureDisplay = temperature
+            merged.temperatureDisplayProtectedLiterals = incoming.temperatureDisplayProtectedLiterals
+        }
 
         merged.noteText =
             incoming.noteText
@@ -301,4 +308,11 @@ public struct Prompt19CalendarEngine: Sendable {
 
         return merged
     }
+}
+
+/// Native-locale date/number literals stay exact while controlled state labels
+/// use the existing shared on-device translation/accessibility presentation.
+public struct Prompt19CalendarAccessibilityCopy: Equatable, Sendable {
+    public let source: String
+    public let protectedLiterals: [String]
 }

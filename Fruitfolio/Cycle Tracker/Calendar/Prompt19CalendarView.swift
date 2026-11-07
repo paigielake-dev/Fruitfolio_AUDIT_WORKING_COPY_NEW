@@ -11,6 +11,7 @@ struct Prompt19CalendarView: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.locale) private var appLocale
     @State private var viewIsVisible = false
     private var ownerIsActive: Bool {
         viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
@@ -61,7 +62,7 @@ struct Prompt19CalendarView: View {
     }
 
     private var engine: Prompt19CalendarEngine {
-        Prompt19CalendarEngine(calendar: calendar)
+        Prompt19CalendarEngine(calendar: calendar, displayLocale: appLocale)
     }
 
     private var loadIdentity: Prompt19CalendarLoadIdentity {
@@ -268,15 +269,7 @@ struct Prompt19CalendarView: View {
         HStack(spacing: 0) {
             ForEach(
                 Array(
-                    [
-                        "S",
-                        "M",
-                        "T",
-                        "W",
-                        "T",
-                        "F",
-                        "S"
-                    ].enumerated()
+                    engine.weekdaySymbols.enumerated()
                 ),
                 id: \.offset
             ) { _, weekday in
@@ -539,7 +532,8 @@ private struct Prompt19DateCell: View {
     private var hovering = false
 
     var body: some View {
-        Group {
+        let copy = engine.accessibilityCopy(for: cell)
+        return Group {
             if cell.isInteractive {
                 Button {
                     onSelect(cell)
@@ -561,14 +555,8 @@ private struct Prompt19DateCell: View {
                         ? 0.015
                         : 0
                 )
-                .accessibilityLabel(
-                    engine.accessibilityLabel(
-                        for: cell
-                    )
-                )
-                .accessibilityHint(
-                    "Opens this date."
-                )
+                .modifier(FruitfolioFixedAccessibilityLabel(source: copy.source, protectedLiterals: copy.protectedLiterals))
+                .modifier(FruitfolioFixedAccessibilityHint(source: "Opens this date."))
             } else {
                 Color.clear
                     .frame(
@@ -615,7 +603,7 @@ private struct Prompt19DateCell: View {
             ) {
                 Text(
                     cell.dateNumber.map(
-                        String.init
+                        engine.displayNumber
                     ) ?? ""
                 )
                 .font(
@@ -871,12 +859,11 @@ private struct Prompt19DateSheet: View {
     @EnvironmentObject
     private var motionPreferences:
         MotionPreferences
+    @Environment(\.locale) private var appLocale
 
     private var engine:
         Prompt19CalendarEngine {
-        Prompt19CalendarEngine(
-            calendar: calendar
-        )
+        Prompt19CalendarEngine(calendar: calendar, displayLocale: appLocale)
     }
 
     private var date: Date? {
@@ -914,9 +901,8 @@ private struct Prompt19DateSheet: View {
 
                     if let cycleDay =
                         annotation?.cycleDay {
-                        Text(
-                            "cycle day \(cycleDay)"
-                        )
+                        FruitfolioFixedText(source: "cycle day \(engine.displayNumber(cycleDay))",
+                            protectedLiterals: [engine.displayNumber(cycleDay)], font: Prompt19Type.sheetSubhead, serious: true)
                         .font(
                             Prompt19Type
                                 .sheetSubhead
@@ -1018,9 +1004,7 @@ private struct Prompt19DateSheet: View {
             if annotation?
                 .recordedPeriod == true {
 
-                Text(
-                    "period recorded"
-                )
+                FruitfolioFixedText(source: "period recorded", font: Prompt19Type.stateLabel, serious: true)
                 .font(
                     Prompt19Type.stateLabel
                 )
@@ -1029,9 +1013,7 @@ private struct Prompt19DateSheet: View {
                 if annotation?
                     .predictedPeriod == true {
 
-                    Text(
-                        "predicted period"
-                    )
+                    FruitfolioFixedText(source: "predicted period", font: Prompt19Type.stateLabel, serious: true)
                     .font(
                         Prompt19Type.stateLabel
                     )
@@ -1040,9 +1022,7 @@ private struct Prompt19DateSheet: View {
                 if annotation?
                     .fertileEstimated == true {
 
-                    Text(
-                        "estimated fertile window ✿"
-                    )
+                    FruitfolioFixedText(source: "estimated fertile window ✿", font: Prompt19Type.stateLabel, serious: true)
                     .font(
                         Prompt19Type.stateLabel
                     )
@@ -1051,9 +1031,7 @@ private struct Prompt19DateSheet: View {
                 if annotation?
                     .ovulationEstimated == true {
 
-                    Text(
-                        "estimated ovulation"
-                    )
+                    FruitfolioFixedText(source: "estimated ovulation", font: Prompt19Type.stateLabel, serious: true)
                     .font(
                         Prompt19Type.stateLabel
                     )
@@ -1080,7 +1058,7 @@ private struct Prompt19DateSheet: View {
 
                 Prompt19SheetSection(
                     title: "period",
-                    value: "recorded"
+                    value: "recorded", valueIsFixedCopy: true
                 )
             }
 
@@ -1091,9 +1069,8 @@ private struct Prompt19DateSheet: View {
                 Prompt19SheetSection(
                     title: "symptoms",
                     value:
-                        symptoms.joined(
-                            separator: " · "
-                        )
+                        symptoms.joined(separator: " · "),
+                    valueIsFixedCopy: annotation?.symptomSummaryIsAuthoredUI == true
                 )
 
             } else if annotation?
@@ -1101,7 +1078,7 @@ private struct Prompt19DateSheet: View {
 
                 Prompt19SheetSection(
                     title: "symptoms",
-                    value: "logged"
+                    value: "logged", valueIsFixedCopy: true
                 )
             }
 
@@ -1111,7 +1088,9 @@ private struct Prompt19DateSheet: View {
 
                 Prompt19SheetSection(
                     title: "temperature",
-                    value: temperature
+                    value: temperature,
+                    valueIsFixedCopy: !(annotation?.temperatureDisplayProtectedLiterals.isEmpty ?? true),
+                    valueProtectedLiterals: annotation?.temperatureDisplayProtectedLiterals ?? []
                 )
 
             } else if annotation?
@@ -1119,7 +1098,7 @@ private struct Prompt19DateSheet: View {
 
                 Prompt19SheetSection(
                     title: "temperature",
-                    value: "recorded"
+                    value: "recorded", valueIsFixedCopy: true
                 )
             }
 
@@ -1197,15 +1176,15 @@ private struct Prompt19SheetSection:
 
     let title: String
     let value: String
+    var valueIsFixedCopy = false
+    var valueProtectedLiterals: [String] = []
 
     var body: some View {
         VStack(
             alignment: .leading,
             spacing: 3
         ) {
-            Text(
-                title
-            )
+            FruitfolioFixedText(source: title, font: Prompt19Type.sectionLabel, serious: true)
             .font(
                 Prompt19Type.sectionLabel
             )
@@ -1215,9 +1194,13 @@ private struct Prompt19SheetSection:
                     .opacity(0.60)
             )
 
-            Text(
-                value
-            )
+            Group {
+                if valueIsFixedCopy {
+                    FruitfolioFixedText(source: value, protectedLiterals: valueProtectedLiterals, font: Prompt19Type.sheetBody, serious: true)
+                } else {
+                    Text(verbatim: value)
+                }
+            }
             .font(
                 Prompt19Type.sheetBody
             )
@@ -1265,9 +1248,7 @@ private struct Prompt19SheetActionButton:
                         height: 22
                     )
 
-                Text(
-                    title
-                )
+                FruitfolioFixedText(source: title, font: Prompt19Type.action, serious: true)
                 .font(
                     Prompt19Type.action
                 )
@@ -1385,9 +1366,8 @@ private struct Prompt19PredictionTransparencyNote:
                 true
             )
 
-            Text(
-                "tiny note these dates are estimates based on what you’ve logged. ✿"
-            )
+            FruitfolioFixedText(source: "tiny note these dates are estimates based on what you’ve logged. ✿",
+                protectedLiterals: ["✿"], font: Prompt19Type.note, serious: true)
             .font(
                 Prompt19Type.note
             )

@@ -38064,7 +38064,12 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
         "development_workflow/CONTACT_PROTECTED_TRANSLATION.md",
         "development_workflow/LANGUAGE_RESTART_NAVIGATION_FIXTURE.md",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38095,9 +38100,12 @@
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "development_workflow/tests/test_batch_recorder.py",
         "development_workflow/tests/test_control_sound_ownership.py",
-        "FruitfolioTests/Prompt1BContactDestinationTests.swift"
+        "FruitfolioTests/Prompt1BContactDestinationTests.swift",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Settings-About-owned-accessibility-and-global-text-routing (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -38132,43 +38140,37 @@
         "Contact seriousnotice/failurecopy now use existing selected-language pipelines. Optionalprotectedliterals propagate through sharedpillcontrol key; controlled publicplatform/handle/email names protected, URLverbatim and openercallbackownershipunchanged. Twoactualcompact-owner/service regressions verify masking/restoration and rejected droppedidentity fallback, using deterministicprotocolfixture NOT learnedtranslation. ExistingContactUIexpanded2to4vectors, allNOT_RUN. No whole393\u2013397/model/native-language certification.",
         "DEBUG-only UUID-scopedrestart owner survivesreleaseonlywhenexplicit; normalQAcleanupunchanged, arbitrarydomainsrejected andexplicitcleanupadded. ActualSettings/FAQhostusesexistingrootlanguage/locale/directionwithoutforcinglanguage; nativeMenuoptionshaveIDs. ThreeFoundationtests verify same-process retainedlanguage/domainisolation/tokenvalidation/cleanup. FourAppleUIvectorsdefineactualSettingsselection+QAhosttransition+processrelaunch+cleanup,NOT_RUN. Productionprefs untouched; noforcedsynchronize/durabilityclaim. Full918/940+21pass; notwholeitem orAppleprocessproof.",
         "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.",
-        "Specific About/body and five headings now observe the same global Settings language through existing shared text owners. All-screen propagation remains broader acceptance work."
+        "Specific About/body and five headings now observe the same global Settings language through existing shared text owners. All-screen propagation remains broader acceptance work.",
+        "Calendar and date-sheet presentation now derive directly from shared selected app locale without separate persisted language state. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T14:46:20.298530+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "workflow_checks": 75,
-          "swift_syntax_files": 326,
-          "static_sound_ownership_diagnostics": 0,
-          "original_About_body_source_literals_preserved": 1,
-          "original_section_heading_source_literals_preserved": 5,
-          "native_About_test_functions_executed": 0,
-          "logs": [
-            "/tmp/fruitfolio_settings_about_workflow.log",
-            "/tmp/fruitfolio_settings_about_final_syntax.log",
-            "/tmp/fruitfolio_settings_about_sound_ownership.log"
-          ],
-          "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
-          "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
-          "Official MADLAD, native-language/clinical and physical-device verification."
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-          "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-          "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-          "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
-        "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
-        "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
-        "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -38212,6 +38214,35 @@
           "remaining": [
             "Run genuine Apple existing four-vector Ask icon hold/tap regression; inspect VoiceOver label and provenance in selected language and hold-label placement without changed actions.",
             "Complete missing model/catalog language coverage with real approved resources and native-language review; routing is not proof translations exist or are correct."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-About-owned-accessibility-and-global-text-routing",
+          "executed": {
+            "workflow_checks": 75,
+            "swift_syntax_files": 326,
+            "static_sound_ownership_diagnostics": 0,
+            "original_About_body_source_literals_preserved": 1,
+            "original_section_heading_source_literals_preserved": 5,
+            "native_About_test_functions_executed": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_about_workflow.log",
+              "/tmp/fruitfolio_settings_about_final_syntax.log",
+              "/tmp/fruitfolio_settings_about_sound_ownership.log"
+            ],
+            "scope": "Workflow, source preservation and Swift syntax only. No Apple SDK typecheck/rendering/audio/focus proof."
+          },
+          "not_run": [
+            "New actual testSettingsAboutModalPreservesLanguageAndRestoresControlsAfterBackground:1test function,4planned launches(English/Arabic\u00d7normal/ReduceMotion), disposable existing language harness, inference paused.",
+            "Apple About modal focus/escape/cue counts/foreign-popup/stale callback/close behavior and actual selected-language rendering.",
+            "Official MADLAD, native-language/clinical and physical-device verification."
+          ],
+          "remaining": [
+            "Execute new actual native About regression and manual VoiceOver/escape/audio admission and focus restoration.",
+            "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
+            "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
+            "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -38307,7 +38338,12 @@
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38349,9 +38385,12 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Shared-icon-identification-and-accessibility-language-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -38396,29 +38435,37 @@
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion."
+        "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.",
+        "Cycle Calendar month/weekday/date/numeral and controlled recorded-label slice connected; other screens remain separately assessed. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T09:41:17.264692+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-icon-identification-and-accessibility-language-owner",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "swift_syntax_files": 319,
-          "syntax_errors": 0,
-          "source_catalog_inspection": "Actual Ask help/Back/back catalog entries do not supply Arabic/French translations; retain truthful source fallback until approved model/catalog output exists."
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Actual Apple hold-label/VoiceOver translation switching, no duplicate action, RTL and paused-runtime original fallback",
-          "Official MADLAD generated labels and native-language acceptance"
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Run genuine Apple existing four-vector Ask icon hold/tap regression; inspect VoiceOver label and provenance in selected language and hold-label placement without changed actions.",
-          "Complete missing model/catalog language coverage with real approved resources and native-language review; routing is not proof translations exist or are correct."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run genuine Apple existing four-vector Ask icon hold/tap regression; inspect VoiceOver label and provenance in selected language and hold-label placement without changed actions.",
-        "Complete missing model/catalog language coverage with real approved resources and native-language review; routing is not proof translations exist or are correct."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -38455,6 +38502,23 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Shared-icon-identification-and-accessibility-language-owner",
+          "executed": {
+            "swift_syntax_files": 319,
+            "syntax_errors": 0,
+            "source_catalog_inspection": "Actual Ask help/Back/back catalog entries do not supply Arabic/French translations; retain truthful source fallback until approved model/catalog output exists."
+          },
+          "not_run": [
+            "Actual Apple hold-label/VoiceOver translation switching, no duplicate action, RTL and paused-runtime original fallback",
+            "Official MADLAD generated labels and native-language acceptance"
+          ],
+          "remaining": [
+            "Run genuine Apple existing four-vector Ask icon hold/tap regression; inspect VoiceOver label and provenance in selected language and hold-label placement without changed actions.",
+            "Complete missing model/catalog language coverage with real approved resources and native-language review; routing is not proof translations exist or are correct."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -38576,7 +38640,12 @@
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
-        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json"
+        "development_workflow/SETTINGS_ACTIVE_ACTION_OWNERSHIP.json",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38638,9 +38707,12 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Settings-active-owned-preference-and-navigation-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -38694,33 +38766,37 @@
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
         "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.",
         "About popup copy now enters existing selected-language text pipeline with protected brand literals and honest fallback; actual target-language output/model is not verified.",
-        "Language selection error/recovery behavior remains under shared Settings authority; stale menu cannot mutate selection while suspended or covered."
+        "Language selection error/recovery behavior remains under shared Settings authority; stale menu cannot mutate selection while suspended or covered.",
+        "Calendar AX labels/hint and date-sheet controlled labels/actions/safety note use shared translation; native dates/numbers protected, private notes excluded. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T15:48:16.689954+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Settings-active-owned-preference-and-navigation-actions",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "swift_syntax_files": 326,
-          "syntax_errors": 0,
-          "static_sound_diagnostics": 0,
-          "logs": [
-            "/tmp/fruitfolio_settings_action_admission_syntax.log",
-            "/tmp/fruitfolio_settings_action_admission_sound.log"
-          ]
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
-          "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-          "Source guards are implementation evidence only; no full-requirement status promotion."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
-        "Source guards are implementation evidence only; no full-requirement status promotion."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -38803,6 +38879,27 @@
             "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
             "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
             "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Settings-active-owned-preference-and-navigation-actions",
+          "executed": {
+            "swift_syntax_files": 326,
+            "syntax_errors": 0,
+            "static_sound_diagnostics": 0,
+            "logs": [
+              "/tmp/fruitfolio_settings_action_admission_syntax.log",
+              "/tmp/fruitfolio_settings_action_admission_sound.log"
+            ]
+          },
+          "not_run": [
+            "Actual Settings Apple SDK build, UI and native controls tests; four planned About language/motion launches are NOT_RUN.",
+            "Actual stale native Menu callback delivery, VoiceOver focus, physical device and official MADLAD inference."
+          ],
+          "remaining": [
+            "Run actual Apple tests and validate inactive/covered action rejection, normal preference editing, navigation and audio.",
+            "Source guards are implementation evidence only; no full-requirement status promotion."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -39012,7 +39109,12 @@
         "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
         "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
-        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -39067,9 +39169,12 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
         "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
-        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift"
+        "FruitfolioTests/Prompt1BPseudonymPolicyTests.swift",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Explicit selected-language authority\n\nSettingsStore remains the one observable app-wide language authority. Its exact injected UserDefaults language load/save implementation is now a Foundation helper shared with portable regressions. The global resolver requires an explicit language; Guide Builder's VoiceOver saved announcement now uses its actual environment SettingsStore instead of independently reading UserDefaults.standard. Root locale/layout direction remain bound to that same published selection. No historical source/saved text is rewritten.\n\nLanguage is the first Settings section and retains recognizable native names and a permanent multilingual selector label/accessibility identifier. All listed languages remain selectable; a selector entry is not proof that that language has complete reviewed UI strings or verified MADLAD tokenizer/model support. Three Foundation regressions exercise every selector value through actual storage/reinitialization, independent injected suites, unknown-value preservation and RTL mapping. An additional actual Combine SettingsStore publication/reinitialization regression is Apple-only and NOT_RUN here.\n\nFAQ section/question strings and Contact failure labels now resolve through the selected SettingsStore language. FAQ expanded answers use the existing scientific display-translation pipeline, preserving original text and explicit unavailable status. Machine translation is not a clinical review. Fruit Basket's sourced explanations already use that pipeline; its quiz question/options remain atomic original-language source-excerpt practice until jointly verified localization can preserve the answer contract. Translating those fields independently would not establish a valid localized quiz.\n\nThe string catalog still contains incomplete/unreviewed non-English entries and stale/missing source keys. Full screen/dialog/error/accessibility coverage, reviewed translations for all requested language families, jointly localized quiz generation, long-source translation and physical-device acceptance remain open. Official MADLAD resources are still blocked by the configured huggingface.co network restriction; no translated runtime output or language quality is claimed. This batch does not replace MADLAD with the Qwen assistant model.\n",
@@ -39118,48 +39223,37 @@
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
         "Close concrete shared-icon language bypass: hold-identification words previously rendered raw dynamic English strings, while VoiceOver labels used separate implicit LocalizedStringKey lookup. Micro-label now resolves through existing selected-language control state; accessible icon label uses existing fixed-accessibility modifier with original/catalog/machine provenance. No new language authority or fabricated translations. Preserve one-word source, artwork, gesture/action ownership and theme. Ask help gains stable accessibility identifier and existing four-vector hold/tap/draft test targets it independently of translated wording. No whole localization implementation promotion.",
         "Remove specific raw Text bypasses for About and dynamic section-title helper. Native language choice names intentionally stay verbatim/recognizable.",
-        "Pseudonym row details are typed verbatim, skip translation task and Markdown in visual/accessibility paths; user text is not an English localization key."
+        "Pseudonym row details are typed verbatim, skip translation task and Markdown in visual/accessibility paths; user text is not an English localization key.",
+        "Removed hard-coded month/weekday English presentation and POSIX-only date formatter in live Calendar; raw user content intentionally verbatim. Whole-app English bypass coverage incomplete. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T16:21:00.833865+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "current_existing_domain_XCTest": 14,
-          "reused_prior_checkpoint_specific_isolation_methods": [
-            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
-            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
-            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
-            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
-          ],
-          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
-          "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
-          "failures": 0,
-          "logs": [
-            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
-            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
-            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
-            "/tmp/fruitfolio_account_shared_display_sound.log"
-          ],
-          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
-          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
-          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
-          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
-          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
-          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
-        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
-        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -39242,6 +39336,41 @@
             "Global language paragraphs and original393/395/397 cover every reachable state; this batch fixes specific Settings bypasses only.",
             "All new SwiftUI APIs remain untypechecked against Apple SDK here.",
             "Prior Contact/FAQ UI records mistakenly called4launch combinations8vectors; appended corrections preserve history and explicitly keep both NOT_RUN."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+          "executed": {
+            "current_existing_domain_XCTest": 14,
+            "reused_prior_checkpoint_specific_isolation_methods": [
+              "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+              "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+              "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+              "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+            ],
+            "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+              "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+              "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+              "/tmp/fruitfolio_account_shared_display_sound.log"
+            ],
+            "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+            "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+            "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+            "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+          ],
+          "remaining": [
+            "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+            "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+            "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -40223,7 +40352,12 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json"
+        "development_workflow/UNIFIED_SYMPTOM_REQUIREMENT_CLOSURES.json",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -40262,9 +40396,12 @@
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
         "FruitfolioTests/Prompt08GlobalControlsTests.swift",
         "Prompt1BSymptomTimelineTests.testActualDateProjectionMatchesBothChronologicalAxisDirectionsWithoutRewritingObservations",
-        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords"
+        "Prompt1BModalAccessibilityTests.testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Unified-symptom-intrinsic-rows-and-calculated-provenance (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -40304,37 +40441,37 @@
         "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
-        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted."
+        "Replace fixed symptom-label positions with actual height-driven rows and scaled label width, preserving the standard150/24 plot center insets, original graph art, real dates and full edge dots. Correct calculated-cycle-day attribution. Mirror actual date projection with RTL labels/arrows and exercise existing disposable UI fixture with a longer symptom name and Arabic. Individually review305\u2013309 full clauses against actual17 executed production-domain tests; mark implementation complete but Apple/external acceptance pending, not VERIFIED. Requirement410 remains broader and is not promoted.",
+        "Arabic date/weekday/numeral behavior proven in Foundation; actual RTL geometry/VoiceOver pending. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T12:02:04.917307+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "focused_actual_domain_XCTest": 17,
-          "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
-          "workflow": 71,
-          "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
-          "syntax_files": 320,
-          "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-          "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-          "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
-          "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
-        "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
-        "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
-        "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -40419,6 +40556,29 @@
             "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
             "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
             "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Unified-symptom-intrinsic-rows-and-calculated-provenance",
+          "executed": {
+            "focused_actual_domain_XCTest": 17,
+            "log": "/tmp/fruitfolio_symptom_intrinsic_rows_focused.log",
+            "workflow": 71,
+            "workflow_log": "/tmp/fruitfolio_symptom_intrinsic_rows_workflow.log",
+            "syntax_files": 320,
+            "syntax_log": "/tmp/fruitfolio_symptom_intrinsic_rows_final_syntax.log"
+          },
+          "not_run": [
+            "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+            "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+            "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests."
+          ],
+          "remaining": [
+            "Apple SwiftUI/UIKit compilation and actual long-label/scrolled plot geometry, complete dots/axis alignment, VoiceOver observation navigation and Dynamic Type screenshots remain NOT_RUN.",
+            "Updated actual UI filter/reload scenario now has six real disposable observations including breast tenderness, English/French/Arabic and both motion settings; all six UI vectors remain NOT_RUN.",
+            "Real native-language/official MADLAD acceptance and clinical review of descriptive interpretation remain external, not proved by date projection tests.",
+            "Broader app-wide RTL and478/36/unnumbered reconciliation remain unfinished."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -41203,7 +41363,12 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
         "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift"
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -41233,9 +41398,12 @@
         "FruitfolioTests/Prompt27ScienceContentTests.swift",
         "FruitfolioTests/Prompt1BCitationDestinationTests.swift",
         "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
-        "FruitfolioTests/Prompt08GlobalControlsTests.swift"
+        "FruitfolioTests/Prompt08GlobalControlsTests.swift",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Cycle-section-navigation-responsive-accessibility (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -41251,31 +41419,37 @@
         "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
         "Localized remaining ownership/intro/deletion/imported-image controls and related cycle-onboarding/shell/symptom/trend vocabulary through existing fixed-text/accessibility owners. Shared translation metadata uses selected app catalog; typed translation errors use catalog, unknown provider/OS detail remains verbatim. Onboarding controlled question/helper/choice text and symptom selection/save accessibility now follow app language; removed symptom two-line clipping. Trend timing summaries protect every recorded count and retain clinical limitations; no record/algorithm/assets rewritten. Focused32 then58 Foundation regressions passed, not SwiftUI execution; syntax parse only. Remaining native date/menu/chart labels and education families are explicitly still open.",
         "Connected existing scientific pregnancy/fertilization/genetics UI vocabulary and hotspot accessibility to existing display-only translation controls. Native four-reference Picker uses visible-parent existing translation states and native plain titles with fallback provenance; no clinical week timing or content invented. Citation open action now translates only fixed action label and exposes exact original source title as native accessibility value. All source metadata/research/art/data untouched.31focused real Foundation pipeline/content/citation/control regressions passed;314syntax-only parses. Source behavior is not Apple UI or official MADLAD acceptance. No whole requirement promoted.",
-        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted."
+        "Fixed actual Cycle Tracker navigation responsiveness:5section tabs no longer enforce single-line text/shrinking. Existing ViewThatFits uses compact original-order row when it fits and full-width growing rows inside the already existing vertical screen scroll otherwise. Controlled labels/selected state now follow app language with provenance; stable section IDs retained. Body biology/Hormone Rhythm controls grow/wrap with minimum44pt height while original underline/art/order/actions/sound ownership remain. No cycle data/prediction/store/navigation-domain rewrite. Actual hosted-size regression written for280pt width and accessibility5 inLTR/RTL, NOT_RUN on Linux.71workflow/315syntax-only passed; last integratedFoundation checkpoint7e73926 remains973/998+21each, not rerun for UI-only change. No whole requirement promoted.",
+        "Existing fonts retained, no shrinking introduced; translated data-sheet values retain wrapping. Native glyph/layout acceptance pending. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T08:06:22.608047+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Cycle-section-navigation-responsive-accessibility",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 315,
-          "syntax_errors": 0
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "New actual UIHosting navigation sizing regression in both directions",
-          "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-          "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-          "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
-        "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
-        "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -41294,6 +41468,24 @@
             "Apple execution of scientific screen controls, four native reference choices, source-link accessibility title/value and fallback provenance",
             "No whole original requirement is closed by this component batch; all associated source-data and acceptance subconditions remain individually tracked",
             "Resume functional gaps across all parts; universal cycle button interaction still differs from canonical implementation"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Cycle-section-navigation-responsive-accessibility",
+          "executed": {
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 315,
+            "syntax_errors": 0
+          },
+          "not_run": [
+            "New actual UIHosting navigation sizing regression in both directions",
+            "Apple SDK build/typecheck, native VoiceOver/tab selection and language-change layout"
+          ],
+          "remaining": [
+            "Execute actual navigation at small iPhone width/XXXL/RTL, including screen scrolling and focus continuity",
+            "Check compact-row and vertical fallback composition against original design on Apple; keep source implementation separate from accepted rendering",
+            "Other global responsive-layout/localization/accessibility paths remain open; this batch does not certify the whole original requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -42257,7 +42449,12 @@
         "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
         "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
-        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -42304,9 +42501,12 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
         "Prompt1BControlTranslationStateTests.testDisplayIdentityPreservesOriginalAndProtectedIdentifierUTF8",
-        "Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal"
+        "Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Translation-display-byte-exact-source-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -42335,28 +42535,37 @@
         "Actual4savepaths replace trapping/first-wins sourceversiondictionary with sharedbyte-exact validator; consistentduplicatescoalesce onlymap, rawSourceRecords preserved, legacy staysunversioned. Rejectconflicting/blank/mixed/Unicodecollidingmetadata visibly throughseriousfixederror andactivecomposer gate. ThreeactualFoundationtests+realcanonicalfull/excerpt persistence preservebody/quantity/DOI/records/IDs/version/time; sixinvalidvectorsreject. AppleUIflowsNOT_RUN; no authenticity/clinical/model/wholecitationcertification.",
         "Actual translation envelope rejects changed question laboratory quantities before retrieval; original and English query safety classifications merge at the stronger level, with original urgent guidance bypassing all models and translated urgency rechecked before research. Citation equality proven for actual corpus; official semantic fidelity not verified.",
         "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
-        "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten."
+        "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
+        "Actual typed temperature projection protects exact numeric/unit literal and preserves all stored measurement/notes/date keys; no citation pipeline modified. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T11:41:18.574663+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Translation-display-byte-exact-source-ownership",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "portable": "/tmp/fruitfolio_display_identity_focused.log: 18 actual owner XCTest passed, including exact-byte key set and resolved-display invalidation tests",
-          "syntax": "/tmp/fruitfolio_display_identity_syntax.log: 320 Swift parsed with zero syntax errors"
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Apple long-form SwiftUI typechecking/presentation and actual selection/citation actions with byte-different originals.",
-          "Official MADLAD and clinical/native-language verification."
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
-          "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
-        "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -42462,6 +42671,22 @@
             "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Translation-display-byte-exact-source-ownership",
+          "executed": {
+            "portable": "/tmp/fruitfolio_display_identity_focused.log: 18 actual owner XCTest passed, including exact-byte key set and resolved-display invalidation tests",
+            "syntax": "/tmp/fruitfolio_display_identity_syntax.log: 320 Swift parsed with zero syntax errors"
+          },
+          "not_run": [
+            "Apple long-form SwiftUI typechecking/presentation and actual selection/citation actions with byte-different originals.",
+            "Official MADLAD and clinical/native-language verification."
+          ],
+          "remaining": [
+            "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
+            "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -42502,7 +42727,12 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "development_workflow/SAVED_ANSWER_SUPPORT_PROVENANCE.md",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json"
+        "development_workflow/ASK_INCOMING_QUESTION_LANGUAGE_PIPELINE.json",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -42521,9 +42751,12 @@
         "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "Prompt19CalendarEngineTests",
+        "Prompt1BCalendarPresentationPolicyTests",
+        "Prompt20CoreTests"
       ],
-      "commit_reference": "batch:Ask-local-incoming-question-language-and-session-privacy (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -42531,40 +42764,37 @@
         "# Offline MADLAD catalog draft workflow\n\nThe legacy `translate_catalog_with_llama.py` entry point now forwards to the MADLAD workflow. Its old Qwen `--model`, `--llama-cli` and auto-approval `--overwrite` behavior is removed. No existing translations are overwritten or reclassified.\n\n`Tools/MADLADCatalogRunner.swift` compiles the exact application MADLAD runtime, scientific protection, language mapping and translation service against actual native llama archives. One process retains its local model across sequential catalog jobs. It uses no remote inference, network client, Ollama, Ask model or test implementation. Each guarded result is written only to a separate unreviewed draft with source/catalog/manifest/runner hashes. Protected printf specifiers are passed intact into the application's protection envelope. Unsupported target tags, invalid resources, changed scientific information and truncated output remain errors. Raw Swift interpolation/plural variation entries require genuine Xcode extraction and are not translated as literal code.\n\nBuild on a host with the Swift compiler and a CPU native CMake build of the vendored llama source (disable optional BLAS/Accelerate/OpenMP backends unless their additional link flags are supplied):\n\n```bash\npython3 Tools/translate_catalog_with_madlad.py --build-only \\\n  --swift /path/to/swiftc --native-llama-build /path/to/llama-build \\\n  --runner /path/to/MADLADCatalogRunner\n```\n\nWith the official converted/checksummed model and generated manifest in a local resource directory:\n\n```bash\npython3 Tools/translate_catalog_with_madlad.py \\\n  --runner /path/to/MADLADCatalogRunner \\\n  --catalog Fruitfolio/Localizable.xcstrings --resources /path/to/resources \\\n  --draft-output /path/to/catalog-es-drafts.json --locales es --limit 10\n```\n\nThe output resumes completed entries only when the exact catalog, manifest and runner hashes match. Changed inputs require a separate draft path. It checkpoints every accepted result and records interrupted/failed processing. Source catalogs stay immutable. A successful exit is not linguistic/clinical acceptance; `runtimeVerified` deliberately remains false because this command does not attest installed-resource provenance, device performance or translation quality. Human/clinical review and a separate explicit reviewed merge remain required. No automatic import/approval tool is provided.\n\nVerification here: the real C/Swift runner compiled/linked successfully against the native CPU archives; its actual missing-resource path returned the original-preserving error with no translated value. The actual repository catalog preflight recorded missing `MADLAD400.manifest.json` without starting inference or altering the catalog. Twenty-four workflow tests pass, including six new orchestration tests using an explicitly named fixture executable; those tests do not execute a translation model. The compiler parsed 237 changed Swift files without syntax errors.\n\nReal T5 inference remains **NOT_RUN**: official weights/tokenizer acquisition is denied by the immutable cloud network policy for huggingface.co. In addition, the application manifest verifier currently requires CryptoKit; this Linux toolchain compiles its explicit rejection branch, while actual verified-model execution requires an Apple host with CryptoKit. No Linux CPU compatibility, actual model output, clinical language equivalence or iPhone memory/thermal claim is made. The previous real Qwen research inference is unrelated to MADLAD acceptance. See MADLAD_VERIFICATION.md and BLOCKERS.md for the exact open gates.\n",
         "# Full bibliographic literals and immutable translation requests\n\nDisplay translation now derives protection from actual source records as well as citation IDs: exact original APA/source text, its semantic-escaped representation, bare DOI identifiers and source URLs remain verbatim. Ordinary source-title words/concepts are deliberately not frozen everywhere in prose. Duplicate/empty literals are removed without altering attribution spelling, case or metadata. Existing numeric/unit/reference/order checks remain.\n\nAsk's current and historical answers, saved Library pages, Guide pages/original-source viewers, Fruit Basket explanations and Hormone Library excerpts pass their actual source records into the common display wrapper. The wrapper's task key includes the resulting literals, and the service receives the captured request's source/literals/language rather than separate live property lookups. No original source record, answer, user note or measurement is rewritten.\n\nThree new portable regressions use an explicitly named text-changing fixture to verify that ordinary prose may change while complete APA author/title text and a bare DOI remain exact, escaped citation variants round-trip, duplicates stay stable, ordinary concept titles stay eligible for translation, and legacy records do not acquire invented attribution. These are protection-pipeline tests, not model/clinical equivalence tests.\n\nVerification:465 portable XCTest +21 Swift Testing passed;470 actual native-linked XCTest +21 Swift Testing passed. Compiler parsed242 changed Swift files without syntax errors. Apple display/source-record propagation and actual selected-language UI remain NOT_RUN. Official MADLAD T5 output, linguistic/clinical equivalence and offline device behavior remain blocked by missing official resources and the Apple/device gate. Literal preservation cannot prove absence of semantic/negation errors; those review gates remain open.\n",
         "Backward-compatibleoptional support snapshot preserves exposedclassification/conceptmap/path/preview+scope. FourAsk captures, actualsavedestination andguidebridgecarryit; fullsaveconceptsretained, excerpt/image-onlyconstructorsomitunsavedconcepts andscopeoriginalfullresponse. Serious noticesinAsk/book/guide/source readings,authoredpages excluded; legacyremainsunknownandfuture/nullbytesprotected. FouractualFoundationcanonical/note/guide/privacy/futuretests+lateactual-enginecontextmetadata assertionspassed portable/native-linked. No packet/privatecontextor missingevidenceedgesinvented. AppleUI/officialmodel/clinicalmeaningNOTverified.",
-        "Missing/paused input translation raises its actual typed error before retrieval instead of labeling the topic unsupported. Existing insufficient/supported-evidence distinctions remain after a successfully prepared query."
+        "Missing/paused input translation raises its actual typed error before retrieval instead of labeling the topic unsupported. Existing insufficient/supported-evidence distinctions remain after a successfully prepared query.",
+        "Recorded/predicted/estimated qualifiers retained verbatim as translation input, actual locale/month model invariant tested. Official translation uncertainty acceptance pending. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T10:00:32.848040+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-local-incoming-question-language-and-session-privacy",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "portable_focused_XCTest_passed": 13,
-          "portable_full_XCTest_passed": 990,
-          "SwiftTesting_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 14,
-          "workflow_passed": 71,
-          "swift_syntax_files": 319,
-          "official_MADLAD_verified": false
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
-          "Apple request/background/locale lifecycle and UI responsiveness",
-          "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
-          "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
-          "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
-          "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
-          "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
-        "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
-        "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
-        "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
-        "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -42628,6 +42858,31 @@
             "Execute actualApple supportmetadata saves/guidecopies/readingnotices withpreview/safety/unavailable/partial/unsupported andselection scopes",
             "Verify translated clinicalmeaning/uncertainty withofficialmodel andnative reviewers; typedenumroundtripsarenotscientifictruth",
             "Preserve onlyexposedconceptsupportmap; fullclaim/evidencegraphnotinventedandrawcontextpacketnotpersisted; retainlegacyunknown/futureprotection andoverallopenacceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Ask-local-incoming-question-language-and-session-privacy",
+          "executed": {
+            "portable_focused_XCTest_passed": 13,
+            "portable_full_XCTest_passed": 990,
+            "SwiftTesting_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 14,
+            "workflow_passed": 71,
+            "swift_syntax_files": 319,
+            "official_MADLAD_verified": false
+          },
+          "not_run": [
+            "Two actual Apple view-model suggestion-source/edited-input and translation-failure draft regressions",
+            "Apple request/background/locale lifecycle and UI responsiveness",
+            "Official MADLAD weights/tokenizer/offline query translation and native-language scientific/safety acceptance"
+          ],
+          "remaining": [
+            "Official MADLAD weights/tokenizer, actual en target compatibility and full offline model translation need real resources and verification.",
+            "Native-language scientific/urgency/negation/meaning review is required; protected-token tests cannot prove free-text semantic fidelity.",
+            "Execute actual Apple view-model suggestion/edited-input/failure-draft tests, language switching, background cancellation and source diagnostic cleanup during route exit.",
+            "Typed-question source language follows the app-language snapshot. Automatic mixed-language detection beyond known app-authored English suggestions is not implemented or certified.",
+            "All478+36+unnumbered requirements remain individually tracked; no whole-language or session acceptance promotion."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -46150,7 +46405,11 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
-        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift"
+        "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -46353,9 +46612,10 @@
         "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
         "Prompt10SavedLibraryTests",
         "Prompt1BBookMotionTests",
-        "Prompt1BSharedLibraryCatalogTests"
+        "Prompt1BSharedLibraryCatalogTests",
+        "Prompt19CalendarEngineTests"
       ],
-      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -46510,38 +46770,37 @@
         "New actual noncanceled held-provider race demonstrates old same-month/context snapshot rejected after epoch changes.28focused XCTest passed. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
         "Two actual production model regressions cover stale held-read/new-load defer and canceled repository admission with successful explicit retry; existing committed-write reconciliation test still passes in80tests. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
         "New actual original-source golden checks7states, complete wording, deterministic presentation, uncertainty anchors, envelope roundtrip and mismatched-role fallback;28tests passed. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json",
-        "Two native methods/3planned launches cover actual forms/background/cover selection/keep/delete and external shared-store deletion. Written NOT_RUN;49+2existing Foundation tests passed. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
+        "Two native methods/3planned launches cover actual forms/background/cover selection/keep/delete and external shared-store deletion. Written NOT_RUN;49+2existing Foundation tests passed. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json",
+        "Three actual new production engine/projection regressions plus87focused/1111full portable and21SwiftTesting passed; Apple/official-model checks unrun. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T18:40:39.853144+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Library-owned-forms-and-shared-deletion-recovery",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
-          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
-          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
-          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
-          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
-          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -47626,6 +47885,29 @@
             "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
             "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
             "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Library-owned-forms-and-shared-deletion-recovery",
+          "executed": {
+            "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+            "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+            "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+            "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+            "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+            "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+          ],
+          "remaining": [
+            "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+            "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+            "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+            "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+            "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -47885,7 +48167,11 @@
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
         "FruitfolioTests/Prompt1BDailyLogViewModelTests.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "FruitfolioTests/Prompt19CalendarEngineTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -48083,9 +48369,10 @@
         "Prompt1BModalAccessibilityTests (2new methods/3launches NOT_RUN)",
         "Prompt10SavedLibraryTests",
         "Prompt1BBookMotionTests",
-        "Prompt1BSharedLibraryCatalogTests"
+        "Prompt1BSharedLibraryCatalogTests",
+        "Prompt19CalendarEngineTests"
       ],
-      "commit_reference": "batch:Library-owned-forms-and-shared-deletion-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:Calendar-selected-locale-and-typed-display-labels (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -48223,38 +48510,37 @@
         "Regression in existing project Swift test source; no external-only assertion or fake Apple SDK. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
         "New regressions are project Swift source; existing native1method/12launch matrix updated and explicitly NOT_RUN. Evidence: development_workflow/DAILY_LOG_OWNED_READS_AND_SHARED_CYCLE_REFRESH.json",
         "Source-golden/production-model regression in existing project Swift tests; unavailable native source environment explicitly skips, never counted passed. Evidence: development_workflow/BODY_BIOLOGY_SOURCE_GROUNDED_SEMANTIC_ROLES.json",
-        "Native tests and fixture changes in project Swift sources; no external-only/fake Apple runtime test. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json"
+        "Native tests and fixture changes in project Swift sources; no external-only/fake Apple runtime test. Evidence: development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json",
+        "New tests live in project Calendar engine Swift tests, exercise actual production model and typed projection; no fake locale/MADLAD inference. Evidence: development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json"
       ],
-      "last_updated": "2026-11-07T18:40:39.853144+00:00",
+      "last_updated": "2026-11-07T19:00:06.708337+00:00",
       "latest_batch_verification": {
-        "batch": "Library-owned-forms-and-shared-deletion-recovery",
+        "batch": "Calendar-selected-locale-and-typed-display-labels",
         "executed": {
-          "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
-          "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
-          "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+          "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+          "full_portable_XCTest": "1111passed,0failures",
+          "Swift_Testing": "21passed,0failures",
+          "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
           "sound_ownership": "0diagnostics"
         },
         "not_run": [
-          "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
-          "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
-          "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
-          "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+          "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+          "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+          "Real-device label length/font/layout/performance acceptance"
         ],
         "remaining": [
-          "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-          "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-          "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-          "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-          "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+          "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+          "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+          "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+          "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-        "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-        "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-        "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-        "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+        "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+        "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+        "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+        "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
       ],
       "prior_batch_verifications": [
         {
@@ -49339,6 +49625,29 @@
             "Verify actual view renders authored role markup with original wording and restrained serious styling on Apple",
             "Verify official translation preserves may/after-ovulation qualifiers, original meaning and role spans",
             "All other unreviewed generated scientific passages and complete cross-application semantic requirements remain incomplete; this is an authored Body Biology component only"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Library-owned-forms-and-shared-deletion-recovery",
+          "executed": {
+            "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
+            "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
+            "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+            "sound_ownership": "0diagnostics"
+          },
+          "not_run": [
+            "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
+            "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
+            "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
+            "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+          ],
+          "remaining": [
+            "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
+            "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
+            "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
+            "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
+            "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "68ba55b3683c49c1a95f7f1885b712006f3116de",
+  "current_HEAD": "5603ac38f4b8f7fe0dea502faa585110dc29ed4d",
   "latest_verified_commit": null,
-  "current_checklist_part": 9,
-  "current_requirement": 394,
-  "current_implementation_batch": "Library-owned-forms-and-shared-deletion-recovery",
+  "current_checklist_part": 6,
+  "current_requirement": 281,
+  "current_implementation_batch": "Calendar-selected-locale-and-typed-display-labels",
   "completed_requirements": [
     206,
     210
@@ -494,12 +494,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/LIBRARY_FORM_ACTIVITY_AND_SHARED_DELETION_RECOVERY.json",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+    "FruitfolioTests/Prompt19CalendarEngineTests.swift",
+    "development_workflow/CALENDAR_SELECTED_LOCALE_AND_TYPED_DISPLAY_LABELS.json",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -513,19 +513,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BLibrary|Prompt10Saved|Prompt1BBook|Prompt10Book'",
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BSharedLibraryCatalogTests'",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt19CalendarEngineTests|Prompt1BCalendarPresentationPolicyTests|Prompt20CoreTests|Prompt1BCanonicalCalendarTests|Prompt1BHormoneCivilDateTests'",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
     "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
   ],
   "last_test_results": {
-    "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
-    "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
-    "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+    "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+    "full_portable_XCTest": "1111passed,0failures",
+    "Swift_Testing": "21passed,0failures",
+    "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
     "sound_ownership": "0diagnostics"
   },
-  "next_exact_implementation_action": "Continue substantive global-language integration gaps in Cycle Calendar date/month/status presentation using selected locale while preserving date keys/measurements; no official MADLAD inference claim.",
-  "updated_at": "2026-11-07T18:40:39.853144+00:00",
+  "next_exact_implementation_action": "Implement required approved-evidence context education for source1221 and original281\u2013286/302/304 using existing research engine and typed logged facts, maintaining privacy/non-diagnostic boundaries; distinguish from static context warnings.",
+  "updated_at": "2026-11-07T19:00:06.708337+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -535,27 +536,26 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_existing_library_book_XCTest": "49passed,0failures; persistence/snapshot/labels/motion/private-fixture domain checks; does not execute new SwiftUI guards",
-      "portable_shared_catalog_XCTest": "2passed,0failures; shared canonical catalog domain checks",
-      "syntax": "335 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
+      "focused_XCTest": "87passed,0failures; selected-locale engine/civil-date/calendar-policy/storage projection",
+      "full_portable_XCTest": "1111passed,0failures",
+      "Swift_Testing": "21passed,0failures",
+      "syntax": "337 Swift files parsed with Swift compiler, 0 with syntax errors. Typechecking/link/runtime NOT verified.",
       "sound_ownership": "0diagnostics"
     },
     "not_run": [
-      "New native Library form/confirmation regression:1method/2planned launches, normal and reduced motion atAXXXL",
-      "New native shared deletion of open book regression:1method/1planned reduced-motion launch in disposable fixture",
-      "Apple SDK build/actual field binding epochs, VoiceOver, popup coverage and callback admission",
-      "Live Reduce Motion change during opening and canonical-artwork color/continuity visual acceptance"
+      "Apple selected Settings language\u2192Calendar/date-sheet/VoiceOver rendering and RTL",
+      "Actual official MADLAD translation of controlled labels/statuses and clinical/native-language acceptance",
+      "Real-device label length/font/layout/performance acceptance"
     ],
     "remaining": [
-      "Execute actual create/rename draft+cover preservation and explicit keep/delete flows on Apple; include cancel paths and queued input events",
-      "Execute shared-store external deletion and ensure shelf becomes interactive rather than dimmed/disabled",
-      "Verify live reduced-motion settlement preserves same selected book/style, no delayed page sound/replayed animation",
-      "Verify all popup/accessibility layers and controls under large text/RTL and after background/uncover",
-      "Foundation persistence/catalog passes do not verify new SwiftUI behavior; existing implemented rows retain their separate manual-acceptance requirements"
+      "Verify actual locale changes propagate immediately through Settings, Calendar, date sheet and accessibility on Apple",
+      "Verify Arabic/RTL labels/date numbers, natural wrapping and protected measurement symbols across all target devices",
+      "Verify official MADLAD accurately translates estimated/recorded qualifiers and reading-type/symptom labels; no synthetic inference substituted",
+      "Raw external annotation strings and private notes remain verbatim by design; full all-feature localization/official language support remain separately incomplete"
     ]
   },
-  "current_checklist_section": "Part 9 \u2014 Localization and MADLAD",
-  "last_recorded_batch_part": 5,
+  "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",
+  "last_recorded_batch_part": 9,
   "last_supplemental_requirements": [],
   "implemented_requirements": [
     9,

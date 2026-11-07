@@ -14,7 +14,13 @@ nonisolated enum Prompt20CalendarProjection {
                 fertileEstimated: false, ovulationEstimated: false, symptomsLogged: summary.hasSymptoms,
                 bbtRecorded: summary.hasBasalTemperature, noteAdded: summary.hasGeneralNote,
                 symptomSummary: summary.symptomNames, temperatureDisplay: summary.hasBasalTemperature ? summary.temperatureDisplay : nil,
-                noteText: summary.hasGeneralNote ? summary.notePreview : nil)
+                noteText: summary.hasGeneralNote ? summary.notePreview : nil,
+                symptomSummaryIsAuthoredUI: true,
+                temperatureDisplayProtectedLiterals: log.temperature.flatMap { reading in
+                    guard summary.hasBasalTemperature else { return nil }
+                    return [Prompt20TemperatureFormatter.string(reading.originalValue, unit: reading.originalUnit)
+                        + reading.originalUnit.symbol]
+                } ?? [])
         }.sorted { $0.key < $1.key }
     }
 }
