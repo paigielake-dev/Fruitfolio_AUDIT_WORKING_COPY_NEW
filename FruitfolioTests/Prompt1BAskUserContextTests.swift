@@ -132,3 +132,68 @@ final class Prompt1BAskUserContextTests: XCTestCase {
     #endif
 
 }
+
+#if DEBUG
+@MainActor
+final class Prompt1BAskContextFixtureIsolationTests: XCTestCase {
+    func testMissingPrivatePreferencesFailsWithoutCreatingAStore() async {
+        let fixture = FruitfolioAskContextRegressionFixture(defaults: nil)
+        XCTAssertNil(fixture.measurements)
+        XCTAssertNotNil(fixture.failureMessage)
+    }
+
+    func testRemountLoadsExactExistingFixtureWithoutAppendingOrRewriting() async throws {
+        let owner = FruitfolioRegressionPreferenceSuite()
+        defer { owner.cleanUp() }
+        let defaults = try XCTUnwrap(owner.defaults)
+        let first = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        let original = try XCTUnwrap(first.measurements?.records.first)
+        XCTAssertEqual(first.measurements?.records.count, 1)
+        let bytes = try XCTUnwrap(defaults.data(forKey: FruitfolioAskContextRegressionFixture.storageKey))
+        let second = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        XCTAssertNil(second.failureMessage)
+        XCTAssertEqual(second.measurements?.records.count, 1)
+        XCTAssertEqual(second.measurements?.records.first?.id, original.id)
+        XCTAssertEqual(second.measurements?.records.first?.result, "12.50")
+        XCTAssertEqual(second.measurements?.records.first?.unit, "ng/mL")
+        XCTAssertEqual(defaults.data(forKey: FruitfolioAskContextRegressionFixture.storageKey), bytes)
+    }
+
+    func testDeletedFixtureRemainsDeletedAfterRemount() async throws {
+        let owner = FruitfolioRegressionPreferenceSuite()
+        defer { owner.cleanUp() }
+        let defaults = try XCTUnwrap(owner.defaults)
+        let first = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        let store = try XCTUnwrap(first.measurements)
+        let id = try XCTUnwrap(store.records.first?.id)
+        try store.delete(id: id)
+        let bytes = try XCTUnwrap(defaults.data(forKey: FruitfolioAskContextRegressionFixture.storageKey))
+        let remounted = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        XCTAssertNil(remounted.failureMessage)
+        XCTAssertEqual(remounted.measurements?.records.count, 0)
+        XCTAssertEqual(defaults.data(forKey: FruitfolioAskContextRegressionFixture.storageKey), bytes)
+    }
+
+    func testProtectedPrivateObjectsFailWithoutReplacement() async throws {
+        let owner = FruitfolioRegressionPreferenceSuite()
+        defer { owner.cleanUp() }
+        let defaults = try XCTUnwrap(owner.defaults)
+        let key = FruitfolioAskContextRegressionFixture.storageKey
+        let seeded = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        XCTAssertNotNil(seeded.measurements)
+        var future = try XCTUnwrap(JSONSerialization.jsonObject(with: try XCTUnwrap(defaults.data(forKey: key))) as? [[String: Any]])
+        future[0]["futureField"] = NSNull()
+        let futureData = try JSONSerialization.data(withJSONObject: future, options: .sortedKeys)
+        for data in [futureData, Data("{\"futureSchema\":99,\"retain\":null}".utf8)] {
+            defaults.set(data, forKey: key)
+            let protected = FruitfolioAskContextRegressionFixture(defaults: defaults)
+            XCTAssertNil(protected.measurements)
+            XCTAssertNotNil(protected.failureMessage)
+            XCTAssertEqual(defaults.data(forKey: key), data)
+        }
+        defaults.set("foreign non-data object", forKey: key)
+        XCTAssertNil(FruitfolioAskContextRegressionFixture(defaults: defaults).measurements)
+        XCTAssertEqual(defaults.string(forKey: key), "foreign non-data object")
+    }
+}
+#endif

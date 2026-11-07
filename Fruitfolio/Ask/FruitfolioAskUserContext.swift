@@ -111,3 +111,39 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
         return snapshot
     }
 }
+
+#if DEBUG
+/// Uses only caller-supplied regression preferences. Missing/protected storage
+/// fails closed; remounting never overwrites records or resurrects a deletion.
+@MainActor
+final class FruitfolioAskContextRegressionFixture {
+    static let storageKey = "fruitfolio.askContextQA.measurements.v1"
+    let measurements: FruitfolioHormoneMeasurementStore?
+    let failureMessage: String?
+    init(defaults: UserDefaults?) {
+        let failure = "Ask regression environment could not be created; original data was preserved."
+        guard let defaults else {
+            measurements = nil; failureMessage = failure; return
+        }
+        let candidate = FruitfolioHormoneMeasurementStore(defaults: defaults, key: Self.storageKey)
+        guard !candidate.storageUnreadable, candidate.storageProtectionReason == nil else {
+            measurements = nil; failureMessage = failure; return
+        }
+        do {
+            if defaults.object(forKey: Self.storageKey) == nil {
+                var fixture = FruitfolioHormoneMeasurement()
+                fixture.hormone = .progesterone; fixture.result = "12.50"; fixture.unit = "ng/mL"
+                fixture.notes = "QA explicitly selected fixture context"
+                try candidate.save(fixture, locale: Locale(identifier: "en_US"))
+            }
+            measurements = candidate; failureMessage = nil
+        } catch {
+            measurements = nil; failureMessage = failure
+        }
+    }
+}
+#if canImport(Combine)
+import Combine
+extension FruitfolioAskContextRegressionFixture: ObservableObject {}
+#endif
+#endif

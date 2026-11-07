@@ -106,34 +106,34 @@ struct FruitfolioAskContextPicker: View {
 
 #if DEBUG
 struct FruitfolioAskContextRegressionHarness: View {
+    @EnvironmentObject private var preferences: FruitfolioRegressionPreferenceSuite
+    var body: some View {
+        FruitfolioAskContextRegressionContent(defaults: preferences.defaults)
+    }
+}
+
+private struct FruitfolioAskContextRegressionContent: View {
     @EnvironmentObject private var settings: SettingsStore
-    @StateObject private var measurements: FruitfolioHormoneMeasurementStore
-    @StateObject private var model: Prompt09AskViewModel
-    private let suite: String
-    init() {
-        let suite = "fruitfolio.askContextQA." + UUID().uuidString
-        self.suite = suite
-        let store = FruitfolioHormoneMeasurementStore(defaults: UserDefaults(suiteName: suite) ?? .standard, key: suite)
-        var fixture = FruitfolioHormoneMeasurement()
-        fixture.hormone = .progesterone; fixture.result = "12.50"; fixture.unit = "ng/mL"
-        fixture.notes = "QA explicitly selected fixture context"
-        try? store.save(fixture, locale: Locale(identifier: "en_US"))
-        _measurements = StateObject(wrappedValue: store)
-        _model = StateObject(wrappedValue: Prompt09AskViewModel.paperRegressionFixture())
+    @StateObject private var fixture: FruitfolioAskContextRegressionFixture
+    @StateObject private var model = Prompt09AskViewModel.paperRegressionFixture()
+    init(defaults: UserDefaults?) {
+        _fixture = StateObject(wrappedValue: FruitfolioAskContextRegressionFixture(defaults: defaults))
     }
     var body: some View {
-        Prompt09AskView(viewModel: model, measurements: measurements)
-            .onAppear {
-                let args = ProcessInfo.processInfo.arguments
-                guard args.contains("-fruitfolioAskControlsQA") else { return }
-                settings.language = args.contains("-fruitfolioAskControlsQAArabic") ? .arabic : .french
-                settings.translationPausedForMemoryPressure = true
-                settings.reduceAnimationOverride = args.contains("-fruitfolioAskControlsQAReduceMotion")
+        Group {
+            if let measurements = fixture.measurements {
+                Prompt09AskView(viewModel: model, measurements: measurements)
+            } else {
+                Text(verbatim: fixture.failureMessage ?? "Ask regression environment unavailable.")
             }
-            .onDisappear {
-                UserDefaults.standard.removeObject(forKey: suite)
-                UserDefaults.standard.removePersistentDomain(forName: suite)
-            }
+        }
+        .onAppear {
+            let args = ProcessInfo.processInfo.arguments
+            guard args.contains("-fruitfolioAskControlsQA") else { return }
+            settings.language = args.contains("-fruitfolioAskControlsQAArabic") ? .arabic : .french
+            settings.translationPausedForMemoryPressure = true
+            settings.reduceAnimationOverride = args.contains("-fruitfolioAskControlsQAReduceMotion")
+        }
     }
 }
 #endif
