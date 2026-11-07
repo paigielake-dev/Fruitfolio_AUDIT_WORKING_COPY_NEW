@@ -1,0 +1,165 @@
+{
+  "base_commit": "c7a9c0e0f7c1b761877533bf9afee9b2e959f8b4",
+  "scope": "Individual source implementation review; no Apple runtime/SDK verification inferred from source or Foundation tests",
+  "style_inventory": [
+    {
+      "type": "CutePopButtonStyle",
+      "file": "Fruitfolio/Hub/CutePopButtonStyle.swift",
+      "line": 5,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "5de3d34e1888520dee7497c90f114caa2e6757636584b70d65388a5116132cd4"
+    },
+    {
+      "type": "Prompt12NavigationRowPopStyle",
+      "file": "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+      "line": 202,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "1ac2a37df4385f2c374aa6d9dae867044c50eaadf1622ae26db4f0fe0d1e6047"
+    },
+    {
+      "type": "Prompt23SoftPressButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Symptoms/Prompt23SymptomsView.swift",
+      "line": 309,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "1784b19e50424da639b8ac0344140753b3bb2b9c621e9165764ac7ef85f635bc"
+    },
+    {
+      "type": "Prompt24SoftPressButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+      "line": 1144,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "06827c431bcdd845f23a721cc63459738095ad0bb7fc131a94381b38d46ac584"
+    },
+    {
+      "type": "Prompt15SoftPressButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+      "line": 1119,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "fc93f20a2b10a2f36fa61e6a1c227731652a3a5a2040e8a4e9ce2fbfdf5f33c4"
+    },
+    {
+      "type": "Prompt15BubblePopButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
+      "line": 1130,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "fc93f20a2b10a2f36fa61e6a1c227731652a3a5a2040e8a4e9ce2fbfdf5f33c4"
+    },
+    {
+      "type": "Prompt19DatePressStyle",
+      "file": "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+      "line": 1927,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "bb0117a927daee3f3487cd52c07f4a4a4f661daa547729c382d0ea1be26c5410"
+    },
+    {
+      "type": "Prompt19GentlePressStyle",
+      "file": "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+      "line": 1941,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "bb0117a927daee3f3487cd52c07f4a4a4f661daa547729c382d0ea1be26c5410"
+    },
+    {
+      "type": "Prompt25SoftPressButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+      "line": 580,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "8215bc2eb71d43586621d651f2e1a479c0ba4be34eee5aea95ddb94532b5a534"
+    },
+    {
+      "type": "Prompt26SoftPressButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+      "line": 509,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "ef45de22414e8c85e740e48a06b87eb6ebe4477c2cd3c2e24743989caba23922"
+    },
+    {
+      "type": "Prompt26PaperButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+      "line": 518,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "ef45de22414e8c85e740e48a06b87eb6ebe4477c2cd3c2e24743989caba23922"
+    },
+    {
+      "type": "Prompt21SoftPressButtonStyle",
+      "file": "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
+      "line": 375,
+      "inspected_behavior": "makeBody delegates to the one canonical effect; no independent press scale/spring",
+      "source_sha256": "badaffff06221a94e2e4c56a0b3efa8ded6ec7384950f276b73c84c4a2061c62"
+    }
+  ],
+  "remaining_plain_styles": [
+    {
+      "file": "Fruitfolio/Global Controls/Prompt08ControlGallery.swift",
+      "line": 101
+    },
+    {
+      "file": "Fruitfolio/Global Controls/Prompt08ControlGallery.swift",
+      "line": 192
+    }
+  ],
+  "plain_style_scope": "Unreferenced developer control gallery only; no production route constructs it",
+  "shared_authority": "FruitfolioButtonPopEffect",
+  "source_proof": {
+    "application_entry": "One WindowGroup -> ContentView -> Prompt03SkeletonView",
+    "root_default": "Skeleton supplies CutePopButtonStyle for unstyled application Buttons",
+    "feature_overrides": "All12declared ButtonStyle types delegate to the same effect; zero independent style press transforms/springs",
+    "motion_authority": "Effect ORs explicit flag, OS accessibility and shell projection of existing app setting; no separate persisted preference",
+    "actions": "Effect changes only visual View state; no callback/nav scheduling or sound producer exists in the style"
+  },
+  "requirements": [
+    {
+      "sequence": 9,
+      "requirement": "Apply the same cute button-pop animation across the entire application.",
+      "subcondition_review": [
+        {
+          "condition": "One animation vocabulary across app-controlled Button views",
+          "source_satisfaction": "The effect owns scale0.88/offset5/rotation-1.2/brightness and one spring; every declared style delegates and the application root supplies it as default."
+        },
+        {
+          "condition": "Feature overrides do not replace canonical interaction",
+          "source_satisfaction": "All12style bodies individually inspected, including preserved paper chrome; no independent press scale/spring remains."
+        },
+        {
+          "condition": "Existing motion authority remains respected",
+          "source_satisfaction": "Explicit/system/app flags reach the same effect; standalone controls still read OS accessibility without requiring another environment object."
+        }
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining_acceptance_conditions": [
+        "Apple SDK build and hosted geometry test execution",
+        "Actual press/cancel/live setting/native menu and iPhone/iPad acceptance; platform-owned presentation remains an Apple acceptance condition"
+      ],
+      "not_claimed": [
+        "Rendered smoothness, touch latency, physical sound and all other control artwork requirements are not certified by this review"
+      ]
+    },
+    {
+      "sequence": 10,
+      "requirement": "Include Cycle Tracker buttons, which were specifically identified as inconsistent.",
+      "subcondition_review": [
+        {
+          "condition": "Cycle-specific style families use the canonical button interaction",
+          "source_satisfaction": "All10Cycle style bodies inspected:calendar2,shell2,body biology,symptoms,trends,fertilization,pregnancy2 delegate to the same effect."
+        },
+        {
+          "condition": "Cycle Buttons without explicit styles receive canonical behavior",
+          "source_satisfaction": "Cycle production route is under the Skeleton root default; remaining calendar/day/butterfly/science plain overrides were changed to CutePopButtonStyle."
+        },
+        {
+          "condition": "Preserve existing artwork/layout/state/action ownership",
+          "source_satisfaction": "Adapters retain their existing signatures; paper chrome remains around its original label. Changes replace only press effects and do not mutate cycle records or prediction inputs."
+        }
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "MANUAL_VERIFICATION_REQUIRED",
+      "remaining_acceptance_conditions": [
+        "Execute Cycle calendar/onboarding/shell/logging/symptom/body control interactions on Apple",
+        "VoiceOver/large text/RTL/Reduce Motion/live setting and actual app SDK acceptance"
+      ],
+      "not_claimed": [
+        "No source inventory is counted as a passed Apple animation/UI test."
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T09:15:31.018706+00:00",
+  "updated_at": "2026-11-07T09:18:50.399848+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11102,6 +11102,44 @@
         ]
       },
       "timestamp": "2026-11-07T09:15:31.018706+00:00"
+    },
+    {
+      "batch": "Canonical-button-individual-implementation-review",
+      "requirements": [
+        9,
+        10
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "Inspected all12actual ButtonStyle bodies and root/app route chain",
+        "Confirmed only unreferenced developer-gallery plain overrides remain",
+        "Per-requirement subcondition review recorded with source hashes",
+        "git diff --check"
+      ],
+      "results": {
+        "source_implementation_reviews": 2,
+        "ButtonStyle_bodies_individually_inspected": 12,
+        "Cycle_style_bodies_individually_inspected": 10,
+        "independent_press_transforms_remaining": 0
+      },
+      "verification": {
+        "executed": {
+          "source_implementation_reviews": 2,
+          "ButtonStyle_bodies_individually_inspected": 12,
+          "Cycle_style_bodies_individually_inspected": 10,
+          "independent_press_transforms_remaining": 0
+        },
+        "not_run": [
+          "Apple SDK build and shared hosted geometry regression",
+          "Actual Cycle/all-app press, cancellation, native-menu, live Reduce Motion and device acceptance"
+        ],
+        "remaining": [
+          "Whole-source implementation is complete for the2narrow animation requirements; Apple rendering/SDK acceptance remains pending",
+          "No passed Foundation suite/source inventory is treated as Apple animation verification",
+          "Other control-artwork, sound/navigation latency and application-wide motion conditions are distinct original requirements and remain individually open"
+        ]
+      },
+      "timestamp": "2026-11-07T09:18:50.399848+00:00"
     }
   ]
 }
