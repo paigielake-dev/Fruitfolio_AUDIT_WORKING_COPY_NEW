@@ -10,6 +10,8 @@ struct Prompt03SkeletonView: View {
     @StateObject private var appState: AppState
     @StateObject private var navigation: NavigationCoordinator
     @StateObject private var settings: SettingsStore
+    @StateObject private var translationLifecycle: FruitfolioTranslationLifecycleOwner
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var audioManager: AudioManager
     @StateObject private var motionPreferences: MotionPreferences
     @StateObject private var popupCoordinator: PopupCoordinator
@@ -44,6 +46,9 @@ struct Prompt03SkeletonView: View {
 
         _settings = StateObject(
             wrappedValue: settingsStore
+        )
+        _translationLifecycle = StateObject(
+            wrappedValue: FruitfolioTranslationLifecycleOwner(settings: settingsStore)
         )
 
         _appState = StateObject(
@@ -113,11 +118,13 @@ struct Prompt03SkeletonView: View {
                     .ignoresSafeArea()
             )
             .onAppear {
+                syncTranslationActivity()
                 syncMotionPreferences()
                 navigation.onNavigationTransition = {
                     audioManager.play(.pageTurn)
                 }
             }
+            .onChange(of: scenePhase) { _, _ in syncTranslationActivity() }
             .onChange(
                 of: systemReduceMotion
             ) {
@@ -129,6 +136,12 @@ struct Prompt03SkeletonView: View {
                 syncMotionPreferences()
             }
             #if canImport(UIKit)
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                translationLifecycle.setActive(false)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                syncTranslationActivity()
+            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
                 settings.translationPausedForMemoryPressure = true
                 Task {
@@ -149,6 +162,14 @@ struct Prompt03SkeletonView: View {
         .environmentObject(prompt27AContextStore)
         .environment(\.locale, Locale(identifier: settings.language.localeIdentifier))
         .environment(\.layoutDirection, rootLayoutDirection)
+    }
+
+    private func syncTranslationActivity() {
+        #if canImport(UIKit)
+        translationLifecycle.setActive(scenePhase == .active && UIApplication.shared.applicationState == .active)
+        #else
+        translationLifecycle.setActive(scenePhase == .active)
+        #endif
     }
 
     @ViewBuilder

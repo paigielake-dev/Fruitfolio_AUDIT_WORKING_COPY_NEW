@@ -24482,7 +24482,10 @@
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/EXCERPT_READING_AID_TRANSLATION.md",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md"
+        "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24516,7 +24519,7 @@
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:Ask-controlled-greeting-and-education-notice-translation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -24542,35 +24545,77 @@
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
         "Actual exact-source cloze now offers separatelylabeled optionalreading aid through existing scientific/MADLAD display pipeline. Originalcloze/options/correctID/history/savedlesson unchanged. Protectsblank, allanswerliteralsincludingabsent, sourceIDs/citations; noomittedanswerappendtoinference. Threeactualservice/envelope protocolfixture tests verify masking/restoration+quantityDOI/source/save and rejectdroppedblank/insertedanswer. FourexistingAppleUI vectors extendedNOT_RUN. Difficulty/citationdisclosurefixedcopylocalized. Full908/930+21pass; no officialmodel/clinical/wholeitem certification.",
-        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations."
+        "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:06:26.609862+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-controlled-greeting-and-education-notice-translation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 919,
-          "native_CPU_XCTest": 943,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_gate_tests": 1
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+              "bytes": 160,
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+              "bytes": 106,
+              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
         },
         "not_run": [
-          "Apple genuine typecheck and greeting/disclaimer rendering, VoiceOver, RTL, Dynamic Type and paused-inference UI",
-          "Official MADLAD inference and native-language safety/uncertainty/clinical review"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-          "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-          "Complete remaining original requirements independently; no whole-item promotion from this batch"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple conversation paths with selected language and fallback, retaining citations and saved originals",
-        "Verify official model/tokenizer linguistic and clinical meaning; no synthetic inference accepted as official",
-        "Complete remaining original requirements independently; no whole-item promotion from this batch"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -24623,7 +24668,11 @@
         "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
         "Fruitfolio/Localizable.xcstrings",
         "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md",
-        "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md"
+        "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24657,7 +24706,7 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift"
       ],
-      "commit_reference": "batch:Translation-source-and-protection-byte-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -24684,35 +24733,77 @@
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
         "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.",
-        "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof."
+        "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:12:39.369105+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Translation-source-and-protection-byte-budgets",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 922,
-          "native_CPU_XCTest": 946,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_byte_budget_regressions": 2
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+              "bytes": 160,
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+              "bytes": 106,
+              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
         },
         "not_run": [
-          "Apple genuine typecheck and actual too-long fallback/retry/accessibility across locales",
-          "OfficialMADLAD weights/tokenizer, device memory/thermal/latency and scientific native-language review"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-          "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-          "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-        "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-        "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -25254,7 +25345,11 @@
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "development_workflow/ASK_FIXED_CONTROL_COVERAGE.md",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md"
+        "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25285,7 +25380,7 @@
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
         "FruitfolioTests/Prompt1BAskUserContextTests.swift"
       ],
-      "commit_reference": "batch:Ask-typed-context-notices-and-protected-counts (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25311,60 +25406,77 @@
         "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.",
         "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
         "ActualAsk nativeprompt forwards originalbinding throughfixedpromptowner. Heading/help/subtitle/search/save-status nowshared selected-language fixedcopy; headingwraps, fonts/colorspreserved andFruitsofLife.xo protected. DEBUGopt-in paused French/Arabic/ReduceMotion fixture and4nativeUIvectors typeoriginalquestion/opencloseactualHelp/checkbounds+identity/capture,NOT_RUN. FiveEnglishfallbackkeys,noinventedforeigntranslations. Foundation/native runs do not typecheck SwiftUI or execute new UI.",
-        "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof."
+        "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:21:01.764587+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-typed-context-notices-and-protected-counts",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 925,
-          "native_CPU_XCTest": 949,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_regressions": 3,
-          "extended_Apple_UI_tests": 1,
-          "extended_Apple_UI_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_context_notice_portable.log": {
-              "bytes": 293781,
-              "sha256": "e338f22b20e045f6161090a7d420b76645352f062e89ca9edd7165ee7943ee90"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_context_notice_native.log": {
-              "bytes": 1209775,
-              "sha256": "4dbe8f24a315e7fc07eb5bfbb17bc882cb2a52f3c2e23aca393f6e0610d23330"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_context_notice_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "dc9ae8c0d70e6aab764701dcd2804f3241f9b9a1761a69618ab17ce2ea1bfc45"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_context_notice_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_context_notice_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Extended actual Apple attach/cancel/background/remove/reopen-record UI test",
-          "Apple typecheck, VoiceOver/RTL/count/rendering, canonicalbuttonlayout and physicalaudio",
-          "OfficialMADLAD weights/tokenizer and native-language scientific/privacy/cancellation meaning review"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple attachment lifecycle and original laboratory-field identity, noticefallback and accessible count",
-          "Review officialmodel translations and complete per-feature/writing-system behavior; literal protection is not semantic acceptance",
-          "Fix actual inactive Ask request ownership next; retain external verification blockers and no whole-item certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple attachment lifecycle and original laboratory-field identity, noticefallback and accessible count",
-        "Review officialmodel translations and complete per-feature/writing-system behavior; literal protection is not semantic acceptance",
-        "Fix actual inactive Ask request ownership next; retain external verification blockers and no whole-item certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -25418,7 +25530,10 @@
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md",
         "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md",
-        "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md"
+        "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25455,7 +25570,7 @@
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift"
       ],
-      "commit_reference": "batch:Translation-source-and-protection-byte-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25483,35 +25598,77 @@
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.",
         "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.",
-        "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof."
+        "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:12:39.369105+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Translation-source-and-protection-byte-budgets",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 922,
-          "native_CPU_XCTest": 946,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_byte_budget_regressions": 2
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+              "bytes": 160,
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+              "bytes": 106,
+              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
         },
         "not_run": [
-          "Apple genuine typecheck and actual too-long fallback/retry/accessibility across locales",
-          "OfficialMADLAD weights/tokenizer, device memory/thermal/latency and scientific native-language review"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-          "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-          "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-        "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-        "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -25571,7 +25728,10 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25607,7 +25767,7 @@
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25634,68 +25794,77 @@
         "Actual moving fruit and standalone stars use one shared-state image accessibility translation owner with complete descriptions/plain semantic labels/truthful status hints. Classification supplies its existing full marker description to that owner instead of nested translation states. Keys exclude frame coordinates and counts. Twenty English keys preserve 765 prior entries. Four Apple layout-only object cases added but NOT_RUN; no art, science, geometry or physics edits.",
         "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
         "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -25743,7 +25912,15 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25773,9 +25950,10 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -25797,68 +25975,77 @@
         "Actualnative vocabulary-only Cmodel verifies targettag before tensorload andfreesonallscopeexits; fullmodelcheckretained. Bounded512negative tags +verifiedchecksum/headerdescriptor cache belongtoresourceepoch, clearedonrelease; no source/results cached. Baseline2nativecases4assertfails; native3focusedpassed. Final942native includes2newcases proving tensor-freeGGUF rejection, zero retainedscopedhandles/offmain and epochcache/retrychecks. Full918/942+21pass. Syntheticuntrainedfixtures NOT officialMADLAD or languagequality. 400\u2013408existingselector evidencecarriedforwardwithindividualexternalacceptance, notcertified.",
         "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.",
         "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -26073,7 +26260,14 @@
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
-        "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md"
+        "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26114,9 +26308,10 @@
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
-        "FruitfolioTests/Prompt1BAskUserContextTests.swift"
+        "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
       ],
-      "commit_reference": "batch:Ask-typed-context-notices-and-protected-counts (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -26141,60 +26336,77 @@
         "Fixed statistic labels use shared control translation, integers/fractions/signed scores use display-only Foundation locale formatting and never enter inference. Failure copy preserves serious/story choice; serious retry omits heart. Ending fruit is an explicit whole-name semantic anchor within a full sentence. Two Foundation formatting regressions across all locales and integer limits pass; eight Apple UI ledger/readback/retry scenarios added but unrun. Real QA model/store are observed. Twenty-seven English-only keys preserve 681 prior entries.",
         "Shared original-source disclosure and memory-retry use canonical compact wrapping cue/motion-owned pills, explicit show/hide and selected state. Saved/source/origin data preserved. Genuine temporary nonclinical catalog fixture resolves protected markup through production service while inference paused; default bundle remains main and bundle path joins request key. Eight Apple size/RTL/mute/motion UI scenarios added but unrun. Two English-only keys preserve 708 prior entries.",
         "Preserved all ten actual title/body pairs and page-five demo in one ordered Foundation catalog, with actual source-copy comparison receipt. Title/body use shared translation; locale-formatted counter never enters inference. Canonical skip preserves existing skip-to-rules/completion behavior. Eight Apple full-progression/skip/Arabic fallback/motion UI cases added but unrun. Twenty-one English-only keys preserve all 710 prior catalog entries.",
-        "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof."
+        "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:21:01.764587+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-typed-context-notices-and-protected-counts",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 925,
-          "native_CPU_XCTest": 949,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_regressions": 3,
-          "extended_Apple_UI_tests": 1,
-          "extended_Apple_UI_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_context_notice_portable.log": {
-              "bytes": 293781,
-              "sha256": "e338f22b20e045f6161090a7d420b76645352f062e89ca9edd7165ee7943ee90"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_context_notice_native.log": {
-              "bytes": 1209775,
-              "sha256": "4dbe8f24a315e7fc07eb5bfbb17bc882cb2a52f3c2e23aca393f6e0610d23330"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_context_notice_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "dc9ae8c0d70e6aab764701dcd2804f3241f9b9a1761a69618ab17ce2ea1bfc45"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_context_notice_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_context_notice_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
             }
           }
         },
         "not_run": [
-          "Extended actual Apple attach/cancel/background/remove/reopen-record UI test",
-          "Apple typecheck, VoiceOver/RTL/count/rendering, canonicalbuttonlayout and physicalaudio",
-          "OfficialMADLAD weights/tokenizer and native-language scientific/privacy/cancellation meaning review"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple attachment lifecycle and original laboratory-field identity, noticefallback and accessible count",
-          "Review officialmodel translations and complete per-feature/writing-system behavior; literal protection is not semantic acceptance",
-          "Fix actual inactive Ask request ownership next; retain external verification blockers and no whole-item certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple attachment lifecycle and original laboratory-field identity, noticefallback and accessible count",
-        "Review officialmodel translations and complete per-feature/writing-system behavior; literal protection is not semantic acceptance",
-        "Fix actual inactive Ask request ownership next; retain external verification blockers and no whole-item certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -26257,7 +26469,13 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26304,7 +26522,7 @@
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -26330,68 +26548,77 @@
         "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -26457,7 +26684,11 @@
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
         "Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyView.swift",
-        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift"
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26507,7 +26738,7 @@
         "FruitfolioTests/Prompt1BScientificArtSizingTests.swift (unchanged; pure parent suite coverage only)",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift (five genuine parent-tested cases; unchanged/not rerun UI batch)"
       ],
-      "commit_reference": "batch:Game-home-scroll-and-native-topic-fixed-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -26545,33 +26776,77 @@
         "Shared canonical science image accessible description now uses existing keyed control translation with protected present medical abbreviations and source/machine/unavailable hints. Missing-art state retains canonical description and localized fixed status. Existing image constructors, plate sizing and no-hit-testing unchanged; five genuine callers/sizing sources byte-preserved with SHA receipt. One English addition preserves947 old entries,948 total. Apple VoiceOver/medical description accuracy unverified.",
         "Actual Body Biology fallback ovary uses shared canonical full-canvas renderer with identical asset/description/230width cap. Original qualified estimate/context/illustration/fimbriae source paragraphs use serious long-form semantic translation; fixed loading/context headings use compact owner. English-only overrides removed where they hid translated source. Engine/loader/models byte-identical with SHA receipt; no biological wording, phase inference, citations or assets changed. One English addition preserves948 entries,949total.",
         "Actual LifeBridge missing-content/privacy/relationship explanations use serious source translation; fixed heading/link/date metadata labels use compact owner. Approved title/URL/version remain verbatim; dates native-formatted separately from translated labels. Brand literals protected in relevant labels/text. Back requires active visible owner; native Links disabled when inactive/shared-popup covered. Reviewed destinations and validator byte-preserved, no company facts/private context supplied. Seven English additions preserve949 entries,956 total; actual approved snapshots/Apple link behavior remain unverified.",
-        "Existing inventory home/topic literals now use shared semantic fixed translation; raw topic binding/axis/identifier unchanged via native helper. Home uses bounded viewport ScrollView/minHeight, preserving normal spacing and scrolling large text. Actual private game harness adds home mode; four English/paused-French \u00d7 Reduce Motion launches written with portrait/landscape controls and native exact topic input. Two English additions preserve956 entries,958 total. Exact revised-copy320\u2013322 ambiguity documented and asynchronous clarification pending; no revised-copy certification. Game model/controller/research byte-preserved."
+        "Existing inventory home/topic literals now use shared semantic fixed translation; raw topic binding/axis/identifier unchanged via native helper. Home uses bounded viewport ScrollView/minHeight, preserving normal spacing and scrolling large text. Actual private game harness adds home mode; four English/paused-French \u00d7 Reduce Motion launches written with portrait/landscape controls and native exact topic input. Two English additions preserve956 entries,958 total. Exact revised-copy320\u2013322 ambiguity documented and asynchronous clarification pending; no revised-copy certification. Game model/controller/research byte-preserved.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-06T22:00:45.995171+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Game-home-scroll-and-native-topic-fixed-copy",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed final edit",
-          "source": "Game data/controller/research SHA unchanged; raw topic binding, original literal words/art retained",
-          "catalog": "956 preserved plus2English additions"
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 60,
+          "syntax_files": 311,
+          "control_sound_ownership_findings": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+              "bytes": 160,
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+              "bytes": 106,
+              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
         },
         "not_run": [
-          "Four new Apple game home/native topic launches, portrait/landscape \u00d7 English/paused-French/Reduce Motion",
-          "Actual home scroll/frame/native keyboard and VoiceOver behavior",
-          "Exact revised founder wording320\u2013322 not individually established from review notes"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Resolve exact revised home/How It Works/topic copy; current inventory wording preserved, broad old evidence not completion proof",
-          "Run all4actual Apple home/viewport/native topic tests and verify no private input enters translation",
-          "Official model/native-language/clinical and whole interaction/device acceptance remain open"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Resolve exact revised home/How It Works/topic copy; current inventory wording preserved, broad old evidence not completion proof",
-        "Run all4actual Apple home/viewport/native topic tests and verify no private input enters translation",
-        "Official model/native-language/clinical and whole interaction/device acceptance remain open"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -26634,7 +26909,13 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26682,7 +26963,7 @@
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -26712,68 +26993,77 @@
         "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -26802,7 +27092,19 @@
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26820,74 +27122,83 @@
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "ActualAsk nativeprompt forwards originalbinding throughfixedpromptowner. Heading/help/subtitle/search/save-status nowshared selected-language fixedcopy; headingwraps, fonts/colorspreserved andFruitsofLife.xo protected. DEBUGopt-in paused French/Arabic/ReduceMotion fixture and4nativeUIvectors typeoriginalquestion/opencloseactualHelp/checkbounds+identity/capture,NOT_RUN. FiveEnglishfallbackkeys,noinventedforeigntranslations. Foundation/native runs do not typecheck SwiftUI or execute new UI.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -29516,7 +29827,9 @@
         "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "development_workflow/TRANSLATION_OVERFLOW_ADMISSION.md",
-        "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md"
+        "development_workflow/TRANSLATION_INPUT_BYTE_BUDGETS.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29571,7 +29884,7 @@
         "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift"
       ],
-      "commit_reference": "batch:Translation-source-and-protection-byte-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -29615,35 +29928,77 @@
         "Shared original-source disclosure and memory-retry use canonical compact wrapping cue/motion-owned pills, explicit show/hide and selected state. Saved/source/origin data preserved. Genuine temporary nonclinical catalog fixture resolves protected markup through production service while inference paused; default bundle remains main and bundle path joins request key. Eight Apple size/RTL/mute/motion UI scenarios added but unrun. Two English-only keys preserve 708 prior entries.",
         "Preserved all ten actual title/body pairs and page-five demo in one ordered Foundation catalog, with actual source-copy comparison receipt. Title/body use shared translation; locale-formatted counter never enters inference. Canonical skip preserves existing skip-to-rules/completion behavior. Eight Apple full-progression/skip/Arabic fallback/motion UI cases added but unrun. Twenty-one English-only keys preserve all 710 prior catalog entries.",
         "Actual service bounds independent overflow at64 tasks with actor-atomic admission; typed capacity error retains original through existing display fallback. Shared32flights/64waiters remain independent and usable. New actual-service protocol scheduling regression saturates independent path, rejects before runtime call, retains shared owners, releases/cancels and retries. Not model output or RSS/clinical acceptance.",
-        "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof."
+        "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:12:39.369105+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Translation-source-and-protection-byte-budgets",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 922,
-          "native_CPU_XCTest": 946,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_byte_budget_regressions": 2
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
+          "log_receipts": {
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
+              "bytes": 160,
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
+              "bytes": 106,
+              "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
+              "bytes": 5,
+              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+            }
+          }
         },
         "not_run": [
-          "Apple genuine typecheck and actual too-long fallback/retry/accessibility across locales",
-          "OfficialMADLAD weights/tokenizer, device memory/thermal/latency and scientific native-language review"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-          "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-          "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple too-long display path, preserving complete original and selections/saved content",
-        "Profile peakdevice memory with officialmodel; source/task budgets do not certify aggregateRSS or context fit",
-        "Verify actualofficial offline inference and clinical/scientific translation meaning; keep external blockers explicit"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -31062,7 +31417,16 @@
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -31095,7 +31459,7 @@
         "FruitfolioTests/Prompt1BAskPaperLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Replaced the two remaining native measurement confirmation dialogs (one/all deletion and dirty-editor discard) with owned shared taped-white requests. The existing editor native sheet now has its own PresentedPopupHost above the sheet, preventing presentation behind it/double root hosts. Shared canonical blur/dim/hit/VoiceOver exclusion and Reduce Motion govern these requests. Shared paper actions now use the canonical control pill and its single soft-pop owner rather than plain raw buttons/manual cue calls. Paper message focus is requested after mounting and guarded by the current request identity/cancellation; translation disclosure/retry controls remain separate accessible children.\n\nThe actual Foundation FruitfolioOwnedPopupSession owns one queued/current request, cancels only that request on departure, ignores queued/old/replaced/dismissing actions, and keeps the first confirmation through rapid repeated presses. Its closing identity remains owned until real dismissal finishes, avoiding the deduplication race that could otherwise drop a replacement. Escape is cancellation and cannot turn into confirmation. Measurement UI restores focus only after the shared host is empty, choosing a surviving control/reload rather than a deleted row. Dirty-editor Keep/Escape retains draft text; explicit discard waits for the actual shared dismissal before closing its sheet. Text-field keyboard focus is released locally before requesting discard; no global keyboard action or extra timer is used.\n\nDeletion intents contain only the target UUID/scope and an opaque in-memory saved revision. The actual persistence changes that revision on saves, reloads and erasure. A changed same-store record/reload invalidates an old confirmation; a separate writer still trips the exact saved-baseline guard. Successful deletion changes the revision, so replay fails. Missing targets do not become false success. No laboratory values are copied into popup ownership metadata or stored as analytics.\n\nSix new actual-core regressions execute ownership/queue cancellation, single-use/Escape, repeated presentation through dismissal, priority replacement, same-store revision/replay and reload/external-writer preservation. New DEBUG measurement fixtures use only a private suite and inject the actual store into the actual existing screen. Three Apple UI regressions cover delete/cancel/confirm at large text with normal/Reduce Motion, dirty draft Keep/discard inside the native sheet, and readable original values under an unsupported future record. Those UI tests, real VoiceOver focus order, screenshots, native-sheet interaction and sound/listening acceptance remain NOT_RUN on Linux.\n\nAvailable verification:540 portable XCTest +21 Swift Testing and545 native-linked XCTest +21 Swift Testing passed;35 workflow tests passed with all6 actual SwiftSyntax cases. All app Swift sources pass the bounded canonical immediate-cue ownership checker with zero findings. Compiler syntax parsed271 changed Swift files; Xcode project references resolve. These do not constitute an Apple build or device acceptance. The portable harness initially omitted its two new production sources; the resulting compile failure was corrected by adding the exact files, not substitutes.",
@@ -31117,68 +31481,77 @@
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
         "Measurement/library fixed headings, date/status/instructions and controlled section titles use compact translation. Native DatePicker getter/setter is byte-identical; day-count display separates locale integer from fixed label; raw patient values and data models/persistence/provider unchanged. Date confirmation uses canonical guarded control. Original safety/context source copy uses existing long-form source/provenance owner; clinical translation meaning remains unverified. Twenty-one English additions preserve 842 old entries. Two actual library launches and date-case assertions written but NOT_RUN.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -31732,7 +32105,8 @@
         "development_workflow/ASK_FIXED_CONTROL_COVERAGE.md",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -31879,7 +32253,7 @@
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -32038,68 +32412,77 @@
         "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
         "ActualAsk nativeprompt forwards originalbinding throughfixedpromptowner. Heading/help/subtitle/search/save-status nowshared selected-language fixedcopy; headingwraps, fonts/colorspreserved andFruitsofLife.xo protected. DEBUGopt-in paused French/Arabic/ReduceMotion fixture and4nativeUIvectors typeoriginalquestion/opencloseactualHelp/checkbounds+identity/capture,NOT_RUN. FiveEnglishfallbackkeys,noinventedforeigntranslations. Foundation/native runs do not typecheck SwiftUI or execute new UI.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -32313,7 +32696,8 @@
         "development_workflow/ASK_FIXED_CONTROL_COVERAGE.md",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -32505,7 +32889,7 @@
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -32698,68 +33082,77 @@
         "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
         "ActualAsk nativeprompt forwards originalbinding throughfixedpromptowner. Heading/help/subtitle/search/save-status nowshared selected-language fixedcopy; headingwraps, fonts/colorspreserved andFruitsofLife.xo protected. DEBUGopt-in paused French/Arabic/ReduceMotion fixture and4nativeUIvectors typeoriginalquestion/opencloseactualHelp/checkbounds+identity/capture,NOT_RUN. FiveEnglishfallbackkeys,noinventedforeigntranslations. Foundation/native runs do not typecheck SwiftUI or execute new UI.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     },
     {
@@ -32950,7 +33343,8 @@
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
         "development_workflow/ASK_TYPED_CONTEXT_NOTICES.md",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
-        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md"
+        "development_workflow/ASK_INACTIVE_REQUEST_OWNERSHIP.md",
+        "development_workflow/TRANSLATION_LIFECYCLE_RELEASE_ACK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -33097,7 +33491,7 @@
         "FruitfolioTests/Prompt1BAskUserContextTests.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
-      "commit_reference": "batch:Ask-inactive-request-ownership-and-draft-preservation (resolve containing commit with git log)",
+      "commit_reference": "batch:Translation-lifecycle-admission-and-release-acknowledgement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -33236,68 +33630,77 @@
         "Actualservice validates foreign-work UTF8 budgets before trimming/catalog/paragraph/envelope/task allocations: source1MiB, language64B, protectedliteralcount1024 andcombined64KiB. Existing typed inputTooLong retains original, never truncates; same-language original bypass unchanged. Twoactualservice regressions check sixrejections/zeroruntime/zerometadata, exactmultibyte/count/metadata boundaries andoversizedsame-language identity. Protocolidentity isnotlearnedtranslation; noRSS/officialmodel/clinicalproof.",
         "ActualAsk nativeprompt forwards originalbinding throughfixedpromptowner. Heading/help/subtitle/search/save-status nowshared selected-language fixedcopy; headingwraps, fonts/colorspreserved andFruitsofLife.xo protected. DEBUGopt-in paused French/Arabic/ReduceMotion fixture and4nativeUIvectors typeoriginalquestion/opencloseactualHelp/checkbounds+identity/capture,NOT_RUN. FiveEnglishfallbackkeys,noinventedforeigntranslations. Foundation/native runs do not typecheck SwiftUI or execute new UI.",
         "Typed controlledprivacy/cancellation/context/size noticesMTS, unknown errorsverbatim inactualcomposer/picker includingidenticalspoof. Locale-native selectioncountprotected, patient snapshot/rawresults/units unchanged. Canonicalremovebutton. ThreeactualFoundation regressions pass typedrouting/unknownNFDbytes/count+snapshot boundaries; existingAppleattach/cancel/background/remove testextendedNOT_RUN. SixEnglishfallbacks; no officialmodel/clinical/wholeitem proof.",
-        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance."
+        "ActualAsk visible/activeepoch +UIKit/scene/modal composer gates reject stalequeued sends; inactive notifications cancel UI/provider/typewriter owners andtyping loop whilepreservingnewerdraft/unsentattachments. VMrestoresinterruptedsearchquestiononlyifempty; caller cancellationforwardstocapturedprovidertask. ThreeactualFoundationowner tests pass;3newAppleVMtests +4extendedAppleUIvectorsNOT_RUN. LinuxVMbuildattemptfailedbeforetests(AppleMarkdown dependency);temporaryadaptationremoved,no fakeSDK/parser/Combine. TwoEnglishfallbacks; no wholebackgrounding/modelacceptance.",
+        "Actualsharedservice closesinference beforelifecycle release; onlylatest acknowledgedtoken resumes, catalogstillallowed. Actualapp-shell serialreconciler retainsUIpause throughactorhops/earlyforeground/newinactive andrecoversdeparted-shelltoken. Combinedtransientmemory/lifecycleflagwiredthroughsharedand8feature/controlUI sources; accepteddisplayretained andunresolvedretries. FiveactualFoundation/service/owner regressions+extendedcatalogcase; no fakeSDK orofficialmodel/deviceproof."
       ],
-      "last_updated": "2026-11-07T03:28:09.251919+00:00",
+      "last_updated": "2026-11-07T03:40:42.944963+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-inactive-request-ownership-and-draft-preservation",
+        "batch": "Translation-lifecycle-admission-and-release-acknowledgement",
         "executed": {
-          "portable_XCTest": 928,
-          "native_CPU_XCTest": 952,
+          "portable_XCTest": 933,
+          "native_CPU_XCTest": 957,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
           "control_sound_ownership_findings": 0,
-          "new_Foundation_owner_tests": 3,
-          "new_Apple_view_model_tests_written": 3,
-          "new_Apple_view_model_tests_executed": 0,
-          "extended_Apple_UI_vectors": 4,
-          "extended_Apple_UI_vectors_executed": 0,
-          "Linux_view_model_build_attempt_tests_executed": 0,
+          "new_Foundation_lifecycle_regressions": 5,
+          "extended_catalog_test": 1,
+          "initial_focused_XCTest_before_recovery_case": 15,
+          "initial_full_portable_before_recovery_case": 932,
+          "initial_full_native_before_recovery_case": 956,
+          "Apple_tests_executed": 0,
+          "official_MADLAD_inference_verified": false,
           "log_receipts": {
-            "/tmp/fruitfolio_ask_inactive_portable.log": {
-              "bytes": 294531,
-              "sha256": "5a469bc18854fdc4c2d4831f9d2c70234e39ab1da7196e0027d20506cfc027a3"
+            "/tmp/fruitfolio_translation_lifecycle_focused.log": {
+              "bytes": 31585,
+              "sha256": "76697ca0888dca3eeef2cd0ad4cfd21dc7444f1285a964398b129c6c2d2db6c2"
             },
-            "/tmp/fruitfolio_ask_inactive_native.log": {
-              "bytes": 1210528,
-              "sha256": "7892560c3324f85cb442fb1f6df16ed1da3c763b5735df435524ab7c2f8ba0b5"
+            "/tmp/fruitfolio_translation_lifecycle_portable.log": {
+              "bytes": 295709,
+              "sha256": "6d2582dc921261b2cc1509d5c2cc97d12050a5ac36c28abc334cbe2be837ada3"
             },
-            "/tmp/fruitfolio_ask_inactive_workflow.log": {
+            "/tmp/fruitfolio_translation_lifecycle_native.log": {
+              "bytes": 1211724,
+              "sha256": "ed3e1e0fa09d2b828a149199df3bd82affa8c485b63091a2a416ce1853c72e38"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_portable_final.log": {
+              "bytes": 296040,
+              "sha256": "476d41e8282b24ae9aef8044ce1b5fa02242992697120ea4cfe4d3790dcfec91"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_native_final.log": {
+              "bytes": 1212026,
+              "sha256": "20ace359f242eb314f85b3ac01b564c011f37e1081cb8010ffbcd004f3db5ca6"
+            },
+            "/tmp/fruitfolio_translation_lifecycle_workflow.log": {
               "bytes": 160,
-              "sha256": "965ae3c3e1a6f8981163a823e464fa501e6e2896f79e075ffe395df9659dbf35"
+              "sha256": "376d22bf6df63515d723ffd380e47010483740f344d3c74867f8cc16f89fa58e"
             },
-            "/tmp/fruitfolio_ask_inactive_syntax.log": {
+            "/tmp/fruitfolio_translation_lifecycle_syntax_final2.log": {
               "bytes": 106,
               "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
             },
-            "/tmp/fruitfolio_ask_inactive_ownership.log": {
+            "/tmp/fruitfolio_translation_lifecycle_ownership_final.log": {
               "bytes": 5,
               "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            },
-            "/tmp/fruitfolio_ask_lifecycle_baseline.log": {
-              "bytes": 5052,
-              "sha256": "0eb3c58f06aeebc37395d59c6ce81a1252652249110ed980e2ce12a1bcbfd665"
             }
           }
         },
         "not_run": [
-          "Actual Apple Combine/Markdown view-model lifecycle tests including3newcancellation/draftcases",
-          "FouractualFrench/Arabicpaused/ReduceMotionXXXlinput/help/background UIvectors",
-          "Apple notification ordering, providerquiescence, focus/keyboard/contextstate/physicalaudio andRTLvisuals",
-          "OfficialMADLAD/device/clinicalandnative-languageacceptance"
+          "Apple genuine typecheck/Combine/scene/notification/task/VoiceOver behavior across affectedcontrols/screens",
+          "Nativephysical-device peakRSS/thermal/release latency andofficialMADLADweights/tokenizer",
+          "Native-language scientific/safety translation review andfullwriting-systemlayoutacceptance"
         ],
         "remaining": [
-          "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-          "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-          "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+          "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+          "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+          "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual Apple view-model/UI lifecycle tests and inspect latecallbacks, restoredquestion/newerdraft, cancellation and source/citationidentity",
-        "Test shared displaytranslation lifecycle separately; Askproviderowner change doesnotcertify backgroundMADLADdisplaytasks",
-        "Preserve genuineAppleMarkdown/Combine verification boundary; no substituteSDKorparser acceptance andno whole473certification"
+        "Execute actual Apple earlyforeground/repeatedinactive and recreated-shell UI lifecycle, accepteddisplayretention andunresolvedretry with memorypause",
+        "Verify actualnative C lifecycle unload/noallocation/reload next usingexistingexplicitlysyntheticT5; do notcountitasofficialMADLAD",
+        "Profile officialmodel/device lifecycle resourcebehavior andclinicallyreviewmeaning; no whole473/428/modelcertification"
       ]
     }
   ]

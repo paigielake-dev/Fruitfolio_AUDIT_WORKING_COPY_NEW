@@ -63,7 +63,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                 }
             }
         }
-        .task(id: TaskKey(sourceKey: key, paused: settings.translationPausedForMemoryPressure)) {
+        .task(id: TaskKey(sourceKey: key, paused: !settings.translationInferenceAllowed)) {
             let request = key
             // Accepted display text remains valid when native allocations are
             // released. A new unresolved key can still use its small catalog
@@ -78,7 +78,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                 let result = try await FruitfolioTranslationService.shared.translateForDisplay(
                     request.source, language: request.language, protectedLiterals: request.protectedLiterals,
                     sourceLanguage: request.sourceLanguage,
-                    inferenceAllowed: !settings.translationPausedForMemoryPressure, bundle: bundle)
+                    inferenceAllowed: settings.translationInferenceAllowed, bundle: bundle)
                 try Task.checkCancellation()
                 rendered = result.text
                 translationOrigin = result.origin
@@ -141,8 +141,8 @@ struct FruitfolioFixedText: View {
         .accessibilityElement(children: .combine)
         .accessibilityHint(Text(presentation.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }
@@ -169,8 +169,8 @@ struct FruitfolioFixedTextField: View {
             .accessibilityLabel(Text(verbatim: presentation.text))
             .accessibilityHint(Text(presentation.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
             .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                inferenceAllowed: settings.translationInferenceAllowed)) {
+                await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
             }
     }
 }
@@ -196,8 +196,8 @@ struct FruitfolioFixedTextEditor: View {
             .accessibilityLabel(Text(verbatim: presentation.text))
             .accessibilityHint(Text(presentation.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
             .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                inferenceAllowed: settings.translationInferenceAllowed)) {
+                await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
             }
     }
 }
@@ -269,8 +269,8 @@ struct FruitfolioFixedAccessibilityLabel: ViewModifier {
             .accessibilityHint(Text(display.status.accessibilityDetail(original: source,
                 localized: { settings.localized($0) })))
             .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                inferenceAllowed: settings.translationInferenceAllowed)) {
+                await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
             }
     }
 }
@@ -296,8 +296,8 @@ struct FruitfolioFixedAccessibilityHint: ViewModifier {
                 supplementalDetail
             ].filter { !$0.isEmpty }.joined(separator: ". ")))
             .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                inferenceAllowed: settings.translationInferenceAllowed)) {
+                await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
             }
     }
 }
@@ -322,8 +322,8 @@ struct FruitfolioFixedAccessibilityValue: ViewModifier {
                     localized: { settings.localized($0) })
             ].filter { !$0.isEmpty }.joined(separator: ". ")))
             .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                inferenceAllowed: settings.translationInferenceAllowed)) {
+                await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
             }
     }
 }

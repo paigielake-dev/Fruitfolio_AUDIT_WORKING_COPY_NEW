@@ -77,6 +77,13 @@ final class SettingsStore {
     #if canImport(Combine)
     @Published
     #endif
+    var translationPausedForLifecycle = false
+    var translationInferenceAllowed: Bool {
+        !translationPausedForMemoryPressure && !translationPausedForLifecycle
+    }
+    #if canImport(Combine)
+    @Published
+    #endif
     private(set) var languagePreferenceNeedsReview = false
     #if canImport(Combine)
     @Published

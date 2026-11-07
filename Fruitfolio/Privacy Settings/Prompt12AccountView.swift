@@ -219,8 +219,8 @@ struct Prompt12AccountView: View {
                     supplementalDetail: input.status.accessibilityDetail(original: usernameLabelKey.source,
                         localized: { settings.localized($0) })))
                 .task(id: FruitfolioControlTranslationState.TaskKey(key: usernameLabelKey,
-                    inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                    await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                    inferenceAllowed: settings.translationInferenceAllowed)) {
+                    await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: settings.translationInferenceAllowed)
                 }
                 .accessibilityFocused($accountFocus, equals: .usernameInput)
                 .accessibilityIdentifier("account.publicUsername")
@@ -324,8 +324,8 @@ struct Prompt12AccountView: View {
                 .accessibilityFocused($accountFocus, equals: .emailInput)
                 .accessibilityIdentifier("account.email")
                 .task(id: FruitfolioControlTranslationState.TaskKey(key: emailLabelKey,
-                    inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                    await emailLabel.resolve(emailLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                    inferenceAllowed: settings.translationInferenceAllowed)) {
+                    await emailLabel.resolve(emailLabelKey, inferenceAllowed: settings.translationInferenceAllowed)
                 }
                 .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                 .foregroundStyle(

@@ -105,6 +105,37 @@ actor FruitfolioTranslationService {
     static let shared = FruitfolioTranslationService(runtime: FruitfolioMADLADRuntime.shared)
     private let runtime: any FruitfolioLocalTranslationRuntime
     init(runtime: any FruitfolioLocalTranslationRuntime) { self.runtime = runtime }
+    private var lifecycleInferenceAllowed = true
+    private var lifecycleToken: UUID?
+    private var acknowledgedLifecycleToken: UUID?
+
+    /// Admission closes before cancellation/release can suspend this actor.
+    func suspendForLifecycle(_ token: UUID) async {
+        lifecycleInferenceAllowed = false
+        lifecycleToken = token
+        acknowledgedLifecycleToken = nil
+        await releaseResources()
+        if lifecycleToken == token { acknowledgedLifecycleToken = token }
+    }
+
+    /// A recreated app shell may inherit a suspension whose old owner is gone.
+    /// Acquire a fresh acknowledged release rather than guessing its token.
+    func establishForegroundLifecycle() async -> Bool {
+        if lifecycleInferenceAllowed { return true }
+        let token = UUID()
+        await suspendForLifecycle(token)
+        return resumeAfterLifecycle(token)
+    }
+
+    /// A foreground callback cannot reopen admission before native release has
+    /// acknowledged, or revive an older presentation's superseded release.
+    func resumeAfterLifecycle(_ token: UUID) -> Bool {
+        guard lifecycleToken == token, acknowledgedLifecycleToken == token else { return false }
+        lifecycleInferenceAllowed = true
+        lifecycleToken = nil
+        acknowledgedLifecycleToken = nil
+        return true
+    }
 
     // Only simultaneous work is shared. Completed text is owned by its caller,
     // never retained here after the final waiter (including failed requests).
@@ -189,6 +220,7 @@ actor FruitfolioTranslationService {
             try Task.checkCancellation()
             return .init(text: accepted, origin: .catalog)
         }
+        guard lifecycleInferenceAllowed else { throw FruitfolioTranslationError.pausedForLifecycle }
         guard inferenceAllowed else { throw FruitfolioTranslationError.pausedForMemoryPressure }
         // Only the simplified Chinese selector maps to the generic zh tag.
         // Traditional Chinese is not silently advertised as equivalent.

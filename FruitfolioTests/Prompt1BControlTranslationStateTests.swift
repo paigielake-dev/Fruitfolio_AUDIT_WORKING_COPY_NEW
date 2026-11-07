@@ -32,9 +32,178 @@ private actor ControlLabelFixtureRuntime: FruitfolioLocalTranslationRuntime {
     func releaseResources() {}
 }
 
+/// Explicit release scheduling fixture, not native or learned model output.
+private actor LifecycleTranslationFixture: FruitfolioLocalTranslationRuntime {
+    private var calls = 0
+    private var releases = 0
+    private var gates: [Int: CheckedContinuation<Void, Never>] = [:]
+    private var waiters: [(Int, CheckedContinuation<Void, Never>)] = []
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        calls += 1
+        return text
+    }
+    func releaseResources() async {
+        releases += 1
+        let index = releases
+        await withCheckedContinuation { continuation in
+            gates[index] = continuation
+            let ready = waiters.filter { $0.0 <= releases }
+            waiters.removeAll { $0.0 <= releases }
+            for (_, waiter) in ready { waiter.resume() }
+        }
+    }
+    func waitForRelease(_ count: Int = 1) async {
+        if releases >= count { return }
+        await withCheckedContinuation { waiters.append((count, $0)) }
+    }
+    func finishReleases() {
+        let pending = Array(gates.values); gates.removeAll()
+        for gate in pending { gate.resume() }
+    }
+    func counts() -> (calls: Int, releases: Int) { (calls, releases) }
+}
+
 @MainActor
 final class Prompt1BControlTranslationStateTests: XCTestCase {
     private typealias Key = FruitfolioControlTranslationState.Key
+    private func lifecycleSettings() throws -> (SettingsStore, String) {
+        let suite = "fruitfolio.tests.translationLifecycle." + UUID().uuidString
+        return (SettingsStore(defaults: try XCTUnwrap(UserDefaults(suiteName: suite))), suite)
+    }
+
+    func testLifecycleServiceRejectsAdmissionAndPrematureResumeUntilReleaseAcknowledges() async throws {
+        let runtime = LifecycleTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let token = UUID()
+        let release = Task { await service.suspendForLifecycle(token) }
+        await runtime.waitForRelease()
+        let premature = await service.resumeAfterLifecycle(token)
+        XCTAssertFalse(premature)
+        do {
+            _ = try await service.translate("original", language: .german, preferCatalog: false)
+            XCTFail("Inactive service admitted inference")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .pausedForLifecycle) }
+        let blocked = await runtime.counts()
+        XCTAssertEqual(blocked.calls, 0)
+        await runtime.finishReleases()
+        await release.value
+        let resumed = await service.resumeAfterLifecycle(token)
+        XCTAssertTrue(resumed)
+        let result = try await service.translate("original", language: .german, preferCatalog: false)
+        XCTAssertEqual(result, "original")
+    }
+
+    func testSupersededLifecycleReleaseCannotReopenNewerSuspension() async throws {
+        let runtime = LifecycleTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let old = UUID(), current = UUID()
+        let first = Task { await service.suspendForLifecycle(old) }
+        await runtime.waitForRelease()
+        let second = Task { await service.suspendForLifecycle(current) }
+        await runtime.waitForRelease(2)
+        await runtime.finishReleases()
+        await first.value; await second.value
+        let stale = await service.resumeAfterLifecycle(old)
+        XCTAssertFalse(stale)
+        do {
+            _ = try await service.translate("original", language: .german, preferCatalog: false)
+            XCTFail("Superseded token reopened admission")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .pausedForLifecycle) }
+        let accepted = await service.resumeAfterLifecycle(current)
+        XCTAssertTrue(accepted)
+    }
+
+    func testLifecycleOwnerHandlesForegroundDuringReleaseAndPreservesMemoryPause() async throws {
+        let (settings, suite) = try lifecycleSettings()
+        defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        let runtime = LifecycleTranslationFixture()
+        let owner = FruitfolioTranslationLifecycleOwner(settings: settings, service: .init(runtime: runtime))
+        settings.translationPausedForMemoryPressure = true
+        owner.setActive(true)
+        await owner.debugWaitForReconciliation()
+        XCTAssertFalse(settings.translationPausedForLifecycle)
+        XCTAssertFalse(settings.translationInferenceAllowed)
+        owner.setActive(false)
+        await runtime.waitForRelease()
+        owner.setActive(true)
+        XCTAssertTrue(settings.translationPausedForLifecycle)
+        await runtime.finishReleases()
+        await owner.debugWaitForReconciliation()
+        XCTAssertFalse(settings.translationPausedForLifecycle)
+        XCTAssertTrue(settings.translationPausedForMemoryPressure)
+        XCTAssertFalse(settings.translationInferenceAllowed)
+        settings.translationPausedForMemoryPressure = false
+        XCTAssertTrue(settings.translationInferenceAllowed)
+        owner.setActive(false)
+        await runtime.waitForRelease(2)
+        owner.setActive(true); owner.setActive(false)
+        await runtime.finishReleases()
+        await owner.debugWaitForReconciliation()
+        XCTAssertTrue(settings.translationPausedForLifecycle)
+        XCTAssertFalse(settings.translationInferenceAllowed)
+        owner.setActive(true)
+        await owner.debugWaitForReconciliation()
+        XCTAssertTrue(settings.translationInferenceAllowed)
+        let counts = await runtime.counts()
+        XCTAssertEqual(counts.releases, 2)
+    }
+
+    func testRecreatedShellRecoversAnAcknowledgedSuspensionWithoutTheOldOwnerToken() async throws {
+        let runtime = LifecycleTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let oldToken = UUID()
+        let oldRelease = Task { await service.suspendForLifecycle(oldToken) }
+        await runtime.waitForRelease()
+        await runtime.finishReleases()
+        await oldRelease.value
+        let (settings, suite) = try lifecycleSettings()
+        defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        let replacement = FruitfolioTranslationLifecycleOwner(settings: settings, service: service)
+        replacement.setActive(true)
+        await runtime.waitForRelease(2)
+        XCTAssertTrue(settings.translationPausedForLifecycle)
+        let stale = await service.resumeAfterLifecycle(oldToken)
+        XCTAssertFalse(stale)
+        await runtime.finishReleases()
+        await replacement.debugWaitForReconciliation()
+        XCTAssertTrue(settings.translationInferenceAllowed)
+        let result = try await service.translate("original", language: .german, preferCatalog: false)
+        XCTAssertEqual(result, "original")
+    }
+
+    func testAcceptedControlSurvivesReleaseAndUnresolvedKeyRetriesAfterAcknowledgement() async throws {
+        let (settings, suite) = try lifecycleSettings()
+        defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        let runtime = LifecycleTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let owner = FruitfolioTranslationLifecycleOwner(settings: settings, service: service)
+        owner.setActive(true)
+        await owner.debugWaitForReconciliation()
+        let accepted = FruitfolioControlTranslationState(service: service)
+        let key = Key(source: "hello", language: .german)
+        await accepted.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
+        XCTAssertEqual(accepted.presentation(for: key).status, .machine)
+        owner.setActive(false)
+        await runtime.waitForRelease()
+        await accepted.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
+        XCTAssertEqual(accepted.presentation(for: key).status, .machine)
+        XCTAssertEqual(accepted.presentation(for: key).text, "hello")
+        let unresolved = FruitfolioControlTranslationState(service: service)
+        let next = Key(source: "save", language: .german)
+        await unresolved.resolve(next, inferenceAllowed: settings.translationInferenceAllowed)
+        XCTAssertEqual(unresolved.presentation(for: next).text, "save")
+        XCTAssertEqual(unresolved.presentation(for: next).status, .unavailable)
+        let before = await runtime.counts()
+        XCTAssertEqual(before.calls, 1)
+        owner.setActive(true)
+        await runtime.finishReleases()
+        await owner.debugWaitForReconciliation()
+        await unresolved.resolve(next, inferenceAllowed: settings.translationInferenceAllowed)
+        XCTAssertEqual(unresolved.presentation(for: next).status, .machine)
+        let after = await runtime.counts()
+        XCTAssertEqual(after.calls, 2)
+    }
+
     #if canImport(Combine)
     func testActualCombinePublisherAnnouncesResolvedControlDisplay() async {
         let runtime = ControlLabelFixtureRuntime()
@@ -60,7 +229,9 @@ final class Prompt1BControlTranslationStateTests: XCTestCase {
             format: .binary, options: 0).write(to: folder.appendingPathComponent("Localizable.strings"))
         let bundle = try XCTUnwrap(Bundle(url: directory))
         let runtime = ControlLabelFixtureRuntime(fail: true)
-        let state = FruitfolioControlTranslationState(service: .init(runtime: runtime))
+        let service = FruitfolioTranslationService(runtime: runtime)
+        await service.suspendForLifecycle(UUID())
+        let state = FruitfolioControlTranslationState(service: service)
         for (source, expected) in [("save", "speichern"), ("DNA", "DNA"), ("LifeBridge information", "LifeBridge Informationen")] {
             let key = Key(source: source, language: .german, protectedLiterals: source == "DNA" ? ["DNA"] : [])
             await state.resolve(key, inferenceAllowed: false, bundle: bundle)

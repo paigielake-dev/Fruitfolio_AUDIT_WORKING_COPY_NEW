@@ -167,13 +167,13 @@ struct Prompt12NavigationRow: View {
         .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: heading.text)))
         .accessibilityHint(Text(accessibilityDetail(heading, explanation)))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: titleKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await titleTranslation.resolve(titleKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await titleTranslation.resolve(titleKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
         .task(id: FruitfolioControlTranslationState.TaskKey(key: detailKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            inferenceAllowed: settings.translationInferenceAllowed)) {
             if detail != nil {
-                await detailTranslation.resolve(detailKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                await detailTranslation.resolve(detailKey, inferenceAllowed: settings.translationInferenceAllowed)
             }
         }
     }
@@ -351,8 +351,8 @@ struct Prompt12VolumeRow: View {
         }
         .frame(minHeight: 44)
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }

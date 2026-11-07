@@ -44,8 +44,8 @@ struct FruitfolioScientificIllustration: View {
         }
         .allowsHitTesting(false)
         .accessibilityHint(Text(description.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
-        .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await descriptionTranslation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: settings.translationInferenceAllowed)) {
+            await descriptionTranslation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }

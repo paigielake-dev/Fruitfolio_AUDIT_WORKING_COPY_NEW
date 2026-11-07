@@ -89,3 +89,70 @@ final class FruitfolioControlTranslationState {
 #if canImport(Combine)
 extension FruitfolioControlTranslationState: ObservableObject {}
 #endif
+
+/// One app-shell owner serializes lifecycle changes through actual resource
+/// acknowledgements. UI pause remains set throughout release/foreground races.
+@MainActor
+final class FruitfolioTranslationLifecycleOwner {
+    private let settings: SettingsStore
+    private let service: FruitfolioTranslationService
+    private var desiredActive: Bool?
+    private var suspendedToken: UUID?
+    private var foregroundEstablished = false
+    private var worker: Task<Void, Never>?
+
+    init(settings: SettingsStore, service: FruitfolioTranslationService = .shared) {
+        self.settings = settings; self.service = service
+        settings.translationPausedForLifecycle = true
+    }
+
+    func setActive(_ active: Bool) {
+        guard desiredActive != active else { return }
+        desiredActive = active
+        settings.translationPausedForLifecycle = true
+        guard worker == nil else { return }
+        worker = Task { [weak self] in
+            guard let self else { return }
+            await self.reconcile()
+        }
+    }
+
+    private func reconcile() async {
+        while true {
+            if desiredActive == true {
+                if let token = suspendedToken {
+                    if await service.resumeAfterLifecycle(token) {
+                        suspendedToken = nil
+                    } else {
+                        let replacement = UUID()
+                        await service.suspendForLifecycle(replacement)
+                        suspendedToken = replacement
+                    }
+                    continue // Recheck desired activity after each actor hop.
+                }
+                if !foregroundEstablished {
+                    guard await service.establishForegroundLifecycle() else { continue }
+                    foregroundEstablished = true
+                    continue
+                }
+                settings.translationPausedForLifecycle = false
+                worker = nil
+                return
+            }
+            if suspendedToken != nil {
+                worker = nil
+                return
+            }
+            let token = UUID()
+            await service.suspendForLifecycle(token)
+            suspendedToken = token
+        }
+    }
+
+    #if DEBUG
+    func debugWaitForReconciliation() async { await worker?.value }
+    #endif
+}
+#if canImport(Combine)
+extension FruitfolioTranslationLifecycleOwner: ObservableObject {}
+#endif

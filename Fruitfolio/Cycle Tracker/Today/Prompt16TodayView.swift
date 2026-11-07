@@ -1187,11 +1187,11 @@ private struct Prompt16LimitedDataCycleWheel: View {
             description.status.accessibilityDetail(original: descriptionSource, localized: { settings.localized($0) }),
             cycleDay == nil ? "" : day.status.accessibilityDetail(original: "cycle day", localized: { settings.localized($0) })
         ].filter { !$0.isEmpty }.joined(separator: ". ")))
-        .task(id: FruitfolioControlTranslationState.TaskKey(key: descriptionKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await descriptionTranslation.resolve(descriptionKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: descriptionKey, inferenceAllowed: settings.translationInferenceAllowed)) {
+            await descriptionTranslation.resolve(descriptionKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
-        .task(id: FruitfolioControlTranslationState.TaskKey(key: dayKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await dayTranslation.resolve(dayKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: dayKey, inferenceAllowed: settings.translationInferenceAllowed)) {
+            await dayTranslation.resolve(dayKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }
@@ -1258,8 +1258,8 @@ private struct Prompt16DayIndicator: View {
         )
         .accessibilityLabel(cycleDay.map { Text(verbatim: label.text + " ") + Text($0, format: .number.locale(appLocale)) } ?? Text(verbatim: label.text))
         .accessibilityHint(Text(label.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
-        .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await labelTranslation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: settings.translationInferenceAllowed)) {
+            await labelTranslation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }

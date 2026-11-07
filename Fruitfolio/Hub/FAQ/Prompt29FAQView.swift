@@ -176,12 +176,12 @@ private struct Prompt29FAQQuestionButton: View {
         ].filter { !$0.isEmpty }.joined(separator: ". ")))
         .accessibilityIdentifier("faq.question.\(item.id)")
         .task(id: FruitfolioControlTranslationState.TaskKey(key: questionKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await questionTranslation.resolve(questionKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await questionTranslation.resolve(questionKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
         .task(id: FruitfolioControlTranslationState.TaskKey(key: stateKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await stateTranslation.resolve(stateKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await stateTranslation.resolve(stateKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }

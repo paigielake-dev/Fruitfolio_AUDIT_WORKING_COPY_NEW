@@ -112,8 +112,8 @@ struct FruitfolioControlPillButton: View {
         .accessibilityHint(Text(display.status.accessibilityDetail(
             original: FruitfolioSemanticDocument.plainText(from: label), localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: translationKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await translation.resolve(translationKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await translation.resolve(translationKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 
@@ -1009,12 +1009,12 @@ struct WatercolorToggle: View {
             state.status.captionKey.map { settings.localized($0) } ?? ""
         ].filter { !$0.isEmpty }.joined(separator: ". ")))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: labelKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await labelTranslation.resolve(labelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await labelTranslation.resolve(labelKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
         .task(id: FruitfolioControlTranslationState.TaskKey(key: valueKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await valueTranslation.resolve(valueKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await valueTranslation.resolve(valueKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }

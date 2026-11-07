@@ -2077,8 +2077,8 @@ struct Prompt28FruitBasketView: View {
                             prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                         .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                         .task(id: FruitfolioControlTranslationState.TaskKey(key: usernameLabelKey,
-                            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                            await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                            inferenceAllowed: settings.translationInferenceAllowed)) {
+                            await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: settings.translationInferenceAllowed)
                         }
                         .accessibilityIdentifier("fruitBasket.publicUsername")
                         .accessibilityFocused($usernameFocus, equals: .input)
@@ -2634,13 +2634,13 @@ private struct Prompt28BasketProgressView: View {
         .accessibilityValue(Text(value))
         .accessibilityHint(Text(hint))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: labelKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await labelTranslation.resolve(labelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await labelTranslation.resolve(labelKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
         .task(id: FruitfolioControlTranslationState.TaskKey(key: groundKey,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            inferenceAllowed: settings.translationInferenceAllowed)) {
             guard groundStateSource != nil else { return }
-            await groundTranslation.resolve(groundKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            await groundTranslation.resolve(groundKey, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }
@@ -2716,8 +2716,8 @@ private struct Prompt28LeaderboardCategoryButton: View {
             original: FruitfolioSemanticDocument.plainText(from: category.rawValue),
             localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }
@@ -2758,8 +2758,8 @@ private struct Prompt28StatisticRow: View {
         .accessibilityHint(Text(display.status.accessibilityDetail(
             original: label, localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }
@@ -2796,8 +2796,8 @@ private struct Prompt28LeaderboardLocalTotal: View {
         .accessibilityHint(Text(display.status.accessibilityDetail(
             original: key.source, localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            inferenceAllowed: settings.translationInferenceAllowed)) {
+            await translation.resolve(key, inferenceAllowed: settings.translationInferenceAllowed)
         }
     }
 }
