@@ -1403,6 +1403,22 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(notice.exists)
             let scroll = app.scrollViews["fruitBasket.question.scroll"]
             XCTAssertTrue(scroll.exists)
+            let aid = app.buttons["fruitBasket.question.readingAid.toggle"]
+            if language == "ar" {
+                XCTAssertTrue(aid.exists)
+                for _ in 0..<20 { if aid.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(aid.isHittable); aid.tap()
+                let content = app.descendants(matching: .any).matching(identifier: "fruitBasket.question.readingAid.content").firstMatch
+                XCTAssertTrue(content.waitForExistence(timeout: 5))
+                let original = content.descendants(matching: .staticText).matching(NSPredicate(format: "label == %@",
+                    "UI fixture only: the selected word is [blank].")).firstMatch
+                XCTAssertTrue(original.waitForExistence(timeout: 3))
+                XCTAssertEqual(excerpt.label, "UI fixture only: the selected word is [blank].")
+                captureGame(app, name: "game-reading-aid-paused-reduced-\(reduced)")
+                for _ in 0..<20 { if aid.isHittable { break }; scroll.swipeDown() }
+                XCTAssertTrue(aid.isHittable); aid.tap()
+                XCTAssertFalse(content.exists)
+            } else { XCTAssertFalse(aid.exists) }
             let first = app.buttons["fruitBasket.question.answer.first"]
             let second = app.buttons["fruitBasket.question.answer.second"]
             for _ in 0..<24 { if second.isHittable { break }; scroll.swipeUp() }

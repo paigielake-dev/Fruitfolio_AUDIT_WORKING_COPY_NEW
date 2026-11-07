@@ -626,8 +626,8 @@ struct Prompt28FruitBasketView: View {
                 }
             }
             if question.category == "source-excerpt practice" {
-                Text("exact-excerpt practice; vocabulary difficulty is separate from catching level. source citations reflect the founder library attribution, not independent clinical review.")
-                    .font(.footnote)
+                FruitfolioFixedText(source: Prompt28ExcerptQuestionPresentation.citationNoticeSource,
+                    font: .footnote, serious: true)
             }
         }
     }
@@ -1058,10 +1058,8 @@ struct Prompt28FruitBasketView: View {
 
                             Spacer()
 
-                            Text(
-                                question.educationalDifficulty.displayName
-                            )
-                            .prompt28Text(.metadata)
+                            FruitfolioFixedText(source: question.educationalDifficulty.displayName,
+                                font: Prompt28TextRole.metadata.font)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                         }
 
@@ -1077,6 +1075,11 @@ struct Prompt28FruitBasketView: View {
                             FruitfolioTranslatedText(source: Prompt28ExcerptQuestionPresentation.noticeSource,
                                 font: Prompt28TextRole.metadata.font, serious: true)
                                 .accessibilityIdentifier("fruitBasket.question.sourceLanguageNotice")
+                            if settings.language != .english {
+                                Prompt28ExcerptReadingAid(question: question, excerpt: excerpt,
+                                    canInteract: canInteractWithGame)
+                                    .id(question)
+                            }
                         } else {
                             // Unknown/legacy templates remain complete and unchanged.
                             Text(verbatim: question.questionText)
@@ -2467,6 +2470,31 @@ struct Prompt28FruitBasketView: View {
 nonisolated private struct Prompt28GameplayHeaderHeightKey: PreferenceKey {
     static let defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
+}
+
+private struct Prompt28ExcerptReadingAid: View {
+    let question: Prompt28Question
+    let excerpt: Prompt28ExcerptQuestionPresentation
+    let canInteract: Bool
+    @State private var expanded = false
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            FruitfolioControlPillButton(label: expanded ? "hide reading aid" : "show reading aid",
+                isSelected: expanded) { expanded.toggle() }
+                .controlSize(.small)
+                .disabled(!canInteract)
+                .accessibilityIdentifier("fruitBasket.question.readingAid.toggle")
+            if expanded {
+                FruitfolioFixedText(source: Prompt28ExcerptQuestionPresentation.readingAidNoticeSource,
+                    font: Prompt28TextRole.metadata.font, serious: true)
+                FruitfolioTranslatedText(source: excerpt.literalExcerpt,
+                    protectedLiterals: excerpt.readingAidProtectedLiterals,
+                    font: Prompt28TextRole.body.font, serious: true,
+                    sourceRecords: question.sourceRecords ?? [])
+                    .accessibilityIdentifier("fruitBasket.question.readingAid.content")
+            }
+        }
+    }
 }
 
 private struct Prompt28MovingFruit: View {

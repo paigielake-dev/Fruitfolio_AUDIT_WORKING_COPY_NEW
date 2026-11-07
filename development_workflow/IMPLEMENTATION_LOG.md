@@ -3170,3 +3170,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 905, "native_CPU_XCTest": 927, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Library_UI_vectors_written": 4, "new_Library_UI_vectors_executed": 0}.
 - Next action: Continue original396 dynamic fruit-character/generated-content localization. Preserve atomic quiz option/answer/source contracts; inspect existing display boundaries before adding a complete-package translation owner. Do not independently translate question/options or claim official model behavior without weights. Keep395/397globalcoverage and all Apple UI/officialMADLAD/clinical/device blockers open.
 - Commit: containing commit for batch Library-dialog-copy-native-counts-and-controlled-errors.
+
+## Protected-on-device-excerpt-reading-aid
+
+- Parent checkpoint: b1d0db0e73f30cb27e7201909df958bac7a3b2d3.
+- Source-order requirements: [396, 397, 418, 422, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28SavedResearchCopy.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Localizable.xcstrings, development_workflow/EXCERPT_READING_AID_TRANSLATION.md.
+- Actual exact-source cloze now offers separatelylabeled optionalreading aid through existing scientific/MADLAD display pipeline. Originalcloze/options/correctID/history/savedlesson unchanged. Protectsblank, allanswerliteralsincludingabsent, sourceIDs/citations; noomittedanswerappendtoinference. Threeactualservice/envelope protocolfixture tests verify masking/restoration+quantityDOI/source/save and rejectdroppedblank/insertedanswer. FourexistingAppleUI vectors extendedNOT_RUN. Difficulty/citationdisclosurefixedcopylocalized. Full908/930+21pass; no officialmodel/clinical/wholeitem certification.
+- Tests added/updated: FruitfolioTests/Prompt1BGameSavedSourceTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 908, "native_CPU_XCTest": 930, "SwiftTesting_each": 21, "focused_reading_aid_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "existing_Apple_UI_vectors_updated": 4, "Apple_UI_vectors_executed": 0, "official_MADLAD_inference": "BLOCKED: approved weights/tokenizer unavailable; synthetic T5 and protocol fixtures are not official inference"}.
+- Next action: Continue397 remaining hard-coded English interface copy, especially Library shell/native metadata without translating authored names/saved original content. Preserve exact-source quiz contract and existing Apple/MADLAD/clinical/native-language/device blockers; continue398–399 preference restoration and recognizable selector.
+- Commit: containing commit for batch Protected-on-device-excerpt-reading-aid.

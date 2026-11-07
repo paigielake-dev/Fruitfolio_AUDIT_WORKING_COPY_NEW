@@ -2,6 +2,22 @@ import Foundation
 import XCTest
 @testable import Fruitfolio
 
+private actor ExcerptReadingAidFixtureRuntime: FruitfolioLocalTranslationRuntime {
+    enum Output { case preserve, dropBlank, insertAnswer(String) }
+    let output: Output
+    private(set) var inputs: [String] = []
+    init(output: Output = .preserve) { self.output = output }
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        inputs.append(text)
+        switch output {
+        case .preserve: return text.replacingOccurrences(of: "the ", with: "le ")
+        case .dropBlank: return "lecture sans marqueur"
+        case .insertAnswer(let answer): return text + " " + answer
+        }
+    }
+    func releaseResources() async {}
+}
+
 final class Prompt1BGameSavedSourceTests: XCTestCase {
     private func question(records: [AskSourceRecord]? = nil,
                           text: String = "which word matches the exact test excerpt?",
@@ -50,6 +66,54 @@ final class Prompt1BGameSavedSourceTests: XCTestCase {
         XCTAssertEqual(saved.answer, q.explanation)
         XCTAssertEqual(saved.knowledgeBaseVersion, q.contentVersion)
         XCTAssertEqual(saved.generationTimestamp, q.createdAt)
+    }
+
+    func testReadingAidMasksBlankAndAnswerChoicesWhilePreservingSourceAndSavedContract() async throws {
+        let record = AskSourceRecord(id: "paper", title: "Original fixture attribution", sourceText: "Original APA fixture",
+            doi: "10.1234/fixture", contentVersion: "paper-v7")
+        let q = question(records: [record], text: Prompt28ExcerptQuestionPresentation.prefix + "the [blank] fixture has FSH 2.5 IU/L. DOI:10.1234/fixture")
+        let excerpt = try XCTUnwrap(Prompt28ExcerptQuestionPresentation(question: q))
+        let before = try XCTUnwrap(Prompt28SavedResearchCopy.pending(question: q))
+        let runtime = ExcerptReadingAidFixtureRuntime()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let translated = try await service.translate(excerpt.literalExcerpt, language: .french,
+            protectedLiterals: FruitfolioCitationProtection.literals(ids: excerpt.readingAidProtectedLiterals, records: q.sourceRecords ?? []),
+            preferCatalog: false)
+        XCTAssertTrue(translated.hasPrefix("le [blank]"))
+        XCTAssertTrue(translated.contains("FSH 2.5 IU/L")); XCTAssertTrue(translated.contains("10.1234/fixture"))
+        let inputs = await runtime.inputs
+        XCTAssertEqual(inputs.count, 1)
+        let input = try XCTUnwrap(inputs.first)
+        for literal in ["[blank]", "first", "second", "FSH", "2.5", "10.1234/fixture"] { XCTAssertFalse(input.contains(literal)) }
+        let after = try XCTUnwrap(Prompt28SavedResearchCopy.pending(question: q))
+        XCTAssertEqual(after.question, before.question); XCTAssertEqual(after.answer, before.answer)
+        XCTAssertEqual(after.sourceIDs, before.sourceIDs); XCTAssertEqual(after.sourceVersions, before.sourceVersions)
+        XCTAssertEqual(after.sourceRecords, before.sourceRecords); XCTAssertEqual(after.generationTimestamp, before.generationTimestamp)
+        XCTAssertEqual(q.answerOptions.map(\.text), ["first", "second"]); XCTAssertEqual(q.correctAnswerID, "a")
+    }
+
+    func testReadingAidRejectsDroppedBlank() async throws {
+        let q = question(text: Prompt28ExcerptQuestionPresentation.prefix + "the [blank] fixture")
+        let excerpt = try XCTUnwrap(Prompt28ExcerptQuestionPresentation(question: q))
+        let service = FruitfolioTranslationService(runtime: ExcerptReadingAidFixtureRuntime(output: .dropBlank))
+        do {
+            _ = try await service.translate(excerpt.literalExcerpt, language: .french,
+                protectedLiterals: excerpt.readingAidProtectedLiterals, preferCatalog: false)
+            XCTFail("A reading aid without the original cloze marker must not be displayed")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+    }
+
+    func testReadingAidRejectsIntroducedOmittedAnswerOrDistractor() async throws {
+        let q = question(text: Prompt28ExcerptQuestionPresentation.prefix + "the [blank] fixture")
+        let excerpt = try XCTUnwrap(Prompt28ExcerptQuestionPresentation(question: q))
+        for answer in q.answerOptions {
+            let service = FruitfolioTranslationService(runtime: ExcerptReadingAidFixtureRuntime(output: .insertAnswer(answer.text)))
+            do {
+                _ = try await service.translate(excerpt.literalExcerpt, language: .french,
+                    protectedLiterals: excerpt.readingAidProtectedLiterals, preferCatalog: false)
+                XCTFail("An absent answer choice must not be introduced into the reading aid")
+            } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .protectedContentChanged) }
+        }
     }
 
     func testKnownExcerptPresentationPreservesLiteralBytesAndSavedOriginal() throws {
