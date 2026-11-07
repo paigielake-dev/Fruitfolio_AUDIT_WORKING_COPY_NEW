@@ -258,6 +258,10 @@ struct Prompt12SettingsView: View {
             .accessibilityLabel("Language / भाषा / زبان")
             .accessibilityValue(settings.language.nativeDisplayName)
 
+            if let message = settings.languagePersistenceMessage {
+                Prompt12InfoText(message)
+                    .accessibilityIdentifier("settings.language.persistence")
+            }
             if settings.languagePreferenceNeedsReview {
                 Prompt12InfoText("the saved language is not recognized by this version. English is shown for now; the original preference is preserved until you choose a language.")
                     .accessibilityIdentifier("settings.language.recovery")

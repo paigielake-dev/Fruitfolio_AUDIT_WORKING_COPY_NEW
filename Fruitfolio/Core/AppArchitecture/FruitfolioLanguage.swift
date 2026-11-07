@@ -149,7 +149,9 @@ enum FruitfolioLanguagePreferences {
         return FruitfolioLanguage(rawValue: raw) == nil
     }
 
-    static func save(_ language: FruitfolioLanguage, to defaults: UserDefaults) {
+    @discardableResult
+    static func save(_ language: FruitfolioLanguage, to defaults: UserDefaults) -> Bool {
         defaults.set(language.rawValue, forKey: defaultsKey)
+        return defaults.object(forKey: defaultsKey) as? String == language.rawValue
     }
 }

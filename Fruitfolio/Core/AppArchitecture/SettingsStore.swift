@@ -81,10 +81,22 @@ final class SettingsStore {
     #if canImport(Combine)
     @Published
     #endif
+    private(set) var languagePersistenceMessage: String? = nil
+    #if canImport(Combine)
+    @Published
+    #endif
     var language: FruitfolioLanguage {
         didSet {
-            FruitfolioLanguagePreferences.save(language, to: defaults)
-            languagePreferenceNeedsReview = false
+            if FruitfolioLanguagePreferences.save(language, to: defaults) {
+                languagePreferenceNeedsReview = false
+                languagePersistenceMessage = nil
+            } else {
+                // The saved authority may still contain the old value, or an
+                // external replacement. Never repair or overwrite it here.
+                language = FruitfolioLanguagePreferences.load(from: defaults)
+                languagePreferenceNeedsReview = FruitfolioLanguagePreferences.needsReview(in: defaults)
+                languagePersistenceMessage = "the language change could not be confirmed. review the saved selection before trying again."
+            }
         }
     }
 

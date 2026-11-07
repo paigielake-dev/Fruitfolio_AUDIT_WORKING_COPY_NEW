@@ -5,8 +5,90 @@ import Foundation
 import XCTest
 @testable import Fruitfolio
 
+private final class Prompt1BLanguageWriteFaultDefaults: UserDefaults, @unchecked Sendable {
+    enum Fault { case accept, drop, replace(String) }
+    var fault: Fault = .accept
+    var languageWriteAttempts = 0
+    override func set(_ value: Any?, forKey key: String) {
+        guard key == FruitfolioLanguagePreferences.defaultsKey else { super.set(value, forKey: key); return }
+        languageWriteAttempts += 1
+        switch fault {
+        case .accept: super.set(value, forKey: key)
+        case .drop: break
+        case .replace(let replacement): super.set(replacement, forKey: key)
+        }
+    }
+}
+
 @MainActor
 final class Prompt1BSettingsLanguageTests: XCTestCase {
+    func testDroppedLanguageWriteCannotRetainUnacknowledgedSelection() async throws {
+        let suite = "Fruitfolio.LanguageWrite.drop." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BLanguageWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set(FruitfolioLanguage.french.rawValue, forKey: FruitfolioLanguagePreferences.defaultsKey)
+        let settings = SettingsStore(defaults: defaults)
+        defaults.fault = .drop
+        let attempts = defaults.languageWriteAttempts
+        settings.language = .japanese
+        XCTAssertEqual(defaults.languageWriteAttempts, attempts + 1)
+        XCTAssertNotNil(settings.languagePersistenceMessage)
+        XCTAssertEqual(settings.language, .french)
+        XCTAssertEqual(SettingsStore(defaults: defaults).language, .french)
+        XCTAssertEqual(defaults.string(forKey: FruitfolioLanguagePreferences.defaultsKey), FruitfolioLanguage.french.rawValue)
+        defaults.fault = .accept
+        settings.language = .japanese
+        XCTAssertEqual(settings.language, .japanese)
+        XCTAssertNil(settings.languagePersistenceMessage)
+        XCTAssertFalse(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(SettingsStore(defaults: defaults).language, .japanese)
+    }
+
+    func testDroppedReplacementPreservesFutureLanguagePreferenceReview() async throws {
+        let suite = "Fruitfolio.LanguageWrite.future." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BLanguageWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set("future-language", forKey: FruitfolioLanguagePreferences.defaultsKey)
+        let settings = SettingsStore(defaults: defaults)
+        defaults.fault = .drop
+        let attempts = defaults.languageWriteAttempts
+        settings.language = .japanese
+        XCTAssertEqual(defaults.languageWriteAttempts, attempts + 1)
+        XCTAssertNotNil(settings.languagePersistenceMessage)
+        XCTAssertEqual(settings.language, .english)
+        XCTAssertTrue(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(defaults.string(forKey: FruitfolioLanguagePreferences.defaultsKey), "future-language")
+        defaults.fault = .accept
+        settings.language = .japanese
+        XCTAssertEqual(settings.language, .japanese)
+        XCTAssertNil(settings.languagePersistenceMessage)
+        XCTAssertFalse(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(SettingsStore(defaults: defaults).language, .japanese)
+    }
+
+    func testInterleavedLanguageReplacementCannotBeMistakenForRequestedSelection() async throws {
+        let suite = "Fruitfolio.LanguageWrite.replace." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BLanguageWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        defaults.fault = .replace(FruitfolioLanguage.arabic.rawValue)
+        let attempts = defaults.languageWriteAttempts
+        settings.language = .japanese
+        XCTAssertEqual(defaults.languageWriteAttempts, attempts + 1)
+        XCTAssertNotNil(settings.languagePersistenceMessage)
+        XCTAssertEqual(settings.language, .arabic)
+        XCTAssertEqual(SettingsStore(defaults: defaults).language, .arabic)
+        XCTAssertFalse(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(defaults.string(forKey: FruitfolioLanguagePreferences.defaultsKey), FruitfolioLanguage.arabic.rawValue)
+        defaults.fault = .accept
+        settings.language = .japanese
+        XCTAssertEqual(settings.language, .japanese)
+        XCTAssertNil(settings.languagePersistenceMessage)
+        XCTAssertFalse(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(SettingsStore(defaults: defaults).language, .japanese)
+    }
+
+
     #if DEBUG
     func testActualTemporaryCatalogCanResolveProtectedFixtureWhileInferenceIsPaused() async throws {
         let fixture = try FruitfolioTranslationCatalogRegressionFixture()

@@ -3137,3 +3137,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 900, "native_CPU_XCTest": 922, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "existing_FAQ_UI_vectors_updated": 4, "FAQ_UI_vectors_executed": 0}.
 - Next action: Continue original375–390 existing approved artwork/layout/dialogue/accessibility, preserve374missingcanonicaltulip and unsuitablecloud blockers. Separate Apple visual/audio/typechecking requirements from feasible Linux source/ownership fixes, then continue391global language persistence.
 - Commit: containing commit for batch FAQ-regular-question-labels-with-expanded-capture.
+
+## Language-write-acknowledgement-and-art-verification-handoff
+
+- Parent checkpoint: 9d0f65ce7288c5c170269744b246f2d13cd32377.
+- Source-order requirements: [375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 476, 477, 478].
+- Source files: Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift, Fruitfolio/Core/AppArchitecture/SettingsStore.swift, Fruitfolio/Privacy Settings/Prompt12SettingsView.swift, Fruitfolio/Localizable.xcstrings, development_workflow/LANGUAGE_WRITE_ACKNOWLEDGEMENT.md, development_workflow/ART_ACCESSIBILITY_375_390_HANDOFF.md.
+- ThreeactualSettings regressions reproduced4assertionfailures against9d0f65c. Exact typed language readback now owns acknowledgement; failedwrites reload savedselection/review without automatic overwrite and showcontrolled feedback. Finalfocused3adds singlewrite/error/retry assertions; full903/925+21each execute initial3statecases with sameproductionfix. Existing375–390source evidence remainsIN_PROGRESS; individually enumerated Apple acceptancechecks carriedforward, not certified. Missing374tulip unchanged.
+- Tests added/updated: FruitfolioTests/Prompt1BSettingsLanguageTests.swift.
+- Verification: {"portable_XCTest": 903, "native_CPU_XCTest": 925, "SwiftTesting_each": 21, "baseline_XCTest": 3, "baseline_failed_assertions": 4, "final_focused_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0}.
+- Next action: Continue393–394 actual global language propagation and screen coverage. Preserve375–390Apple verification handoff,374tulip and officialMADLAD/clinical/device blockers; do not count source, AST checks or syntheticT5 as runtime acceptance.
+- Commit: containing commit for batch Language-write-acknowledgement-and-art-verification-handoff.
