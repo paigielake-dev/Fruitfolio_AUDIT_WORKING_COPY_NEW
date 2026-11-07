@@ -17,10 +17,13 @@ actor FruitfolioResearchPackageStore {
     private let resourceURL: URL?
     private let lifeBridgeResourceURL: URL?
     private var cachedLifeBridgeContent: FruitfolioLifeBridgeContent?
+    private let brandResourceURL: URL?
+    private var cachedBrandContent: FruitfolioBrandContent?
 
-    init(resourceURL: URL? = nil, lifeBridgeResourceURL: URL? = nil) {
+    init(resourceURL: URL? = nil, lifeBridgeResourceURL: URL? = nil, brandResourceURL: URL? = nil) {
         self.resourceURL = resourceURL
         self.lifeBridgeResourceURL = lifeBridgeResourceURL
+        self.brandResourceURL = brandResourceURL
     }
 
     func lifeBridgeContent() throws -> FruitfolioLifeBridgeContent? {
@@ -37,6 +40,21 @@ actor FruitfolioResearchPackageStore {
     func lifeBridgeAnswer(originalQuestion: String, query: String) throws -> AskAnswer? {
         try Task.checkCancellation()
         let answer = try lifeBridgeContent()?.informationalAnswer(originalQuestion: originalQuestion, query: query)
+        try Task.checkCancellation()
+        return answer
+    }
+
+    func brandAnswer(originalQuestion: String, query: String) throws -> AskAnswer? {
+        try Task.checkCancellation()
+        let content: FruitfolioBrandContent?
+        if let cachedBrandContent { content = cachedBrandContent }
+        else {
+            if let brandResourceURL { content = FruitfolioBrandInformation.load(at: brandResourceURL) }
+            else { content = FruitfolioBrandInformation.load() }
+            if let content { cachedBrandContent = content }
+        }
+        try Task.checkCancellation()
+        let answer = content?.informationalAnswer(originalQuestion: originalQuestion, query: query)
         try Task.checkCancellation()
         return answer
     }
@@ -803,6 +821,17 @@ final class FruitfolioResearchIntelligenceEngine:
                 originalQuestion: trimmed,
                 answerText: "details not available in the approved library yet. open LifeBridge information for the founder-specified official websites. current organization-specific claims require reviewed snapshots from both LifeBridge and FruitsofLife.xo.",
                 support: .genuinelyNovel, knowledgeBaseVersion: FruitfolioLifeBridgeInformation.awaitingStatus, answerPath: .unavailableContent)
+        }
+
+        if safety.level == .normal, FruitfolioBrandInformation.isInformationQuestion(searchQuestion) {
+            lastDiagnostics = nil
+            if let answer = try await packageStore.brandAnswer(originalQuestion: trimmed, query: searchQuestion) {
+                return answer
+            }
+            return AskAnswer(originalQuestion: trimmed,
+                answerText: "reviewed FruitsofLife.xo brand or product details are not available in the approved library yet. the founder-specified account is https://www.instagram.com/fruitsoflife.xo/ . first-party brand information must remain separate from independent scientific evidence.",
+                support: .genuinelyNovel, knowledgeBaseVersion: FruitfolioBrandInformation.awaitingStatus,
+                answerPath: .unavailableContent)
         }
 
         let normalized =

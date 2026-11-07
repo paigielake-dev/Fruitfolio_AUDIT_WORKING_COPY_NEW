@@ -1,0 +1,41 @@
+{
+  "source_instruction": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt:995 (exact receipt retained in FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json)",
+  "resource_contract": {
+    "path": "Fruitfolio/FruitsofLifeApprovedBrandContent.json",
+    "scope": "brandAndProductInformation",
+    "snapshots": "Existing FruitfolioLifeBridgeSnapshot fields: unique id, title, exact founder Instagram account URL, retrievedAt, reviewedAt, version, complete approvedText. ISO8601 dates. Requires authorized reviewed nonclinical brand/product content; metadata validation is not independent approval or scientific review.",
+    "source": "https://www.instagram.com/fruitsoflife.xo/",
+    "not_added": "No fabricated production content, approvals, dates, source facts, product claims or model weights were added."
+  },
+  "implementation": {
+    "ingestion": "Existing bounded local-only 8MiB file reader reused; no inference-time fetch/crawl. Decoder rejects unsupported declared scope and invalid metadata/account URLs.",
+    "ownership": "Existing ResearchPackageStore actor loads and caches only static approved brand content, not questions, conversations or answers. Cancellation checked before/after source matching.",
+    "consumer": "Actual Ask engine routes narrow generic platform/brand/product/educational-content/announcement requests to full reviewed source excerpts, with source records and explicitly first-party nonmedical attribution.",
+    "safety": "Urgent/sensitive handling precedes publisher access. Unknown/medical brand questions retain scientific pipeline. Instagram cannot satisfy either mandatory LifeBridge website, and brand snippets never enter approved medical RAG or generated clinical synthesis.",
+    "display": "Existing active/historical translated answer consumers protect proper source names for publisher and unavailable-content answers. Exact original source and save-version metadata remain unchanged.",
+    "missing_content": "Actual typed unavailable response with no fabricated citations when valid source snapshots are absent."
+  },
+  "executed": {
+    "full_portable_XCTest": 1009,
+    "Swift_Testing": 21,
+    "native_CPU_focused_XCTest": 34,
+    "workflow": 71,
+    "swift_syntax_files": 320,
+    "logs": [
+      "/tmp/fruitfolio_brand_consumer_full_portable.log",
+      "/tmp/fruitfolio_brand_consumer_native.log",
+      "/tmp/fruitfolio_brand_consumer_workflow.log",
+      "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+    ],
+    "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
+  },
+  "not_run": [
+    "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+    "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
+  ],
+  "remaining": [
+    "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+    "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+    "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+  ]
+}

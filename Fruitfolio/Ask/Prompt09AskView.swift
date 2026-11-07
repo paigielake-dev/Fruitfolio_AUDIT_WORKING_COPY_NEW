@@ -1055,7 +1055,7 @@ struct Prompt09AskView: View {
                 FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
                     .accessibilityIdentifier("ask.evidenceSupport.\(answer.id.uuidString)")
             }
-            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs + (answer.answerPath == .publisherInformation ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []), sourceRecords: answer.sources) { display, displayLanguage in
+            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs + ((answer.answerPath == .publisherInformation || answer.answerPath == .unavailableContent) ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []), sourceRecords: answer.sources) { display, displayLanguage in
                 Prompt09SelectableAnswerText(
                     text: display,
                     selectedText: Binding(get: { historicalSelections[answer.id] },
@@ -1603,7 +1603,7 @@ struct Prompt09LocalizedAnswerText: View {
 
     var body: some View {
         FruitfolioTranslatedContent(source: answer.answerText,
-            protectedLiterals: answer.sourceIDs + (answer.answerPath == .publisherInformation
+            protectedLiterals: answer.sourceIDs + ((answer.answerPath == .publisherInformation || answer.answerPath == .unavailableContent)
                 ? FruitfolioLifeBridgeInformation.protectedNames(in: answer.answerText) : []),
             sourceRecords: answer.sources, bundle: bundle) { display, displayLanguage in
             Group {

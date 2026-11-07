@@ -36,7 +36,7 @@ final class Prompt1BLifeBridgeTests: XCTestCase {
             try founder ?? snapshot(id: "founder", url: FruitfolioLifeBridgeInformation.founderURL)],
             officialApplicationURL: application, relationshipDisclosure: nil)
     }
-    private func writeResource(_ content: FruitfolioLifeBridgeContent) throws -> (directory: URL, file: URL) {
+    private func writeResource<Content: Encodable>(_ content: Content) throws -> (directory: URL, file: URL) {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("Fruitfolio.Publishers." + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         do {
@@ -48,6 +48,102 @@ final class Prompt1BLifeBridgeTests: XCTestCase {
             try? FileManager.default.removeItem(at: directory)
             throw error
         }
+    }
+
+    func testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines() {
+        for question in ["what is Fruitfolio?", "who created Fruitfolio?", "what products does FruitsofLife.xo offer?",
+                         "where can I download Fruitfolio?", "how can I contact FruitsofLife.xo?",
+                         "what educational content does FruitsofLife.xo offer?",
+                         "tell me about FruitsofLife.xo announcements", "FruitsofLife.xo platform information"] {
+            XCTAssertTrue(FruitfolioBrandInformation.isInformationQuestion(question), question)
+        }
+        for question in ["does Fruitfolio treat infertility?", "FruitsofLife.xo progesterone products",
+                         "Fruitfolio medical advice", "Fruitfolio LifeBridge eligibility", "what is FruitfolioBank?",
+                         "what products treat PCOS?", "FruitsofLife.xo.xyz products"] {
+            XCTAssertFalse(FruitfolioBrandInformation.isInformationQuestion(question), question)
+        }
+    }
+
+    func testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope() throws {
+        let valid = try snapshot(id: "brand", url: FruitfolioLifeBridgeInformation.founderInstagramURL)
+        XCTAssertTrue(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: [valid]).validate())
+        XCTAssertFalse(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: []).validate())
+        XCTAssertFalse(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: [valid, valid]).validate())
+        for text in ["https://instagram.com/fruitsoflife.xo/", "https://www.instagram.com/another-account/",
+                     "https://www.instagram.com/fruitsoflife.xo/extra", "https://www.instagram.com/p/unknown-author/",
+                     "https://www.instagram.com/fruitsoflife.xo/?redirect=other", "https://www.instagram.com/fruitsoflife.xo/#other",
+                     "https://user@www.instagram.com/fruitsoflife.xo/", "https://www.instagram.com:444/fruitsoflife.xo/"] {
+            let invalid = try snapshot(url: URL(string: text))
+            XCTAssertFalse(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: [invalid]).validate(), text)
+        }
+        for invalid in [try snapshot(url: FruitfolioLifeBridgeInformation.founderInstagramURL, version: ""),
+                        try snapshot(url: FruitfolioLifeBridgeInformation.founderInstagramURL, text: " \n"),
+                        try snapshot(url: FruitfolioLifeBridgeInformation.founderInstagramURL,
+                            retrieved: Date(timeIntervalSince1970: 3_000), reviewed: Date(timeIntervalSince1970: 2_000)),
+                        try snapshot(url: FruitfolioLifeBridgeInformation.founderInstagramURL,
+                            reviewed: Date.distantFuture)] {
+            XCTAssertFalse(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: [invalid]).validate())
+        }
+        let encoded = try JSONEncoder().encode(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: [valid]))
+        let wrongScope = String(decoding: encoded, as: UTF8.self)
+            .replacingOccurrences(of: "brandAndProductInformation", with: "independentScientificEvidence")
+        XCTAssertThrowsError(try JSONDecoder().decode(FruitfolioBrandContent.self, from: Data(wrongScope.utf8)))
+        XCTAssertFalse(try content(official: valid).validate(), "Instagram must not replace either mandatory LifeBridge source")
+    }
+
+    @MainActor
+    func testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution() async throws {
+        let account = FruitfolioLifeBridgeInformation.founderInstagramURL
+        let product = try snapshot(id: "product", url: account, title: "products fixture",
+            text: "nonclinical product fixture *exact original*. all qualifications remain.")
+        let contact = try snapshot(id: "contact", url: account, title: "contact fixture",
+            text: "nonclinical contact fixture.")
+        let resource = try writeResource(FruitfolioBrandContent(scope: .brandAndProductInformation, snapshots: [contact, product]))
+        defer { try? FileManager.default.removeItem(at: resource.directory) }
+        let store = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"),
+            brandResourceURL: resource.file)
+        let model = Prompt1BPublisherSynthesisProbe()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: store, languageModel: model)
+        let first = try await engine.answer(question: "what products does FruitsofLife.xo offer?", conversation: [])
+        XCTAssertEqual(first.answerPath, .publisherInformation)
+        XCTAssertEqual(first.support, .partiallySupported)
+        XCTAssertEqual(first.sourceIDs, ["fruitsoflife-brand:product"])
+        XCTAssertEqual(first.originalQuestion, "what products does FruitsofLife.xo offer?")
+        XCTAssertTrue(first.answerText.contains(FruitfolioSemanticMarkup.markdown([.init(text: product.approvedText)])))
+        XCTAssertTrue(first.answerText.contains("not independent scientific evidence"))
+        let record = try XCTUnwrap(first.sources.first)
+        XCTAssertEqual(record.urlString, account?.absoluteString)
+        XCTAssertEqual(record.contentVersion, product.version)
+        XCTAssertNil(record.doi)
+        XCTAssertNil(record.publicationData)
+        XCTAssertTrue(record.sourceText?.contains(product.reviewedAt.ISO8601Format()) == true)
+        XCTAssertNotNil(Prompt09SaveSourceVersions.validated(first.sources))
+        let second = try await engine.answer(question: "how can I contact FruitsofLife.xo?", conversation: [])
+        XCTAssertEqual(second.sourceIDs, ["fruitsoflife-brand:contact"])
+        XCTAssertNotEqual(first.id, second.id, "Only static reviewed content is cached, never a prior answer")
+        XCTAssertNil(engine.lastDiagnostics)
+        let calls = await model.calls
+        XCTAssertEqual(calls, 0)
+    }
+
+    @MainActor
+    func testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts() async throws {
+        let resource = try writeResource(FruitfolioBrandContent(scope: .brandAndProductInformation,
+            snapshots: [try snapshot(url: FruitfolioLifeBridgeInformation.officialURL)]))
+        defer { try? FileManager.default.removeItem(at: resource.directory) }
+        let model = Prompt1BPublisherSynthesisProbe()
+        let store = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/unavailable/research.json"),
+            brandResourceURL: resource.file)
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: store, languageModel: model)
+        let answer = try await engine.answer(question: "what is Fruitfolio?", conversation: [])
+        XCTAssertEqual(answer.answerPath, .unavailableContent)
+        XCTAssertEqual(answer.knowledgeBaseVersion, FruitfolioBrandInformation.awaitingStatus)
+        XCTAssertTrue(answer.sources.isEmpty)
+        XCTAssertTrue(answer.sourceIDs.isEmpty)
+        let calls = await model.calls
+        XCTAssertEqual(calls, 0)
+        XCTAssertNil(FruitfolioBrandInformation.load(at: try XCTUnwrap(FruitfolioLifeBridgeInformation.founderInstagramURL)),
+            "A source URL must never initiate a publisher fetch")
     }
 
     func testPublisherIntentCannotHijackUnrelatedOrMedicalResearchQuestions() {

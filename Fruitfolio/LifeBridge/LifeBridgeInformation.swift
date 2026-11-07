@@ -166,16 +166,110 @@ enum FruitfolioLifeBridgeInformation {
     }
 
     static func load(at url: URL) -> FruitfolioLifeBridgeContent? {
-        // Loading approved content is strictly local. Publisher links are opened
-        // separately by explicit user action, never fetched during inference.
+        guard let data = localApprovedData(at: url) else { return nil }
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        guard let content = try? decoder.decode(FruitfolioLifeBridgeContent.self, from: data), content.validate() else { return nil }
+        return content
+    }
+
+    /// Shared bounded local reader; publisher URLs are never fetched by Ask.
+    static func localApprovedData(at url: URL) -> Data? {
         guard url.isFileURL, ["", "localhost"].contains(url.host?.lowercased() ?? ""),
               let file = try? FileHandle(forReadingFrom: url) else { return nil }
         defer { try? file.close() }
         let limit = 8 * 1024 * 1024
         guard let data = try? file.read(upToCount: limit + 1), data.count <= limit else { return nil }
+        return data
+    }
+}
+
+/// Separately reviewed first-party brand/product excerpts. These never become
+/// approved scientific-library chunks or satisfy the two LifeBridge sources.
+struct FruitfolioBrandContent: Codable, Equatable, Sendable {
+    enum Scope: String, Codable, Sendable { case brandAndProductInformation }
+    let scope: Scope
+    let snapshots: [FruitfolioLifeBridgeSnapshot]
+
+    func validate(now: Date = Date()) -> Bool {
+        guard now.timeIntervalSinceReferenceDate.isFinite, !snapshots.isEmpty,
+              Set(snapshots.map(\.id)).count == snapshots.count else { return false }
+        return snapshots.allSatisfy { snapshot in
+            let url = snapshot.sourceURL
+            return url.scheme?.lowercased() == "https" &&
+                url.host?.lowercased() == "www.instagram.com" &&
+                ["/fruitsoflife.xo", "/fruitsoflife.xo/"].contains(url.path) &&
+                url.user == nil && url.password == nil && (url.port == nil || url.port == 443) &&
+                url.query == nil && url.fragment == nil &&
+                [snapshot.id, snapshot.title, snapshot.version, snapshot.approvedText]
+                    .allSatisfy { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty } &&
+                snapshot.retrievedAt.timeIntervalSinceReferenceDate.isFinite &&
+                snapshot.reviewedAt.timeIntervalSinceReferenceDate.isFinite &&
+                snapshot.retrievedAt <= snapshot.reviewedAt && snapshot.reviewedAt <= now
+        }
+    }
+
+    func informationalAnswer(originalQuestion: String, query: String) -> AskAnswer? {
+        guard validate(), FruitfolioBrandInformation.isInformationQuestion(query) else { return nil }
+        let terms = FruitfolioQueryNormalizer.tokens(query)
+        // One complete approved excerpt, selected by relevance with curator-order
+        // ties. No question/answer caching, generation, or qualifier slicing.
+        let selected = snapshots.enumerated().max { lhs, rhs in
+            func score(_ item: FruitfolioLifeBridgeSnapshot) -> Int {
+                3 * terms.intersection(FruitfolioQueryNormalizer.tokens(item.title)).count +
+                    terms.intersection(FruitfolioQueryNormalizer.tokens(item.approvedText)).count
+            }
+            let left = score(lhs.element), right = score(rhs.element)
+            return left == right ? lhs.offset > rhs.offset : left < right
+        }?.element
+        guard let selected else { return nil }
+        let record = AskSourceRecord(id: "fruitsoflife-brand:" + selected.id,
+            title: selected.title,
+            sourceText: "first-party brand/product information; not independent scientific evidence\nretrieved " +
+                selected.retrievedAt.ISO8601Format() + "\nreviewed " + selected.reviewedAt.ISO8601Format() +
+                "\nversion " + selected.version,
+            urlString: selected.sourceURL.absoluteString, doi: nil, publicationData: nil,
+            contentVersion: selected.version)
+        return AskAnswer(originalQuestion: originalQuestion,
+            answerText: "here’s the reviewed brand information. ☆ **FruitsofLife.xo first-party brand/product information**\n\n" +
+                FruitfolioSemanticMarkup.markdown([.init(text: selected.approvedText)]) +
+                "\n\nthis publisher excerpt describes the brand or its products. it is not independent scientific evidence or medical guidance. check the original account for current details.",
+            support: .partiallySupported, sourceIDs: [record.id], sources: [record],
+            knowledgeBaseVersion: "fruitsoflife-brand:" + selected.id + "@" + selected.version,
+            answerPath: .publisherInformation)
+    }
+}
+
+enum FruitfolioBrandInformation {
+    static let awaitingStatus = "awaiting_reviewed_fruitsoflife_brand_content"
+
+    /// Narrow generic brand/product requests only. Unknown or medical topics
+    /// continue through the scientific pipeline, even when a brand is mentioned.
+    static func isInformationQuestion(_ question: String) -> Bool {
+        let names = FruitfolioLifeBridgeInformation.protectedNames(in: question)
+        guard names.contains(where: { ["fruitfolio", "fruitsoflife.xo"].contains($0.lowercased()) }),
+              !FruitfolioLifeBridgeInformation.isOrganizationQuestion(question) else { return false }
+        let words = Set(question.lowercased().split { !$0.isLetter && !$0.isNumber }.map(String.init))
+        let allowed: Set<String> = ["fruitfolio", "fruitsoflife", "xo", "what", "who", "where", "how", "can", "i",
+            "is", "are", "does", "do", "the", "a", "an", "it", "its", "their", "this", "that", "of", "for", "to",
+            "from", "and", "about", "tell", "me", "please", "information", "info", "brand", "brands", "product",
+            "products", "offer", "offers", "app", "application", "download", "get", "find", "contact", "website",
+            "account", "instagram", "founder", "created", "made", "support", "privacy", "pricing", "price", "cost",
+            "educational", "education", "content", "platform", "announcements", "announcement", "offerings",
+            "offering", "latest", "published", "publishes", "by", "explain", "learn", "more", "s", "your"]
+        return !words.isEmpty && words.isSubset(of: allowed)
+    }
+
+    static func load(bundle: Bundle = .main) -> FruitfolioBrandContent? {
+        guard let url = bundle.url(forResource: "FruitsofLifeApprovedBrandContent", withExtension: "json") else { return nil }
+        return load(at: url)
+    }
+
+    static func load(at url: URL) -> FruitfolioBrandContent? {
+        guard let data = FruitfolioLifeBridgeInformation.localApprovedData(at: url) else { return nil }
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        guard let content = try? decoder.decode(FruitfolioLifeBridgeContent.self, from: data), content.validate() else { return nil }
+        guard let content = try? decoder.decode(FruitfolioBrandContent.self, from: data), content.validate() else { return nil }
         return content
     }
 }

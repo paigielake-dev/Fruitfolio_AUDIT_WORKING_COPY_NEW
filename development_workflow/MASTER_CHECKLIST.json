@@ -24173,7 +24173,9 @@
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json"
+        "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24184,46 +24186,51 @@
       "related_tests": [
         "Prompt1BLifeBridgeTests",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
+        "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
+        "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
       ],
-      "commit_reference": "batch:LifeBridge-approved-publisher-Ask-consumer-and-shared-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added a LifeBridge destination through FAQ and relevant Ask questions without adding a Hub button. Founder-specified official and Carrd URLs are exact, user-initiated and carry no health data. Approved-content slots require snapshots from both named sources with titles, URLs, retrieval/review dates and versions. Missing snapshots yield awaiting_verified_lifebridge_content and no organization-specific claims; normal-safety LifeBridge questions receive transparent missing-library fallback before unrelated research can be used as company evidence. Approved snapshots/application/disclosure are not invented and remain an external content dependency.",
         "Integrate exact first-party Instagram destination explicitly specified in founder line995 and correction1477, retaining user-initiated external navigation/active guards, original two required LifeBridge/Carrd snapshot gate and scientific-source separation. Actual six Foundation tests pass, including Instagram not replacing either mandatory source. Preserve complete instruction hashes and explicitly identify missing approved social snapshots, first-party brand retrieval and source-specific Ask integration. Link/source presence is not counted as full requirement completion.",
-        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion."
+        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
       ],
-      "last_updated": "2026-11-07T11:31:51.408532+00:00",
+      "last_updated": "2026-11-07T11:51:44.089393+00:00",
       "latest_batch_verification": {
-        "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
         "executed": {
-          "focused_portable_XCTest_passed": 29,
-          "latest_publisher_only_XCTest_passed": 14,
-          "full_portable_XCTest_passed": 1002,
-          "SwiftTesting_full_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 30,
-          "workflow_passed": 71,
+          "full_portable_XCTest": 1009,
+          "Swift_Testing": 21,
+          "native_CPU_focused_XCTest": 34,
+          "workflow": 71,
           "swift_syntax_files": 320,
-          "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          "logs": [
+            "/tmp/fruitfolio_brand_consumer_full_portable.log",
+            "/tmp/fruitfolio_brand_consumer_native.log",
+            "/tmp/fruitfolio_brand_consumer_workflow.log",
+            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+          ],
+          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
         },
         "not_run": [
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
         ],
         "remaining": [
-          "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-          "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-          "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-        "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-        "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-        "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-        "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
       ],
       "prior_batch_verifications": [
         {
@@ -24245,6 +24252,31 @@
             "Official MADLAD, scientific source/clinical review and native-language acceptance"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+          "executed": {
+            "focused_portable_XCTest_passed": 29,
+            "latest_publisher_only_XCTest_passed": 14,
+            "full_portable_XCTest_passed": 1002,
+            "SwiftTesting_full_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 30,
+            "workflow_passed": 71,
+            "swift_syntax_files": 320,
+            "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          },
+          "not_run": [
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "remaining": [
+            "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
+            "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
+            "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -24264,7 +24296,9 @@
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json"
+        "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24275,49 +24309,54 @@
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift (five genuine parent-tested cases; unchanged/not rerun UI batch)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing whole shared-host class; LifeBridge-specific runtime NOT_RUN)",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
+        "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
+        "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
       ],
-      "commit_reference": "batch:LifeBridge-approved-publisher-Ask-consumer-and-shared-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added a LifeBridge destination through FAQ and relevant Ask questions without adding a Hub button. Founder-specified official and Carrd URLs are exact, user-initiated and carry no health data. Approved-content slots require snapshots from both named sources with titles, URLs, retrieval/review dates and versions. Missing snapshots yield awaiting_verified_lifebridge_content and no organization-specific claims; normal-safety LifeBridge questions receive transparent missing-library fallback before unrelated research can be used as company evidence. Approved snapshots/application/disclosure are not invented and remain an external content dependency.",
         "Actual structural validator requires exact HTTPS hosts, no URL credentials and default/443 port for reviewed snapshots/application. Blank ID/title/version/body and nonfinite dates rejected without rewriting accepted originals. Literal approved query/fragment stays intact; no local health data appended. Three nonclinical fixture cases reproduce13 failed assertions before fix; full800/822 XCTest +21SwiftTesting each pass. No reviewer authentication/company facts/approved-snapshot availability established;315\u2013317 remain blocked.",
         "Actual LifeBridge missing-content/privacy/relationship explanations use serious source translation; fixed heading/link/date metadata labels use compact owner. Approved title/URL/version remain verbatim; dates native-formatted separately from translated labels. Brand literals protected in relevant labels/text. Back requires active visible owner; native Links disabled when inactive/shared-popup covered. Reviewed destinations and validator byte-preserved, no company facts/private context supplied. Seven English additions preserve949 entries,956 total; actual approved snapshots/Apple link behavior remain unverified.",
         "Both actual Ask and FAQ LifeBridge native-sheet entrypoints use existing FruitfolioPresentedPopupHost. This gives presented surface its own canonical popup coordinator instead of inheriting unrelated root overlay state. Existing boolean dismissal/content/links unchanged; no new popup framework, blur constants, assets, company facts or model source. Source surface isolation only; Apple layering/focus/blur behavior unverified.",
         "Integrate exact first-party Instagram destination explicitly specified in founder line995 and correction1477, retaining user-initiated external navigation/active guards, original two required LifeBridge/Carrd snapshot gate and scientific-source separation. Actual six Foundation tests pass, including Instagram not replacing either mandatory source. Preserve complete instruction hashes and explicitly identify missing approved social snapshots, first-party brand retrieval and source-specific Ask integration. Link/source presence is not counted as full requirement completion.",
-        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion."
+        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
       ],
-      "last_updated": "2026-11-07T11:31:51.408532+00:00",
+      "last_updated": "2026-11-07T11:51:44.089393+00:00",
       "latest_batch_verification": {
-        "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
         "executed": {
-          "focused_portable_XCTest_passed": 29,
-          "latest_publisher_only_XCTest_passed": 14,
-          "full_portable_XCTest_passed": 1002,
-          "SwiftTesting_full_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 30,
-          "workflow_passed": 71,
+          "full_portable_XCTest": 1009,
+          "Swift_Testing": 21,
+          "native_CPU_focused_XCTest": 34,
+          "workflow": 71,
           "swift_syntax_files": 320,
-          "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          "logs": [
+            "/tmp/fruitfolio_brand_consumer_full_portable.log",
+            "/tmp/fruitfolio_brand_consumer_native.log",
+            "/tmp/fruitfolio_brand_consumer_workflow.log",
+            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+          ],
+          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
         },
         "not_run": [
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
         ],
         "remaining": [
-          "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-          "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-          "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-        "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-        "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-        "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-        "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
       ],
       "prior_batch_verifications": [
         {
@@ -24357,6 +24396,31 @@
             "Official MADLAD, scientific source/clinical review and native-language acceptance"
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+          "executed": {
+            "focused_portable_XCTest_passed": 29,
+            "latest_publisher_only_XCTest_passed": 14,
+            "full_portable_XCTest_passed": 1002,
+            "SwiftTesting_full_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 30,
+            "workflow_passed": 71,
+            "swift_syntax_files": 320,
+            "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          },
+          "not_run": [
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "remaining": [
+            "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
+            "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
+            "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
       ]
     },
@@ -24376,7 +24440,9 @@
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json"
+        "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24386,48 +24452,53 @@
         "Prompt1BLifeBridgeTests",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift (five genuine parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
+        "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
+        "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
       ],
-      "commit_reference": "batch:LifeBridge-approved-publisher-Ask-consumer-and-shared-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added a LifeBridge destination through FAQ and relevant Ask questions without adding a Hub button. Founder-specified official and Carrd URLs are exact, user-initiated and carry no health data. Approved-content slots require snapshots from both named sources with titles, URLs, retrieval/review dates and versions. Missing snapshots yield awaiting_verified_lifebridge_content and no organization-specific claims; normal-safety LifeBridge questions receive transparent missing-library fallback before unrelated research can be used as company evidence. Approved snapshots/application/disclosure are not invented and remain an external content dependency.",
         "Actual structural validator requires exact HTTPS hosts, no URL credentials and default/443 port for reviewed snapshots/application. Blank ID/title/version/body and nonfinite dates rejected without rewriting accepted originals. Literal approved query/fragment stays intact; no local health data appended. Three nonclinical fixture cases reproduce13 failed assertions before fix; full800/822 XCTest +21SwiftTesting each pass. No reviewer authentication/company facts/approved-snapshot availability established;315\u2013317 remain blocked.",
         "Actual LifeBridge missing-content/privacy/relationship explanations use serious source translation; fixed heading/link/date metadata labels use compact owner. Approved title/URL/version remain verbatim; dates native-formatted separately from translated labels. Brand literals protected in relevant labels/text. Back requires active visible owner; native Links disabled when inactive/shared-popup covered. Reviewed destinations and validator byte-preserved, no company facts/private context supplied. Seven English additions preserve949 entries,956 total; actual approved snapshots/Apple link behavior remain unverified.",
         "Integrate exact first-party Instagram destination explicitly specified in founder line995 and correction1477, retaining user-initiated external navigation/active guards, original two required LifeBridge/Carrd snapshot gate and scientific-source separation. Actual six Foundation tests pass, including Instagram not replacing either mandatory source. Preserve complete instruction hashes and explicitly identify missing approved social snapshots, first-party brand retrieval and source-specific Ask integration. Link/source presence is not counted as full requirement completion.",
-        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion."
+        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
       ],
-      "last_updated": "2026-11-07T11:31:51.408532+00:00",
+      "last_updated": "2026-11-07T11:51:44.089393+00:00",
       "latest_batch_verification": {
-        "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
         "executed": {
-          "focused_portable_XCTest_passed": 29,
-          "latest_publisher_only_XCTest_passed": 14,
-          "full_portable_XCTest_passed": 1002,
-          "SwiftTesting_full_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 30,
-          "workflow_passed": 71,
+          "full_portable_XCTest": 1009,
+          "Swift_Testing": 21,
+          "native_CPU_focused_XCTest": 34,
+          "workflow": 71,
           "swift_syntax_files": 320,
-          "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          "logs": [
+            "/tmp/fruitfolio_brand_consumer_full_portable.log",
+            "/tmp/fruitfolio_brand_consumer_native.log",
+            "/tmp/fruitfolio_brand_consumer_workflow.log",
+            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+          ],
+          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
         },
         "not_run": [
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
         ],
         "remaining": [
-          "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-          "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-          "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-        "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-        "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-        "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-        "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
       ],
       "prior_batch_verifications": [
         {
@@ -24467,6 +24538,31 @@
             "Instagram source collection also requires access to the exact founder account and appropriate authorized content snapshots. No network crawling or health-data attachment added to app.",
             "Apple active/inactive link handling, external-open choice, RTL/Dynamic Type and VoiceOver",
             "Official MADLAD, scientific source/clinical review and native-language acceptance"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+          "executed": {
+            "focused_portable_XCTest_passed": 29,
+            "latest_publisher_only_XCTest_passed": 14,
+            "full_portable_XCTest_passed": 1002,
+            "SwiftTesting_full_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 30,
+            "workflow_passed": 71,
+            "swift_syntax_files": 320,
+            "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          },
+          "not_run": [
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "remaining": [
+            "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
+            "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
+            "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -35655,7 +35751,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
         "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
-        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift"
+        "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -35725,9 +35824,13 @@
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
         "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
         "Prompt1BControlTranslationStateTests.testDisplayIdentityPreservesOriginalAndProtectedIdentifierUTF8",
-        "Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal"
+        "Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal",
+        "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
+        "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
+        "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
       ],
-      "commit_reference": "batch:Translation-display-byte-exact-source-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -35787,28 +35890,41 @@
         "Fixed real HormoneLibraryProvider retrieval failure:global top24 was filtered for the hormone too late, hiding appropriate eligible original paragraphs. Provider now scopes the full contextualized eligible corpus to the hormone first, retains source approval/complete-paragraph/citation/dedup boundaries and ranks that finite pool. Unicode matcher compiles once per article with unchanged aliases/boundaries; reused exact-name/approval tests pass. One regression reproduces32higher-ranked unrelated notes excluding a real target from the old cutoff and verifies production provider now selects original target/citations. Actual7hormone corpus readback improves structural selected buckets21\u219228of35; this is not7founder-aspect completeness. Dedicated coverage artifact records exact paragraph/source hashes and7remaining gaps, including a known already-available AMH limitations paragraph for next work.13portable/14native focused XCTest passed,71workflow,315syntax-only. Initial chained-expression compiler failure fixed with explicit existing RankedNote steps; logs retained. No medical facts/research/assets/measurements rewritten; no officialMADLAD or Apple/clinical acceptance claimed.",
         "Addressed actual approved-source relevance failures for original257 andSPEC4.9.7:AMH limitation wording now finds the existing full paragraph containing both no-IVF-guarantee and no-ovulation-confirmation cautions; LH function query recognizes the actual surge/follicular-rupture evidence. Specific estradiol/E2 evidence outranks general estrogen class material while class context remains available. Source review caught a further problem: hormone-name preference still chose an ovarian-testing list as functions; a stronger actual biological-role assertion failed, then the query was corrected to the approved follicular-development role and all7focused tests passed. Full original text/citation checks remain. Historical coverage artifact retained; followup32of35lexical buckets/3empty recorded without treating them as clinical completeness or478-item progress.71workflow/315syntax-only passed. No research/data/artwork rewritten and no whole requirement promoted.",
         "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
-        "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten."
+        "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
       ],
-      "last_updated": "2026-11-07T11:41:18.574663+00:00",
+      "last_updated": "2026-11-07T11:51:44.089393+00:00",
       "latest_batch_verification": {
-        "batch": "Translation-display-byte-exact-source-ownership",
+        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
         "executed": {
-          "portable": "/tmp/fruitfolio_display_identity_focused.log: 18 actual owner XCTest passed, including exact-byte key set and resolved-display invalidation tests",
-          "syntax": "/tmp/fruitfolio_display_identity_syntax.log: 320 Swift parsed with zero syntax errors"
+          "full_portable_XCTest": 1009,
+          "Swift_Testing": 21,
+          "native_CPU_focused_XCTest": 34,
+          "workflow": 71,
+          "swift_syntax_files": 320,
+          "logs": [
+            "/tmp/fruitfolio_brand_consumer_full_portable.log",
+            "/tmp/fruitfolio_brand_consumer_native.log",
+            "/tmp/fruitfolio_brand_consumer_workflow.log",
+            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+          ],
+          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
         },
         "not_run": [
-          "Apple long-form SwiftUI typechecking/presentation and actual selection/citation actions with byte-different originals.",
-          "Official MADLAD and clinical/native-language verification."
+          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
         ],
         "remaining": [
-          "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
-          "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
-        "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
       ],
       "prior_batch_verifications": [
         {
@@ -35907,6 +36023,22 @@
             "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
             "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
             "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Translation-display-byte-exact-source-ownership",
+          "executed": {
+            "portable": "/tmp/fruitfolio_display_identity_focused.log: 18 actual owner XCTest passed, including exact-byte key set and resolved-display invalidation tests",
+            "syntax": "/tmp/fruitfolio_display_identity_syntax.log: 320 Swift parsed with zero syntax errors"
+          },
+          "not_run": [
+            "Apple long-form SwiftUI typechecking/presentation and actual selection/citation actions with byte-different originals.",
+            "Official MADLAD and clinical/native-language verification."
+          ],
+          "remaining": [
+            "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
+            "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37112,7 +37244,9 @@
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -37264,9 +37398,13 @@
         "Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal",
         "Prompt1BHormonePersistenceTests.testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords",
         "Prompt1BHormonePersistenceTests.testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
-        "Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence"
+        "Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence",
+        "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
+        "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
+        "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
       ],
-      "commit_reference": "batch:Measurement-user-chronological-history-choice (resolve containing commit with git log)",
+      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -37386,27 +37524,41 @@
         "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
         "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation.",
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
-        "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed."
+        "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
       ],
-      "last_updated": "2026-11-07T11:44:22.071989+00:00",
+      "last_updated": "2026-11-07T11:51:44.089393+00:00",
       "latest_batch_verification": {
-        "batch": "Measurement-user-chronological-history-choice",
+        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
         "executed": {
-          "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
-          "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+          "full_portable_XCTest": 1009,
+          "Swift_Testing": 21,
+          "native_CPU_focused_XCTest": 34,
+          "workflow": 71,
+          "swift_syntax_files": 320,
+          "logs": [
+            "/tmp/fruitfolio_brand_consumer_full_portable.log",
+            "/tmp/fruitfolio_brand_consumer_native.log",
+            "/tmp/fruitfolio_brand_consumer_workflow.log",
+            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+          ],
+          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
         },
         "not_run": [
-          "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
         ],
         "remaining": [
-          "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
-          "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
-        "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
       ],
       "prior_batch_verifications": [
         {
@@ -37703,6 +37855,21 @@
           "remaining": [
             "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
             "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Measurement-user-chronological-history-choice",
+          "executed": {
+            "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
+            "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+          },
+          "not_run": [
+            "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+          ],
+          "remaining": [
+            "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+            "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -37899,7 +38066,9 @@
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -38046,9 +38215,13 @@
         "Prompt1BControlTranslationStateTests.testResolvedDisplayCannotBeReusedForCanonicallyEquivalentNewOriginal",
         "Prompt1BHormonePersistenceTests.testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords",
         "Prompt1BHormonePersistenceTests.testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
-        "Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence"
+        "Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence",
+        "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
+        "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
+        "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
       ],
-      "commit_reference": "batch:Measurement-user-chronological-history-choice (resolve containing commit with git log)",
+      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -38151,27 +38324,41 @@
         "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
         "Mount the existing single display-translation owner immediately with the complete validated answer, concurrently with its English typewriter. Preserve original source/citations/selection and original toggle; a completed target cancels only the matching answer's English stream. This removes artificial animation-before-translation sequencing, not clinical/model generation validation.",
         "Use byte-exact source and protected-literal equality/hashing for real control display ownership; the long-form display owner reuses that production identity and preserves exact source-language/bundle-path bytes. A changed NFC/NFD original or identifier invalidates accepted display provenance rather than inheriting old target text. Persisted originals and records are never rewritten.",
-        "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed."
+        "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
       ],
-      "last_updated": "2026-11-07T11:44:22.071989+00:00",
+      "last_updated": "2026-11-07T11:51:44.089393+00:00",
       "latest_batch_verification": {
-        "batch": "Measurement-user-chronological-history-choice",
+        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
         "executed": {
-          "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
-          "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+          "full_portable_XCTest": 1009,
+          "Swift_Testing": 21,
+          "native_CPU_focused_XCTest": 34,
+          "workflow": 71,
+          "swift_syntax_files": 320,
+          "logs": [
+            "/tmp/fruitfolio_brand_consumer_full_portable.log",
+            "/tmp/fruitfolio_brand_consumer_native.log",
+            "/tmp/fruitfolio_brand_consumer_workflow.log",
+            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
+          ],
+          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
         },
         "not_run": [
-          "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
+          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
         ],
         "remaining": [
-          "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
-          "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
-        "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
+        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
+        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
       ],
       "prior_batch_verifications": [
         {
@@ -38468,6 +38655,21 @@
           "remaining": [
             "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
             "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Measurement-user-chronological-history-choice",
+          "executed": {
+            "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
+            "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+          },
+          "not_run": [
+            "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+          ],
+          "remaining": [
+            "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+            "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

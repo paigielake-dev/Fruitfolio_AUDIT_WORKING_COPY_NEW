@@ -3872,3 +3872,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_portable_XCTest_passed": 39, "syntax_files": 320, "syntax_errors": 0, "initial_test_failure": "New export assertion initially used the default JSON date decoder against existing ISO8601 export; corrected the test decoder, then all39 passed. No production date format changed."}.
 - Next action: Continue original Part8 FAQ and shared composition requirements using their live source and existing evidence; prioritize demonstrated missing behavior and record individual implementation closure only after all clauses are reviewed.
 - Commit: containing commit for batch Measurement-user-chronological-history-choice.
+
+## Founder-Instagram-reviewed-brand-Ask-consumer
+
+- Parent checkpoint: 9ed298a67d6af1ad5d5c9adbfb1dafcb6c41d95d.
+- Source-order requirements: [317, 318, 319, 433, 443, 444].
+- Separate founder additions: ['SPEC-BINDING-LIFEBRIDGE-SOURCES', 'SPEC-7.9.5'].
+- Source files: Fruitfolio/LifeBridge/LifeBridgeInformation.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, Fruitfolio/Ask/Prompt09AskView.swift, FruitfolioTests/Prompt1BLifeBridgeTests.swift, development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json.
+- Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.
+- Tests added/updated: Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines, Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope, Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution, Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts.
+- Verification: {"portable_XCTest_passed": 1009, "SwiftTesting_passed": 21, "native_CPU_focused_XCTest_passed": 34, "workflow_passed": 71, "syntax_files": 320, "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."}.
+- Next action: Close individually evidenced hormone input/persistence requirements using the already executed39 actual domain/store regressions and live editor bindings; retain Apple acceptance pending and preserve all prior evidence, then continue remaining functional gaps across all parts.
+- Commit: containing commit for batch Founder-Instagram-reviewed-brand-Ask-consumer.
