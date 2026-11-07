@@ -12,6 +12,7 @@ nonisolated struct FruitfolioEvidencePacket:
     let permittedContext: FruitfolioBoundedTrackerContext?
     let contentVersion: String
     var userProvidedContext: FruitfolioAskUserContext? = nil
+    var conversationalPresentation: FruitfolioConversationalPresentation = .neutral
 }
 
 /// The local model never gets to hand arbitrary prose directly to the UI.

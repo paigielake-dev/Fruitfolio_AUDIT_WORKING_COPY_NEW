@@ -81,3 +81,62 @@ final class Prompt1BEvidenceBoundaryTests: XCTestCase {
         XCTAssertEqual(Prompt54CanonicalVoicePolicy.preferredKaomojiRange, 0...1)
     }
 }
+
+extension Prompt1BEvidenceBoundaryTests {
+    func testExplicitConversationalCuesNeverBecomeDiagnosesOrQuotedKeywordProfiles() {
+        let expected: [(String, FruitfolioConversationalPresentation)] = [
+            ("I’m really worried about this question", .gentle), ("i feel sad about this", .gentle),
+            ("I'm embarrassed to ask", .gentle), ("I am frustrated with this explanation", .clear),
+            ("just curious about this", .curious), ("I'm excited to learn", .bright),
+            ("just for fun, how does this work?", .casual), ("I'm excited but worried about this", .gentle)
+        ]
+        for (question, presentation) in expected { XCTAssertEqual(FruitfolioConversationalPresentation.classify(question), presentation) }
+        for question in ["I'm not worried", "my friend is worried", "what does worried mean?",
+                         "\"I'm worried\" is a quoted example", "I'm sadistic", "not just curious", "for fungal research"] {
+            XCTAssertEqual(FruitfolioConversationalPresentation.classify(question), .neutral, question)
+        }
+    }
+
+    func testGeneratedAndFallbackPresentationShareCueWithoutChangingEvidenceOrTrustingModelBridge() throws {
+        var evidence = packet()
+        evidence.conversationalPresentation = .gentle
+        let draft = FruitfolioGeneratedDraft(bridge: "you have an anxiety disorder", claims: [
+            .init(text: original, evidenceIDs: ["note-1"])], limitation: "you will definitely be fine")
+        let generated = try XCTUnwrap(FruitfolioGeneratedDraftValidator.validatedAnswer(draft: draft, evidence: evidence))
+        let fallback = FruitfolioCanonicalAnswerVoice.compose(excerpts: [FruitfolioSemanticPolicy.sourceMarkup(original)],
+            hasUnansweredParts: false, safety: evidence.safetyClassification, presentation: .gentle)
+        XCTAssertEqual(generated.text, fallback)
+        XCTAssertTrue(generated.text.hasPrefix("we can take this one step at a time."))
+        XCTAssertTrue(generated.text.contains(original))
+        XCTAssertEqual(generated.usedEvidenceIDs, ["note-1"])
+        XCTAssertFalse(generated.text.contains("anxiety disorder"))
+        XCTAssertFalse(generated.text.contains("definitely be fine"))
+        XCTAssertFalse(FruitfolioEvidencePromptBuilder.selectionPrompt(question: "fixture", evidence: evidence).contains("conversationalPresentation"))
+    }
+
+    func testSeriousnessOverridesBrightFramingAndUrgentNoticesRemainExact() {
+        let serious = Prompt34SafetyClassification(level: .sensitive, matchedPatterns: [])
+        let text = FruitfolioCanonicalAnswerVoice.compose(excerpts: [original], hasUnansweredParts: false,
+            safety: serious, presentation: .bright)
+        XCTAssertTrue(text.hasPrefix("here is what the approved research supports."))
+        XCTAssertFalse(text.contains("explore this!"))
+        let urgent = Prompt34SafetyClassification(level: .urgent, matchedPatterns: [])
+        let originalUrgent = Prompt34LocalSafetyRouter.urgentResponseText()
+        for presentation in FruitfolioConversationalPresentation.allCases {
+            XCTAssertEqual(presentation.notice(originalUrgent, safety: urgent), originalUrgent)
+        }
+    }
+}
+
+extension Prompt1BEvidenceBoundaryTests {
+    func testConversationalPrefaceCannotRemoveSymptomsNegationOrScientificValues() {
+        let question = "I’m worried about how E2 20 pg/mL compares with 12.50 ng/mL?"
+        XCTAssertEqual(FruitfolioConversationalPresentation.researchQuestion(question),
+                       "how E2 20 pg/mL compares with 12.50 ng/mL?")
+        for original in ["I'm sad and nauseous", "I'm not worried about how E2 changes",
+                         "my friend is worried about how E2 changes", "I'm worried about 12 ng/mL",
+                         "\"I'm worried about how E2 changes\""] {
+            XCTAssertEqual(FruitfolioConversationalPresentation.researchQuestion(original), original)
+        }
+    }
+}

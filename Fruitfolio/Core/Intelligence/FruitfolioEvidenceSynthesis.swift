@@ -163,7 +163,7 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
         // Free-form bridge/limitation fields cannot bypass evidence validation.
         return ValidatedAnswer(text: FruitfolioCanonicalAnswerVoice.compose(excerpts: surviving,
             hasUnansweredParts: answeredNeeds.count < evidence.claimEvidenceMap.count,
-            safety: evidence.safetyClassification), usedEvidenceIDs: usedEvidenceIDs)
+            safety: evidence.safetyClassification, presentation: evidence.conversationalPresentation), usedEvidenceIDs: usedEvidenceIDs)
     }
 }
 

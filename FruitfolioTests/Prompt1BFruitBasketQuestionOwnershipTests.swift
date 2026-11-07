@@ -249,3 +249,24 @@ final class Prompt1BFruitBasketQuestionOwnershipTests: XCTestCase {
         XCTAssertNil(store.questionHistory["fixture"])
     }
 }
+
+extension Prompt1BFruitBasketQuestionOwnershipTests {
+    func testExplicitConcernUsesSharedCalmPresentationWithoutChangingQuestionHistoryOrUrgentCopy() async throws {
+        let suite = "Fruitfolio.explicit-cue." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        let provider = Prompt1BDelayedGameResearch(failure: .unsupportedTopic)
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: provider)
+        defer { model.leaveScreen() }
+        let topic = "I'm worried about progesterone"
+        model.rawTopic = topic
+        let task = Task { await model.loadQuestion() }
+        await provider.waitForStart(); await provider.finish(); await task.value
+        XCTAssertEqual(model.message, "we can take this one step at a time.\n\nthere is not enough approved research for this topic in the FruitsofLife.xo library yet.")
+        XCTAssertTrue(model.setupMessageRequiresSeriousTone)
+        XCTAssertEqual(model.rawTopic, topic)
+        XCTAssertTrue(store.questionHistory.isEmpty)
+        XCTAssertNil(model.currentQuestion)
+    }
+}

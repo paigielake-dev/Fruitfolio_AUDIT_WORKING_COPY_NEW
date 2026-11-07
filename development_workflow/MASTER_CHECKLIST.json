@@ -11899,7 +11899,10 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
-        "Fruitfolio/Ask/Prompt09AnswerSupport.swift"
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11915,16 +11918,57 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets"
+        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:P3-native-whole-paragraph-token-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified."
+        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: Generated supported paragraphs keep the existing canonical voice; explicit cue framing added without rewriting scientific source text. Full founder long-form voice remains incomplete. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-05T21:19:43.429166+00:00"
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
+      "latest_batch_verification": {
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
+        "executed": {
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
+        },
+        "not_run": [
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
+        ],
+        "remaining": [
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ]
     },
     {
       "sequence": 149,
@@ -11947,7 +11991,10 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
-        "Fruitfolio/Ask/Prompt09AnswerSupport.swift"
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11963,16 +12010,57 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets"
+        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:P3-native-whole-paragraph-token-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified."
+        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: retrievalOnlyAnswer passes the same trusted presentation enum to CanonicalAnswerVoice.compose as validated generation; actual corpus fallback test executed. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-05T21:19:43.429166+00:00"
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
+      "latest_batch_verification": {
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
+        "executed": {
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
+        },
+        "not_run": [
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
+        ],
+        "remaining": [
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ]
     },
     {
       "sequence": 150,
@@ -11995,7 +12083,10 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
-        "Fruitfolio/Ask/Prompt09AnswerSupport.swift"
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12011,16 +12102,57 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets"
+        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:P3-native-whole-paragraph-token-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified."
+        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: Model failure/invalid draft catch paths preserve the same cue and complete source fallback; no new factual model prose accepted. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-05T21:19:43.429166+00:00"
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
+      "latest_batch_verification": {
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
+        "executed": {
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
+        },
+        "not_run": [
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
+        ],
+        "remaining": [
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ]
     },
     {
       "sequence": 151,
@@ -12040,7 +12172,11 @@
         "Fruitfolio/FruitfolioResearchPackage.json",
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12052,14 +12188,55 @@
         "ResearchCompilationTests",
         "Prompt1BResearchEngineIntegrationTests",
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
-        "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID"
+        "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:P3-real-Swift-native-inference-and-headless-engine (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
-        "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights."
+        "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: One shared nonclinical bridge function serves generated and retrieval/model-failure paths. No separate simplified fallback tone added. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-05T21:09:21.211007+00:00"
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
+      "latest_batch_verification": {
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
+        "executed": {
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
+        },
+        "not_run": [
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
+        ],
+        "remaining": [
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ]
     },
     {
       "sequence": 152,
@@ -12436,7 +12613,11 @@
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12456,9 +12637,14 @@
         "ResearchCompilationTests",
         "Prompt1BResearchEngineIntegrationTests",
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
-        "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID"
+        "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:P3-real-Swift-native-inference-and-headless-engine (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -12466,9 +12652,45 @@
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
-        "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights."
+        "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: Conservative explicit first-person/casual/curious cues adapt framing; negated/quoted/third-person cues stay neutral and seriousness overrides bright presentation. Wider conversational/brand/multilingual acceptance remains incomplete. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-05T21:09:21.211007+00:00"
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
+      "latest_batch_verification": {
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
+        "executed": {
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
+        },
+        "not_run": [
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
+        ],
+        "remaining": [
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ]
     },
     {
       "sequence": 160,
@@ -12492,7 +12714,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioReviewedSemanticContexts.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
-        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json"
+        "development_workflow/SEMANTIC_REVIEWED_SOURCE_COVERAGE.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12506,46 +12732,82 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Reviewed-context-semantics-on-substantive-fallbacks (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed."
+        "Fixed missing semantic production on substantive source fallbacks:common policy now accepts explicit reviewed full-context roles, bound by exactUTF8original+joined-span equality, with no word-list styling. Five actual eligible source passages have editorial role metadata(food list inclcomplete apple slices/peanutbutter/Greekyogurt/frozenblueberries; AMH limits/definition; estradiol andLHmechanisms). Unknown/changed/NFD-different passages stayplain. Shared evidence-copy boundary, normal unformatted generation, actual retrieval fallback, game explanations and resulting hormone presentation use same authority, preserving all source words/citations. Actual engine fallback+normal controlled model and bundled game provider tested on real corpus subset; prefix/selection and byte guards tested.978portable/1003native CPU XCTest+21SwiftTesting each,26focused,1finalnormal-path focused,71workflow,316syntax-only passed. Initial optional-sourceRecords test compile error corrected; failure log retained. Partial5passage corpus coverage explicitly recorded; no whole semantic requirement promoted, no new clinical facts, no officialMADLAD or Apple result claimed.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: Existing complete evidence validation and canonical sourceMarkup remain authoritative. Presentation metadata survives budgeting; no keyword-driven semantic styler introduced or full corpus styling coverage claimed. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-07T09:15:31.018706+00:00",
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
       "latest_batch_verification": {
-        "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
         "executed": {
-          "focused_XCTest": 26,
-          "portable_full_XCTest": 978,
-          "native_CPU_full_XCTest": 1003,
-          "SwiftTesting_each_full": 21,
-          "final_normal_fallback_game_pipeline_XCTest": 1,
-          "workflow_checks": 71,
-          "changed_Swift_syntax_only": 316,
-          "reviewed_whole_passages": 5,
-          "portable_exit_code": 0,
-          "native_exit_code": 0
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
         },
         "not_run": [
-          "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
-          "Official MADLAD and clinical/translation acceptance"
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
         ],
         "remaining": [
-          "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-          "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-          "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-          "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
-        "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
-        "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
-        "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "Reviewed-context-semantics-on-substantive-fallbacks",
+          "executed": {
+            "focused_XCTest": 26,
+            "portable_full_XCTest": 978,
+            "native_CPU_full_XCTest": 1003,
+            "SwiftTesting_each_full": 21,
+            "final_normal_fallback_game_pipeline_XCTest": 1,
+            "workflow_checks": 71,
+            "changed_Swift_syntax_only": 316,
+            "reviewed_whole_passages": 5,
+            "portable_exit_code": 0,
+            "native_exit_code": 0
+          },
+          "not_run": [
+            "Apple SDK build, actual Markdown rendering/typewriter/VoiceOver/text selection/save and layout",
+            "Official MADLAD and clinical/translation acceptance"
+          ],
+          "remaining": [
+            "Extend contextual editorial review beyond these5exact source passages and reconcile every eligible feature/fallback pathway; no keyword-based inference may fill the gaps",
+            "Other food names/source contexts and cloze-question presentation remain unreviewed; 47/48/53/160/325are not closed by examples or helper presence",
+            "Run Apple actual rich-text/selection/save accessibility flows and independent clinical/translation acceptance",
+            "Full production source was unchanged after full suites; one normal-path assertion was added afterward and its focused real engine test passed"
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -12852,7 +13114,10 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
-        "Fruitfolio/Ask/Prompt09AnswerSupport.swift"
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12869,17 +13134,58 @@
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
-        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets"
+        "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:P3-native-whole-paragraph-token-budgets (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
-        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified."
+        "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: Support/partial/unsupported states and full scientific evidence/IDs remain distinct; new presentation cannot smuggle diagnoses/reassurance through model bridge fields. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-05T21:19:43.429166+00:00"
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
+      "latest_batch_verification": {
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
+        "executed": {
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
+        },
+        "not_run": [
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
+        ],
+        "remaining": [
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ]
     },
     {
       "sequence": 165,
@@ -12909,7 +13215,11 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
-        "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json"
+        "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json",
+        "development_workflow/FOUNDER_SOURCE_COVERAGE.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12928,9 +13238,13 @@
         "Prompt1BFruitBasketResearchTests",
         "Prompt1BHealthSafetyBoundaryTests",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
-        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:LifeBridge-approved-publisher-Ask-consumer-and-shared-owner (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
@@ -12938,40 +13252,71 @@
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
         "Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization.",
-        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion."
+        "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: Multi-concept retrieval outranks single-heading crowding, and only clear-question introductory framing is scoped for search. Actual previously unsupported progesterone-temperature question now uses approved source evidence; no support thresholds/approval gates relaxed. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-07T11:31:51.408532+00:00",
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
       "latest_batch_verification": {
-        "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
         "executed": {
-          "focused_portable_XCTest_passed": 29,
-          "latest_publisher_only_XCTest_passed": 14,
-          "full_portable_XCTest_passed": 1002,
-          "SwiftTesting_full_portable_passed": 21,
-          "native_CPU_focused_XCTest_passed": 30,
-          "workflow_passed": 71,
-          "swift_syntax_files": 320,
-          "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
+          "swift_syntax_files": 327,
+          "failures": 0,
+          "logs": [
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
+          ],
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
         },
         "not_run": [
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
         ],
         "remaining": [
-          "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-          "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-          "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-          "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-          "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
-        "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
-        "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
-        "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
-        "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
+      ],
+      "prior_batch_verifications": [
+        {
+          "batch": "LifeBridge-approved-publisher-Ask-consumer-and-shared-owner",
+          "executed": {
+            "focused_portable_XCTest_passed": 29,
+            "latest_publisher_only_XCTest_passed": 14,
+            "full_portable_XCTest_passed": 1002,
+            "SwiftTesting_full_portable_passed": 21,
+            "native_CPU_focused_XCTest_passed": 30,
+            "workflow_passed": 71,
+            "swift_syntax_files": 320,
+            "native_scope": "Real Qwen Ask generated/reload path plus actual Foundation publisher/engine tests; no official MADLAD verification."
+          },
+          "not_run": [
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "remaining": [
+            "Actual founder-approved, licensed current snapshots from both named websites are still absent; do not create an invented LifeBridgeApprovedContent.json. All production organization facts still remain unavailable until the approved resource is provided.",
+            "Real source freshness, discrepancy reconciliation and approval/licensing are content-review work. Optional supplied review flags are a presentation mechanism, not automatic semantic conflict detection.",
+            "Instagram first-party brand/product content ingestion and brand-only Ask routing remain unfinished separately; the exact account URL/link and identifiers do not satisfy that instruction.",
+            "Apple shared-actor loading/presentation, source disclosure/review flags, VoiceOver/RTL/Dynamic Type and navigation remain NOT_RUN.",
+            "Official MADLAD query/display inference, language compatibility and native-language/clinical meaning checks remain blocked/unverified. Controlled identifier-runtime tests are not that evidence."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        }
       ]
     },
     {
@@ -43509,7 +43854,12 @@
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
         "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json",
         "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json",
-        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -43687,9 +44037,12 @@
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
         "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskScrollTests.swift",
-        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -43830,48 +44183,44 @@
         "17 actual Foundation tests pass; new native rendered five-region regression is written and NOT_RUN.",
         "15 focused actual production policy/layout/ownership tests pass; priorfull1062+21 is explicitly scoped to9c7c4ed before this Ask change.",
         "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN.",
-        "14 real underlying tests pass and4 existing named authority methods reused;327 syntax parses/static sound pass. New SwiftUI behavior is not claimed runtime verified."
+        "14 real underlying tests pass and4 existing named authority methods reused;327 syntax parses/static sound pass. New SwiftUI behavior is not claimed runtime verified.",
+        "Shared cue/retrieval source change; see requirement-specific source context and tests in CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json. Full source contract remains incomplete.",
+        "Requirement-specific batch scope: 1073 actual portable XCTest+21 Swift Testing pass;1 native actual CPU Qwen context/privacy test passes. Controlled synthesis fixtures are not official MADLAD. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-07T16:21:00.833865+00:00",
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
       "latest_batch_verification": {
-        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
         "executed": {
-          "current_existing_domain_XCTest": 14,
-          "reused_prior_checkpoint_specific_isolation_methods": [
-            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
-            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
-            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
-            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
-          ],
-          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
           "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
           "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
-            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
-            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
-            "/tmp/fruitfolio_account_shared_display_sound.log"
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
           ],
-          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
-          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
-          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
-          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
         ],
         "remaining": [
-          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
-          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
-          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
-        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
-        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
       ],
       "prior_batch_verifications": [
         {
@@ -44666,6 +45015,41 @@
             "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
             "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
             "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+          "executed": {
+            "current_existing_domain_XCTest": 14,
+            "reused_prior_checkpoint_specific_isolation_methods": [
+              "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+              "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+              "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+              "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+            ],
+            "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+              "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+              "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+              "/tmp/fruitfolio_account_shared_display_sound.log"
+            ],
+            "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+            "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+            "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+            "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+          ],
+          "remaining": [
+            "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+            "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+            "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }
@@ -44901,7 +45285,12 @@
         "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
         "development_workflow/CLOSED_WHEEL_PHASE_ANNOTATIONS.json",
         "development_workflow/ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json",
-        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json"
+        "development_workflow/ACCOUNT_ACTIVE_DRAFT_ROUTES_AND_SHARED_DISPLAY.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+        "development_workflow/CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -45074,9 +45463,12 @@
         "FruitfolioTests/Prompt18CycleWheelTests.swift",
         "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
         "FruitfolioTests/Prompt1BAskScrollTests.swift",
-        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift",
+        "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
+        "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+        "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Account-active-owned-actions-draft-safe-routes-and-shared-display (resolve containing commit with git log)",
+      "commit_reference": "batch:Shared-conversational-presentation-and-balanced-research-retrieval (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -45200,48 +45592,44 @@
         "Append exact original/source-unit evidence and distinguish source implementation from native visual verification.",
         "Append executed versus native-unrun evidence and two individual implementation closures; no VERIFIED promotion.",
         "Final same-batch fractional reader test:15 actual focused tests passed at /tmp/fruitfolio_ask_content_growth_fractional_final_tests.log; source fingerprints and complete event sequence retained in ASK_MEASURED_CONTENT_GROWTH_FOLLOW.json. Native acceptance remains NOT_RUN.",
-        "Append exact full-clause reviews229230231 and explicit unexecuted native acceptance without removing prior evidence."
+        "Append exact full-clause reviews229230231 and explicit unexecuted native acceptance without removing prior evidence.",
+        "Scope/recovery reconciliation only; preserves exact478/36 identities and individually reviewed founder text.",
+        "Requirement-specific batch scope: Individually read/classified356 of484 source candidates without implementation/VERIFIED promotion.128 applicability units remain; original478 and indexed36 identities unchanged. See CONVERSATIONAL_PRESENTATION_AND_BALANCED_RETRIEVAL.json; no completion promotion."
       ],
-      "last_updated": "2026-11-07T16:21:00.833865+00:00",
+      "last_updated": "2026-11-07T16:57:48.649717+00:00",
       "latest_batch_verification": {
-        "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+        "batch": "Shared-conversational-presentation-and-balanced-research-retrieval",
         "executed": {
-          "current_existing_domain_XCTest": 14,
-          "reused_prior_checkpoint_specific_isolation_methods": [
-            "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
-            "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
-            "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
-            "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
-          ],
-          "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+          "full_portable_XCTest": 1073,
+          "Swift_Testing": 21,
+          "focused_prior_to_final_ranking_fixture_strengthening": 46,
+          "actual_native_CPU_Qwen_context_privacy_XCTest": 1,
           "swift_syntax_files": 327,
-          "static_sound_diagnostics": 0,
           "failures": 0,
           "logs": [
-            "/tmp/fruitfolio_account_exit_current_authority_tests.log",
-            "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
-            "/tmp/fruitfolio_account_shared_display_final_syntax.log",
-            "/tmp/fruitfolio_account_shared_display_sound.log"
+            "/tmp/fruitfolio_conversational_tone_full_portable.log",
+            "/tmp/fruitfolio_conversational_tone_actual_native_qwen.log",
+            "/tmp/fruitfolio_conversational_tone_final_syntax.log"
           ],
-          "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+          "scope": "Actual production Foundation retrieval/voice/evidence/game models; controlled synthesis/query-translation fixtures are not official MADLAD. The native1test actually uses original Qwen CPU weights and is a compatibility/privacy regression, not clinical validation."
         },
         "not_run": [
-          "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
-          "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
-          "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
-          "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+          "Apple SDK/UI/real-device acceptance.",
+          "Official MADLAD model/tokenizer/offline quality and clinical/native-language review."
         ],
         "remaining": [
-          "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
-          "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
-          "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+          "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+          "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+          "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+          "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
-        "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
-        "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
+        "Requirement159 remains incomplete beyond conservative explicit English self-report/clear-question intros; fixed approved brand/unavailable-copy pathways retain their existing copy. No blanket all-conversation or multilingual tone-completion claim.",
+        "Requirements148\u2013153 still need full founder Guide/answer-first prose alignment beyond safe framing and complete source quotations; semantic coverage is not globally complete.",
+        "Apple builds/UI/VoiceOver, official MADLAD weights/tokenizer/offline inference/native-language and clinical/reference acceptance remain NOT_RUN.",
+        "128 founder source candidates still require applicability review; all scoped units need individual implementation reconciliation. Scope review is not added-requirement or completion count."
       ],
       "prior_batch_verifications": [
         {
@@ -46036,6 +46424,41 @@
             "Apple: stream a research-supported long answer at normal/large type; confirm follow at tail, scroll to older answer during stream and confirm position stays, manually return near tail and confirm follow resumes.",
             "Apple: repeat under scene suspension, foreign modal, rotation/keyboard and VoiceOver; no scrolling behind modal or replay on reactivation.",
             "Foundation decision tests and source wiring establish implementation; native event ordering/layout remains acceptance pending."
+          ],
+          "scope": "Evidence for this batch only; does not certify the entire original requirement."
+        },
+        {
+          "batch": "Account-active-owned-actions-draft-safe-routes-and-shared-display",
+          "executed": {
+            "current_existing_domain_XCTest": 14,
+            "reused_prior_checkpoint_specific_isolation_methods": [
+              "testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority",
+              "testActualObservableStoreUsesInjectedSuiteWithoutCrossingUsernameNamespaces",
+              "testFrozenSaveRechecksActualCurrentAccountAtCommitInsteadOfCapturingStaleIdentity",
+              "testSharedAuthorityEnforcesCurrentIdentityWithoutEditorSuppliedFragmentsAndPreservesCallerExclusions"
+            ],
+            "prior_checkpoint": "9c7c4ed810f91e3848e13c08485ba3886be2c2a6",
+            "swift_syntax_files": 327,
+            "static_sound_diagnostics": 0,
+            "failures": 0,
+            "logs": [
+              "/tmp/fruitfolio_account_exit_current_authority_tests.log",
+              "/tmp/fruitfolio_phase_checkpoint_full_portable.log",
+              "/tmp/fruitfolio_account_shared_display_final_syntax.log",
+              "/tmp/fruitfolio_account_shared_display_sound.log"
+            ],
+            "scope": "Current14 actual underlying persistence/exit/pseudonym tests do not execute new SwiftUI guards/navigation/focus. Four named actual authority/isolation methods reused from prior checkpoint; no redundant full suite."
+          },
+          "not_run": [
+            "Apple SDK typecheck/build and actual Account/Settings/Fruit Basket observer and scene behavior.",
+            "New native testAccountPrivacyAndExternalExportRequireTheExistingDirtyDraftChoice:1 method6 planned nominal launches, NOT_RUN.",
+            "Updated testAccountInputLabelsPreserveTypedUsernameAndEmail:1 method4 planned language-direction/motion launches with two background events per launch, NOT_RUN.",
+            "Native focus/VoiceOver and real navigation destinations: disposable route counters exercise callback intent only; official MADLAD and real-device acceptance NOT_RUN."
+          ],
+          "remaining": [
+            "Run Apple build and new/updated native tests, including dirty Privacy/export Keep/Save/Discard, inactive action rejection, interrupted confirmation and preserved drafts.",
+            "Verify canonical display propagation across real Account/Settings/Fruit Basket and exact username/accessibility bytes under language changes.",
+            "Backend account identity remains preserved; no global username uniqueness, unknown legal-name detection or universal moderation claim."
           ],
           "scope": "Evidence for this batch only; does not certify the entire original requirement."
         }

@@ -128,6 +128,8 @@ nonisolated struct FruitfolioRankedNote:
 {
     let chunk: FruitfolioResearchNoteChunk
     let score: Double
+    // Retrieval relevance only, never medical entailment or source approval.
+    var matchedConceptCount: Int = 0
 }
 
 nonisolated struct FruitfolioRankedSourceChunk:
@@ -391,13 +393,19 @@ nonisolated struct FruitfolioLocalResearchRetriever:
 
                 return FruitfolioRankedNote(
                     chunk: chunk,
-                    score: score
+                    score: score,
+                    matchedConceptCount: queryTokens.intersection(headingTokens.union(bodyTokens)).count
                 )
             }
             .sorted {
                 lhs,
                 rhs in
 
+                // A single repeated heading term must not crowd out a passage
+                // that actually addresses multiple requested concepts.
+                if lhs.matchedConceptCount != rhs.matchedConceptCount {
+                    return lhs.matchedConceptCount > rhs.matchedConceptCount
+                }
                 if lhs.score == rhs.score {
                     return lhs.chunk.chunkID
                         < rhs.chunk.chunkID

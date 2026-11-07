@@ -834,9 +834,11 @@ final class FruitfolioResearchIntelligenceEngine:
                 answerPath: .unavailableContent)
         }
 
+        let conversationalPresentation = FruitfolioConversationalPresentation.classify(searchQuestion)
+        let scopedResearchQuestion = FruitfolioConversationalPresentation.researchQuestion(searchQuestion)
         let normalized =
             FruitfolioQueryNormalizer.normalize(
-                searchQuestion + " " + (userContext?.topicHints.joined(separator: " ") ?? "")
+                scopedResearchQuestion + " " + (userContext?.topicHints.joined(separator: " ") ?? "")
             )
 
         let claims =
@@ -909,7 +911,8 @@ final class FruitfolioResearchIntelligenceEngine:
             return unsupportedAnswer(
                 question: trimmed,
                 packageVersion:
-                    package.contentVersion
+                    package.contentVersion,
+                presentation: conversationalPresentation, safety: safety
             )
         }
 
@@ -976,7 +979,8 @@ final class FruitfolioResearchIntelligenceEngine:
                     trackerContext,
                 contentVersion:
                     package.contentVersion,
-                userProvidedContext: userContext
+                userProvidedContext: userContext,
+                conversationalPresentation: conversationalPresentation
             )
 
         let answerText: String
@@ -1000,7 +1004,7 @@ final class FruitfolioResearchIntelligenceEngine:
                 answerPath = .generated
             } else {
                 answerText = retrievalOnlyAnswer(question: searchQuestion, coverage: coverage,
-                    notes: packet.researchNoteChunks, safety: safety)
+                    notes: packet.researchNoteChunks, safety: safety, presentation: conversationalPresentation)
                 answerPath = .retrievalFallback
                 usedEvidenceIDs = Set(packet.researchNoteChunks.prefix(3).map(\.chunkID))
             }
@@ -1015,7 +1019,7 @@ final class FruitfolioResearchIntelligenceEngine:
                     coverage: coverage,
                     notes:
                         packet.researchNoteChunks,
-                    safety: safety
+                    safety: safety, presentation: conversationalPresentation
                 )
         }
 
@@ -1132,13 +1136,15 @@ final class FruitfolioResearchIntelligenceEngine:
 
     private func unsupportedAnswer(
         question: String,
-        packageVersion: String
+        packageVersion: String,
+        presentation: FruitfolioConversationalPresentation,
+        safety: Prompt34SafetyClassification
     ) -> AskAnswer {
         AskAnswer(
             originalQuestion:
                 question,
             answerText:
-                FruitfolioCanonicalAnswerVoice.unsupportedMessage,
+                presentation.notice(FruitfolioCanonicalAnswerVoice.unsupportedMessage, safety: safety),
             support:
                 .genuinelyNovel,
             supportMap:
@@ -1166,14 +1172,15 @@ final class FruitfolioResearchIntelligenceEngine:
         notes:
             [FruitfolioResearchNoteChunk],
         safety:
-            Prompt34SafetyClassification
+            Prompt34SafetyClassification,
+        presentation: FruitfolioConversationalPresentation
     ) -> String {
         // Context has already been restored from the original paragraph table.
         // Do not clip at a character limit and accidentally remove a qualifier.
         let excerpts = notes.prefix(3).map { FruitfolioSemanticPolicy.sourceMarkup($0.text, serious: safety.requiresSeriousTone) }.filter { !$0.isEmpty }
         return FruitfolioCanonicalAnswerVoice.compose(excerpts: excerpts,
             hasUnansweredParts: !coverage.unsupportedClaims.isEmpty || !coverage.partiallySupportedClaims.isEmpty,
-            safety: safety)
+            safety: safety, presentation: presentation)
     }
 
     private func deduplicateNotes(

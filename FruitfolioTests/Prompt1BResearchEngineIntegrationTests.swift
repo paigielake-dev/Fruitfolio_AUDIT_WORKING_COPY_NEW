@@ -306,3 +306,25 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
     #endif
 
 }
+
+extension Prompt1BResearchEngineIntegrationTests {
+    func testActualResearchEngineUsesExplicitCueInBothValidatedAndRetrievalFallbackPaths() async throws {
+        let question = "I'm worried about how progesterone affects temperature"
+        let packageStore = try store()
+        let generatedEngine = FruitfolioResearchIntelligenceEngine(packageStore: packageStore,
+            languageModel: Prompt1BSingleEvidenceSynthesis())
+        let fallbackEngine = FruitfolioResearchIntelligenceEngine(packageStore: packageStore,
+            languageModel: Prompt1BUnavailableSynthesis())
+        for (engine, expectedPath) in [(generatedEngine, FruitfolioAnswerPath.generated),
+                                      (fallbackEngine, FruitfolioAnswerPath.retrievalFallback)] {
+            let answer = try await engine.answer(question: question, conversation: [])
+            XCTAssertEqual(answer.originalQuestion, question)
+            XCTAssertEqual(answer.answerPath, expectedPath, "scoped=\(FruitfolioConversationalPresentation.researchQuestion(question)); diagnostics=\(String(describing: engine.lastDiagnostics))")
+            XCTAssertTrue(answer.answerText.hasPrefix("we can take this one step at a time."))
+            XCTAssertFalse(answer.sourceIDs.isEmpty)
+            XCTAssertEqual(Set(answer.sources.map(\.id)), Set(answer.sourceIDs))
+            XCTAssertFalse(answer.answerText.contains("you are worried"))
+            XCTAssertFalse(answer.answerText.contains("you will be fine"))
+        }
+    }
+}

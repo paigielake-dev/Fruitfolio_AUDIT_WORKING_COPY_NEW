@@ -103,6 +103,7 @@ final class Prompt28FruitBasketViewModel {
         guard let message else { return false }
         // Typed context stays local; only the controlled message is translated.
         return message == Prompt34LocalSafetyRouter.urgentResponseText()
+            || FruitfolioConversationalPresentation.classify(rawTopic).prefersCalm
             || Prompt34LocalSafetyRouter.classify(rawTopic + " " + message).requiresSeriousTone
     }
     var allowsTopicEditing: Bool {
@@ -271,7 +272,11 @@ final class Prompt28FruitBasketViewModel {
             default:
                 screen = .error
             }
-            message = error.displayMessage(serious: Prompt34LocalSafetyRouter.classify(requestedTopic).requiresSeriousTone)
+            let safety = Prompt34LocalSafetyRouter.classify(requestedTopic)
+            let presentation = FruitfolioConversationalPresentation.classify(requestedTopic)
+            let original = error.displayMessage(serious: safety.requiresSeriousTone || presentation.prefersCalm)
+            if case .urgentTopic = error { message = original }
+            else { message = presentation.notice(original, safety: safety) }
         } catch {
             guard isCurrent() else { return }
             screen = .error

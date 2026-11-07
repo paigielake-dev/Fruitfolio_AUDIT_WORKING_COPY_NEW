@@ -12,7 +12,8 @@ final class Prompt1BEvidenceBudgetTests: XCTestCase {
             sourceRecords: [], safetyClassification: .init(level: .normal, matchedPatterns: []), permittedContext: nil, contentVersion: "fixture")
     }
     func testWholeParagraphAdmissionOmitsOversizedEvidenceAndItsIDsWithoutClipping() throws {
-        let original = packet([String(repeating: "long medical paragraph ", count: 100), "a complete short paragraph"])
+        var original = packet([String(repeating: "long medical paragraph ", count: 100), "a complete short paragraph"])
+        original.conversationalPresentation = .gentle
         let selected = try XCTUnwrap(FruitfolioEvidenceBudget.fit(evidence: original, maximumPromptTokens: 120, maximumOutputTokens: 180,
             promptTokenCount: { 20 + $0.researchNoteChunks.reduce(0) { $0 + $1.text.utf8.count } },
             outputTokenCount: { $0.utf8.count }))
@@ -20,6 +21,7 @@ final class Prompt1BEvidenceBudgetTests: XCTestCase {
         XCTAssertEqual(selected.evidence.claimEvidenceMap.first?.noteChunkIDs, ["note-1"])
         XCTAssertLessThanOrEqual(selected.promptTokens, 120)
         XCTAssertEqual(original.researchNoteChunks.count, 2)
+        XCTAssertEqual(selected.evidence.conversationalPresentation, .gentle)
     }
     func testNoEvidenceFitsFallsBackRatherThanCuttingScientificText() throws {
         let original = packet(["a complete paragraph with an essential qualifier"])

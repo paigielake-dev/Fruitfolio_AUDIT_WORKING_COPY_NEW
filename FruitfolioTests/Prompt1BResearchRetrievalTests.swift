@@ -42,3 +42,23 @@ final class Prompt1BResearchRetrievalTests: XCTestCase {
         XCTAssertTrue(retriever.searchSources(question: "progesterone temperature", approvedSourceIDs: ["approved"], limit: -1).isEmpty)
     }
 }
+
+extension Prompt1BResearchRetrievalTests {
+    func testMultipleRequestedConceptsOutrankSingleTermHeadingCrowdingWithoutChangingScores() {
+        let distractors = (0..<12).map { index in
+            FruitfolioResearchNoteChunk(chunkID: "d-\(index)", researchTopicID: "fixture", heading: "anchor",
+                subheading: nil, text: "anchor fixture", sourceIDs: [], semanticTags: [], domainTags: [])
+        }
+        let relevant = FruitfolioResearchNoteChunk(chunkID: "complete-match", researchTopicID: "fixture",
+            heading: "nonclinical fixture", subheading: nil, text: "anchor context target", sourceIDs: [], semanticTags: [], domainTags: [])
+        let package = FruitfolioResearchPackage(schemaVersion: 1, contentVersion: "fixture", generatedFrom: "test",
+            generationNote: "Nonclinical ranking fixture, not source approval", researchNoteChunks: distractors + [relevant], sources: [], sourceChunks: [])
+        let ranked = FruitfolioLocalResearchRetriever(package: package).searchNotes(question: "anchor target", limit: 8)
+        XCTAssertEqual(ranked.first?.chunk.chunkID, relevant.chunkID)
+        XCTAssertEqual(ranked.first?.matchedConceptCount, 2)
+        XCTAssertEqual(ranked.first?.score, 2)
+        XCTAssertTrue(ranked.dropFirst().allSatisfy { $0.score == 4 })
+        XCTAssertEqual(ranked.count, 8)
+        XCTAssertTrue(ranked.dropFirst().allSatisfy { $0.matchedConceptCount == 1 })
+    }
+}
