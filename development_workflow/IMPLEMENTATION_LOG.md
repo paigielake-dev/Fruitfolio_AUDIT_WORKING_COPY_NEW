@@ -3668,3 +3668,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"syntax_errors": 0, "swift_syntax_files": 318, "new_tests_executed": 0}.
 - Next action: Continue original requirement-specific source review at tour semantic feature-name styling, then remaining independent requirements across all parts. Preserve pending Apple lifecycle/performance acceptance; do not promote from code presence.
 - Commit: containing commit for batch Hub-owned-navigation-cooldown.
+
+## Tour-explicit-feature-semantic-roles
+
+- Parent checkpoint: 03e637f3649b14cdc7a685901de591f6c90ebf84.
+- Source-order requirements: [95].
+- Separate founder additions: [].
+- Source files: Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift, Fruitfolio/First-Launch Tour/Prompt07TourModels.swift, Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift.
+- Replace brand-only string substitution in actual tour dialogue with explicit context-specific semantic spans for library, encyclopedia, saved-page organizational features, calendar/cycle and Fruit Basket. Move the existing target/step copy into a Foundation file while retaining actual character ownership in the SwiftUI extension. Feed authored semantic markup into the existing translation envelope and canonical renderer; keep all six original messages byte-for-byte, existing nonbreaking decoration spacing, focus, design and protected names. No global keyword styling or status promotion.
+- Tests added/updated: FruitfolioTests/Prompt1BSemanticSliceTests.swift.
+- Verification: {"focused_XCTest_passed": 9, "swift_syntax_files": 319, "syntax_errors": 0}.
+- Next action: Continue with outstanding Ask continuous-paper requirements and their actual source/evidence; leave Apple tour rendering, VoiceOver and official translated emphasis acceptance explicitly pending.
+- Commit: containing commit for batch Tour-explicit-feature-semantic-roles.

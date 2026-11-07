@@ -98,6 +98,7 @@ SOURCES = [
     'Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift',
     'Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift',
     'Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift',
+    'Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift',
     'Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift',
     'Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift',
     'Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift',

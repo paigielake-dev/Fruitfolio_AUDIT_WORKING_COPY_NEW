@@ -328,10 +328,9 @@ struct Prompt07TourOverlay: View {
     }
 
     private var styledStepMessage: some View {
-        FruitfolioTranslatedContent(source: step.message, protectedLiterals: ["Fruitfolio", "FruitsofLife.xo"]) { display, _ in
+        FruitfolioTranslatedContent(source: FruitfolioSemanticMarkup.markdown(step.messageSpans), protectedLiterals: ["Fruitfolio", "FruitsofLife.xo"]) { display, _ in
             FruitfolioSemanticText(
                 markdown: display
-                    .replacingOccurrences(of: "FruitsofLife.xo", with: "**FruitsofLife.xo**")
                     .replacingOccurrences(of: " ♡", with: "\u{00A0}♡")
                     .replacingOccurrences(of: " :-)", with: "\u{00A0}:-)"),
                 baseFont: .custom("Chalkboard SE", size: 10.25, relativeTo: .body)

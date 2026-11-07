@@ -7639,20 +7639,45 @@
       "description": "Apply semantic bold styling to important feature names in fruit-character tour dialogue.",
       "relevant_source_files": [
         "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
-        "Fruitfolio/First-Launch Tour/Prompt07TourModels.swift"
+        "Fruitfolio/First-Launch Tour/Prompt07TourModels.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourCopy.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt07FirstLaunchTourTests/testDelayedInvitationRequiresActiveUncompletedHub"
+        "Prompt07FirstLaunchTourTests/testDelayedInvitationRequiresActiveUncompletedHub",
+        "FruitfolioTests/Prompt1BSemanticSliceTests.swift"
       ],
-      "commit_reference": "batch:P2-hub-invitation-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Tour-explicit-feature-semantic-roles (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration."
+        "Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration.",
+        "Replace brand-only string substitution in actual tour dialogue with explicit context-specific semantic spans for library, encyclopedia, saved-page organizational features, calendar/cycle and Fruit Basket. Move the existing target/step copy into a Foundation file while retaining actual character ownership in the SwiftUI extension. Feed authored semantic markup into the existing translation envelope and canonical renderer; keep all six original messages byte-for-byte, existing nonbreaking decoration spacing, focus, design and protected names. No global keyword styling or status promotion."
       ],
-      "last_updated": "2026-11-05T18:42:18.592924+00:00"
+      "last_updated": "2026-11-07T09:30:49.020105+00:00",
+      "latest_batch_verification": {
+        "batch": "Tour-explicit-feature-semantic-roles",
+        "executed": {
+          "focused_XCTest_passed": 9,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Apple Markdown renderer/tour UI, VoiceOver focus and translated semantic appearance",
+          "Official MADLAD translated dialogue and native-speaker meaning review"
+        ],
+        "remaining": [
+          "Execute actual tour UI in all six stages, confirm feature anchors bold without changed wording, accessible reading/focus unchanged, translated semantic roles preserved.",
+          "Linux tests verify actual authored messages/roles/markup and existing semantic slice/source boundaries; they do not verify Apple rendering or official MADLAD."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual tour UI in all six stages, confirm feature anchors bold without changed wording, accessible reading/focus unchanged, translated semantic roles preserved.",
+        "Linux tests verify actual authored messages/roles/markup and existing semantic slice/source boundaries; they do not verify Apple rendering or official MADLAD."
+      ]
     },
     {
       "sequence": 96,

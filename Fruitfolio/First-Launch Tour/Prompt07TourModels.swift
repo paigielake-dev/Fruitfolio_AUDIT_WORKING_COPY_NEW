@@ -1,29 +1,7 @@
 import SwiftUI
 import Combine
 
-enum Prompt07TourTarget: Hashable, Sendable {
-    case ask
-    case library
-    case guideBuilder
-    case cycle
-    case fruitBasket
-    case faq
-}
-
-enum Prompt07TourStep: Int, CaseIterable, Identifiable, Sendable {
-    case ask = 1
-    case library = 2
-    case guideBuilder = 3
-    case cycle = 4
-    case fruitBasket = 5
-    case ready = 6
-
-    var id: Int { rawValue }
-
-    var progressText: String {
-        "\(rawValue) of 6"
-    }
-
+extension Prompt07TourStep {
     @MainActor
     var character: FruitPopupCharacter {
         switch self {
@@ -36,39 +14,6 @@ enum Prompt07TourStep: Int, CaseIterable, Identifiable, Sendable {
         }
     }
 
-    var target: Prompt07TourTarget? {
-        switch self {
-        case .ask:
-            return .ask
-        case .library:
-            return .library
-        case .guideBuilder:
-            return .guideBuilder
-        case .cycle:
-            return .cycle
-        case .fruitBasket:
-            return .fruitBasket
-        case .ready:
-            return nil
-        }
-    }
-
-    var message: String {
-        switch self {
-        case .ask:
-            return "got a question? start here ( ´﹀` ) i’ll look through the FruitsofLife.xo library for you."
-        case .library:
-            return "anything you love can be tucked into your own little encyclopedia! ♡"
-        case .guideBuilder:
-            return "organize your saved pages into chapters, notes, study guides, little handbooks… whatever works for you. :-)"
-        case .cycle:
-            return "this is more than a period calendar. log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle."
-        case .fruitBasket:
-            return "and when you feel like playing… come fill your fruit basket! (〃⌒∇⌒)"
-        case .ready:
-            return "that’s it! explore wherever you’d like. ♡"
-        }
-    }
 }
 
 @MainActor

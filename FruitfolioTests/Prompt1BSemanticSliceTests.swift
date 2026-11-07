@@ -2,6 +2,27 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BSemanticSliceTests: XCTestCase {
+    func testTourFeatureRolesPreserveEveryOriginalDialogueByte() {
+        let originals = [
+            "got a question? start here ( ´﹀` ) i’ll look through the FruitsofLife.xo library for you.",
+            "anything you love can be tucked into your own little encyclopedia! ♡",
+            "organize your saved pages into chapters, notes, study guides, little handbooks… whatever works for you. :-)",
+            "this is more than a period calendar. log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle.",
+            "and when you feel like playing… come fill your fruit basket! (〃⌒∇⌒)",
+            "that’s it! explore wherever you’d like. ♡"
+        ]
+        let anchors = [["FruitsofLife.xo library"], ["encyclopedia"],
+                       ["chapters", "notes", "study guides", "little handbooks"],
+                       ["period calendar", "Fruitfolio", "cycle"], ["fruit basket"], []]
+        for (index, step) in Prompt07TourStep.allCases.enumerated() {
+            XCTAssertEqual(Data(step.message.utf8), Data(originals[index].utf8))
+            XCTAssertEqual(step.messageSpans.filter { $0.emphasis == .anchorBold }.map(\.text), anchors[index])
+            let markup = FruitfolioSemanticMarkup.markdown(step.messageSpans)
+            for anchor in anchors[index] { XCTAssertTrue(markup.contains("**\(anchor)**")) }
+            XCTAssertFalse(step.messageSpans.contains { $0.emphasis != .plain && $0.emphasis != .anchorBold })
+        }
+    }
+
     func testReviewedPassageRolesMatchActualEligibleCorpusWithoutChangingAnyWords() throws {
         let explicit = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_RESEARCH_PATH"].map { URL(fileURLWithPath: $0) }
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json"))
