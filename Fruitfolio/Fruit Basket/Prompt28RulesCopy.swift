@@ -2,7 +2,7 @@ import Foundation
 
 /// Game rules only: never a medical interpretation of a fruit or source paragraph.
 nonisolated enum Prompt28RulesCopy {
-    static let standaloneStar = "a standalone star — catch it to bank one star pass. it does not fill the fruit basket."
+    static let standaloneStar = "a standalone star — catch it to bank one star pass after it fully enters and settles. it does not fill the fruit basket or add points."
 
     static func fruitAccessibilitySource(_ fruit: Prompt28FallingFruit, classificationPrompt: Bool = false) -> String {
         let marker = fruit.classification == .good ? "attached star marker" : "no attached star marker"
@@ -15,7 +15,7 @@ nonisolated enum Prompt28RulesCopy {
         let rules = Prompt28RoundRules.canonical
         return "catch \(rules.goodFruitTarget) starred fruits to fill your basket. the small star attached to a fruit marks a good fruit; it is not a bonus star. fruit counts only after it enters and settles in the basket. each good catch earns +\(rules.goodFruitCatchScore) points. missing good fruit or letting bad fruit pass costs no points."
     }
-    static let protection = "standalone stars are rare. each caught star adds one star pass to the passes you already have, with no fixed limit. stars do not fill the basket or add points. catching bad fruit spends exactly one available pass and play continues. without a pass, that catch attempt ends; you can retry. passes carry between catch attempts in this learning session, not into a new session."
+    static let protection = "standalone stars are rare. each caught star adds one star pass to the passes you already have, with no fixed limit. stars do not fill the basket or add points. a pass is banked only after the star fully enters and settles. catching bad fruit spends exactly one available pass and play continues. without a pass, that catch attempt ends; you can retry. passes carry between catch attempts in this learning session, not into a new session."
     static let results = "the result shows actual catches, stars collected, passes used and remaining, points earned in that attempt, and the session score. a failed attempt keeps its already-earned points and catches. the library explanation is separate from the visual catch rule."
     static let totals = "on-device totals count good fruit and standalone stars when caught, including failed or unfinished attempts. successful baskets count only completed baskets. older saved fruit totals may omit failed or unfinished attempts; no missing history is guessed. worldwide rankings are unavailable until secure registration is configured."
     static let accessibleMode = "classification mode uses catch and pass buttons with the same scoring and protection rules, without reflex dragging. question difficulty changes the learning depth; game level changes catching. resetting game level preserves lifetime progress."
@@ -40,7 +40,7 @@ nonisolated enum Prompt28TourCatalog {
         .init(title: "answer the question",
               body: "pick the answer you think is right. a wrong answer shows the correct answer + sourced explanation, with no point loss."),
         .init(title: "the catch rule",
-              body: "catch the fruit that belongs in your basket. standalone stars are rare bonus drops: each one banks one star pass.", showsFruitDemo: true),
+              body: Prompt28RulesCopy.catches + "\n\n" + Prompt28RulesCopy.protection, showsFruitDemo: true),
         .init(title: "practice a good catch",
               body: "a good catch adds +1 to your basket and +10 points. ten good fruits fills it."),
         .init(title: "missing is okay",
@@ -50,6 +50,6 @@ nonisolated enum Prompt28TourCatalog {
         .init(title: "fill to 10",
               body: "the tenth good fruit lands first, the basket reaches 10 / 10, then the result shows what you actually caught. the sourced library explanation stays separate from the catch rule."),
         .init(title: "one last reminder",
-              body: "catch 10 good fruits. standalone stars bank protection for bad-fruit catches. question difficulty and game level stay separate. ♡"),
+              body: "catch \(Prompt28RoundRules.canonical.goodFruitTarget) good fruits. " + Prompt28RulesCopy.standaloneStar + " question difficulty and game level stay separate. ♡"),
     ]
 }

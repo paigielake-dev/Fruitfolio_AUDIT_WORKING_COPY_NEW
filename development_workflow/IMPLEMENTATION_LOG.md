@@ -3060,3 +3060,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 893, "native_CPU_XCTest": 915, "SwiftTesting_each": 21, "focused_XCTest": 2, "workflow_checks": 60, "syntax_files": 311, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Synchronize shared rule/FAQ/tutorial/catch feedback wording with actual full-entry-and-settlement star-pass banking, no fruit/points, stackable rare passes and one-pass protection. Reuse existing canonical strings, preserve pending founder replacements320–322, add meaningful catalog/tutorial contract coverage and run supported checks.
 - Commit: containing commit for batch Actual-entry-settlement-zero-credit-and-shared-flattened-poses.
+
+## Shared-star-pass-instructions-FAQ-and-tutorial-sync
+
+- Parent checkpoint: 2dbe46ad81c25d29efc930ff2d47ec4a70698a06.
+- Source-order requirements: [338, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Localizable.xcstrings, development_workflow/SHARED_STAR_PASS_INSTRUCTION_SYNC.md.
+- Sharedcollectible/protection copy explicitlybanksafterfullentry+settlement,0basket/points; originalrare/stack/no-app-cap/one-pass/sessioncarryqualificationsretained. FAQ/howto/live/movingaccessibilityreusecanonical; tutorialcatchruleconsumesfullsharedrules andlastreminderreusescaption+separatedifficulty/level. Catalog967oldpreserved+2English=969/0foreign. Focus3pass; full894/916XCTest+21SwiftTesting each pass. Model/engine/transitSHAunchanged; updatedUIlabelcaseNOT_RUN; exactfounder320–322notclaimedresolved.
+- Tests added/updated: FruitfolioTests/Prompt1BGameRulesCatalogTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 894, "native_CPU_XCTest": 916, "SwiftTesting_each": 21, "focused_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "English_catalog_entries": 969, "nonempty_foreign_units": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify actual controller/shared-frame wind displacement of fruit and standalone stars under breezy direction changes with genuine mask manifest; compare clear/rain cases with no hidden wind. Reuse existing physics if correct, add only missing integration evidence and preserve art/masks/source/code architecture.
+- Commit: containing commit for batch Shared-star-pass-instructions-FAQ-and-tutorial-sync.

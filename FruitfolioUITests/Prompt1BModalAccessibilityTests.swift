@@ -864,7 +864,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(pear.waitForExistence(timeout: 5))
             XCTAssertEqual(pear.label, "pear. attached star marker. belongs in basket")
             XCTAssertEqual(lemon.label, "lemon. no attached star marker. does not belong in basket")
-            XCTAssertEqual(star.label, "a standalone star — catch it to bank one star pass. it does not fill the fruit basket.")
+            XCTAssertEqual(star.label, "a standalone star — catch it to bank one star pass after it fully enters and settles. it does not fill the fruit basket or add points.")
             XCTAssertEqual(app.descendants(matching: .any).matching(identifier: "fruitBasket.round.star").count, 1)
             XCTAssertFalse(pear.label.contains("**"))
             XCTAssertFalse(lemon.label.contains("**"))

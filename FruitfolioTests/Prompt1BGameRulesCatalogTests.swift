@@ -15,6 +15,23 @@ final class Prompt1BGameRulesCatalogTests: XCTestCase {
         ]))
     }
 
+    func testTutorialFAQAndCollectibleDescribeDelayedBankingAndNoFruitOrPoints() throws {
+        let tourRule = try XCTUnwrap(Prompt28TourCatalog.pages.first { $0.showsFruitDemo })
+        let faq = try XCTUnwrap(Prompt29FAQCatalog.sections.first { $0.id == "basket" })
+        let faqRule = try XCTUnwrap(faq.items.first { $0.answer.contains("standalone stars are rare") })
+        for source in [tourRule.body, faqRule.answer, Prompt28RulesCopy.protection] {
+            XCTAssertTrue(source.contains("fully enters and settles"))
+            XCTAssertTrue(source.contains("no fixed limit"))
+            XCTAssertTrue(source.contains("do not fill the basket or add points"))
+            XCTAssertTrue(source.contains("exactly one available pass"))
+            XCTAssertTrue(source.contains("not into a new session"))
+        }
+        XCTAssertTrue(Prompt28RulesCopy.standaloneStar.contains("fully enters and settles"))
+        XCTAssertTrue(Prompt28RulesCopy.standaloneStar.contains("does not fill the fruit basket or add points"))
+        XCTAssertTrue(Prompt28TourCatalog.pages.last?.body.contains("fully enters and settles") == true)
+        XCTAssertTrue(Prompt28TourCatalog.pages.last?.body.contains("question difficulty and game level stay separate") == true)
+    }
+
     func testDocumentedScoreAndProtectionMatchActualEngineWithoutFruitCreditForStars() {
         let engine = Prompt28FruitBasketEngine()
         var session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
