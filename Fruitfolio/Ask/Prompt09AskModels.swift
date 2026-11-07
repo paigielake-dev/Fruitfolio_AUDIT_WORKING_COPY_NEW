@@ -2,6 +2,18 @@ import Foundation
 
 // MARK: - Ask conversation
 
+/// Only app-authored fixed copy may enter the compact UI translator.
+/// Authored questions and unmatched provider messages retain their original bytes.
+enum Prompt09ControlledCopy {
+    static let greeting = "hi hi! ⟡ ݁ ₊ . what would you like to learn today?"
+    static let educationDisclaimer = "this is for education only, not medical advice."
+    static let greetingDecoration = "⟡ ݁ ₊ ."
+
+    static func isGreeting(_ message: AskMessage) -> Bool {
+        message.role == .fruitfolio && message.text.utf8.elementsEqual(greeting.utf8)
+    }
+}
+
 enum AskMessageRole: String, Codable, Sendable {
     case fruitfolio
     case user

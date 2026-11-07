@@ -10,9 +10,9 @@ final class Prompt09AskViewModel: ObservableObject {
         case failed(String)
     }
 
-    static let greeting = "hi hi! ⟡ ݁ ₊ . what would you like to learn today?"
+    static let greeting = Prompt09ControlledCopy.greeting
     static let sourcesHeading = "sources ˚ ☆ ‧ ₊"
-    static let educationDisclaimer = "this is for education only, not medical advice."
+    static let educationDisclaimer = Prompt09ControlledCopy.educationDisclaimer
 
     static let suggestedQuestions = [
         "why does cervical mucus change?",

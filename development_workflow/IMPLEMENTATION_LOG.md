@@ -3236,3 +3236,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 918, "native_CPU_XCTest": 942, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Rhythm_Apple_UI_vectors_written": 4, "Rhythm_Apple_UI_vectors_executed": 0, "scientific_engine_policy_store_files_unchanged": 5}.
 - Next action: Continue original418–428 actual MADLAD SwiftUI/runtime/Ask evidence validation, citation/uncertainty/claim protection, availability/partial-output/off-main/memory. Reuse existing native/preflight evidence; do not repeat completed audits or count synthetic T5 as officialmodel proof. Preserve410–417Apple visual/linguistic acceptance and clinical-adjustment method blocker.
 - Commit: containing commit for batch Rhythm-translated-layout-and-measurement-store-boundary.
+
+## Ask-controlled-greeting-and-education-notice-translation
+
+- Parent checkpoint: 60a17fd434f8357c5b2384ba6f2d056829710b11.
+- Source-order requirements: [395, 397, 418, 420, 422, 425, 426, 476, 477, 478].
+- Source files: Fruitfolio/Ask/Prompt09AskModels.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Localizable.xcstrings, development_workflow/ASK_CONTROLLED_COPY_TRANSLATION.md.
+- Fixed welcome/exact app-role greeting and current/historical education disclaimer now shared translated display. Exact byte/role gate rejects authored user and unknown provider content; unmatched provider text verbatim. Original font/color roles and protected decorative glyphs. One actual Foundation regression; no clinical or official-model acceptance. Two English fallbacks; no invented foreign translations.
+- Tests added/updated: FruitfolioTests/Prompt1BAskPaperLayoutTests.swift.
+- Verification: {"portable_XCTest": 919, "native_CPU_XCTest": 943, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "new_Foundation_gate_tests": 1}.
+- Next action: Bound independent overflow translation task ownership; test admission, preservation of shared owners and release/retry. Continue original remaining requirements with Apple/official model blockers explicit.
+- Commit: containing commit for batch Ask-controlled-greeting-and-education-notice-translation.

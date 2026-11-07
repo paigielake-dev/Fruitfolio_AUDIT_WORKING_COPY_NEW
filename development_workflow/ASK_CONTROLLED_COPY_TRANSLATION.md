@@ -1,0 +1,7 @@
+# Ask controlled greeting and education notice translation
+
+The fixed welcome greeting and exact app-authored greeting message now use the compact translation owner. Only the fruitfolio role with byte-identical controlled greeting qualifies; user messages and unknown provider messages remain original. Decorative greeting glyphs are protected literals. Both current and historical education disclaimers use the shared translation path, serious presentation, original font roles and existing color inheritance. Grounded answer validation, source records, selection language and saved original content are unchanged.
+
+A Foundation regression executes the actual role/byte gate, rejecting identical user text and modified or unknown provider messages. This checks routing eligibility, not linguistic or clinical correctness. Two explicit English catalog fallbacks were added; no foreign translation was invented. Existing actual translation-owner fallback/protection tests run in the full suites.
+
+Apple typechecking, greeting/notice visibility and VoiceOver, font weight/italics, RTL and Dynamic Type, paused/unavailable inference presentation and complete conversation interaction remain unverified. Official MADLAD weights/tokenizer and native-language clinical meaning, uncertainty and safety-warning review remain blocked. Synthetic T5 inference is not official MADLAD acceptance. No whole checklist requirement is certified by this batch.

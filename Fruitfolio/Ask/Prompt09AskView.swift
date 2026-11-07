@@ -466,23 +466,11 @@ struct Prompt09AskView: View {
                         true
                     )
 
-                    Text(
-                        Prompt09AskViewModel
-                            .greeting
-                    )
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 16,
-                            relativeTo:
-                                .body
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
+                    FruitfolioFixedText(
+                        source: Prompt09AskViewModel.greeting,
+                        protectedLiterals: [Prompt09ControlledCopy.greetingDecoration],
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .body).bold(),
+                        color: DesignTokens.ColorToken.primaryBurgundy
                     )
                     .frame(
                         maxWidth:
@@ -692,20 +680,20 @@ struct Prompt09AskView: View {
             .isConversationStarted {
 
             HStack {
-                Text(message.text)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 15,
-                            relativeTo:
-                                .body
+                Group {
+                    if Prompt09ControlledCopy.isGreeting(message) {
+                        FruitfolioFixedText(
+                            source: message.text,
+                            protectedLiterals: [Prompt09ControlledCopy.greetingDecoration],
+                            font: .custom("Chalkboard SE", size: 15, relativeTo: .body),
+                            color: DesignTokens.ColorToken.primaryBurgundy
                         )
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
+                    } else {
+                        Text(verbatim: message.text)
+                            .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
+                            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    }
+                }
                     .padding(
                         .horizontal,
                         16
@@ -1057,24 +1045,13 @@ struct Prompt09AskView: View {
                             Spacer()
                         }
 
-                        Text(
-                            Prompt09AskViewModel
-                                .educationDisclaimer
+                        FruitfolioFixedText(
+                            source: Prompt09AskViewModel.educationDisclaimer,
+                            font: .custom("Chalkboard SE", size: 12.5, relativeTo: .footnote).italic(),
+                            color: DesignTokens.ColorToken.secondaryBurgundy,
+                            serious: true
                         )
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 12.5,
-                                relativeTo:
-                                    .footnote
-                            )
-                            .italic()
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .secondaryBurgundy
-                        )
+                        .accessibilityIdentifier("ask.educationDisclaimer.current")
                         .frame(
                             maxWidth:
                                 .infinity,
@@ -1132,8 +1109,9 @@ struct Prompt09AskView: View {
                 .disabled(isExcerptSaved(answerID: answer.id, range: historicalSelectionRanges[answer.id],
                                          language: historicalSelectionLanguages[answer.id], text: historicalSelections[answer.id]))
             }
-            Text(Prompt09AskViewModel.educationDisclaimer)
-                .font(.footnote).italic()
+            FruitfolioFixedText(source: Prompt09AskViewModel.educationDisclaimer,
+                                font: .footnote.italic(), serious: true)
+                .accessibilityIdentifier("ask.educationDisclaimer.\(answer.id.uuidString)")
         }
         .padding(.vertical, 22)
         .frame(maxWidth: .infinity, alignment: .leading)

@@ -2,6 +2,17 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BAskPaperLayoutTests: XCTestCase {
+    func testOnlyExactAppGreetingUsesControlledTranslation() {
+        let source = Prompt09ControlledCopy.greeting
+        XCTAssertTrue(Prompt09ControlledCopy.isGreeting(AskMessage(role: .fruitfolio, text: source)))
+        XCTAssertFalse(Prompt09ControlledCopy.isGreeting(AskMessage(role: .user, text: source)))
+        for unknown in [source + " ", source + " medical advice", "provider response", ""] {
+            let message = AskMessage(role: .fruitfolio, text: unknown)
+            XCTAssertFalse(Prompt09ControlledCopy.isGreeting(message))
+            XCTAssertEqual(Array(message.text.utf8), Array(unknown.utf8))
+        }
+    }
+
     func testPaperAndTextStayCenteredAndBoundedAcrossSmallAndLongSessions() {
         for width: CGFloat in [240, 320, 393, 852] {
             for height: CGFloat in [180, 852, 10_000] {
