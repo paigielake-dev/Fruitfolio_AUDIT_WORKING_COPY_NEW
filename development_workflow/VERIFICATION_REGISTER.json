@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T09:32:05.231043+00:00",
+  "updated_at": "2026-11-07T09:34:01.484434+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11279,6 +11279,42 @@
         ]
       },
       "timestamp": "2026-11-07T09:32:05.231043+00:00"
+    },
+    {
+      "batch": "Ask-transient-claim-evidence-token-reuse",
+      "requirements": [
+        130,
+        131,
+        135,
+        136
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "Focused Prompt1BResearchEngineIntegrationTests: six passed",
+        "319 Swift syntax parses, zero errors",
+        "git diff --check"
+      ],
+      "results": {
+        "focused_XCTest_passed": 6,
+        "swift_syntax_files": 319,
+        "syntax_errors": 0
+      },
+      "verification": {
+        "executed": {
+          "focused_XCTest_passed": 6,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Apple device responsiveness/latency profiling",
+          "Native model generation and official MADLAD not exercised by this focused regression"
+        ],
+        "remaining": [
+          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        ]
+      },
+      "timestamp": "2026-11-07T09:34:01.484434+00:00"
     }
   ]
 }

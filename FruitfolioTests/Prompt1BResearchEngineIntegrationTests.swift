@@ -19,6 +19,15 @@ private actor Prompt1BSingleEvidenceSynthesis: FruitfolioLanguageModel {
     }
 }
 
+private actor Prompt1BClaimMapCapture: FruitfolioLanguageModel {
+    private(set) var captured: FruitfolioEvidencePacket?
+    func availability() async -> FruitfolioLanguageModelAvailability { .packageNotLinked }
+    func generateDraft(question: String, evidence: FruitfolioEvidencePacket) async throws -> FruitfolioGeneratedDraft {
+        captured = evidence
+        throw FruitfolioLanguageModelError.unavailable(.packageNotLinked)
+    }
+}
+
 @MainActor
 final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
     private func store() throws -> FruitfolioResearchPackageStore {
@@ -26,6 +35,30 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioResearchPackage", withExtension: "json"))
         return FruitfolioResearchPackageStore(resourceURL: url)
     }
+    func testMultiClaimOptimizationPreservesActualCorpusEvidenceLinksAndCitations() async throws {
+        let capture = Prompt1BClaimMapCapture()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: capture)
+        let answer = try await engine.answer(
+            question: "how does progesterone affect temperature and how does estradiol support follicles?", conversation: [])
+        let captured = await capture.captured
+        let packet = try XCTUnwrap(captured)
+        XCTAssertGreaterThan(packet.claimEvidenceMap.count, 1)
+        for mapping in packet.claimEvidenceMap {
+            let claim = FruitfolioQueryNormalizer.tokens(mapping.claim.text)
+            let expectedNotes = packet.researchNoteChunks.filter {
+                !claim.intersection(FruitfolioQueryNormalizer.tokens($0.text)).isEmpty
+            }.map(\.chunkID)
+            let expectedSources = packet.sourceChunks.filter {
+                !claim.intersection(FruitfolioQueryNormalizer.tokens($0.text)).isEmpty
+            }.map(\.sourceChunkID)
+            XCTAssertEqual(mapping.noteChunkIDs, expectedNotes)
+            XCTAssertEqual(mapping.sourceChunkIDs, expectedSources)
+        }
+        XCTAssertFalse(answer.sourceIDs.isEmpty)
+        XCTAssertEqual(answer.answerPath, .retrievalFallback)
+        XCTAssertEqual(Set(answer.sourceIDs), Set(answer.sources.map(\.id)))
+    }
+
     func testActualFallbackAndGameExplanationUseReviewedSourceRolesWithOriginalCitations() async throws {
         let complete = try await store().load()
         let review = try XCTUnwrap(FruitfolioReviewedSemanticContexts.passages.first { $0.noteID == "note_ca00d1045d9609459ec60f03" })

@@ -840,41 +840,19 @@ final class FruitfolioResearchIntelligenceEngine:
                 && $0.isApprovedForDisplay
             }
 
-        let claimMap =
-            claims.map {
-                claim in
-
-                let noteIDs =
-                    noteChunks
-                        .filter {
-                            overlaps(
-                                claim.text,
-                                $0.text
-                            )
-                        }
-                        .map {
-                            $0.chunkID
-                        }
-
-                let sourceIDs =
-                    sourceChunks
-                        .filter {
-                            overlaps(
-                                claim.text,
-                                $0.text
-                            )
-                        }
-                        .map {
-                            $0.sourceChunkID
-                        }
-
-                return FruitfolioClaimEvidence(
-                    claim: claim,
-                    noteChunkIDs: noteIDs,
-                    sourceChunkIDs:
-                        sourceIDs
-                )
-            }
+        // Tokenize each complete evidence paragraph once for this request,
+        // rather than once per claim/evidence pair on the main actor. These
+        // transient indexes retain exactly the same lexical overlap policy.
+        let noteClaimTokens = noteChunks.map { ($0.chunkID, FruitfolioQueryNormalizer.tokens($0.text)) }
+        let sourceClaimTokens = sourceChunks.map { ($0.sourceChunkID, FruitfolioQueryNormalizer.tokens($0.text)) }
+        let claimMap = claims.map { claim in
+            let needed = FruitfolioQueryNormalizer.tokens(claim.text)
+            return FruitfolioClaimEvidence(
+                claim: claim,
+                noteChunkIDs: noteClaimTokens.filter { !needed.isDisjoint(with: $0.1) }.map { $0.0 },
+                sourceChunkIDs: sourceClaimTokens.filter { !needed.isDisjoint(with: $0.1) }.map { $0.0 }
+            )
+        }
 
         let packet =
             FruitfolioEvidencePacket(
@@ -1126,27 +1104,6 @@ final class FruitfolioResearchIntelligenceEngine:
             )
             .inserted
         }
-    }
-
-    private func overlaps(
-        _ lhs: String,
-        _ rhs: String
-    ) -> Bool {
-        let leftTokens =
-            FruitfolioQueryNormalizer.tokens(
-                lhs
-            )
-
-        let rightTokens =
-            FruitfolioQueryNormalizer.tokens(
-                rhs
-            )
-
-        return !leftTokens
-            .intersection(
-                rightTokens
-            )
-            .isEmpty
     }
 
     private func makeGap(

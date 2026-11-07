@@ -9190,16 +9190,39 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt1BEvidenceBoundaryTests"
+        "Prompt1BEvidenceBoundaryTests",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-transient-claim-evidence-token-reuse (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-07T09:34:01.484434+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-transient-claim-evidence-token-reuse",
+        "executed": {
+          "focused_XCTest_passed": 6,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Apple device responsiveness/latency profiling",
+          "Native model generation and official MADLAD not exercised by this focused regression"
+        ],
+        "remaining": [
+          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+        "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+      ]
     },
     {
       "sequence": 131,
@@ -9229,16 +9252,39 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt1BEvidenceBoundaryTests"
+        "Prompt1BEvidenceBoundaryTests",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-transient-claim-evidence-token-reuse (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-07T09:34:01.484434+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-transient-claim-evidence-token-reuse",
+        "executed": {
+          "focused_XCTest_passed": 6,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Apple device responsiveness/latency profiling",
+          "Native model generation and official MADLAD not exercised by this focused regression"
+        ],
+        "remaining": [
+          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+        "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+      ]
     },
     {
       "sequence": 132,
@@ -9388,16 +9434,39 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt1BEvidenceBoundaryTests"
+        "Prompt1BEvidenceBoundaryTests",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-transient-claim-evidence-token-reuse (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-07T09:34:01.484434+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-transient-claim-evidence-token-reuse",
+        "executed": {
+          "focused_XCTest_passed": 6,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Apple device responsiveness/latency profiling",
+          "Native model generation and official MADLAD not exercised by this focused regression"
+        ],
+        "remaining": [
+          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+        "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+      ]
     },
     {
       "sequence": 136,
@@ -9477,9 +9546,10 @@
         "Prompt14CycleOnboardingTests",
         "Prompt1BTodaySnapshotTests",
         "Prompt1BFruitBasketResearchTests",
-        "Prompt1BHealthSafetyBoundaryTests"
+        "Prompt1BHealthSafetyBoundaryTests",
+        "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift"
       ],
-      "commit_reference": "evidence mapping corrected for b2e427d; see IMPLEMENTATION_LOG",
+      "commit_reference": "batch:Ask-transient-claim-evidence-token-reuse (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -9492,9 +9562,31 @@
         "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
-        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
+        "Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion."
       ],
-      "last_updated": "2026-11-06T00:26:39.479684+00:00"
+      "last_updated": "2026-11-07T09:34:01.484434+00:00",
+      "latest_batch_verification": {
+        "batch": "Ask-transient-claim-evidence-token-reuse",
+        "executed": {
+          "focused_XCTest_passed": 6,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Apple device responsiveness/latency profiling",
+          "Native model generation and official MADLAD not exercised by this focused regression"
+        ],
+        "remaining": [
+          "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+          "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Measure multi-claim Ask responsiveness on Apple device; reduced repeated tokenization is source-established, actual latency improvement not measured.",
+        "Complete remaining pipeline optimization requirements individually; retain native inference, clinical and Apple acceptance limitations."
+      ]
     },
     {
       "sequence": 137,

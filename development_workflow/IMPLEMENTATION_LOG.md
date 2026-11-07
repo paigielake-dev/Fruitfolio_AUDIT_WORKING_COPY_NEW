@@ -3692,3 +3692,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"swift_syntax_files": 319, "syntax_errors": 0, "runtime_tests_executed": 0}.
 - Next action: Continue outstanding research pipeline/functionality requirements using actual source and prior evidence; preserve pending Apple Ask entry/inactive/live Reduce Motion acceptance.
 - Commit: containing commit for batch Ask-scene-owned-entry-and-discovery-reveal.
+
+## Ask-transient-claim-evidence-token-reuse
+
+- Parent checkpoint: d47ce380891573eb1b57d3f13837a74a29d6d7f2.
+- Source-order requirements: [130, 131, 135, 136].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift.
+- Remove repeated complete-paragraph tokenization from actual Ask claim/evidence mapping: build transient note/source token sets once per answer, and one token set per claim, retaining original overlap predicate, evidence order, retrieval limits, source approval, citations, source expansion, safety, generated-draft validation and fallback. Remove obsolete pairwise overlaps helper. No question/transcript cache or persistent data changes. Actual multi-claim corpus regression preserves every expected evidence link and cited fallback; no device latency claim or whole optimization completion.
+- Tests added/updated: FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift.
+- Verification: {"focused_XCTest_passed": 6, "swift_syntax_files": 319, "syntax_errors": 0}.
+- Next action: Continue remaining independent requirements, inspecting safe concurrency opportunities against existing actor ownership and avoiding duplicated model operations or weakened grounding.
+- Commit: containing commit for batch Ask-transient-claim-evidence-token-reuse.
