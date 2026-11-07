@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "8c73f5f8de6bbfd3b5409a46c7ccc16dd950a1ac",
+  "current_HEAD": "06fa77967e0d3cdded501c5e33ee50294c8299fa",
   "latest_verified_commit": null,
   "current_checklist_part": 10,
-  "current_requirement": 444,
-  "current_implementation_batch": "Ask-private-save-authority-and-exact-conversion",
+  "current_requirement": 474,
+  "current_implementation_batch": "Founder-batch-evidence-contract-and-reconciliation",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,17 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
-    "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-    "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
-    "FruitfolioTests/Prompt1BAskUserContextTests.swift",
-    "FruitfolioTests/Prompt1BPendingSavePrivacyTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/ASK_PRIVATE_SAVE_AUTHORITY_AND_CONVERSION.md",
+    "Tools/record_prompt1b_batch.py",
+    "Tools/sync_supplemental_spec.py",
+    "development_workflow/BATCH_EVIDENCE_CONTRACT.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
+    "development_workflow/SUPPLEMENTAL_BATCH_EVIDENCE_RECONCILIATION.json",
+    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
+    "development_workflow/tests/test_batch_recorder.py"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -516,61 +512,40 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Initialfocused6fixtureXCTestpassed; finalfocused10fixture/conversion/sourceversionpassed;0SwiftTestingselected",
-    "Full950portable/975native CPU XCTest+21SwiftTestingeach",
-    "60workflowchecks",
-    "311Swift syntaxparses(notAppleSDKtypecheck)",
-    "SwiftSyntaxsource control-sound ownership0findings",
-    "Applicable3supplementalrows receivebatch evidencewithoutstatus/blockerchanges; exact36sourceidentityasserted",
-    "git diff --check"
+    "Full portable and native CPU Swift suites",
+    "Workflow unittest discovery: 69 passed",
+    "Source identity check and git diff --check"
   ],
   "last_test_results": {
     "portable_XCTest": 950,
     "native_CPU_XCTest": 975,
     "SwiftTesting_each": 21,
-    "workflow_checks": 60,
-    "syntax_files": 311,
-    "control_sound_ownership_findings": 0,
-    "new_Foundation_authority_conversion_tests": 3,
-    "initial_focused_fixture_XCTest": 6,
-    "final_focused_XCTest": 10,
-    "focused_SwiftTesting_selected": 0,
-    "extended_Apple_dialog_identity_cancel_vectors": 4,
-    "extended_Apple_UI_vectors_executed": 0,
-    "official_MADLAD_inference_verified": false,
+    "workflow_checks": 69,
+    "historical_batches_reconciled": 14,
+    "founder_entries_reconciled": 12,
+    "initial_focused_tests": 15,
+    "initial_focused_failures_fixed": 1,
     "log_receipts": {
-      "/tmp/fruitfolio_ask_library_focused.log": {
-        "bytes": 29117,
-        "sha256": "77aefd8e6ab960b215dd796c609d2577e35194f6c9309ef1fa2c8506115c18f8"
+      "/tmp/fruitfolio_founder_recorder_portable.log": {
+        "bytes": 301867,
+        "sha256": "be6509fb78197693a564975b603200f21c6df3a24903f0c0cc5bb01ca5d0e266"
       },
-      "/tmp/fruitfolio_ask_library_focused_final.log": {
-        "bytes": 30582,
-        "sha256": "fbec65e520f9b52dc75aab6b3719942461c90f1dd039653212a967599b184455"
+      "/tmp/fruitfolio_founder_recorder_native.log": {
+        "bytes": 1277074,
+        "sha256": "54f4ebfd5a0c73dad6be41c98447c9fed0a9be743ed43517c482273dd014cd00"
       },
-      "/tmp/fruitfolio_ask_library_portable.log": {
-        "bytes": 301850,
-        "sha256": "c7483c83ece08cdd7fdb376ff729f9dd8086d9fd1f3d0dc83d241212866094cd"
+      "/tmp/fruitfolio_founder_recorder_workflow_final.log": {
+        "bytes": 169,
+        "sha256": "a7523198695bbfe212ee497008e08a76e5a2f6858f8ee839dbd28f7d2ac6ffa9"
       },
-      "/tmp/fruitfolio_ask_library_native.log": {
-        "bytes": 1277003,
-        "sha256": "4e3d77c31176778515c48bcb091235ef5edc5b4e23e1c5eb92b9c35038ee3849"
-      },
-      "/tmp/fruitfolio_ask_library_workflow.log": {
-        "bytes": 160,
-        "sha256": "09f180b09eae014424bdda0c5b92e74d7808d16274af74146a5f863a7755fea1"
-      },
-      "/tmp/fruitfolio_ask_library_syntax.log": {
-        "bytes": 106,
-        "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-      },
-      "/tmp/fruitfolio_ask_library_ownership.log": {
-        "bytes": 5,
-        "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+      "/tmp/fruitfolio_founder_recorder_focused.log": {
+        "bytes": 1221,
+        "sha256": "4ca53081b298666a0c45b0becaea9d29de1250b877713bfcdcf8ff75583b3451"
       }
     }
   },
-  "next_exact_implementation_action": "Extend batch recorder with validated supplemental founder IDs and structured implementation/executed/unexecuted/remaining evidence; preserve all36exactsource identities and478originalorder/status safety. Test invalid IDs/no partial writes andsync preservation. Reconcile actual local batch evidence without promoting full acceptance.",
-  "updated_at": "2026-11-07T04:51:29.708422+00:00",
+  "next_exact_implementation_action": "Implement consent-preserving legacy excerpt recovery: detect retained full-answer remainder, preserve by default, offer explicit selected-only cleanup with stale-data and shared-copy guards.",
+  "updated_at": "2026-11-07T05:10:44.294654+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -583,57 +558,45 @@
       "portable_XCTest": 950,
       "native_CPU_XCTest": 975,
       "SwiftTesting_each": 21,
-      "workflow_checks": 60,
-      "syntax_files": 311,
-      "control_sound_ownership_findings": 0,
-      "new_Foundation_authority_conversion_tests": 3,
-      "initial_focused_fixture_XCTest": 6,
-      "final_focused_XCTest": 10,
-      "focused_SwiftTesting_selected": 0,
-      "extended_Apple_dialog_identity_cancel_vectors": 4,
-      "extended_Apple_UI_vectors_executed": 0,
-      "official_MADLAD_inference_verified": false,
+      "workflow_checks": 69,
+      "historical_batches_reconciled": 14,
+      "founder_entries_reconciled": 12,
+      "initial_focused_tests": 15,
+      "initial_focused_failures_fixed": 1,
       "log_receipts": {
-        "/tmp/fruitfolio_ask_library_focused.log": {
-          "bytes": 29117,
-          "sha256": "77aefd8e6ab960b215dd796c609d2577e35194f6c9309ef1fa2c8506115c18f8"
+        "/tmp/fruitfolio_founder_recorder_portable.log": {
+          "bytes": 301867,
+          "sha256": "be6509fb78197693a564975b603200f21c6df3a24903f0c0cc5bb01ca5d0e266"
         },
-        "/tmp/fruitfolio_ask_library_focused_final.log": {
-          "bytes": 30582,
-          "sha256": "fbec65e520f9b52dc75aab6b3719942461c90f1dd039653212a967599b184455"
+        "/tmp/fruitfolio_founder_recorder_native.log": {
+          "bytes": 1277074,
+          "sha256": "54f4ebfd5a0c73dad6be41c98447c9fed0a9be743ed43517c482273dd014cd00"
         },
-        "/tmp/fruitfolio_ask_library_portable.log": {
-          "bytes": 301850,
-          "sha256": "c7483c83ece08cdd7fdb376ff729f9dd8086d9fd1f3d0dc83d241212866094cd"
+        "/tmp/fruitfolio_founder_recorder_workflow_final.log": {
+          "bytes": 169,
+          "sha256": "a7523198695bbfe212ee497008e08a76e5a2f6858f8ee839dbd28f7d2ac6ffa9"
         },
-        "/tmp/fruitfolio_ask_library_native.log": {
-          "bytes": 1277003,
-          "sha256": "4e3d77c31176778515c48bcb091235ef5edc5b4e23e1c5eb92b9c35038ee3849"
-        },
-        "/tmp/fruitfolio_ask_library_workflow.log": {
-          "bytes": 160,
-          "sha256": "09f180b09eae014424bdda0c5b92e74d7808d16274af74146a5f863a7755fea1"
-        },
-        "/tmp/fruitfolio_ask_library_syntax.log": {
-          "bytes": 106,
-          "sha256": "175b16f34a4af1052b681c8ab21fbca2ffa59169f7986810b07dd8af1eb73c69"
-        },
-        "/tmp/fruitfolio_ask_library_ownership.log": {
-          "bytes": 5,
-          "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+        "/tmp/fruitfolio_founder_recorder_focused.log": {
+          "bytes": 1221,
+          "sha256": "4ca53081b298666a0c45b0becaea9d29de1250b877713bfcdcf8ff75583b3451"
         }
       }
     },
     "not_run": [
-      "FouractualAppleprivate-store-instance/dialogcancel/draftretentionUIvectors andtypecheck/VoiceOver/RTL/XXXL/focus/cue behavior",
-      "OfficialMADLAD weights/tokenizer/native-languageclinicalquality andphysicaldeviceacceptance"
+      "Apple builds, UI, accessibility and physical-device acceptance",
+      "Official MADLAD weights/tokenizer inference and clinical language validation"
     ],
     "remaining": [
-      "Execute actualAppleprivateinstance/cancellationandreadbacks; noUIwritesagainstproductionstandardsuite",
-      "VerifyallSaveDestinationfields/UIownershipwithactualApple; FoundationexactconverterdoesnotcertifyUIKitcallbackdeliveryoralltransientwrites",
-      "Automate evidenceupdatesforapplicable36founder additions alongside478withoutchangingoriginalsourceidentityorblockedacceptance"
+      "Run Apple and official-model acceptance with genuine dependencies",
+      "Historical reconciliation is targeted, not exhaustive; no whole requirement certification",
+      "Cross-file crash atomicity and off-machine backup are not established"
     ]
   },
   "current_checklist_section": "Part 10 \u2014 Testing, integration, and final verification",
-  "last_recorded_batch_part": 10
+  "last_recorded_batch_part": 10,
+  "last_supplemental_requirements": [
+    "SPEC-7.9.6",
+    "SPEC-7.9.12",
+    "SPEC-BINDING-ASK-SESSION"
+  ]
 }

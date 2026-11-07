@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T04:51:29.708422+00:00",
+  "updated_at": "2026-11-07T05:10:44.294654+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -8745,6 +8745,94 @@
         ]
       },
       "timestamp": "2026-11-07T04:51:29.708422+00:00"
+    },
+    {
+      "batch": "Founder-batch-evidence-contract-and-reconciliation",
+      "requirements": [
+        443,
+        444,
+        476,
+        477,
+        478
+      ],
+      "supplemental_requirements": [
+        "SPEC-7.9.6",
+        "SPEC-7.9.12",
+        "SPEC-BINDING-ASK-SESSION"
+      ],
+      "commands": [
+        "Full portable and native CPU Swift suites",
+        "Workflow unittest discovery: 69 passed",
+        "Source identity check and git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 950,
+        "native_CPU_XCTest": 975,
+        "SwiftTesting_each": 21,
+        "workflow_checks": 69,
+        "historical_batches_reconciled": 14,
+        "founder_entries_reconciled": 12,
+        "initial_focused_tests": 15,
+        "initial_focused_failures_fixed": 1,
+        "log_receipts": {
+          "/tmp/fruitfolio_founder_recorder_portable.log": {
+            "bytes": 301867,
+            "sha256": "be6509fb78197693a564975b603200f21c6df3a24903f0c0cc5bb01ca5d0e266"
+          },
+          "/tmp/fruitfolio_founder_recorder_native.log": {
+            "bytes": 1277074,
+            "sha256": "54f4ebfd5a0c73dad6be41c98447c9fed0a9be743ed43517c482273dd014cd00"
+          },
+          "/tmp/fruitfolio_founder_recorder_workflow_final.log": {
+            "bytes": 169,
+            "sha256": "a7523198695bbfe212ee497008e08a76e5a2f6858f8ee839dbd28f7d2ac6ffa9"
+          },
+          "/tmp/fruitfolio_founder_recorder_focused.log": {
+            "bytes": 1221,
+            "sha256": "4ca53081b298666a0c45b0becaea9d29de1250b877713bfcdcf8ff75583b3451"
+          }
+        }
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": 950,
+          "native_CPU_XCTest": 975,
+          "SwiftTesting_each": 21,
+          "workflow_checks": 69,
+          "historical_batches_reconciled": 14,
+          "founder_entries_reconciled": 12,
+          "initial_focused_tests": 15,
+          "initial_focused_failures_fixed": 1,
+          "log_receipts": {
+            "/tmp/fruitfolio_founder_recorder_portable.log": {
+              "bytes": 301867,
+              "sha256": "be6509fb78197693a564975b603200f21c6df3a24903f0c0cc5bb01ca5d0e266"
+            },
+            "/tmp/fruitfolio_founder_recorder_native.log": {
+              "bytes": 1277074,
+              "sha256": "54f4ebfd5a0c73dad6be41c98447c9fed0a9be743ed43517c482273dd014cd00"
+            },
+            "/tmp/fruitfolio_founder_recorder_workflow_final.log": {
+              "bytes": 169,
+              "sha256": "a7523198695bbfe212ee497008e08a76e5a2f6858f8ee839dbd28f7d2ac6ffa9"
+            },
+            "/tmp/fruitfolio_founder_recorder_focused.log": {
+              "bytes": 1221,
+              "sha256": "4ca53081b298666a0c45b0becaea9d29de1250b877713bfcdcf8ff75583b3451"
+            }
+          }
+        },
+        "not_run": [
+          "Apple builds, UI, accessibility and physical-device acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical language validation"
+        ],
+        "remaining": [
+          "Run Apple and official-model acceptance with genuine dependencies",
+          "Historical reconciliation is targeted, not exhaustive; no whole requirement certification",
+          "Cross-file crash atomicity and off-machine backup are not established"
+        ]
+      },
+      "timestamp": "2026-11-07T05:10:44.294654+00:00"
     }
   ]
 }

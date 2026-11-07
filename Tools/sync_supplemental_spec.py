@@ -15,8 +15,8 @@ SOURCE = ROOT / 'development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracte
 TARGET = ROOT / 'development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json'
 
 
-def specifications():
-    raw = SOURCE.read_bytes()
+def specifications(source=SOURCE):
+    raw = source.read_bytes()
     # Preserve undecodable legacy characters byte-for-byte; never replace them.
     lines = raw.decode('utf-8', errors='surrogateescape').split('\n')
     headers = []
@@ -71,9 +71,13 @@ def row(identifier, original_id, start, end, lines):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--root', type=Path, default=ROOT)
     args = parser.parse_args()
-    source_hash, rows = specifications()
-    previous = json.loads(TARGET.read_text()) if TARGET.exists() else {}
+    root = args.root.resolve()
+    source = root / SOURCE.relative_to(ROOT)
+    target = root / TARGET.relative_to(ROOT)
+    source_hash, rows = specifications(source)
+    previous = json.loads(target.read_text()) if target.exists() else {}
     if args.check:
         assert previous.get('source_sha256') == source_hash
         actual = previous['requirements']
@@ -85,15 +89,23 @@ def main():
     old = {row['id']: row for row in previous.get('requirements', [])}
     for entry in rows:
         evidence = old.get(entry['id'], {})
+        # Only exact source identity is regenerated. Unknown/future progress
+        # metadata must survive along with known verification history.
+        for key, value in evidence.items():
+            if key not in entry:
+                entry[key] = value
         for key, default in [('implementation_status', 'NOT_STARTED'), ('verification_status', 'NOT_RUN'),
                              ('relevant_source_files', []), ('related_tests', []), ('blockers', []), ('evidence', [])]:
-            entry[key] = evidence.get(key, default)
-    document = dict(schema_version=1, source=str(SOURCE.relative_to(ROOT)), source_sha256=source_hash,
+            entry.setdefault(key, default)
+    document = dict(schema_version=1, source=str(source.relative_to(root)), source_sha256=source_hash,
                     decoding='UTF-8 with surrogateescape; original source bytes remain unchanged',
                     scope='24 numbered additions plus 12 explicit binding additions; not an assertion that every unnumbered founder paragraph is indexed',
                     authority='Current user directives authorize full implementation and MADLAD; historical attachment workflow exclusions are superseded',
                     original_478_tracker='development_workflow/MASTER_CHECKLIST.json', requirements=rows)
-    TARGET.write_text(json.dumps(document, indent=2, ensure_ascii=True) + '\n')
+    for key, value in previous.items():
+        if key not in document:
+            document[key] = value
+    target.write_text(json.dumps(document, indent=2, ensure_ascii=True) + '\n')
 
 
 if __name__ == '__main__':
