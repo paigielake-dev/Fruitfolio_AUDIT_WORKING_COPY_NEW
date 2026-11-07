@@ -70,7 +70,7 @@ struct Prompt10EncyclopediaDetailView: View {
         .overlay {
             if showingMaterialEditor {
                 ZStack {
-                DesignTokens.ColorToken.backgroundCream.opacity(FruitfolioModalBlurSpec.dimOpacity).ignoresSafeArea().allowsHitTesting(false)
+                FruitfolioModalBackdrop().allowsHitTesting(false)
                 FruitfolioPresentedPopupHost {
                     Prompt10UserMaterialEditor(store: store, encyclopediaID: encyclopediaID, existing: materialToEdit,
                         onSaved: { page in selectedPage = page; showingMaterialEditor = false; materialToEdit = nil },

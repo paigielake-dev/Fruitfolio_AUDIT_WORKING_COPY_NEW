@@ -14,6 +14,16 @@ enum FruitfolioModalBlurSpec {
     }
 }
 
+/// Visual backdrop shared by non-Hub-tour modal families. Each caller retains
+/// its existing outside-tap policy; this view never dismisses a presentation.
+struct FruitfolioModalBackdrop: View {
+    var body: some View {
+        Color.black.opacity(FruitfolioModalBlurSpec.dimOpacity)
+            .ignoresSafeArea()
+            .accessibilityHidden(true)
+    }
+}
+
 struct FruitfolioModalBlurModifier: ViewModifier {
     let isActive: Bool
     let reduceMotion: Bool

@@ -163,8 +163,7 @@ struct FruitPopupHost<Content: View>: View {
         for request: FruitPopupRequest
     ) -> some View {
 
-        Color.black.opacity(FruitfolioModalBlurSpec.dimOpacity)
-            .ignoresSafeArea()
+        FruitfolioModalBackdrop()
             .contentShape(Rectangle())
             .onTapGesture {
                 if request.dismissBehavior == .tapOutside {

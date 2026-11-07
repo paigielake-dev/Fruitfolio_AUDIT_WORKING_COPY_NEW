@@ -78,9 +78,7 @@ struct Prompt11GuideBuilderView: View {
             )
 
             if overlay != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
+                FruitfolioModalBackdrop()
                     .allowsHitTesting(false)
                     .transition(.opacity)
                     .zIndex(90)

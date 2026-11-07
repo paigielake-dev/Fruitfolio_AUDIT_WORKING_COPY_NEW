@@ -179,9 +179,7 @@ struct Prompt09AskView: View {
             )
 
             if pendingLibrarySave != nil || showingHelp || showingContextPicker {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
+                FruitfolioModalBackdrop()
                     .allowsHitTesting(false)
                     .transition(.opacity)
                     .zIndex(150)

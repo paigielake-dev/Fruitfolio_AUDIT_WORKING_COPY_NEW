@@ -74,7 +74,7 @@ struct Prompt30ContactView: View {
 
     private func linkFailure(_ destination: Prompt30ContactDestination) -> some View {
         ZStack {
-            Color.black.opacity(FruitfolioModalBlurSpec.dimOpacity).ignoresSafeArea()
+            FruitfolioModalBackdrop()
                 .accessibilityHidden(true)
             FruitfolioTapedWhitePopup {
                 VStack(spacing: 12) {

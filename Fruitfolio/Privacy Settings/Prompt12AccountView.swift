@@ -129,9 +129,7 @@ struct Prompt12AccountView: View {
             )
 
             if activeOverlay {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
+                FruitfolioModalBackdrop()
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
                     .zIndex(90)

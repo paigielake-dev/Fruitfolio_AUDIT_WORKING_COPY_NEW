@@ -37,8 +37,7 @@ struct Prompt12DataManagementRegressionHarness: View {
                 .accessibilityIdentifier("dataQA.background")
                 .fruitfolioModalBlur(active: presented, reduceMotion: motion.reduceMotionActive)
             if presented {
-                DesignTokens.ColorToken.backgroundCream.opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea().accessibilityHidden(true).allowsHitTesting(false)
+                FruitfolioModalBackdrop().accessibilityHidden(true).allowsHitTesting(false)
                 Prompt12DataManagementView(store: fixture.store, mode: .popup, onBack: {
                     presented = false
                     Task { @MainActor in

@@ -516,7 +516,7 @@ struct Prompt28FruitBasketView: View {
     private var stormNote: some View {
         let serious = viewModel.currentQuestion?.usesSeriousFeedback == true
         return ZStack {
-            DesignTokens.ColorToken.backgroundCream.opacity(0.72).ignoresSafeArea()
+            FruitfolioModalBackdrop()
             FruitfolioLargeControlCardPopup {
                 VStack(spacing: 10) {
                     HStack {
@@ -1353,6 +1353,7 @@ struct Prompt28FruitBasketView: View {
                     .allowsHitTesting(viewModel.screen != .paused)
                     .accessibilityHidden(viewModel.screen == .paused)
                     if viewModel.screen == .paused && !showStormNote {
+                        FruitfolioModalBackdrop().allowsHitTesting(false)
                         ScrollView {
                             pausePanel.frame(maxWidth: .infinity, minHeight: max(0, available.height - 32))
                         }
@@ -2344,11 +2345,7 @@ struct Prompt28FruitBasketView: View {
 
     private var tourOverlay: some View {
         ZStack {
-            DesignTokens
-                .ColorToken
-                .backgroundCream
-                .opacity(0.72)
-                .ignoresSafeArea()
+            FruitfolioModalBackdrop()
 
             FruitfolioTapedWhitePopup {
                 VStack(spacing: 8) {

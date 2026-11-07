@@ -42,9 +42,7 @@ struct Prompt10SavedLibraryView: View {
                 .fruitfolioModalBlur(active: popup != nil, reduceMotion: motionPreferences.reduceMotionActive)
 
             if popup != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
+                FruitfolioModalBackdrop()
                     .allowsHitTesting(false)
                     .transition(.opacity)
                     .zIndex(90)

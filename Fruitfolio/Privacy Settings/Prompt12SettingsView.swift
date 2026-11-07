@@ -54,9 +54,7 @@ struct Prompt12SettingsView: View {
 
             if showDataManagement ||
                 showAbout {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
+                FruitfolioModalBackdrop()
                     .zIndex(90)
             }
 
