@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-11-07T11:44:22.071989+00:00",
+  "requirements": [
+    251,
+    443,
+    444
+  ],
+  "supplemental_requirements": [
+    "SPEC-4.9.6"
+  ],
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BHormone(Persistence|CivilDate|Measurement|Validation|SnapshotProtection)Tests'",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "git diff --check"
+  ],
+  "results": {
+    "focused_portable_XCTest_passed": 39,
+    "syntax_files": 320,
+    "syntax_errors": 0,
+    "initial_test_failure": "New export assertion initially used the default JSON date decoder against existing ISO8601 export; corrected the test decoder, then all39 passed. No production date format changed."
+  },
+  "verification": {
+    "executed": {
+      "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
+      "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+    },
+    "not_run": [
+      "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+    ],
+    "remaining": [
+      "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+      "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+    ]
+  }
+}

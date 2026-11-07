@@ -30,8 +30,8 @@ final class FruitfolioHormoneMeasurementStore {
         storageProtectionReason = persistence.protectionReason
     }
     var savedRecordRevision: UUID { persistence.revision }
-    func history(hormone: FruitfolioMeasuredHormone? = nil) -> [FruitfolioHormoneMeasurement] {
-        persistence.history(hormone: hormone)
+    func history(hormone: FruitfolioMeasuredHormone? = nil, order: FruitfolioHormoneHistoryOrder = .newestFirst) -> [FruitfolioHormoneMeasurement] {
+        persistence.history(hormone: hormone, order: order)
     }
     func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current,
               intent: FruitfolioMeasurementSaveIntent? = nil) throws {

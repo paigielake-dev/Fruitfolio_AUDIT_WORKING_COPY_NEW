@@ -21,6 +21,7 @@ struct FruitfolioHormoneInformationView: View {
     }
     @State private var showingLibrary = false
     @State private var filter: FruitfolioMeasuredHormone?
+    @State private var historyOrder: FruitfolioHormoneHistoryOrder = .newestFirst
     @State private var editing: FruitfolioHormoneMeasurement?
     @State private var editingIntent: FruitfolioMeasurementSaveIntent?
     @State private var errorMessage: String?
@@ -82,7 +83,13 @@ struct FruitfolioHormoneInformationView: View {
                     }
                 } label: { FruitfolioFixedText(source: "filter by hormone", serious: true) }
                 .accessibilityIdentifier("measurements.hormoneFilter")
-                ForEach(store.history(hormone: filter)) { measurement in
+                Picker(selection: $historyOrder) {
+                    ForEach(FruitfolioHormoneHistoryOrder.allCases) { order in
+                        FruitfolioFixedText(source: order.label, serious: true).tag(order)
+                    }
+                } label: { FruitfolioFixedText(source: "sort measurements by test date", serious: true) }
+                .accessibilityIdentifier("measurements.historyOrder")
+                ForEach(store.history(hormone: filter, order: historyOrder)) { measurement in
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
                             if measurement.hormone == .other {

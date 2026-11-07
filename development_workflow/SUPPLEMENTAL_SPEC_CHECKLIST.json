@@ -129,14 +129,73 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
-        "Fruitfolio/Hormone Information/HormoneInformationView.swift"
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
       "related_tests": [
-        "Prompt1BHormoneValidationTests"
+        "Prompt1BHormoneValidationTests",
+        "Prompt1BHormonePersistenceTests.testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords",
+        "Prompt1BHormonePersistenceTests.testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
+        "Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence"
       ],
       "blockers": [],
       "evidence": [
-        "Local entry/history/export/delete and context navigation implemented in earlier batches; field-specific UI, language, clinical and privacy acceptance remain unverified."
+        "Local entry/history/export/delete and context navigation implemented in earlier batches; field-specific UI, language, clinical and privacy acceptance remain unverified.",
+        "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed."
+      ],
+      "latest_batch_verification": {
+        "batch": "Measurement-user-chronological-history-choice",
+        "executed": {
+          "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
+          "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+        },
+        "not_run": [
+          "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+        ],
+        "remaining": [
+          "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+          "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+        ],
+        "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
+      },
+      "remaining_verification_requirements": [
+        "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+        "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+      ],
+      "commit_reference": "batch:Measurement-user-chronological-history-choice (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T11:44:22.071989+00:00",
+      "batch_evidence": [
+        {
+          "batch": "Measurement-user-chronological-history-choice",
+          "implementation_evidence": "Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91\u201399 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.",
+          "files": [
+            "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+            "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+            "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+            "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+            "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+          ],
+          "tests": [
+            "Prompt1BHormonePersistenceTests.testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords",
+            "Prompt1BHormonePersistenceTests.testExactValuesAndUnitsSurviveRestartEditExportAndDelete",
+            "Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence"
+          ],
+          "verification": {
+            "executed": {
+              "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
+              "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
+            },
+            "not_run": [
+              "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
+            ],
+            "remaining": [
+              "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+              "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
+            ]
+          },
+          "parent_checkpoint": "16e59470ae9ac692a890a366a3536351e67ab962"
+        }
       ]
     },
     {

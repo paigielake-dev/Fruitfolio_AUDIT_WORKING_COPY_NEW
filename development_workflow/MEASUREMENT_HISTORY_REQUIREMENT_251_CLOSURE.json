@@ -1,0 +1,24 @@
+{
+  "requirement": 251,
+  "status": "IMPLEMENTED",
+  "verification": "MANUAL_VERIFICATION_REQUIRED",
+  "source_requirement": "Allow viewing, filtering, sorting, editing, and deleting records.",
+  "founder_source": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt:91-99",
+  "clause_evidence": {
+    "view": "Live ForEach reads full store.history; record cards render original result/unit/reported date/optional metadata and notes; no record prefix limit.",
+    "filter": "Existing hormone picker passes its selected controlled hormone to the actual store query. New executed chronological/filter regression covers both hormone choices and empty match.",
+    "sort": "New live historyOrder picker forwards newestFirst/oldestFirst through observed store to persistence. Executed query regression verifies both directions, same-day deterministic ties and no writes.",
+    "edit": "Per-record button freezes .edit(measurement), opens actual editor and saves through store.save(updated,locale:intent:). Executed store tests verify edits, restarts and rejection of stale/deleted/recreated identities.",
+    "delete": "Per-record button enters owned requestDeletion(.one(id)); confirmed action calls store.delete(id:). Existing executed persistence tests cover actual single deletion, no-op missing IDs, dropped writes and changed-snapshot protection."
+  },
+  "executed_results": {
+    "focused_XCTest": 39,
+    "log": "/tmp/fruitfolio_hormone_history_order_final.log",
+    "syntax_files": 320
+  },
+  "not_run": [
+    "Apple compilation and complete visible view/filter/sort/edit/delete flow.",
+    "VoiceOver/Dynamic Type/selected-language acceptance."
+  ],
+  "closure_limit": "Implementation complete with external acceptance pending; not VERIFIED and not an automatic ID-list promotion."
+}

@@ -39,11 +39,13 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
         } catch { storageUnreadable = true; protectionReason = .unreadableStorage }
     }
 
-    func history(hormone: FruitfolioMeasuredHormone? = nil) -> [FruitfolioHormoneMeasurement] {
+    func history(hormone: FruitfolioMeasuredHormone? = nil, order: FruitfolioHormoneHistoryOrder = .newestFirst) -> [FruitfolioHormoneMeasurement] {
         records.filter { hormone == nil || $0.hormone == hormone }.sorted {
             let left = $0.dayForOrdering()
             let right = $1.dayForOrdering()
-            if let left, let right, left != right { return left > right }
+            if let left, let right, left != right {
+                return order == .newestFirst ? left > right : left < right
+            }
             if (left == nil) != (right == nil) { return left != nil }
             // No test time was collected. UUID is a deterministic same-day tie,
             // not a fabricated order of laboratory concentrations.

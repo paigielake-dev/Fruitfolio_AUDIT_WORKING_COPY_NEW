@@ -30,6 +30,47 @@ private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
 }
 
 final class Prompt1BHormonePersistenceTests: XCTestCase {
+    func testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords() throws {
+        let suite = "HormoneHistoryOrder." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementPersistence(defaults: defaults, key: "measurements")
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: 0))
+        func record(_ day: Int, hormone: FruitfolioMeasuredHormone, id: String) throws -> FruitfolioHormoneMeasurement {
+            var record = FruitfolioHormoneMeasurement()
+            record.id = try XCTUnwrap(UUID(uuidString: id))
+            record.hormone = hormone
+            record.result = "12.500"
+            record.unit = "µIU/mL"
+            record.notes = "original café report"
+            try record.setReportedTestDate(try XCTUnwrap(calendar.date(from:
+                DateComponents(year: 2026, month: 11, day: day))), calendar: calendar)
+            return record
+        }
+        let early = try record(1, hormone: .lh, id: "00000000-0000-0000-0000-000000000003")
+        let lateA = try record(3, hormone: .lh, id: "00000000-0000-0000-0000-000000000001")
+        let lateB = try record(3, hormone: .lh, id: "00000000-0000-0000-0000-000000000002")
+        let middle = try record(2, hormone: .fsh, id: "00000000-0000-0000-0000-000000000004")
+        for record in [lateB, early, middle, lateA] { try store.save(record, locale: Locale(identifier: "en_US")) }
+        let bytes = defaults.data(forKey: "measurements")
+        let revision = store.revision
+        let originals = store.records
+        XCTAssertEqual(store.history().map(\.id), [lateA.id, lateB.id, middle.id, early.id])
+        XCTAssertEqual(store.history(order: .oldestFirst).map(\.id), [early.id, middle.id, lateA.id, lateB.id])
+        XCTAssertEqual(store.history(hormone: .lh, order: .oldestFirst).map(\.id), [early.id, lateA.id, lateB.id])
+        XCTAssertEqual(store.history(hormone: .lh, order: .newestFirst).map(\.id), [lateA.id, lateB.id, early.id])
+        XCTAssertTrue(store.history(hormone: .amh, order: .oldestFirst).isEmpty)
+        XCTAssertEqual(store.records, originals)
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(store.revision, revision)
+        // Export retains its established default, independent of display choice.
+        let exportDecoder = JSONDecoder()
+        exportDecoder.dateDecodingStrategy = .iso8601
+        XCTAssertEqual(try exportDecoder.decode([FruitfolioHormoneMeasurement].self,
+            from: store.exportJSON()).map(\.id), [lateA.id, lateB.id, middle.id, early.id])
+    }
+
     func testDeletingMissingIDDoesNotWriteOrInvalidateAcknowledgedRevision() throws {
         let suite = "FruitfolioMissingMeasurementDelete." + UUID().uuidString
         let defaults = try XCTUnwrap(HormoneFaultDefaults(suiteName: suite))

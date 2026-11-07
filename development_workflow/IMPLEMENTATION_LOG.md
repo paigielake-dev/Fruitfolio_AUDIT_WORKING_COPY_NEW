@@ -3860,3 +3860,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_portable_XCTest_passed": 18, "syntax_files": 320, "syntax_errors": 0}.
 - Next action: Inspect the actual founder constraints on controlled Other Hormone entry and implement missing functional validation if required, then proceed across incomplete requirements without promoting unexecuted acceptance.
 - Commit: containing commit for batch Translation-display-byte-exact-source-ownership.
+
+## Measurement-user-chronological-history-choice
+
+- Parent checkpoint: 16e59470ae9ac692a890a366a3536351e67ab962.
+- Source-order requirements: [251, 443, 444].
+- Separate founder additions: ['SPEC-4.9.6'].
+- Source files: Fruitfolio/Hormone Information/HormoneMeasurement.swift, Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift, Fruitfolio/Hormone Information/HormoneMeasurementStore.swift, Fruitfolio/Hormone Information/HormoneInformationView.swift, FruitfolioTests/Prompt1BHormonePersistenceTests.swift.
+- Implement an actual newest/oldest test-date selector on measurement history, wired through the existing observed store and persistence query. Both directions compose with the hormone filter; same-day UUID ties and unknown-date-last behavior remain unchanged. Sorting is display-only: no saved values, units, dates, notes, revisions or export ordering are rewritten. Founder source lines91–99 require user chronological sorting. Existing controlled Other Hormone name validation is already covered by the executed validation suite and was not unnecessarily changed.
+- Tests added/updated: Prompt1BHormonePersistenceTests.testChronologicalChoiceCombinesWithHormoneFilterWithoutWritingRecords, Prompt1BHormonePersistenceTests.testExactValuesAndUnitsSurviveRestartEditExportAndDelete, Prompt1BHormoneCivilDateTests.testSameDayRecordsHaveStableOrderRatherThanInventedLaboratoryTimeSequence.
+- Verification: {"focused_portable_XCTest_passed": 39, "syntax_files": 320, "syntax_errors": 0, "initial_test_failure": "New export assertion initially used the default JSON date decoder against existing ISO8601 export; corrected the test decoder, then all39 passed. No production date format changed."}.
+- Next action: Continue original Part8 FAQ and shared composition requirements using their live source and existing evidence; prioritize demonstrated missing behavior and record individual implementation closure only after all clauses are reviewed.
+- Commit: containing commit for batch Measurement-user-chronological-history-choice.

@@ -50,6 +50,18 @@ nonisolated enum FruitfolioHormoneReportFormat {
 
 enum FruitfolioHormoneTestDatePrecision: String, Codable, Sendable { case day }
 
+/// Display order only; it never changes the reported day or invents a test time.
+enum FruitfolioHormoneHistoryOrder: String, CaseIterable, Identifiable, Sendable {
+    case newestFirst, oldestFirst
+    var id: String { rawValue }
+    var label: String {
+        switch self {
+        case .newestFirst: return "newest test date first"
+        case .oldestFirst: return "oldest test date first"
+        }
+    }
+}
+
 struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable {
     var id = UUID()
     var hormone: FruitfolioMeasuredHormone = .estradiol

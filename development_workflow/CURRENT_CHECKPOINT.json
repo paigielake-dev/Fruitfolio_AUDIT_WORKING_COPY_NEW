@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "a643a80ca246e71fc9281876461ce4caa7600d5d",
+  "current_HEAD": "16e59470ae9ac692a890a366a3536351e67ab962",
   "latest_verified_commit": null,
-  "current_checklist_part": 5,
-  "current_requirement": 241,
-  "current_implementation_batch": "Translation-display-byte-exact-source-ownership",
+  "current_checklist_part": 8,
+  "current_requirement": 373,
+  "current_implementation_batch": "Measurement-user-chronological-history-choice",
   "completed_requirements": [
     206,
     210
@@ -494,10 +494,14 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
-    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+    "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+    "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+    "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+    "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/MEASUREMENT_HISTORY_REQUIREMENT_251_CLOSURE.json",
+    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -510,17 +514,18 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py Prompt1BControlTranslationStateTests",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BHormone(Persistence|CivilDate|Measurement|Validation|SnapshotProtection)Tests'",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "git diff --check"
   ],
   "last_test_results": {
-    "focused_portable_XCTest_passed": 18,
+    "focused_portable_XCTest_passed": 39,
     "syntax_files": 320,
-    "syntax_errors": 0
+    "syntax_errors": 0,
+    "initial_test_failure": "New export assertion initially used the default JSON date decoder against existing ISO8601 export; corrected the test decoder, then all39 passed. No production date format changed."
   },
-  "next_exact_implementation_action": "Inspect the actual founder constraints on controlled Other Hormone entry and implement missing functional validation if required, then proceed across incomplete requirements without promoting unexecuted acceptance.",
-  "updated_at": "2026-11-07T11:41:18.574663+00:00",
+  "next_exact_implementation_action": "Continue original Part8 FAQ and shared composition requirements using their live source and existing evidence; prioritize demonstrated missing behavior and record individual implementation closure only after all clauses are reviewed.",
+  "updated_at": "2026-11-07T11:44:22.071989+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -530,21 +535,22 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable": "/tmp/fruitfolio_display_identity_focused.log: 18 actual owner XCTest passed, including exact-byte key set and resolved-display invalidation tests",
-      "syntax": "/tmp/fruitfolio_display_identity_syntax.log: 320 Swift parsed with zero syntax errors"
+      "focused": "/tmp/fruitfolio_hormone_history_order_final.log: 39 actual domain/store tests passed",
+      "syntax": "/tmp/fruitfolio_hormone_history_order_syntax.log: 320 parsed, zero errors"
     },
     "not_run": [
-      "Apple long-form SwiftUI typechecking/presentation and actual selection/citation actions with byte-different originals.",
-      "Official MADLAD and clinical/native-language verification."
+      "Apple newest/oldest picker interaction, selected-language accessibility, Dynamic Type, editor and confirmation presentation."
     ],
     "remaining": [
-      "These controlled runtime fixtures establish ownership only, not learned translation quality or official MADLAD execution.",
-      "Complete Apple display acceptance and remaining original/citation protection clauses independently; no entire requirement promoted."
+      "Requirement251 implementation is individually reviewed for viewing/filtering/sorting/editing/deleting; Apple acceptance remains unexecuted.",
+      "SPEC-4.9.6 complete visible workflow and any optional graph acceptance remain pending; no claim of clinical completeness or invented graph values."
     ]
   },
-  "current_checklist_section": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
-  "last_recorded_batch_part": 9,
-  "last_supplemental_requirements": [],
+  "current_checklist_section": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
+  "last_recorded_batch_part": 5,
+  "last_supplemental_requirements": [
+    "SPEC-4.9.6"
+  ],
   "implemented_requirements": [
     9,
     10,
