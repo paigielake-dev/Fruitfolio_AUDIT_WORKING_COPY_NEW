@@ -1,0 +1,464 @@
+{
+  "founder_receipts": [
+    {
+      "file": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+      "line": 951,
+      "raw_line_sha256": "1762be9e0bba575806f40a097e102a953b90bcf30de369ce51a18c1ae6860665",
+      "instruction": "3E \u2014 Answer available. Fruitfolio displays the answer on the answer-paper presentation. MAKE SURE THE ANSWER UTILIZES TYPING ASMR UNLESS THE USER HAS THAT TOGGLED OFF. The answer can include selectable text, source/citation affordances, save/bookmark actions, and optional educational art (EMPHASIS ON THE OPTIONAL; default answer has no art and only SPECIFIC searches can generate the art. See below for the new titles. Also ASK EDUCATIONAL ART RESTRAINT: Ask the Encyclopedia must not display scientific artwork simply because an available asset loosely matches the subject of an answer. Educational artwork should appear only when it materially improves understanding of the specific biological concept being explained and is appropriate to the Research-grounded content. Default to clean text when an image adds little value; generally use no educational image by default and one major educational illustration when genuinely useful, with additional sequential artwork reserved for intentionally opened illustrated experiences such as Fertilization Education or Pregnancy Education. Never create anatomy/science collages, add scientific artwork as decoration, or display assets merely for coverage.). - GOOD (add the following stuff below though) For Ask the Encyclopedia, optimize the complete local AI and retrieval pipeline so that answers are generated and begin appearing as quickly as reasonably possible with minimal runtime lag, without sacrificing Research Library grounding, claim/evidence validation, safety classification, context personalization, verified citations, or any existing Fruitfolio behavior. Audit the current pipeline for unnecessary sequential operations, repeated retrieval, redundant processing, duplicate model work, avoidable waits, or other bottlenecks. Where technically safe, perform independent work concurrently, reuse/cache appropriate results, and begin rendering usable answer content as soon as possible rather than making the user wait for unrelated processing to finish. Do not achieve faster responses by skipping research retrieval, evidence validation, safety checks, citation verification, Canonical Voice processing, or Semantic Stylization."
+    },
+    {
+      "file": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+      "line": 1212,
+      "raw_line_sha256": "6addecfc44eb125c5e1af8d29537cab33975bcac3c42dd13bab6782d7fa43e40",
+      "instruction": "    FERTILIZATION / PREGNANCY EDUCATION ACCESS: Preserve Fertilization Education as Encyclopedia Education, not as a consequence of Cycle Tracker predictions. Users may intentionally access it through its established encyclopedia/search/Ask/related-education/saved-content pathways, and TTC or fertility-treatment context may make it appropriately discoverable; however, estimated fertility, estimated ovulation, cervical fluid, LH, BBT, intercourse, symptoms, or a late predicted period must never automatically trigger Fertilization Education or imply that fertilization occurred. Pregnancy Education may similarly be intentionally explored by anyone and may become contextually discoverable following explicit user-reported pregnancy, without implying that viewing the education establishes pregnancy. Ovulation education remains separate and may continue through the Cycle Wheel\u2019s existing learn why \u2192 pathway."
+    },
+    {
+      "file": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+      "line": 1232,
+      "raw_line_sha256": "e36ee074504b5650b1f151119db2461981163c6eda2b5d8de8cde2a431a62a9a",
+      "instruction": "EDUCATIONAL NAVIGATION AUDIT: Verify that the current production Swift implementation provides a visible, reachable user-facing path into Fertilization Education, Pregnancy Education, and the other implemented encyclopedia/science modules. The specification references pathways such as Encyclopedia \u2192 Reproductive Biology \u2192 Fertilization, Ask, search, related educational cross-links, and saved content, but the current six-button Hub does not expose a separate generic Encyclopedia destination. If an educational module exists in code but no legitimate current UI path reaches it, treat that as a navigation/discoverability defect and connect it through the appropriate existing Fruitfolio feature architecture rather than creating a seventh Hub button or a new top-level Science area."
+    }
+  ],
+  "implementation": {
+    "entry": "Existing Ask discovery card \u2192 explicit explore encyclopedia education button \u2192 the five existing module families. No new Hub button, root Science area or prediction/symptom-triggered presentation.",
+    "existing_views_reused": [
+      "Prompt25FertilizationModule",
+      "Prompt26PregnancyEducationRootView",
+      "Prompt27ContextualScienceSectionView"
+    ],
+    "content": "Actual existing module provider protocols consume one shared actor built on canonical ResearchPackageStore/retriever. Complete source paragraphs only; quarantine/approved-reference/version gates retained. No generated medical prose, patient input, inference or web fetch.",
+    "scope_correction": "Real corpus review caught social culture for an agar plate and incidental disease/nutrition term matches. Revised biomedical role selectors, scientific aliases, source-context headings and general-reference illustration qualification; controlled counterexamples and actual corpus tests passed. This still is not clinical/full-chapter acceptance.",
+    "citations": "Actual selected paragraph's own source records, original APA/title/URL/DOI/publication/version fields through existing citation component; Source factory and actual saved library store readback preserve original body/context and citation metadata.",
+    "actions": "Existing source/save/Ask callbacks are connected; save uses the same supplied library authority and save destination. Explicit Ask action prefills an app-authored English suggestion without sending it or attaching health data. Related education links are user actions.",
+    "ownership": "Visit-owned cancellable reads, generation/path/scene/visibility admission, synchronous stage-navigation read invalidation through existing page callback. No persistent conversation/measurement cache.",
+    "language": "Existing global Settings/translation owners reused for new controls and preserved module display; bibliographic metadata remains verbatim. No new language preference or claim of official MADLAD verification.",
+    "assets": "Existing original science artwork/catalogs/stages retained; metadata reachability tests are not image-pixel/device acceptance."
+  },
+  "actual_core_corpus_coverage": {
+    "requests": 39,
+    "eligible_scope_matches": 27,
+    "no_qualified_match": 12,
+    "selected": [
+      {
+        "content_id": "education.science.bone",
+        "note_id": "note_52baaed496807372e0ae851f",
+        "original_heading": "bone density before menopause",
+        "original_paragraph_sha256": "a5baf58c543ea091d658d0d43ab9902bcca61ed37d3f70c0273408196095f8ee",
+        "source_ids": [
+          "source_a874dc118556318fd5bc2d03",
+          "source_97f14008fffb2a6566712b75",
+          "source_cbc7c668146a6fdd74df3f89",
+          "source_2273316144cd429b2e806a40"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.cell",
+        "note_id": "note_9fda72b909171874e29eec93",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "35e9973256565d1e58f2cffdc32ac9bee482015054436830abaf6c62d99cbd99",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.cells",
+        "note_id": "note_9fda72b909171874e29eec93",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "35e9973256565d1e58f2cffdc32ac9bee482015054436830abaf6c62d99cbd99",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.chromosome",
+        "note_id": "note_04da18e68c81d3018dd47118",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "2976470507bcd9046fe51d1a85c05e43e41c1088d901e5f64183178f8dfd6569",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.dna",
+        "note_id": "note_04da18e68c81d3018dd47118",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "2976470507bcd9046fe51d1a85c05e43e41c1088d901e5f64183178f8dfd6569",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.gut_microbiome",
+        "note_id": "note_89d42dcf38a4f99e94703dee",
+        "original_heading": "fiber foods for women",
+        "original_paragraph_sha256": "308ad1c96814750fee8e9611358e8dd23d6847d599eee15b4c53fc8bcd89760e",
+        "source_ids": [
+          "source_978a9e60bd986e037eac20c6",
+          "source_6e04e0fe73e35dee2a4abf14",
+          "source_0c128362d91c5b65fe5eefe9",
+          "source_1a7822b149c31b436b4deddb"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.heart",
+        "note_id": "note_838db850a2b183aec2dd6501",
+        "original_heading": "POTS in women: dizziness, fast heart rate, and feeling dismissed",
+        "original_paragraph_sha256": "1a16d85d9ab0bd97d1622f159bd7bef9e11c609626ded11d07f0c73bb7fc02b5",
+        "source_ids": [
+          "source_56a41a51db14559a877f340e",
+          "source_190c1f6780e7bbba8bd50512",
+          "source_9ff9ba9e415c203e2c5c019b",
+          "source_d2d7708df7b38ddb1eacb1bf"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.kidneys",
+        "note_id": "note_b6d23a67504ba35895a57a5b",
+        "original_heading": "postpartum blood pressure and why it still matters",
+        "original_paragraph_sha256": "2084fb5c51e9da04d5328b2c727db077bac8824fa1559a96819d743768878512",
+        "source_ids": [
+          "source_655b67e0269ec7e4aff734f8",
+          "source_1b88a235ea804fa1afefa28f",
+          "source_79c936d68a15a9569058ae46",
+          "source_e07ea54576240b4d3d2b6b56"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.liver",
+        "note_id": "note_5e3d5a737bd617ea91c1d788",
+        "original_heading": "why some medications affect women differently",
+        "original_paragraph_sha256": "a447265e0bf4095d0f930887dd09c3826922cfe3601a2bdd7bafea17d9b24195",
+        "source_ids": [
+          "source_1d4ecaee83e1851b3c503ee8",
+          "source_bf8e1f2549fa1f62bbcde927",
+          "source_b9ed8049ecfe5c9ef5a76432",
+          "source_d6c3608aa1d4dd51014a1c53",
+          "source_79b1c549dbd797339ee03191"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.microscopy",
+        "note_id": "note_40aceddb03d1b996362d4049",
+        "original_heading": "premature rupture of membranes: when water breaks too early",
+        "original_paragraph_sha256": "4af79cef7a933ddc035b86b837836a0430b8a6ae135050b9f4339695627605c5",
+        "source_ids": [
+          "source_bd39b8b1c613254c02204cfa",
+          "source_6e79f947082586753bf8a59e",
+          "source_1db1a97403b590c532803a02",
+          "source_52cf0319a1957145fe171ce6"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.muscle",
+        "note_id": "note_8379ffd3cdd4ec542dbe5fa6",
+        "original_heading": "testosterone in women (its role, the right amount, etc.)",
+        "original_paragraph_sha256": "54d7bf591e5ad8d77f6ca8636855be04ca1553a45cd53eaf580d76bcfa12f346",
+        "source_ids": [
+          "source_b8dfbfb338d484e136413222",
+          "source_616a309f0fdf03729e6fc5f1"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.protein",
+        "note_id": "note_e26eb127ddfbbf6efcf44f79",
+        "original_heading": "seed cycling",
+        "original_paragraph_sha256": "44d58839307199e2e881e2858b3590456b7868f0a0be0db3d83c89379c844bcc",
+        "source_ids": [
+          "source_6b05889ac2f2bf4876a24456",
+          "source_4abc59d76f14e699cfa4174c",
+          "source_371463908e00e473f94ccac1",
+          "source_dee343e9aa879b51bf2e6444",
+          "source_980123b34d84b5a8cf746ddf"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.receptor",
+        "note_id": "note_1f73218d8981cba25895f895",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "5203b4ab09989305e6a3451c757d967d12482e5461c8d3f999d16ad35db7c719",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.sample_collection",
+        "note_id": "note_db5a15672c71e62254df42be",
+        "original_heading": "group b strep testing",
+        "original_paragraph_sha256": "b4dd4af7c551b8569713f14eeb7642e4ad0944d3f565f4448ecd0ddbd4289157",
+        "source_ids": [
+          "source_07b3d421911b630151623b1c",
+          "source_9f2bbccedf0cbf5e7712b4f0",
+          "source_18425791d3bdc8f1785d4227",
+          "source_07b6ab3255f6214ab76c7131"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.skin",
+        "note_id": "note_08b282ca0410b5396c663046",
+        "original_heading": "vulvar lichen sclerosus: itching, skin changes, and why care matters",
+        "original_paragraph_sha256": "35065eda06d46e7d48e8f9661986cb73db30206330fab2ba0db9fcfab57812d3",
+        "source_ids": [
+          "source_73d4a0ca885e09e2074f8914",
+          "source_54cd9cd384c50bb485f9796e",
+          "source_aa14a86915d934ff51cfb811",
+          "source_95cdd75f287a27031774c386"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.stomach",
+        "note_id": "note_a2079f35b5cd7c6a4ffd7038",
+        "original_heading": "heartburn during pregnancy",
+        "original_paragraph_sha256": "c4e1bbebff15348dda105af44f991b552cc24820181dc6b21347b0de1fbc46c3",
+        "source_ids": [
+          "source_365d77a51a21113195f87f09",
+          "source_dcd2e45224eb2e6bc74bdb0a",
+          "source_e7921f024763f33ad98caea5"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "education.science.thyroid",
+        "note_id": "note_722f3d8647d3132f56f6bbbc",
+        "original_heading": "hashimoto\u2019s disease: when the thyroid slows down",
+        "original_paragraph_sha256": "3a33a2feb5c0af065de259cc6cc5f62955b4e48a6ebc01ca862c485c45a8bd10",
+        "source_ids": [
+          "source_8b27d4a4521680971be99747",
+          "source_219409b249288f24cb7f8b09",
+          "source_674d03c7943097ce65940ef7",
+          "source_e871b1b822734d25abca453c"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "fertilization.blastocyst.short",
+        "note_id": "note_bf1e1d8bc97e7d936e8f55d4",
+        "original_heading": "role of embryo transfer in IVF process",
+        "original_paragraph_sha256": "c9975efb81adfdc84f92d5d8a060cfe1db7f9b6e5accd64f54ea034a3b0c4852",
+        "source_ids": [
+          "source_411a0490673dd34cc52f8928"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "fertilization.fertilization.short",
+        "note_id": "note_71bbe941dba56588335ca1e0",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "a3d4065942a8f973c45c9c0a0f148a45b2f2c244131fa4cc97521b1980ece29f",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "fertilization.oocyte.short",
+        "note_id": "note_71bbe941dba56588335ca1e0",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "a3d4065942a8f973c45c9c0a0f148a45b2f2c244131fa4cc97521b1980ece29f",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.early_development.core",
+        "note_id": "note_aa06a9578a80e234a1c4fb3f",
+        "original_heading": "female gametogenesis (oogenesis) - https://www.ncbi.nlm.nih.gov/books/NBK555917/",
+        "original_paragraph_sha256": "aa29cddcce8f0b580d92634ccc371b22821b19aaf9a86eb69b9741b15727d055",
+        "source_ids": [
+          "source_f223f8fbd45f797189f22b29",
+          "source_58a1321b143177b18de81b90"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.fetal_development.core",
+        "note_id": "note_78b160e8ceda05d6baa5f7a7",
+        "original_heading": "fetal growth restriction: when baby is measuring small",
+        "original_paragraph_sha256": "b85c55c3333f28c2555b8906fd368f1765011de917620fb8bb472fe3bc47e8d3",
+        "source_ids": [
+          "source_1fac49cc8541b96020516543",
+          "source_6fad5ff088d037505b9f0fad",
+          "source_d6ba8497efc791001a08e27b",
+          "source_25b9538740c6e897dedf2943"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.placenta.core",
+        "note_id": "note_9070dd54f69993847087710f",
+        "original_heading": "placenta previa explained gently",
+        "original_paragraph_sha256": "23ae2ca82ab7aa5e5d863e2359033725ce6df9cac9ee06cb8c4d08710e89c54b",
+        "source_ids": [
+          "source_f4dc4bb601e1ff0bb5dc8fd2",
+          "source_6ddeede63e8432d8343a6b96",
+          "source_f86d8bbdb6aefd5b2b67911d",
+          "source_f3ad0f2d48d0694166d8732c"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.prenatal_vitamins.core",
+        "note_id": "note_2a88506d48797dc14025161c",
+        "original_heading": "medication safety before pregnancy",
+        "original_paragraph_sha256": "321b4ee90338ad84c032b646546d70de3aa3c36caffce6364cd7b0f8a1b51b8e",
+        "source_ids": [
+          "source_af0573821dc696aa2d2ba08a",
+          "source_aa50aa915bb53784fc9a4e59",
+          "source_bbcd52da32260b9789961b66",
+          "source_2c9e1abfe5196d676d568987"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.testing.core",
+        "note_id": "note_b213aef650e214910e77b363",
+        "original_heading": "pregnancy tests and why timing changes results",
+        "original_paragraph_sha256": "5cbfc8610c34203131ead15ab7b899b32d6b18e673c5f1600a66fed8be424ac4",
+        "source_ids": [
+          "source_7097a8badc867bf6c15272b6",
+          "source_314fcf844fdff8017025e054",
+          "source_8c17f926846f7c317a35dec7",
+          "source_423cedd5d13f3de4452655cd",
+          "source_3c3a1d19b47751fb5f0e5fe6"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.ultrasound.core",
+        "note_id": "note_20c0e24823093718c0f62d69",
+        "original_heading": "velamentous cord insertion explained gently",
+        "original_paragraph_sha256": "f5e4fbf70c7a9c094992f2f5e5e4294aec77c0a83a5ea1c9de5fd2aebb7feca3",
+        "source_ids": [
+          "source_8e6382c53c18138ee5688f81",
+          "source_bf05974c4e844c849b84d8cb",
+          "source_e7720546b8d8f8746b187dd9"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      },
+      {
+        "content_id": "pregnancy.umbilical_cord.core",
+        "note_id": "note_2672d65f24dbcac7059d5a12",
+        "original_heading": "velamentous cord insertion explained gently",
+        "original_paragraph_sha256": "219fc38864d466406fca302453661c023aea1fa7eda119351a3e4b4582b10fde",
+        "source_ids": [
+          "source_8e6382c53c18138ee5688f81",
+          "source_bf05974c4e844c849b84d8cb",
+          "source_e7720546b8d8f8746b187dd9"
+        ],
+        "scope": "Eligible original-paragraph/source-integrity match, not a full chapter or clinical approval."
+      }
+    ],
+    "missing_content_ids": [
+      "education.science.centrifugation",
+      "education.science.culture",
+      "education.science.liquid_transfer",
+      "education.science.mitochondrion",
+      "education.science.nucleus",
+      "education.science.pcr_reaction_setup",
+      "education.science.rna",
+      "education.science.specimen_collection",
+      "education.science.test_tube",
+      "fertilization.four_cell.short",
+      "fertilization.morula.short",
+      "fertilization.two_cell.short"
+    ],
+    "limit": "Counts describe core source matching only. Do not convert them into Prompt1B completion, full topic correctness or release readiness."
+  },
+  "unfinished_implementation_and_content": {
+    "fetal_reference_mapping_ids": [
+      "pregnancy.fetal_development.reference_01",
+      "pregnancy.fetal_development.reference_02",
+      "pregnancy.fetal_development.reference_03",
+      "pregnancy.fetal_development.reference_04"
+    ],
+    "pregnancy_detail_section_ids": [
+      "pregnancy.testing.hcg",
+      "pregnancy.testing.timing",
+      "pregnancy.testing.results",
+      "pregnancy.testing.limitations",
+      "pregnancy.early_development.implantation",
+      "pregnancy.early_development.terminology",
+      "pregnancy.early_development.transitions",
+      "pregnancy.fetal_development.variability",
+      "pregnancy.fetal_development.scale",
+      "pregnancy.fetal_development.terminology",
+      "pregnancy.placenta.development",
+      "pregnancy.placenta.anatomy",
+      "pregnancy.placenta.exchange",
+      "pregnancy.placenta.hormones",
+      "pregnancy.placenta.circulation",
+      "pregnancy.umbilical_cord.anatomy",
+      "pregnancy.umbilical_cord.vessels",
+      "pregnancy.umbilical_cord.whartons_jelly",
+      "pregnancy.umbilical_cord.circulation",
+      "pregnancy.ultrasound.sound_waves",
+      "pregnancy.ultrasound.approaches",
+      "pregnancy.ultrasound.limitations",
+      "pregnancy.ultrasound.professional_role",
+      "pregnancy.prenatal_vitamins.folate",
+      "pregnancy.prenatal_vitamins.nutrients",
+      "pregnancy.prenatal_vitamins.dosing",
+      "pregnancy.prenatal_vitamins.safety",
+      "pregnancy.prenatal_vitamins.preconception"
+    ],
+    "fertilization_expanded_content_ids": [
+      "fertilization.oocyte.expanded",
+      "fertilization.fertilization.expanded",
+      "fertilization.two_cell.expanded",
+      "fertilization.four_cell.expanded",
+      "fertilization.morula.expanded",
+      "fertilization.blastocyst.expanded"
+    ],
+    "notes": [
+      "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+      "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+      "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+      "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open."
+    ]
+  },
+  "executed": {
+    "latest_full_portable_XCTest": 1044,
+    "latest_full_SwiftTesting": 21,
+    "focused_module_XCTest": 31,
+    "native_CPU_focused_XCTest": 21,
+    "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+    "workflow": 71,
+    "swift_syntax_files": 326,
+    "logs": [
+      "/tmp/fruitfolio_education_navigation_final_full.log",
+      "/tmp/fruitfolio_education_navigation_final_focused.log",
+      "/tmp/fruitfolio_education_navigation_native.log",
+      "/tmp/fruitfolio_education_navigation_final_workflow.log",
+      "/tmp/fruitfolio_education_navigation_final_syntax.log"
+    ]
+  },
+  "not_run": [
+    "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+    "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+    "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+    "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+  ],
+  "closure": "Concrete production entry and provider/action wiring implemented; Apple runtime acceptance and chapter completeness remain open. No original whole requirement is promoted by this batch and no all478/36/unnumbered completion claim is made."
+}

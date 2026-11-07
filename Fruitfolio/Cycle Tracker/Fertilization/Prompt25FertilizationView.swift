@@ -126,6 +126,7 @@ struct Prompt25FertilizationView: View {
                 Prompt25SoftPressButtonStyle(reduceMotion: reduceMotion)
             )
             .modifier(FruitfolioFixedAccessibilityLabel(source: "Back"))
+            .accessibilityIdentifier("fertilization.back")
 
             Spacer(minLength: 16)
 

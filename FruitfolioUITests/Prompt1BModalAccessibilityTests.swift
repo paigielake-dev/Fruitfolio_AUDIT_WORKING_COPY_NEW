@@ -3,6 +3,41 @@ import XCTest
 final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioAskPaperQA", "-fruitfolioAskControlsQA",
+            "-fruitfolioAskControlsQAReduceMotion", "-UIPreferredContentSizeCategoryName",
+            "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let input = app.descendants(matching: .any).matching(identifier: "ask.question.input").firstMatch
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        let authored = "unsent education navigation fixture"
+        input.tap(); input.typeText(authored)
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "prompt25.fertilization").firstMatch.exists)
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "education.module.pregnancy").firstMatch.exists)
+        let open = app.buttons["ask.education.open"]
+        let conversation = app.scrollViews["ask.conversation"]
+        for _ in 0..<30 { if open.isHittable { break }; conversation.swipeDown() }
+        XCTAssertTrue(open.isHittable); open.tap()
+        let fertilization = app.buttons["education.collection.fertilization"]
+        XCTAssertTrue(fertilization.waitForExistence(timeout: 8)); fertilization.tap()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "prompt25.fertilization").firstMatch.waitForExistence(timeout: 8))
+        let back = app.buttons["fertilization.back"]
+        XCTAssertTrue(back.waitForExistence(timeout: 5)); back.tap()
+        let pregnancy = app.buttons["education.collection.pregnancy"]
+        XCTAssertTrue(pregnancy.waitForExistence(timeout: 5))
+        for _ in 0..<12 { if pregnancy.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(pregnancy.isHittable); pregnancy.tap()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "education.module.pregnancy").firstMatch.waitForExistence(timeout: 8))
+        let close = app.buttons["education.close"]
+        XCTAssertTrue(close.isHittable); close.tap()
+        XCTAssertTrue(input.waitForExistence(timeout: 5))
+        XCTAssertEqual(input.value as? String, authored, "Browsing education must not replace the unsent Ask draft")
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "education.module.pregnancy").firstMatch.exists)
+        captureGame(app, name: "ask-explicit-education-return-draft-accessibility-size")
+        app.terminate()
+    }
+
     func testGameSaveDestinationRetainsDraftAcrossBackgroundAndSavesOriginalMetadataOnce() {
         for language in ["en", "fr"] {
         for reduced in [false, true] {

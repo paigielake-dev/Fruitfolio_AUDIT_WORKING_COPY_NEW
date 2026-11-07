@@ -3216,7 +3216,15 @@
         "development_workflow/LIFEBRIDGE_PUBLISHER_ASK_PIPELINE.json",
         "development_workflow/FOUNDER_INSTAGRAM_INSTRUCTION_STATUS.json",
         "FruitfolioTests/Prompt1BLifeBridgeTests.swift",
-        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json"
+        "development_workflow/FRUITSOFLIFE_BRAND_ASK_PIPELINE.json",
+        "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "Tools/run_portable_swift_tests.py",
+        "development_workflow/EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -3229,7 +3237,11 @@
         "Prompt1BLifeBridgeTests.testGenericBrandRouteKeepsMedicalAndLifeBridgeQuestionsInTheirOwnPipelines",
         "Prompt1BLifeBridgeTests.testBrandResourceRequiresExactAccountReviewDatesUniqueIDsAndDeclaredScope",
         "Prompt1BLifeBridgeTests.testActualBrandResourceFeedsSourceSpecificAskWithoutScientificOrGenerativeSubstitution",
-        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts"
+        "Prompt1BLifeBridgeTests.testMissingOrInvalidBrandSnapshotReturnsExplicitUnavailableWithoutInventedFacts",
+        "Prompt1BEducationResearchTests",
+        "Prompt25FertilizationCoreTests",
+        "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
       ],
       "blockers": [
         "Official weights/tokenizer unavailable: huggingface.co CONNECT denied 403 and domain draft immutable.",
@@ -3243,7 +3255,8 @@
         "Reconciled batch:Saved-answer-support-provenance-and-selection-privacy; local commit 53d900700a91483b39c9bda3baafd168bb21f6a7; structured execution/gaps in batch_evidence. Whole acceptance remains unchanged.",
         "Implement missing incoming-question local translation before the English index, preserving original question/session/history, scientific tokens, source validation and strongest pre/post-translation safety. Keep known English app suggestions separate from typed request language without another preference. Fail missing/paused/bad translations explicitly, restore untouched failed draft, and clear query-derived diagnostics at session reset. Actual production engine/service/corpus tests pass; real Qwen Ask generation/reload also passes. Official MADLAD and Apple view-model/runtime acceptance remain NOT_RUN; no whole requirement promotion.",
         "Connect the previously UI-only approved publisher resource to real scoped Ask access through the existing actor owner. Preserve two required publishers, full quoted text/qualifiers, source-specific titles/URLs/retrieval-review/version metadata, explicit official priority, supplied review flags, and first-party/scientific separation. No organization facts are generated from model memory or fake defaults. Actor/file/cache/query tests and source-preservation checks execute with nonclinical fixtures; actual company snapshots remain externally missing. First-party names protected across query/display and adjacent writing systems. Real clinical queries still search existing scientific corpus. No whole requirement promotion.",
-        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated."
+        "Implement the unnumbered founder line995 first-party brand/product consumer inside existing Ask actor architecture. Reuse existing reviewed snapshot metadata and bounded local reader; require exact founder account and explicit nonclinical scope; serve complete source-specific excerpts with review/version citations and no generative substitution. Preserve independent medical evidence and mandatory dual-site LifeBridge boundaries. No production facts or approval snapshots fabricated.",
+        "Implement founder unnumbered1212/1232 explicit science-education access through existing Ask with existing Fertilization/Pregnancy/genetics/anatomy/laboratory views, actual local two-layer research adapters, contextual complete-paragraph quotes, scoped citations, original save/reload and explicit Ask/related callbacks. No seventh Hub button or automatic pregnancy/fertilization navigation. Correct source-role false matches before acceptance. Actual27 core source matches/12 unavailable topics are integrity coverage, not complete chapters; detailed/reference mappings remain explicitly unfinished and no whole requirement is promoted."
       ],
       "batch_evidence": [
         {
@@ -3525,42 +3538,106 @@
             ]
           },
           "parent_checkpoint": "9ed298a67d6af1ad5d5c9adbfb1dafcb6c41d95d"
+        },
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "implementation_evidence": "Implement founder unnumbered1212/1232 explicit science-education access through existing Ask with existing Fertilization/Pregnancy/genetics/anatomy/laboratory views, actual local two-layer research adapters, contextual complete-paragraph quotes, scoped citations, original save/reload and explicit Ask/related callbacks. No seventh Hub button or automatic pregnancy/fertilization navigation. Correct source-role false matches before acceptance. Actual27 core source matches/12 unavailable topics are integrity coverage, not complete chapters; detailed/reference mappings remain explicitly unfinished and no whole requirement is promoted.",
+          "files": [
+            "Fruitfolio/Ask/Prompt09AskView.swift",
+            "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+            "Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift",
+            "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+            "FruitfolioTests/Prompt1BEducationResearchTests.swift",
+            "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+            "Tools/run_portable_swift_tests.py",
+            "development_workflow/EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json"
+          ],
+          "tests": [
+            "Prompt1BEducationResearchTests",
+            "Prompt25FertilizationCoreTests",
+            "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
+            "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+          ],
+          "verification": {
+            "executed": {
+              "latest_full_portable_XCTest": 1044,
+              "latest_full_SwiftTesting": 21,
+              "focused_module_XCTest": 31,
+              "native_CPU_focused_XCTest": 21,
+              "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+              "workflow": 71,
+              "swift_syntax_files": 326,
+              "logs": [
+                "/tmp/fruitfolio_education_navigation_final_full.log",
+                "/tmp/fruitfolio_education_navigation_final_focused.log",
+                "/tmp/fruitfolio_education_navigation_native.log",
+                "/tmp/fruitfolio_education_navigation_final_workflow.log",
+                "/tmp/fruitfolio_education_navigation_final_syntax.log"
+              ]
+            },
+            "not_run": [
+              "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+              "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+              "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+              "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+            ],
+            "remaining": [
+              "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+              "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+              "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+              "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+              "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+              "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+            ]
+          },
+          "parent_checkpoint": "fe651d99094ef466371658ff70d903fd1bdea31c"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Founder-Instagram-reviewed-brand-Ask-consumer",
+        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
         "executed": {
-          "full_portable_XCTest": 1009,
-          "Swift_Testing": 21,
-          "native_CPU_focused_XCTest": 34,
+          "latest_full_portable_XCTest": 1044,
+          "latest_full_SwiftTesting": 21,
+          "focused_module_XCTest": 31,
+          "native_CPU_focused_XCTest": 21,
+          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
           "workflow": 71,
-          "swift_syntax_files": 320,
+          "swift_syntax_files": 326,
           "logs": [
-            "/tmp/fruitfolio_brand_consumer_full_portable.log",
-            "/tmp/fruitfolio_brand_consumer_native.log",
-            "/tmp/fruitfolio_brand_consumer_workflow.log",
-            "/tmp/fruitfolio_brand_consumer_final_syntax.log"
-          ],
-          "native_scope": "Real Qwen engine generation/reload plus publisher fixture tests. Native runner copied source before the final generic brand vocabulary expansion; full1009 portable execution covers final Foundation code. Native engine/model logic unchanged by that expansion."
+            "/tmp/fruitfolio_education_navigation_final_full.log",
+            "/tmp/fruitfolio_education_navigation_final_focused.log",
+            "/tmp/fruitfolio_education_navigation_native.log",
+            "/tmp/fruitfolio_education_navigation_final_workflow.log",
+            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+          ]
         },
         "not_run": [
-          "Apple compilation/presentation/VoiceOver/RTL/Dynamic Type/source controls",
-          "Official MADLAD query/answer inference, native-language clinical and real-device acceptance"
+          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
         ],
         "remaining": [
-          "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
-          "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
-          "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Authorized reviewed exact-account snapshots and freshness/licensing review. Production brand details remain unavailable until this real resource is supplied.",
-        "Real content-specific product/announcement query acceptance requires actual approved source content; generic safe routing is not proof of all future product vocabulary.",
-        "Whole478 +36 +unnumbered reconciliation remains unfinished; no global completion percentage or whole founder closure inferred."
+        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
       ],
-      "commit_reference": "batch:Founder-Instagram-reviewed-brand-Ask-consumer (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T11:51:44.089393+00:00"
+      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T13:28:52.738609+00:00"
     },
     {
       "id": "SPEC-7.9.6",
@@ -3629,7 +3706,15 @@
         "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
         "development_workflow/GUIDE_REQUIRED_ALIGNMENT_AND_CLOSURE.md",
         "development_workflow/PART4_IMPLEMENTATION_CLOSURE.json",
-        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt"
+        "development_workflow/SOURCE_MATERIALS/Execution_Directive_2026-11-07.txt",
+        "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "FruitfolioTests/Prompt1BEducationResearchTests.swift",
+        "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "Tools/run_portable_swift_tests.py",
+        "development_workflow/EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json"
       ],
       "related_tests": [
         "Prompt1BMADLADManifestTests",
@@ -3643,7 +3728,11 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BUserMaterialTests.swift",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "Prompt1BEducationResearchTests",
+        "Prompt25FertilizationCoreTests",
+        "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
+        "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
       ],
       "blockers": [
         "Official weights/tokenizer unavailable: huggingface.co CONNECT denied 403 and domain draft immutable.",
@@ -3668,7 +3757,8 @@
         "Guide contents/search fixed copy now uses control translation; authored names/questions/query preserved. Native ungrouped ordinals retain at least two digits with no truncation; names/numbers protected in accessible section/page prose. Contents/search rows use44pt targets and stable IDs. Real eight-page private canonical fixture reaches production search gate and rejects reseeding; actual derived page positions tested. Two new Foundation cases pass; four Apple vectors written NOT_RUN. Final969/994 XCTest+21 SwiftTesting each;69 workflow;312 parse-only checks;zero source sound findings. Initial968/993 snapshots preserved; no search algorithm/save-schema change or official-model acceptance.",
         "Shared Guide paper fixed labels/native numbers and read-mode controls now localize; authored questions/notes/addresses/source IDs remain verbatim, duplicates use position identity, legacy remainder warning is non-destructive. Read titles wrap at original font; native pagination literals protected. Explicit reduce-motion navigation/page/reorder animation omitted; closing disables/hides content and guards page callbacks. Real private fixture covers legacy note and repeated synthetic IDs. One pagination regression plus updated canonical fixture assertions pass; four Apple vectors written NOT_RUN. Full970/995 XCTest+21 SwiftTesting each,69 workflow,313 changed-file parse checks,zero source sound findings. One English fallback; no data rewrite or official-model acceptance.",
         "Actual Guide reorder callbacks capture ordered IDs/language/visit and use real canonical gateways before writes/cues/status. Hidden/inactive/stale/wrong-guide/scope/language/order and ambiguous identities reject with zero setter calls. Independent authored updates survive; old order cannot replay. Capture shared once per list. Root rotates real epochs across context changes; three section labels localize at44pt. Three real-store ownership tests pass; four Apple lifecycle/live-move vectors written NOT_RUN. Final973/998 XCTest+21 SwiftTesting each;69 workflow;313 parse-only checks;zero source sound findings. Environment reconnected with exact WIP preserved, ancestor/bundle verified; native final process handle unavailable but completed suite logs retained.",
-        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted."
+        "Completed related Guide fixed-copy/menu/picker gaps using existing translation states and native menu titles; authored candidate text protected/verbatim with original preview provenance, known errors typed. Demonstrated note-conflict omission fixed by passing existing initialNote baseline. No new coordinator/fixture. Recorder preserves evidence-based implementation closure. Individually reviewed52Part4 items with28unnumbered founder paragraph hashes: canonical authority/identity206/210 verified by real store/projection tests;50UI implementations awaiting external acceptance. Four Apple vectors writtenNOT_RUN. Focused37then43 passed; full973/998 XCTest+21 SwiftTesting each,70 workflow,313syntax-only checks,zero source sound findings. Latest acceleration directive persisted.",
+        "Implement founder unnumbered1212/1232 explicit science-education access through existing Ask with existing Fertilization/Pregnancy/genetics/anatomy/laboratory views, actual local two-layer research adapters, contextual complete-paragraph quotes, scoped citations, original save/reload and explicit Ask/related callbacks. No seventh Hub button or automatic pregnancy/fertilization navigation. Correct source-role false matches before acceptance. Actual27 core source matches/12 unavailable topics are integrity coverage, not complete chapters; detailed/reference mappings remain explicitly unfinished and no whole requirement is promoted."
       ],
       "batch_evidence": [
         {
@@ -4845,82 +4935,106 @@
             ]
           },
           "parent_checkpoint": "8e3ecdde337bbb8ebebd0507fec72838f95e01ac"
+        },
+        {
+          "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
+          "implementation_evidence": "Implement founder unnumbered1212/1232 explicit science-education access through existing Ask with existing Fertilization/Pregnancy/genetics/anatomy/laboratory views, actual local two-layer research adapters, contextual complete-paragraph quotes, scoped citations, original save/reload and explicit Ask/related callbacks. No seventh Hub button or automatic pregnancy/fertilization navigation. Correct source-role false matches before acceptance. Actual27 core source matches/12 unavailable topics are integrity coverage, not complete chapters; detailed/reference mappings remain explicitly unfinished and no whole requirement is promoted.",
+          "files": [
+            "Fruitfolio/Ask/Prompt09AskView.swift",
+            "Fruitfolio/Ask/FruitfolioEducationLibraryView.swift",
+            "Fruitfolio/Core/Intelligence/FruitfolioEducationResearch.swift",
+            "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+            "FruitfolioTests/Prompt1BEducationResearchTests.swift",
+            "FruitfolioTests/Prompt26PregnancyEducationTests.swift",
+            "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+            "Tools/run_portable_swift_tests.py",
+            "development_workflow/EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json"
+          ],
+          "tests": [
+            "Prompt1BEducationResearchTests",
+            "Prompt25FertilizationCoreTests",
+            "Prompt26PregnancyEducationTests (16 Foundation cases; UIKit image case excluded/NOT_RUN)",
+            "Prompt1BModalAccessibilityTests.testAskExplicitEducationNavigationPreservesDraftAndDoesNotImplyPregnancy"
+          ],
+          "verification": {
+            "executed": {
+              "latest_full_portable_XCTest": 1044,
+              "latest_full_SwiftTesting": 21,
+              "focused_module_XCTest": 31,
+              "native_CPU_focused_XCTest": 21,
+              "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+              "workflow": 71,
+              "swift_syntax_files": 326,
+              "logs": [
+                "/tmp/fruitfolio_education_navigation_final_full.log",
+                "/tmp/fruitfolio_education_navigation_final_focused.log",
+                "/tmp/fruitfolio_education_navigation_native.log",
+                "/tmp/fruitfolio_education_navigation_final_workflow.log",
+                "/tmp/fruitfolio_education_navigation_final_syntax.log"
+              ]
+            },
+            "not_run": [
+              "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+              "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+              "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+              "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
+            ],
+            "remaining": [
+              "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+              "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+              "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+              "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+              "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+              "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
+            ]
+          },
+          "parent_checkpoint": "fe651d99094ef466371658ff70d903fd1bdea31c"
         }
       ],
       "latest_batch_verification": {
-        "batch": "Guide-required-alignment-and-Part4-implementation-closure",
+        "batch": "Explicit-Ask-education-navigation-and-grounded-module-adapters",
         "executed": {
-          "portable_XCTest": 973,
-          "native_CPU_XCTest": 998,
-          "SwiftTesting_each": 21,
-          "initial_focused_XCTest": 37,
-          "final_focused_XCTest": 43,
-          "workflow_checks": 70,
-          "changed_Swift_syntax_files": 313,
-          "control_sound_ownership_findings": 0,
-          "Apple_UI_vectors_written": 4,
-          "Apple_UI_vectors_executed": 0,
-          "English_fallbacks_added": 6,
-          "existing_empty_English_records_populated": 2,
-          "official_MADLAD_verified": false,
-          "portable_command_exit_code": 0,
-          "native_command_exit_code": 0,
-          "Part4_implementation_reviews": 52,
-          "Part4_core_verified_ids": [
-            206,
-            210
-          ],
-          "Part4_awaiting_Apple_external": 50,
-          "log_receipts": {
-            "/tmp/fruitfolio_guide_alignment_portable.log": {
-              "bytes": 311580,
-              "sha256": "31bf88642a71c6c75d89dc5f96160ac256472aa43cbbe33f65a070e630537355"
-            },
-            "/tmp/fruitfolio_guide_alignment_native.log": {
-              "bytes": 1286769,
-              "sha256": "7890fd2bc2e04eb23721d04c44c84f363ca3e66c912b4cd47fa013c6098b3b65"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused.log": {
-              "bytes": 39613,
-              "sha256": "d0cc92e9afc3fc9330f50c60c38b99f544750c76d2887bdd95768fcd163a1ddd"
-            },
-            "/tmp/fruitfolio_guide_alignment_focused_final.log": {
-              "bytes": 41508,
-              "sha256": "6af181904a97df8b27e9d455bf44e2f50b45fc98db5141d4c80f2140b0507a5a"
-            },
-            "/tmp/fruitfolio_guide_alignment_workflow.log": {
-              "bytes": 170,
-              "sha256": "fae777c802dc978f4aaacf8b68da0a49666bcaee613f6ace01c8b7c38489b15b"
-            },
-            "/tmp/fruitfolio_guide_alignment_syntax_closure.log": {
-              "bytes": 106,
-              "sha256": "6fb7da9946d4f88193df346e4744e8e616ef7ed98fa19df0ac053ec8f028f87d"
-            },
-            "/tmp/fruitfolio_guide_alignment_ownership.log": {
-              "bytes": 5,
-              "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
-            }
-          }
+          "latest_full_portable_XCTest": 1044,
+          "latest_full_SwiftTesting": 21,
+          "focused_module_XCTest": 31,
+          "native_CPU_focused_XCTest": 21,
+          "native_scope": "5 real education adapter/corpus/save tests +16 research-engine tests, including genuine Qwen generation/reload. Not official MADLAD; filtered Swift Testing count0.",
+          "workflow": 71,
+          "swift_syntax_files": 326,
+          "logs": [
+            "/tmp/fruitfolio_education_navigation_final_full.log",
+            "/tmp/fruitfolio_education_navigation_final_focused.log",
+            "/tmp/fruitfolio_education_navigation_native.log",
+            "/tmp/fruitfolio_education_navigation_final_workflow.log",
+            "/tmp/fruitfolio_education_navigation_final_syntax.log"
+          ]
         },
         "not_run": [
-          "Four native Guide menu/note-cancel Apple vectors and actual menu-title/picker binding execution",
-          "Apple SDK build/typecheck, media import/animation/focus/VoiceOver/RTL/large-text/device acceptance",
-          "Official MADLAD weights/tokenizer/native device inference and clinical/linguistic review"
+          "Apple SDK typechecking/build and actual navigation/sources/save/Ask/UI/VoiceOver/RTL/Dynamic Type behavior. New real Ask education/draft-preservation UI test is written, NOT_RUN.",
+          "Three actual Fertilization Apple lifecycle regressions remain NOT_RUN.",
+          "Pregnancy UIKit application-bundle image-resolution test is NOT_RUN and excluded from Linux discovery rather than counted as an empty pass.",
+          "Official MADLAD inference, native-language/clinical content acceptance and physical-device resource/performance verification."
         ],
         "remaining": [
-          "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-          "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-          "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+          "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+          "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+          "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+          "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+          "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+          "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
         ],
         "scope": "Evidence for this batch only; whole founder acceptance and blockers remain separate."
       },
       "remaining_verification_requirements": [
-        "Execute actual native menu, conflict and picker flows on Apple; reused Foundation tests are not SwiftUI execution",
-        "Part4 closure separates canonical authority/identity from UI/release acceptance; other checklist sections still require individual reconciliation",
-        "Original preview badge added after full-suite source snapshot affects only excluded SwiftUI code; final syntax checks cover it, Apple execution remains unrun"
+        "Detailed chapter section adapters have not been populated; existing controls hide absent expansions. Do not treat empty sections as full implementation.",
+        "Fetal reference illustrations require reviewed content-to-reference mapping; generic fetal prose is deliberately not substituted or personalized.",
+        "Triage each core missing topic against raw available notes/source eligibility and valid biomedical aliases before calling it an external blocker.",
+        "Current selected clinical-context excerpts are identified by original research heading and qualified as general illustration references. They are not a complete general anatomy/biology textbook; source/clinical review and more appropriate approved overview content remain open.",
+        "Twelve core content IDs and four reference IDs are explicitly enumerated in EDUCATION_NAVIGATION_AND_RESEARCH_PIPELINE.json; not all are classified external until source triage is done.",
+        "Whole478/36/unnumbered reconciliation remains unfinished; no completion percentage inferred from test or topic counts."
       ],
-      "commit_reference": "batch:Guide-required-alignment-and-Part4-implementation-closure (resolve containing commit with git log)",
-      "last_updated": "2026-11-07T07:35:33.139413+00:00"
+      "commit_reference": "batch:Explicit-Ask-education-navigation-and-grounded-module-adapters (resolve containing commit with git log)",
+      "last_updated": "2026-11-07T13:28:52.738609+00:00"
     },
     {
       "id": "SPEC-7.9.7",

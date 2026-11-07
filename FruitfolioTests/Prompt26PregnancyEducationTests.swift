@@ -50,15 +50,15 @@ final class Prompt26PregnancyEducationTests: XCTestCase {
         )
     }
 
+    #if canImport(UIKit)
     func testAllCanonicalPregnancyImagesResolveFromApplicationBundle() {
-        #if canImport(UIKit)
         let result = Prompt26PregnancyAssetAudit.audit()
         XCTAssertTrue(
             result.isComplete,
             "Missing Prompt 26 pregnancy assets: \(result.missingImageNames.joined(separator: ", "))"
         )
-        #endif
     }
+    #endif
 
     func testCanonicalTopicHeroAssetMapping() {
         XCTAssertEqual(Prompt26PregnancyEducationCatalog.topic(.testing).heroAsset, .test)

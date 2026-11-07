@@ -25,6 +25,7 @@ struct Prompt09AskView: View {
     @ObservedObject private var contextMeasurements: FruitfolioHormoneMeasurementStore
     @ObservedObject private var savedLibrary: Prompt10SavedLibraryStore
     @State private var showLifeBridge = false
+    @State private var showEducation = false
     @State private var showingEntryPageTurn = true
     @State private var entryPageTurnSoundPlayed = false
 
@@ -252,6 +253,18 @@ struct Prompt09AskView: View {
                 .zIndex(200)
             }
         }
+        .sheet(isPresented: $showEducation) {
+            FruitfolioPresentedPopupHost {
+                FruitfolioEducationLibraryView(library: savedLibrary,
+                    onClose: { audioManager.play(.popupClose); showEducation = false },
+                    onAsk: { question in
+                        audioManager.play(.popupClose)
+                        showEducation = false
+                        viewModel.useSuggestion(question)
+                        inputFocused = true
+                    })
+            }
+        }
         .sheet(isPresented: $showLifeBridge) {
             FruitfolioPresentedPopupHost {
                 FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
@@ -350,7 +363,7 @@ struct Prompt09AskView: View {
 
     private var canInteractWithComposer: Bool {
         requestInteraction.ticket != nil && scenePhase == .active && UIApplication.shared.applicationState == .active &&
-            !showingEntryPageTurn && !showingHelp && !showingContextPicker && !showLifeBridge &&
+            !showingEntryPageTurn && !showingHelp && !showingContextPicker && !showLifeBridge && !showEducation &&
             pendingLibrarySave == nil && popupCoordinator.currentPopup == nil
     }
 
@@ -507,6 +520,14 @@ struct Prompt09AskView: View {
                         vertical: true
                     )
                 }
+
+                WatercolorSecondaryButton(label: "explore encyclopedia education") {
+                    guard canInteractWithComposer else { return }
+                    inputFocused = false
+                    audioManager.play(.popupOpen)
+                    showEducation = true
+                }
+                .accessibilityIdentifier("ask.education.open")
 
                 VStack(spacing: 8) {
                     ForEach(
