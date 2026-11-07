@@ -3192,3 +3192,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 911, "native_CPU_XCTest": 933, "SwiftTesting_each": 21, "new_metadata_XCTest": 3, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "existing_Library_UI_vectors_extended": 4, "Apple_UI_vectors_executed": 0, "pre_correction_compiles": "failed before XCTest execution; nonexistent escaping API corrected"}.
 - Next action: Continue remaining397 Library sort labels/value/expanded-state/hints with source-language-aware control ownership and correct selected traits. Preserve model/record ordering and user-authored text. Then398–399global persisted language/selector coverage; no repeated broad audits.
 - Commit: containing commit for batch Library-shell-native-metadata-and-protected-authored-fields.
+
+## Library-sort-translated-values-and-owned-selection
+
+- Parent checkpoint: cceb59b54371271e1dd7cc50c5fee2f42101a6cd.
+- Source-order requirements: [389, 390, 395, 397, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift, Fruitfolio/Localizable.xcstrings, development_workflow/LIBRARY_SORT_TRANSLATION_OWNERSHIP.md.
+- Sorttrigger/options now canonicaltranslatedpills, selectedtraits and source-ownedcues; newcompactAXvalueowner preserveslabel/hint+explicitvalueprovenance. ActualFoundationgate rejects inactive/collapsed/stale/duplicate selections and expiredclosedfocus tickets; actualcallbacks checkliveparent+UIApplicationactivity. Fourgate tests execute; existing4AppleLibraryUIvectors extendselection/reopen/state/popcountsNOT_RUN. Existingordering/binding/bookrecords unchanged. Full915/937+21pass, noApple/model/wholeitem certification.
+- Tests added/updated: FruitfolioTests/Prompt10SavedLibraryTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 915, "native_CPU_XCTest": 937, "SwiftTesting_each": 21, "new_sort_ownership_XCTest": 4, "workflow_checks": 60, "syntax_files": 311, "control_sound_ownership_findings": 0, "existing_Library_UI_vectors_extended": 4, "Apple_UI_vectors_executed": 0}.
+- Next action: Continue398–399 actual language preference restoration/navigation and always-recognizable selector using existing authority and tests. Preserve globalcopy coverage and all Apple/UI/MADLAD/clinical/device blockers; do not claim same-process recreation is verified process restart.
+- Commit: containing commit for batch Library-sort-translated-values-and-owned-selection.

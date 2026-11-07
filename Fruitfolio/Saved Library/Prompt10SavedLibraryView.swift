@@ -232,17 +232,9 @@ struct Prompt10SavedLibraryView: View {
             HStack {
                 Spacer()
 
-                Prompt10SortPicker(
-                    sort: $sort,
-                    reduceMotion:
-                        motionPreferences.reduceMotionActive
-                )
-                .buttonStyle(
-                    CutePopButtonStyle(
-                        reduceMotion:
-                            motionPreferences.reduceMotionActive
-                    )
-                )
+                Prompt10SortPicker(sort: $sort, reduceMotion: motionPreferences.reduceMotionActive,
+                    isEnabled: popup == nil && openingEncyclopediaID == nil,
+                    canInteract: { popup == nil && openingEncyclopediaID == nil })
             }
         }
     }

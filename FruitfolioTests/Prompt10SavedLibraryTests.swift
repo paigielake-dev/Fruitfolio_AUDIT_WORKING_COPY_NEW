@@ -3,6 +3,59 @@ import XCTest
 
 @MainActor
 final class Prompt10SavedLibraryTests: XCTestCase {
+    func testSortMenuRejectsSelectionsBeforeActivationAndWhileCollapsed() async {
+        var owner = Prompt10SortInteraction()
+        XCTAssertNil(owner.select(.alphabetical, expected: owner.ticket))
+        XCTAssertFalse(owner.toggle(expected: owner.ticket))
+        owner.setActive(true)
+        XCTAssertNil(owner.select(.alphabetical, expected: owner.ticket))
+        XCTAssertFalse(owner.isExpanded)
+    }
+
+    func testSortMenuConsumesEachToggleAndSelectionTicketExactlyOnce() async {
+        var owner = Prompt10SortInteraction()
+        owner.setActive(true)
+        let closed = owner.ticket
+        XCTAssertTrue(owner.toggle(expected: closed))
+        XCTAssertFalse(owner.toggle(expected: closed))
+        XCTAssertTrue(owner.isExpanded)
+        let opened = owner.ticket
+        XCTAssertEqual(owner.select(.alphabetical, expected: opened), .alphabetical)
+        XCTAssertNil(owner.select(.newest, expected: opened))
+        XCTAssertFalse(owner.isExpanded)
+    }
+
+    func testOldSortSelectionCannotReachReopenedOrReactivatedMenu() async {
+        var owner = Prompt10SortInteraction()
+        owner.setActive(true)
+        XCTAssertTrue(owner.toggle(expected: owner.ticket))
+        let old = owner.ticket
+        owner.setActive(false)
+        XCTAssertNil(owner.select(.oldest, expected: old))
+        owner.setActive(true)
+        XCTAssertTrue(owner.toggle(expected: owner.ticket))
+        XCTAssertTrue(owner.isExpanded)
+        XCTAssertNil(owner.select(.oldest, expected: old))
+        XCTAssertTrue(owner.isExpanded)
+        XCTAssertEqual(owner.select(.newest, expected: owner.ticket), .newest)
+    }
+
+    func testSortFocusTicketExpiresOnReopenOrOwnerDeactivation() async {
+        var owner = Prompt10SortInteraction()
+        owner.setActive(true)
+        XCTAssertTrue(owner.toggle(expected: owner.ticket))
+        XCTAssertEqual(owner.select(.oldest, expected: owner.ticket), .oldest)
+        let focus = owner.ticket
+        XCTAssertTrue(owner.ownsClosedState(focus))
+        XCTAssertTrue(owner.toggle(expected: owner.ticket))
+        XCTAssertFalse(owner.ownsClosedState(focus))
+        XCTAssertTrue(owner.toggle(expected: owner.ticket))
+        let current = owner.ticket
+        XCTAssertTrue(owner.ownsClosedState(current))
+        owner.setActive(false)
+        XCTAssertFalse(owner.ownsClosedState(current))
+    }
+
     private var defaults: UserDefaults!
     private var store: Prompt10SavedLibraryStore!
     private var key: String!

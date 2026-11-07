@@ -385,3 +385,33 @@ nonisolated struct Prompt10BookTileCopy: Equatable, Sendable {
         return ("\(literal), open encyclopedia", [literal])
     }
 }
+
+/// Ephemeral ownership for one visible Library sort menu; never persisted.
+nonisolated struct Prompt10SortInteraction: Equatable, Sendable {
+    private(set) var isActive = false
+    private(set) var isExpanded = false
+    private(set) var ticket = UUID()
+
+    mutating func setActive(_ active: Bool) {
+        guard isActive != active else { return }
+        isActive = active
+        isExpanded = false
+        ticket = UUID()
+    }
+    @discardableResult
+    mutating func toggle(expected: UUID) -> Bool {
+        guard isActive, expected == ticket else { return false }
+        isExpanded.toggle()
+        ticket = UUID()
+        return true
+    }
+    mutating func select(_ option: Prompt10LibrarySort, expected: UUID) -> Prompt10LibrarySort? {
+        guard isActive, isExpanded, expected == ticket else { return nil }
+        isExpanded = false
+        ticket = UUID()
+        return option
+    }
+    func ownsClosedState(_ expected: UUID) -> Bool {
+        isActive && !isExpanded && expected == ticket
+    }
+}

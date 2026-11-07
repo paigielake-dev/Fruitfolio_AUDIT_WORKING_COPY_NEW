@@ -301,3 +301,29 @@ struct FruitfolioFixedAccessibilityHint: ViewModifier {
             }
     }
 }
+
+/// Keeps value provenance in the value so a separately translated label/hint
+/// retains its own ownership and is never overwritten by this modifier.
+@MainActor
+struct FruitfolioFixedAccessibilityValue: ViewModifier {
+    let source: String
+    var protectedLiterals: [String] = []
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: source, language: settings.language, protectedLiterals: protectedLiterals)
+    }
+    func body(content: Content) -> some View {
+        let display = translation.presentation(for: key)
+        content
+            .accessibilityValue(Text([
+                FruitfolioSemanticDocument.plainText(from: display.text),
+                display.status.accessibilityDetail(original: source,
+                    localized: { settings.localized($0) })
+            ].filter { !$0.isEmpty }.joined(separator: ". ")))
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
+    }
+}

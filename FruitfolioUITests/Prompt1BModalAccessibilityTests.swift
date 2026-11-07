@@ -2576,6 +2576,27 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(clear.waitForExistence(timeout: 3)); XCTAssertTrue(clear.isHittable); clear.tap()
             XCTAssertFalse(noMatches.exists); XCTAssertTrue(book.exists)
             XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 4")
+            let sort = app.buttons["library.sort.toggle"]
+            XCTAssertTrue(sort.waitForExistence(timeout: 3))
+            for _ in 0..<20 { if sort.isHittable { break }; app.swipeDown() }
+            XCTAssertTrue(sort.isHittable); sort.tap()
+            let alphabetical = app.buttons["library.sort.option.alphabetical"]
+            let recent = app.buttons["library.sort.option.recentlyUpdated"]
+            XCTAssertTrue(alphabetical.waitForExistence(timeout: 3))
+            XCTAssertTrue(recent.isSelected); XCTAssertFalse(alphabetical.isSelected)
+            for _ in 0..<20 { if alphabetical.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(alphabetical.isHittable); alphabetical.tap()
+            XCTAssertFalse(alphabetical.exists)
+            XCTAssertTrue(sort.label.contains("alphabetical"))
+            XCTAssertTrue((sort.value as? String)?.contains("collapsed") == true)
+            for _ in 0..<20 { if sort.isHittable { break }; app.swipeDown() }
+            XCTAssertTrue(sort.isHittable); sort.tap()
+            XCTAssertTrue(alphabetical.waitForExistence(timeout: 3)); XCTAssertTrue(alphabetical.isSelected)
+            XCTAssertFalse(recent.isSelected)
+            for _ in 0..<20 { if sort.isHittable { break }; app.swipeDown() }
+            XCTAssertTrue(sort.isHittable); sort.tap()
+            XCTAssertFalse(alphabetical.exists)
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 8")
             captureGame(app, name: "library-native-name-arabic-\(arabic)-reduced-\(reduced)")
             app.terminate()
         }

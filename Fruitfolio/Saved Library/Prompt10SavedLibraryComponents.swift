@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt10BookTile: View {
     let encyclopedia: Prompt10Encyclopedia
@@ -147,108 +148,75 @@ struct Prompt10QuietSearchField: View {
     }
 }
 
+@MainActor
 struct Prompt10SortPicker: View {
     @Binding var sort: Prompt10LibrarySort
     let reduceMotion: Bool
-    @State private var expanded = false
+    let isEnabled: Bool
+    private let canInteract: @MainActor () -> Bool
+    @State private var interaction = Prompt10SortInteraction()
+    @Environment(\.scenePhase) private var scenePhase
+    @AccessibilityFocusState private var triggerFocused: Bool
+
+    init(sort: Binding<Prompt10LibrarySort>, reduceMotion: Bool, isEnabled: Bool = true,
+         canInteract: @escaping @MainActor () -> Bool = { true }) {
+        self._sort = sort
+        self.reduceMotion = reduceMotion
+        self.isEnabled = isEnabled
+        self.canInteract = canInteract
+    }
+
+    private var canHandleInteraction: Bool {
+        isEnabled && canInteract() && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
 
     var body: some View {
-        VStack(spacing: 6) {
-            Button {
-                expanded.toggle()
-            } label: {
-                HStack(spacing: 6) {
-                    Text("sort")
-                        .fontWeight(.bold)
-
-                    Text(sort.label)
-
-                    Text(expanded ? "⌃" : "⌄")
-                        .accessibilityHidden(true)
+        let ticket = interaction.ticket
+        return VStack(spacing: 6) {
+            FruitfolioControlPillButton(label: "sort · \(sort.label)", isSelected: interaction.isExpanded,
+                reduceMotionOverride: reduceMotion) {
+                guard canHandleInteraction else { return }
+                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.18)) {
+                    _ = interaction.toggle(expected: ticket)
                 }
-                .font(.custom("Chalkboard SE", size: 11))
-                .foregroundStyle(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(
-                    minHeight: DesignTokens.Layout.minimumHitTarget
-                )
-                .padding(.horizontal, 12)
             }
-            .buttonStyle(
-                CutePopButtonStyle(
-                    reduceMotion: reduceMotion
-                )
-            )
-            .accessibilityLabel("sort encyclopedias")
-            .accessibilityValue("\(sort.label), \(expanded ? "expanded" : "collapsed")")
-            .accessibilityHint(expanded ? "hides sorting choices" : "shows sorting choices")
+            .controlSize(.small)
+            .modifier(FruitfolioFixedAccessibilityValue(source: interaction.isExpanded ? "expanded" : "collapsed"))
+            .accessibilityFocused($triggerFocused)
+            .accessibilityIdentifier("library.sort.toggle")
 
-            if expanded {
+            if interaction.isExpanded {
                 VStack(spacing: 2) {
                     ForEach(Prompt10LibrarySort.allCases) { option in
-                        Button {
-                            sort = option
-                            withAnimation(
-                                reduceMotion
-                                    ? .easeOut(duration: 0.12)
-                                    : .easeOut(duration: 0.22)
-                            ) {
-                                expanded = false
+                        FruitfolioControlPillButton(label: option.label, isSelected: option == sort,
+                            reduceMotionOverride: reduceMotion) {
+                            guard canHandleInteraction else { return }
+                            let chosen = withAnimation(reduceMotion ? nil : .easeOut(duration: 0.18)) {
+                                interaction.select(option, expected: ticket)
                             }
-                        } label: {
-                            HStack {
-                                Text(option.label)
-                                    .font(
-                                        .custom(
-                                            "Chalkboard SE",
-                                            size: 11
-                                        )
-                                    )
-
-                                Spacer()
-
-                                if option == sort {
-                                    Text("✓")
-                                        .accessibilityHidden(true)
-                                }
+                            guard let chosen else { return }
+                            sort = chosen
+                            let closedTicket = interaction.ticket
+                            Task { @MainActor in
+                                await Task.yield()
+                                guard !Task.isCancelled, canHandleInteraction,
+                                      interaction.ownsClosedState(closedTicket) else { return }
+                                triggerFocused = true
                             }
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
-                            .frame(
-                                minHeight: DesignTokens.Layout.minimumHitTarget
-                            )
-                            .padding(.horizontal, 12)
                         }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(option.label)
-                        .accessibilityAddTraits(option == sort ? .isSelected : [])
+                        .controlSize(.small)
+                        .accessibilityIdentifier("library.sort.option." + option.rawValue)
                     }
                 }
                 .padding(.vertical, 6)
-                .background {
-                    RoundedRectangle(
-                        cornerRadius: 18,
-                        style: .continuous
-                    )
-                    .fill(
-                        DesignTokens.ColorToken.backgroundCream
-                    )
-                    .overlay {
-                        RoundedRectangle(
-                            cornerRadius: 18,
-                            style: .continuous
-                        )
-                        .stroke(
-                            DesignTokens.ColorToken.primaryBurgundy.opacity(0.12),
-                            lineWidth: 1
-                        )
-                    }
-                }
                 .transition(.opacity)
             }
         }
+        .disabled(!isEnabled || scenePhase != .active || !interaction.isActive)
+        .onAppear { interaction.setActive(isEnabled && scenePhase == .active) }
+        .onChange(of: scenePhase) { _, phase in interaction.setActive(isEnabled && phase == .active) }
+        .onChange(of: isEnabled) { _, enabled in interaction.setActive(enabled && scenePhase == .active) }
+        .onDisappear { interaction.setActive(false) }
     }
 }
 
