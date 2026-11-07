@@ -62,6 +62,56 @@ enum Prompt09SaveSourceVersions {
     }
 }
 
+/// Copies only public response support, never a contextual research packet.
+/// Selections retain original-response status without retaining unsaved concepts.
+struct Prompt09SavedAnswerSupport: Codable, Equatable, Sendable {
+    let classification: AskKnowledgeSupport
+    let concepts: [AskSupportMapEntry]?
+    let scope: Prompt10SavedPageType
+    let answerPath: FruitfolioAnswerPath?
+    let isDevelopmentPreview: Bool
+
+    init(answer: AskAnswer) {
+        classification = answer.support
+        concepts = answer.supportMap
+        scope = .fullAnswer
+        answerPath = answer.answerPath
+        isDevelopmentPreview = answer.isDevelopmentPreview
+    }
+    private init(original: Self, selection: Bool) {
+        classification = original.classification
+        concepts = selection ? nil : original.concepts
+        scope = selection ? .excerpt : original.scope
+        answerPath = original.answerPath
+        isDevelopmentPreview = original.isDevelopmentPreview
+    }
+    func restricted(to type: Prompt10SavedPageType) -> Self {
+        type == .excerpt ? Self(original: self, selection: true) : self
+    }
+    var notice: String? {
+        if isDevelopmentPreview { return "layout preview; this is not a research answer." }
+        if answerPath == .localSafety { return "this content comes from a safety response, not an individual medical assessment." }
+        if answerPath == .unavailableContent { return "approved research was unavailable for the original response." }
+        if answerPath == .unsupported {
+            return scope == .excerpt
+                ? "the full original response was not supported by the approved research. this selection has not been independently assessed."
+                : "the original response was not supported by the approved research."
+        }
+        switch classification {
+        case .supported:
+            return scope == .excerpt ? "the full original response was supported by the approved research. this selection has not been independently assessed." : nil
+        case .partiallySupported:
+            return scope == .excerpt
+                ? "the full original response was only partially supported by the approved research. this selection has not been independently assessed."
+                : "the original response was only partially supported by the approved research."
+        case .genuinelyNovel:
+            return scope == .excerpt
+                ? "the full original response was not supported by the approved research. this selection has not been independently assessed."
+                : "the original response was not supported by the approved research."
+        }
+    }
+}
+
 /// Open only a supplied HTTPS citation or an exact DOI resolver destination.
 /// A title, search phrase or model-generated address never becomes a link.
 enum Prompt09CitationDestination {

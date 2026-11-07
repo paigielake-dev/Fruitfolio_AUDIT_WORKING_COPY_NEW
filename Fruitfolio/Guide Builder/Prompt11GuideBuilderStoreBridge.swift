@@ -129,7 +129,8 @@ extension Prompt10SavedLibraryStore {
             excerptLanguage: sourcePage.excerptLanguage,
             sourceRecords: sourcePage.sourceRecords,
             educationalAssetIDs: sourcePage.educationalAssetIDs,
-            userMaterial: sourcePage.userMaterial
+            userMaterial: sourcePage.userMaterial,
+            evidenceSupport: sourcePage.evidenceSupport
         )
     }
 

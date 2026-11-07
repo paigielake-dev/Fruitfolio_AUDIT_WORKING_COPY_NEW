@@ -467,6 +467,10 @@ struct Prompt10SavedPageView: View {
                 notesSection
                 importedImagesSection
 
+                if page.userMaterial == nil, let notice = page.evidenceSupport?.restricted(to: page.saveType).notice {
+                    FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                        .accessibilityIdentifier("savedPage.evidenceSupport")
+                }
                 if let records = page.sourceRecords, !records.isEmpty {
                     FruitfolioSourceCitationList(sources: records)
                 } else if !page.sourceIDs.isEmpty {

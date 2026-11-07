@@ -445,7 +445,8 @@ struct Prompt10AskSaveDestination: View {
                 excerptSelectionLength: pending.selectedRenderedRange?.length,
                 excerptLanguage: pending.saveType == .excerpt ? pending.selectedDisplayLanguage : nil,
                 sourceRecords: pending.sourceRecords,
-                educationalAssetIDs: pending.educationalAssetIDs
+                educationalAssetIDs: pending.educationalAssetIDs,
+                evidenceSupport: pending.evidenceSupport
             )
 
             if let selected = store.encyclopedia(id: encyclopediaID),

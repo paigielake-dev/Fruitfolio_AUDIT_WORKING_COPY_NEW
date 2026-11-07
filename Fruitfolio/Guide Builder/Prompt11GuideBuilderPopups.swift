@@ -1003,6 +1003,10 @@ struct Prompt11OriginalAnswerPopup: View {
                                     sourceLanguage: sourcePage.displaySourceLanguage, semanticSpans: sourcePage.displaySemanticSpans, sourceRecords: sourcePage.sourceRecords ?? [])
                             }
                             FruitfolioSavedScientificIllustrations(assetIDs: sourcePage.educationalAssetIDs ?? [])
+                            if sourcePage.userMaterial == nil, let notice = sourcePage.evidenceSupport?.restricted(to: sourcePage.saveType).notice {
+                                FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                                    .accessibilityIdentifier("savedPage.evidenceSupport")
+                            }
                             if let records = sourcePage.sourceRecords, !records.isEmpty {
                                 FruitfolioSourceCitationList(sources: records)
                             }

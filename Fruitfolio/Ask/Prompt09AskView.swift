@@ -806,6 +806,10 @@ struct Prompt09AskView: View {
                     alignment: .leading,
                     spacing: 14
                 ) {
+                    if !answer.isDevelopmentPreview, let notice = Prompt09SavedAnswerSupport(answer: answer).notice {
+                        FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                            .accessibilityIdentifier("ask.evidenceSupport.current")
+                    }
                     if answer
                         .isDevelopmentPreview {
 
@@ -1079,6 +1083,10 @@ struct Prompt09AskView: View {
 
     private func historicalAnswerView(_ answer: AskAnswer) -> some View {
         VStack(alignment: .leading, spacing: 14) {
+            if let notice = Prompt09SavedAnswerSupport(answer: answer).notice {
+                FruitfolioFixedText(source: notice, font: .caption, color: DesignTokens.ColorToken.secondaryBurgundy, serious: true)
+                    .accessibilityIdentifier("ask.evidenceSupport.\(answer.id.uuidString)")
+            }
             FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs, sourceRecords: answer.sources) { display, displayLanguage in
                 Prompt09SelectableAnswerText(
                     text: display,
@@ -1127,7 +1135,7 @@ struct Prompt09AskView: View {
             selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id],
             selectedDisplayLanguage: historicalSelectionLanguages[answer.id] ?? "en",
             selectedSemanticSpans: excerpt == nil ? nil : historicalSelectionSpans[answer.id], sourceRecords: answer.sources,
-            educationalAssetIDs: selectedIllustrationsForSave(answer.id))
+            educationalAssetIDs: selectedIllustrationsForSave(answer.id), evidenceSupport: .init(answer: answer))
     }
 
     private func visibleIllustrations(_ answerID: UUID) -> [FruitfolioAssetID] {
@@ -1156,7 +1164,7 @@ struct Prompt09AskView: View {
                     sourceIDs: answer.sourceIDs,
                     sourceVersions: sourceVersions,
                     knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
-                    sourceRecords: answer.sources, educationalAssetIDs: visibleIllustrations(answer.id))
+                    sourceRecords: answer.sources, educationalAssetIDs: visibleIllustrations(answer.id), evidenceSupport: .init(answer: answer))
             }
         }
     }
@@ -1206,7 +1214,8 @@ struct Prompt09AskView: View {
                 generationTimestamp:
                     answer.generationTimestamp,
                 sourceRecords: answer.sources,
-                educationalAssetIDs: selectedIllustrationsForSave(answer.id)
+                educationalAssetIDs: selectedIllustrationsForSave(answer.id),
+                evidenceSupport: .init(answer: answer)
             )
     }
 
@@ -1254,7 +1263,8 @@ struct Prompt09AskView: View {
                 selectedDisplayLanguage: viewModel.selectedExcerptLanguage ?? "en",
                 selectedSemanticSpans: viewModel.selectedExcerptSemanticSpans,
                 sourceRecords: answer.sources,
-                educationalAssetIDs: selectedIllustrationsForSave(answer.id)
+                educationalAssetIDs: selectedIllustrationsForSave(answer.id),
+                evidenceSupport: .init(answer: answer)
             )
     }
 

@@ -100,6 +100,13 @@ final class Prompt1BAskUserContextTests: XCTestCase {
         XCTAssertFalse(answer.answerText.contains("private-marker-not-output"))
         XCTAssertFalse(answer.sources.contains { $0.id == record.id.uuidString })
         XCTAssertEqual(answer.answerPath, .retrievalFallback)
+        let support = Prompt09SavedAnswerSupport(answer: answer)
+        for metadata in [support, support.restricted(to: .excerpt)] {
+            let encoded = String(decoding: try JSONEncoder().encode(metadata), as: UTF8.self)
+            XCTAssertFalse(encoded.contains("private-marker-not-output"))
+            XCTAssertFalse(encoded.contains(record.id.uuidString))
+            XCTAssertFalse(encoded.contains("12,50"))
+        }
         let prompt = FruitfolioEvidencePromptBuilder.selectionPrompt(question: question, evidence: packet)
         XCTAssertTrue(prompt.contains("UNTRUSTED DATA"))
         XCTAssertTrue(prompt.contains("12,50"))

@@ -54,6 +54,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var sourceVersions: [String: String]
     var knowledgeBaseVersion: String?
     var generationTimestamp: Date?
+    var evidenceSupport: Prompt09SavedAnswerSupport?
 
     var savedAt: Date
     var updatedAt: Date
@@ -93,7 +94,8 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         excerptLanguage: String? = nil,
         sourceRecords: [AskSourceRecord]? = nil,
         educationalAssetIDs: [FruitfolioAssetID]? = nil,
-        userMaterial: Prompt10UserMaterialProvenance? = nil
+        userMaterial: Prompt10UserMaterialProvenance? = nil,
+        evidenceSupport: Prompt09SavedAnswerSupport? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -109,6 +111,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.sourceVersions = sourceVersions
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp
+        self.evidenceSupport = evidenceSupport?.restricted(to: saveType)
         self.savedAt = savedAt
         self.updatedAt = updatedAt
         self.notes = notes
