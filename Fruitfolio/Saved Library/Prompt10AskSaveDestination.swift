@@ -53,6 +53,13 @@ struct Prompt10AskSaveDestination: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
+                #if DEBUG
+                if ProcessInfo.processInfo.arguments.contains("-fruitfolioAskIllustrationQA") {
+                    Text("QA library authority: \(ObjectIdentifier(store).hashValue)")
+                        .font(.caption2)
+                        .accessibilityIdentifier("askQA.dialogLibraryAuthority")
+                }
+                #endif
                 Prompt10LibraryStorageNotice(store: store, interactionAllowed: { ownsInteraction(interactionID) })
                 if store.storageProtectionReason != nil {
                     // Original pending Ask content remains owned by this popup;
@@ -422,32 +429,7 @@ struct Prompt10AskSaveDestination: View {
         }
 
         do {
-            let page = Prompt10SavedPage(
-                chapterID: chapterID,
-                question: pending.question,
-                answer: pending.answer,
-                saveType: pending.saveType,
-                excerptText: pending.excerptText,
-                originalAnswerID:
-                    pending.originalAnswerID,
-                originalConversationID:
-                    pending.originalConversationID,
-                sourceIDs:
-                    pending.sourceIDs,
-                sourceVersions:
-                    pending.sourceVersions,
-                knowledgeBaseVersion:
-                    pending.knowledgeBaseVersion,
-                generationTimestamp:
-                    pending.generationTimestamp,
-                excerptSemanticSpans: pending.selectedSemanticSpans,
-                excerptSelectionLocation: pending.selectedRenderedRange?.location,
-                excerptSelectionLength: pending.selectedRenderedRange?.length,
-                excerptLanguage: pending.saveType == .excerpt ? pending.selectedDisplayLanguage : nil,
-                sourceRecords: pending.sourceRecords,
-                educationalAssetIDs: pending.educationalAssetIDs,
-                evidenceSupport: pending.evidenceSupport
-            )
+            let page = pending.makeSavedPage(chapterID: chapterID)
 
             if let selected = store.encyclopedia(id: encyclopediaID),
                selected.chapters.flatMap(\.pages).contains(where: { $0.isDuplicateSave(of: page) }) {

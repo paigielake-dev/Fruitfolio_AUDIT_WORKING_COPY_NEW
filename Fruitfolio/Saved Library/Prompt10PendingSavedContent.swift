@@ -58,3 +58,17 @@ struct Prompt10PendingSavedContent: Equatable {
     }
 }
 
+
+/// The same immutable payload-to-page conversion is used by the native dialog
+/// and Foundation regression tests; it never chooses or writes a destination.
+extension Prompt10PendingSavedContent {
+    func makeSavedPage(chapterID: UUID) -> Prompt10SavedPage {
+        Prompt10SavedPage(chapterID: chapterID, question: question, answer: answer, saveType: saveType,
+            excerptText: excerptText, originalAnswerID: originalAnswerID, originalConversationID: originalConversationID,
+            sourceIDs: sourceIDs, sourceVersions: sourceVersions, knowledgeBaseVersion: knowledgeBaseVersion,
+            generationTimestamp: generationTimestamp, excerptSemanticSpans: selectedSemanticSpans,
+            excerptSelectionLocation: selectedRenderedRange?.location, excerptSelectionLength: selectedRenderedRange?.length,
+            excerptLanguage: saveType == .excerpt ? selectedDisplayLanguage : nil,
+            sourceRecords: sourceRecords, educationalAssetIDs: educationalAssetIDs, evidenceSupport: evidenceSupport)
+    }
+}

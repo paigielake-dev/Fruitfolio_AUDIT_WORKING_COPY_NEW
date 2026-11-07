@@ -118,16 +118,18 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
 @MainActor
 final class FruitfolioAskContextRegressionFixture {
     static let storageKey = "fruitfolio.askContextQA.measurements.v1"
+    static let libraryStorageKey = "fruitfolio.askContextQA.library.v1"
     let measurements: FruitfolioHormoneMeasurementStore?
+    let savedLibrary: Prompt10SavedLibraryStore?
     let failureMessage: String?
     init(defaults: UserDefaults?) {
         let failure = "Ask regression environment could not be created; original data was preserved."
         guard let defaults else {
-            measurements = nil; failureMessage = failure; return
+            measurements = nil; savedLibrary = nil; failureMessage = failure; return
         }
         let candidate = FruitfolioHormoneMeasurementStore(defaults: defaults, key: Self.storageKey)
         guard !candidate.storageUnreadable, candidate.storageProtectionReason == nil else {
-            measurements = nil; failureMessage = failure; return
+            measurements = nil; savedLibrary = nil; failureMessage = failure; return
         }
         do {
             if defaults.object(forKey: Self.storageKey) == nil {
@@ -136,9 +138,11 @@ final class FruitfolioAskContextRegressionFixture {
                 fixture.notes = "QA explicitly selected fixture context"
                 try candidate.save(fixture, locale: Locale(identifier: "en_US"))
             }
-            measurements = candidate; failureMessage = nil
+            measurements = candidate
+            savedLibrary = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: Self.libraryStorageKey)
+            failureMessage = nil
         } catch {
-            measurements = nil; failureMessage = failure
+            measurements = nil; savedLibrary = nil; failureMessage = failure
         }
     }
 }

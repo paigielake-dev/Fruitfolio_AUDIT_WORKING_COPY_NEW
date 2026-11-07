@@ -146,6 +146,7 @@ final class Prompt1BAskContextFixtureIsolationTests: XCTestCase {
     func testMissingPrivatePreferencesFailsWithoutCreatingAStore() async {
         let fixture = FruitfolioAskContextRegressionFixture(defaults: nil)
         XCTAssertNil(fixture.measurements)
+        XCTAssertNil(fixture.savedLibrary)
         XCTAssertNotNil(fixture.failureMessage)
     }
 
@@ -203,4 +204,106 @@ final class Prompt1BAskContextFixtureIsolationTests: XCTestCase {
         XCTAssertEqual(defaults.string(forKey: key), "foreign non-data object")
     }
 }
+#endif
+
+#if DEBUG
+extension Prompt1BAskContextFixtureIsolationTests {
+    func testPrivateCanonicalLibraryRemountPreservesSourceAndSupportWithoutCrossingAuthorities() async throws {
+        let first = FruitfolioRegressionPreferenceSuite(), other = FruitfolioRegressionPreferenceSuite()
+        defer { first.cleanUp(); other.cleanUp() }
+        let defaults = try XCTUnwrap(first.defaults)
+        let otherDefaults = try XCTUnwrap(other.defaults)
+        let fixture = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        let independent = FruitfolioAskContextRegressionFixture(defaults: otherDefaults)
+        let store = try XCTUnwrap(fixture.savedLibrary)
+        XCTAssertEqual(store.count, 0)
+        XCTAssertEqual(independent.savedLibrary?.count, 0)
+        let measurementBytes = defaults.data(forKey: FruitfolioAskContextRegressionFixture.storageKey)
+        let book = try store.createEncyclopedia(name: "private QA library", style: .sage)
+        let chapter = try XCTUnwrap(book.chapters.first)
+        let response = AskAnswer(originalQuestion: "QA question", answerText: "QA fixture response",
+            support: .partiallySupported, supportMap: [.init(concept: "QA concept", support: .partiallySupported)],
+            knowledgeBaseVersion: "fixture", answerPath: .retrievalFallback)
+        let support = Prompt09SavedAnswerSupport(answer: response)
+        let sources = [AskSourceRecord(id: "QA-source", title: "Synthetic source", doi: "10.1234/fixture", contentVersion: "v1")]
+        let page = try store.savePage(.init(chapterID: chapter.id, question: response.originalQuestion,
+            answer: response.answerText, saveType: .fullAnswer, sourceIDs: ["QA-source"],
+            sourceVersions: ["QA-source": "v1"], sourceRecords: sources, evidenceSupport: support),
+            to: book.id, chapterID: chapter.id)
+        let bytes = try XCTUnwrap(defaults.data(forKey: FruitfolioAskContextRegressionFixture.libraryStorageKey))
+        let remounted = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        let restored = try XCTUnwrap(remounted.savedLibrary?.encyclopedia(id: book.id)?.chapters.first?.pages.first)
+        XCTAssertEqual(restored.id, page.id)
+        XCTAssertEqual(restored.evidenceSupport, support)
+        XCTAssertEqual(restored.sourceRecords, sources)
+        XCTAssertEqual(restored.sourceVersions, ["QA-source": "v1"])
+        XCTAssertEqual(defaults.data(forKey: FruitfolioAskContextRegressionFixture.libraryStorageKey), bytes)
+        XCTAssertEqual(defaults.data(forKey: FruitfolioAskContextRegressionFixture.storageKey), measurementBytes)
+        XCTAssertNil(defaults.object(forKey: "fruitfolio.prompt10.savedLibrary.v2"))
+        XCTAssertNil(otherDefaults.object(forKey: FruitfolioAskContextRegressionFixture.libraryStorageKey))
+        XCTAssertEqual(independent.savedLibrary?.count, 0)
+    }
+
+    func testProtectedPrivateLibraryRemainsReadOnlyAndNeverFallsBackOrRepairs() async throws {
+        let owner = FruitfolioRegressionPreferenceSuite()
+        defer { owner.cleanUp() }
+        let defaults = try XCTUnwrap(owner.defaults)
+        let key = FruitfolioAskContextRegressionFixture.libraryStorageKey
+        let bytes = Data("{\"futureSchema\":99,\"retain\":null}".utf8)
+        defaults.set(bytes, forKey: key)
+        let fixture = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        let library = try XCTUnwrap(fixture.savedLibrary)
+        XCTAssertNotNil(library.storageProtectionReason)
+        XCTAssertThrowsError(try library.createEncyclopedia(name: "valid blocked private book", style: .sage))
+        XCTAssertEqual(defaults.data(forKey: key), bytes)
+        XCTAssertNil(defaults.object(forKey: "fruitfolio.prompt10.savedLibrary.v2"))
+    }
+}
+
+extension Prompt1BAskContextFixtureIsolationTests {
+    func testActualPendingConversionPreservesSelectionMetadataThroughPrivateCanonicalSave() async throws {
+        let owner = FruitfolioRegressionPreferenceSuite()
+        defer { owner.cleanUp() }
+        let defaults = try XCTUnwrap(owner.defaults)
+        let fixture = FruitfolioAskContextRegressionFixture(defaults: defaults)
+        let store = try XCTUnwrap(fixture.savedLibrary)
+        let book = try store.createEncyclopedia(name: "private selected page", style: .sage)
+        let chapter = try XCTUnwrap(book.chapters.first)
+        let selected = "FSH ≤ 12.5 IU/L [fixture-source]"
+        let response = AskAnswer(originalQuestion: "fixture question", answerText: selected + " private unsaved remainder",
+            support: .partiallySupported, supportMap: [.init(concept: "private unsaved remainder", support: .genuinelyNovel)],
+            knowledgeBaseVersion: "fixture-kb", answerPath: .retrievalFallback)
+        let spans = [FruitfolioSemanticSpan(text: selected, emphasis: .anchorBold)]
+        let sources = [AskSourceRecord(id: "fixture-source", title: "Synthetic reference", doi: "10.1234/fixture", contentVersion: "v1")]
+        let pending = Prompt10PendingSavedContent(question: response.originalQuestion, answer: response.answerText,
+            saveType: .excerpt, excerptText: selected, originalAnswerID: "fixture-answer",
+            originalConversationID: "fixture-conversation", sourceIDs: ["fixture-source"],
+            sourceVersions: ["fixture-source": "v1"], knowledgeBaseVersion: "fixture-kb",
+            generationTimestamp: Date(timeIntervalSince1970: 99),
+            selectedRenderedRange: NSRange(location: 3, length: (selected as NSString).length),
+            selectedDisplayLanguage: "fr", selectedSemanticSpans: spans, sourceRecords: sources,
+            educationalAssetIDs: [.ovarian_cycle_follicle_development_stages],
+            evidenceSupport: .init(answer: response))
+        let saved = try store.savePage(pending.makeSavedPage(chapterID: chapter.id), to: book.id, chapterID: chapter.id)
+        let restored = try XCTUnwrap(FruitfolioAskContextRegressionFixture(defaults: defaults).savedLibrary?
+            .encyclopedia(id: book.id)?.chapters.first?.pages.first)
+        XCTAssertEqual(restored.id, saved.id)
+        XCTAssertEqual(restored.answer, selected)
+        XCTAssertEqual(restored.sourceRecords, sources)
+        XCTAssertEqual(restored.sourceVersions, ["fixture-source": "v1"])
+        XCTAssertEqual(restored.originalAnswerID, "fixture-answer")
+        XCTAssertEqual(restored.originalConversationID, "fixture-conversation")
+        XCTAssertEqual(restored.generationTimestamp, Date(timeIntervalSince1970: 99))
+        XCTAssertEqual(restored.excerptSelectionLocation, 3)
+        XCTAssertEqual(restored.excerptSelectionLength, (selected as NSString).length)
+        XCTAssertEqual(restored.excerptLanguage, "fr")
+        XCTAssertEqual(restored.excerptSemanticSpans, spans)
+        XCTAssertEqual(restored.educationalAssetIDs, [.ovarian_cycle_follicle_development_stages])
+        XCTAssertEqual(restored.evidenceSupport?.classification, .partiallySupported)
+        XCTAssertNil(restored.evidenceSupport?.concepts)
+        let bytes = String(decoding: try JSONEncoder().encode(restored), as: UTF8.self)
+        XCTAssertFalse(bytes.contains("private unsaved remainder"))
+    }
+}
+
 #endif

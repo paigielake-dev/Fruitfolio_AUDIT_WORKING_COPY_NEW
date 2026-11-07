@@ -58,12 +58,8 @@ final class Prompt1BAskSourceVersionSaveTests: XCTestCase {
                 sourceIDs: ["fixture-source", "legacy-source"], sourceVersions: versions,
                 knowledgeBaseVersion: "fixture-kb", generationTimestamp: Date(timeIntervalSince1970: 99),
                 sourceRecords: sources)
-            let page = try store.savePage(.init(chapterID: chapter.id, question: pending.question,
-                answer: pending.answer, saveType: pending.saveType, excerptText: pending.excerptText,
-                originalAnswerID: pending.originalAnswerID, originalConversationID: pending.originalConversationID,
-                sourceIDs: pending.sourceIDs, sourceVersions: pending.sourceVersions,
-                knowledgeBaseVersion: pending.knowledgeBaseVersion, generationTimestamp: pending.generationTimestamp,
-                sourceRecords: pending.sourceRecords), to: book.id, chapterID: chapter.id)
+            let page = try store.savePage(pending.makeSavedPage(chapterID: chapter.id),
+                to: book.id, chapterID: chapter.id)
             let reloaded = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
             let saved = try XCTUnwrap(reloaded.encyclopedia(id: book.id)?.chapters.first?.pages.first { $0.id == page.id })
             XCTAssertEqual(saved.answer, type == .excerpt ? excerpt : original)

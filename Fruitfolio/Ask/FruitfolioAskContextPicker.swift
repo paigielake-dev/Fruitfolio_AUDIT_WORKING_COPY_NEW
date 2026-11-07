@@ -123,8 +123,15 @@ private struct FruitfolioAskContextRegressionContent: View {
     }
     var body: some View {
         Group {
-            if let measurements = fixture.measurements {
-                Prompt09AskView(viewModel: model, measurements: measurements)
+            if let measurements = fixture.measurements, let library = fixture.savedLibrary {
+                VStack(spacing: 0) {
+                    Prompt09AskView(viewModel: model, measurements: measurements, savedLibrary: library)
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAskIllustrationQA") {
+                        Text("QA library authority: \(ObjectIdentifier(library).hashValue)")
+                            .font(.caption2)
+                            .accessibilityIdentifier("askQA.fixtureLibraryAuthority")
+                    }
+                }
             } else {
                 Text(verbatim: fixture.failureMessage ?? "Ask regression environment unavailable.")
             }

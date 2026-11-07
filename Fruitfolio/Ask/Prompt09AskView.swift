@@ -23,6 +23,7 @@ struct Prompt09AskView: View {
     @State private var pendingContextSend = false
     @State private var requestInteraction = Prompt09RequestInteraction()
     @ObservedObject private var contextMeasurements: FruitfolioHormoneMeasurementStore
+    @ObservedObject private var savedLibrary: Prompt10SavedLibraryStore
     @State private var showLifeBridge = false
     @State private var showingEntryPageTurn = true
 
@@ -49,8 +50,10 @@ struct Prompt09AskView: View {
 
     @FocusState private var inputFocused: Bool
 
-    init(viewModel: Prompt09AskViewModel? = nil, measurements: FruitfolioHormoneMeasurementStore? = nil) {
+    init(viewModel: Prompt09AskViewModel? = nil, measurements: FruitfolioHormoneMeasurementStore? = nil,
+         savedLibrary: Prompt10SavedLibraryStore? = nil) {
         _contextMeasurements = ObservedObject(wrappedValue: measurements ?? .shared)
+        _savedLibrary = ObservedObject(wrappedValue: savedLibrary ?? .shared)
         _viewModel = StateObject(wrappedValue: viewModel ?? Prompt09AskViewModel())
     }
 
@@ -188,7 +191,7 @@ struct Prompt09AskView: View {
             // Prompt 10 decides WHERE it goes.
             if let pendingLibrarySave {
                 Prompt10AskSaveDestination(
-                    store: .shared,
+                    store: savedLibrary,
                     pending:
                         pendingLibrarySave,
                     onSaved: {
@@ -1177,6 +1180,7 @@ struct Prompt09AskView: View {
                     knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
                     sourceRecords: answer.sources, educationalAssetIDs: visibleIllustrations(answer.id), evidenceSupport: .init(answer: answer))
             }
+            .accessibilityIdentifier("ask.illustration.saveOnly")
         }
     }
 

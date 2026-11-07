@@ -2918,6 +2918,23 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertNotEqual((include.value as? String)?.components(separatedBy: ". ").first, initial)
             include.tap()
             XCTAssertEqual((include.value as? String)?.components(separatedBy: ". ").first, initial)
+            let authority = app.staticTexts["askQA.fixtureLibraryAuthority"]
+            XCTAssertTrue(authority.exists)
+            let expectedAuthority = authority.label
+            let imageSave = app.buttons["ask.illustration.saveOnly"]
+            for _ in 0..<20 { if imageSave.isHittable { break }; conversation.swipeUp() }
+            XCTAssertTrue(imageSave.isHittable)
+            imageSave.tap()
+            let dialogAuthority = app.staticTexts["askQA.dialogLibraryAuthority"]
+            XCTAssertTrue(dialogAuthority.waitForExistence(timeout: 5))
+            XCTAssertEqual(dialogAuthority.label, expectedAuthority, "Actual save dialog uses the fixture's private canonical store")
+            let cancelSave = app.buttons["library.saveDestination.cancel"]
+            for _ in 0..<30 { if cancelSave.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(cancelSave.isHittable)
+            cancelSave.tap()
+            XCTAssertTrue(conversation.waitForExistence(timeout: 3))
+            XCTAssertFalse(dialogAuthority.exists)
+            XCTAssertEqual(input.value as? String, authored)
             captureGame(app, name: "ask-controls-paused-arabic-\(arabic)-reduced-\(reduced)")
             app.terminate()
         }
