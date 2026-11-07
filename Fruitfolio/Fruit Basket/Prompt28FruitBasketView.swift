@@ -1478,7 +1478,7 @@ struct Prompt28FruitBasketView: View {
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees + (star.isInVines ? sin(star.vineContactTime * 13) * 4 : 0)))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
-                    .modifier(FruitfolioFixedAccessibilityLabel(source: "star pass"))
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: Prompt28RulesCopy.standaloneStar))
                     .accessibilityIdentifier("fruitBasket.round.star")
             }
 
@@ -1547,7 +1547,7 @@ struct Prompt28FruitBasketView: View {
                 viewModel.classificationFruit {
 
                 Prompt28MovingFruit(fruit: fruit, reduceMotion: true,
-                    accessibilitySource: "\(fruit.fruitID.displayName). \(fruit.classification == .good ? "attached star marker" : "no attached star marker"). Does this belong in the basket?")
+                    accessibilitySource: Prompt28RulesCopy.fruitAccessibilitySource(fruit, classificationPrompt: true))
                     .frame(width: 100, height: 100)
                     .accessibilityIdentifier("fruitBasket.classification.fruit")
                     .onAppear { Prompt28AssetUsageRegistrar.markRendered(fruit.fruitID.assetID) }
@@ -1572,7 +1572,7 @@ struct Prompt28FruitBasketView: View {
             } else if viewModel.classificationStarAvailable {
                 FruitfolioImage(id: .fruitbasket_star).frame(width: 52, height: 52)
                     .accessibilityHidden(true)
-                FruitfolioTranslatedText(source: "a standalone star — catch it to bank one star pass. it does not fill the fruit basket.",
+                FruitfolioTranslatedText(source: Prompt28RulesCopy.standaloneStar,
                     font: Prompt28TextRole.body.font, serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
                     .multilineTextAlignment(.center)
                 Prompt28WatercolorButton(title: "catch star", accent: .paleYellow) {
@@ -2487,7 +2487,7 @@ private struct Prompt28MovingFruit: View {
         }
         .accessibilityElement(children: .ignore)
         .modifier(FruitfolioFixedAccessibilityLabel(source: accessibilitySource
-            ?? "\(fruit.fruitID.displayName), \(fruit.classification == .good ? "belongs in basket" : "does not belong in basket")"))
+            ?? Prompt28RulesCopy.fruitAccessibilitySource(fruit)))
     }
 }
 

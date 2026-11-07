@@ -278,6 +278,54 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         }
     }
 
+    func testObjectDescriptionsDistinguishMarkerAndStandaloneStarWithoutMotionKeys() async {
+        var good = Prompt28FallingFruit(fruitID: .pear, classification: .good,
+            x: 0.25, y: 0.4, fallSpeed: 0.2, horizontalDrift: 0.02, rotationDegrees: 0)
+        let bad = Prompt28FallingFruit(fruitID: .pear, classification: .bad,
+            x: 0.25, y: 0.4, fallSpeed: 0.2, horizontalDrift: 0.02, rotationDegrees: 0)
+        let goodSource = Prompt28RulesCopy.fruitAccessibilitySource(good)
+        let badSource = Prompt28RulesCopy.fruitAccessibilitySource(bad)
+        let starSource = Prompt28RulesCopy.standaloneStar
+        XCTAssertEqual(Set([goodSource, badSource, starSource]).count, 3)
+        XCTAssertTrue(goodSource.contains("attached star marker")); XCTAssertFalse(goodSource.contains("no attached"))
+        XCTAssertTrue(badSource.contains("no attached star marker"))
+        XCTAssertTrue(starSource.contains("standalone star")); XCTAssertTrue(starSource.contains("one star pass"))
+        XCTAssertTrue(starSource.contains("does not fill the fruit basket"))
+        good.x = 0.9; good.y = 0.7; good.isInVines = true; good.vineContactTime = 0.4
+        XCTAssertEqual(Prompt28RulesCopy.fruitAccessibilitySource(good), goodSource)
+        XCTAssertTrue(Prompt28RulesCopy.fruitAccessibilitySource(good, classificationPrompt: true).contains("attached star marker"))
+    }
+
+    func testGoodFruitStandaloneStarAndProtectedBadFruitRemainDistinctActualEvents() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        model.classificationStarAvailable = false
+        model.classificationFruit = .init(fruitID: .pear, classification: .good,
+            x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        XCTAssertEqual(model.basketCount, 1); XCTAssertEqual(model.session?.score, 10)
+        XCTAssertEqual(model.session?.availableStarPasses, 0)
+        model.classificationFruit = nil; model.classificationStarAvailable = true
+        model.classificationStarDecision(accept: true)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        XCTAssertEqual(model.basketCount, 1); XCTAssertEqual(model.session?.score, 10)
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        model.classificationStarAvailable = false
+        model.classificationFruit = .init(fruitID: .lemon, classification: .bad,
+            x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        XCTAssertEqual(model.basketCount, 1); XCTAssertEqual(model.session?.score, 10)
+        XCTAssertEqual(model.session?.availableStarPasses, 0)
+        XCTAssertEqual(model.roundLedger.caughtFruit, [.pear])
+        XCTAssertEqual(model.roundLedger.starsCollected, 1)
+        XCTAssertEqual(model.roundLedger.blockedBadFruit, [.lemon])
+        XCTAssertEqual(model.screen, .catchActive); XCTAssertNil(model.roundResult)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalFruitCaught, 1)
+        XCTAssertEqual(store.progress(for: "fixture")?.totalStarsEarned, 1)
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))

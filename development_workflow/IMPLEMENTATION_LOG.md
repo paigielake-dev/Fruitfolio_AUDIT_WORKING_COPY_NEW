@@ -3016,3 +3016,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 885, "native_CPU_XCTest": 907, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 8, "pre_fix_failed_assertions": 4, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Continue original order at327: verify actual good-fruit/bad-fruit/standalone-star distinction and remaining accessible/localized object presentation. Use targeted source/actualcontroller evidence, implement only concrete gaps, retain original art/markers/rules and avoid counting Apple-only visuals as passed.
 - Commit: containing commit for batch Reject-present-blank-source-version-preserve-nil-legacy.
+
+## Explicit-game-object-markers-and-separate-ledger-events
+
+- Parent checkpoint: 60f203bc05e0c34269e89d46bee8b02927578eed.
+- Source-order requirements: [327, 329, 330, 332, 333, 334, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, development_workflow/GAME_OBJECT_DISTINCTION.md.
+- Physical fruit accessibility names identify attached/no attached marker; standalone collectible shares original one-pass/no-basket caption with classification. Original art/geometry/engine/store/catalog unchanged. Two Core cases verify distinct motion-stable descriptions and actual settled goodfruit→star→protectedbadfruit: separatebasket/score/pass/ledger/cumulative accounting, roundcontinues. Initial immutable-rotation test compile0executed corrected; final887/909XCTest+21SwiftTesting each pass. Four English/Arabicpaused×ReduceMotion native object UI launchvectors updated, NOT_RUN; no wholeitem/officialmodelcertification.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 887, "native_CPU_XCTest": 909, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "earlier_invalid_fixture_executed_tests": 0, "written_Apple_object_launch_vectors_extended": 4, "executed_Apple_object_launch_vectors": 0, "English_catalog_entries": 967, "nonempty_foreign_units": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify actual rare-drop planner integration in both physical and classification spawners through deterministic controlled-unit seam preserving default production randomness; test8fruit spacing and probability boundary, validate benefits against existing separate-event regression. Preserve art/rules and avoid statistical/flaky or physical-runtime claims.
+- Commit: containing commit for batch Explicit-game-object-markers-and-separate-ledger-events.

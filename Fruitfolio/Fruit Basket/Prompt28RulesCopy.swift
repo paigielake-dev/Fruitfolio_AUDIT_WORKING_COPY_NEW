@@ -2,6 +2,15 @@ import Foundation
 
 /// Game rules only: never a medical interpretation of a fruit or source paragraph.
 nonisolated enum Prompt28RulesCopy {
+    static let standaloneStar = "a standalone star — catch it to bank one star pass. it does not fill the fruit basket."
+
+    static func fruitAccessibilitySource(_ fruit: Prompt28FallingFruit, classificationPrompt: Bool = false) -> String {
+        let marker = fruit.classification == .good ? "attached star marker" : "no attached star marker"
+        let purpose = classificationPrompt ? "Does this belong in the basket?"
+            : fruit.classification == .good ? "belongs in basket" : "does not belong in basket"
+        return "\(fruit.fruitID.displayName). \(marker). \(purpose)"
+    }
+
     static var catches: String {
         let rules = Prompt28RoundRules.canonical
         return "catch \(rules.goodFruitTarget) starred fruits to fill your basket. the small star attached to a fruit marks a good fruit; it is not a bonus star. fruit counts only after it enters and settles in the basket. each good catch earns +\(rules.goodFruitCatchScore) points. missing good fruit or letting bad fruit pass costs no points."
