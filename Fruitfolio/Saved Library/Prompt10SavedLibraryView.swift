@@ -111,13 +111,8 @@ struct Prompt10SavedLibraryView: View {
                     Spacer()
                 }
 
-                Text("my encyclopedias")
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 26
-                        )
-                    )
+                FruitfolioFixedText(source: "my encyclopedias",
+                font: .custom("Chalkboard SE", size: 26, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -125,15 +120,8 @@ struct Prompt10SavedLibraryView: View {
                     .multilineTextAlignment(.center)
             }
 
-            Text(
-                "your saved little corner of Fruitfolio ♡"
-            )
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 12.5
-                )
-            )
+            FruitfolioFixedText(source: "your saved little corner of Fruitfolio ♡", protectedLiterals: ["Fruitfolio", "♡"],
+                font: .custom("Chalkboard SE", size: 12.5, relativeTo: .body), color: DesignTokens.ColorToken.secondaryBurgundy)
             .foregroundStyle(
                 DesignTokens.ColorToken.secondaryBurgundy
             )
@@ -208,27 +196,15 @@ struct Prompt10SavedLibraryView: View {
 
     private var emptyState: some View {
         VStack(spacing: 10) {
-            Text("nothing here yet! ☆")
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 17
-                    )
-                )
+            FruitfolioFixedText(source: "nothing here yet! ☆", protectedLiterals: ["☆"],
+                font: .custom("Chalkboard SE", size: 17, relativeTo: .body))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
 
-            Text(
-                "save something you love and we’ll start your first little book."
-            )
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 13
-                )
-            )
+            FruitfolioFixedText(source: "save something you love and we’ll start your first little book.",
+                font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: DesignTokens.ColorToken.secondaryBurgundy)
             .foregroundStyle(
                 DesignTokens.ColorToken.secondaryBurgundy
             )
@@ -282,15 +258,9 @@ struct Prompt10SavedLibraryView: View {
                 !searchText.isEmpty {
 
                 VStack(spacing: 8) {
-                    Text(
-                        "no little books matched that search ✿"
-                    )
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 13
-                        )
-                    )
+                    FruitfolioFixedText(source: "no little books matched that search ✿", protectedLiterals: ["✿"],
+                font: .custom("Chalkboard SE", size: 13, relativeTo: .body), color: DesignTokens.ColorToken.secondaryBurgundy)
+                    .accessibilityIdentifier("library.search.noMatches")
                     .foregroundStyle(
                         DesignTokens.ColorToken
                             .secondaryBurgundy
@@ -367,15 +337,8 @@ struct Prompt10SavedLibraryView: View {
             }
 
         } label: {
-            Text(
-                "+ add another little encyclopedia"
-            )
-            .font(
-                .custom(
-                    "Chalkboard SE",
-                    size: 12
-                )
-            )
+            FruitfolioFixedText(source: "+ add another little encyclopedia",
+                font: .custom("Chalkboard SE", size: 12, relativeTo: .body))
             .fontWeight(.bold)
             .foregroundStyle(
                 DesignTokens.ColorToken.primaryBurgundy
@@ -447,6 +410,7 @@ struct Prompt10SavedLibraryView: View {
     @ViewBuilder
     private var bookOpeningOverlay: some View {
         if let id = openingEncyclopediaID, let encyclopedia = store.encyclopedia(id: id) {
+            let copy = Prompt10BookTileCopy.opening(name: encyclopedia.name)
             GeometryReader { geometry in
                 let frame = Prompt10BookMotion.frame(from: openingOrigin, in: geometry.size, progress: bookTravel)
                 ZStack {
@@ -468,7 +432,7 @@ struct Prompt10SavedLibraryView: View {
             }
             .fruitfolioModalBlur(active: popup != nil, reduceMotion: motionPreferences.reduceMotionActive)
             .accessibilityElement(children: .contain)
-            .accessibilityLabel("\(encyclopedia.name), open encyclopedia")
+            .modifier(FruitfolioFixedAccessibilityLabel(source: copy.source, protectedLiterals: copy.protectedLiterals))
         }
     }
 

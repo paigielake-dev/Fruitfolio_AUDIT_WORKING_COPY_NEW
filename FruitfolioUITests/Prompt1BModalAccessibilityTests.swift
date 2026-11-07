@@ -2566,6 +2566,16 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA private book,")).firstMatch
             XCTAssertTrue(book.waitForExistence(timeout: 5))
             XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 3")
+            let search = app.textFields["library.search.input"]
+            XCTAssertTrue(search.waitForExistence(timeout: 3))
+            for _ in 0..<20 { if search.isHittable { break }; app.swipeDown() }
+            XCTAssertTrue(search.isHittable); search.tap(); search.typeText("missing fixture")
+            let noMatches = app.descendants(matching: .any).matching(identifier: "library.search.noMatches").firstMatch
+            XCTAssertTrue(noMatches.waitForExistence(timeout: 3))
+            let clear = app.buttons["library.search.clear"]
+            XCTAssertTrue(clear.waitForExistence(timeout: 3)); XCTAssertTrue(clear.isHittable); clear.tap()
+            XCTAssertFalse(noMatches.exists); XCTAssertTrue(book.exists)
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 4")
             captureGame(app, name: "library-native-name-arabic-\(arabic)-reduced-\(reduced)")
             app.terminate()
         }

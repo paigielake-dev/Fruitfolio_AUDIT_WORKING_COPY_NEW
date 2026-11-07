@@ -4,9 +4,12 @@ struct Prompt10BookTile: View {
     let encyclopedia: Prompt10Encyclopedia
     let reduceMotion: Bool
     let action: () -> Void
+    @EnvironmentObject private var settings: SettingsStore
 
     var body: some View {
-        Button {
+        let copy = Prompt10BookTileCopy(name: encyclopedia.name, subtitle: encyclopedia.subtitle,
+            chapters: encyclopedia.chapterCount, pages: encyclopedia.savedPageCount, language: settings.language)
+        return Button {
             action()
         } label: {
             VStack(spacing: 8) {
@@ -19,33 +22,33 @@ struct Prompt10BookTile: View {
                         }
                     }
 
-                Text(encyclopedia.name)
+                Text(verbatim: encyclopedia.name)
                     .font(.custom("Chalkboard SE", size: 14))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .truncationMode(.tail)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 132)
 
                 if let description = encyclopedia.subtitle, !description.isEmpty {
-                    Text(description)
+                    Text(verbatim: description)
                         .font(.custom("Chalkboard SE", size: 12, relativeTo: .caption))
                         .foregroundStyle(DesignTokens.ColorToken.secondaryBurgundy)
                         .multilineTextAlignment(.center)
-                        .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: 132)
                 }
 
-                Text(metadataText)
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                FruitfolioFixedText(source: copy.metadataSource, protectedLiterals: copy.numericLiterals,
+                    font: .custom("Chalkboard SE", size: 10.5, relativeTo: .caption),
+                    color: DesignTokens.ColorToken.secondaryBurgundy)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(
                 maxWidth: .infinity,
@@ -59,23 +62,11 @@ struct Prompt10BookTile: View {
                 reduceMotion: reduceMotion
             )
         )
-        .accessibilityLabel(
-            "\(encyclopedia.name), \(encyclopedia.subtitle ?? ""), \(metadataText)"
-        )
-        .accessibilityHint(
-            "Opens this encyclopedia"
-        )
+        .modifier(FruitfolioFixedAccessibilityLabel(source: copy.accessibilitySource,
+            protectedLiterals: copy.accessibilityProtectedLiterals))
+        .modifier(FruitfolioFixedAccessibilityHint(source: "Opens this encyclopedia"))
     }
 
-    private var metadataText: String {
-        let chapters = encyclopedia.chapterCount
-        let pages = encyclopedia.savedPageCount
-
-        let chapterWord = chapters == 1 ? "chapter" : "chapters"
-        let pageWord = pages == 1 ? "page" : "pages"
-
-        return "\(chapters) \(chapterWord) · \(pages) \(pageWord)"
-    }
 }
 
 struct Prompt10LibraryHero: View {
@@ -102,14 +93,14 @@ struct Prompt10QuietSearchField: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            Text("find")
-                .font(.custom("Chalkboard SE", size: 11))
+            FruitfolioFixedText(source: "find", font: .custom("Chalkboard SE", size: 11, relativeTo: .body),
+                color: DesignTokens.ColorToken.secondaryBurgundy)
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
 
-            TextField(
+            FruitfolioFixedTextField(
                 "find an encyclopedia…",
                 text: $text
             )
@@ -119,16 +110,13 @@ struct Prompt10QuietSearchField: View {
             )
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled(false)
+            .accessibilityIdentifier("library.search.input")
 
             if !text.isEmpty {
-                Button("clear") {
-                    text = ""
-                }
-                .font(.custom("Chalkboard SE", size: 10.5))
-                .foregroundStyle(
-                    DesignTokens.ColorToken.secondaryBurgundy
-                )
-                .buttonStyle(.plain)
+                FruitfolioControlPillButton(label: "clear") { text = "" }
+                .controlSize(.small)
+                .frame(maxWidth: 104)
+                .accessibilityIdentifier("library.search.clear")
                 .frame(
                     minWidth: DesignTokens.Layout.minimumHitTarget,
                     minHeight: DesignTokens.Layout.minimumHitTarget

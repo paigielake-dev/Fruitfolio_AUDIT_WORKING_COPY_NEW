@@ -424,7 +424,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                     .accessibilityHidden(true)
 
                     FruitfolioFixedText(source: "deleting it removes the saved collection inside it.",
-            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
+            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), color: DesignTokens.ColorToken.secondaryBurgundy)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
@@ -512,7 +512,7 @@ struct Prompt10FullLibraryPopup: View {
                 .multilineTextAlignment(.center)
 
                 FruitfolioFixedText(source: "delete an encyclopedia you don’t need anymore to make room for another! :-)",
-            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
+            font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), color: DesignTokens.ColorToken.secondaryBurgundy)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )

@@ -359,3 +359,29 @@ nonisolated enum Prompt10BookLabelPolicy {
         else { throw Prompt10LibraryError.inappropriateLabel }
     }
 }
+
+/// Display-only Library metadata. Authored fields are escaped and protected,
+/// never rewritten or supplied as ordinary inference prose.
+nonisolated struct Prompt10BookTileCopy: Equatable, Sendable {
+    let metadataSource: String
+    let numericLiterals: [String]
+    let accessibilitySource: String
+    let accessibilityProtectedLiterals: [String]
+
+    init(name: String, subtitle: String?, chapters: Int, pages: Int, language: FruitfolioLanguage) {
+        let locale = Locale(identifier: language.localeIdentifier)
+        let chapterCount = chapters.formatted(.number.locale(locale))
+        let pageCount = pages.formatted(.number.locale(locale))
+        numericLiterals = [chapterCount, pageCount]
+        metadataSource = "\(chapterCount) \(chapters == 1 ? "chapter" : "chapters") · \(pageCount) \(pages == 1 ? "page" : "pages")"
+        let literalName = FruitfolioSemanticMarkup.markdown([.init(text: name)])
+        let literalSubtitle = FruitfolioSemanticMarkup.markdown([.init(text: subtitle ?? "")])
+        accessibilitySource = "\(literalName), \(literalSubtitle), \(metadataSource)"
+        accessibilityProtectedLiterals = ([literalName, literalSubtitle] + numericLiterals).filter { !$0.isEmpty }
+    }
+
+    static func opening(name: String) -> (source: String, protectedLiterals: [String]) {
+        let literal = FruitfolioSemanticMarkup.markdown([.init(text: name)])
+        return ("\(literal), open encyclopedia", [literal])
+    }
+}
