@@ -1993,8 +1993,8 @@ struct Prompt28FruitBasketView: View {
             VStack(spacing: 14) {
                 topBar
                 if store.hasLegacyCaptureTotals {
-                    Text("totals saved before this update may omit fruit from failed or unfinished attempts. existing totals are retained; new captures are counted as they happen.")
-                        .font(.footnote).fixedSize(horizontal: false, vertical: true)
+                    FruitfolioFixedText(source: "totals saved before this update may omit fruit from failed or unfinished attempts. existing totals are retained; new captures are counted as they happen.", font: .footnote)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
 

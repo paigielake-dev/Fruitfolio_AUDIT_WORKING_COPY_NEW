@@ -557,6 +557,89 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         }
     }
 
+    func testActualFruitAndStarSpawnsUseBoundedLevelSpeedsAndPreserveCapturedMotion() async throws {
+        let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
+            ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+        let library = try Prompt28ObstacleMaskLibrary.load(url: url)
+        for level in 1...8 {
+            for isStar in [false, true] {
+                let (suite, defaults, store, model) = try activeModeFixture(mode: .catchMode,
+                    starDropRandomUnit: { isStar ? 0 : 1 }, gameLevel: level, obstacleLibrary: library)
+                defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+                // Respect the real rarity planner: eight ordinary spawns precede
+                // the first eligible star; a zero random draw does not bypass it.
+                let spawnCount = isStar ? 9 : 1
+                for index in 0..<spawnCount {
+                    model.activeFruit.removeAll(); model.activeStars.removeAll()
+                    model.advanceGameplayFrame(delta: 0.04,
+                        now: Date(timeIntervalSince1970: 40_000 + Double(index) * 10))
+                }
+                let nextFrame = Date(timeIntervalSince1970: 40_000 + Double(spawnCount - 1) * 10 + 0.04)
+                let config = model.engine.config(for: level)
+                let speeds = (1.18 / config.fallDurationRange.upperBound)...(1.18 / config.fallDurationRange.lowerBound)
+                let bytes = defaults.data(forKey: "game")
+                if isStar {
+                    let initial = try XCTUnwrap(model.activeStars.first)
+                    XCTAssertTrue(speeds.contains(initial.fallSpeed)); XCTAssertTrue(config.driftRange.contains(initial.horizontalDrift))
+                    model.advanceGameplayFrame(delta: 0.04, now: nextFrame)
+                    let moved = try XCTUnwrap(model.activeStars.first { $0.id == initial.id })
+                    XCTAssertEqual(moved.fallSpeed, initial.fallSpeed); XCTAssertEqual(moved.horizontalDrift, initial.horizontalDrift)
+                    XCTAssertGreaterThan(moved.y, initial.y)
+                } else {
+                    let initial = try XCTUnwrap(model.activeFruit.first)
+                    XCTAssertTrue(speeds.contains(initial.fallSpeed)); XCTAssertTrue(config.driftRange.contains(initial.horizontalDrift))
+                    model.advanceGameplayFrame(delta: 0.04, now: nextFrame)
+                    let moved = try XCTUnwrap(model.activeFruit.first { $0.id == initial.id })
+                    XCTAssertEqual(moved.fallSpeed, initial.fallSpeed); XCTAssertEqual(moved.horizontalDrift, initial.horizontalDrift)
+                    XCTAssertGreaterThan(moved.y, initial.y)
+                }
+                XCTAssertEqual(model.basketCount, 0); XCTAssertEqual(model.session?.score, 0)
+                XCTAssertFalse(store.isReadOnly); XCTAssertEqual(defaults.data(forKey: "game"), bytes)
+            }
+        }
+    }
+
+    func testActualAcknowledgedSuccessThresholdAndFailurePreserveBoundedProgression() async throws {
+        let url = Bundle.main.url(forResource: "Prompt28ObstacleMasks", withExtension: "json")
+            ?? ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_OBSTACLE_MASKS_PATH"].map { URL(fileURLWithPath: $0) }
+        let library = try Prompt28ObstacleMaskLibrary.load(url: url)
+        for level in 1...8 {
+            for succeeds in [false, true] {
+                let (suite, defaults, store, model) = try activeModeFixture(mode: .classification,
+                    starDropRandomUnit: { 1 }, gameLevel: level, obstacleLibrary: library)
+                defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+                var initial = try XCTUnwrap(store.progress(for: "fixture"))
+                initial.successesInCurrentLevel = max(0, Prompt28ProgressionPolicy.successesRequired(at: level) - 1)
+                XCTAssertTrue(store.updateProgress(initial))
+                let count = succeeds ? model.engine.rules.goodFruitTarget : 1
+                for _ in 0..<count {
+                    model.classificationStarAvailable = false
+                    model.classificationFruit = .init(fruitID: succeeds ? .pear : .lemon,
+                        classification: succeeds ? .good : .bad, x: 0.5, fallSpeed: 0,
+                        horizontalDrift: 0, rotationDegrees: 0)
+                    model.classificationDecision(accept: true)
+                    for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date(timeIntervalSince1970: 50_000)) }
+                }
+                // Exercise the real lifecycle resolution of an already-terminal round.
+                model.sceneBecameInactive()
+                let saved = try XCTUnwrap(store.progress(for: "fixture"))
+                let result = try XCTUnwrap(model.roundResult)
+                let expected = succeeds ? min(level + 1, 8) : level
+                XCTAssertEqual(saved.currentGameLevel, expected); XCTAssertEqual(model.session?.currentGameLevel, expected)
+                XCTAssertEqual(saved.totalRoundsCompleted, initial.totalRoundsCompleted + 1)
+                XCTAssertEqual(saved.totalSuccessfulRounds, initial.totalSuccessfulRounds + (succeeds ? 1 : 0))
+                XCTAssertEqual(saved.successesInCurrentLevel, succeeds ? 0 : initial.successesInCurrentLevel)
+                XCTAssertEqual(result.gameLevelPlayed, level); XCTAssertEqual(result.nextGameLevel, expected)
+                XCTAssertEqual(result.succeeded, succeeds)
+                XCTAssertEqual(model.screen, succeeds ? .basketReveal : .catchUnsuccessful)
+                XCTAssertFalse(store.isReadOnly)
+                let bytes = defaults.data(forKey: "game")
+                model.sceneBecameInactive()
+                XCTAssertEqual(defaults.data(forKey: "game"), bytes, "The same terminal round must not advance twice")
+            }
+        }
+    }
+
     private func controllerPaintedPoint(_ name: String, geometry: Prompt28ObstacleGeometry) throws -> CGPoint {
         let mask = try XCTUnwrap(geometry.library.masks[name])
         let frame = try XCTUnwrap(geometry.frame(name))

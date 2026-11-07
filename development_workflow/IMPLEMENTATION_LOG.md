@@ -3104,3 +3104,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 898, "native_CPU_XCTest": 920, "SwiftTesting_each": 21, "focused_XCTest": 2, "workflow_checks": 60, "syntax_files": 311}.
 - Next action: Verify actual fruit/star spawners use bounded level-driven speed ranges across1–8, preserve captured motion and plateau beyond8. Then actual acknowledged success/failure progression and reveal/result ownership, without repeating earlier persistence audits.
 - Commit: containing commit for batch Actual-controller-painted-branch-and-vine-contact.
+
+## Actual-level-speed-and-acknowledged-progression-matrices
+
+- Parent checkpoint: 3cd9e3c988276615eed26eee5b4944ccd12ab476.
+- Source-order requirements: [358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 476, 477, 478].
+- Source files: development_workflow/ACTUAL_LEVEL_SPEED_PROGRESSION.md, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual16-vector fruit/star spawn matrix checks all8level ranges, captured base speed/drift and next-frame descent after genuine rarity spacing. Actual16-vector success/failure threshold matrix checks acknowledged saved/session/result agreement, settledgoodfruit, preserved failed-round credit, level8plateau and duplicate lifecycle resolution no-op. Initialspeedfixture wrongly expected immediate rarestar; failed run preserved, fixture corrected without changing planner. Final results only count corrected source. No source-presence/whole-item/device certification. Existing leaderboard legacy-total notice now uses shared fixed-copy translation and one English catalog fallback, with all old catalog objects unchanged; Apple rendering not executed.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift, FruitfolioTests/Prompt1BProgressionPolicyTests.swift.
+- Verification: {"portable_XCTest": 900, "native_CPU_XCTest": 922, "SwiftTesting_each": 21, "actual_spawn_vectors": 16, "actual_terminal_vectors": 16, "workflow_checks": 60, "syntax_files": 311}.
+- Next action: Continue leaderboard/rules fixed-copy localization and mechanism consistency, then shared username/FAQ/accessibility requirements. Preserve exact founder copy clarification and external backend/model/clinical/device blockers.
+- Commit: containing commit for batch Actual-level-speed-and-acknowledged-progression-matrices.
