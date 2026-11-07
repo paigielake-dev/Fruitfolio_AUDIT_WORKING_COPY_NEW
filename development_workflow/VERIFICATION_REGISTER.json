@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T10:00:32.848040+00:00",
+  "updated_at": "2026-11-07T10:05:26.393464+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -11605,6 +11605,44 @@
         ]
       },
       "timestamp": "2026-11-07T10:00:32.848040+00:00"
+    },
+    {
+      "batch": "Ask-authorized-question-snapshot-and-newer-draft-ownership",
+      "requirements": [
+        119,
+        120,
+        123,
+        434,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "Seven actual context XCTest regressions",
+        "319 Swift syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "focused_context_XCTest_passed": 7,
+        "swift_syntax_files": 319,
+        "syntax_errors": 0
+      },
+      "verification": {
+        "executed": {
+          "focused_context_XCTest_passed": 7,
+          "swift_syntax_files": 319,
+          "syntax_errors": 0
+        },
+        "not_run": [
+          "Two genuine Apple Combine view-model submission/draft regressions: queued publication race with NFC/NFD and deliberate newer empty draft",
+          "Actual SwiftUI queued Send edit/context guard and local language snapshot behavior"
+        ],
+        "remaining": [
+          "Run actual Apple regressions and verify the authorized question is sent once, a newer draft is preserved byte-for-byte, edited suggestion provenance changes to submitted app language, and deliberate empty draft is not restored over.",
+          "Execute root Ask context/keyboard/background reentry acceptance; syntax and unrelated context tests do not establish Combine/UI behavior."
+        ]
+      },
+      "timestamp": "2026-11-07T10:05:26.393464+00:00"
     }
   ]
 }

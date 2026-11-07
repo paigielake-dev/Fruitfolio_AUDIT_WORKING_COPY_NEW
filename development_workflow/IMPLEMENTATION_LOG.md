@@ -3788,3 +3788,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_focused_XCTest_passed": 13, "portable_full_XCTest_passed": 990, "SwiftTesting_portable_passed": 21, "native_CPU_focused_XCTest_passed": 14, "workflow_passed": 71, "swift_syntax_files": 319, "official_MADLAD_verified": false}.
 - Next action: Continue unresolved Hormone Library scientific content and source-specific first-party Ask retrieval, then remaining independent original/founder clauses. Preserve mixed-language detection, actual Apple UI, official MADLAD and clinical acceptance limitations; do not count infrastructure or fixtures as completed user behavior.
 - Commit: containing commit for batch Ask-local-incoming-question-language-and-session-privacy.
+
+## Ask-authorized-question-snapshot-and-newer-draft-ownership
+
+- Parent checkpoint: e3cd6d6b72bd9e2f03d0bfc3020af7818299f6b0.
+- Source-order requirements: [119, 120, 123, 434, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Ask/FruitfolioAskUserContext.swift.
+- Fix actual queued-send race: snapshot authorized input bytes and known-suggestion language before view-model publications/child-task scheduling; never reread a newer composer draft as the submitted question. Clear only the matching original draft; a local composer revision prevents failure restoration over a deliberately changed-then-empty draft. Real view also cancels a queued send if text changed before dispatch, with typed fixed-copy notice; optional context still requires exact consent. Two actual Apple Combine regression cases added, NOT_RUN. Seven context boundary tests and319 syntax checks pass; no source-presence-based completion promotion.
+- Tests added/updated: FruitfolioTests/Prompt1BAskLifecycleTests.swift.
+- Verification: {"focused_context_XCTest_passed": 7, "swift_syntax_files": 319, "syntax_errors": 0}.
+- Next action: Fix confirmed urgent-guidance gate ordering: optional oversized context must not preempt recognizable urgent guidance. Preserve source/language safety and document remaining actual Apple and official-model verification.
+- Commit: containing commit for batch Ask-authorized-question-snapshot-and-newer-draft-ownership.

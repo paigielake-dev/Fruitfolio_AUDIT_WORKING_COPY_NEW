@@ -1,4 +1,5 @@
 import XCTest
+import Combine
 @testable import Fruitfolio
 
 private actor Prompt1BSuspendedAskEngine: AskKnowledgeServing {
@@ -21,6 +22,7 @@ private actor Prompt1BSuspendedAskEngine: AskKnowledgeServing {
 /// Actual view-model request contract; no clinical/model inference claim.
 private actor Prompt1BLanguageCaptureAskEngine: AskLocalizedResearchServing {
     private(set) var languages: [FruitfolioLanguage] = []
+    private(set) var questions: [String] = []
     let fail: Bool
     init(fail: Bool = false) { self.fail = fail }
     func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
@@ -39,6 +41,7 @@ private actor Prompt1BLanguageCaptureAskEngine: AskLocalizedResearchServing {
         userContext: FruitfolioAskUserContext?, inputLanguage: FruitfolioLanguage, translationInferenceAllowed: Bool,
         progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
         languages.append(inputLanguage)
+        questions.append(question)
         if fail { throw FruitfolioTranslationError.resourcesMissing }
         return try await answer(question: question, conversation: conversation)
     }
@@ -46,6 +49,46 @@ private actor Prompt1BLanguageCaptureAskEngine: AskLocalizedResearchServing {
 
 @MainActor
 final class Prompt1BAskLifecycleTests: XCTestCase {
+    func testSubmissionFreezesOriginalBytesBeforePublishedStateCanChangeTheDraft() async {
+        let engine = Prompt1BLanguageCaptureAskEngine()
+        let model = Prompt09AskViewModel(engine: engine)
+        let original = "source café question"
+        let newer = "source cafe\u{0301} question"
+        model.useSuggestion(original)
+        let observation = model.$hasUserContextInFlight.dropFirst().prefix(1).sink { _ in
+            model.inputText = newer
+        }
+        defer { observation.cancel() }
+        await model.submitCurrentQuestion(reduceMotion: true, inputLanguage: .french)
+        var questions = await engine.questions
+        var languages = await engine.languages
+        XCTAssertEqual(questions.count, 1)
+        XCTAssertEqual(Data(questions[0].utf8), Data(original.utf8))
+        XCTAssertEqual(languages, [.english])
+        XCTAssertEqual(Data(model.inputText.utf8), Data(newer.utf8), "A canonically equivalent but newly authored draft must not be erased")
+        await model.submitCurrentQuestion(reduceMotion: true, inputLanguage: .french)
+        questions = await engine.questions
+        languages = await engine.languages
+        XCTAssertEqual(languages, [.english, .french])
+        XCTAssertEqual(Data(questions[1].utf8), Data(newer.utf8))
+    }
+
+    func testFailedRequestDoesNotRestoreOverAnIntentionallyClearedNewDraft() async {
+        let model = Prompt09AskViewModel(engine: Prompt1BLanguageCaptureAskEngine(fail: true))
+        model.inputText = "original submitted question"
+        let observation = model.$phase.sink { phase in
+            if phase == .searching {
+                model.inputText = "newer draft"
+                model.inputText = ""
+            }
+        }
+        defer { observation.cancel() }
+        await model.submitCurrentQuestion(reduceMotion: true, inputLanguage: .french)
+        XCTAssertEqual(model.inputText, "", "Failure must respect a deliberate newer clear, not restore an old submitted question")
+        XCTAssertEqual(model.messages.last?.text, "original submitted question")
+        XCTAssertNil(model.answer)
+    }
+
     func testKnownEnglishSuggestionDoesNotAcquireTheInterfaceLanguageAndEditedTextDoes() async {
         let engine = Prompt1BLanguageCaptureAskEngine()
         let model = Prompt09AskViewModel(engine: engine)

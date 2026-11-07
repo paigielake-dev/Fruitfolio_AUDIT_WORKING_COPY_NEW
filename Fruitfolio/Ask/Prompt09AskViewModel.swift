@@ -22,7 +22,7 @@ final class Prompt09AskViewModel: ObservableObject {
         "what happens after fertilization?"
     ]
 
-    @Published var inputText = ""
+    @Published var inputText = "" { didSet { composerRevision &+= 1 } }
     @Published private(set) var hasUserContextInFlight = false
     @Published private(set) var messages: [AskMessage]
     @Published private(set) var answer: AskAnswer?
@@ -48,6 +48,7 @@ final class Prompt09AskViewModel: ObservableObject {
     private var requestTask: Task<Void, Never>?
     private var requestGeneration = UUID()
     private var sourceSuggestion: String?
+    private var composerRevision: UInt = 0
 
     init(
         conversationID: UUID = UUID(),
@@ -148,6 +149,12 @@ final class Prompt09AskViewModel: ObservableObject {
         translationInferenceAllowed: Bool = true,
         userContext: FruitfolioAskUserContext? = nil
     ) async {
+        // Freeze authorized text/provenance before publishing state or queuing
+        // the child task; observers/new typing must not replace the request.
+        let submittedInput = inputText
+        let questionLanguage: FruitfolioLanguage = sourceSuggestion.map {
+            submittedInput.utf8.elementsEqual($0.utf8)
+        } == true ? .english : inputLanguage
         requestTask?.cancel()
         let generation = UUID()
         requestGeneration = generation
@@ -155,7 +162,8 @@ final class Prompt09AskViewModel: ObservableObject {
         let task = Task { [weak self] in
             guard let self else { return }
             await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation, userContext: userContext,
-                inputLanguage: inputLanguage, translationInferenceAllowed: translationInferenceAllowed)
+                submittedInput: submittedInput, questionLanguage: questionLanguage,
+                translationInferenceAllowed: translationInferenceAllowed)
         }
         requestTask = task
         await withTaskCancellationHandler {
@@ -173,15 +181,11 @@ final class Prompt09AskViewModel: ObservableObject {
         reduceMotion: Bool,
         generation: UUID,
         userContext: FruitfolioAskUserContext?,
-        inputLanguage: FruitfolioLanguage,
+        submittedInput: String,
+        questionLanguage: FruitfolioLanguage,
         translationInferenceAllowed: Bool
     ) async {
-        // Suggestions are known English authored copy even when the interface
-        // language differs. Any edited text follows the submitted app language.
-        let questionLanguage: FruitfolioLanguage = sourceSuggestion.map {
-            inputText.utf8.elementsEqual($0.utf8)
-        } == true ? .english : inputLanguage
-        let question = inputText
+        let question = submittedInput
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
@@ -209,7 +213,9 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedExcerptSemanticSpans = nil
         selectedExcerptLanguage = nil
         excerptSaved = false
-        inputText = ""
+        let clearedSubmittedDraft = inputText.utf8.elementsEqual(submittedInput.utf8)
+        if clearedSubmittedDraft { inputText = "" }
+        let clearedDraftRevision = composerRevision
 
         messages.append(
             AskMessage(
@@ -282,7 +288,9 @@ final class Prompt09AskViewModel: ObservableObject {
                 phase = .ready
                 return
             }
-            if inputText.isEmpty { inputText = question }
+            if clearedSubmittedDraft, inputText.isEmpty, composerRevision == clearedDraftRevision {
+                inputText = submittedInput
+            }
             phase = .failed(
                 error.localizedDescription
             )

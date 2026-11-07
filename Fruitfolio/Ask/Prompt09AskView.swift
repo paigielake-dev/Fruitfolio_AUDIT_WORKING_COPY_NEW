@@ -1522,6 +1522,7 @@ struct Prompt09AskView: View {
             return
         }
 
+        let submittedInput = viewModel.inputText
         let requestedMeasurements = selectedContextMeasurements
         let requestedCategories = selectedContextCategories
         let userContext: FruitfolioAskUserContext?
@@ -1551,6 +1552,10 @@ struct Prompt09AskView: View {
             }
             guard !Task.isCancelled, sendTaskGeneration == generation,
                   requestInteraction.accepts(ownerTicket), canInteractWithComposer else { return }
+            guard viewModel.inputText.utf8.elementsEqual(submittedInput.utf8) else {
+                contextSharingMessage = .questionChangedBeforeSending
+                return
+            }
             do {
                 let current = try FruitfolioAskUserContext.selected(measurementIDs: requestedMeasurements,
                     personalCategories: requestedCategories, measurements: contextMeasurements.records,
