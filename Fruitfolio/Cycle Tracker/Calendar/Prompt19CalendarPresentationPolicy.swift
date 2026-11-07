@@ -19,6 +19,12 @@ nonisolated enum Prompt19CalendarPresentationPolicy {
 nonisolated struct Prompt19CalendarLoadIdentity: Equatable, Sendable {
     let month: Prompt19CalendarMonth
     let context: Prompt27AContextPolicyResult
+    let presentationEpoch: UUID?
+    init(month: Prompt19CalendarMonth, context: Prompt27AContextPolicyResult, presentationEpoch: UUID? = nil) {
+        self.month = month
+        self.context = context
+        self.presentationEpoch = presentationEpoch
+    }
     func accepts(_ snapshot: Prompt19CalendarSnapshot, current: Self) -> Bool {
         self == current && snapshot.month == month
     }

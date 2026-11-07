@@ -24,6 +24,11 @@ struct Prompt19CalendarView: View {
     @State private var monthDrift: CGFloat = 0
     @State private var showPredictionNote = false
     @State private var pendingAction: Prompt19CalendarAction?
+    @State private var loadEpoch = UUID()
+    private struct PresentationRequest: Equatable {
+        let identity: Prompt19CalendarLoadIdentity
+        let active: Bool
+    }
 
     private let calendar: Calendar
 
@@ -60,7 +65,7 @@ struct Prompt19CalendarView: View {
     }
 
     private var loadIdentity: Prompt19CalendarLoadIdentity {
-        .init(month: displayedMonth, context: contextPolicy)
+        .init(month: displayedMonth, context: contextPolicy, presentationEpoch: loadEpoch)
     }
     private var presentationAnnotations: [Prompt19CalendarDateKey: Prompt19CalendarDayAnnotation] {
         guard snapshot.month == displayedMonth else { return [:] }
@@ -144,7 +149,8 @@ struct Prompt19CalendarView: View {
         }
         .padding(.horizontal, 2)
         .frame(maxWidth: .infinity)
-        .task(id: loadIdentity) { [requested = loadIdentity] in
+        .task(id: PresentationRequest(identity: loadIdentity, active: ownerIsActive)) { [requested = loadIdentity] in
+            guard ownerIsActive else { return }
             await loadMonth(requested: requested)
         }
         .sheet(
@@ -164,7 +170,7 @@ struct Prompt19CalendarView: View {
                 }
 
                 pendingAction = nil
-                guard viewIsVisible else { return }
+                guard ownerIsActive else { return }
                 onAction(action)
             }
         ) {
@@ -193,7 +199,16 @@ struct Prompt19CalendarView: View {
             }
         }
         .onAppear { viewIsVisible = true }
-        .onDisappear { viewIsVisible = false; pendingAction = nil }
+        .onDisappear {
+            viewIsVisible = false
+            invalidatePresentationWork()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { invalidatePresentationWork() }
+        }
+        .onChange(of: popupCoordinator.currentPopup != nil) { _, covered in
+            if covered { invalidatePresentationWork() }
+        }
         .accessibilityIdentifier("prompt19.calendar")
     }
 
@@ -463,9 +478,19 @@ struct Prompt19CalendarView: View {
         }
     }
 
+    private func invalidatePresentationWork() {
+        loadEpoch = UUID()
+        // No log draft exists yet; cancel a consumed date-sheet handoff rather
+        // than replaying it when a covered/background presentation returns.
+        pendingAction = nil
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) { monthDrift = 0 }
+    }
+
     @MainActor
     private func loadMonth(requested: Prompt19CalendarLoadIdentity) async {
-        guard !Task.isCancelled, requested == loadIdentity else { return }
+        guard !Task.isCancelled, ownerIsActive, requested == loadIdentity else { return }
         let requestedMonth = requested.month
         loadState = .loading
 
@@ -475,14 +500,14 @@ struct Prompt19CalendarView: View {
                     month: requestedMonth
                 )
 
-            guard !Task.isCancelled, requested.accepts(loaded, current: loadIdentity) else {
+            guard !Task.isCancelled, ownerIsActive, requested.accepts(loaded, current: loadIdentity) else {
                 return
             }
 
             snapshot = loaded
             loadState = .loaded
         } catch {
-            guard !Task.isCancelled, requested == loadIdentity else {
+            guard !Task.isCancelled, ownerIsActive, requested == loadIdentity else {
                 return
             }
 

@@ -4318,3 +4318,15 @@ Final Ask batch addendum:15 focused tests rerun successfully after correcting su
 - Verification: {"focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests", "full_portable_XCTest": "1104 passed,0failures", "Swift_Testing": "21passed,0failures", "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
 - Next action: Continue Calendar/Today logging state and load responsiveness requirements295–300 from existing source; preserve prior checkpoints and do not revisit completed audits.
 - Commit: containing commit for batch Science-owned-requests-and-shared-hotspot-source-canvas.
+
+## Calendar-presentation-epoch-and-active-log-handoff
+
+- Parent checkpoint: f696f32f23d09241904323580f0abe34bda14e70.
+- Source-order requirements: [11, 295, 298, 299, 303, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift, Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift, FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift, development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json.
+- Calendar load identity now includes current presentation epoch; task also keys active owner. Background/cover/disappear invalidates epoch and consumed pending logging handoff, resets month drift without animation. Loader completion checks active owner and actual epoch/month/context before publish. Date-sheet final dismissal callback rechecks visible active foreground uncovered ownership before routing. Selected date and all stored observations/drafts untouched. Foreground/uncover starts fresh request for same month/context. Evidence: development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json
+- Tests added/updated: Prompt1BCalendarPresentationPolicyTests.testSameMonthAndContextResultFromBeforeReactivationCannotReplaceCurrentPresentation, Prompt19CalendarEngineTests, Prompt1BRecoveredCycleLoaderTests, Prompt1BTodaySnapshotTests.
+- Verification: {"portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests", "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking", "sound_ownership": "0diagnostics"}.
+- Next action: Continue shared daily-log state and date-owner validation across Calendar/Today, using actual store/viewmodel consumers and preserving all existing drafts.
+- Commit: containing commit for batch Calendar-presentation-epoch-and-active-log-handoff.

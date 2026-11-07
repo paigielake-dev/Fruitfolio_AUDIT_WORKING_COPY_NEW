@@ -34,6 +34,26 @@ final class Prompt1BCalendarPresentationPolicyTests: XCTestCase {
         XCTAssertEqual(calls, 1)
     }
 
+    @MainActor
+    func testSameMonthAndContextResultFromBeforeReactivationCannotReplaceCurrentPresentation() async throws {
+        let gate = CalendarCancellationProbe()
+        let cycle = Prompt13CycleStore.inMemory()
+        let month = Prompt19CalendarMonth(year: 2026, month: 11)
+        let loader = Prompt19CalendarLoader(todayLoader: .init(cycleStore: cycle,
+            onboardingStore: .inMemory(cycleStore: cycle)), supplementalProvider: .init { _, _ in await gate.hold(); return [] })
+        let beforeBackground = Prompt19CalendarLoadIdentity(month: month, context: .init(), presentationEpoch: UUID())
+        let task = Task { try await loader.load(month: month) }
+        await gate.waitUntilHeld()
+        let afterReactivation = Prompt19CalendarLoadIdentity(month: month, context: .init(), presentationEpoch: UUID())
+        // Deliberately do not cancel: SwiftUI task cancellation may arrive after
+        // reactivation. A same-month/context result still belongs to its epoch.
+        await gate.release()
+        let oldSnapshot = try await task.value
+        XCTAssertEqual(oldSnapshot.month, month)
+        XCTAssertFalse(beforeBackground.accepts(oldSnapshot, current: afterReactivation))
+        XCTAssertTrue(afterReactivation.accepts(oldSnapshot, current: afterReactivation))
+    }
+
     func testContextChangeHidesOnlyInapplicableEstimatesWithoutChangingRecordedData() {
         let key = Prompt19CalendarDateKey(year: 2026, month: 11, day: 5)
         let original = Prompt19CalendarDayAnnotation(key: key, cycleDay: 7, recordedPeriod: true, predictedPeriod: true,

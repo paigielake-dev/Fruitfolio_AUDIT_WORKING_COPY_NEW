@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "316b407c79d6d992dad376b1fbea6237d258c733",
+  "current_HEAD": "f696f32f23d09241904323580f0abe34bda14e70",
   "latest_verified_commit": null,
   "current_checklist_part": 6,
-  "current_requirement": 295,
-  "current_implementation_batch": "Science-owned-requests-and-shared-hotspot-source-canvas",
+  "current_requirement": 298,
+  "current_implementation_batch": "Calendar-presentation-epoch-and-active-log-handoff",
   "completed_requirements": [
     206,
     210
@@ -494,14 +494,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift",
-    "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceModels.swift",
-    "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift",
-    "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
-    "FruitfolioTests/Prompt27ScienceContentTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SCIENCE_OWNED_REQUESTS_AND_SHARED_HOTSPOT_CANVAS.json"
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+    "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+    "development_workflow/CALENDAR_PRESENTATION_EPOCH_AND_LOG_HANDOFF.json",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -514,20 +511,17 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt27Science|Prompt1BScientificArt'",
-    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 /tmp/fruitfolio_run_incremental.py 'Prompt1BCalendarPresentationPolicyTests|Prompt19CalendarEngineTests|Prompt1BRecoveredCycleLoaderTests|Prompt1BTodaySnapshotTests'",
     "PYTHONDONTWRITEBYTECODE=1 python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "rg --files Fruitfolio -g *.swift -0 | xargs -0 /tmp/fruitfolio-control-sound-ownership-final --check"
   ],
   "last_test_results": {
-    "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
-    "full_portable_XCTest": "1104 passed,0failures",
-    "Swift_Testing": "21passed,0failures",
+    "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
     "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
     "sound_ownership": "0diagnostics"
   },
-  "next_exact_implementation_action": "Continue Calendar/Today logging state and load responsiveness requirements295\u2013300 from existing source; preserve prior checkpoints and do not revisit completed audits.",
-  "updated_at": "2026-11-07T18:10:14.720704+00:00",
+  "next_exact_implementation_action": "Continue shared daily-log state and date-owner validation across Calendar/Today, using actual store/viewmodel consumers and preserving all existing drafts.",
+  "updated_at": "2026-11-07T18:13:28.180876+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -537,28 +531,23 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "focused_XCTest": "32 passed,0failures:23existing portable catalog/router/safety/content tests now executed,3actual new lifecycle/payload tests,6existing source-canvas sizing tests",
-      "full_portable_XCTest": "1104 passed,0failures",
-      "Swift_Testing": "21passed,0failures",
+      "portable_XCTest": "28passed,0failures; actual loader held-provider reactivation race plus calendar engine, recovered-loader and Today snapshot tests",
       "syntax": "334 Swift files parsed,0syntax errors; not SDK typechecking",
       "sound_ownership": "0diagnostics"
     },
     "not_run": [
-      "Apple Combine/SwiftUI build and actual shared illustration accessibility/overlay rendering",
-      "Native UIImage application-bundle resolution test (excluded by actual UIKit availability)",
-      "Actual science hotspot hit testing,44pt edge targets, VoiceOver, dynamic text and RTL",
-      "Official MADLAD model and clinical/native-language acceptance"
+      "Apple actual Calendar/date-sheet/log handoff and background/uncover timing",
+      "VoiceOver, large text/RTL, reduced-motion visual and device latency checks"
     ],
     "remaining": [
-      "Verify the shared Layout proposes identical image/overlay canvas and does not block hotspot buttons on Apple",
-      "Verify default noninteractive scientific illustrations retain original proportions, labels and no intercepted touches on every consumer",
-      "Verify active/uncovered controls and source/provider cancellation in actual SwiftUI events",
-      "Production curated hotspot/content mappings and complete approved scientific education coverage are not established by nonclinical fixtures; retain unavailable states where source metadata missing",
-      "Original requirements310\u2013314 and cross-app interaction/accessibility remain IN_PROGRESS; no full source-only closure"
+      "Verify actual same-month foreground reload rejects old snapshot and preserves selected date on Apple",
+      "Verify consumed date-sheet logging callback cannot open a log after cover/background/disappearance; user must be able to reselect after cancellation",
+      "Verify real Calendar\u2192DailyLog\u2192Today save/cancel records and drafts remain consistent",
+      "No measured device input-lag or complete cross-app logging-overlay acceptance claim"
     ]
   },
   "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",
-  "last_recorded_batch_part": 8,
+  "last_recorded_batch_part": 6,
   "last_supplemental_requirements": [],
   "implemented_requirements": [
     9,
