@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T12:15:55.007933+00:00",
+  "updated_at": "2026-11-07T12:22:12.685377+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -12154,6 +12154,55 @@
         ]
       },
       "timestamp": "2026-11-07T12:15:55.007933+00:00"
+    },
+    {
+      "batch": "Fertilization-stage-content-and-transition-ownership",
+      "requirements": [
+        67,
+        68,
+        70,
+        311,
+        443,
+        444
+      ],
+      "supplemental_requirements": [],
+      "commands": [
+        "10 actual portable Fertilization Core XCTest",
+        "Three actual Apple VM tests written, NOT_RUN",
+        "322 Swift syntax parses",
+        "71 workflow checks",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_core_XCTest_passed": 10,
+        "log": "/tmp/fruitfolio_fertilization_core_final.log",
+        "initial_filter_attempt": "The initial filter matched zero tests because the existing runner did not include this Foundation module. That run is not counted. Added the two exact production Foundation files and existing Core test file to the real portable runner; final10 passed.",
+        "syntax_files": 322,
+        "syntax_log": "/tmp/fruitfolio_fertilization_ownership_syntax.log",
+        "workflow_passed": 71,
+        "workflow_log": "/tmp/fruitfolio_fertilization_ownership_workflow.log"
+      },
+      "verification": {
+        "executed": {
+          "portable_core_XCTest_passed": 10,
+          "log": "/tmp/fruitfolio_fertilization_core_final.log",
+          "initial_filter_attempt": "The initial filter matched zero tests because the existing runner did not include this Foundation module. That run is not counted. Added the two exact production Foundation files and existing Core test file to the real portable runner; final10 passed.",
+          "syntax_files": 322,
+          "syntax_log": "/tmp/fruitfolio_fertilization_ownership_syntax.log",
+          "workflow_passed": 71,
+          "workflow_log": "/tmp/fruitfolio_fertilization_ownership_workflow.log"
+        },
+        "not_run": [
+          "Three new actual Combine/SwiftUI Apple VM lifecycle tests: stale-stage return before replacement load, canceled noncooperative provider and owned delayed completion/reduced-motion settling.",
+          "Apple typechecking, view lifecycle/focus/cue/audio, real-device and content/source acceptance."
+        ],
+        "remaining": [
+          "Create legitimate explicit access to Fertilization and Pregnancy (and other already implemented science modules) from existing Ask/encyclopedia/related/saved architecture, without a seventh Hub button or prediction-triggered navigation.",
+          "Wire approved source-backed content and existing source/Ask/save interactions; default unavailable provider and code presence do not satisfy full education functionality.",
+          "Apple execution is required to verify the new actual model/view ownership behavior; portable10 tests establish stage/asset/content-model contracts only."
+        ]
+      },
+      "timestamp": "2026-11-07T12:22:12.685377+00:00"
     }
   ]
 }

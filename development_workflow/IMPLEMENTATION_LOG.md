@@ -3932,3 +3932,15 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"focused_portable_XCTest_passed": 21, "full_portable_XCTest_passed": 1013, "SwiftTesting_passed": 21, "workflow_passed": 71, "syntax_files": 320}.
 - Next action: Fix demonstrated Fertilization stage/content ownership race: old provider can publish after stage changes before next load begins, and transition completion is unowned. Invalidate stage loads synchronously, cancel/settle owned transitions on lifecycle/Reduce Motion, add real Apple VM regression (NOT_RUN on Linux), and preserve original six stages/art/research.
 - Commit: containing commit for batch Authored-account-and-game-dialogue-contextual-roles.
+
+## Fertilization-stage-content-and-transition-ownership
+
+- Parent checkpoint: 506f7d652cf66b8531020befdf2990a4a5160194.
+- Source-order requirements: [67, 68, 70, 311, 443, 444].
+- Separate founder additions: [].
+- Source files: Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift, Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationViewModel.swift, FruitfolioTests/Prompt25FertilizationCoreTests.swift, Tools/run_portable_swift_tests.py, development_workflow/FERTILIZATION_OWNERSHIP_AND_NAVIGATION_GAP.json.
+- Fix concrete stale stage/content and unowned delayed-transition defects in preserved Fertilization module; add cancellation/stage guards, shared app Reduce Motion, scene-owned loading/cue/focus and reusable approved stage content. Compile/run actual existing Foundation models/provider/Core tests in portable runner. Production trace exposes missing app call site and default unavailable content; do not count source fix as live module or whole requirement completion.
+- Tests added/updated: Prompt25FertilizationCoreTests, Prompt25FertilizationLifecycleTests.testOldProviderCannotPublishUnderNewStageBeforeReplacementLoadStarts, Prompt25FertilizationLifecycleTests.testCanceledPresentationCannotPublishNoncooperativeProviderResult, Prompt25FertilizationLifecycleTests.testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition.
+- Verification: {"portable_core_XCTest_passed": 10, "log": "/tmp/fruitfolio_fertilization_core_final.log", "initial_filter_attempt": "The initial filter matched zero tests because the existing runner did not include this Foundation module. That run is not counted. Added the two exact production Foundation files and existing Core test file to the real portable runner; final10 passed.", "syntax_files": 322, "syntax_log": "/tmp/fruitfolio_fertilization_ownership_syntax.log", "workflow_passed": 71, "workflow_log": "/tmp/fruitfolio_fertilization_ownership_workflow.log"}.
+- Next action: Implement founder source line1232 explicit reachable education navigation through existing Ask/encyclopedia feature architecture for Fertilization/Pregnancy and other existing modules, with approved research/source/Ask/save integration and no seventh Hub button or automatic prediction-triggered navigation. Read FERTILIZATION_OWNERSHIP_AND_NAVIGATION_GAP.json first.
+- Commit: containing commit for batch Fertilization-stage-content-and-transition-ownership.

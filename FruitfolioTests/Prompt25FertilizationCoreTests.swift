@@ -129,3 +129,78 @@ final class Prompt25FertilizationCoreTests: XCTestCase {
         }
     }
 }
+
+#if canImport(Combine) && canImport(SwiftUI)
+/// Deliberately noncooperative provider to exercise actual Apple model ownership.
+/// Its text is a nonclinical fixture, never approved embryology content.
+private actor Prompt25HeldContentFixture: Prompt25FertilizationContentProviding {
+    let started: XCTestExpectation
+    private var pending: CheckedContinuation<Prompt25EducationalContent, Never>?
+    init(started: XCTestExpectation) { self.started = started }
+    func content(for stage: Prompt25FertilizationStage) async -> Prompt25EducationalContent {
+        await withCheckedContinuation { continuation in
+            pending = continuation
+            started.fulfill()
+        }
+    }
+    func finish() {
+        pending?.resume(returning: .init(shortText: "old-stage nonclinical fixture",
+            expandedSections: [], sourceCount: 1, isApproved: true))
+        pending = nil
+    }
+}
+
+@MainActor
+final class Prompt25FertilizationLifecycleTests: XCTestCase {
+    func testOldProviderCannotPublishUnderNewStageBeforeReplacementLoadStarts() async {
+        let started = expectation(description: "old stage provider started")
+        let provider = Prompt25HeldContentFixture(started: started)
+        let model = Prompt25FertilizationViewModel(initialStage: .oocyte, contentProvider: provider)
+        let old = Task { await model.loadContent() }
+        await fulfillment(of: [started], timeout: 2)
+        model.setStage(.fertilization, animated: false, reduceMotion: true)
+        // Intentionally do not start the new stage load: this is the previous
+        // gap between stage publication and SwiftUI's replacement .task.
+        await provider.finish()
+        await old.value
+        XCTAssertEqual(model.stageID, .fertilization)
+        XCTAssertEqual(model.content, .unavailable)
+        XCTAssertEqual(model.contentState, .idle)
+    }
+
+    func testCanceledPresentationCannotPublishNoncooperativeProviderResult() async {
+        let started = expectation(description: "provider started")
+        let provider = Prompt25HeldContentFixture(started: started)
+        let model = Prompt25FertilizationViewModel(initialStage: .oocyte, contentProvider: provider)
+        let request = Task { await model.loadContent() }
+        await fulfillment(of: [started], timeout: 2)
+        model.suspendPresentation()
+        request.cancel()
+        await provider.finish()
+        await request.value
+        XCTAssertEqual(model.stageID, .oocyte)
+        XCTAssertEqual(model.content, .unavailable)
+        XCTAssertEqual(model.contentState, .idle)
+    }
+
+    func testSuspensionDropsDelayedCallbackAndReducedMotionSettlesOnlyCurrentTransition() async throws {
+        let model = Prompt25FertilizationViewModel(initialStage: .oocyte,
+            contentProvider: Prompt25UnavailableContentProvider())
+        var completions = 0
+        model.next(reduceMotion: false) { completions += 1 }
+        XCTAssertTrue(model.isTransitioning)
+        model.suspendPresentation()
+        XCTAssertEqual(model.stageID, .fertilization)
+        XCTAssertFalse(model.isTransitioning)
+        try await Task.sleep(for: .milliseconds(450))
+        XCTAssertEqual(completions, 0)
+        model.next(reduceMotion: false) { completions += 1 }
+        model.settleTransitionForReducedMotion()
+        XCTAssertEqual(model.stageID, .twoCell)
+        XCTAssertFalse(model.isTransitioning)
+        XCTAssertEqual(completions, 1)
+        try await Task.sleep(for: .milliseconds(450))
+        XCTAssertEqual(completions, 1)
+    }
+}
+#endif

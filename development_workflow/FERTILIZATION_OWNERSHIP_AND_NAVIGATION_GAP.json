@@ -1,0 +1,37 @@
+{
+  "source_receipt": {
+    "file": "development_workflow/SOURCE_MATERIALS/Founder_Prompt1B_Extracted.txt",
+    "line": 1232,
+    "sha256": "e36ee074504b5650b1f151119db2461981163c6eda2b5d8de8cde2a431a62a9a",
+    "instruction": "EDUCATIONAL NAVIGATION AUDIT: Verify that the current production Swift implementation provides a visible, reachable user-facing path into Fertilization Education, Pregnancy Education, and the other implemented encyclopedia/science modules. The specification references pathways such as Encyclopedia \u2192 Reproductive Biology \u2192 Fertilization, Ask, search, related educational cross-links, and saved content, but the current six-button Hub does not expose a separate generic Encyclopedia destination. If an educational module exists in code but no legitimate current UI path reaches it, treat that as a navigation/discoverability defect and connect it through the appropriate existing Fruitfolio feature architecture rather than creating a seventh Hub button or a new top-level Science area."
+  },
+  "demonstrated_defects": [
+    "loadContent checked only a generation incremented by a replacement load, not stage identity or cancellation. A prior stage could therefore publish between setStage and the next SwiftUI task.",
+    "Animated transition used an unowned delayed Task with no cancellation or generation check, retaining hidden callbacks.",
+    "View read only system Reduce Motion, bypassing the shared app override."
+  ],
+  "implemented": [
+    "Synchronous generation invalidation on setStage; capture exact requested stage and reject canceled/stale provider results.",
+    "Own transition task and callback, invalidate on suspension and settle current transition exactly once for reduced motion.",
+    "Scene-keyed visible loading, guarded focus/cue publication and suspension on disappearance/inactivity; reuse already approved same-stage content.",
+    "Use shared MotionPreferences and cancel/resettle delayed cues without changing the six logical stages or source/art."
+  ],
+  "verification": {
+    "portable_core_XCTest_passed": 10,
+    "log": "/tmp/fruitfolio_fertilization_core_final.log",
+    "initial_filter_attempt": "The initial filter matched zero tests because the existing runner did not include this Foundation module. That run is not counted. Added the two exact production Foundation files and existing Core test file to the real portable runner; final10 passed.",
+    "syntax_files": 322,
+    "syntax_log": "/tmp/fruitfolio_fertilization_ownership_syntax.log",
+    "workflow_passed": 71,
+    "workflow_log": "/tmp/fruitfolio_fertilization_ownership_workflow.log"
+  },
+  "not_run": [
+    "Three new actual Combine/SwiftUI Apple VM lifecycle tests: stale-stage return before replacement load, canceled noncooperative provider and owned delayed completion/reduced-motion settling.",
+    "Apple typechecking, view lifecycle/focus/cue/audio, real-device and content/source acceptance."
+  ],
+  "navigation_limit": "Production source search currently finds only the module's own wrapper calling Prompt25FertilizationView, with no app feature calling that wrapper. This fix is NOT counted as evidence of a reachable/live scientific feature. Founder line1232 explicitly requires repairing such navigation defects through existing architecture.",
+  "next_missing_functionality": [
+    "Create legitimate explicit access to Fertilization and Pregnancy (and other already implemented science modules) from existing Ask/encyclopedia/related/saved architecture, without a seventh Hub button or prediction-triggered navigation.",
+    "Wire approved source-backed content and existing source/Ask/save interactions; default unavailable provider and code presence do not satisfy full education functionality."
+  ]
+}

@@ -10,7 +10,13 @@ struct Prompt25FertilizationView: View {
     private let onPageSound: () -> Void
 
     @StateObject private var viewModel: Prompt25FertilizationViewModel
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @Environment(\.scenePhase) private var scenePhase
+    private var reduceMotion: Bool { motionPreferences.reduceMotionActive }
+    private struct ContentRequest: Equatable {
+        let stage: Prompt25FertilizationStageID
+        let active: Bool
+    }
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var dragOffset: CGFloat = 0
@@ -72,11 +78,30 @@ struct Prompt25FertilizationView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .task(id: viewModel.stageID) {
-            await viewModel.loadContent()
+        .task(id: ContentRequest(stage: viewModel.stageID, active: scenePhase == .active)) {
+            guard !Task.isCancelled, scenePhase == .active else { return }
+            let requestedStage = viewModel.stageID
+            if viewModel.contentState != .loaded { await viewModel.loadContent() }
+            guard !Task.isCancelled, scenePhase == .active,
+                  viewModel.stageID == requestedStage else { return }
             stageHeadingFocused = true
             await showSwipeCueIfNeeded()
         }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active {
+                viewModel.suspendPresentation()
+                swipeCueOffset = 0
+                dragOffset = 0
+            }
+        }
+        .onChange(of: reduceMotion) { _, reduced in
+            if reduced {
+                viewModel.settleTransitionForReducedMotion()
+                swipeCueOffset = 0
+                dragOffset = 0
+            }
+        }
+        .onDisappear { viewModel.suspendPresentation() }
         .accessibilityIdentifier("prompt25.fertilization")
     }
 
@@ -411,7 +436,7 @@ struct Prompt25FertilizationView: View {
     private var stageSwipeGesture: some Gesture {
         DragGesture(minimumDistance: 12)
             .onChanged { value in
-                guard !viewModel.isTransitioning else { return }
+                guard scenePhase == .active, !viewModel.isTransitioning else { return }
                 let horizontal = value.translation.width
                 let vertical = value.translation.height
 
@@ -429,7 +454,7 @@ struct Prompt25FertilizationView: View {
                     }
                 }
 
-                guard !viewModel.isTransitioning else { return }
+                guard scenePhase == .active, !viewModel.isTransitioning else { return }
 
                 let horizontal = value.translation.width
                 let vertical = value.translation.height
@@ -452,36 +477,39 @@ struct Prompt25FertilizationView: View {
     }
 
     private func navigatePrevious() {
-        guard viewModel.canGoPrevious else { return }
+        guard scenePhase == .active, viewModel.canGoPrevious else { return }
         onPageSound()
         viewModel.previous(reduceMotion: reduceMotion)
     }
 
     private func navigateNext() {
-        guard viewModel.canGoNext else { return }
+        guard scenePhase == .active, viewModel.canGoNext else { return }
         onPageSound()
         viewModel.next(reduceMotion: reduceMotion)
     }
 
     private func showSwipeCueIfNeeded() async {
-        guard !hasShownSwipeCue,
+        guard !hasShownSwipeCue, scenePhase == .active,
               viewModel.stageID == .oocyte,
               !reduceMotion
         else {
             return
         }
 
+        do { try await Task.sleep(for: .milliseconds(450)) }
+        catch { return }
+        guard !Task.isCancelled, scenePhase == .active, !reduceMotion,
+              viewModel.stageID == .oocyte else { return }
         hasShownSwipeCue = true
-
-        try? await Task.sleep(for: .milliseconds(450))
-        guard !Task.isCancelled else { return }
 
         withAnimation(.easeInOut(duration: 0.28)) {
             swipeCueOffset = 7
         }
 
-        try? await Task.sleep(for: .milliseconds(300))
-        guard !Task.isCancelled else { return }
+        do { try await Task.sleep(for: .milliseconds(300)) }
+        catch { return }
+        guard !Task.isCancelled, scenePhase == .active, !reduceMotion,
+              viewModel.stageID == .oocyte else { return }
 
         withAnimation(.easeInOut(duration: 0.28)) {
             swipeCueOffset = 0

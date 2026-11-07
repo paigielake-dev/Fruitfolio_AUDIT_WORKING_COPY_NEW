@@ -20,6 +20,9 @@ final class Prompt25FertilizationViewModel: ObservableObject {
 
     private let contentProvider: any Prompt25FertilizationContentProviding
     private var loadGeneration = 0
+    private var transitionTask: Task<Void, Never>?
+    private var transitionID = UUID()
+    private var transitionCompletion: (@MainActor () -> Void)?
 
     init(
         initialStage: Prompt25FertilizationStageID,
@@ -46,13 +49,18 @@ final class Prompt25FertilizationViewModel: ObservableObject {
     }
 
     func loadContent() async {
+        guard !Task.isCancelled else { return }
         loadGeneration += 1
         let generation = loadGeneration
+        let requestedStage = stage
         contentState = .loading
+        guard !Task.isCancelled, generation == loadGeneration,
+              requestedStage.id == stageID else { return }
 
-        let loaded = await contentProvider.content(for: stage)
+        let loaded = await contentProvider.content(for: requestedStage)
 
-        guard generation == loadGeneration else { return }
+        guard !Task.isCancelled, generation == loadGeneration,
+              requestedStage.id == stageID else { return }
 
         content = loaded
         contentState = loaded.isApproved ? .loaded : .unavailable
@@ -66,6 +74,13 @@ final class Prompt25FertilizationViewModel: ObservableObject {
     ) {
         guard !isTransitioning, newStage != stageID else { return }
 
+        // Invalidate before publishing the stage; an old provider may finish
+        // before SwiftUI starts the replacement stage task.
+        loadGeneration += 1
+        transitionTask?.cancel()
+        transitionID = UUID()
+        let expectedTransition = transitionID
+        transitionCompletion = completion
         isTransitioning = true
         isExpanded = false
         showsRelatedTopics = false
@@ -77,17 +92,45 @@ final class Prompt25FertilizationViewModel: ObservableObject {
                 stageID = newStage
             }
 
-            Task { @MainActor in
-                try? await Task.sleep(for: .milliseconds(380))
-                isTransitioning = false
-                completion()
+            transitionTask = Task { @MainActor [weak self] in
+                do { try await Task.sleep(for: .milliseconds(380)) }
+                catch { return }
+                guard !Task.isCancelled else { return }
+                self?.finishTransition(expected: expectedTransition)
             }
         } else {
             stageID = newStage
-            isTransitioning = false
-            completion()
+            finishTransition(expected: expectedTransition)
         }
     }
+
+    private func finishTransition(expected: UUID) {
+        guard transitionID == expected, isTransitioning else { return }
+        transitionTask = nil
+        let completion = transitionCompletion
+        transitionCompletion = nil
+        isTransitioning = false
+        completion?()
+    }
+
+    func settleTransitionForReducedMotion() {
+        transitionTask?.cancel()
+        finishTransition(expected: transitionID)
+    }
+
+    /// Keep the selected logical stage while dropping hidden/stale publications
+    /// and deferred caller actions. The visible owner can reload on return.
+    func suspendPresentation() {
+        loadGeneration += 1
+        transitionID = UUID()
+        transitionTask?.cancel()
+        transitionTask = nil
+        transitionCompletion = nil
+        isTransitioning = false
+        if contentState == .loading { contentState = .idle }
+    }
+
+    deinit { transitionTask?.cancel() }
 
     func previous(
         reduceMotion: Bool,

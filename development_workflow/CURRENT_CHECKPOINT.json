@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "3fa72d425c2dca53d69f01b18fad114dc36f9101",
+  "current_HEAD": "506f7d652cf66b8531020befdf2990a4a5160194",
   "latest_verified_commit": null,
   "current_checklist_part": 6,
-  "current_requirement": 311,
-  "current_implementation_batch": "Authored-account-and-game-dialogue-contextual-roles",
+  "current_requirement": 310,
+  "current_implementation_batch": "Fertilization-stage-content-and-transition-ownership",
   "completed_requirements": [
     206,
     210
@@ -494,10 +494,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
-    "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
-    "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
-    "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
+    "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+    "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationViewModel.swift",
+    "FruitfolioTests/Prompt25FertilizationCoreTests.swift",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/FERTILIZATION_OWNERSHIP_AND_NAVIGATION_GAP.json",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -511,21 +512,23 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "21 focused actual portable Account/level-reset/semantic XCTest",
-    "Full portable XCTest +Swift Testing",
+    "10 actual portable Fertilization Core XCTest",
+    "Three actual Apple VM tests written, NOT_RUN",
+    "322 Swift syntax parses",
     "71 workflow checks",
-    "320 Swift syntax parses",
     "git diff --check"
   ],
   "last_test_results": {
-    "focused_portable_XCTest_passed": 21,
-    "full_portable_XCTest_passed": 1013,
-    "SwiftTesting_passed": 21,
+    "portable_core_XCTest_passed": 10,
+    "log": "/tmp/fruitfolio_fertilization_core_final.log",
+    "initial_filter_attempt": "The initial filter matched zero tests because the existing runner did not include this Foundation module. That run is not counted. Added the two exact production Foundation files and existing Core test file to the real portable runner; final10 passed.",
+    "syntax_files": 322,
+    "syntax_log": "/tmp/fruitfolio_fertilization_ownership_syntax.log",
     "workflow_passed": 71,
-    "syntax_files": 320
+    "workflow_log": "/tmp/fruitfolio_fertilization_ownership_workflow.log"
   },
-  "next_exact_implementation_action": "Fix demonstrated Fertilization stage/content ownership race: old provider can publish after stage changes before next load begins, and transition completion is unowned. Invalidate stage loads synchronously, cancel/settle owned transitions on lifecycle/Reduce Motion, add real Apple VM regression (NOT_RUN on Linux), and preserve original six stages/art/research.",
-  "updated_at": "2026-11-07T12:15:55.007933+00:00",
+  "next_exact_implementation_action": "Implement founder source line1232 explicit reachable education navigation through existing Ask/encyclopedia feature architecture for Fertilization/Pregnancy and other existing modules, with approved research/source/Ask/save integration and no seventh Hub button or automatic prediction-triggered navigation. Read FERTILIZATION_OWNERSHIP_AND_NAVIGATION_GAP.json first.",
+  "updated_at": "2026-11-07T12:22:12.685377+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -535,22 +538,26 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "focused": "/tmp/fruitfolio_authored_dialogue_semantics_focused.log: 21 passed",
-      "full": "/tmp/fruitfolio_authored_dialogue_full_portable.log: 1013 XCTest +21 Swift Testing passed",
-      "workflow": "/tmp/fruitfolio_authored_dialogue_workflow.log: 71 passed",
-      "syntax": "/tmp/fruitfolio_authored_dialogue_semantics_syntax.log: 320 parsed,0 errors"
+      "portable_core_XCTest_passed": 10,
+      "log": "/tmp/fruitfolio_fertilization_core_final.log",
+      "initial_filter_attempt": "The initial filter matched zero tests because the existing runner did not include this Foundation module. That run is not counted. Added the two exact production Foundation files and existing Core test file to the real portable runner; final10 passed.",
+      "syntax_files": 322,
+      "syntax_log": "/tmp/fruitfolio_fertilization_ownership_syntax.log",
+      "workflow_passed": 71,
+      "workflow_log": "/tmp/fruitfolio_fertilization_ownership_workflow.log"
     },
     "not_run": [
-      "Apple actual popup attributed rendering/wrapping/VoiceOver/actions and localized semantic display.",
-      "Official MADLAD semantic-tag translation and native-language review."
+      "Three new actual Combine/SwiftUI Apple VM lifecycle tests: stale-stage return before replacement load, canceled noncooperative provider and owned delayed completion/reduced-motion settling.",
+      "Apple typechecking, view lifecycle/focus/cue/audio, real-device and content/source acceptance."
     ],
     "remaining": [
-      "This addresses five authored contexts only; complete eligible-copy semantic coverage remains unfinished. No whole semantic requirement is promoted merely from these entries.",
-      "Apple rendering/geometry and official model/linguistic acceptance remain pending; actual Foundation role/callback/original-byte tests are not that verification."
+      "Create legitimate explicit access to Fertilization and Pregnancy (and other already implemented science modules) from existing Ask/encyclopedia/related/saved architecture, without a seventh Hub button or prediction-triggered navigation.",
+      "Wire approved source-backed content and existing source/Ask/save interactions; default unavailable provider and code presence do not satisfy full education functionality.",
+      "Apple execution is required to verify the new actual model/view ownership behavior; portable10 tests establish stage/asset/content-model contracts only."
     ]
   },
   "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",
-  "last_recorded_batch_part": 1,
+  "last_recorded_batch_part": 6,
   "last_supplemental_requirements": [],
   "implemented_requirements": [
     9,
